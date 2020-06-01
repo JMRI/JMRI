@@ -213,7 +213,7 @@ La num&#233;rotation Rapports  <p> est r&#233;sum&#233;e dans le tableau ci-dess
 <a name="SVs" id="SVs"></a>
 <h2>Traitement des Variables Syst&#232;me LocoNet (SVs)</h2>
 ( Ce qui suit a &#233;t&#233; tout d'abord disponible dansAvant
-<a href="http://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI 4.1.2</a>. Les versions pr&#233;c&#233;dentes 
+<a href="https://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI 4.1.2</a>. Les versions pr&#233;c&#233;dentes 
 peuvent ne pas &#234;tres termin&#233;es ).
 <p>
 Comme les d&#233;codeurs stockent les Variables de Configuration ( CVs ) pour d&#233;finir leurs r&#233;glages, 

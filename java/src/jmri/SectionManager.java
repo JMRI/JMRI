@@ -234,7 +234,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
                     s.getReverseBlockingSensor().setState(Sensor.ACTIVE);
                 }
             } catch (jmri.JmriException reason) {
-                log.error("Exception when initializing blocking Sensors for Section " + s.getDisplayName(jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME));
+                log.error("Exception when initializing blocking Sensors for Section {}", s.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME));
             }
         }
     }

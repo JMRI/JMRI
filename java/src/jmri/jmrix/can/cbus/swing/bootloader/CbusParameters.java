@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class CbusParameters {
         paramData[0] = d.length;
         
         for (int i = 0; i < paramData[0]; i++) {
-            paramData[i+1] = d[i];
+            paramData[i+1] = d[i] & 0xFF;
         }
         
     }
@@ -129,15 +130,15 @@ public class CbusParameters {
                     if (fp.paramData[PROC_TYPE_IDX] == hp.paramData[PROC_TYPE_IDX]) {
                         fp.valid = true;
                     } else {
-                        log.debug("Processor type mismatch {} {}", fp.paramData[PROC_TYPE_IDX], hp.paramData[PROC_TYPE_IDX]);
+                        log.error("Processor type mismatch {} {}", fp.paramData[PROC_TYPE_IDX], hp.paramData[PROC_TYPE_IDX]);
                     }
                 }
                 return fp;
             } else {
-                log.debug("Module ID mismatch {} {}", fp.paramData[MANU_ID_IDX], hp.paramData[MANU_ID_IDX]);
+                log.error("Module ID mismatch {} {}", fp.paramData[MODULE_ID_IDX], hp.paramData[MODULE_ID_IDX]);
             }
         } else {
-            log.debug("Manufacturer ID mismatch {} {}", fp.paramData[MODULE_ID_IDX], hp.paramData[MODULE_ID_IDX]);
+            log.error("Manufacturer ID mismatch {} {}", fp.paramData[MANU_ID_IDX], hp.paramData[MANU_ID_IDX]);
         }
         
         fp.valid = false;
@@ -212,6 +213,6 @@ public class CbusParameters {
         valid = s;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusBootloaderPane.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusParameters.class);
     
 }

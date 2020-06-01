@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.Sensor;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.EditorScaffold;
@@ -14,7 +15,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MultiSensorIconDialogTest {
 
@@ -33,7 +34,6 @@ public class MultiSensorIconDialogTest {
         JUnitUtil.dispose(editor);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -42,6 +42,7 @@ public class MultiSensorIconDialogTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

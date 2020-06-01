@@ -173,7 +173,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry : _iconMaps.entrySet()) {
             root.add(store3levelMap(entry.getKey(), entry.getValue()));
             if (log.isDebugEnabled()) {
-                log.debug("Add type node " + entry.getKey());
+                log.debug("Add type node {}", entry.getKey());
             }
         }
 
@@ -269,15 +269,14 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             String familyName = (String) famNode.getUserObject();
             HashMap<String, NamedIcon> iconMap = new HashMap<>();
             List<CatalogTreeLeaf> list = famNode.getLeaves();
-            for (int i = 0; i < list.size(); i++) {
-                String iconName = list.get(i).getName();
-                CatalogTreeLeaf leaf = list.get(i);
-                String path = leaf.getPath();
+            for (CatalogTreeLeaf catalogTreeLeaf : list) {
+                String iconName = catalogTreeLeaf.getName();
+                String path = catalogTreeLeaf.getPath();
                 NamedIcon icon = NamedIcon.getIconByName(path);
                 if (icon == null) {
                     log.warn("loadFamilyMap cannot find icon \"{}\" in family\"{}\" at path \"{}\"", iconName, familyName, path);
                     String fileName = RED_X;
-                    icon = new jmri.jmrit.catalog.NamedIcon(fileName, fileName);
+                    icon = new NamedIcon(fileName, fileName);
                 }
                 iconMap.put(iconName, icon);
                 log.debug("Add {} icon to family \"{}\"", iconName, familyName);
@@ -347,25 +346,23 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families) {
         HashMap<String, HashMap<String, NamedIcon>> familyMap = new HashMap<>();
-        for (int k = 0; k < families.size(); k++) {
-            String familyName = families.get(k).getName();
+        for (Element family : families) {
+            String familyName = family.getName();
             HashMap<String, NamedIcon> iconMap = new HashMap<>();
             // Map of all icons of in family, familyName
-            List<Element> iconfiles = families.get(k).getChildren();
-            for (int j = 0; j < iconfiles.size(); j++) {
-                String iconName = iconfiles.get(j).getName();
-                String fileName = iconfiles.get(j).getText().trim();
+            List<Element> iconfiles = family.getChildren();
+            for (Element iconfile : iconfiles) {
+                String iconName = iconfile.getName();
+                String fileName = iconfile.getText().trim();
                 if (fileName.length() == 0) {
-                    log.warn("loadDefaultFamilyMap: icon \"{}\" in family \"{}\" has no image file.",
-                            iconName, familyName);
+                    log.warn("loadDefaultFamilyMap: icon \"{}\" in family \"{}\" has no image file.", iconName, familyName);
                     fileName = RED_X;
                 }
                 NamedIcon icon = NamedIcon.getIconByName(fileName);
                 if (icon == null) {
-                    log.warn("loadDefaultFamilyMap: icon \"{}\" in family \"{}\" cannot get icon from file \"{}\".",
-                            iconName, familyName, fileName);
+                    log.warn("loadDefaultFamilyMap: icon \"{}\" in family \"{}\" cannot get icon from file \"{}\".", iconName, familyName, fileName);
                     fileName = RED_X;
-                    icon = new jmri.jmrit.catalog.NamedIcon(fileName, fileName);
+                    icon = new NamedIcon(fileName, fileName);
                 }
                 iconMap.put(iconName, icon);
             }
@@ -381,14 +378,13 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             loadDefaultIndicatorTOMap(List<Element> typeList) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap = new HashMap<>();
         // Map of all families of type, typeName
-        for (int k = 0; k < typeList.size(); k++) {
-            String familyName = typeList.get(k).getName();
-            List<Element> types = typeList.get(k).getChildren();
+        for (Element element : typeList) {
+            String familyName = element.getName();
+            List<Element> types = element.getChildren();
             HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types);
             familyTOMap.put(familyName, familyMap);
             if (log.isDebugEnabled()) {
-                log.debug("Add {}  IndicatorTO sub-families to item type {}  to IndicatorTO families.",
-                        familyMap.size(), familyName);
+                log.debug("Add {}  IndicatorTO sub-families to item type {}  to IndicatorTO families.", familyMap.size(), familyName);
             }
         }
         return familyTOMap;
@@ -398,9 +394,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (GraphicsEnvironment.isHeadless()) {
             return null;
         }
-        ItemPalette instance = InstanceManager.getOptionalDefault(ItemPalette.class).orElseGet(() -> {
-            return InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed));
-        });
+        ItemPalette instance = InstanceManager.getOptionalDefault(ItemPalette.class).orElseGet(() -> InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed)));
         if (!ed.equals(instance.getEditor())) {
             instance.updateBackground(ed);
             InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(ed, null, instance);
@@ -575,15 +569,11 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         findIcon.addSeparator();
 
         JMenuItem openItem = new JMenuItem(Bundle.getMessage("openDirMenu"));
-        openItem.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(DirectorySearcher.class).openDirectory();
-        });
+        openItem.addActionListener((ActionEvent e) -> InstanceManager.getDefault(DirectorySearcher.class).openDirectory());
         findIcon.add(openItem);
 
          JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
-         searchItem.addActionListener((ActionEvent e) -> {
-             jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-         });
+         searchItem.addActionListener((ActionEvent e) -> DirectorySearcher.instance().searchFS());
          findIcon.add(searchItem);
 
         setJMenuBar(menuBar);
@@ -593,11 +583,11 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     public void closePanels(java.awt.event.WindowEvent e) {
         java.awt.Component[] comps = _tabPane.getComponents();
         if (log.isDebugEnabled()) {
-            log.debug("closePanels: tab count= " + _tabPane.getTabCount());
+            log.debug("closePanels: tab count= {}", _tabPane.getTabCount());
         }
-        for (int i = 0; i < comps.length; i++) {
-            javax.swing.JViewport vp = (javax.swing.JViewport) ((JScrollPane) comps[i]).getComponent(0);
-            java.awt.Component ip = vp.getView();
+        for (Component comp : comps) {
+            javax.swing.JViewport vp = (javax.swing.JViewport) ((JScrollPane) comp).getComponent(0);
+            Component ip = vp.getView();
             if (ip instanceof ItemPanel) {
                 ((ItemPanel) ip).closeDialogs();
             }
@@ -678,9 +668,8 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (log.isDebugEnabled()) {
             HashMap<String, HashMap<String, NamedIcon>> families = getFamilyMaps(type);
             if (families != null && families.size() > 0) {
-                Iterator<String> it = families.keySet().iterator();
-                while (it.hasNext()) {
-                    log.debug("removeIconMap remaining Keys: family \"{}\" in type \"{}\"", it.next(), type);
+                for (String s : families.keySet()) {
+                    log.debug("removeIconMap remaining Keys: family \"{}\" in type \"{}\"", s, type);
                 }
             }
         }
@@ -762,9 +751,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map) {
         HashMap<String, NamedIcon> clone = new HashMap<>();
         if (map != null) {
-            Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : map.entrySet()) {
                 String name = entry.getKey();
                 NamedIcon icon = new NamedIcon(entry.getValue());
                 clone.put(name, icon);

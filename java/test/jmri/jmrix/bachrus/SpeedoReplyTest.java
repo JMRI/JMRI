@@ -9,13 +9,12 @@ import org.junit.Test;
 /**
  * SpeedoReplyTest.java
  *
- * Description:	tests for the jmri.jmrix.bachrus.SpeedoReply class
+ * Test for the jmri.jmrix.bachrus.SpeedoReply class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -36,7 +35,7 @@ public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     
     @After
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

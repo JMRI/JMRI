@@ -32,7 +32,9 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * constructor
+     * constructor.
+     * @param prefix system prefix.
+     * @param userName system username.
      */
     public AnymaDMX_SystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
@@ -94,7 +96,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * <li>Channels are numbered from 1 to 512.</li>
      * <li>Does not check whether that node is defined on current system.</li>
      * </ul>
-     *
+     * @param systemName system name.
      * @return 0 if an error is found.
      */
     public int getChannelFromSystemName(String systemName) {
@@ -132,6 +134,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * Public static method to check and skip the System Prefix string on a
      * system name.
      *
+     * @param systemName system name string.
      * @return offset of the 1st character past the prefix, or -1 if not valid
      *         for this connection
      */
@@ -148,6 +151,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * Public static method to convert one format anyma dmx system name to the
      * alternate format.
      *
+     * @param systemName system name string.
      * @return "" (empty string) if the supplied system name does not have a
      *         valid format, or if there is no representation in the alternate
      *         naming scheme
@@ -171,9 +175,11 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Public static method to validate system name format. Does not check
-     * whether that node is defined on current system.
+     * Public static method to validate system name format.
+     * Does not check whether that node is defined on current system.
      *
+     * @param systemName proposed system name.
+     * @param type bean type, only L supported.
      * @return enum indicating current validity, which might be just as a prefix
      */
     public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
@@ -208,6 +214,8 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * Public static method to validate anyma dmx system name for configuration.
      * Does validate node number and system prefix.
      *
+     * @param systemName anya dmx systemName.
+     * @param type bean type, only L supported.
      * @return 'true' if system name has a valid meaning in current
      *         configuration, else returns 'false'.
      */
@@ -236,6 +244,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      * Nodes are numbered from 0 - 127. Does not check whether that node is
      * defined on current system.
      *
+     * @param systemName system name.
      * @return '-1' if invalid systemName format or if the node is not found.
      */
     public int getNodeAddressFromSystemName(String systemName) {
@@ -248,7 +257,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
                 if (num > 0) {
                     result = num;
                 } else {
-                    log.warn("invalid anyma dmx system name: " + systemName);
+                    log.warn("invalid anyma dmx system name: {}", systemName);
                 }
             } else {
                 log.error("invalid character in header field of system name: {}", systemName);

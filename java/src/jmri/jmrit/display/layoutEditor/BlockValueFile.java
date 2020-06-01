@@ -45,7 +45,6 @@ public class BlockValueFile extends XmlFile {
     // operational variables
     private BlockManager blockManager = null;
     private final static String defaultFileName = FileUtil.getUserFilesPath() + "blockvalues.xml";
-    private Document doc = null;
     private Element root = null;
 
     /**
@@ -75,11 +74,7 @@ public class BlockValueFile extends XmlFile {
                     // blocks with values to be occupied
                     boolean allPoweredUp = true;
                     for (PowerManager pm : jmri.InstanceManager.getList(PowerManager.class)) {
-                        try {
-                            if (pm.getPower() != jmri.PowerManager.ON) {
-                                allPoweredUp = false;
-                            }
-                        } catch (JmriException e) {
+                        if (pm.getPower() != jmri.PowerManager.ON) {
                             allPoweredUp = false;
                         }
                     }
@@ -156,7 +151,7 @@ public class BlockValueFile extends XmlFile {
         if (blocks.size() > 0) {
             // there are blocks defined, create root element
             root = new Element("block_values");
-            doc = newDocument(root, dtdLocation + "block-values.dtd");
+            Document doc = newDocument(root, dtdLocation + "block-values.dtd");
             boolean valuesFound = false;
 
             // add XSLT processing instruction
@@ -169,8 +164,7 @@ public class BlockValueFile extends XmlFile {
 
             // save block values in xml format
             Element values = new Element("blockvalues");
-            for (int i = 0; i < blocks.size(); i++) {
-                String sname = blocks.get(i);
+            for (String sname : blocks) {
                 Block b = blockManager.getBySystemName(sname);
                 if (b != null) {
                     Object o = b.getValue();
@@ -192,7 +186,7 @@ public class BlockValueFile extends XmlFile {
                         valuesFound = true;
                     }
                 } else {
-                    log.error("Block " + sname + " was not found.");
+                    log.error("Block {} was not found.", sname);
                 }
             }
             root.addContent(values);
@@ -211,7 +205,7 @@ public class BlockValueFile extends XmlFile {
                     // write content to file
                     writeXML(findFile(defaultFileName), doc);
                 } catch (IOException ioe) {
-                    log.error("IO Exception " + ioe);
+                    log.error("While writing block value file ", ioe);
                     throw (ioe);
                 }
             }
@@ -219,6 +213,6 @@ public class BlockValueFile extends XmlFile {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(BlockValueFile.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockValueFile.class);
 
 }

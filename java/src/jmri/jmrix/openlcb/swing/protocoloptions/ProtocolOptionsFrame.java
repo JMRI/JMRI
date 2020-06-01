@@ -7,8 +7,6 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,9 +47,9 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         this.scm = scm;
     }
 
-    private Map<String, JPanel> protocolPanels = new HashMap<>();
+    private final Map<String, JPanel> protocolPanels = new HashMap<>();
     private JTabbedPane protocolTabs;
-    private List<Runnable> saveCallbacks = new ArrayList<>();
+    private final List<Runnable> saveCallbacks = new ArrayList<>();
     boolean anyChanged = false;
 
     private JPanel getProtocolTab(String protocolKey) {
@@ -108,12 +106,7 @@ public class ProtocolOptionsFrame extends JmriJFrame {
             scm.setProtocolOption(protocolKey, optionKey, newV);
             anyChanged = true;
         });
-        valueField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                log.warn("Entry changed: " + protocolKey + " " + optionKey + " = " + valueField.getText());
-            }
-        });
+        valueField.addActionListener(actionEvent -> log.warn("Entry changed: {} {} = {}", protocolKey, optionKey, valueField.getText()));
     }
 
     private void addOptionLabel(String protocolKey, String optionKey, JPanel tab) {
@@ -239,22 +232,12 @@ public class ProtocolOptionsFrame extends JmriJFrame {
                 new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png",
                         FileUtil.Location.INSTALLED)));
         bottomPanel.add(saveButton);
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                saveButtonClicked();
-            }
-        });
+        saveButton.addActionListener(actionEvent -> saveButtonClicked());
 
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         bottomPanel.add(cancelButton);
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                ProtocolOptionsFrame.this.dispatchEvent(new WindowEvent(ProtocolOptionsFrame
-                        .this, WindowEvent.WINDOW_CLOSING));
-            }
-        });
+        cancelButton.addActionListener(actionEvent -> ProtocolOptionsFrame.this.dispatchEvent(new WindowEvent(ProtocolOptionsFrame
+                .this, WindowEvent.WINDOW_CLOSING)));
 
         pack();
     }

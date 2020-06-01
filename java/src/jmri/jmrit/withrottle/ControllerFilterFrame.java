@@ -189,7 +189,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
     @Override
     public void tableChanged(TableModelEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("Set mod flag true for: " + getTitle());
+            log.debug("Set mod flag true for: {}", getTitle());
         }
         this.setModifiedFlag(true);
     }

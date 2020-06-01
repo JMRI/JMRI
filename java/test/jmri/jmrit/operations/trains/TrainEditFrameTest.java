@@ -501,7 +501,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

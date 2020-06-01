@@ -8,13 +8,14 @@ import javax.swing.JMenu;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.4
  */
 abstract public class ComponentFactory {
 
     /**
-     * Provide a menu with all items attached to this system connection
+     * Provide a menu with all items attached to this system connection.
+     * @return menu with all items attached to this system connection.
      */
     abstract public JMenu getMenu();
 

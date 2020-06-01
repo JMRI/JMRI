@@ -49,6 +49,7 @@ public abstract class AbstractNode {
     /**
      * Check for valid address with respect to range, etc.
      *
+     * @param address node number to check.
      * @return true if valid
      */
     abstract protected boolean checkNodeAddress(int address);
@@ -63,6 +64,7 @@ public abstract class AbstractNode {
 
     /**
      * Create a Transmit packet (AbstractMRMessage) to send current state.
+     * @return packet to send current node state.
      */
     abstract public AbstractMRMessage createOutPacket();
 
@@ -90,7 +92,8 @@ public abstract class AbstractNode {
     abstract public void resetTimeout(AbstractMRMessage m);
 
     /**
-     * Return state of needSend flag.
+     * Get Must Send state.
+     * @return state of needSend flag.
      */
     public boolean mustSend() {
         return needSend;

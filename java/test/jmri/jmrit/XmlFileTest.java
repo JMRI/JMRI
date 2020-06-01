@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  * and the custom <user.home>/temp/xml directory
  *
- * @author	Bob Jacobsen Copyright 2001
+ * @author Bob Jacobsen Copyright 2001
  */
 public class XmlFileTest {
 
@@ -100,7 +100,7 @@ public class XmlFileTest {
                         log.debug(ex.toString());
                     }
 
-                    log.debug("DTD: "+theDTD+" SCHEMA: "+theSchema+" ("+validate+") expects "+passes+" was "+result+(passes!=result?" !!!!!!!!!!!!!!!!!!!!!!!!!":"") );
+                    log.debug("DTD: {} SCHEMA: {} ({}) expects {} was {}{}", theDTD, theSchema, validate, passes, result, passes != result ? " !!!!!!!!!!!!!!!!!!!!!!!!!" : "");
                     Assert.assertEquals("DTD: "+theDTD+" SCHEMA: "+theSchema+" ("+validate+")", passes, result);
 
                 }
@@ -252,7 +252,6 @@ public class XmlFileTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

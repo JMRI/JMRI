@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of DccConsist
  *
- * @author	Paul Copyright (C) 2011, 2016
+ * @author Paul Copyright (C) 2011, 2016
  */
 public class DccConsistTest extends AbstractConsistTestBase {
 
@@ -31,7 +31,6 @@ public class DccConsistTest extends AbstractConsistTestBase {
         Assert.assertNotNull(c);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -46,6 +45,7 @@ public class DccConsistTest extends AbstractConsistTestBase {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
         c = null;
     }

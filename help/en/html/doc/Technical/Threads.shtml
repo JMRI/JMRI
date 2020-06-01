@@ -73,7 +73,7 @@
       
       We would prefer that you handle the threading issues
       that arise in that case via the 
-      <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
+      <a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
       class. ThreadingUtil provides utilities that make it easy to
       invoke needed functions on the right thread.
 
@@ -106,14 +106,14 @@
       <p>
       If you do write a method that has to be called on a particular
       thread, please annotate it with a 
-      <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnGuiThread.html">@InvokeOnGuiThread</a>
+      <a href="https://jmri.org/JavaDoc/doc/jmri/InvokeOnGuiThread.html">@InvokeOnGuiThread</a>
       or
-      <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnLayoutThread.html">@InvokeOnLayoutThread</a>
+      <a href="https://jmri.org/JavaDoc/doc/jmri/InvokeOnLayoutThread.html">@InvokeOnLayoutThread</a>
       to ease later static checking.
 
       <p>
       If you have ensured that a method is thread safe and may be run on any thread, please mark it with
-      <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnAnyThread.html">@InvokeOnAnyThread</a>
+      <a href="https://jmri.org/JavaDoc/doc/jmri/InvokeOnAnyThread.html">@InvokeOnAnyThread</a>
       
       <p>
       If you want to check at runtime that something is running on the intended thread:
@@ -137,7 +137,26 @@
     <code>@GuardedBy</code> annotations that are useful.
     See the discussion on the 
     <a href="SpotBugs.shtml#annotations">JMRI SpotBugs page</a>.
-
+    <p>
+    If you do need to launch a thread of your own, there are a few things
+    to remember:
+    <ul>
+        <li>Please put your thread into the JMRI thread group by
+            putting <code>ThreadingUtil.getJmriThreadGroup()</code>
+            as the first argument to the 
+            <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html#constructor.summary">Thread constructor</a>.
+            This makes it easier to sort JMRI-created threads from system and library threads
+            when debugging.
+        <li>Please make sure that your new thread(s)
+            are terminated properly at the end each
+            <a href="JUnit.shtml">JUnit test</a>
+            for your code.  If you leave them running, 
+            they interfere with later tests. See the 
+            <a href="#ending">next section</a>
+            for how to terminate threads.
+    </ul>
+    
+     
 <a id="ending" name="ending"></a>
 <h3>Ending Threads</h3>
 
@@ -175,11 +194,11 @@
 
 <a id="timer" name="timer"></a>
 <h3>Timed Events</h3> 
-    The <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
+    The <a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
     class provides the
-    <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUIDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnGUIDelayed</a>
+    <a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUIDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnGUIDelayed</a>
     and
-    <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnLayoutDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnLayoutDelayed</a>
+    <a href="https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnLayoutDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnLayoutDelayed</a>
     methods to make it easy to run some code after a delay.
     In general, you should use these whenever possible instead of explicit 
     javax.swing.Timer or java.util.Timer objects.
@@ -191,7 +210,7 @@
         <li>The requested operation is run on the Timer's own thread, which isn't the layout or GUI thread.
     </ul>
     
-   The <a href="http://jmri.org/JavaDoc/doc/jmri/util/TimerUtil.html">jmri.util.TimerUtil</a>
+   The <a href="https://jmri.org/JavaDoc/doc/jmri/util/TimerUtil.html">jmri.util.TimerUtil</a>
    can help with these issues.
     
 <h3>Other Items of Interest</h3>    
@@ -212,7 +231,7 @@
     
     <p>
     The 
-    <a href="http://jmri.org/JavaDoc/doc/jmri/util/PropertyChangeEventQueue.html">jmri.util.PropertyChangeEventQueue</a>
+    <a href="https://jmri.org/JavaDoc/doc/jmri/util/PropertyChangeEventQueue.html">jmri.util.PropertyChangeEventQueue</a>
     class can handle listening to lots of NamedBeans without possibly missing or overlapping some notifications.
     The 
     <a href="https://github.com/JMRI/JMRI/tree/master/java/src/jmri/jmrit/automat/Siglet.java">jmri.jmrit.automat.Siglet</a>

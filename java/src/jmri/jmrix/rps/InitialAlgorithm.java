@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Neither Ashenfelter nor Bucher provide any guarantee as to the intellectual
  * property status of this algorithm. Use it at your own risk.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class InitialAlgorithm implements Calculator {
 
@@ -73,11 +73,11 @@ public class InitialAlgorithm implements Calculator {
             rl = r.getValue(4) * vsound;
         }
 
-        log.debug("inputs " + ri + " " + rj + " " + rk + " " + rl);
+        log.debug("inputs {} {} {} {}", ri, rj, rk, rl);
 
         gps();
 
-        log.debug("x = " + x0 + " y = " + y0 + " z0 = " + z0);
+        log.debug("x = {} y = {} z0 = {}", x0, y0, z0);
         return new Measurement(r, x0, y0, z0, vsound, -99, "Initial");
     }
 
@@ -152,9 +152,9 @@ public class InitialAlgorithm implements Calculator {
         double Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz;
         double r0i, r0j, r0k, r0l, r01, r02;//     sat. position, range:
         double x1, y1, z1, x2, y2, z2, e1, e2;//       xi, yi, zi, ri
-        //	  xj, yj, zj, rj
-        //	  xk, yk, zk, rk
-        //	  xl, yl, zl, rl (rel.)
+        // xj, yj, zj, rj
+        // xk, yk, zk, rk
+        // xl, yl, zl, rl (rel.)
 
         // in case of early error return, make it far away
         x0 = y0 = z0 = r0 = 9.9999999e99;
@@ -168,11 +168,11 @@ public class InitialAlgorithm implements Calculator {
             xik = xi - xk;
             yik = yi - yk;
             zik = zi - zk;
-            log.debug("xik=" + xik + " yik=" + yik);
+            log.debug("xik={} yik={}", xik, yik);
             xjk = xj - xk;
             yjk = yj - yk;
             zjk = zj - zk;
-            log.debug("xjk=" + xjk + " yjk=" + yjk);
+            log.debug("xjk={} yjk={}", xjk, yjk);
             Ci = (xi * xi - xk * xk + yi * yi - yk * yk + zi * zi - zk * zk - ri * ri + rk * rk) / 2;
             Cj = (xj * xj - xk * xk + yj * yj - yk * yk + zj * zj - zk * zk - rj * rj + rk * rk) / 2;
             Dz = xik * yjk - xjk * yik;
@@ -189,7 +189,7 @@ public class InitialAlgorithm implements Calculator {
                 Bx = (Ay * (yk - By) + Az * (zk - Bz) + xk) / Ax;
                 Cx = Bx * Bx - (By * By + Bz * Bz - 2 * yk * By - 2 * zk * Bz + yk * yk + zk * zk + xk * xk - rk * rk) / Ax;
                 if (Cx < 0.0) {
-                    log.warn("Cx is " + Cx + ", less than 0, in 3 sensor case");
+                    log.warn("Cx is {}, less than 0, in 3 sensor case", Cx);
                     return false;
                 }
                 x1 = Bx + Math.sqrt(Cx);
@@ -208,7 +208,7 @@ public class InitialAlgorithm implements Calculator {
                 By = (Az * (zk - Bz) + Ax * (xk - Bx) + yk) / Ay;
                 Cy = By * By - (Bz * Bz + Bx * Bx - 2 * zk * Bz - 2 * xk * Bx + zk * zk + xk * xk + yk * yk - rk * rk) / Ay;
                 if (Cy < 0.0) {
-                    log.warn("Cy is " + Cy + ", less than 0, in 3 sensor case");
+                    log.warn("Cy is {}, less than 0, in 3 sensor case", Cy);
                     return false;
                 }
                 y1 = By + Math.sqrt(Cy);
@@ -231,7 +231,7 @@ public class InitialAlgorithm implements Calculator {
                 Bz = (Ax * (xk - Bx) + Ay * (yk - By) + zk) / Az;
                 Cz = Bz * Bz - (Bx * Bx + By * By - 2 * xk * Bx - 2 * yk * By + xk * xk + yk * yk + zk * zk - rk * rk) / Az;
                 if (Cz < 0.0) {
-                    log.warn("Cz is " + Cz + ", less than 0, in 3 sensor case");
+                    log.warn("Cz is {}, less than 0, in 3 sensor case", Cz);
                     return false;
                 }
                 z1 = Bz + Math.sqrt(Cz);
@@ -240,8 +240,8 @@ public class InitialAlgorithm implements Calculator {
                 z2 = 2 * Bz - z1;
                 x2 = Ax * z2 + Bx;
                 y2 = Ay * z2 + By;
-                log.debug("x1 = " + x1);
-                log.debug("x2 = " + x2);
+                log.debug("x1 = {}", x1);
+                log.debug("x2 = {}", x2);
             }
         } else if (ngps == 4) {//  Solve with relative ranges
             xie = xi + 1e-9;
@@ -318,9 +318,9 @@ public class InitialAlgorithm implements Calculator {
             r01 = (r0i + r0j + r0k + r0l) / 4;
             e1 = Math.sqrt(((r0i - r01) * (r0i - r01) + (r0j - r01) * (r0j - r01)
                     + (r0k - r01) * (r0k - r01) + (r0l - r01) * (r0l - r01)) / 4);
-            log.debug("e1 = " + e1);
+            log.debug("e1 = {}", e1);
             if (e1 > 1e-4) {
-                x1 = y1 = z1 = r01 = 9.9999999e99;//	  solution 1 NG
+                x1 = y1 = z1 = r01 = 9.9999999e99; // solution 1 NG
             }
             r0i = Math.sqrt((xi - x2) * (xi - x2) + (yi - y2) * (yi - y2) + (zi - z2) * (zi - z2)) - ri;
             r0j = Math.sqrt((xj - x2) * (xj - x2) + (yj - y2) * (yj - y2) + (zj - z2) * (zj - z2)) - rj;
@@ -329,12 +329,12 @@ public class InitialAlgorithm implements Calculator {
             r02 = (r0i + r0j + r0k + r0l) / 4;
             e2 = Math.sqrt(((r0i - r02) * (r0i - r02) + (r0j - r02) * (r0j - r02)
                     + (r0k - r02) * (r0k - r02) + (r0l - r02) * (r0l - r02)) / 4);
-            log.debug("e2 = " + e2);
+            log.debug("e2 = {}", e2);
             if (e2 > 1e-4) {
-                x2 = y2 = z2 = r02 = 9.9999999e99; //	  solution 2 NG
+                x2 = y2 = z2 = r02 = 9.9999999e99; // solution 2 NG
             }
         } else { //   Invalid value of ngps
-            log.warn("ngps no good: " + ngps);
+            log.warn("ngps no good: {}", ngps);
             return false;
         }
 

@@ -19,7 +19,6 @@ public class LnTrafficControllerTest {
         Assert.assertNotNull("exists", memo.getLnTrafficController() );
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

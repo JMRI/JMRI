@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * ZTC640AdapterTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.ztc640.ZTC640Adapter class
+ * Test for the jmri.jmrix.lenz.ztc640.ZTC640Adapter class
  *
  * @author Paul Bender
  */

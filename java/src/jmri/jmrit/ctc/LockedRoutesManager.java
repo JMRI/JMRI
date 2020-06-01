@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LockedRoutesManager {
-    private final static Logger log = LoggerFactory.getLogger(TrafficLocking.class);
+    private final static Logger log = LoggerFactory.getLogger(LockedRoutesManager.class);
     private final ArrayList<LockedRoute> _mArrayListOfLockedRoutes = new ArrayList<>();
 
 
@@ -22,23 +22,38 @@ public class LockedRoutesManager {
         _mArrayListOfLockedRoutes.clear();
     }
 
-/**
- * Call this routine with a set of resources that need to be checked against
- * the presently allocated resources.  ONLY A CHECK IS DONE.  No resources
- * are modified!  Typically used for a O.S. section turnout check.  Get the
- * primary O.S. sensor associated with the turnout, and pass it as the only
- * entry in "sensors".  Returns true if there is no overlap of resources, else returns false.
- */
+    /**
+     * Call this routine with a set of resources that need to be checked against
+     * the presently allocated resources.
+     * <p>
+     * ONLY A CHECK IS DONE.
+     * No resources are modified!
+     * <p>
+     * Typically used for a O.S. section turnout check.
+     * Get the primary O.S. sensor associated with the turnout, and pass it as 
+     * the only entry in "sensors".  
+     * @param sensors set of sensors.
+     * @param osSectionDescription section description.
+     * @param ruleDescription rule description.
+     * @return true if there is no overlap of resources, else returns false.
+     */
     public boolean checkRoute(HashSet<Sensor> sensors, String osSectionDescription, String ruleDescription) {
         return privateCheckRoute(sensors, osSectionDescription, ruleDescription) != null;
     }
 
-/**
- * Call this routine with a set of resources that need to be checked against
- * the presently allocated resources.  If there is no overlap, then add the
- * set to the presently allocated resources and return the LockedRoute object.
- * If not, modify nothing and return null.
- */
+    /**
+     * Call this routine with a set of resources that need to be checked against
+     * the presently allocated resources.
+     * <p>
+     * If there is no overlap, then add the
+     * set to the presently allocated resources and return the LockedRoute object.
+     * If there is overlap, modify nothing and return null.
+     * 
+     * @param sensors set of sensors.
+     * @param osSectionDescription section description.
+     * @param ruleDescription rule description.
+     * @return locked route if success, null if failed.
+     */
     public LockedRoute checkRouteAndAllocateIfAvailable(HashSet<Sensor> sensors, String osSectionDescription, String ruleDescription) {
         LockedRoute newLockedRoute = privateCheckRoute(sensors, osSectionDescription, ruleDescription);
         if (newLockedRoute == null) return null;

@@ -12,7 +12,7 @@ import org.junit.*;
 /**
  * Tests for the Path class
  *
- * @author	Bob Jacobsen Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2016
  */
 public class ConditionalVariableTest {
 
@@ -940,7 +940,6 @@ public class ConditionalVariableTest {
 
     // from here down is testing infrastructure
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -957,6 +956,7 @@ public class ConditionalVariableTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

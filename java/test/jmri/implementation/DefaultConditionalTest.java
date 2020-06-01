@@ -802,7 +802,6 @@ public class DefaultConditionalTest {
     
     // from here down is testing infrastructure
 
-    // The minimal setup for log4J
     @Before
     public void setUp(){
         JUnitUtil.setUp();
@@ -818,6 +817,7 @@ public class DefaultConditionalTest {
     @After
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

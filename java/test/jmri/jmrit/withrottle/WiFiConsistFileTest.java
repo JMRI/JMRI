@@ -9,7 +9,7 @@ import org.junit.*;
 /**
  * Test simple functioning of WiFiConsistFile
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class WiFiConsistFileTest {
 

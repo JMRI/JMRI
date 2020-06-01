@@ -1,13 +1,17 @@
 package jmri;
 
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
+import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
@@ -36,7 +40,17 @@ import jmri.managers.AbstractManager;
 public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, InstanceManagerAutoDefault {
 
     private final String powerManagerChangeName;
-
+    public final ShutDownTask shutDownTask = new AbstractShutDownTask("Writing Blocks") {
+        @Override
+        public void run() {
+            try {
+                new BlockValueFile().writeBlockValues();
+            } catch (IOException ex) {
+                log.error("Exception writing blocks", ex);
+            }
+        }
+    };
+    
     public BlockManager() {
         super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
@@ -44,6 +58,12 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         InstanceManager.getList(PowerManager.class).forEach(pm -> pm.addPropertyChangeListener(this));
         powerManagerChangeName = InstanceManager.getListPropertyName(PowerManager.class);
         InstanceManager.addPropertyChangeListener(this);
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
+    }
+
+    @Override
+    public void dispose() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
 
     @Override
@@ -273,7 +293,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
                 if (pm.getPower() == jmri.PowerManager.ON) {
                     lastTimeLayoutPowerOn = Instant.now();
                 }
-            } catch (JmriException | NoSuchMethodError xe) {
+            } catch (NoSuchMethodError xe) {
                 // do nothing
             }
         }

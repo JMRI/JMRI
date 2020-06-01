@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.util.BitSet;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetConstants;
@@ -58,6 +59,17 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private int momentaryGroup4 = 0;
     private int momentaryGroup5 = 0;
     
+    /**
+     * Accessory state cache. A "1" bit means THROWN, "0" means
+     * CLOSED. 
+     */
+    private final BitSet accessoryState = new BitSet(1024);
+    
+    /**
+     * Bit is set if the accessory was operated.
+     */
+    private final BitSet accessoryOperated = new BitSet(1024);
+
     public XNetSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
         try {
@@ -117,6 +129,10 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     public void configure() {
         // connect to a packetizing traffic controller
         XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
+        configure(packets);
+    }
+    
+    protected void configure(XNetTrafficController packets) {
         packets.connectPort(this);
 
         // start operation
@@ -309,6 +325,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 // LZ100 and LZV100 respond with an ACC_INFO_RESPONSE.
                 // but XpressNet standard says to no response (which causes
                 // the interface to send an OK reply).
+                reply = accReqReply(m);
+                break;
             case XNetConstants.ACC_INFO_REQ:
                 reply = accInfoReply(m);
                 break;
@@ -458,32 +476,143 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         return reply;
     }
 
-    // Create a reply to a request for the accessory device Status
-    private XNetReply accInfoReply(XNetMessage m) {
-        XNetReply reply = new XNetReply();
-        reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
-        reply.setElement(1, m.getElement(1));
-           if (m.getOpCode() == XNetConstants.ACC_OPER_REQ || 
-               m.getElement(1) < 64) {
-              // treat as turnout feedback request.
-              if (m.getElement(2) == 0x80) {
-                 reply.setElement(2, 0x00);
-              } else {
-                 reply.setElement(2, 0x10);
-              }
-           } else {
-              // treat as feedback encoder request.
-              if (m.getElement(2) == 0x80) {
-                 reply.setElement(2, 0x40);
-              } else {
-                 reply.setElement(2, 0x50);
-              }
-           }
-           reply.setElement(3, 0x00);
-           reply.setParity();
-        return reply;
+    /**
+     * Return the turnout feedback type.
+     * <ul>
+     * <li>0x00 - turnout without feedback, ie DR5000
+     * <li>0x01 - turnout with feedback, ie NanoX
+     * <li>0x10 - feedback module
+     * </ul>
+     * @return the turnout type reported by this station.
+     */
+    protected int getTurnoutFeedbackType() {
+        return 0x01;
+    }
+    
+    /**
+     * Returns accessory state, in the Operation Info Reply bit format. If the
+     * accessory has not been operated yet, returns 00 (not operated).
+     * 
+     * @param a accessory number
+     * @return two bits representing the accessory state.
+     */
+    protected int getAccessoryStateBits(int a) {
+        if (!accessoryOperated.get(a)) {
+            return 0x00;
+        }
+        boolean state = accessoryState.get(a);
+        int zbits = state ? 0b10 : 0b01;
+        return zbits;
     }
 
+    protected XNetReply accInfoReply(XNetMessage m) {
+        if (m.getElement(1) >= 64) {
+            return feedbackInfoReply(m);
+        } else {
+            boolean nibble = (m.getElement(2) & 0x01) == 0x01;
+            int ba = m.getElement(1);
+            return accInfoReply(ba, nibble);
+        }
+    }
+    
+    protected XNetReply feedbackInfoReply(XNetMessage m) {
+        XNetReply reply = new XNetReply();
+       reply.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
+        reply.setElement(1, m.getElement(1));
+        // treat as feedback encoder request.
+        if (m.getElement(2) == 0x80) {
+            reply.setElement(2, 0x40);
+        } else {
+            reply.setElement(2, 0x50);
+        }
+       reply.setElement(3, 0x00);
+       reply.setParity();
+       return reply;
+    }
+
+    /**
+     * Creates a reply packet for a turnout/accessory.
+     * @param baseAddress base address for the feedback, the 4-turnout block; numbered from 0
+     * @param nibble lower or upper nibble (2 turnout block) delivered in the reply
+     * @return constructed reply.
+     */
+    protected XNetReply accInfoReply(int baseAddress, boolean nibble) {
+        XNetReply r = new XNetReply();
+        r.setOpCode(XNetConstants.ACC_INFO_RESPONSE);
+        r.setElement(1, baseAddress);
+        int nibbleVal = 0;
+        int a = baseAddress * 4 + 1;
+        if (nibble) {
+            a += 2;
+        }
+        int zbits = getAccessoryStateBits(a++);
+        nibbleVal |= zbits;
+        zbits = getAccessoryStateBits(a++);
+        nibbleVal |= (zbits << 2);
+        r.setElement(2, // 0 << 7 |          // turnout movement completed, unsupported; always done
+            getTurnoutFeedbackType() << 5 | // two bits: accessory without feedback
+            (nibble ? 1 : 0) << 4 |         // upper / lower nibble
+            nibbleVal & 0x0f);
+        r.setElement(3, 0);
+        r.setParity();
+        return r;
+    }
+    
+    /**
+     * Generate reply to accessory request command.
+     * The returned XNetReply is the first to be returned by this simulated command station.
+     * @param address the accessory address
+     * @param output the output to be manipulated
+     * @param state true if output should be on, false for off
+     * @param previousAccessoryState the previous accessory state
+     * @return the reply instance.
+     */
+    protected XNetReply generateAccRequestReply(int address, int output, boolean state, boolean previousAccessoryState) {
+        XNetReply r;
+
+        if (state) {
+            if (accessoryOperated.get(address) && previousAccessoryState == (output != 0)) {
+                // just OK, the accessory is in the same state.
+                return okReply();
+            } else {
+                accessoryOperated.set(address);
+                r = accInfoReply(address);
+                r.setUnsolicited();
+            }
+        } else {
+            accessoryOperated.set(address);
+            // generate just OK to OFF
+            r = okReply();
+        }
+        return r;
+    }
+
+    /**
+     * Creates a reply for the specific turnout dcc address. 
+     * @param dccTurnoutAddress the turnout address
+     * @return a reply packet
+     */
+    protected XNetReply accInfoReply(int dccTurnoutAddress) {
+        dccTurnoutAddress--;
+        int baseAddress = dccTurnoutAddress / 4;
+        boolean upperNibble = dccTurnoutAddress % 4 >= 2;
+        return accInfoReply(baseAddress, upperNibble);
+    }
+
+    protected XNetReply accReqReply(XNetMessage m) {
+        int baseaddress = m.getElement(1);
+        int subaddress = (m.getElement(2) & 0x06) >> 1;
+        int address = (baseaddress * 4) + subaddress + 1;
+        int output = m.getElement(2) & 0x01;
+        boolean on = ((m.getElement(2) & 0x08)) == 0x08;
+        boolean oldState = accessoryState.get(address);
+        if (on) {
+            accessoryState.set(address, output != 0);
+        }
+        log.debug("Received command {} ... {}", m, m.toMonitorString());
+        return generateAccRequestReply(address, output, on, oldState);
+    }
+    
     private void writeReply(XNetReply r) {
         int i;
         int len = (r.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
@@ -508,7 +637,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * @return filled message
      * @throws IOException when presented by the input source.
      */
-    private XNetMessage loadChars() throws java.io.IOException {
+    protected XNetMessage loadChars() throws java.io.IOException {
         int i;
         byte char1;
         char1 = readByteProtected(inpipe);
@@ -529,6 +658,9 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
      * repeated to get the next real character.
+     * @param istream the input data source
+     * @return the next byte, waiting for it to become available
+     * @throws java.io.IOException from the underlying operations
      */
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
         byte[] rcvBuffer = new byte[1];

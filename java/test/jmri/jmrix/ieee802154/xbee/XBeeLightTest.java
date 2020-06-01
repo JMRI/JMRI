@@ -8,9 +8,9 @@ import org.junit.Test;
 /**
  * XBeeLightTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeLight class
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeLight class
  *
- * @author	Paul Bender copyright (C) 2012,2016
+ * @author Paul Bender copyright (C) 2012,2016
  */
 public class XBeeLightTest {
 
@@ -35,7 +35,6 @@ public class XBeeLightTest {
         Assert.assertNotNull("exists", s);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

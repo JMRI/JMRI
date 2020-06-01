@@ -50,6 +50,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
      * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
+     * @param s Action title string.
      */
     public EcosLocoTableAction(String s) {
         super(s);
@@ -191,7 +192,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
                         if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
                             JOptionPane.showMessageDialog(f,
                                     Bundle.getMessage("EcosEditAssignedDialog", ecosObjectNo));
-                            log.error(ecosObjectNo + " This roster entry already has an ECoS loco assigned to it");
+                            log.error("{} This roster entry already has an ECoS loco assigned to it", ecosObjectNo);
                             return;
                         }
                         String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();

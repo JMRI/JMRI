@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * VirtualSignalHeadXmlTest.java
  *
- * Description: tests for the VirtualSignalHeadXml class
+ * Test for the VirtualSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class VirtualSignalHeadXmlTest {
       Assert.assertNotNull("VirtualSignalHeadXml constructor",new VirtualSignalHeadXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

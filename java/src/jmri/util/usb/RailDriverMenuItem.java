@@ -111,15 +111,7 @@ public class RailDriverMenuItem extends JMenuItem
             //
             if (!invokeOnMenuOnly) {
                 // start the HID services
-                InstanceManager.getDefault(ShutDownManager.class)
-                        .register(new AbstractShutDownTask("RailDriverMenuItem shutdown HID") {
-                            // if we're going to start, we have to also stop
-                            @Override
-                            public boolean execute() {
-                                hidServices.stop();
-                                return true;
-                            }
-                        });
+                InstanceManager.getDefault(ShutDownManager.class).register(hidServices::stop);
                 log.debug("Starting HID services.");
                 hidServices.start();
 
@@ -204,14 +196,14 @@ public class RailDriverMenuItem extends JMenuItem
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    byte[] buff_old = new byte[14];	// read buffer
+                    byte[] buff_old = new byte[14]; // read buffer
                     Arrays.fill(buff_old, (byte) 0);
 
                     while (!thread.isInterrupted()) {
                         if (!hidDevice.isOpen()) {
                             hidDevice.open();
                         }
-                        byte[] buff_new = new byte[14];	// read buffer
+                        byte[] buff_new = new byte[14]; // read buffer
                         int ret = hidDevice.read(buff_new);
                         if (ret >= 0) {
                             //log.debug("hidDevice.read: {}", buff_new);
@@ -343,7 +335,7 @@ public class RailDriverMenuItem extends JMenuItem
         try {
             TimeUnit.MILLISECONDS.sleep((long) (delay * 1000.0));
         } catch (InterruptedException ex) {
-            log.debug("TimeUnit.sleep InterruptedException: " + ex);
+            log.debug("TimeUnit.sleep InterruptedException: {}", ex);
         }
     }
 
@@ -351,8 +343,8 @@ public class RailDriverMenuItem extends JMenuItem
     // constants used to talk to RailDriver
     //
     // these are the report ID's
-    private final byte LEDCommand = (byte) 134;			// Command code to set the LEDs.
-    private final byte SpeakerCommand = (byte) 133;		// Command code to set the speaker state.
+    private final byte LEDCommand = (byte) 134; // Command code to set the LEDs.
+    private final byte SpeakerCommand = (byte) 133; // Command code to set the speaker state.
 
     // Seven segment lookup table for digits ('0' thru '9')
     private final byte SevenSegment[] = {
@@ -377,7 +369,7 @@ public class RailDriverMenuItem extends JMenuItem
 
     // Set the LEDS.
     public void setLEDs(@Nonnull String ledstring) {
-        byte[] buff = new byte[7];	// Segment buffer.
+        byte[] buff = new byte[7]; // Segment buffer.
         Arrays.fill(buff, (byte) 0);
 
         int outIdx = 2;
@@ -423,7 +415,7 @@ public class RailDriverMenuItem extends JMenuItem
     }   // setLEDs
 
     public void setSpeakerOn(boolean onFlag) {
-        byte[] buff = new byte[7];	// data buffer
+        byte[] buff = new byte[7]; // data buffer
         Arrays.fill(buff, (byte) 0);
 
         buff[5] = (byte) (onFlag ? 1 : 0);      // On / off
@@ -462,7 +454,7 @@ public class RailDriverMenuItem extends JMenuItem
                 log.error("hidDevice.write error: {}", hidDevice.getLastErrorMessage());
             }
         } catch (IllegalStateException ex) {
-            log.error("hidDevice.write Exception : " + ex);
+            log.error("hidDevice.write Exception : {}", ex);
         }
     }
 
@@ -641,7 +633,7 @@ public class RailDriverMenuItem extends JMenuItem
                 // switch, this is also an analog input w/detents, not a switch!
                 // Small values (much less than 0.5) are off, values near 0.5 are
                 // slow, and larger values are full.
-                log.info("WIPER value: " + value);
+                log.info("WIPER value: {}", value);
             } else {
                 log.info("FUNCTION {} value: {}", oldValue, value);
                 if (functionPanel != null) {
@@ -727,14 +719,14 @@ public class RailDriverMenuItem extends JMenuItem
                         case 34: {  // Gear Shift Up
                             if (isDown) {
                                 // shuntFn
-                                functionButtons[3].changeState(false);
+                                functionButtons[3].setSelected(false);
                             }
                             break;
                         }
                         case 35: {  // Gear Shift Down
                             if (isDown) {
                                 // shuntFn
-                                functionButtons[3].changeState(true);
+                                functionButtons[3].setSelected(true);
                             }
                             break;
                         }
@@ -784,10 +776,10 @@ public class RailDriverMenuItem extends JMenuItem
                         if (button != null) {
                             if (button.getIsLockable()) {
                                 if (isDown) {
-                                    button.changeState(!button.getState());
+                                    button.setSelected(!button.getState());
                                 }
                             } else {
-                                button.changeState(isDown);
+                                button.setSelected(isDown);
                             }
                         }
                     }

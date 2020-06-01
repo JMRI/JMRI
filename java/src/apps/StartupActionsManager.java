@@ -1,8 +1,8 @@
 package apps;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import apps.startup.StartupActionModelUtil;
-import apps.startup.StartupModel;
+import jmri.util.startup.StartupModel;
 import apps.startup.StartupModelFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,6 @@ import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.implementation.FileLocationsPreferences;
@@ -64,7 +63,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
      * <p>
      * Loads the startup action preferences and, if all required managers have
      * initialized without exceptions, performs those actions. Startup actions
-     * are only performed if {@link apps.startup.StartupModel#isValid()} is true
+     * are only performed if {@link StartupModel#isValid()} is true
      * for the action. It is assumed that the action has retained an Exception
      * that can be used to explain why isValid() is false.
      */
@@ -116,10 +115,10 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                 log.debug("No element to read");
             }
             if (perform) {
-                this.actions.stream().filter((action) -> (action.isValid())).forEachOrdered((action) -> {
+                this.actions.stream().filter(action -> action.isValid()).forEachOrdered(action -> {
                     try {
                         action.performAction();
-                    } catch (JmriException ex) {
+                    } catch (Exception ex) {
                         this.addInitializationException(profile, ex);
                     }
                 });
@@ -193,7 +192,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * Insert a {@link apps.startup.StartupModel} at the given position.
+     * Insert a {@link jmri.util.startup.StartupModel} at the given position.
      * Triggers an {@link java.beans.IndexedPropertyChangeEvent} where the old
      * value is null and the new value is the inserted model.
      *
@@ -215,7 +214,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * Move a {@link apps.startup.StartupModel} from position start to position
+     * Move a {@link jmri.util.startup.StartupModel} from position start to position
      * end. Triggers an {@link java.beans.IndexedPropertyChangeEvent} where the
      * index is end, the old value is start and the new value is the moved
      * model.
@@ -235,7 +234,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * Remove a {@link apps.startup.StartupModel}. Triggers an
+     * Remove a {@link jmri.util.startup.StartupModel}. Triggers an
      * {@link java.beans.IndexedPropertyChangeEvent} where the index is the
      * position of the removed model, the old value is the model, and the new
      * value is null.

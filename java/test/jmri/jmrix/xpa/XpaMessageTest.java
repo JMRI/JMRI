@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * XpaMessageTest.java
  *
- * Description: tests for the jmri.jmrix.xpa.XpaMessage class
+ * Test for the jmri.jmrix.xpa.XpaMessage class
  *
  * @author Paul Bender
  */

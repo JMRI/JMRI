@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of MultiIconEditor
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class MultiIconEditorTest {
 
@@ -33,5 +33,5 @@ public class MultiIconEditorTest {
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(MultiIconEditorTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MultiIconEditorTest.class);
 }

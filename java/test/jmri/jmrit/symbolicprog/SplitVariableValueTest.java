@@ -1,5 +1,7 @@
 package jmri.jmrit.symbolicprog;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,7 +114,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueRead() {
-    }	// due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of SplitAddr
 
     @Override
     @Test
@@ -165,9 +167,11 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                 "VVVVVVVV", 0, 255, v, null, null,
                 highCV, 1, 0, "VVVVVVVV", null, null, null, null);
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("1029");  // to tell if changed
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        var.focusLost(focusEvent);
         Assert.assertEquals("set var full value", "" + (1029), ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set var low bits", 5, cv1.getValue());
         Assert.assertEquals("set var high bits", 4, cv2.getValue());
@@ -193,9 +197,11 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                 "XXXXVVVV", 0, 255, v, null, null,
                 highCV, 1, 0, "VVVVVVVV", null, null, null, null);
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("1029");  // to tell if changed
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        var.focusLost(focusEvent);
         Assert.assertEquals("set var full value", "" + (1029), ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set var low bits", 0xF5, cv1.getValue());
         Assert.assertEquals("set var high bits", 4 * 16, cv2.getValue());
@@ -221,9 +227,11 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                 "VVVVVVVV", 0, 255, v, null, null,
                 highCV, 1, 0, "XXVVVVXX", null, null, null, null);
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("1029");  // to tell if changed
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        var.focusLost(focusEvent);
         Assert.assertEquals("set var full value", "" + (1029), ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set var low bits", 5, cv1.getValue());
         Assert.assertEquals("set var high bits", 0xC3 + 4 * 4, cv2.getValue());
@@ -249,9 +257,11 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false, lowCV,
                 "XVVVVVVX", 0, 255, v, null, null,
                 highCV, 1, 0, "XVVVVVXX", null, null, null, null);
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("1029");  // to tell if changed
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        var.focusLost(focusEvent);
         Assert.assertEquals("set var full value", "" + (1029), ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set var low bits", 5 * 2 + 0x81, cv1.getValue());
         Assert.assertEquals("set var high bits", 0x83 + 0x40, cv2.getValue());
@@ -292,10 +302,12 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         };
         evtList = new ArrayList<>();
         var.addPropertyChangeListener(listen);
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
 
         // set to specific value
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("5");
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        var.focusLost(focusEvent);
 
         // read should get 123, 123 from CVs
         var.readAll();
@@ -333,8 +345,11 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         SplitVariableValue var = new SplitVariableValue("name", "comment", "", false, false, false, false,
                 lowCV, "XXVVVVVV", 0, 255, v, null, null,
                 highCV, 1, 0, "VVVVVVVV", null, null, null, null);
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
+
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("4797");
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        var.focusLost(focusEvent);
 
         var.writeAll();
         // wait for reply (normally, done by callback; will check that later)
@@ -381,6 +396,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
                 highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         Assert.assertNotNull("makeVar returned null", var);
 
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
         CvValue[] cv = var.usesCVs();
 
         Assert.assertEquals("number of CVs is", 8, cv.length);
@@ -395,8 +411,9 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("cv[7] is", "282", cv[7].number());
 
         // start with a random value
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("2144498191");
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        var.focusLost(focusEvent);
         Assert.assertEquals("set var text value", "2144498191", ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
         Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
@@ -408,8 +425,9 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
 
         // change to maximum unsigned value
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("18446744073709551615");
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        var.focusLost(focusEvent);
         Assert.assertEquals("set var text value", "18446744073709551615", ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set CV" + cv[0].number(), 0xFF, cv[0].getValue());
         Assert.assertEquals("set CV" + cv[1].number(), 0xFF, cv[1].getValue());
@@ -421,8 +439,9 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("set CV" + cv[7].number(), 0xFF, cv[7].getValue());
 
         // change to one less than maximum unsigned value
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("18446744073709551614");
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        var.focusLost(focusEvent);
         Assert.assertEquals("set var text value", "18446744073709551614", ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set CV" + cv[0].number(), 0xFE, cv[0].getValue());
         Assert.assertEquals("set CV" + cv[1].number(), 0xFF, cv[1].getValue());
@@ -434,8 +453,9 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("set CV" + cv[7].number(), 0xFF, cv[7].getValue());
 
         // change to last 63 bit unsigned value
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("9223372036854775807");
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        var.focusLost(focusEvent);
         Assert.assertEquals("set var text value", "9223372036854775807", ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set CV" + cv[0].number(), 0xFF, cv[0].getValue());
         Assert.assertEquals("set CV" + cv[1].number(), 0xFF, cv[1].getValue());
@@ -447,8 +467,9 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("set CV" + cv[7].number(), 0x7F, cv[7].getValue());
 
         // change to first 64 bit unsigned value
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText("9223372036854775808");
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        var.focusLost(focusEvent);
         Assert.assertEquals("set var text value", "9223372036854775808", ((JTextField) var.getCommonRep()).getText());
         Assert.assertEquals("set CV" + cv[0].number(), 0x00, cv[0].getValue());
         Assert.assertEquals("set CV" + cv[1].number(), 0x00, cv[1].getValue());
@@ -599,6 +620,189 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
         Assert.assertEquals("set CV" + cv[7].number(), 0x80, cv[7].getValue());
         Assert.assertEquals("set var text value", "9223372036854775808", ((JTextField) var.getCommonRep()).getText());
+
+    }
+
+    @Test
+    public void testTextInvalidLongValEnteredFocusLost() {
+        String name = "Decimal Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "275:8";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = "";
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String extra1 = "upper";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
+        CvValue[] cv = var.usesCVs();
+
+        Assert.assertEquals("number of CVs is", 8, cv.length);
+
+        Assert.assertEquals("cv[0] is", "275", cv[0].number());
+        Assert.assertEquals("cv[1] is", "276", cv[1].number());
+        Assert.assertEquals("cv[2] is", "277", cv[2].number());
+        Assert.assertEquals("cv[3] is", "278", cv[3].number());
+        Assert.assertEquals("cv[4] is", "279", cv[4].number());
+        Assert.assertEquals("cv[5] is", "280", cv[5].number());
+        Assert.assertEquals("cv[6] is", "281", cv[6].number());
+        Assert.assertEquals("cv[7] is", "282", cv[7].number());
+
+        // start with a random value
+        var.focusGained(focusEvent);
+        ((JTextField) var.getCommonRep()).setText("2144498191");
+        var.focusLost(focusEvent);
+        Assert.assertEquals("set var text value", "2144498191", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x7F, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
+
+        // change text to an invalid long value
+        var.focusGained(focusEvent);
+        ((JTextField) var.getCommonRep()).setText("184467F4079551615");
+        var.focusLost(focusEvent);
+        // ensure original text restored and value unchanged
+        Assert.assertEquals("set var text value", "2144498191", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x7F, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
+
+        // change text to another invalid long value
+        var.focusGained(focusEvent);
+        ((JTextField) var.getCommonRep()).setText("3G");
+        var.focusLost(focusEvent);
+        // ensure original text restored and value unchanged
+        Assert.assertEquals("set var text value", "2144498191", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x7F, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
+
+    }
+
+    @Test
+    public void testTextInvalidLongValEnteredActionPerformed() {
+        String name = "Decimal Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "275:8";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = "";
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String extra1 = "upper";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        ActionEvent actionEvent = new ActionEvent(var.getCommonRep(), 0, name);
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
+        CvValue[] cv = var.usesCVs();
+
+        Assert.assertEquals("number of CVs is", 8, cv.length);
+
+        Assert.assertEquals("cv[0] is", "275", cv[0].number());
+        Assert.assertEquals("cv[1] is", "276", cv[1].number());
+        Assert.assertEquals("cv[2] is", "277", cv[2].number());
+        Assert.assertEquals("cv[3] is", "278", cv[3].number());
+        Assert.assertEquals("cv[4] is", "279", cv[4].number());
+        Assert.assertEquals("cv[5] is", "280", cv[5].number());
+        Assert.assertEquals("cv[6] is", "281", cv[6].number());
+        Assert.assertEquals("cv[7] is", "282", cv[7].number());
+
+        // start with a random value
+        var.focusGained(focusEvent);
+        ((JTextField) var.getCommonRep()).setText("2144498191");
+        var.actionPerformed(actionEvent);
+        Assert.assertEquals("set var text value", "2144498191", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x7F, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
+
+        // change text to an invalid long value
+        var.focusGained(focusEvent);
+        ((JTextField) var.getCommonRep()).setText("184467F4079551615");
+        var.actionPerformed(actionEvent);
+        // ensure original text restored and value unchanged
+        Assert.assertEquals("set var text value", "2144498191", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x7F, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
+
+        // change text to another invalid long value
+        var.focusGained(focusEvent);
+        ((JTextField) var.getCommonRep()).setText("3G");
+        var.actionPerformed(actionEvent);
+        // ensure original text restored and value unchanged
+        Assert.assertEquals("set var text value", "2144498191", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0x7F, cv[3].getValue());
+        Assert.assertEquals("set CV" + cv[4].number(), 0x00, cv[4].getValue());
+        Assert.assertEquals("set CV" + cv[5].number(), 0x00, cv[5].getValue());
+        Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
+        Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
 
     }
 

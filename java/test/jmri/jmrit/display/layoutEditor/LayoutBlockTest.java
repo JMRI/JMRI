@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of LayoutBlock
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LayoutBlockTest {
 
@@ -125,7 +125,8 @@ public class LayoutBlockTest {
     @After
     public void tearDown() throws Exception {
         layoutBlock = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutBlockTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockTest.class);
 }

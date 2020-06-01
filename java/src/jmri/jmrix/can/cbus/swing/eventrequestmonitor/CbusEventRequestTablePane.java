@@ -132,7 +132,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
         }
                 
         eventModel.addTableModelListener(this);
-        	
+        
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        
         // main pane

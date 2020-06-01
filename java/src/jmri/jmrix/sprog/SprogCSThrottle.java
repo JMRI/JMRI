@@ -14,12 +14,14 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets
  *
- * @author	Andrew Crosland Copyright (C) 2006, 2012
+ * @author Andrew Crosland Copyright (C) 2006, 2012
  */
 public class SprogCSThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param memo system connection.
+     * @param address Loco Address.
      */
     public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address) {
         super(memo);

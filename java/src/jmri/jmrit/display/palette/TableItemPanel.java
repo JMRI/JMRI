@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -109,21 +108,13 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
 
         JPanel panel = new JPanel();
         _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
-        _addTableButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                makeAddToTableWindow();
-            }
-        });
+        _addTableButton.addActionListener(a -> makeAddToTableWindow());
         _addTableButton.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
         panel.add(_addTableButton);
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
-        clearSelectionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                _table.clearSelection();
-                hideIcons();
-            }
+        clearSelectionButton.addActionListener(a -> {
+            _table.clearSelection();
+            hideIcons();
         });
         clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
@@ -137,10 +128,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
     protected void makeAddToTableWindow() {
         _addTableDialog = new JDialog(_frame, Bundle.getMessage("AddToTableTitle"), true);
 
-        ActionListener cancelListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) { cancelPressed(e); }
-        };
+        ActionListener cancelListener = this::cancelPressed;
         ActionListener okListener = new ActionListener() {
             /** {@inheritDoc} */
             @Override
@@ -307,9 +295,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                 if (_itemType.equals("Turnout")) {
                     TurnoutIcon t = new TurnoutIcon(editor);
                     t.setTurnout(bean.getDisplayName());
-                    Iterator<Entry<String, NamedIcon>> iter = iMap.entrySet().iterator();
-                    while (iter.hasNext()) {
-                        Entry<String, NamedIcon> ent = iter.next();
+                    for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
                         t.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
                     }
                     t.setFamily(_family);
@@ -318,9 +304,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                 } else if (_itemType.equals("Sensor")) {
                     SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                             "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
-                    Iterator<Entry<String, NamedIcon>> iter = iMap.entrySet().iterator();
-                    while (iter.hasNext()) {
-                        Entry<String, NamedIcon> ent = iter.next();
+                    for (Entry<String, NamedIcon> ent : iMap.entrySet()) {
                         s.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
                     }
                     s.setSensor(bean.getDisplayName());

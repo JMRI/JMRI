@@ -89,6 +89,13 @@
         information on them can be found on <a href=
         "https://docs.oracle.com/javase/tutorial/java/generics/">
         this page</a> from the Java Tutorial.</li>
+        
+        <li>Enums, added in Java 5, are a better way of representing
+        N selections than using integer constants.  The entire idea is to
+        <u>not</u> have them be just another form of Integer or String, so don't provide
+        methods to convert them from or to Integer (int) or String.  If you need to
+        provide an ordering or comparison, add a public method to the enum to do that; it can work 
+        with the internal structure of the enum without exposing it.
 
         <li>If you need to use comma-separated variable (CSV)
         files, please use the <a href="https://commons.apache.org/proper/commons-csv/">Apache Commons CSV API</a> if
@@ -98,6 +105,17 @@
         <a href="http://opencsv.sourceforge.net/">opencsv API</a>, 
         but since we only want to use one, the
         conversion will be a lot of work.</li>
+        
+        <li>We currently don't use the Java <code>assert</code> keyword in our production
+        code. (We use the 
+        <a href="JUnit.shtml">JUnit Assert in testing</a>, but that's different).
+        We may use it in the future, but for now please 
+        <a href="Logging.shtml">log a message at the Error level</a> 
+        if you encounter an internal consistency problem during normal 
+        operation; if there's no way to continue, 
+        <code>throw new AssertionError("description");</code> as that's 
+        a step toward our eventually figuring out how to use Java
+        assertions in such cases.
       </ul>
 
       <a id="collections" name="collections"></a>
@@ -138,7 +156,7 @@
             <a href="http://www.jmri.org/JavaDoc/doc/jmri/util/com/dictiography/collections/IndexedTreeMap.html">IndexedTreeMap</a>
         </ul>
 
-      <h2>Code Format</h2>The <a href=
+      <h2><a id="format" name="format">Code Format</a></h2>The <a href=
       "http://www.oracle.com/technetwork/java/codeconventions-150003.pdf">
       Java Code Conventions</a> (if that link is broken, try
       <a href=
@@ -165,7 +183,7 @@
       a while, marking it as "deprecated" so that people can
       discover that it will eventually go away. 
       (The current list of those is available as
-      <a href="http://jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>)
+      <a href="https://jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>)
       The sequence is then:
       <ul>
         <li>Write the new methods.
@@ -293,7 +311,7 @@ This is an example of two problems:
 
 Let's discuss those separately:
 
-<h3>Catching the Exception class</h3>
+<h3><a id="catch" name="catch">Catching the Exception class</a></h3>
 
 There are two subcases here:
 <ul>
@@ -323,7 +341,7 @@ so the clean way to do this is to catch that:
 </pre>
 </ul>
 
-<h3>Empty catch block</h3>
+<h3><a id="empty" name="empty">Empty catch block</a></h3>
 
 What's an empty <code>catch</code> block trying to say?
 

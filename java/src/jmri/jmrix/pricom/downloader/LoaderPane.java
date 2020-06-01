@@ -24,7 +24,7 @@ import purejavacomm.*;
 /**
  * Pane for downloading software updates to PRICOM products
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -75,7 +75,7 @@ public class LoaderPane extends javax.swing.JPanel {
                     //} catch (jmri.jmrix.SerialConfigException ex) {
                     //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port. Did you select the right one?\n" + ex);
+                    log.error("Error while opening port. Did you select the right one?\n{}", ex);
                 }
             }
         });
@@ -104,6 +104,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Open button has been pushed, create the actual display connection
+     * @param e Event from pressed button
      */
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
@@ -147,7 +148,7 @@ public class LoaderPane extends javax.swing.JPanel {
             byte endbyte = 0x03;
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: " + e);
+            log.error("Exception on output: {}", e);
         }
     }
 
@@ -170,13 +171,13 @@ public class LoaderPane extends javax.swing.JPanel {
             try {
                 nibbleIncomingData();            // remove any pending chars in queue
             } catch (java.io.IOException e) {
-                log.warn("nibble: Exception: " + e.toString());
+                log.warn("nibble: Exception: {}", e.toString());
             }
             while (true) {   // loop permanently, stream close will exit via exception
                 try {
                     handleIncomingData();
                 } catch (java.io.IOException e) {
-                    log.warn("run: Exception: " + e.toString());
+                    log.warn("run: Exception: {}", e.toString());
                 }
             }
         }
@@ -241,6 +242,8 @@ public class LoaderPane extends javax.swing.JPanel {
 
         /**
          * Send the next message of the download.
+         * @param buffer holds message to be sent
+         * @param length length of message within buffer
          */
         void nextMessage(byte[] buffer, int length) {
 
@@ -430,8 +433,8 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true); // pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
@@ -454,14 +457,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             //opened = true;
@@ -565,7 +561,7 @@ public class LoaderPane extends javax.swing.JPanel {
         try {
             pdiFile.open();
         } catch (IOException e) {
-            log.error("Error opening file: " + e);
+            log.error("Error opening file: {}", e);
         }
 
         comment.setText(pdiFile.getComment());
@@ -610,12 +606,13 @@ public class LoaderPane extends javax.swing.JPanel {
      * <p>
      * The last two bytes of the buffer hold the checksum, and are not included
      * in the checksum.
+     * @param buffer Buffer holding the message to be get a CRC
      */
     void CRC_block(byte[] buffer) {
         long crc = 0;
 
         for (int r = 0; r < buffer.length - 2; r++) {
-            crc = CRC_char(crc, buffer[r]);	// do this character
+            crc = CRC_char(crc, buffer[r]); // do this character
         }
 
         // store into buffer
@@ -627,6 +624,8 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Check to see if message starts transmission
+     * @param buffer Buffer holding the message to be checked
+     * @return True if buffer is a upload-ready message
      */
     boolean isUploadReady(byte[] buffer) {
         if (buffer[0] != 31) {
@@ -649,6 +648,8 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Check to see if this is a request for the next block
+     * @param buffer Buffer holding the message to be checked
+     * @return True if buffer is a sent-next message
      */
     boolean isSendNext(byte[] buffer) {
         if (buffer[0] != 31) {
@@ -672,6 +673,9 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Get output data length from 1st message
+     * 
+     * @param buffer Message from which length is to be extracted
+     * @return length of the buffer
      */
     int getDataSize(byte[] buffer) {
         if (buffer[4] == 44) {
@@ -686,6 +690,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Return a properly formatted boot message, complete with CRC
+     * @return buffer Contains boot message that's been created
      */
     byte[] bootMessage() {
         byte[] buffer = new byte[]{99, 0, 0, 0, 0};

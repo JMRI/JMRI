@@ -23,7 +23,7 @@ public class SimpleReporterServerTest {
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
@@ -38,7 +38,7 @@ public class SimpleReporterServerTest {
                     // null output string drops characters
                     // could be replaced by one that checks for specific outputs
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                     }
                 });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
@@ -53,7 +53,7 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -68,7 +68,7 @@ public class SimpleReporterServerTest {
             sendMessageMethod.invoke(a,"Hello World");
         });
         assertThat(thrown).withFailMessage("Exception sending Status").isNull();
-        assertThat(sb.toString()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(sb.toString()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     @Test
@@ -78,7 +78,7 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -93,7 +93,7 @@ public class SimpleReporterServerTest {
             sendMessageMethod.invoke(a, "Hello World");
         });
         assertThat(thrown).withFailMessage("Exception sending Status").isNull();
-        assertThat(jcs.getOutput()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(jcs.getOutput()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
 
@@ -104,7 +104,7 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -112,7 +112,7 @@ public class SimpleReporterServerTest {
         SimpleReporterServer a = new SimpleReporterServer(input, output);
         Throwable thrown = catchThrowable( () -> a.sendErrorStatus("IT1"));
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER ERROR\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER ERROR\n");
     }
 
     @Test
@@ -122,7 +122,7 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -133,7 +133,7 @@ public class SimpleReporterServerTest {
             a.sendReport("IR1", "Hello World");
         });
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1 Hello World\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1 Hello World\n");
     }
 
     @Test
@@ -143,7 +143,7 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -154,7 +154,7 @@ public class SimpleReporterServerTest {
             a.sendReport("IR1", new jmri.implementation.DefaultIdTag("ID1234", "Hello World"));
         });
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1 Hello World\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1 Hello World\n");
     }
 
     @Test
@@ -164,7 +164,7 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -176,7 +176,7 @@ public class SimpleReporterServerTest {
         });
         // null report, sends back the reporter name only.
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1\n");
     }
 
     @Test
@@ -186,7 +186,7 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -195,7 +195,7 @@ public class SimpleReporterServerTest {
         Throwable thrown = catchThrowable( () ->
             a.parseStatus("REPORTER IR1 Hello World\n\r"));
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1 Hello World\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1 Hello World\n");
     }
 
     @Test
@@ -205,7 +205,7 @@ public class SimpleReporterServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -214,20 +214,19 @@ public class SimpleReporterServerTest {
         Throwable thrown = catchThrowable( () -> 
             a.parseStatus("REPORTER IR1\n\r"));
         assertThat(thrown).withFailMessage("Exception sending Error Status").isNull();
-        assertThat(sb.toString()).isEqualTo("REPORTER IR1\n").withFailMessage("sendErrorStatus check");
+        assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("REPORTER IR1\n");
     }
 
 
-    // The minimal setup for log4J
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initReporterManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

@@ -8,6 +8,7 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 
 import jmri.ProgrammerException;
+import org.mockito.Mockito;
 
 /**
  * Tests for LocoNet CsOpSwAccess class.
@@ -1464,18 +1465,21 @@ public class CsOpSwAccessTest {
 
     @Before
     public void setUp() {
-        // The minimal setup for log4J
         jmri.util.JUnitUtil.setUp();
         lnis = new LocoNetInterfaceScaffold();
         sm = new SlotManager(lnis);
-        memo = new LocoNetSystemConnectionMemo(lnis, sm);
+        memo = Mockito.mock(LocoNetSystemConnectionMemo.class);
+        Mockito.when(memo.getLnTrafficController()).thenReturn(lnis);
+        Mockito.when(memo.getSlotManager()).thenReturn(sm);
         pl = new ProgListenerScaffold();
         sm.setSystemConnectionMemo(memo);
     }
 
     @After
     public void tearDown() {
-        memo.dispose();
+        memo= null;
+        sm.dispose();
+        sm = null;
         lnis = null;
         JUnitUtil.tearDown();
     }

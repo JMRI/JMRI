@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -32,7 +33,6 @@ public class TextItemPanelTest {
         JUnitUtil.dispose(es);
    }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -42,6 +42,7 @@ public class TextItemPanelTest {
     @After
     public void tearDown() {
         ip = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

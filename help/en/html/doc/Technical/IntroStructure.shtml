@@ -51,14 +51,14 @@
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/help">help/</a></dt>
             <dd>The <a href="Help.shtml">in-program help files</a></dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/jython">jython/</a></dt>
-            <dd>Various <a href="http://jmri.org/jython">sample</a> and 
-                <a href="http://jmri.org/jython/test">test</a> scripts.</dd>
+            <dd>Various <a href="https://jmri.org/jython">sample</a> and 
+                <a href="https://jmri.org/jython/test">test</a> scripts.</dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/lib">lib/</a></dt>
             <dd>Jar files and linkable libraries that JMRI relies on.</dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/resources">resources/</a></dt>
             <dd>Image and sound resources used by the library, and available for 
             user selection.  These can be 
-            <a href="http://jmri.org/resources">directly browsed</a>.</dd>
+            <a href="https://jmri.org/resources">directly browsed</a>.</dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/web">web/</a></dt>
             <dd>Files for JMRI's built-in web servers</dd>
         <dt><a href="https://github.com/JMRI/JMRI/blob/master/xml">xml/</a></dt>
@@ -85,6 +85,9 @@
       which you can get the hardware-specific items 
       that represent what you want to access on the layout.
       </p>
+      <a href="images/OverallPackageStructure.png">
+        <img src="images/OverallPackageStructure.png" align="right" height="261" width="247" style="border:1px solid blue"/>
+      </a>
       <p>Because
       we have different hardware implementations in 
       subpackages of the 
@@ -95,12 +98,10 @@
       <p>Other code should, in general, not reference
       those specific implementations directly.</p>
 
-      <a href="images/OverallPackageStructure.png"><img src="images/OverallPackageStructure.png" align="right" height="20%" width="20%" /></a>
-              (The help/en/packages section of the in-program help files are also organized this way)
+      <p>(The help/en/packages section of the in-program help files are also organized this way)</p>
               
       <p>More specifically:</p>
 
-      <a href="images/OverallImplementationStructure.png"><img src="images/OverallImplementationStructure.png" align="right" height="20%" width="20%" /></a>
       <dl>
         <dt>jmri</dt>
 
@@ -116,7 +117,12 @@
         <dd>Contains commonly useful <strong>t</strong>ools and
         extensions.<br>
         It can depend on jmri.* and externals. It must not depend
-        on jmrix.*</dd>
+        on jmrix.*
+
+      <a href="images/OverallImplementationStructure.png">
+        <img src="images/OverallImplementationStructure.png" align="right" height="261" width="360"  style="border:1px solid blue" />
+      </a>
+        </dd>
 
         <dt>jmrix</dt>
 
@@ -130,7 +136,7 @@
         jmrix subpackages.
         </dd>
 
-        <dt>The jmri.jmris package</dt>
+        <dt>jmris</dt>
 
         <dd>contains all the code for the server implementation for
         the JMRI interfaces.</dd>
@@ -161,7 +167,11 @@
         This is an exception to the idea that packages should
         not directly reference classes across the tree: these utility
         classes are generally available for use.
+      <a href="images/OverallAppDependencies.png">
+        <img src="images/OverallAppDependencies.png" align="right" height="456" width="325"  style="border:1px solid blue" />
+      </a>
         </dd>
+        
 
         <dt>apps</dt>
 
@@ -173,9 +183,9 @@
         system-specific tool objects for an application; that
         dependency is from the apps package)</dd>
 
+     </dl>
 
-
-      </dl>
+     
 
       Although it's not always honored, the tree structure here is important:
       Packages should <em>not</em> reference across the tree.
@@ -238,7 +248,7 @@
       <a href="Names.shtml">is available on a separate page</a>.</p>
 
       <p>The 
-      <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
+      <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
       as a key central point for this navigation.
         <ul>
             <li>It provides access to key objects, particularly the Managers
@@ -246,16 +256,16 @@
             <li>It automatically handles creation of many parts of JMRI via
                 several mechanisms:
                 <ul>
-                  <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a></li>
-                  <li><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></li>
+                  <li><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoDefault.html">InstanceManagerAutoDefault</a></li>
+                  <li><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></li>
                 </ul>
                 and, when needed, provides for their
-                    <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoInitialize.html">post-creation initialization</a>.
+                    <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManagerAutoInitialize.html">post-creation initialization</a>.
             </li>
             <li>It 
-                <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a> 
+                <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html#dispose-jmri.Disposable-">disposes</a> 
                 of 
-                <a href="http://jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a>
+                <a href="https://jmri.org/JavaDoc/doc/jmri/Disposable.html">suitable objects</a>
                 at the end of their lifespan when the InstanceManager (or a particular collection in it)
                 is cleared.</li>
         </ul>

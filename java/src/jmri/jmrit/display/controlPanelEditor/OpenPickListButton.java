@@ -24,7 +24,7 @@ import jmri.jmrit.picker.PickSinglePanel;
  */
 public class OpenPickListButton<T extends NamedBean> {
 
-    private JPanel _buttonPanel;
+    private final JPanel _buttonPanel;
     private JFrame _pickFrame;
     private JButton _openPicklistButton;
     String[] _blurbLines;
@@ -79,7 +79,7 @@ public class OpenPickListButton<T extends NamedBean> {
         JPanel panel = new JPanel();
         panel.add(blurb);
         content.add(panel);
-        PickSinglePanel<T> pickPanel = new PickSinglePanel<T>(_model);
+        PickSinglePanel<T> pickPanel = new PickSinglePanel<>(_model);
         content.add(pickPanel);
         content.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
         pickPanel.setToolTipText(Bundle.getMessage("ToolTipPickLists"));

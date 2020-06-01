@@ -124,7 +124,6 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
         assertEquals(2, result.size());
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() throws Exception {

@@ -13,7 +13,7 @@ import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainsScriptActionTest extends OperationsTestCase {
 
@@ -21,7 +21,7 @@ public class TrainsScriptActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsTableFrame ttf = new TrainsTableFrame();
-        TrainsScriptAction t = new TrainsScriptAction("Test Action",ttf);
+        TrainsScriptAction t = new TrainsScriptAction(ttf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(ttf);
         JUnitOperationsUtil.checkOperationsShutDownTask();

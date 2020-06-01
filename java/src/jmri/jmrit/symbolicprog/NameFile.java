@@ -51,10 +51,13 @@ public class NameFile extends XmlFile {
     /**
      * Read the contents of a NameFile XML file into this object. Note that this
      * does not clear any existing entries.
+     * @param name File name to read
+     * @throws JDOMException if the file can't be parsed
+     * @throws IOException from underlying IO operations
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         if (log.isDebugEnabled()) {
-            log.debug("readFile " + name);
+            log.debug("readFile {}", name);
         }
 
         // read file, find root
@@ -67,7 +70,7 @@ public class NameFile extends XmlFile {
 
         List<Element> l = root.getChildren("definition");
         if (log.isDebugEnabled()) {
-            log.debug("readNames sees " + l.size() + " direct children");
+            log.debug("readNames sees {} direct children", l.size());
         }
         for (int i = 0; i < l.size(); i++) {
             // handle each entry
@@ -77,7 +80,7 @@ public class NameFile extends XmlFile {
         // now recurse with "definitiongroup" children
         l = root.getChildren("definitiongroup");
         if (log.isDebugEnabled()) {
-            log.debug("readNames sees " + l.size() + " groups");
+            log.debug("readNames sees {} groups", l.size());
         }
         for (int i = 0; i < l.size(); i++) {
             // handle each entry

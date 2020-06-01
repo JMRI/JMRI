@@ -18,7 +18,7 @@ import org.jdom2.*;
 /**
  * BlockBossLogicXmlTest.java
  *
- * Description: tests for the BlockBossLogicXml class
+ * Test for the BlockBossLogicXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -136,7 +136,6 @@ public class BlockBossLogicXmlTest {
         jmri.util.JUnitAppender.assertErrorMessage("Ignoring a <signalelement> element with no signal attribute value");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

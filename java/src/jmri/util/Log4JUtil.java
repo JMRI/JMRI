@@ -51,25 +51,30 @@ public class Log4JUtil {
 
     /**
      * Emit a particular WARNING-level message just once.
+     * <p>
+     * Goal is to be lightweight and fast;
+     * this will only be used in a few places,
+     * and only those should appear in data structure.
+     * @param logger The Logger to warn.
+     * @param msg Message.
+     * @param args Message Arguments.
      * @return true if the log was emitted this time
      */
-    // Goal is to be lightweight and fast; this will only be used in a few places,
-    // and only those should appear in data structure.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_UNKNOWN_ARRAY",justification="Passing varargs array through")
     static public boolean warnOnce(@Nonnull Logger logger, @Nonnull String msg, Object... args) {
-        // the  Map<String, Boolean> is just being checked for existence; it's never False
-        Map<String, Boolean> loggerMap = warnedOnce.get(logger);
-        if (loggerMap == null) {  // if it exists, there was a prior warning given
-            loggerMap = new HashMap<>();
-            warnedOnce.put(logger, loggerMap);
-        } else {
-            if (Boolean.TRUE.equals(loggerMap.get(msg))) return false;
+        Set<String> loggerSet = warnedOnce.get(logger);
+        if (loggerSet == null) { 
+            loggerSet = new HashSet<>();
+            warnedOnce.put(logger, loggerSet);
+        } else {  // if it exists, there was a prior warning given
+            if (loggerSet.contains(msg)) return false;
         }
         warnOnceHasWarned = true;
-        loggerMap.put(msg, Boolean.TRUE);
+        loggerSet.add(msg);
         logger.warn(msg, args);
         return true;
     }
-    static private Map<Logger, Map<String, Boolean>> warnedOnce = new HashMap<>();
+    static private Map<Logger, Set<String>> warnedOnce = new HashMap<>();
     static private boolean warnOnceHasWarned = false;
     
     /**
@@ -91,11 +96,14 @@ public class Log4JUtil {
     
     /**
      * Warn that a deprecated method has been invoked.
-     * Can also be used to warn of some deprecated condition, i.e.
-     * obsolete-format input data.
      * <p>
-     * Thie logging is turned off by default during testing to
+     * Can also be used to warn of some deprecated condition,
+     * i.e. obsolete-format input data.
+     * <p>
+     * The logging is turned off by default during testing to
      * simplify updating tests when warnings are added.
+     * @param logger The Logger to warn.
+     * @param methodName method name.
      */
      static public void deprecationWarning(@Nonnull Logger logger, @Nonnull String methodName) {
         if (logDeprecations) {
@@ -111,6 +119,7 @@ public class Log4JUtil {
      * Should only be used by test code. We denote this
      * by marking it deprecated, but we don't intend to remove it.
      * (Might have to if we start removing deprecated references from test code)
+     * @param log true to log deprecations, else false.
      * @deprecated - do not remove
      */
     @Deprecated // do not remove
@@ -122,6 +131,7 @@ public class Log4JUtil {
      * Should only be used by test code. We denote this
      * by marking it deprecated, but we don't intend to remove it.
      * (Might have to if we start removing deprecated references from test code)
+     * @return true if deprecation warnings are logged.
      * @deprecated - do not remove
      */
     @Deprecated // do not remove
@@ -220,9 +230,9 @@ public class Log4JUtil {
         while (e.hasMoreElements()) {
             Appender a = (Appender) e.nextElement();
             if (a instanceof RollingFileAppender) {
-                log.info("This log is appended to file: " + ((RollingFileAppender) a).getFile());
+                log.info("This log is appended to file: {}", ((RollingFileAppender) a).getFile());
             } else if (a instanceof FileAppender) {
-                log.info("This log is stored in file: " + ((FileAppender) a).getFile());
+                log.info("This log is stored in file: {}", ((FileAppender) a).getFile());
             }
         }
         return (program + " version " + jmri.Version.name()
@@ -267,11 +277,12 @@ public class Log4JUtil {
      * <p>
      * If you then pass it to 
      * Log4J for logging, it'll take up less space.
+     * @param <T> Throwable generic
      * @param t The Throwable to truncate and return
      * @return The original object with truncated stack trace
      */
     public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t) {
-        StackTraceElement[]	originalTrace = t.getStackTrace();
+        StackTraceElement[] originalTrace = t.getStackTrace();
         int i;
         for (i = originalTrace.length-1; i>0; i--) { // search from deepest
             String name = originalTrace[i].getClassName();
@@ -288,12 +299,13 @@ public class Log4JUtil {
      * <p>
      * If you then pass it to 
      * Log4J for logging, it'll take up less space.
+     * @param <T> Throwable generic
      * @param t The Throwable to truncate and return
      * @param len The number of stack trace entries to keep.
      * @return The original object with truncated stack trace
      */
     public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t, int len) {
-        StackTraceElement[]	originalTrace = t.getStackTrace();
+        StackTraceElement[] originalTrace = t.getStackTrace();
         int newLen = Math.min(len, originalTrace.length);
         StackTraceElement[] newTrace = new StackTraceElement[newLen];
         for (int i = 0; i < newLen; i++) newTrace[i] = originalTrace[i];

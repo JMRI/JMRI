@@ -9,10 +9,10 @@ import org.junit.Test;
 /**
  * Z21SimulatorLocoDataTest.java
  * 
- * Description:	tests for the jmri.jmrix.roco.z21.simulator.z21SimulatorLocoData
+ * Test for the jmri.jmrix.roco.z21.simulator.z21SimulatorLocoData
  * class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Z21SimulatorLocoDataTest {
         
@@ -40,7 +40,6 @@ public class Z21SimulatorLocoDataTest {
         Assert.assertEquals("speed byte",0x03,a.getSpeed());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

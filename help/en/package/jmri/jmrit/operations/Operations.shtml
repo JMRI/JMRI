@@ -204,7 +204,11 @@
       <li><a href="#TrackTools">Track Tools</a>
 
        <ul>
-        <li><a href="#LoadOptions">Load Options</a></li>
+        <li><a href="#LoadOptions">Load Options</a>
+
+         <ul>
+          <li><a href="#SpurOption">Hold cars with custom loads when spurs are full</a></li>
+         </ul></li>
 
         <li><a href="#RoadOptions">Road Options</a></li>
 
@@ -713,6 +717,9 @@
    If you decide to use schedules, the <a href="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</a>
    tool can show you which car types and loads will be serviced by your spurs.</p>
 
+   <p>OperationsPro&trade; will send messages to the system console when there are errors or problems with the program. You
+    can access the system console from the main menu bar under "Help".</p>
+
    <a name="Settings" id="Settings"></a>
    <h2>Settings</h2>
    The Settings window contains general parameters for the Operations application. Select from the
@@ -793,8 +800,8 @@
    <h4>Car Types</h4>
    <p>
     OperationsPro&trade; has two sets of car types for you to use. Descriptive provides type names
-    like "Boxcar" and "Tankcar", and AAR Codes provides type names like "XM" and "T" for boxcars and
-    tankcars respectively. Select the one that you prefer. You can add or delete car types by using
+    like "Boxcar" and "tank car", and AAR Codes provides type names like "XM" and "T" for boxcars and
+    tank cars respectively. Select the one that you prefer. You can add or delete car types by using
     the <a href="#CarTypeLengthWeight">car type edit</a> window.
    </p>
 
@@ -856,6 +863,11 @@
    </p>
 
    <p>
+    You can quickly set the <a href="#SetTrainIconCoordinates">train icon coordinates</a> for your panel using tools in
+    the Routes and <a href="#EditRoute">Edit Route</a> windows.
+   </p>
+
+   <p>
     <img src="images/PanelWithMarkers.png">
    </p>
 
@@ -899,7 +911,7 @@
     especially if you are managing data for more than one railroad. For example, if today is August
     29, 2012, the program will create a backup directory named "2012_08_29_00".</p>
 
-   <h4>What isn't backed up by OperationsPro</h4>
+   <h4>What isn't backed up by OperationsPro&trade;</h4>
 
    <p>There are many OperationPro directories and files that aren't backed up using the methods described above. You
     can find all of the directories and files not backed up inside the "operations" directory. Here's the list with the
@@ -1203,7 +1215,7 @@
 
    <h4>Generate CSV Manifests</h4>
    If you want to create your own <a href="#SetupExcelProgram">Custom Manifest</a> using a comma
-   separated value (.csv) file, select this option. You can use a program like Excel to create a
+   separated values (.csv) file, select this option. You can use a program like Excel to create a
    Manifest to your liking. You can find the Manifest files in the operations directory in a
    directory called "csvManifests". Each line of the file starts with a two to five letter code,
    followed by the code's description, and then any parameters associated with the code. Here's a
@@ -1504,9 +1516,9 @@
    <a name="GenerateCsvSwitchLists" id="GenerateCsvSwitchLists"></a>
    <h4>Generate CSV Switch Lists</h4>
 
-   <p>You can also generate custom switch lists using a comma separated value (.csv) files. You
+   <p>You can also generate custom switch lists using a comma separated values (.csv) files. You
     can find the switch list files in the operations directory in a directory called
-    "csvSwitchLists". The csv switch lists use the same codes and descriptions as the csv manifests,
+    "csvSwitchLists". The CSV switch lists use the same codes and descriptions as the CSV manifests,
     plus the following:</p>
 
    <table>
@@ -1543,7 +1555,7 @@
     <tr>
      <td>ETE</td>
 
-     <td>Estimated Time Enroute</td>
+     <td>Estimated Time En route</td>
 
      <td>Time</td>
     </tr>
@@ -1587,7 +1599,7 @@
     <tr>
      <td>TIR</td>
 
-     <td>Train en Route</td>
+     <td>Train En Route</td>
     </tr>
 
     <tr>
@@ -1615,7 +1627,7 @@
    <h3>Options</h3>
 
    <h4>Save Train Manifests</h4>
-   When the option "Save Train Manifests" is selected, OperationsPro will save the current train
+   When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current train
    Manifest before creating a new one. The program will store the old Manifests in a directory
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the
@@ -2235,7 +2247,7 @@
    Manifests and switch lists. A schedule provides very fine control on the order types of cars will
    be delivered to a spur. You can specify the car type, when it can be delivered, the car's road
    and load. You can also decide the car's new load, destination, and when the car is to be picked
-   up. For example, if you wanted two SP boxcars to be delivered followed by a tankcar loaded with
+   up. For example, if you wanted two SP boxcars to be delivered followed by a tank car loaded with
    "Oil", you can create a schedule that will do exactly that.
 
    <p>You should note that adding schedules and custom loads is an optional feature and isn't
@@ -2373,19 +2385,19 @@
    <h4>Schedule Example</h4>
 
    <p>In the schedule shown above, the schedule is requesting two SP boxcars in a row with any
-    load, then a tankcar with with a load of "Oil". Reading the entire schedule line for the two SP
+    load, then a tank car with with a load of "Oil". Reading the entire schedule line for the two SP
     boxcars, it also states that there isn't a random delivery for the cars, the cars can be
     delivered any day of the week, the load received can be anything, and the load shipped can be
     the default empty "E" or default load "L". There isn't a destination for the cars, so the
     program can send them anywhere that is willing to accept the boxcars with their new load. And
     finally the cars can be picked up at any time.</p>
 
-   <p>The next line in the schedule is requesting a tankcar with a load of "Oil". Reading the
-    entire schedule line for the tankcar, there isn't an random value, the car is only delivered on
-    Mondays, the tankcar's road name doesn't matter, the new load will be the default empty or "E"
+   <p>The next line in the schedule is requesting a tank car with a load of "Oil". Reading the
+    entire schedule line for the tank car, there isn't an random value, the car is only delivered on
+    Mondays, the tank car's road name doesn't matter, the new load will be the default empty or "E"
     since the car arrived with a custom load, and and the car is to be sent to "Susanville", but
-    only on Fridays. After the tankcar is delivered the schedule starts from the beginning, again
-    requesting two SP boxcars followed by a tankcar with oil.</p>
+    only on Fridays. After the tank car is delivered the schedule starts from the beginning, again
+    requesting two SP boxcars followed by a tank car with oil.</p>
 
    <p>The schedule controls when and what cars will be delivered and the car order. It makes the spur more
     restrictive, only cars demanded by the schedule will be delivered to the spur. Looking at the schedule you will see
@@ -2397,7 +2409,7 @@
    <p>
     If you want custom <a href="#CarLoad">loads</a> for your cars, you can create them using the <a
      href="#EditCarLoads">Edit Car Loads</a>. Each new load name is associated with
-    the car type. For example you can have "Freight" for a boxcar, and "Oil" for a tankcar. The
+    the car type. For example you can have "Freight" for a boxcar, and "Oil" for a tank car. The
     program will deliver cars with a custom load to a spur that has a schedule that also requests
     that particular load. However, cars with a custom load can still be placed at yards, staging,
     and interchanges.
@@ -2610,7 +2622,7 @@
 
    <p>
     Note that it is okay to create more classification tracks or "virtual tracks" then there are
-    physical tracks in your classification yard. The cars can share the same "slough" tracks until
+    physical tracks in your classification yard. The cars can share common tracks until
     its time to finally sort them into their various destinations or trains. You can also use the <a
      href="#Pools">Track Pools</a> feature to share the track space in your yard.
    </p>
@@ -2630,10 +2642,10 @@
    C/I track, meaning that if an industry need a certain type of car it might not be delivered to
    the C/I track. One way to fix this problem is to create multiple C/I tracks for that location,
    and restrict them to certain types of cars. For example, say a location's industries could use
-   two boxcars, and one tankcar. You would create two C/I tracks, one would be the length of two
-   boxcars, and only allow boxcars, the other would only allow tankcars, and would be the length of
-   one tankcar. Each C/I track could have the "same" name using the hyphen feature, for example you
-   could name the C/I boxcar track "Yard-(boxcars)", and the tankcar track "Yard-(tankcars)". Both
+   two boxcars, and one tank car. You would create two C/I tracks, one would be the length of two
+   boxcars, and only allow boxcars, the other would only allow tank cars, and would be the length of
+   one tank car. Each C/I track could have the "same" name using the hyphen feature, for example you
+   could name the C/I boxcar track "Yard-(boxcars)", and the tank car track "Yard-(tank cars)". Both
    tracks would print as "Yard" on Manifests and switch lists. And finally to facilitate the
    exchange of cars from the spur tracks to the through freight, create another C/I track that only
    accepts set outs from the local switcher. The other solution is to use the
@@ -2862,16 +2874,15 @@
    <a name="SpurOption" id="SpurOption"></a>
    <h5>Spur Option</h5>
 
-   <p>Spurs have the option "Hold cars with custom loads when spurs are full" and this option is
-    used to restrict car movement. When this option is selected, cars with custom loads are only
-    routed to spurs with schedules demanding the car's custom load. When the program finds a car
-    with a custom load but without a final destination, it will search all spurs for a schedule that
-    is demanding that car's type and load, and if found will route the car there. If all spurs are
-    full and the option "Hold cars with custom loads when spurs are full" is selected for any spur
-    demanding that car's custom load, the program will only move the car when one of the spurs can
-    accept a new car, i.e. the spur is no longer full. If however the option "Hold cars with custom
-    loads when spurs are full" isn't selected for all of the spur/schedules demanding the car's
-    custom load, the program will attempt to move the car to another location, which can be staging.</p>
+   <p>In the "Edit Track Load Options" window spurs have the additional option "Hold cars with custom loads when
+    spurs are full" and this option is used to restrict car movement. When this option is selected, cars with custom
+    loads are only routed to spurs with schedules demanding the car's custom load. When the program finds a car with a
+    custom load but without a final destination, it will search all spurs for a schedule that is demanding that car's
+    type and load, and if found will route the car there. If all spurs are full and the option "Hold cars with custom
+    loads when spurs are full" is selected for any spur with an alternate track demanding that car's custom load, the
+    program will only move the car when one of the spurs can accept a new car, i.e. the spur is no longer full. If
+    however the option "Hold cars with custom loads when spurs are full" isn't selected for all of the spur/schedules
+    demanding the car's custom load, the program will attempt to move the car to another location, which can be staging.</p>
 
    <p>
     You can have the program ignore the "Hold cars with custom loads when spurs are full" feature
@@ -2957,10 +2968,10 @@
    </p>
 
    <p>Adding an alternate track will normally increase the number of cars that the program routes to a spur /
-    schedule. The program refers to these cars as "inbound" to the spur/industry. For a car to be "inbound" is has to be
-    transported by trains that don't directly service the spur/industry. The maximum number of inbound cars to a spur
-    with an alternate track is determined by the length of the spur and the alternate track. So if the spur could hold 6
-    cars, and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to the spur.</p>
+    schedule. The train build report refers to routed cars as "inbound" to the spur/industry. The maximum number of
+    inbound cars to a spur with an alternate track is determined by the length of the spur and the alternate track. So
+    if the spur could hold 6 cars, and the alternate track 5, then the program would allow a maximum of 11 cars to be
+    sent to the spur.</p>
 
    <p>
     You can see all "inbound" cars by using the sort by "FD" or <a href="#FinalDestination">Final Destination</a> in the
@@ -3210,11 +3221,11 @@
    </p>
 
    <p>
-    If you prefer to use comma delimiters instead of spaces (Comma Separated Values), use a file
-    with a .csv extension or place the word "comma" at the start of your import file and use commas
-    instead of spaces. You can also have the program create a csv file for you by selecting the <a
-     href="#CarsTools">Export to file</a> under the "Tools-&gt;Car Roster" menu in the "Cars"
-    window. The following are two examples of importing cars with comma deliminters.
+    If you prefer to use comma delimiters instead of spaces (comma separated values), use a file with a .csv extension
+    or place the word "comma" at the start of your import file and use commas instead of spaces. You can also have the
+    program create a comma separated values file for you by selecting the <a href="#CarsTools">Export to file</a> under
+    the "Tools-&gt;Car Roster" menu in the "Cars" window. The following are two examples of importing cars with comma
+    delimiters.
    </p>
 
    <p>
@@ -3222,10 +3233,10 @@
     655578,UP,Tank Car,40,3.8,Yellow,DB,1934,York,-,York Freight
    </p>
 
-   <p>You need to be very careful with spaces when importing a comma delimitated file. The
+   <p>You need to be very careful with spaces when importing a comma separated values (.csv) file. The
     program will include leading and trailing spaces if they exist between the commas.</p>
 
-   <p>A comma delimitated file can also import a car's load and kernel name, just add them after
+   <p>A comma separated values file can also import a car's load and kernel name, just add them after
     the track name field.</p>
 
    <p>
@@ -3277,7 +3288,7 @@
    <p>Select the road (reporting mark) for the car. If the desired road doesn't exist, press the
     "Edit" button to the right of the road select menu box. This will allow you to add a new road or
     delete any that you don't need. You can use the "hyphen" feature to create unique road names.
-    The program will drop all characters after a hyphen when printing a Manifest or switch list.</p>
+    The program will drop the hyphen and the following characters when printing a Manifest or switch list.</p>
 
    <h4>Road Number</h4>
    <p>Enter the car's road number in the text box. The program requires a unique road and number
@@ -3352,7 +3363,7 @@
    lists. For example a load of tools could be entered as "L(Tools)" or just "Tools" if desired.
 
    <p>
-    Some folks don't want the default empty or "E" load for a car when the car's load flips from the
+    Some operators don't want the default empty or "E" load for a car when the car's load flips from the
     "L" load or when a car's custom load is removed. To set a custom empty load for car, see <a
      href="#CarsSet">Set Car</a> and the <a href="#ReturnWhenEmpty">Return When Empty</a> fields.
     You can tell the program which custom empty load you want each car to have.
@@ -3385,15 +3396,14 @@
    The Id Tag dropdown allows you to associate a <a href="../../../../html/tools/IdTags.shtml">IdTag</a>
    with this piece of rolling stock. If any of the locations have an associated <a
     href="#LocationReporter">Id Tag Reader at Location</a> and the Id Tag associated with this car
-   is read by that Reporter, then the location will be updated. See <a href="#Options">Options</a>
-   to enable this feature.
+   is read by that Reporter, then the location will be updated. See <a href="#Options">Options</a> to enable this
+   feature.
 
-   <h3>Add</h3>
-   Press the "Add" button to enter a new car into your roster. If you have similar cars, you can
-   select an existing car using the "Edit" button in the "Cars" window, and then modify the car's
-   road number, and any other car attributes, followed by pressing the "Add" button to create
-   another car for your roster. Pressing the "Add" button also causes the new car to be saved. See
-   the "Save" button below.
+   <h3>Add (Copy)</h3>
+   Press the "Add" button to enter a new car into your roster. You can also use the "Add" button to make a copy of a car.
+   Select an existing car using the "Edit" button in the "Cars" window, and then modify the car's road number, and any
+   other car attributes, then press the "Add" button to create another car for your roster. Pressing the "Add"
+   button also causes the new car to be saved. See the "Save" button below.
 
    <h3>Save</h3>
    <p>Press "Save" to store the car's attributes after you've made changes. The program will
@@ -3412,9 +3422,12 @@
    </p>
 
    <h4>Add Button</h4>
-   To add a new car attribute name, enter the desired text in the text box and press the "Add" button.
-   When you first enter a new car attribute name, it will show up at the start of the list. Later when
-   your restart the program it will be sorted in the correct order.
+   To add a new car attribute name, enter the desired text in the text box and press the "Add" button. When you first
+   enter a new car attribute name, it will show up at the start of the list. Later when your restart the program it will
+   be sorted in the correct order.
+
+   <p>You can also use the "hyphen" feature when creating new car type, road, and load names. The program will drop
+    the characters after the hyphen when printing a Manifest or switch list.</p>
 
    <h4>Delete Button</h4>
    To delete a car attribute name, select the name you want to delete in the menu box and press the
@@ -3431,9 +3444,10 @@
 
    <a name="DeleteUnusedAttributes" id="DeleteUnusedAttributes"></a>
    <h4>Delete Unused Attribute Names</h4>
-   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars with this attribute name" and "Delete unused attribute names".
-   The first will show a count in front of the menu box. The count is the number of'cars that have this particular
-   attribute name. The delete option will prompt you to delete any attribute name that hasn't been assigned to a car. 
+   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars with this attribute
+   name" and "Delete unused attribute names". The first will show a count in front of the menu box. The count is the
+   number of'cars that have this particular attribute name. The delete option will prompt you to delete any attribute
+   name that hasn't been assigned to a car. 
    
    <a name="EditCarLoads" id="EditCarLoads"></a>
    <h3>Edit Car Loads</h3>
@@ -3577,7 +3591,7 @@
 
    <h4>Car Roster-&gt;Export to file</h4>
    In addition to <a href="#ImportingCars">Import from file</a> feature described earlier, you can
-   also export your cars to a comma separated value file. The "Export to file" function creates a
+   also export your cars to a comma separated values file. The "Export to file" function creates a
    file named "ExportOperationsCarRoster.csv" in the operations directory. Note that the export cars
    tool will only export the cars shown in the cars window for a location or track.
 
@@ -3698,14 +3712,14 @@
 
    <p>If you prefer to use comma delimiters instead of spaces, use a file with a .csv extension
     or place the word "comma" at the start of your import file and use commas instead of spaces. The
-    following are two examples of importing locomotives with comma deliminters.</p>
+    following are two examples of importing locomotives with comma delimiters.</p>
 
    <p>
     comma<br> 236,UP,RS 4,40,AT,1930,Home Town USA,-,Engine Terminal<br> 5578,SP,SW
     1200,42,DB,1934,Town of York,-,York Engine Yard
    </p>
 
-   <p>You need to be very careful with spaces when importing a comma delimitated file. The
+   <p>You need to be very careful with spaces when importing a comma separated values (.csv) file. The
     program will include leading and trailing spaces if they exist between the commas.</p>
 
    <p>To import a file, use the "Tools" menu in the upper left hand corner of the
@@ -3908,12 +3922,15 @@
    </p>
 
    <p>
-    The X and Y are the coordinates on your dispatcher's panel for the optional train icon. You can set the coordinates
-    here, use the <a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a> tool, or use the "SetX&amp;Y" <a
-     href="#PanelOptionsTrainIcons">train icon</a> popup menu to teach the program where you want the train icon placed
-    when the train is at the specified location. Leave the X and Y coordinates at zero if you want to manually move the
-    icon or you're not using the icon feature.
+    The X and Y are the coordinates on your dispatcher's panel for the optional <a href="#PanelOptionsTrainIcons">train
+     icon.</a> You can set the coordinates directly in the table by double clicking on the X or Y cells, or use the <a
+     href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a> tool if you want to change all of your routes at
+    once, or use the "Set Train Icon Coordinates for this Route" tool if you only want to adjust one route, or use the
+    "SetX&amp;Y" <a href="#PanelOptionsTrainIcons">train icon</a> pop-up menu to teach the program where you want the
+    train icon placed when the train is at the specified location. Leave the X and Y coordinates at zero if you want to
+    manually move the icon or you're not using the icon feature.
    </p>
+
    <a name="RouteComment" id="RouteComment"></a>
 
    <p>Each location in the route can also have an optional comment that will appear in the
@@ -4060,7 +4077,7 @@
     found under "Tools" in the <a href="#Settings">Settings</a> or <a href="#Trains">Trains</a> window, two additional checkboxes will appear
     labeled "Open" and "Run". If the "Open" checkbox is selected the "Function" button for a built
     train will become "Open" rather than "Print" or "Preview". Pressing a train's "Open" button will
-    allow you to examine the train's comma separated value file. If you select the "Run" checkbox,
+    allow you to examine the train's comma separated values file. If you select the "Run" checkbox,
     the function button for a built train becomes "Run". Pressing a train's "Run" button will start
     the Excel program configured by the <a href="#SetupExcelProgram">Setup Excel Program
      (Manifest Creator)</a> window found in the Trains "Tools" menu .
@@ -4382,7 +4399,7 @@
    will bring up a new window with several script options.
 
    <p>
-    Included in the <a href="http://jmri.org/jython/operations">jython directory</a> are several
+    Included in the <a href="https://jmri.org/jython/operations">jython directory</a> are several
     examples of operation oriented scripts. These scripts were included in the JMRI download and can
     be found in the jmri-&gt;jython-&gt;operations directory.
    </p>
@@ -5001,7 +5018,7 @@
    and also install it in the csvManifest directory.
 
    <p>
-    You can enable the creation of the comma separated value (CSV) files needed for an external
+    You can enable the creation of the comma separated values (.csv) files needed for an external
     Excel program from the Train's "Tools" menu "Setup Excel Program" or from the <a
      href="#ManifestOptions">Options</a> "Generate CSV Manifests".
    </p>
@@ -5017,9 +5034,9 @@
 
    <a name="ExportTimetable" id="ExportTimetable"></a>
    <h4>Export Timetable</h4>
-   The export Timetable tool produces comma separated value (CSV) file for the Timetable application. You can also use
+   The export Timetable tool produces comma separated values (.csv) file for the Timetable application. You can also use
    the "Import from OperationsPro..." found in the Timetable application to create and import in one step. The
-   OperationsPro export creates a "Segment" called "Locations" based on an alphabetical list of location names, or if
+   OperationsPro&trade; export creates a "Segment" called "Locations" based on an alphabetical list of location names, or if
    you create a route named "Timetable", produces a segment of locations based on the route's location order. 
    
    <p>During the export, the program will calculate the maximum work times at each train's location based on the move
@@ -5491,12 +5508,12 @@
     Program (Manifest Creator)</a>.
 
    <p>Four new buttons will appear at the bottom of the "Switch Lists by Location" window,
-    "Generate csv Switch Lists", "Generate csv Switch Lists Changes", "Run", and "Run Changes". The
-    "Generate csv Switch Lists" will create a csv file for each of the selected locations. And the
-    "Generate csv Switch Lists Changes" will only create new csv files for locations that have have
-    been modified by a new train build. You can find the csv files in the csvSwitchList directory.
+    "Generate CSV Switch Lists", "Generate CSV Switch Lists Changes", "Run", and "Run Changes". The
+    "Generate CSV Switch Lists" will create a comma separated values file for each of the selected locations. And the
+    "Generate CSV Switch Lists Changes" will only create new CSV files for locations that have have
+    been modified by a new train build. You can find the CSV files in the csvSwitchList directory.
     The "Run" button is used to create custom switch lists for all of the selected locations by
-    executing an Excel program. The "Run" button will create the csv files needed before asking the
+    executing an Excel program. The "Run" button will create the CSV files needed before asking the
     Excel program to create and print a custom switch list. The "Run Changes" will only create new
     switch lists for locations that have new work.</p>
 
@@ -5508,7 +5525,7 @@
     the right side of the <a href="#Trains">Trains</a> window. Pressing the "Move" button will cause the train to depart
     its current location move to the next location in the route. The locomotives and cars assigned to the train will
     travel to the next location on the railroad. At each location, cars can be picked up or set out. You can also move a
-    train by selecting the train's <a href="#PanelOptionsTrainIcons">icon</a> and selecting "Move" from the icon's popup
+    train by selecting the train's <a href="#PanelOptionsTrainIcons">icon</a> and selecting "Move" from the icon's pop-up
     menu. Each press of the "Move" button moves the train closer to its terminal location. When the train arrives at the
     last location in the route, the last press of the "Move" button will terminate the train. Once a train is
     terminated, you can build it again.
@@ -5565,7 +5582,7 @@
    <a name="OperationsWebAccess" id="OperationsWebAccess"></a>
    <h2>Operations Web Access</h2>
    You can also access some of the OperationPro&trade; windows from a browser. For more information
-   see <a href="http://jmri.org/help/en/html/web/">JMRI Web Access</a>.
+   see <a href="https://jmri.org/help/en/html/web/">JMRI Web Access</a>.
 
    <p>
     <img src="images/WebConductor.png">

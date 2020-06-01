@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.managers.TranspondingTagManager class.
  *
- * @author	Matthew Harris Copyright (C) 2011
+ * @author Matthew Harris Copyright (C) 2011
  */
 public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManagerTest {
 
@@ -118,7 +118,6 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         Assert.assertFalse("Non-matching TranspondingTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() throws Exception {

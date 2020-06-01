@@ -10,15 +10,14 @@ import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PrintCarLoadsActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Print Car Loads Frame");
-        PrintCarLoadsAction t = new PrintCarLoadsAction(true,jf);
+        PrintCarLoadsAction t = new PrintCarLoadsAction(true);
         Assert.assertNotNull("exists",t);
     }
 

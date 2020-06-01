@@ -5,18 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Logix;
-import jmri.Memory;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanUsageReport;
-import jmri.SignalHead;
-import jmri.Timebase;
+
+import jmri.*;
 import jmri.jmrit.beantable.LRouteTableAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,12 +20,24 @@ import org.slf4j.LoggerFactory;
 public class DefaultLogix extends AbstractNamedBean
         implements Logix {
 
+    private final ConditionalManager conditionalManager;
+
     public DefaultLogix(String systemName, String userName) {
+        this(systemName,userName,InstanceManager.getDefault(ConditionalManager.class));
+    }
+
+    public DefaultLogix(String systemName,String userName,ConditionalManager conditionalManager) {
         super(systemName, userName);
+        this.conditionalManager = conditionalManager;
     }
 
     public DefaultLogix(String systemName) {
+        this(systemName,InstanceManager.getDefault(ConditionalManager.class));
+    }
+
+    public DefaultLogix(String systemName,ConditionalManager conditionalManager) {
         super(systemName);
+        this.conditionalManager = conditionalManager;
     }
 
     @Override
@@ -203,12 +205,11 @@ public class DefaultLogix extends AbstractNamedBean
         }
         // check other Logix(es) for use of this conditional (systemName) for use as a
         // variable in one of their conditionals
-        ArrayList<String> checkReferences = InstanceManager.getDefault(jmri.ConditionalManager.class).getWhereUsed(systemName);
+        ArrayList<String> checkReferences = conditionalManager.getWhereUsed(systemName);
         if (checkReferences != null) {
             Conditional c = getConditional(systemName);
             String refName = checkReferences.get(0);
-            Logix x = InstanceManager.getDefault(jmri.ConditionalManager.class)
-                .getParentLogix(refName);
+            Logix x = conditionalManager.getParentLogix(refName);
             Conditional cRef = x.getConditional(refName);
             return new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                 cRef.getSystemName(), x.getUserName(), x.getSystemName()};
@@ -220,7 +221,7 @@ public class DefaultLogix extends AbstractNamedBean
             return null;
         }
         // delete the Conditional object
-        Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(systemName);
+        Conditional c = conditionalManager.getBySystemName(systemName);
         if (c == null) {
             log.error("attempt to delete non-existing Conditional - {}", systemName);  // NOI18N
             return null;
@@ -243,7 +244,7 @@ public class DefaultLogix extends AbstractNamedBean
             cName = _conditionalSystemNames.get(i);
             c = getConditional(cName);
             if (c == null) {
-                log.error("Invalid conditional system name when calculating Logix - " + cName);  // NOI18N
+                log.error("Invalid conditional system name when calculating Logix - {}", cName);  // NOI18N
             } else {
                 // calculate without taking any action unless Logix is enabled
                 c.calculate(mEnabled, null);
@@ -340,7 +341,7 @@ public class DefaultLogix extends AbstractNamedBean
                 if (var.getType() == Conditional.Type.CONDITIONAL_TRUE
                         || var.getType() == Conditional.Type.CONDITIONAL_FALSE) {
                     // Get the referenced (target) conditonal -- The name can be either a system name or a user name
-                    Conditional cRef = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(var.getName());
+                    Conditional cRef = conditionalManager.getConditional(var.getName());
                     if (cRef != null) {
                         // re-arrange names as needed
                         var.setName(cRef.getSystemName());      // The state variable reference is now a conditional system name
@@ -351,7 +352,7 @@ public class DefaultLogix extends AbstractNamedBean
                             var.setGuiName(uName);
                         }
                         // Add the conditional reference to the where used map
-                        InstanceManager.getDefault(jmri.ConditionalManager.class).addWhereUsed(var.getName(), cName);
+                        conditionalManager.addWhereUsed(var.getName(), cName);
                         isDirty = true;
                     } else {
                         log.error("setGuiNames: For conditional '{}' in logix '{}', the referenced conditional, '{}',  does not exist",  // NOI18N
@@ -592,9 +593,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 break;
                             default:
                                 if (!LRouteTableAction.LOGIX_INITIALIZER.equals(varName)) {
-                                    log.error("Unknown (new) Variable Listener type= " + varListenerType + ", for varName= "  // NOI18N
-                                            + varName + ", varType= " + varType + " in Conditional, "  // NOI18N
-                                            + _conditionalSystemNames.get(i));
+                                    log.error("Unknown (new) Variable Listener type= {}, for varName= {}, varType= {} in Conditional, {}", varListenerType, varName, varType, _conditionalSystemNames.get(i));
                                 }
                                 continue;
                         }
@@ -632,9 +631,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 }
                                 break;
                             default:
-                                log.error("Unknown (old) Variable Listener type= " + varListenerType + ", for varName= "  // NOI18N
-                                        + varName + ", varType= " + varType + " in Conditional, "  // NOI18N
-                                        + _conditionalSystemNames.get(i));
+                                log.error("Unknown (old) Variable Listener type= {}, for varName= {}, varType= {} in Conditional, {}", varListenerType, varName, varType, _conditionalSystemNames.get(i));
                         }
                     }
                     // addition listeners needed for memory compare
@@ -654,7 +651,7 @@ public class DefaultLogix extends AbstractNamedBean
                                         conditional);
                                 _listeners.add(listener);
                             } catch (IllegalArgumentException ex) {
-                                log.error("invalid memory name= \"" + name + "\" in state variable");  // NOI18N
+                                log.error("invalid memory name= \"{}\" in state variable", name);  // NOI18N
                                 break;
                             }
                         } else {
@@ -664,9 +661,7 @@ public class DefaultLogix extends AbstractNamedBean
                     }
                 }
             } else {
-                log.error("invalid conditional system name in Logix \"" + getSystemName()  // NOI18N
-                        + "\" assembleListenerList DELETING "  // NOI18N
-                        + _conditionalSystemNames.get(i) + " from Conditional list.");  // NOI18N
+                log.error("invalid conditional system name in Logix \"{}\" assembleListenerList DELETING {} from Conditional list.", getSystemName(), _conditionalSystemNames.get(i));  // NOI18N
                 _conditionalSystemNames.remove(i);
 
             }
@@ -932,8 +927,7 @@ public class DefaultLogix extends AbstractNamedBean
         } catch (Exception ex) {
             log.error("Bad name for listener on \"{}\": ", listener.getDevName(), ex);  // NOI18N
         }
-        log.error("Bad name for " + msg + " listener on \"" + listener.getDevName()  // NOI18N
-                + "\" when removing");  // NOI18N
+        log.error("Bad name for {} listener on \"{}\" when removing", msg, listener.getDevName());  // NOI18N
     }
 
     /* /**
@@ -1078,7 +1072,7 @@ public class DefaultLogix extends AbstractNamedBean
             Conditional c = null;
             for (int i = 0; i < _conditionalSystemNames.size(); i++) {
                 cName = _conditionalSystemNames.get(i);
-                c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(cName);
+                c = conditionalManager.getBySystemName(cName);
                 if (c != null) {
                     for (jmri.ConditionalAction ca : c.getCopyOfActions()) {
                         if (nb.equals(ca.getBean())) {

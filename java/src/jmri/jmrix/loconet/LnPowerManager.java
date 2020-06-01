@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.JmriException;
+import jmri.managers.AbstractPowerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author B. Milhaupt Copyright (C)
  */
-public class LnPowerManager
-        extends jmri.managers.AbstractPowerManager
-        implements LocoNetListener {
+public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnectionMemo> implements LocoNetListener {
 
     public LnPowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
@@ -33,10 +32,9 @@ public class LnPowerManager
         updateTrackPowerStatus();  // this delays a while then reads slot 0 to get current track status
     }
 
-    protected int power = UNKNOWN;
-
     @Override
     public void setPower(int v) throws JmriException {
+        int old = power;
         power = UNKNOWN;
 
         checkTC();
@@ -57,30 +55,7 @@ public class LnPowerManager
             tc.sendLocoNetMessage(l);
         }
 
-        firePropertyChange("Power", null, null); // NOI18N
-    }
-
-    @Override
-    public int getPower() {
-        return power;
-    }
-
-    // these next three public methods have been added so that other classes
-    // do not need to reference the static final values "ON", "OFF", and "UKNOWN".
-    public boolean isPowerOn() {
-        return (power == ON);
-    }
-
-    public boolean isPowerOff() {
-        return (power == OFF);
-    }
-
-    public boolean isPowerUnknown() {
-        return (power == UNKNOWN);
-    }
-
-    public boolean isPowerIdle() {
-        return (power == IDLE);
+        firePowerPropertyChange(old, power);
     }
 
     // to free resources when no longer used
@@ -114,42 +89,40 @@ public class LnPowerManager
     // to listen for status changes from LocoNet
     @Override
     public void message(LocoNetMessage m) {
-        if (m.getOpCode() == LnConstants.OPC_GPON) {
-            power = ON;
-            firePropertyChange("Power", null, null); // NOI18N
-        } else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
-            power = OFF;
-            firePropertyChange("Power", null, null); // NOI18N
-        } else if (m.getOpCode() == LnConstants.OPC_IDLE) {
-            power = IDLE;
-            firePropertyChange("Power", null, null); // NOI18N
-        } else if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
-            // grab the track status any time that a slot read of a "normal" slot passes thru.
-            // Ignore "reserved" and "master control" slots in slot numbers 120-127
-            if ((m.getElement(1) == 0x0E) && (m.getElement(2) < 120)) {
-                int slotTrackStatus;
-                switch (m.getElement(7) & (0x03)) {
-                    case LnConstants.GTRK_POWER:
-                        slotTrackStatus = IDLE;
-                        break;
-                    case (LnConstants.GTRK_POWER + LnConstants.GTRK_IDLE):
-                        slotTrackStatus = ON;
-                        break;
-                    case LnConstants.GTRK_IDLE:
-                        slotTrackStatus = OFF;
-                        break;
-                    default:
-                        slotTrackStatus = UNKNOWN;
-                        break;
-                }
-                if (power != slotTrackStatus) {
-                    // fire a property change only if slot status is DIFFERENT
-                    // from current local status
-                    power = slotTrackStatus; // update local track status from slot info
-                    firePropertyChange("Power", null, null); // NOI18N
-                }
-            }
+        int old = power;
+        switch (m.getOpCode()) {
+            case LnConstants.OPC_GPON:
+                power = ON;
+                break;
+            case LnConstants.OPC_GPOFF:
+                power = OFF;
+                break;
+            case LnConstants.OPC_IDLE:
+                power = IDLE;
+                break;
+            case LnConstants.OPC_SL_RD_DATA:
+                // grab the track status any time that a slot read of a "normal" slot passes thru.
+                // Ignore "reserved" and "master control" slots in slot numbers 120-127
+                if ((m.getElement(1) == 0x0E) && (m.getElement(2) < 120)) {
+                    switch (m.getElement(7) & (0x03)) {
+                        case LnConstants.GTRK_POWER:
+                            power = IDLE;
+                            break;
+                        case (LnConstants.GTRK_POWER + LnConstants.GTRK_IDLE):
+                            power = ON;
+                            break;
+                        case LnConstants.GTRK_IDLE:
+                            power = OFF;
+                            break;
+                        default:
+                            power = UNKNOWN;
+                            break;
+                    }
+                }   break;
+            default:
+                break;
         }
+        firePowerPropertyChange(old, power);
     }
 
     /**
@@ -193,13 +166,30 @@ public class LnPowerManager
         @Override
         public void run() {
             // wait a little bit to allow PowerManager to be initialized
+            log.trace("LnTrackStatusUpdateThread start check loop");
+            for (int i = 1; i <=10; i++) {
+                if (tc.status()) break; // TrafficController is reporting ready
+                
+                log.trace("LnTrackStatusUpdateThread waiting {} time", i);
+                // else wait, then try again
+                try {
+                    // Delay 500 mSec to allow init of traffic controller, listeners.
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                    return; // and stop work
+                }
+            }
+
             try {
-                // Delay 500 mSec to allow init of traffic controller, listeners.
-                Thread.sleep(500);
+                // Delay just a bit more, just in case.  Yes, this shouldn't be needed...
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
                 return; // and stop work
             }
+            
+            log.trace("LnTrackStatusUpdateThread sending request");
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_RQ_SL_DATA);
             msg.setElement(1, 0);

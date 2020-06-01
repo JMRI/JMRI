@@ -82,7 +82,6 @@ public class CombinedLocoSelPaneTest {
         JUnitAppender.assertWarnMessage("Found mfg 13 (Public-domain and DIY) version 123; no such decoder defined");
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

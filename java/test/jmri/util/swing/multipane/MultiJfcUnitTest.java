@@ -17,7 +17,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 /**
  * Swing tests for the Multipane (IDE) GUI
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class MultiJfcUnitTest {
 

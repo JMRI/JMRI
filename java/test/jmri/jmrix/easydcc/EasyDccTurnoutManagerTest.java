@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.easydcc.EasyDccTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -45,16 +45,16 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
         Turnout o = l.newTurnout("ET21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
+            log.debug("received turnout value {}", o);
         }
         Assert.assertTrue(null != (EasyDccTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("ET21"));
+            log.debug("by system name: {}", l.getBySystemName("ET21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("ET21"));

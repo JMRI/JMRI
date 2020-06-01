@@ -30,8 +30,7 @@ public class MockShutDownManagerTest {
         Assert.assertEquals(0, dsdm.tasks().size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
-            public boolean execute() {
-                return true;
+            public void run() {
             }
         };
         dsdm.register(task);
@@ -52,8 +51,7 @@ public class MockShutDownManagerTest {
         Assert.assertEquals(0, dsdm.tasks().size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
-            public boolean execute() {
-                return true;
+            public void run() {
             }
         };
         dsdm.register(task);
@@ -85,7 +83,6 @@ public class MockShutDownManagerTest {
         }
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

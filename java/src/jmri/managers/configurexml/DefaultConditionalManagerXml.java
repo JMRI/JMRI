@@ -114,10 +114,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 // save action information
                 List<ConditionalAction> actionList = c.getCopyOfActions();
-                /*               	if (numCond>1190) {
-                 partTime = System.currentTimeMillis() - partTime;
-                 System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
-                 }*/
                 for (ConditionalAction action : actionList) {
                     Element aElem = new Element("conditionalAction");  // NOI18N
                     aElem.setAttribute("option", Integer.toString(action.getOption()));  // NOI18N

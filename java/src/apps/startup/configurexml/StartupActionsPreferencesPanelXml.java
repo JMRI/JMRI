@@ -1,7 +1,7 @@
 package apps.startup.configurexml;
 
 import apps.StartupActionsManager;
-import apps.startup.StartupModel;
+import jmri.util.startup.StartupModel;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
@@ -23,7 +23,7 @@ public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Arrange for all {@link apps.startup.StartupModel} objects to be stored.
+     * Arrange for all {@link jmri.util.startup.StartupModel} objects to be stored.
      *
      * @param o Object to store, of type
      *          {@link apps.startup.StartupActionsPreferencesPanel}

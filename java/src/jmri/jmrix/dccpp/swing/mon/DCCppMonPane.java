@@ -186,7 +186,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
     @Override
     public void notifyTimeout(final DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

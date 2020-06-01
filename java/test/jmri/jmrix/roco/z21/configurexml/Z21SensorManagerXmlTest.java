@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Z21SensorManagerXml.java
  *
- * Description: tests for the Z21SensorManagerXml class
+ * Test for the Z21SensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class Z21SensorManagerXmlTest {
       Assert.assertNotNull("Z21SensorManagerXml constructor",new Z21SensorManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

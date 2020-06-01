@@ -50,14 +50,13 @@ cache:
 
 os:
   - linux
-#  - osx # temporarilly disabled -- its more complex than originally anticipated to do conditional matrixes based on PR/push differentiation
 
 dist: bionic
 
 env:
   global:
   # false to silence most maven output; true to catch tests that do not complete
-  - PRINT_SUMMARY=false
+  - PRINT_SUMMARY=true
   - MAVEN_OPTS=-Xmx1536m
   # see http://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html#runOrder for valid values
   - RUN_ORDER=alphabetical
@@ -72,9 +71,6 @@ jobs:
   - name: Headless Tests
     os: linux
     env: HEADLESS=true STATIC=false
-  - name: Static Analysis
-    os: linux
-    env: HEADLESS=true STATIC=true
   - name: Intermittently Failing GUI Tests
     os: linux
     env: HEADLESS=false SKIPINTERMITTENT=false STATIC=true

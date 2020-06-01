@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test the VerifyWriteProgrammerFacade class.
  *
- * @author	Bob Jacobsen Copyright 2013
+ * @author Bob Jacobsen Copyright 2013
  * 
  */
 public class VerifyWriteProgrammerFacadeTest {
@@ -40,7 +40,7 @@ public class VerifyWriteProgrammerFacadeTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }
@@ -72,7 +72,7 @@ public class VerifyWriteProgrammerFacadeTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }

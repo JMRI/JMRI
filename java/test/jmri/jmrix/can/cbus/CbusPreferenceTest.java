@@ -23,7 +23,6 @@ public class CbusPreferenceTest {
         t = null;
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

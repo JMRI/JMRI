@@ -21,7 +21,7 @@ public class SRCPParserTest {
         
         String code = "POWER SET\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNotNull().isInstanceOf(ParseException.class);
     }
 
@@ -30,28 +30,28 @@ public class SRCPParserTest {
     public void testSetPowerOn() throws ParseException {
         String code = "SET 1 POWER ON\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        assertThat(p.command()).isNotNull().withFailMessage("SET Power On");
+        assertThat(p.command()).withFailMessage("SET Power On").isNotNull();
     }
 
     @Test
     public void testSetPowerOff() throws ParseException {
         String code = "SET 1 POWER OFF\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        assertThat(p.command()).isNotNull().withFailMessage("SET Power Off");
+        assertThat(p.command()).withFailMessage("SET Power Off").isNotNull();
     }
 
     @Test
     public void testCheckPowerOff() throws ParseException {
         String code = "CHECK 1 POWER OFF\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        assertThat(p.command()).isNotNull().withFailMessage("Check Power Off");
+        assertThat(p.command()).withFailMessage("Check Power Off").isNotNull();
     }
 
     @Test
     public void testGetPower() {
         String code = "GET 1 POWER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -59,7 +59,7 @@ public class SRCPParserTest {
     public void testInitPower() {
         String code = "Init 1 POWER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -67,7 +67,7 @@ public class SRCPParserTest {
     public void testTermPower() {
         String code = "TERM 1 POWER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -76,7 +76,7 @@ public class SRCPParserTest {
     public void testGetFB() {
         String code = "GET 1 FB 42\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -84,7 +84,7 @@ public class SRCPParserTest {
     public void testSetFB() {
         String code = "SET 1 FB 42 1\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -92,7 +92,7 @@ public class SRCPParserTest {
     public void testInitFB() {
         String code = "INIT 1 FB\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -100,7 +100,7 @@ public class SRCPParserTest {
     public void testTermFB() {
         String code = "TERM 1 FB\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -108,7 +108,7 @@ public class SRCPParserTest {
     public void testWaitFB() {
         String code = "WAIT 1 FB 42 1 10\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -117,7 +117,7 @@ public class SRCPParserTest {
     public void testSetGAClosed() {
         String code = "SET 1 GA 42 0 0 -1\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -125,7 +125,7 @@ public class SRCPParserTest {
     public void testSetGAThrown() {
         String code = "SET 1 GA 42 0 1 -1\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -133,7 +133,7 @@ public class SRCPParserTest {
     public void testInitGA() {
         String code = "INIT 1 GA 42 N\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -142,7 +142,7 @@ public class SRCPParserTest {
     public void testGetServer() {
         String code = "GET 0 SERVER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -150,7 +150,7 @@ public class SRCPParserTest {
     public void testResetServer() {
         String code = "RESET 0 SERVER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -158,7 +158,7 @@ public class SRCPParserTest {
     public void testTERMServer() {
         String code = "TERM 0 SERVER\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -167,7 +167,7 @@ public class SRCPParserTest {
     public void testGETTime() {
         String code = "GET 0 TIME\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -175,7 +175,7 @@ public class SRCPParserTest {
     public void testINITTime() {
         String code = "INIT 0 TIME 1 2\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -183,7 +183,7 @@ public class SRCPParserTest {
     public void testSETTime() {
         String code = "SET 0 TIME 2014014 12 32 42\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -191,7 +191,7 @@ public class SRCPParserTest {
     public void testTERMTime() {
         String code = "TERM 0 TIME\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -199,7 +199,7 @@ public class SRCPParserTest {
     public void testWaitTime() {
         String code = "WAIT 0 TIME 2014020 1 30 41\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -208,7 +208,7 @@ public class SRCPParserTest {
     public void testGetGL() {
         String code = "GET 1 GL 42\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -216,7 +216,7 @@ public class SRCPParserTest {
     public void testInitGLShortAddress() {
         String code = "INIT 1 GL 42 N 1 28 2\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -224,7 +224,7 @@ public class SRCPParserTest {
     public void testInitGLLongAddress() {
         String code = "INIT 1 GL 1042 N 2 28 2\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -232,7 +232,7 @@ public class SRCPParserTest {
     public void testSetGL() {
         String code = "SET 1 GL 42 0 2 28 0 1 = 0 0 0 0 0\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -240,7 +240,7 @@ public class SRCPParserTest {
     public void testTERMGL() {
         String code = "TERM 1 GL 42\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -249,7 +249,7 @@ public class SRCPParserTest {
     public void testGetSESSION() {
         String code = "GET 0 SESSION 12345\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -258,7 +258,7 @@ public class SRCPParserTest {
     public void testGetBusDescription() {
         String code = "GET 0 DESCRIPTION\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -266,7 +266,7 @@ public class SRCPParserTest {
     public void testGetDeviceGroupDescription() {
         String code = "GET 0 DESCRIPTION GA\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -274,7 +274,7 @@ public class SRCPParserTest {
     public void testGetDeviceDescription() {
         String code = "GET 0 DESCRIPTION GA 42\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -283,7 +283,7 @@ public class SRCPParserTest {
     public void testSetCVValue() {
         String code = "SET 1 SM 0 CV 1 1\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -291,36 +291,40 @@ public class SRCPParserTest {
     public void testGetCVValue() {
         String code = "GET 1 SM 0 CV 1\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
     @Test
-    public void testSetCVBITValue() throws ParseException {
+    public void testSetCVBITValue() {
         String code = "SET 1 SM 0 CVBIT 1 1 0\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        p.command();
+        Throwable thrown = catchThrowable(p::command);
+        assertThat(thrown).isNull();
     }
 
     @Test
-    public void testGetCVBITValue() throws ParseException {
+    public void testGetCVBITValue() {
         String code = "GET 1 SM 0 CVBIT 1 0\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        p.command();
+        Throwable thrown = catchThrowable(p::command);
+        assertThat(thrown).isNull();
     }
 
     @Test
-    public void testSetRegValue() throws ParseException {
+    public void testSetRegValue() {
         String code = "SET 1 SM 0 REG 1 1\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        p.command();
+        Throwable thrown = catchThrowable(p::command);
+        assertThat(thrown).isNull();
     }
 
     @Test
-    public void testGetRegValue() throws ParseException {
+    public void testGetRegValue() {
         String code = "GET 1 SM 0 REG 1\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        p.command();
+        Throwable thrown = catchThrowable(p::command);
+        assertThat(thrown).isNull();
     }
 
 
@@ -328,7 +332,7 @@ public class SRCPParserTest {
     public void testINITSM() {
         String code = "INIT 1 SM NMRA\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -336,7 +340,7 @@ public class SRCPParserTest {
     public void testTERMSM() {
         String code = "TERM 1 SM\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -344,7 +348,7 @@ public class SRCPParserTest {
     public void testVerifyCVValue() {
         String code = "VERIFY 1 SM 0 CV 1 2\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -353,7 +357,7 @@ public class SRCPParserTest {
     public void testGetLOCK() {
         String code = "GET 1 LOCK GA 42\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -361,7 +365,7 @@ public class SRCPParserTest {
     public void testSetLOCK() {
         String code = "SET 1 LOCK GA 42 60\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -369,7 +373,7 @@ public class SRCPParserTest {
     public void testTermLOCK() {
         String code = "TERM 1 LOCK GA 42\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
-        Throwable thrown = catchThrowable( () -> p.command());
+        Throwable thrown = catchThrowable(p::command);
         assertThat(thrown).isNull();
     }
 
@@ -381,7 +385,7 @@ public class SRCPParserTest {
         String code = "GO\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SimpleNode n = p.handshakecommand();
-        assertThat(n).isNotNull().withFailMessage("Go node");
+        assertThat(n).withFailMessage("Go node").isNotNull();
     }
 
     // test the "SET" command
@@ -390,7 +394,7 @@ public class SRCPParserTest {
         String code = "SET PROTOCOL SRCP 1.2.3\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SimpleNode n = p.handshakecommand();
-        assertThat(n).isNotNull().withFailMessage("Set node");
+        assertThat(n).withFailMessage("Set node").isNotNull();
     }
 
     @Test
@@ -398,7 +402,7 @@ public class SRCPParserTest {
         String code = "SET CONNECTIONMODE SRCP COMMAND\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SimpleNode n = p.handshakecommand();
-        assertThat(n).isNotNull().withFailMessage("Set node");
+        assertThat(n).withFailMessage("Set node").isNotNull();
     }
 
     @Test
@@ -406,10 +410,9 @@ public class SRCPParserTest {
         String code = "SET CONNECTIONMODE SRCP INFO\n\r";
         SRCPParser p = new SRCPParser(new StringReader(code));
         SimpleNode n = p.handshakecommand();
-        assertThat(n).isNotNull().withFailMessage("Set node");
+        assertThat(n).withFailMessage("Set node").isNotNull();
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

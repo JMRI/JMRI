@@ -31,7 +31,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         TurnoutOperation result = null;
         String className = e.getAttributeValue("class");
         if (className == null) {
-            log.error("class name missing in turnout operation \"" + e + "\"");
+            log.error("class name missing in turnout operation \"{}\"", e);
         } else {
             log.debug("loadOperation for class {}", className);
             try {
@@ -99,7 +99,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
             log.error("exception in getAdapter", e);
         }
         if (adapter == null) {
-            log.warn("could not create adapter class " + fullConfigName);
+            log.warn("could not create adapter class {}", fullConfigName);
         }
         return adapter;
     }

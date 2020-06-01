@@ -7,7 +7,6 @@ import java.util.ListIterator;
 import javax.annotation.concurrent.GuardedBy;
 
 import jmri.*;
-import jmri.NamedBeanUsageReport;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.ThreadingUtil;
 
@@ -1027,13 +1026,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             Engineer.ThrottleRamp ramp = _engineer.getRamp();
                             if (ramp == null || ramp.ready) {   // do not change flags when ramping
                                 // recheck flags
-                                if (_idxCurrentOrder < _orders.size() - 1 &&
-                                		Stop.equals(getSpeedTypeForBlock(_idxCurrentOrder + 1))) {
-                                	break;	// cannot overide flags
+                                if (_idxCurrentOrder < _orders.size() - 1
+                                        && Stop.equals(getSpeedTypeForBlock(_idxCurrentOrder + 1))) {
+                                    break; // cannot overide flags
                                 }
-                            	if (_idxCurrentOrder == 0) {
+                                if (_idxCurrentOrder == 0) {
                                     _engineer.setHalt(false);
-                            	}
+                                }
                                 _waitForSignal = false;
                                 _waitForBlock = false;
                                 _waitForWarrant = false;
@@ -1099,10 +1098,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         int state = runState;
-        if ( state == Warrant.HALT) {
-        	if (_waitForSignal || _waitForBlock || _waitForWarrant) {
-        		state = WAIT_FOR_CLEAR;
-        	}
+        if (state == Warrant.HALT) {
+            if (_waitForSignal || _waitForBlock || _waitForWarrant) {
+                state = WAIT_FOR_CLEAR;
+            }
         }
         if (ret) {
             fireRunStatus("controlChange", state, idx);
@@ -1657,17 +1656,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         };
 
         synchronized (allocateBlocks) {
-            Thread doit = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        javax.swing.SwingUtilities.invokeAndWait(allocateBlocks);
-                    }
-                    catch (Exception e) {
-                        log.error("Exception in allocateBlocks", e);
-                    }
-                }
-            };
+            Thread doit = jmri.util.ThreadingUtil.newThread(
+                    () -> {
+                        try {
+                            javax.swing.SwingUtilities.invokeAndWait(allocateBlocks);
+                        }
+                        catch (Exception e) {
+                            log.error("Exception in allocateBlocks", e);
+                        }
+                    },
+                    "Warrant doit");
             doit.start();
         }
         return true;

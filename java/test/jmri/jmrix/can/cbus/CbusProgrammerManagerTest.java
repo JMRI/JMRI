@@ -11,7 +11,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammerManager class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusProgrammerManagerTest {
 

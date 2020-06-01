@@ -112,7 +112,6 @@ public class SCWarrantTest extends WarrantTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

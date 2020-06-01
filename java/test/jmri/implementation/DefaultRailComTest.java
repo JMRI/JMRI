@@ -110,7 +110,6 @@ public class DefaultRailComTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();

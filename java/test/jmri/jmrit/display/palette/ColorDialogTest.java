@@ -2,7 +2,7 @@ package jmri.jmrit.display.palette;
 
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
-import javax.swing.JComponent;
+
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
@@ -42,7 +42,7 @@ public class ColorDialogTest {
         jmri.util.JUnitUtil.waitFor(() -> {
             return _done;
         }, "Dialog done.");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // allow some time for button push
+        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
         Assert.assertEquals("panel color is red", Color.RED, _cpe.getTargetPanel().getBackground());
         JUnitUtil.dispose(_cpe);
@@ -66,7 +66,7 @@ public class ColorDialogTest {
         jmri.util.JUnitUtil.waitFor(() -> {
             return _done;
         }, "Dialog done.");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // allow some time for button push
+        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
         Assert.assertEquals("panel color is green", Color.GREEN, _cpe.getTargetPanel().getBackground());
         JUnitUtil.dispose(_cpe);
@@ -87,7 +87,7 @@ public class ColorDialogTest {
         jmri.util.JUnitUtil.waitFor(() -> {
             return _done;
         }, "Dialog done.");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // allow some time for button push
+        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
         Assert.assertEquals("border color is blue", Color.BLUE, _pos.getPopupUtility().getBorderColor());
         JUnitUtil.dispose(_cpe);
@@ -111,7 +111,7 @@ public class ColorDialogTest {
         jmri.util.JUnitUtil.waitFor(() -> {
             return _done;
         }, "Dialog done.");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // allow some time for button push
+        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
         Assert.assertEquals("margin color is green", Color.GREEN, _pos.getPopupUtility().getBackground());
         JUnitUtil.dispose(_cpe);
@@ -133,7 +133,7 @@ public class ColorDialogTest {
         jmri.util.JUnitUtil.waitFor(() -> {
             return _done;
         }, "Dialog done.");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // allow some time for button push
+        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
         Assert.assertEquals("font color is red", Color.RED, _pos.getPopupUtility().getForeground());
         JUnitUtil.dispose(_cpe);
@@ -155,7 +155,7 @@ public class ColorDialogTest {
         jmri.util.JUnitUtil.waitFor(() -> {
             return _done;
         }, "Dialog done.");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  // allow some time for button push
+        new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
         Assert.assertEquals("font color is red", Color.BLUE, _pos.getPopupUtility().getForeground());
         JUnitUtil.dispose(_cpe);
@@ -215,7 +215,6 @@ public class ColorDialogTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -225,6 +224,7 @@ public class ColorDialogTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

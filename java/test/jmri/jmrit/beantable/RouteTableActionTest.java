@@ -2,22 +2,18 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import jmri.Route;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  *
- * @author	Bob Jacobsen Copyright 2004, 2007
+ * @author Bob Jacobsen Copyright 2004, 2007
  */
 public class RouteTableActionTest extends AbstractTableActionBase<Route> {
 
@@ -69,10 +65,12 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddRoute"));  // NOI18N
         Assert.assertNotNull("Found Add Route Frame", addFrame);  // NOI18N
 
-        new JTextFieldOperator(addFrame, 0).setText("105");  // NOI18N
-        new JTextFieldOperator(addFrame, 1).setText("Route 105");  // NOI18N
+        JLabelOperator systemLabel = new JLabelOperator(addFrame,Bundle.getMessage("LabelSystemName"));
+        new JTextFieldOperator((JTextField)systemLabel.getLabelFor()).setText("105");  // NOI18N
+        JLabelOperator userLabel = new JLabelOperator(addFrame,Bundle.getMessage("LabelUserName"));
+        new JTextFieldOperator((JTextField) userLabel.getLabelFor()).setText("Route 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
-        new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+        //new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
 
 
         Route chk105 = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("Route 105");  // NOI18N
@@ -102,7 +100,7 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         
         //press create button to create a Route, then close the create window
         jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
-        jf.requestClose();
+        //jf.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         // press "Edit" button, which is the last column (no heading), to open the Edit Route window
@@ -112,10 +110,9 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         //enter a username in the Edit window
         JFrame f2 = JFrameOperator.waitJFrame("Edit Route", true, true);
         jf = new JFrameOperator(f2);
-        //username field is the first field in window
-        JTextFieldOperator jtxt = new JTextFieldOperator(jf, 0);
-        jtxt.clickMouse();
-        jtxt.setText("TestRouteUserName");      
+
+        JLabelOperator userLabel = new JLabelOperator(jf,Bundle.getMessage("LabelUserName"));
+        new JTextFieldOperator((JTextField) userLabel.getLabelFor()).typeText("TestRouteUserName");
         
         //press Update to save the Route change
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonUpdate"));
@@ -155,7 +152,6 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -175,7 +175,7 @@ public class Sound {
     public void play() {
         if (streaming) {
             Runnable streamSound = new StreamingSound(this.url);
-            Thread tStream = new Thread(streamSound);
+            Thread tStream = jmri.util.ThreadingUtil.newThread(streamSound);
             tStream.start();
         } else {
             clipRef.updateAndGet(clip -> {
@@ -266,7 +266,7 @@ public class Sound {
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format); // format is an AudioFormat object
         if (!AudioSystem.isLineSupported(info)) {
             // Handle the error.
-            log.warn("line not supported: " + info);
+            log.warn("line not supported: {}", info);
             return;
         }
         // Obtain and open the line.
@@ -275,7 +275,7 @@ public class Sound {
             line.open(format);
         } catch (LineUnavailableException ex) {
             // Handle the error.
-            log.error("error opening line: " + ex);
+            log.error("error opening line: {}", ex);
             return;
         }
         line.start();
@@ -370,7 +370,7 @@ public class Sound {
                 // link an audio stream to the sampled sound's file
                 stream = AudioSystem.getAudioInputStream(url);
                 format = stream.getFormat();
-                log.debug("Audio format: " + format);
+                log.debug("Audio format: {}", format);
                 // convert ULAW/ALAW formats to PCM format
                 if ((format.getEncoding() == AudioFormat.Encoding.ULAW)
                         || (format.getEncoding() == AudioFormat.Encoding.ALAW)) {
@@ -385,13 +385,13 @@ public class Sound {
                     stream = AudioSystem.getAudioInputStream(newFormat, stream);
                     log.info("Converted Audio format: {}", newFormat);
                     format = newFormat;
-                    log.debug("new converted Audio format: " + format);
+                    log.debug("new converted Audio format: {}", format);
                 }
             } catch (UnsupportedAudioFileException e) {
-                log.error("AudioFileException " + e.getMessage());
+                log.error("AudioFileException {}", e.getMessage());
                 return;
             } catch (IOException e) {
-                log.error("IOException " + e.getMessage());
+                log.error("IOException {}", e.getMessage());
                 return;
             }
             streamingStop = false;
@@ -408,14 +408,14 @@ public class Sound {
                     DataLine.Info info
                             = new DataLine.Info(SourceDataLine.class, format);
                     if (!AudioSystem.isLineSupported(info)) {
-                        log.error("Audio play() does not support: " + format);
+                        log.error("Audio play() does not support: {}", format);
                         return;
                     }
                     // get a line of the required format
                     line = (SourceDataLine) AudioSystem.getLine(info);
                     line.open(format);
                 } catch (Exception e) {
-                    log.error("Exception while creating Audio out " + e.getMessage());
+                    log.error("Exception while creating Audio out {}", e.getMessage());
                     return;
                 }
             }
@@ -428,7 +428,7 @@ public class Sound {
             //   pass them on through the SourceDataLine 
             int numRead;
             byte[] buffer = new byte[line.getBufferSize()];
-            log.debug("streaming sound buffer size = " + line.getBufferSize());
+            log.debug("streaming sound buffer size = {}", line.getBufferSize());
             line.start();
             // read and play chunks of the audio
             try {
@@ -440,7 +440,7 @@ public class Sound {
                     }
                 }
             } catch (IOException e) {
-                log.error("IOException while reading sound file " + e.getMessage());
+                log.error("IOException while reading sound file {}", e.getMessage());
             }
             // wait until all data is played, then close the line
             line.drain();

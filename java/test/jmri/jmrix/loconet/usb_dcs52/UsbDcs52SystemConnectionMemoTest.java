@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.usb_dcs52;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,27 +8,25 @@ import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class UsbDcs52SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class UsbDcs52SystemConnectionMemoTest extends SystemConnectionMemoTestBase<UsbDcs52SystemConnectionMemo> {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
        JUnitUtil.setUp();
-       UsbDcs52SystemConnectionMemo memo = new UsbDcs52SystemConnectionMemo();
-       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
-       memo.setLnTrafficController(lnis);
-       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
-       memo.configureManagers();
-       scm = memo;
+       scm = new UsbDcs52SystemConnectionMemo();
+       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(scm);
+       scm.setLnTrafficController(lnis);
+       scm.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+       scm.configureManagers();
     }
 
     @Override
     @After
     public void tearDown() {
-        ((UsbDcs52SystemConnectionMemo)scm).dispose();
+        scm.dispose();
         JUnitUtil.tearDown();
     }
 

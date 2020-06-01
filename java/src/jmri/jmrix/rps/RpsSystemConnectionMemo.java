@@ -159,6 +159,8 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Validate RPS system name format.
      *
+     * @param systemName system name.
+     * @param type e.g. S for Sensor, T for Turnout.
      * @return VALID if system name has a valid format, else return INVALID
      */
     public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {

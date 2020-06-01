@@ -175,7 +175,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     @Override
     public void setRate(double newRate) {
         if (DEBUG_SHOW_PUBLIC_CALLS) {
-            log.debug("setRate: " + newRate); // NOI18N
+            log.debug("setRate: {}", newRate); // NOI18N
         }
         int newRatio = (int) newRate;
         if (newRatio < 1 || newRatio > 60) {
@@ -340,7 +340,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
     }
 
     private void issueClockRatio(int r) {
-        log.debug("sending ratio " + r + " to mrc cmd station"); // NOI18N
+        log.debug("sending ratio {} to mrc cmd station", r); // NOI18N
         MrcMessage cmdMrc = jmri.jmrix.mrc.MrcMessage.setClockRatio(r);
         tc.sendMrcMessage(cmdMrc);
     }

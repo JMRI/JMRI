@@ -116,6 +116,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     
     /** 
      * Check for a deprecated system prefix and warn if found
+     * @param prefix The alphanumeric prefix to test for
      * @deprecated 4.15.3  part of #4670 migration to parsable prefixes
      */
     @Deprecated // part of #4670 migration to parsable prefixes

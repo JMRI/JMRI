@@ -2,6 +2,7 @@ package jmri.jmrix.openlcb.swing.hub;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import jmri.jmrix.can.CanListener;
@@ -30,18 +31,16 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
             @Override
             public void notifyOwner(String line) {
                 nextLine = line;
-                SwingUtilities.invokeLater(() -> {
-                    label.setText(nextLine);
-                });
+                SwingUtilities.invokeLater(() -> label.setText(nextLine));
             }
         };
     }
 
     CanSystemConnectionMemo memo;
 
-    transient Hub hub;
+    final transient Hub hub;
 
-    JLabel label = new JLabel("                                                 ");
+    final JLabel label = new JLabel("                                                 ");
 
     @Override
     public void initContext(Object context) {
@@ -73,45 +72,33 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     Thread t;
 
     void startHubThread(int port) {
-        t = new Thread() {
-            @Override
-            public void run() {
-                hub.start();
-            }
-        };
+        t = jmri.util.ThreadingUtil.newThread(hub::start,
+                "OpenLCB Hub Thread");
         t.setDaemon(true);
 
         // add forwarder for internal JMRI traffic
-        hub.addForwarder(new Hub.Forwarding() {
-            @Override
-            public void forward(Hub.Memo m) {
-                if (m.source == null) {
-                    return;  // was from this
-                }                // process and forward m.line;
-                GridConnectReply msg = new GridConnectReply();
-                byte[] bytes;
-                try {
-                    bytes = m.line.getBytes("US-ASCII");  // GC adapters use ASCII // NOI18N
-                } catch (java.io.UnsupportedEncodingException e) {
-                    log.error("Cannot proceed with GC input message since US-ASCII not supported");
-                    return;
-                }
-                for (int i = 0; i < m.line.length(); i++) {
-                    msg.setElement(i, bytes[i]);
-                }
-                workingReply = msg.createReply();
-
-                CanMessage result = new CanMessage(workingReply.getNumDataElements(), workingReply.getHeader());
-                for (int i = 0; i < workingReply.getNumDataElements(); i++) {
-                    result.setElement(i, workingReply.getElement(i));
-                }
-                result.setExtended(workingReply.isExtended());
-
-                // Send over outbound link
-                memo.getTrafficController().sendCanMessage(result, HubPane.this);
-                // And send into JMRI
-                memo.getTrafficController().distributeOneReply(workingReply, HubPane.this);
+        hub.addForwarder(m -> {
+            if (m.source == null) {
+                return;  // was from this
+            }                // process and forward m.line
+            GridConnectReply msg = new GridConnectReply();
+            byte[] bytes;
+            bytes = m.line.getBytes(StandardCharsets.US_ASCII);  // GC adapters use ASCII // NOI18N
+            for (int i = 0; i < m.line.length(); i++) {
+                msg.setElement(i, bytes[i]);
             }
+            workingReply = msg.createReply();
+
+            CanMessage result = new CanMessage(workingReply.getNumDataElements(), workingReply.getHeader());
+            for (int i = 0; i < workingReply.getNumDataElements(); i++) {
+                result.setElement(i, workingReply.getElement(i));
+            }
+            result.setExtended(workingReply.isExtended());
+
+            // Send over outbound link
+            memo.getTrafficController().sendCanMessage(result, HubPane.this);
+            // And send into JMRI
+            memo.getTrafficController().distributeOneReply(workingReply, HubPane.this);
         });
 
         t.start();
@@ -139,9 +126,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         return "OpenLCB Hub Control";
     }
 
-    protected void init() {
-    }
-
     @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
@@ -151,7 +135,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     public synchronized void message(CanMessage l) {  // receive a message and log it
         GridConnectMessage gm = new GridConnectMessage(l);
         if (log.isDebugEnabled()) {
-            log.debug("message " + gm.toString());
+            log.debug("message {}",gm);
         }
         hub.putLine(gm.toString());
     }
@@ -160,13 +144,11 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     public synchronized void reply(CanReply reply) {
         if (reply != workingReply) {
             GridConnectMessage gm = new GridConnectMessage(new CanMessage(reply));
-            if (log.isDebugEnabled()) {
-                log.debug("reply " + gm.toString());
-            }
+            log.debug("reply {}", gm.toString());
             hub.putLine(gm.toString());
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(HubPane.class);
+    private static final Logger log = LoggerFactory.getLogger(HubPane.class);
 
 }

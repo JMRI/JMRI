@@ -10,7 +10,7 @@ import org.junit.Assert;
 /**
  * JUnit tests for the InputBits class.
  *
- * @author	Dave Duchamp 2009
+ * @author Dave Duchamp 2009
  */
 public class InputBitsTest {
 

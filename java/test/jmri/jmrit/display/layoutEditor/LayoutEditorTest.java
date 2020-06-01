@@ -20,6 +20,7 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  *
  * @author Paul Bender Copyright (C) 2016
  * @author George Warner Copyright (C) 2019
+ * @author Bob Jacobsen Copyright (C) 2020
  */
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
@@ -52,6 +53,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
             jfo.closeFrameWithConfirmations();
             e = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
@@ -71,123 +73,6 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.dispose(e);
     }
 
-    @Test
-    public void testEnums() {
-        Assert.assertEquals("HitPointTypes.NONE.getValue() == 0", LayoutEditor.HitPointType.NONE.getXmlValue(), Integer.valueOf(0));
-        Assert.assertEquals("HitPointTypes.POS_POINT.getValue() == 1", LayoutEditor.HitPointType.POS_POINT.getXmlValue(), Integer.valueOf(1));
-        Assert.assertEquals("HitPointTypes.TURNOUT_A.getValue() == 2", LayoutEditor.HitPointType.TURNOUT_A.getXmlValue(), Integer.valueOf(2));
-        Assert.assertEquals("HitPointTypes.TURNOUT_B.getValue() == 3", LayoutEditor.HitPointType.TURNOUT_B.getXmlValue(), Integer.valueOf(3));
-        Assert.assertEquals("HitPointTypes.TURNOUT_C.getValue() == 4", LayoutEditor.HitPointType.TURNOUT_C.getXmlValue(), Integer.valueOf(4));
-        Assert.assertEquals("HitPointTypes.TURNOUT_D.getValue() == 5", LayoutEditor.HitPointType.TURNOUT_D.getXmlValue(), Integer.valueOf(5));
-        Assert.assertEquals("HitPointTypes.LEVEL_XING_A.getValue() == 6", LayoutEditor.HitPointType.LEVEL_XING_A.getXmlValue(), Integer.valueOf(6));
-        Assert.assertEquals("HitPointTypes.LEVEL_XING_B.getValue() == 7", LayoutEditor.HitPointType.LEVEL_XING_B.getXmlValue(), Integer.valueOf(7));
-        Assert.assertEquals("HitPointTypes.LEVEL_XING_C.getValue() == 8", LayoutEditor.HitPointType.LEVEL_XING_C.getXmlValue(), Integer.valueOf(8));
-        Assert.assertEquals("HitPointTypes.LEVEL_XING_D.getValue() == 9", LayoutEditor.HitPointType.LEVEL_XING_D.getXmlValue(), Integer.valueOf(9));
-        Assert.assertEquals("HitPointTypes.TRACK.getValue() == 10", LayoutEditor.HitPointType.TRACK.getXmlValue(), Integer.valueOf(10));
-        Assert.assertEquals("HitPointTypes.TURNOUT_CENTER.getValue() == 11", LayoutEditor.HitPointType.TURNOUT_CENTER.getXmlValue(), Integer.valueOf(11));
-        Assert.assertEquals("HitPointTypes.LEVEL_XING_CENTER.getValue() == 12", LayoutEditor.HitPointType.LEVEL_XING_CENTER.getXmlValue(), Integer.valueOf(12));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_CENTER.getValue() == 13", LayoutEditor.HitPointType.TURNTABLE_CENTER.getXmlValue(), Integer.valueOf(13));
-        Assert.assertEquals("HitPointTypes.LAYOUT_POS_LABEL.getValue() == 14", LayoutEditor.HitPointType.LAYOUT_POS_LABEL.getXmlValue(), Integer.valueOf(14));
-        Assert.assertEquals("HitPointTypes.LAYOUT_POS_JCOMP.getValue() == 15", LayoutEditor.HitPointType.LAYOUT_POS_JCOMP.getXmlValue(), Integer.valueOf(15));
-        Assert.assertEquals("HitPointTypes.MULTI_SENSOR.getValue() == 16", LayoutEditor.HitPointType.MULTI_SENSOR.getXmlValue(), Integer.valueOf(16));
-        Assert.assertEquals("HitPointTypes.MARKER.getValue() == 17", LayoutEditor.HitPointType.MARKER.getXmlValue(), Integer.valueOf(17));
-        Assert.assertEquals("HitPointTypes.TRACK_CIRCLE_CENTRE.getValue() == 18", LayoutEditor.HitPointType.TRACK_CIRCLE_CENTRE.getXmlValue(), Integer.valueOf(18));
-        Assert.assertEquals("HitPointTypes.UNUSED_19.getValue() == 19", LayoutEditor.HitPointType.UNUSED_19.getXmlValue(), Integer.valueOf(19));
-        Assert.assertEquals("HitPointTypes.SLIP_CENTER.getValue() == 20", LayoutEditor.HitPointType.SLIP_CENTER.getXmlValue(), Integer.valueOf(20));
-        Assert.assertEquals("HitPointTypes.SLIP_A.getValue() == 21", LayoutEditor.HitPointType.SLIP_A.getXmlValue(), Integer.valueOf(21));
-        Assert.assertEquals("HitPointTypes.SLIP_B.getValue() == 22", LayoutEditor.HitPointType.SLIP_B.getXmlValue(), Integer.valueOf(22));
-        Assert.assertEquals("HitPointTypes.SLIP_C.getValue() == 23", LayoutEditor.HitPointType.SLIP_C.getXmlValue(), Integer.valueOf(23));
-        Assert.assertEquals("HitPointTypes.SLIP_D.getValue() == 24", LayoutEditor.HitPointType.SLIP_D.getXmlValue(), Integer.valueOf(24));
-        Assert.assertEquals("HitPointTypes.SLIP_LEFT.getValue() == 25", LayoutEditor.HitPointType.SLIP_LEFT.getXmlValue(), Integer.valueOf(25));
-        Assert.assertEquals("HitPointTypes.SLIP_RIGHT.getValue() == 26", LayoutEditor.HitPointType.SLIP_RIGHT.getXmlValue(), Integer.valueOf(26));
-        Assert.assertEquals("HitPointTypes.UNUSED_27.getValue() == 27", LayoutEditor.HitPointType.UNUSED_27.getXmlValue(), Integer.valueOf(27));
-        Assert.assertEquals("HitPointTypes.UNUSED_28.getValue() == 28", LayoutEditor.HitPointType.UNUSED_28.getXmlValue(), Integer.valueOf(28));
-        Assert.assertEquals("HitPointTypes.UNUSED_29.getValue() == 29", LayoutEditor.HitPointType.UNUSED_29.getXmlValue(), Integer.valueOf(29));
-        Assert.assertEquals("HitPointTypes.BEZIER_CONTROL_POINT_0.getValue() == 30", LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_0.getXmlValue(), Integer.valueOf(30));
-        Assert.assertEquals("HitPointTypes.BEZIER_CONTROL_POINT_1.getValue() == 31", LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_1.getXmlValue(), Integer.valueOf(31));
-        Assert.assertEquals("HitPointTypes.BEZIER_CONTROL_POINT_2.getValue() == 32", LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_2.getXmlValue(), Integer.valueOf(32));
-        Assert.assertEquals("HitPointTypes.BEZIER_CONTROL_POINT_3.getValue() == 33", LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_3.getXmlValue(), Integer.valueOf(33));
-        Assert.assertEquals("HitPointTypes.BEZIER_CONTROL_POINT_4.getValue() == 34", LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_4.getXmlValue(), Integer.valueOf(34));
-        Assert.assertEquals("HitPointTypes.BEZIER_CONTROL_POINT_5.getValue() == 35", LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_5.getXmlValue(), Integer.valueOf(35));
-        Assert.assertEquals("HitPointTypes.BEZIER_CONTROL_POINT_6.getValue() == 36", LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_6.getXmlValue(), Integer.valueOf(36));
-        Assert.assertEquals("HitPointTypes.BEZIER_CONTROL_POINT_7.getValue() == 37", LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_7.getXmlValue(), Integer.valueOf(37));
-        Assert.assertEquals("HitPointTypes.BEZIER_CONTROL_POINT_8.getValue() == 38", LayoutEditor.HitPointType.BEZIER_CONTROL_POINT_8.getXmlValue(), Integer.valueOf(38));
-        Assert.assertEquals("HitPointTypes.SHAPE_CENTER.getValue() == 39", LayoutEditor.HitPointType.SHAPE_CENTER.getXmlValue(), Integer.valueOf(39));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_0.getValue() == 40", LayoutEditor.HitPointType.SHAPE_POINT_0.getXmlValue(), Integer.valueOf(40));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_1.getValue() == 41", LayoutEditor.HitPointType.SHAPE_POINT_1.getXmlValue(), Integer.valueOf(41));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_2.getValue() == 42", LayoutEditor.HitPointType.SHAPE_POINT_2.getXmlValue(), Integer.valueOf(42));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_3.getValue() == 43", LayoutEditor.HitPointType.SHAPE_POINT_3.getXmlValue(), Integer.valueOf(43));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_4.getValue() == 44", LayoutEditor.HitPointType.SHAPE_POINT_4.getXmlValue(), Integer.valueOf(44));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_5.getValue() == 45", LayoutEditor.HitPointType.SHAPE_POINT_5.getXmlValue(), Integer.valueOf(45));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_6.getValue() == 46", LayoutEditor.HitPointType.SHAPE_POINT_6.getXmlValue(), Integer.valueOf(46));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_7.getValue() == 47", LayoutEditor.HitPointType.SHAPE_POINT_7.getXmlValue(), Integer.valueOf(47));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_8.getValue() == 48", LayoutEditor.HitPointType.SHAPE_POINT_8.getXmlValue(), Integer.valueOf(48));
-        Assert.assertEquals("HitPointTypes.SHAPE_POINT_9.getValue() == 49", LayoutEditor.HitPointType.SHAPE_POINT_9.getXmlValue(), Integer.valueOf(49));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_0.getValue() == 50", LayoutEditor.HitPointType.TURNTABLE_RAY_0.getXmlValue(), Integer.valueOf(50));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_1.getValue() == 51", LayoutEditor.HitPointType.TURNTABLE_RAY_1.getXmlValue(), Integer.valueOf(51));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_2.getValue() == 52", LayoutEditor.HitPointType.TURNTABLE_RAY_2.getXmlValue(), Integer.valueOf(52));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_3.getValue() == 53", LayoutEditor.HitPointType.TURNTABLE_RAY_3.getXmlValue(), Integer.valueOf(53));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_4.getValue() == 54", LayoutEditor.HitPointType.TURNTABLE_RAY_4.getXmlValue(), Integer.valueOf(54));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_5.getValue() == 55", LayoutEditor.HitPointType.TURNTABLE_RAY_5.getXmlValue(), Integer.valueOf(55));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_6.getValue() == 56", LayoutEditor.HitPointType.TURNTABLE_RAY_6.getXmlValue(), Integer.valueOf(56));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_7.getValue() == 57", LayoutEditor.HitPointType.TURNTABLE_RAY_7.getXmlValue(), Integer.valueOf(57));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_8.getValue() == 58", LayoutEditor.HitPointType.TURNTABLE_RAY_8.getXmlValue(), Integer.valueOf(58));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_9.getValue() == 59", LayoutEditor.HitPointType.TURNTABLE_RAY_9.getXmlValue(), Integer.valueOf(59));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_10.getValue() == 60", LayoutEditor.HitPointType.TURNTABLE_RAY_10.getXmlValue(), Integer.valueOf(60));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_11.getValue() == 61", LayoutEditor.HitPointType.TURNTABLE_RAY_11.getXmlValue(), Integer.valueOf(61));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_12.getValue() == 62", LayoutEditor.HitPointType.TURNTABLE_RAY_12.getXmlValue(), Integer.valueOf(62));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_13.getValue() == 63", LayoutEditor.HitPointType.TURNTABLE_RAY_13.getXmlValue(), Integer.valueOf(63));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_14.getValue() == 64", LayoutEditor.HitPointType.TURNTABLE_RAY_14.getXmlValue(), Integer.valueOf(64));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_15.getValue() == 65", LayoutEditor.HitPointType.TURNTABLE_RAY_15.getXmlValue(), Integer.valueOf(65));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_16.getValue() == 66", LayoutEditor.HitPointType.TURNTABLE_RAY_16.getXmlValue(), Integer.valueOf(66));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_17.getValue() == 67", LayoutEditor.HitPointType.TURNTABLE_RAY_17.getXmlValue(), Integer.valueOf(67));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_18.getValue() == 68", LayoutEditor.HitPointType.TURNTABLE_RAY_18.getXmlValue(), Integer.valueOf(68));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_19.getValue() == 69", LayoutEditor.HitPointType.TURNTABLE_RAY_19.getXmlValue(), Integer.valueOf(69));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_20.getValue() == 70", LayoutEditor.HitPointType.TURNTABLE_RAY_20.getXmlValue(), Integer.valueOf(70));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_21.getValue() == 71", LayoutEditor.HitPointType.TURNTABLE_RAY_21.getXmlValue(), Integer.valueOf(71));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_22.getValue() == 72", LayoutEditor.HitPointType.TURNTABLE_RAY_22.getXmlValue(), Integer.valueOf(72));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_23.getValue() == 73", LayoutEditor.HitPointType.TURNTABLE_RAY_23.getXmlValue(), Integer.valueOf(73));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_24.getValue() == 74", LayoutEditor.HitPointType.TURNTABLE_RAY_24.getXmlValue(), Integer.valueOf(74));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_25.getValue() == 75", LayoutEditor.HitPointType.TURNTABLE_RAY_25.getXmlValue(), Integer.valueOf(75));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_26.getValue() == 76", LayoutEditor.HitPointType.TURNTABLE_RAY_26.getXmlValue(), Integer.valueOf(76));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_27.getValue() == 77", LayoutEditor.HitPointType.TURNTABLE_RAY_27.getXmlValue(), Integer.valueOf(77));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_28.getValue() == 78", LayoutEditor.HitPointType.TURNTABLE_RAY_28.getXmlValue(), Integer.valueOf(78));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_29.getValue() == 79", LayoutEditor.HitPointType.TURNTABLE_RAY_29.getXmlValue(), Integer.valueOf(79));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_30.getValue() == 80", LayoutEditor.HitPointType.TURNTABLE_RAY_30.getXmlValue(), Integer.valueOf(80));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_31.getValue() == 81", LayoutEditor.HitPointType.TURNTABLE_RAY_31.getXmlValue(), Integer.valueOf(81));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_32.getValue() == 82", LayoutEditor.HitPointType.TURNTABLE_RAY_32.getXmlValue(), Integer.valueOf(82));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_33.getValue() == 83", LayoutEditor.HitPointType.TURNTABLE_RAY_33.getXmlValue(), Integer.valueOf(83));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_34.getValue() == 84", LayoutEditor.HitPointType.TURNTABLE_RAY_34.getXmlValue(), Integer.valueOf(84));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_35.getValue() == 85", LayoutEditor.HitPointType.TURNTABLE_RAY_35.getXmlValue(), Integer.valueOf(85));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_36.getValue() == 86", LayoutEditor.HitPointType.TURNTABLE_RAY_36.getXmlValue(), Integer.valueOf(86));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_37.getValue() == 87", LayoutEditor.HitPointType.TURNTABLE_RAY_37.getXmlValue(), Integer.valueOf(87));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_38.getValue() == 88", LayoutEditor.HitPointType.TURNTABLE_RAY_38.getXmlValue(), Integer.valueOf(88));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_39.getValue() == 89", LayoutEditor.HitPointType.TURNTABLE_RAY_39.getXmlValue(), Integer.valueOf(89));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_40.getValue() == 90", LayoutEditor.HitPointType.TURNTABLE_RAY_40.getXmlValue(), Integer.valueOf(90));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_41.getValue() == 91", LayoutEditor.HitPointType.TURNTABLE_RAY_41.getXmlValue(), Integer.valueOf(91));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_42.getValue() == 92", LayoutEditor.HitPointType.TURNTABLE_RAY_42.getXmlValue(), Integer.valueOf(92));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_43.getValue() == 93", LayoutEditor.HitPointType.TURNTABLE_RAY_43.getXmlValue(), Integer.valueOf(93));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_44.getValue() == 94", LayoutEditor.HitPointType.TURNTABLE_RAY_44.getXmlValue(), Integer.valueOf(94));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_45.getValue() == 95", LayoutEditor.HitPointType.TURNTABLE_RAY_45.getXmlValue(), Integer.valueOf(95));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_46.getValue() == 96", LayoutEditor.HitPointType.TURNTABLE_RAY_46.getXmlValue(), Integer.valueOf(96));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_47.getValue() == 97", LayoutEditor.HitPointType.TURNTABLE_RAY_47.getXmlValue(), Integer.valueOf(97));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_48.getValue() == 98", LayoutEditor.HitPointType.TURNTABLE_RAY_48.getXmlValue(), Integer.valueOf(98));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_49.getValue() == 99", LayoutEditor.HitPointType.TURNTABLE_RAY_49.getXmlValue(), Integer.valueOf(99));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_50.getValue() == 100", LayoutEditor.HitPointType.TURNTABLE_RAY_50.getXmlValue(), Integer.valueOf(100));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_51.getValue() == 101", LayoutEditor.HitPointType.TURNTABLE_RAY_51.getXmlValue(), Integer.valueOf(101));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_52.getValue() == 102", LayoutEditor.HitPointType.TURNTABLE_RAY_52.getXmlValue(), Integer.valueOf(102));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_53.getValue() == 103", LayoutEditor.HitPointType.TURNTABLE_RAY_53.getXmlValue(), Integer.valueOf(103));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_54.getValue() == 104", LayoutEditor.HitPointType.TURNTABLE_RAY_54.getXmlValue(), Integer.valueOf(104));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_55.getValue() == 105", LayoutEditor.HitPointType.TURNTABLE_RAY_55.getXmlValue(), Integer.valueOf(105));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_56.getValue() == 106", LayoutEditor.HitPointType.TURNTABLE_RAY_56.getXmlValue(), Integer.valueOf(106));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_57.getValue() == 107", LayoutEditor.HitPointType.TURNTABLE_RAY_57.getXmlValue(), Integer.valueOf(107));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_58.getValue() == 108", LayoutEditor.HitPointType.TURNTABLE_RAY_58.getXmlValue(), Integer.valueOf(108));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_59.getValue() == 109", LayoutEditor.HitPointType.TURNTABLE_RAY_59.getXmlValue(), Integer.valueOf(109));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_60.getValue() == 110", LayoutEditor.HitPointType.TURNTABLE_RAY_60.getXmlValue(), Integer.valueOf(110));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_61.getValue() == 111", LayoutEditor.HitPointType.TURNTABLE_RAY_61.getXmlValue(), Integer.valueOf(111));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_62.getValue() == 112", LayoutEditor.HitPointType.TURNTABLE_RAY_62.getXmlValue(), Integer.valueOf(112));
-        Assert.assertEquals("HitPointTypes.TURNTABLE_RAY_63.getValue() == 113", LayoutEditor.HitPointType.TURNTABLE_RAY_63.getXmlValue(), Integer.valueOf(113));
-    }
 
     @Test
     @Ignore("Test fails to find and close dialog on Jenkins")
@@ -336,14 +221,14 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void testGetLayoutWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout width", 0, e.getLayoutWidth());
+        Assert.assertEquals("layout width", 0, e.gContext.getLayoutWidth());
     }
 
     @Test
     public void testGetLayoutHeight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout height", 0, e.getLayoutHeight());
+        Assert.assertEquals("layout height", 0, e.gContext.getLayoutHeight());
     }
 
     @Test
@@ -351,7 +236,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen width - 20
         int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20);
-        Assert.assertEquals("window width", w, e.getWindowWidth());
+        Assert.assertEquals("window width", w, e.gContext.getWindowWidth());
     }
 
     @Test
@@ -359,21 +244,21 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to screen height - 120
         int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 120);
-        Assert.assertEquals("window height", h, e.getWindowHeight());
+        Assert.assertEquals("window height", h, e.gContext.getWindowHeight());
     }
 
     @Test
     public void testGetUpperLeftX() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("upper left X", 0, e.getUpperLeftX());
+        Assert.assertEquals("upper left X", 0, e.gContext.getUpperLeftX());
     }
 
     @Test
     public void testGetUpperLeftY() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("upper left Y", 0, e.getUpperLeftY());
+        Assert.assertEquals("upper left Y", 0, e.gContext.getUpperLeftY());
     }
 
     @Test
@@ -382,86 +267,86 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         ThreadingUtil.runOnGUI(() -> {
             // set the panel dimensions to known values
             e.setLayoutDimensions(100, 100, 100, 100, 100, 100);
-            Assert.assertEquals("layout width after set", 100, e.getLayoutWidth());
-            Assert.assertEquals("layout height after set", 100, e.getLayoutHeight());
-            Assert.assertEquals("window width after set", 100, e.getWindowWidth());
-            Assert.assertEquals("window height after set", 100, e.getWindowHeight());
-            Assert.assertEquals("upper left X after set", 100, e.getUpperLeftX());
-            Assert.assertEquals("upper left Y after set", 100, e.getUpperLeftX());
+            Assert.assertEquals("layout width after set", 100, e.gContext.getLayoutWidth());
+            Assert.assertEquals("layout height after set", 100, e.gContext.getLayoutHeight());
+            Assert.assertEquals("window width after set", 100, e.gContext.getWindowWidth());
+            Assert.assertEquals("window height after set", 100, e.gContext.getWindowHeight());
+            Assert.assertEquals("upper left X after set", 100, e.gContext.getUpperLeftX());
+            Assert.assertEquals("upper left Y after set", 100, e.gContext.getUpperLeftX());
         });
     }
 
     @Test
     public void testSetGrideSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("grid size after set", 100, e.setGridSize(100));
+        Assert.assertEquals("grid size after set", 100, e.gContext.setGridSize(100));
     }
 
     @Test
     public void testGetGrideSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 10.
-        Assert.assertEquals("grid size", 10, e.getGridSize());
+        Assert.assertEquals("grid size", 10, e.gContext.getGridSize());
     }
 
     @Test
     public void testGetMainlineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 4.
-        Assert.assertEquals("mainline track width", 4, e.getMainlineTrackWidth());
+        Assert.assertEquals("mainline track width", 4, e.gContext.getMainlineTrackWidth());
     }
 
     @Test
     public void testSetMainlineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setMainlineTrackWidth(10);
-        Assert.assertEquals("mainline track width after set", 10, e.getMainlineTrackWidth());
+        e.gContext.setMainlineTrackWidth(10);
+        Assert.assertEquals("mainline track width after set", 10, e.gContext.getMainlineTrackWidth());
     }
 
     @Test
     public void testGetSidelineTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 2.
-        Assert.assertEquals("side track width", 2, e.getSidelineTrackWidth());
+        Assert.assertEquals("side track width", 2, e.gContext.getSidelineTrackWidth());
     }
 
     @Test
     public void testSetSideTrackWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setSidelineTrackWidth(10);
-        Assert.assertEquals("Side track width after set", 10, e.getSidelineTrackWidth());
+        e.gContext.setSidelineTrackWidth(10);
+        Assert.assertEquals("Side track width after set", 10, e.gContext.getSidelineTrackWidth());
     }
 
     @Test
     public void testGetXScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 1.
-        Assert.assertEquals("XScale", 1.0, e.getXScale(), 0.0);
+        Assert.assertEquals("XScale", 1.0, e.gContext.getXScale(), 0.0);
     }
 
     @Test
     public void testSetXScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setXScale(2.0);
-        Assert.assertEquals("XScale after set ", 2.0, e.getXScale(), 0.0);
+        e.gContext.setXScale(2.0);
+        Assert.assertEquals("XScale after set ", 2.0, e.gContext.getXScale(), 0.0);
     }
 
     @Test
     public void testGetYScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 1.
-        Assert.assertEquals("YScale", 1.0, e.getYScale(), 0.0);
+        Assert.assertEquals("YScale", 1.0, e.gContext.getYScale(), 0.0);
     }
 
     @Test
     public void testSetYScale() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setYScale(2.0);
-        Assert.assertEquals("YScale after set ", 2.0, e.getYScale(), 0.0);
+        e.gContext.setYScale(2.0);
+        Assert.assertEquals("YScale after set ", 2.0, e.gContext.getYScale(), 0.0);
     }
 
     @Test
@@ -1139,5 +1024,21 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.dispose(e);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+    @Test
+    public void testScrollViewPort() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        javax.swing.JScrollPane scrollPane = e.getPanelScrollPane();
+        java.awt.Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
+        int x = (int) scrollBounds.getX();
+        int y = (int) scrollBounds.getY();
+        int w = (int) scrollBounds.getWidth();
+        int h = (int) scrollBounds.getHeight();
+        // scrollBounds values are platform and OS dependent so specific values cannot be determined.
+        Assert.assertTrue("scroll bound x", x > 0);
+        Assert.assertTrue("scroll bound y", y > 0);
+        Assert.assertTrue("scroll bound w", w > 0);
+        Assert.assertTrue("scroll bound h", h > 0);
+    }
+
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

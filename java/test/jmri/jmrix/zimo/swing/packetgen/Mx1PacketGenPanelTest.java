@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * Test simple functioning of Mx1PacketGenPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Mx1PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 

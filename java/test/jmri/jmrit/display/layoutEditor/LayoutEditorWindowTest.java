@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * Swing tests for the LayoutEditor.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public class LayoutEditorWindowTest {
 
@@ -49,6 +49,7 @@ public class LayoutEditorWindowTest {
     @After
     public void tearDown() throws Exception {
         cm = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

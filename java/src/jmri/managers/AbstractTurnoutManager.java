@@ -19,7 +19,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     public AbstractTurnoutManager(SystemConnectionMemo memo) {
         super(memo);
-        InstanceManager.getDefault(TurnoutOperationManager.class);		// force creation of an instance
+        InstanceManager.getDefault(TurnoutOperationManager.class); // force creation of an instance
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
@@ -202,6 +202,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * Internal method to invoke the factory, after all the logic for returning
      * an existing Turnout has been invoked.
      *
+     * @param systemName system name.
+     * @param userName username.
      * @return never null
      */
     abstract protected Turnout createNewTurnout(@Nonnull String systemName, String userName);

@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
@@ -52,6 +53,33 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     static public int postProgDelay = 100; // this is public to allow changes via script
 
+    public int slotScanInterval = 50; // this is public to allow changes via script and tests
+    /**
+     * slotMapEntry - a from to pair of slot numbers defining a valid range of loco/system slots
+     * TODO add slottype, eg systemslot, std slot, expanded slot etc
+     * @author sg
+     *
+     */
+    static public class SlotMapEntry {
+        public SlotMapEntry(int from, int to) {
+            fromSlot = from;
+            toSlot = to;
+        }
+        int fromSlot;
+        int toSlot;
+        public int getFrom() {
+            return fromSlot;
+        }
+        public int getTo() {
+            return toSlot;
+        }
+    }
+    
+    /**
+     * a Map of the CS slots.
+     */
+    public List<SlotMapEntry> slotMap = new ArrayList<SlotMapEntry>();
+    
     /**
      * Constructor for a SlotManager on a given TrafficController.
      *
@@ -63,6 +91,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // change timeout values from AbstractProgrammer superclass
         LONG_TIMEOUT = 180000;  // Fleischmann command stations take forever
         SHORT_TIMEOUT = 8000;   // DCS240 reads
+        
+        slotMap = Arrays.asList(new SlotMapEntry(0,127));
 
         loadSlots();
 
@@ -336,7 +366,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 // just modified the slot information.
                 javax.swing.Timer t = new javax.swing.Timer(500, (java.awt.event.ActionEvent e) -> {
                     log.debug("Updating slots account received opcode 0x8a message");   // NOI18N
-                    update();
+                    update(slotMap,slotScanInterval);
                 });
                 t.stop();
                 t.setInitialDelay(500);
@@ -1431,10 +1461,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * <p>
      * This is not invoked by this class, but can be invoked from elsewhere to
      * start the process of scanning all slots to update their contents.
+     * 
+     * @param inputSlotMap array of from to pairs
+     * @param interval ms between slt rds
      */
-    synchronized public void update() {
-        nextReadSlot = 0;
-        readNextSlot();
+    synchronized public void update(List<SlotMapEntry> inputSlotMap, int interval) {
+        for ( SlotMapEntry item: inputSlotMap) {
+            nextReadSlot = item.getFrom();
+            readNextSlot(item.getTo(),interval);
+        }
+    }
+    
+    public void update() {
+        update(slotMap, slotScanInterval);
     }
 
     /**
@@ -1460,17 +1499,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Continue the sequence of reading all slots.
+     * @param toSlot index of the next slot to read
+     * @param interval wait time before operation, milliseconds
      */
-    synchronized protected void readNextSlot() {
+    synchronized protected void readNextSlot(int toSlot, int interval) {
         // send info request
         sendReadSlot(nextReadSlot++);
 
         // schedule next read if needed
-        if (nextReadSlot < 127) {
-            javax.swing.Timer t = new javax.swing.Timer(50, new java.awt.event.ActionListener() {
+        if (nextReadSlot < toSlot) {
+            javax.swing.Timer t = new javax.swing.Timer(interval, new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    readNextSlot();
+                    readNextSlot(toSlot,interval);
                 }
             });
             t.setRepeats(false);

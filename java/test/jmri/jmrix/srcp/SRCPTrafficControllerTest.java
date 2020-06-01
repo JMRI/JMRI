@@ -7,13 +7,12 @@ import org.junit.Before;
 /**
  * SRCPTrafficControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPTrafficController class
+ * Test for the jmri.jmrix.srcp.SRCPTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

@@ -30,6 +30,11 @@ public class CbusMenu extends JMenu {
                 add(new CanNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
+        
+        // Added tools that can normally only be found in PanelPro tools menu so that they are available from DP3
+        add(new javax.swing.JSeparator());
+        add(new jmri.jmrit.ampmeter.AmpMeterAction(Bundle.getMessage("MenuItemAmpMeter")));
+
     }
 
     Item[] panelItems = new Item[]{

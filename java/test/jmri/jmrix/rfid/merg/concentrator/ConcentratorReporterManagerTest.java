@@ -7,9 +7,9 @@ import org.junit.*;
 /**
  * ConcentratorReporterManagerTest.java
  * <p>
- * Description:	tests for the ConcentratorReporterManager class
+ * Test for the ConcentratorReporterManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 

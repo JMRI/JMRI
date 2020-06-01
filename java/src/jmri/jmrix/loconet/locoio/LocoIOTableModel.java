@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Basic Configurer for LocoIO hardware.
  * <p>
- * This code derves the SV values from the user-selected mode and address; this
+ * This code derives the SV values from the user-selected mode and address; this
  * is different from earlier versions where the user was expected to do the
  * derivation manually. This derivation is complicated by the fact that the
  * "mode" SV[port.0] in the LocoIO doesn't fully specify the operation being
@@ -73,6 +73,7 @@ public class LocoIOTableModel
     //private JLabel     locobuffer = null;
     /**
      * Primary constructor. Initializes all the arrays.
+     * @param ldata the data.
      */
     public LocoIOTableModel(LocoIOData ldata) {
         super();

@@ -20,7 +20,6 @@ public class LayoutBlockNeighbourTableModelTest {
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -30,5 +29,5 @@ public class LayoutBlockNeighbourTableModelTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    // private final static Logger log = LoggerFactory.getLogger(LayoutBlockNeighbourTableModelTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockNeighbourTableModelTest.class);
 }

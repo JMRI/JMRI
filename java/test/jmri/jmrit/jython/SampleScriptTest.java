@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -13,8 +15,8 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Invokes Python-language scripts in jython/tests
  *
- * @author	Bob Jacobsen Copyright 2016
- * @author	Paul Bender Copyright (C) 2017
+ * @author Bob Jacobsen Copyright 2016
+ * @author Paul Bender Copyright (C) 2017
  * @since JMRI 4.3.6
  */
 @RunWith(Parameterized.class)
@@ -63,26 +65,27 @@ public class SampleScriptTest {
     
     @Before
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         
         // it's not really understood why, but doing these inside of the 
         // sample Python script doesn't always work; it's as if that
         // is working with a different InstanceManager. So we 
         // include a comprehensive set here.
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initConfigureManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initDebugPowerManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDebugPowerManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDebugThrottleManager();
     }
         
     @After 
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetWindows(false,false);
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
     @AfterClass

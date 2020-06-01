@@ -27,7 +27,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.Locale;
-import javax.help.SwingHelpUtilities;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
@@ -53,14 +52,12 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.ShutDownManager;
-import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.DebugMenu;
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
 import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.jython.RunJythonScript;
@@ -87,7 +84,6 @@ import jmri.util.SystemType;
 import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.URIDrop;
-import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
@@ -133,10 +129,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Enable proper snapping of JSliders
         SliderSnap.init();
 
-        // Prepare font lists
-        log.trace("prepareFontLists");
-        prepareFontLists();
-
         // Get configuration profile
         log.trace("start to get configuration profile - locate files");
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
@@ -177,7 +169,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                         ex.getLocalizedMessage(),
                         jmri.Application.getApplicationName(),
                         JOptionPane.ERROR_MESSAGE);
-                log.error(ex.getMessage());
+                log.error("Exception migrating configuration to profiles: {}",ex.getMessage());
             }
         }
         log.trace("about to try getStartingProfile");
@@ -193,32 +185,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             } else {
                 log.info("Starting without a profile");
             }
-            
+
             // rapid language set; must follow up later with full setting as part of preferences
-            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
+            jmri.util.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
-
-        // add the default shutdown task to save blocks
-        // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.getDefault(ShutDownManager.class).
-                register(new AbstractShutDownTask("Writing Blocks") {
-                    @Override
-                    public boolean execute() {
-                        // Save block values prior to exit, if necessary
-                        log.debug("Start writing block info");
-                        try {
-                            new BlockValueFile().writeBlockValues();
-                        } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
-                        catch (IOException ioe) {
-                            log.error("Exception writing blocks: {}", ioe.getMessage());
-                        }
-
-                        // continue shutdown
-                        return true;
-                    }
-                });
 
         // Install configuration manager and Swing error handler
         // Constructing the JmriConfigurationManager also loads various configuration services
@@ -259,7 +231,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             file = singleConfig;
         }
-                
+
         // ensure the UserPreferencesManager has loaded. Done on GUI
         // thread as it can modify GUI objects
         log.debug("*** About to getDefault(jmri.UserPreferencesManager.class) with file {}", file);
@@ -303,7 +275,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
-                log.error(e.getLocalizedMessage(), e);
+                log.error("", e);
             }
         }
 
@@ -319,7 +291,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                log.error(e.getLocalizedMessage(), e);
+                log.error("",e);
             }
         }
         // Now load deferred config items
@@ -559,11 +531,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     /**
-     * Open Preferences action.
-     * Often done due to error
+     * Open Preferences action. Often done due to error
      */
     public void doPreferences() {
-        if (prefsAction == null) prefsAction = new TabbedPreferencesAction();
+        if (prefsAction == null) {
+            prefsAction = new TabbedPreferencesAction();
+        }
         prefsAction.actionPerformed(null);
     }
 
@@ -605,7 +578,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Include prefs in Edit menu if not on Mac OS X or not using Aqua Look and Feel
         if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
             editMenu.addSeparator();
-            if (prefsAction == null) prefsAction = new TabbedPreferencesAction();
+            if (prefsAction == null) {
+                prefsAction = new TabbedPreferencesAction();
+            }
             editMenu.add(prefsAction);
         }
 
@@ -624,7 +599,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
+        menuBar.add(new PanelMenu());
     }
 
     /**
@@ -670,7 +645,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         d.add(new JSeparator());
         d.add(new apps.TrainCrew.InstallFromURL());
-        
+
         // add final to menu bar
         menuBar.add(d);
 
@@ -678,11 +653,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     /**
      * Add a script menu to a window menu bar.
-     * 
+     *
      * @param menuBar the menu bar to add the script menu to
-     * @param wi the window interface containing menuBar
-     * @deprecated since 4.17.5 without direct replacement; appears
-     * to have been empty method since 1.2.3
+     * @param wi      the window interface containing menuBar
+     * @deprecated since 4.17.5 without direct replacement; appears to have been
+     * empty method since 1.2.3
      */
     @Deprecated
     protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
@@ -709,7 +684,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         JMenu helpMenu = HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
 
         // tell help to use default browser for external types
-        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
         // use as main help menu
         menuBar.add(helpMenu);
@@ -773,11 +748,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             cs.setText(" ");
             return;
         }
-        
-        log.debug("conn.name() is {} ",conn.name()); // eg CAN via MERG Network Interface
-        log.debug("conn.getConnectionName() is {} ",conn.getConnectionName()); // eg MERG2
-        log.debug("conn.getManufacturer() is {} ",conn.getManufacturer()); // eg MERG
-        
+
+        log.debug("conn.name() is {} ", conn.name()); // eg CAN via MERG Network Interface
+        log.debug("conn.getConnectionName() is {} ", conn.getConnectionName()); // eg MERG2
+        log.debug("conn.getManufacturer() is {} ", conn.getManufacturer()); // eg MERG
+
         ConnectionStatus.instance().addConnection(conn.getConnectionName(), conn.getInfo());
         cs.setFont(pane.getFont());
         updateLine(conn, cs);
@@ -828,7 +803,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         JPanel pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         log.debug("Fetch main logo: {}", logo());
-        pane1.add(new JLabel(new ImageIcon(getToolkit().getImage(FileUtil.findURL(logo(), FileUtil.Location.INSTALLED)), "JMRI logo"), JLabel.LEFT));
+        pane1.add(new JLabel(new ImageIcon(getToolkit().getImage(FileUtil.findURL(logo(), FileUtil.Location.ALL)), "JMRI logo"), JLabel.LEFT));
         pane1.add(Box.createRigidArea(new Dimension(15, 0))); // Some spacing between logo and status panel
 
         log.debug("start labels");
@@ -1108,10 +1083,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // first set a default position and size
         frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
-        
+
         // then attempt set from stored preference
         frame.setFrameLocation();
-        
+
         // and finally show
         frame.setVisible(true);
     }
@@ -1162,6 +1137,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      *
      * @param name Program/application name as known by the user
      */
+    @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",justification = "info message contains context information")
     protected static void setStartupInfo(String name) {
         // Set the application name
         try {
@@ -1171,20 +1147,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
 
         // Log the startup information
-        log.info(Log4JUtil.startupInfo(name));
-    }
-
-    private void prepareFontLists() {
-        // Prepare font lists
-        Thread fontThread = new Thread(() -> {
-            log.debug("Prepare font lists...");
-            FontComboUtil.prepareFontLists();
-            log.debug("...Font lists built");
-        }, "PrepareFontListsThread");
-        
-        fontThread.setDaemon(true);
-        fontThread.setPriority(Thread.MIN_PRIORITY);
-        fontThread.start();
+        log.info("{}",Log4JUtil.startupInfo(name));
     }
 
     @Override

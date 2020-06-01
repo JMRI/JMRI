@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OpenLcbComponentFactoryTest {
 
@@ -18,7 +18,6 @@ public class OpenLcbComponentFactoryTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -27,6 +26,7 @@ public class OpenLcbComponentFactoryTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

@@ -49,8 +49,8 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
     }
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    String _cv;	// remember the cv number being read/written
+    int _val;   // remember the value being read/written for confirmative reply
+    String _cv; // remember the cv number being read/written
     
     // programming interface
     @Override
@@ -180,7 +180,7 @@ public class VerifyWriteProgrammerFacade extends AbstractProgrammerFacade implem
                 break;
 
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;

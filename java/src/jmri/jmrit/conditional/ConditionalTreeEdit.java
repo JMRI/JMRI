@@ -934,6 +934,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             if (refList != null) {
                 for (String ref : refList) {
                     Conditional cRef = _conditionalManager.getBySystemName(ref);
+                    if (cRef==null){
+                        log.error("Conditional :{}: not found while updating username",ref);
+                        continue;
+                    }
                     List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                     int idx = 0;
                     for (ConditionalVariable var : varList) {

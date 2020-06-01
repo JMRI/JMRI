@@ -9,9 +9,9 @@ import org.junit.Test;
 /**
  * IEEE802154MessageTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154Message class
+ * Test for the jmri.jmrix.ieee802154.IEEE802154Message class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class IEEE802154MessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -21,7 +21,6 @@ public class IEEE802154MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("length", 3, m.getNumDataElements());
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
@@ -31,7 +30,7 @@ public class IEEE802154MessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

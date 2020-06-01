@@ -10,7 +10,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Vector;
 import jmri.jmrix.ConnectionStatus;
@@ -225,6 +224,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
      * than that of commands sent, but this fact simply implies that we may have
      * a higher number of pending commands for a while, without any negative
      * consequence (the maximum is however arbitrary).
+     *
+     * @param s number to send
      */
     protected synchronized void xnTcpSetPendingPackets(int s) {
         pendingPackets += s;

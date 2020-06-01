@@ -8,7 +8,7 @@ import org.junit.Assume;
 import org.junit.Test;
 
 import jmri.InstanceManager;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -61,7 +61,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         // create and register a panel
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
                 "Train Test Panel");
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
+        InstanceManager.getDefault(EditorManager.class).add(editor);
 
         // confirm panel creation
         JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");

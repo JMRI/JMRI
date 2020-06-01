@@ -1,6 +1,7 @@
 package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -151,6 +152,7 @@ public class ConditionalTreeEditTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

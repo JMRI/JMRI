@@ -13,6 +13,7 @@ public class SensorTurnoutOperationConfig extends CommonTurnoutOperationConfig {
     /**
      * Create the config JPanel, if there is one, to configure this operation
      * type
+     * @param op turnout operation.
      */
     public SensorTurnoutOperationConfig(TurnoutOperation op) {
         super(op);

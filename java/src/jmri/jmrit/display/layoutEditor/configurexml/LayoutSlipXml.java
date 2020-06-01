@@ -4,6 +4,8 @@ import java.awt.geom.Point2D;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutSingleSlip;
+import jmri.jmrit.display.layoutEditor.LayoutDoubleSlip;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -23,7 +25,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
     public LayoutSlipXml() {
     }
 
-    EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIO<>(LayoutSlip.TurnoutType.class);
+    final static EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutSlip.TurnoutType.class);
 
     /**
      * Default implementation for storing the contents of a LayoutSlip
@@ -199,10 +201,22 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             log.error("failed to convert layoutslip center  attribute");
         }
 
-        LayoutSlip.TurnoutType type = tTypeEnumMap.inputFromAttribute(element.getAttribute("slipType"));
+        LayoutSlip.TurnoutType type =
+                tTypeEnumMap.inputFromAttribute(element.getAttribute("slipType"));
 
         // create the new LayoutSlip
-        LayoutSlip l = new LayoutSlip(name, new Point2D.Double(x, y), 0.0, p, type);
+        LayoutSlip l; 
+        switch(type) {
+            case DOUBLE_SLIP :
+                l = new LayoutDoubleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                break;
+            case SINGLE_SLIP :
+                l = new LayoutSingleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                break;
+            default:
+                log.error("can't create slip {} with type {}", name, type);
+                return; // without creating
+        }
 
         // get remaining attributes
         l.setTurnout(getElement(element, "turnout"));
@@ -323,7 +337,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
                         bc.getChild("turnoutB").getText());
             }
         }
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
     String getElement(Element el, String child) {
@@ -333,5 +347,5 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         return "";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutSlipXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipXml.class);
 }

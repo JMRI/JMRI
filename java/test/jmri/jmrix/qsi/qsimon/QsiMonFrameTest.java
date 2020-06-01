@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the QsiProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class QsiMonFrameTest {
 
@@ -84,7 +84,7 @@ public class QsiMonFrameTest {
         @Override
         public void sendQsiMessage(QsiMessage m, QsiListener l) {
             if (log.isDebugEnabled()) {
-                log.debug("sendQsiMessage [" + m + "]");
+                log.debug("sendQsiMessage [{}]", m);
             }
             // save a copy
             outbound.add(m);
@@ -97,7 +97,7 @@ public class QsiMonFrameTest {
         protected void sendTestMessage(QsiMessage m) {
             // forward a test message to Listeners
             if (log.isDebugEnabled()) {
-                log.debug("sendTestMessage    [" + m + "]");
+                log.debug("sendTestMessage    [{}]", m);
             }
             notifyMessage(m, null);
         }
@@ -105,7 +105,7 @@ public class QsiMonFrameTest {
         protected void sendTestReply(QsiReply m) {
             // forward a test message to Listeners
             if (log.isDebugEnabled()) {
-                log.debug("sendTestReply    [" + m + "]");
+                log.debug("sendTestReply    [{}]", m);
             }
             notifyReply(m);
         }
@@ -122,6 +122,12 @@ public class QsiMonFrameTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class);

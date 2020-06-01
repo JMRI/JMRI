@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Test simple functioning of IEEE802154MonPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class IEEE802154MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
@@ -37,10 +37,10 @@ public class IEEE802154MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @After
     @Override
     public void tearDown() {
-            panel = pane = null;
-            helpTarget = null;
-            title = null;	    
-	    memo = null;
-	    JUnitUtil.tearDown();    
+        panel = pane = null;
+        helpTarget = null;
+        title = null;
+        memo = null;
+        JUnitUtil.tearDown();
     }
 }

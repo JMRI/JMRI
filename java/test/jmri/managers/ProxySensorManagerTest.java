@@ -17,11 +17,11 @@ import org.junit.Test;
 /**
  * Test the ProxySensorManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014
+ * @author Bob Jacobsen 2003, 2006, 2008, 2014
  */
 public class ProxySensorManagerTest implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
-    protected ProxySensorManager l = null;	// holds objects under test
+    protected ProxySensorManager l = null; // holds objects under test
 
     @Test
     public void testDispose() {
@@ -228,7 +228,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Sensor s4 = l.provideSensor("ZS2");
 
         // property listener should have been immediately invoked
-        Assert.assertEquals("propertyListenerCount", 4, propertyListenerCount);
+        Assert.assertEquals("propertyListenerCount", 5, propertyListenerCount);
         Assert.assertEquals("last call", "length", propertyListenerLast);
 
         // listener should have been immediately invoked

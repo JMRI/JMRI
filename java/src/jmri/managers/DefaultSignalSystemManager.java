@@ -103,7 +103,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                         // check that there's an aspects.xml file
                         File aspects = new File(file.getPath() + File.separator + "aspects.xml");
                         if (aspects.exists()) {
-                            log.debug("found system: " + file.getName());
+                            log.debug("found system: {}", file.getName());
                             retval.add(file.getName());
                         }
                     }
@@ -135,7 +135,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                         // check that there's an aspects.xml file
                         File aspects = new File(file.getPath() + File.separator + "aspects.xml");
                         if ((aspects.exists()) && (!retval.contains(file.getName()))) {
-                            log.debug("found system: " + file.getName());
+                            log.debug("found system: {}", file.getName());
                             retval.add(file.getName());
                         }
                     }

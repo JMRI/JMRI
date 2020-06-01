@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.managers.InternalSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
@@ -244,7 +244,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = "Changed";
     }
 
-    // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {

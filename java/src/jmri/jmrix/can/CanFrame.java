@@ -56,7 +56,7 @@ public interface CanFrame {
      * Only valid data elements are included.
      * @return eg. "(1A ext) 81 EA 83 00 12"
      */
-    default String monString() {
+    public default String monString() {
         StringBuilder buf = new StringBuilder(32);
         buf.append("(");
         buf.append( Integer.toHexString(getHeader()));
@@ -73,7 +73,7 @@ public interface CanFrame {
      * Only valid data elements are included.
      * @return eg. "[12] 81 EA 83"
      */
-    default String getToString() {
+    public default String getToString() {
         StringBuilder buf = new StringBuilder(28);
         buf.append("[");
         buf.append( Integer.toHexString(getHeader()));
@@ -86,7 +86,7 @@ public interface CanFrame {
      * Append the hex value of the data elements to a StringBuilder.
      * @param sb to append the hex values to
      */
-    default void appendHexElements(StringBuilder sb) {
+    public default void appendHexElements(StringBuilder sb) {
         for (int i = 0; i < getNumDataElements(); i++) {
             sb.append(" ");
             sb.append(jmri.util.StringUtil.twoHexFromInt(getElement(i)));
@@ -99,7 +99,7 @@ public interface CanFrame {
      * @param b CanFrame to test
      * @return true if RTR, Extended, Header and Data elements match, else false
      */
-    default boolean isEqual ( Object a, Object b ) {
+    public default boolean isEqual ( Object a, Object b ) {
         if (a instanceof CanFrame && b instanceof CanFrame) {
             CanFrame aa = (CanFrame) a;
             CanFrame bb = (CanFrame) b;
@@ -119,7 +119,7 @@ public interface CanFrame {
      * @param b CanFrame to test
      * @return true if Data elements match, else false
      */
-    default boolean dataFramesEqual( CanFrame a, CanFrame b) {
+    public default boolean dataFramesEqual( CanFrame a, CanFrame b) {
         if (a.getNumDataElements() != b.getNumDataElements()) {
             return false;
         }
@@ -135,7 +135,7 @@ public interface CanFrame {
      * Check if the CAN Frame is extended OR RtR.
      * @return true if either extended or RtR, else false
      */
-    default boolean extendedOrRtr() {
+    public default boolean extendedOrRtr() {
         return ( isExtended() || isRtr() );
     }
 

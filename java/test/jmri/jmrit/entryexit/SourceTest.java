@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Sensor;
@@ -120,6 +121,7 @@ public class SourceTest {
     @AfterClass
     static public void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

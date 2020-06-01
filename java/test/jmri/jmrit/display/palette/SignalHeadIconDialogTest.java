@@ -3,7 +3,6 @@ package jmri.jmrit.display.palette;
 import java.awt.GraphicsEnvironment;
 import jmri.*;
 import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
@@ -15,7 +14,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SignalHeadIconDialogTest {
 
@@ -33,7 +32,6 @@ public class SignalHeadIconDialogTest {
         JUnitUtil.dispose(editor);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -43,6 +41,7 @@ public class SignalHeadIconDialogTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

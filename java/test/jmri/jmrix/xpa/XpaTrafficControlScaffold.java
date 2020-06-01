@@ -1,7 +1,7 @@
 /**
  * XpaInterfaceScaffold.java
  *
- * Description:	Stands in for the XpaTrafficController class
+ * Stands in for the XpaTrafficController class
  *
  * @author Bob Jacobsen
  */
@@ -15,7 +15,7 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
 
     public XpaTrafficControlScaffold() {
         if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
+            log.debug("setting instance: {}", this);
         }
     }
 
@@ -33,7 +33,7 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
     @Override
     public void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendXpaMessage [" + m + "]");
+            log.debug("sendXpaMessage [{}]", m);
         }
         // save a copy
         outbound.add(m);
@@ -51,7 +51,7 @@ public class XpaTrafficControlScaffold extends XpaTrafficController {
     protected void sendTestMessage(XpaMessage m, XpaListener l) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, l);
     }

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Dcc4PcReply.java
  *
- * Description: Carries the reply to a Dcc4PcMessage
+ * Carries the reply to a Dcc4PcMessage
  *
  * @author Kevin Dickerson Copyright (C) 2012
  * @author Bob Jacobsen Copyright (C) 2001
@@ -72,6 +72,7 @@ public class Dcc4PcReply extends AbstractMRReply {
 
     /**
      * Is this reply indicating that a general error has occurred?
+     * @return true if error, else false.
      */
     public boolean isError() {
         return error;
@@ -109,7 +110,8 @@ public class Dcc4PcReply extends AbstractMRReply {
     }
 
     /**
-     * Returns a string representation of this Dcc4PcReply
+     * Returns a hex string representation of this Dcc4PcReply.
+     * @return hex string format of Reply using 0x format.
      */
     public String toHexString() {
 

@@ -57,13 +57,13 @@ public class PrintLocationsAction extends AbstractAction {
     CarLoads cls = InstanceManager.getDefault(CarLoads.class);
     CarRoads crs = InstanceManager.getDefault(CarRoads.class);
 
-    public PrintLocationsAction(String actionName, boolean isPreview) {
-        super(actionName);
+    public PrintLocationsAction(boolean isPreview) {
+        super(isPreview ? Bundle.getMessage("MenuItemPreview") : Bundle.getMessage("MenuItemPrint"));
         _isPreview = isPreview;
     }
 
-    public PrintLocationsAction(String actionName, boolean isPreview, Location location) {
-        super(actionName);
+    public PrintLocationsAction(boolean isPreview, Location location) {
+        super(isPreview ? Bundle.getMessage("MenuItemPreview") : Bundle.getMessage("MenuItemPrint"));
         _isPreview = isPreview;
         _location = location;
     }
@@ -136,7 +136,7 @@ public class PrintLocationsAction extends AbstractAction {
                 writer.close(); // force completion of the printing
             }
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction: " + we);
+            log.error("Error printing PrintLocationAction: {}", we);
         }
     }
 
@@ -172,7 +172,8 @@ public class PrintLocationsAction extends AbstractAction {
             if (_location != null && location != _location) {
                 continue;
             }
-            // location name, track length, used, number of RS, scheduled pick ups and drops
+            // location name, track length, used, number of RS, scheduled pick
+            // ups and drops
             s = padOutString(location.getName(), Control.max_len_string_location_name) +
                     TAB +
                     "  " +
@@ -337,7 +338,7 @@ public class PrintLocationsAction extends AbstractAction {
                 }
             }
         }
-        // now show the contents of each schedule     
+        // now show the contents of each schedule
         for (Schedule schedule : schedules) {
             writer.write(FORM_FEED);
             s = schedule.getName() + NEW_LINE;
@@ -367,7 +368,7 @@ public class PrintLocationsAction extends AbstractAction {
                         Bundle.getMessage("Wait") +
                         NEW_LINE;
                 writer.write(s);
-                
+
                 s = padOutString("", cts.getMaxNameLength() + 1) +
                         padOutString(si.getRandom(), Bundle.getMessage("Random").length() + 1) +
                         padOutString(si.getSetoutTrainScheduleName(), Bundle.getMessage("Delivery").length() + 1) +
@@ -512,7 +513,8 @@ public class PrintLocationsAction extends AbstractAction {
             }
             writer.write(MessageFormat.format(Bundle.getMessage("NumberTypeLength"), new Object[]{numberOfCars, type,
                     totalTrackLength, Setup.getLengthUnit().toLowerCase()}) + NEW_LINE);
-            // don't bother reporting when the number of cars for a given type is zero
+            // don't bother reporting when the number of cars for a given type
+            // is zero
             if (numberOfCars > 0) {
                 // spurs
                 writer.write(SPACE +
@@ -595,7 +597,7 @@ public class PrintLocationsAction extends AbstractAction {
                     foundError = true;
                 }
             }
-        } 
+        }
         if (!foundError) {
             writer.write(Bundle.getMessage("NoErrors"));
         }
@@ -685,7 +687,7 @@ public class PrintLocationsAction extends AbstractAction {
                 writer.write(getSchedule(track));
                 writer.write(getStagingInfo(track));
             } catch (IOException we) {
-                log.error("Error printing PrintLocationAction: " + we);
+                log.error("Error printing PrintLocationAction: {}", we);
             }
         }
     }
@@ -884,7 +886,7 @@ public class PrintLocationsAction extends AbstractAction {
             for (String id : ids) {
                 Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
                 if (train == null) {
-                    log.info("Could not find a train for id: " + id + " track (" + track.getName() + ")");
+                    log.info("Could not find a train for id: {} track ({})", id, track.getName());
                     continue;
                 }
                 charCount += train.getName().length() + 2;
@@ -903,13 +905,7 @@ public class PrintLocationsAction extends AbstractAction {
             for (String id : ids) {
                 Route route = InstanceManager.getDefault(RouteManager.class).getRouteById(id);
                 if (route == null) {
-                    log.info("Could not find a route for id: " +
-                            id +
-                            " location (" +
-                            track.getLocation().getName() +
-                            ") track (" +
-                            track.getName() +
-                            ")"); // NOI18N
+                    log.info("Could not find a route for id: {} location ({}) track ({})", id, track.getLocation().getName(), track.getName()); // NOI18N
                     continue;
                 }
                 charCount += route.getName().length() + 2;
@@ -943,7 +939,7 @@ public class PrintLocationsAction extends AbstractAction {
             for (String id : ids) {
                 Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
                 if (train == null) {
-                    log.info("Could not find a train for id: " + id + " track (" + track.getName() + ")");
+                    log.info("Could not find a train for id: {} track ({})", id, track.getName());
                     continue;
                 }
                 charCount += train.getName().length() + 2;
@@ -962,13 +958,7 @@ public class PrintLocationsAction extends AbstractAction {
             for (String id : ids) {
                 Route route = InstanceManager.getDefault(RouteManager.class).getRouteById(id);
                 if (route == null) {
-                    log.info("Could not find a route for id: " +
-                            id +
-                            " location (" +
-                            track.getLocation().getName() +
-                            ") track (" +
-                            track.getName() +
-                            ")"); // NOI18N
+                    log.info("Could not find a route for id: {} location ({}) track ({})", id, track.getLocation().getName(), track.getName()); // NOI18N
                     continue;
                 }
                 charCount += route.getName().length() + 2;
@@ -1053,7 +1043,7 @@ public class PrintLocationsAction extends AbstractAction {
         }
         return buf.toString();
     }
-    
+
     private String getStagingInfo(Track track) {
         if (!track.isStaging()) {
             return "";
@@ -1062,7 +1052,8 @@ public class PrintLocationsAction extends AbstractAction {
         StringBuffer buf = new StringBuffer();
 
         if (track.isLoadSwapEnabled() || track.isLoadEmptyEnabled()) {
-            buf.append(TAB + SPACE +
+            buf.append(TAB +
+                    SPACE +
                     Bundle.getMessage("OptionalLoads") +
                     NEW_LINE);
             if (track.isLoadSwapEnabled()) {
@@ -1083,7 +1074,8 @@ public class PrintLocationsAction extends AbstractAction {
                 track.isAddCustomLoadsEnabled() ||
                 track.isAddCustomLoadsAnySpurEnabled() ||
                 track.isAddCustomLoadsAnyStagingTrackEnabled()) {
-            buf.append(TAB + SPACE +
+            buf.append(TAB +
+                    SPACE +
                     Bundle.getMessage("OptionalCustomLoads") +
                     NEW_LINE);
             if (track.isRemoveCustomLoadsEnabled()) {
@@ -1113,7 +1105,8 @@ public class PrintLocationsAction extends AbstractAction {
         }
 
         if (track.isBlockCarsEnabled()) {
-            buf.append(TAB + SPACE +
+            buf.append(TAB +
+                    SPACE +
                     Bundle.getMessage("OptionalBlocking") +
                     NEW_LINE);
             buf.append(TAB +

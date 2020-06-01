@@ -13,8 +13,8 @@ import org.junit.Test;
  * Test simple functioning of NodeConfigManagerAction
  * Copied from nodeconfig
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Chuck Catania Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2016
+ * @author Chuck Catania Copyright (C) 2017
  */
 public class NodeConfigManagerActionTest {
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * CbusTurnoutManagerXmlTest.java
  *
- * Description: tests for the CbusTurnoutManagerXml class
+ * Test for the CbusTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,7 +20,6 @@ public class CbusTurnoutManagerXmlTest {
       Assert.assertNotNull("CbusTurnoutManagerXml constructor",new CbusTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

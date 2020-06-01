@@ -6,25 +6,19 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
-import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
+import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of the Roster contents
@@ -43,16 +37,16 @@ public class PrintEngineRosterAction extends AbstractAction {
 
     EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-    public PrintEngineRosterAction(String actionName, boolean preview, EnginesTableFrame pWho) {
-        super(actionName);
-        isPreview = preview;
+    public PrintEngineRosterAction(boolean isPreview, EnginesTableFrame pWho) {
+        super(isPreview ? Bundle.getMessage("MenuItemPreview") : Bundle.getMessage("MenuItemPrint"));
+        _isPreview = isPreview;
         panel = pWho;
     }
 
     /**
      * Variable to set whether this is to be printed or previewed
      */
-    boolean isPreview;
+    boolean _isPreview;
     EnginesTableFrame panel;
     EnginePrintOptionFrame epof = null;
 
@@ -87,7 +81,7 @@ public class PrintEngineRosterAction extends AbstractAction {
         HardcopyWriter writer = null;
         try {
             writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"), fontSize, .5, .5, .5, .5,
-                    isPreview, "", landscape, true, null);
+                    _isPreview, "", landscape, true, null);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -164,7 +158,7 @@ public class PrintEngineRosterAction extends AbstractAction {
                 writer.write(s + NEW_LINE);
             }
         } catch (IOException we) {
-            log.error("Error printing ConsistRosterEntry: " + we);
+            log.error("Error printing ConsistRosterEntry: {}", we);
         }
         // and force completion of the printing
         writer.close();
@@ -269,7 +263,7 @@ public class PrintEngineRosterAction extends AbstractAction {
         
         @Override
         public void initComponents() {
-            if (isPreview) {
+            if (_isPreview) {
                 setTitle(Bundle.getMessage("MenuItemPreview"));
             } else {
                 setTitle(Bundle.getMessage("MenuItemPrint"));

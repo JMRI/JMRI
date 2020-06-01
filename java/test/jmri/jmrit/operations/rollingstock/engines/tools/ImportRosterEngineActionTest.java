@@ -5,6 +5,13 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -14,11 +21,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 /**
  *
@@ -38,14 +40,14 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ImportRosterEngineAction t = new ImportRosterEngineAction("Test Action");
+        ImportRosterEngineAction t = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", t);
     }
 
     @Test
     public void testFailedImport() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction("Test Action");
+        ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
         importRosterAction.actionPerformed(new ActionEvent("Test Action", 0, null));
 
@@ -96,7 +98,7 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         e1.putAttribute("key b", "value b");
         r.addEntry(e1);
 
-        ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction("Test Action");
+        ImportRosterEngineAction importRosterAction = new ImportRosterEngineAction();
         Assert.assertNotNull("exists", importRosterAction);
         importRosterAction.actionPerformed(new ActionEvent("Test Action", 0, null));
 

@@ -234,7 +234,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         if (log.isDebugEnabled()) {
             log.debug("propertyChange {} = {}",evt.getPropertyName(),evt.getNewValue());
         }
-        if (evt.getPropertyName().equals("Power")) {
+        if (evt.getPropertyName().equals(PowerManager.POWER)) {
             setPowerIcons();
         }
     }
@@ -300,20 +300,19 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             powerLight.setToolTipText(Bundle.getMessage(POWER_UNKNOWN));
             return;
         }
-        try {
-            if (powerMgr.getPower() == PowerManager.ON) {
+        switch (powerMgr.getPower()) {
+            case PowerManager.ON:
                 powerLight.setIcon(powerOnIcon);
                 powerLight.setToolTipText(Bundle.getMessage("PowerOn"));
-            } else if (powerMgr.getPower() == PowerManager.OFF) {
+                break;
+            case PowerManager.OFF:
                 powerLight.setIcon(powerOffIcon);
                 powerLight.setToolTipText(Bundle.getMessage("PowerOff"));
-            } else {
+                break;
+            default:
                 powerLight.setIcon(powerXIcon);
                 powerLight.setToolTipText(Bundle.getMessage(POWER_UNKNOWN));
-            }
-        } catch (JmriException ex) {
-            powerLight.setIcon(powerXIcon);
-            powerLight.setToolTipText(Bundle.getMessage(POWER_UNKNOWN));
+                break;
         }
     }
 

@@ -7,10 +7,10 @@ import org.junit.Before;
 /**
  * Dcc4PcReporterManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.dcc4pc.Dcc4PcReporterManager
+ * Test for the jmri.jmrix.dcc4pc.Dcc4PcReporterManager
  * class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2016
  */
 public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
@@ -21,7 +21,6 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
     }
 
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

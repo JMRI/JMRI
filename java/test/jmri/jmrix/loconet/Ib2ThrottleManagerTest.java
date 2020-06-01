@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Ib2ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -31,6 +31,7 @@ public class Ib2ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
     public void tearDown() {
         ((Ib2ThrottleManager)tm).dispose();
         memo.dispose();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

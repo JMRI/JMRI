@@ -93,7 +93,7 @@ Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when goi
 
 public abstract class AbstractMRTrafficController {
 
-    private ShutDownTask shutDownTask = null; // retain for possible removal.
+    private final Runnable shutDownTask = this::terminate; // retain for possible removal.
 
     /**
      * Create a new unnamed MRTrafficController.
@@ -111,7 +111,7 @@ public abstract class AbstractMRTrafficController {
         // in an unusable state. Once the shutdown task executes, the connection
         // must be considered permanently closed.
         
-        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask = new CleanupTask(this));
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
     }
 
     private boolean synchronizeRx = true;
@@ -176,7 +176,10 @@ public abstract class AbstractMRTrafficController {
 
     /**
      * Implement this to forward a specific message type to a protocol-specific
-     * listener interface. This puts the casting into the concrete class.
+     * listener interface.
+     * This puts the casting into the concrete class.
+     * @param client abstract listener.
+     * @param m message to forward.
      */
     protected abstract void forwardMessage(AbstractMRListener client, AbstractMRMessage m);
 
@@ -184,6 +187,7 @@ public abstract class AbstractMRTrafficController {
      * Invoked if it's appropriate to do low-priority polling of the command
      * station, this should return the next message to send, or null if the
      * TrafficController should just sleep.
+     * @return Formatted poll message
      */
     protected abstract AbstractMRMessage pollMessage();
 
@@ -595,6 +599,7 @@ public abstract class AbstractMRTrafficController {
      * Add header to the outgoing byte stream.
      *
      * @param msg the output byte stream
+     * @param m Message results
      * @return next location in the stream to fill
      */
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
@@ -609,6 +614,7 @@ public abstract class AbstractMRTrafficController {
      *
      * @param msg    the output byte stream
      * @param offset the first byte not yet used
+     * @param m   output message to extend
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
         if (!m.isBinary()) {
@@ -761,18 +767,19 @@ public abstract class AbstractMRTrafficController {
             }
             controller = p;
             // and start threads
-            xmtThread = new Thread(xmtRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        transmitLoop();
-                    } catch(ThreadDeath td) {
-                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
-                        // ThreadDeath must be thrown per Java API Javadocs
-                        throw td;
-                    } catch (Throwable e) {
-                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
-                    }
+            xmtThread = jmri.util.ThreadingUtil.newThread(
+                xmtRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            transmitLoop();
+                        } catch(ThreadDeath td) {
+                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
+                            // ThreadDeath must be thrown per Java API Javadocs
+                            throw td;
+                        } catch (Throwable e) {
+                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
+                        }
                 }
             });
             
@@ -786,12 +793,13 @@ public abstract class AbstractMRTrafficController {
             xmtThread.setPriority(Thread.MAX_PRIORITY-1);      //bump up the priority
             xmtThread.start();
 
-            rcvThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    receiveLoop();
-                }
-            });
+            rcvThread = jmri.util.ThreadingUtil.newThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        receiveLoop();
+                    }
+                });
             rcvThread.setName(
                 (packages.length>=2 ? packages[packages.length-2]+"." :"")
                 +(packages.length>=1 ? packages[packages.length-1] :"")
@@ -903,6 +911,7 @@ public abstract class AbstractMRTrafficController {
     /**
      * Report an error on the receive loop. Separated so tests can suppress, even
      * though message is asynchronous.
+     * @param e Exception encountered at lower level to trigger error, or null
      */
     protected void reportReceiveLoopException(Exception e) {
         log.error("run: Exception: {} in {}", e.toString(), this.getClass().toString(), e);
@@ -919,6 +928,8 @@ public abstract class AbstractMRTrafficController {
     /**
      * Dummy routine, to be filled by protocols that have to skip some
      * start-of-message characters.
+     * @param istream input source
+     * @throws IOException from underlying operations
      */
     protected void waitForStartOfReply(DataInputStream istream) throws IOException {
     }
@@ -936,9 +947,9 @@ public abstract class AbstractMRTrafficController {
      * @throws java.io.IOException if unable to read
      */
     protected byte readByteProtected(DataInputStream istream) throws IOException {
-	if(istream == null) {
-                throw new IOException("Input Stream NULL when reading");
-	}
+        if (istream == null) {
+            throw new IOException("Input Stream NULL when reading");
+        }
         while (true) { // loop will repeat until character found
             int nchars;
             nchars = istream.read(rcvBuffer, 0, 1);
@@ -1019,9 +1030,9 @@ public abstract class AbstractMRTrafficController {
             }
         } catch (InterruptedException ie) {
             if(threadStopRequest) return;
-            log.error("Unexpected exception in invokeAndWait: {}" + ie.toString(), ie);
+            log.error("Unexpected exception in invokeAndWait: {}{}", ie, ie.toString());
         } catch (java.lang.reflect.InvocationTargetException| RuntimeException e) {
-            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
+            log.error("Unexpected exception in invokeAndWait: {}{}", e, e.toString());
             return;
         }
         log.debug("dispatch thread invoked");
@@ -1032,6 +1043,7 @@ public abstract class AbstractMRTrafficController {
      * <p>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
+     * @throws java.io.IOException on error.
      */
     public void handleOneIncomingReply() throws IOException {
         // we sit in this until the message is complete, relying on
@@ -1151,8 +1163,10 @@ public abstract class AbstractMRTrafficController {
         }
     }
 
-    /*
+    /**
      * Log an error message for a message received in an unexpected state.
+     * @param State message state.
+     * @param msgString message string.
      */
     protected void unexpectedReplyStateError(int State, String msgString) {
        String[] packages = this.getClass().getName().split("\\.");
@@ -1161,9 +1175,10 @@ public abstract class AbstractMRTrafficController {
        log.error("reply complete in unexpected state: {} was {} in class {}", State, msgString, name);
     }
 
-    /*
+    /**
      * for testing purposes, let us be able to find out
-     * what the last sender was
+     * what the last sender was.
+     * @return last sender, mLastSender.
      */
     public AbstractMRListener getLastSender() {
         return mLastSender;
@@ -1286,7 +1301,6 @@ public abstract class AbstractMRTrafficController {
                 // interrupted during cleanup.
             }
         }    
-
         // we also need to remove the shutdown task. 
         InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
@@ -1296,43 +1310,6 @@ public abstract class AbstractMRTrafficController {
      */
     protected volatile boolean threadStopRequest = false;
     
-    /**
-     * Internal class to handle traffic controller cleanup. The primary task of
-     * this thread is to make sure the DCC system has exited service mode when
-     * the program exits.
-     */
-    static class CleanupTask implements jmri.ShutDownTask {
-
-        AbstractMRTrafficController mTc;
-
-        CleanupTask(AbstractMRTrafficController pTc) {
-            mTc = pTc;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean isShutdownAllowed() {return true;}
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean execute() {
-            mTc.terminate();
-            return true;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public String getName() {return "ShutDownTask for "+mTc.getClass().getName();}
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean isParallel() {return false;}
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean isComplete() {return !this.isParallel();}
-    }
-
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMRTrafficController.class);
 
 }

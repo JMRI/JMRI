@@ -15,6 +15,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.vsdecoder.swing.VSDControl;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 import jmri.util.PhysicalLocation;
@@ -40,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018
+ * @author Klaus Killinger Copyright (C) 2018-2020
  */
 public class VSDecoder implements PropertyChangeListener {
 
@@ -52,6 +53,8 @@ public class VSDecoder implements PropertyChangeListener {
     private VSDConfig config;
 
     private float tunnelVolume = 0.5f;
+    private float master_volume;
+    private float decoder_volume;
 
     // For use in VSDecoderManager
     int dirfn = 1;
@@ -61,6 +64,7 @@ public class VSDecoder implements PropertyChangeListener {
     int topspeed;
     int topspeed_rev;
     int setup_index; // Can be set by a Route
+    boolean is_muted;
 
     HashMap<String, VSDSound> sound_list; // list of sounds
     HashMap<String, SoundEvent> event_list; // list of events
@@ -90,10 +94,10 @@ public class VSDecoder implements PropertyChangeListener {
                 initialized = false;
             }
         } catch (java.util.zip.ZipException e) {
-            log.error("ZipException loading VSDecoder from " + config.getVSDPath());
+            log.error("ZipException loading VSDecoder from {}", config.getVSDPath());
             // would be nice to pop up a dialog here...
         } catch (java.io.IOException ioe) {
-            log.error("IOException loading VSDecoder from " + config.getVSDPath());
+            log.error("IOException loading VSDecoder from {}", config.getVSDPath());
             // would be nice to pop up a dialog here...
         }
 
@@ -150,10 +154,10 @@ public class VSDecoder implements PropertyChangeListener {
                 initialized = false;
             }
         } catch (java.util.zip.ZipException e) {
-            log.error("ZipException loading VSDecoder from " + path);
+            log.error("ZipException loading VSDecoder from {}", path);
             // would be nice to pop up a dialog here...
         } catch (java.io.IOException ioe) {
-            log.error("IOException loading VSDecoder from " + path);
+            log.error("IOException loading VSDecoder from {}", path);
             // would be nice to pop up a dialog here...
         }
     }
@@ -326,12 +330,16 @@ public class VSDecoder implements PropertyChangeListener {
         return config.getLocoAddress();
     }
 
+    public RosterEntry getRosterEntry() {
+        return config.getRosterEntry();
+    }
+
     /**
-     * Get the current master volume setting for this VSDecoder
+     * Get the current decoder volume setting for this VSDecoder
      *
      * @return (float) volume level (0.0 - 1.0)
      */
-    public float getMasterVolume() {
+    public float getDecoderVolume() {
         return config.getVolume();
     }
 
@@ -341,20 +349,25 @@ public class VSDecoder implements PropertyChangeListener {
      * @param vol (float) volume level (0.0 - 1.0)
      */
     public void setMasterVolume(float vol) {
-        log.debug("VSD: float volume: {}", vol);
-        config.setVolume(vol);
+        master_volume = vol;
+        decoder_volume = config.getVolume();
+        log.debug("VSD config id: {}, Master volume: {}, Decoder volume: {}", config.getId(), master_volume, decoder_volume);
         for (VSDSound vs : sound_list.values()) {
-            vs.setVolume(vol);
+            vs.setVolume(master_volume * decoder_volume);
         }
     }
 
     /**
-     * Is this VSDecoder muted?
+     * Set the current decoder volume setting for this VSDecoder
      *
-     * @return true if muted.
+     * @param dv (float) volume level (0.0 - 1.0)
      */
-    public boolean isMuted() {
-        return false;
+    public void setDecoderVolume(float dv) {
+        config.setVolume(dv);
+        log.debug("config set decoder volume to {}", dv);
+        for (VSDSound vs : sound_list.values()) {
+            vs.setVolume(master_volume * dv);
+        }
     }
 
     /**
@@ -366,6 +379,14 @@ public class VSDecoder implements PropertyChangeListener {
         for (VSDSound vs : sound_list.values()) {
             vs.mute(m);
         }
+    }
+
+    private void setMuteState(boolean m) {
+        is_muted = m;
+    }
+
+    private boolean getMuteState() {
+        return is_muted;
     }
 
     /**
@@ -399,16 +420,20 @@ public class VSDecoder implements PropertyChangeListener {
             // s.setPosition(PhysicalLocation.translate(p, ref));
             s.setPosition(p);
         }
+
         // Set (relative) volume for this location (in case we're in a tunnel)
-        float tv = config.getVolume();
+        float tv = master_volume * config.getVolume();
+        log.debug("current master volume: {}, decoder volume: {}", master_volume, config.getVolume());
         if (p.isTunnel()) {
             tv *= tunnelVolume;
-            log.debug("VSD: Tunnel volume: {}", tv);
+            log.debug("VSD: In tunnel, volume: {}", tv);
         } else {
-            log.debug("VSD: Not in tunnel. Volume: {}", tv);
+            log.debug("VSD: Not in tunnel, volume: {}", tv);
         }
-        for (VSDSound vs : sound_list.values()) {
-            vs.setVolume(tv);
+        if (! getMuteState()) {
+            for (VSDSound vs : sound_list.values()) {
+                vs.setVolume(tv);
+            }
         }
     }
 
@@ -464,10 +489,10 @@ public class VSDecoder implements PropertyChangeListener {
         if (property.equals(VSDManagerFrame.MUTE)) {
             // GUI Mute button
             log.debug("VSD: Mute change. value: {}", evt.getNewValue());
-            Boolean b = (Boolean) evt.getNewValue();
-            this.mute(b.booleanValue());
+            setMuteState((boolean) evt.getNewValue());
+            this.mute(getMuteState());
         } else if (property.equals(VSDManagerFrame.VOLUME_CHANGE)) {
-            // GUI Volume slider
+            // GUI Volume slider (Master Volume)
             log.debug("VSD: Volume change. value: {}", evt.getOldValue());
             // Slider gives integer 0-100. Need to change that to a float 0.0-1.0
             this.setMasterVolume((1.0f * (Integer) evt.getOldValue()) / 100.0f);
@@ -638,7 +663,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @param vf (VSDFile) : VSD File to pull the XML from
      * @param pn (String) : Parameter Name to find within the VSD File.
      */
-    @SuppressWarnings({"cast"})
+    @SuppressWarnings("cast")
     public void setXml(VSDFile vf, String pn) {
         Iterator<Element> itr;
         Element e = null;

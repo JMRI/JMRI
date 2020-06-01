@@ -18,6 +18,8 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     /**
      * Constructor.
+     * @param memo system connection.
+     * @param address loco address.
      */
     public MarklinThrottle(MarklinSystemConnectionMemo memo, LocoAddress address) {
         super(memo);
@@ -128,10 +130,13 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         }
         log.debug("Float speed = {} Int speed = ", speed, value);
         firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        record(speed);
     }
 
     /**
      * Convert a Marklin speed integer to a float speed value
+     * @param lSpeed Marklin-format speed value
+     * @return 0.0 - 1.0 speed value
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) {
@@ -156,8 +161,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     @Override
     public void setSpeedStepMode(SpeedStepMode Mode) {
         if (log.isDebugEnabled()) {
-            log.debug("Speed Step Mode Change to Mode: " + Mode
-                    + " Current mode is: " + this.speedStepMode);
+            log.debug("Speed Step Mode Change to Mode: {} Current mode is: {}", Mode, this.speedStepMode);
         }
         boolean isLong = ((jmri.ThrottleManager) adapterMemo.get(jmri.ThrottleManager.class)).canBeLongAddress(address.getNumber());
         switch (address.getProtocol()) {
@@ -187,6 +191,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     @Override
     protected void throttleDispose() {
         active = false;
+         finishRecord();
     }
 
     @Override
@@ -199,13 +204,13 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.MANCOMMANDSTART && m.getCommand() <= MarklinConstants.MANCOMMANDEND) {
             if (m.getAddress() != getCANAddress()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Addressed packet is not for us " + m.getAddress() + " " + getCANAddress());
+                    log.debug("Addressed packet is not for us {} {}", m.getAddress(), getCANAddress());
                 }
                 return;
             }
             if (m.getCommand() == MarklinConstants.LOCODIRECTION) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Loco Direction " + m.getElement(9));
+                    log.debug("Loco Direction {}", m.getElement(9));
                 }
                 //The CS2 sets the speed of the loco to Zero when changing direction, however it doesn't appear to broadcast it out.
                 switch (m.getElement(9)) {

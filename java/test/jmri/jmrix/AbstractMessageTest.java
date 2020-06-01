@@ -6,11 +6,10 @@ import org.junit.Before;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AbstractMessageTest extends AbstractMessageTestBase {
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
@@ -25,7 +24,7 @@ public class AbstractMessageTest extends AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

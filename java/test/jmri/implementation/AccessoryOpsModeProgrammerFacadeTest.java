@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Test the AccessoryOpsModeProgrammerFacade class.
  *
- * @author	Bob Jacobsen Copyright 2014
- * @author	Dave Heap 2017
+ * @author Bob Jacobsen Copyright 2014
+ * @author Dave Heap 2017
  *
  */
 // @ToDo("transform to annotations requires e.g. http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations/")
@@ -86,7 +86,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         ProgListener l = new ProgListener() {
             @Override
             public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
+                log.debug("callback value={} status={}", value, status);
                 replied = true;
                 readValue = value;
             }
@@ -143,7 +143,6 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         replied = false;
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();

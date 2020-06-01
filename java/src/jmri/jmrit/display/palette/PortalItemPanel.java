@@ -1,8 +1,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -47,12 +45,7 @@ public class PortalItemPanel extends FamilyItemPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         JButton setDefaultsButton = new JButton(Bundle.getMessage("setDefaultIcons"));
-        setDefaultsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                setDefaults();
-            }
-        });
+        setDefaultsButton.addActionListener(a -> setDefaults());
         setDefaultsButton.setToolTipText(Bundle.getMessage("ToolTipSetDefaultIcons"));
         panel.add(setDefaultsButton);
         return panel;

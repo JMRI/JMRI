@@ -68,7 +68,6 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
 
     private EasyDccSystemConnectionMemo _memo;
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

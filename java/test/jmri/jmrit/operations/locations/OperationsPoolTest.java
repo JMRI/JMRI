@@ -11,13 +11,13 @@ import org.junit.Test;
 
 /**
  * Tests for the Operations Pool class Last manually cross-checked on ?????
- *
+ * <p>
  * Still to do: ?????????????? Nees to be updated for Pool class ScheduleItem:
  * XML read/write Schedule: Register, List, XML read/write Track:
  * AcceptsDropTrain, AcceptsDropRoute Track: AcceptsPickupTrain,
  * AcceptsPickupRoute Track: CheckScheduleValid Track: XML read/write Location:
  * Track support <-- I am here Location: XML read/write
- *
+ * 
  * @author Gregory Madsen Copyright (C) 2012, based on OperationsLocationTest
  * class
  */
@@ -27,7 +27,7 @@ public class OperationsPoolTest extends OperationsTestCase {
     Track t1 = null;
     Track t2 = null;
 
-	// test Pool Class (part one)
+    // test Pool Class (part one)
     // test Pool creation in different ways
     // public void testCreateDefault()
     // {
@@ -173,7 +173,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testLengthenTrack1() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 120 feet, which will take 20 feet from Track 2
@@ -188,7 +188,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testLengthenTrack1Maximum() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 180 feet, which will take all available 80 feet
@@ -204,7 +204,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testLengthenTrack1TooLong() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 181 feet, which will fail as there is only 80
@@ -220,7 +220,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testShortenTrack1() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 80 feet, which will give 20 feet to Track 2
@@ -235,7 +235,7 @@ public class OperationsPoolTest extends OperationsTestCase {
 
     @Test
     public void testShortenTrack1BelowMinimum() {
-		// Track 1 is 100 feet, minimum 50, available 50
+        // Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
 
         // Request Track 1 to be 20 feet, which will give 80 feet to Track 2

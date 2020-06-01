@@ -7,7 +7,7 @@ import org.junit.*;
 /**
  * Test simple functioning of TreePanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class TreePanelTest {
 
@@ -17,7 +17,7 @@ public class TreePanelTest {
             // just checking for failure to construct
             new TreePanel();
         } catch (Throwable e) {
-            log.warn("TreeModelTest caught "+e);
+            log.warn("TreeModelTest caught {}", e);
             if (e instanceof UnsatisfiedLinkError) {
                 log.info("TreeModel.instance threw UnsatisfiedLinkError, which means we can't test on this platform");
                 return;

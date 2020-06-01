@@ -19,8 +19,12 @@ import org.slf4j.LoggerFactory;
  */
 public class ThrottleFrameManager implements InstanceManagerAutoDefault {
 
-    private final static int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
-    private final static int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
+    private final static int NEXT_THROTTLE_KEY  = KeyEvent.VK_RIGHT;
+    private final static int PREV_THROTTLE_KEY  = KeyEvent.VK_LEFT;
+
+    private final static int MOVE_TO_FUNCTIONS  = KeyEvent.VK_F;
+    private final static int MOVE_TO_CONTROL    = KeyEvent.VK_C;
+    private final static int MOVE_TO_ADDRESS    = KeyEvent.VK_A;
 
     private int activeFrame;
     private final ThrottleCyclingKeyListener throttleCycler;
@@ -133,6 +137,35 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         tf.toFront();
     }
 
+
+    private void requestFocusAddress() {
+        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getAddressPanel().requestFocus();
+        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getAddressPanel().toFront();
+        try {
+            throttleWindows.get(activeFrame).getCurrentThrottleFrame().getAddressPanel().setSelected(true);
+        } catch (java.beans.PropertyVetoException ex) {
+            log.debug("address move vetoed");
+        }
+    }
+    private void requestFocusControls() {
+        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getControlPanel().requestFocus();
+        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getControlPanel().toFront();
+        try {
+            throttleWindows.get(activeFrame).getCurrentThrottleFrame().getControlPanel().setSelected(true);
+        } catch (java.beans.PropertyVetoException ex) {
+            log.debug("control move vetoed");
+        }
+    }
+    private void requestFocusFunctions() {
+        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getFunctionPanel().requestFocus();
+        throttleWindows.get(activeFrame).getCurrentThrottleFrame().getFunctionPanel().toFront();
+        try {
+            throttleWindows.get(activeFrame).getCurrentThrottleFrame().getFunctionPanel().setSelected(true);
+        } catch (java.beans.PropertyVetoException ex) {
+            log.debug("function move vetoed");
+        }
+    }
+
     public ThrottleWindow getCurrentThrottleFrame() {
         if (throttleWindows == null) {
             return null;
@@ -161,10 +194,17 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
          */
         @Override
         public void keyReleased(KeyEvent e) {
+            log.trace("TFM {}", e);
             if (e.isShiftDown() && e.getKeyCode() == NEXT_THROTTLE_KEY) {
                 requestFocusForNextFrame();
             } else if (e.isShiftDown() && e.getKeyCode() == PREV_THROTTLE_KEY) {
                 requestFocusForPreviousFrame();
+            } else if (e.isShiftDown() && e.getKeyCode() == MOVE_TO_FUNCTIONS) {
+                requestFocusFunctions();
+            } else if (e.isShiftDown() && e.getKeyCode() == MOVE_TO_CONTROL) {
+                requestFocusControls();
+            } else if (e.isShiftDown() && e.getKeyCode() == MOVE_TO_ADDRESS) {
+                requestFocusAddress();
             }
         }
     }

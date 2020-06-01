@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Ib2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -411,7 +411,6 @@ public class Ib2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(expResult, result);
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

@@ -33,6 +33,7 @@ public class SensorGroup {
 
     /**
      * Create one, looking up an existing one if present
+     * @param name Name of the group
      */
     SensorGroup(String name) {
         this.name = name;
@@ -53,7 +54,7 @@ public class SensorGroup {
     }
 
     void addPressed() {
-        log.debug("start with " + sensorList.size() + " lines");
+        log.debug("start with {} lines", sensorList.size());
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         String group = name;
 

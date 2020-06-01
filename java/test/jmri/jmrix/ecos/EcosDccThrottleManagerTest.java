@@ -6,7 +6,7 @@ import org.junit.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EcosDccThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
@@ -17,7 +17,6 @@ public class EcosDccThrottleManagerTest extends jmri.managers.AbstractThrottleMa
     public void testGetThrottleInfo() {
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

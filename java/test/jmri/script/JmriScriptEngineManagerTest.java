@@ -293,6 +293,7 @@ public class JmriScriptEngineManagerTest {
     @After
     public void tearDown() {
         jsem = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

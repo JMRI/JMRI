@@ -11,7 +11,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
- * @author	Andrew Crosland Copyright (C) 2006
+ * @author Andrew Crosland Copyright (C) 2006
  */
 public class SprogCSSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -23,14 +23,6 @@ public class SprogCSSerialDriverAdapter
                 true)); // first element (TrackPowerState) NOI18N
         // Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
         this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogCSTitle"));
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated  // will be removed when class is converted
-    static public SprogCSSerialDriverAdapter instance() {
-        return null;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class);

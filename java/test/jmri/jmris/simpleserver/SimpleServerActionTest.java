@@ -2,7 +2,6 @@ package jmri.jmris.simpleserver;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import jmri.util.swing.JmriAbstractActionTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.Assume;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,5 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Definition of objects to handle configuring a layout connection via a SPROG 
  * Generation 5 SerialDriverAdapter object.
@@ -47,7 +45,7 @@ public class PiSprog3ConnectionConfig extends jmri.jmrix.can.adapters.Connection
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            adapter = new Sprog3PlusSerialDriverAdapter();
+            adapter = new PiSprog3SerialDriverAdapter();
         }
     }
 

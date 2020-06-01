@@ -2,7 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import jmri.jmrit.display.panelEditor.PanelEditor;
+
 import org.junit.*;
 
 /**
@@ -48,7 +48,6 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
 
     }
 
-    // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {

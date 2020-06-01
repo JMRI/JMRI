@@ -56,11 +56,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         setStoreElementClass(blocks);
         BlockManager bm = (BlockManager) o;
         if (bm != null) {
-            //TODO: dead code strip: (don't sort - this is so JMRI preserves the order of things in the file)
-            //AlphanumComparator ac = new AlphanumComparator();
-            //List<String> contents = bm.getSystemNameList();
-            //Collections.sort(contents, (String s1, String s2) -> ac.compare(s1, s2));
-            //java.util.Iterator<String> iter = contents.iterator();
 
             SortedSet<Block> blkList = bm.getNamedBeanSet();
             // don't return an element if there are no blocks to include
@@ -164,6 +159,10 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 if (bm.isSavedPathInfo()) {
                     // then the paths
                     List<Path> paths = b.getPaths();
+                    
+                    // in sorted order
+                    java.util.Collections.sort(paths);
+                    
                     for (Path p : paths) {
                         addPath(elem, p);
                     }
@@ -230,19 +229,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         List<Element> list = sharedBlocks.getChildren("block");
         log.debug("Found {} objects", list.size());
 
-        try {
-            InstanceManager.getDefault(jmri.BlockManager.class).setDataListenerMute(true);
-            // first pass don't load full contents (just create all the blocks)
-            for (Element block : list) {
-                loadBlock(block, false);
-            }
+        // first pass don't load full contents (just create all the blocks)
+        for (Element block : list) {
+            loadBlock(block, false);
+        }
 
-            // second pass load full contents
-            for (Element block : list) {
-                loadBlock(block, true);
-            }
-        } finally {
-            InstanceManager.getDefault(jmri.BlockManager.class).setDataListenerMute(false);
+        // second pass load full contents
+        for (Element block : list) {
+            loadBlock(block, true);
         }
         
         return result;
