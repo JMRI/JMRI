@@ -79,7 +79,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
         }
-        createModel();
     }
 
     public LRouteTableAction() {
@@ -92,6 +91,17 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
      */
     @Override
     protected void createModel() {
+        // create GUI elements once
+        if (m == null) {
+            _systemName = new JTextField(15);
+            _userName = new JTextField(25);
+            soundFile = new JTextField(30);
+            scriptFile = new JTextField(30);
+            cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+            createButton = new JButton(Bundle.getMessage("ButtonCreate"));
+            deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+            updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+        }
         m = new LBeanTableDataModel();
     }
 
@@ -321,8 +331,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     ConditionalManager _conditionalManager = null;
     LogixManager _logixManager = null;
 
-    JTextField _systemName = new JTextField(15);
-    JTextField _userName = new JTextField(25);
+    JTextField _systemName;
+    JTextField _userName;
 
     JmriJFrame _addFrame = null;
     JTabbedPane _tabbedPane = null;
@@ -353,13 +363,13 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     JRadioButton _initializeButton;
     boolean _initialize = false;
 
-    JTextField soundFile = new JTextField(30);
-    JTextField scriptFile = new JTextField(30);
+    JTextField soundFile;
+    JTextField scriptFile;
 
-    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-    JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
-    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-    JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+    JButton cancelButton;
+    JButton createButton;
+    JButton deleteButton;
+    JButton updateButton;
 
     boolean routeDirty = false;  // true to fire reminder to save work
 
