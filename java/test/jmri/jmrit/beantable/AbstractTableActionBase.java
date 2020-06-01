@@ -34,6 +34,16 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
     protected AbstractTableAction<B> a = null;
     protected String helpTarget = "index"; // index is default value specified in AbstractTableAction.
 
+    /**
+     * Test that AbstractTableAction subclasses do not create Swing objects when
+     * constructed, but defer that to later.
+     */
+    @Test
+    public final void testDeferredCreation() {
+        assertThat(a.m).isNull();
+        assertThat(a.f).isNull();
+    }
+
     @Test
     public void testGetTableDataModel() {
         GuiActionRunner.execute(() -> assertThat(a.getTableDataModel()).as("Table Data Model Exists").isNotNull());

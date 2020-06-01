@@ -34,6 +34,11 @@ which checks the dates of the control files to make sure they've benen updated w
 
 ### Specific components:
 
+##### jetty-*.jar
+- version 9.4.28.v20200408
+- provides the HTTP and WebSocket servers
+- from https://search.maven.org/search?q=g:org.eclipse.jetty%20v:9.4.28.v20200428
+
 ##### jsplitbutton-1.3.1.jar
 - version 1.3.1
 - provides a Swing split button

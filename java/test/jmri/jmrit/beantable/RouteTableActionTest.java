@@ -2,18 +2,13 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import jmri.Route;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
-import org.assertj.swing.edt.GuiActionRunner;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
@@ -62,83 +57,83 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
     @Test
     public void testAddRoute() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        GuiActionRunner.execute(() -> {
-            a.actionPerformed(null); // show table
-            JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleRouteTable"), true, true);
-            Assert.assertNotNull(f);
+        a.actionPerformed(null); // show table
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleRouteTable"), true, true);
+        Assert.assertNotNull(f);
 
-            a.addPressed(null);
-            JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddRoute"));  // NOI18N
-            Assert.assertNotNull("Found Add Route Frame", addFrame);  // NOI18N
+        a.addPressed(null);
+        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddRoute"));  // NOI18N
+        Assert.assertNotNull("Found Add Route Frame", addFrame);  // NOI18N
 
-            new JTextFieldOperator(addFrame, 0).setText("105");  // NOI18N
-            new JTextFieldOperator(addFrame, 1).setText("Route 105");  // NOI18N
-            new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
-            new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+        JLabelOperator systemLabel = new JLabelOperator(addFrame,Bundle.getMessage("LabelSystemName"));
+        new JTextFieldOperator((JTextField)systemLabel.getLabelFor()).setText("105");  // NOI18N
+        JLabelOperator userLabel = new JLabelOperator(addFrame,Bundle.getMessage("LabelUserName"));
+        new JTextFieldOperator((JTextField) userLabel.getLabelFor()).setText("Route 105");  // NOI18N
+        new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        //new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
 
-            Route chk105 = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("Route 105");  // NOI18N
-            Assert.assertNotNull("Verify IO105 Added", chk105);  // NOI18N
-            Assert.assertEquals("Verify system name prefix", "IO105", chk105.getSystemName());  // NOI18N
 
-            addFrame.dispose();
-            JUnitUtil.dispose(f);
-        });
+        Route chk105 = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("Route 105");  // NOI18N
+        Assert.assertNotNull("Verify IO105 Added", chk105);  // NOI18N
+        Assert.assertEquals("Verify system name prefix", "IO105", chk105.getSystemName());  // NOI18N
+
+        addFrame.dispose();
+        JUnitUtil.dispose(f);
     }
 
     @Test
     public void testEditRoute() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
-        GuiActionRunner.execute(() -> a.actionPerformed(null));
+        a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
         JFrameOperator jfo = new JFrameOperator(f);
 
         // find the "Add... " button and press it.
-        jmri.util.swing.JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
+        jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 
         //enable "Auto System Name" via checkbox
-        JCheckBoxOperator jcbo = new JCheckBoxOperator(jf, Bundle.getMessage("LabelAutoSysName"));
+        JCheckBoxOperator jcbo = new JCheckBoxOperator(jf,Bundle.getMessage("LabelAutoSysName"));
         jcbo.doClick();
-
+        
         //press create button to create a Route, then close the create window
-        jmri.util.swing.JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
-        jf.requestClose();
+        jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        //jf.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         // press "Edit" button, which is the last column (no heading), to open the Edit Route window
         JTableOperator tbl = new JTableOperator(jfo);
-        tbl.clickOnCell(0, tbl.getColumnCount() - 1);
+        tbl.clickOnCell(0,tbl.getColumnCount() -1);
 
         //enter a username in the Edit window
         JFrame f2 = JFrameOperator.waitJFrame("Edit Route", true, true);
         jf = new JFrameOperator(f2);
-        //username field is the first field in window
-        JTextFieldOperator jtxt = new JTextFieldOperator(jf, 0);
-        jtxt.clickMouse();
-        jtxt.setText("TestRouteUserName");
 
+        JLabelOperator userLabel = new JLabelOperator(jf,Bundle.getMessage("LabelUserName"));
+        new JTextFieldOperator((JTextField) userLabel.getLabelFor()).typeText("TestRouteUserName");
+        
         //press Update to save the Route change
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonUpdate"));
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonUpdate"));
 
         //press Cancel to close the Edit window
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
-
+        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
+        
         //retrieve the expected route for verification
         Route chkRoute = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("IO:AUTO:0001");  // NOI18N
         Assert.assertEquals("Verify no additional routes were created", 1, tbl.getRowCount());  // NOI18N
         Assert.assertNotNull("Verify IO:AUTO:0001 Added", chkRoute);  // NOI18N
         Assert.assertEquals("Verify system name didn't change", "IO:AUTO:0001", chkRoute.getSystemName());  // NOI18N
         Assert.assertEquals("Verify user name is TestRouteUserName", "TestRouteUserName", chkRoute.getUserName());  // NOI18N
-
+        
         JUnitUtil.dispose(f2);
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
     @Override
-    public String getAddFrameName() {
+    public String getAddFrameName(){
         return Bundle.getMessage("TitleAddRoute");
     }
 
@@ -156,13 +151,14 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
     public void testEditButton() {
     }
 
+
     @Before
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initDefaultUserMessagePreferences();
-        helpTarget = "package.jmri.jmrit.beantable.RouteTable";
+        jmri.util.JUnitUtil.resetProfileManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        helpTarget = "package.jmri.jmrit.beantable.RouteTable"; 
         a = new RouteTableAction();
     }
 
