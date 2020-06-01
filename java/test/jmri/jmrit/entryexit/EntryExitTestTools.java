@@ -14,18 +14,7 @@ class EntryExitTestTools {
         java.io.File f = new java.io.File("java/test/jmri/jmrit/entryexit/load/EntryExitTest.xml");
         cm.load(f);
 
-        for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
-            switch (panel.getLayoutName()) {
-                case "Alpha":
-                    panels.put("Alpha", panel);
-                    break;
-                case "Beta":
-                    panels.put("Beta", panel);
-                    break;
-                default:
-                    break;
-            }
-        }
+        InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class).forEach(p -> panels.put(p.getLayoutName(), p));
 
         InstanceManager.getDefault(SensorManager.class).getSensor("Reset").setKnownState(Sensor.ACTIVE);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();

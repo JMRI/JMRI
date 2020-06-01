@@ -112,7 +112,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
     String memoryOption = "";     // Optional memory variable to receive allocation messages
     int memoryClearDelay = 0;     // Delay before clearing memory, 0 for clearing disabled
 
-    static JPanel glassPane = new JPanel();
+    private static JPanel glassPane = null;
 
     /**
      * Delay between issuing Turnout commands
@@ -128,15 +128,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
             InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
         }
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
-
-        glassPane.setOpaque(false);
-        glassPane.setLayout(null);
-        glassPane.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                e.consume();
-            }
-        });
     }
 
     public void setDispatcherIntegration(boolean boo) {
@@ -152,6 +143,17 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
      * @return JPanel overlay
      */
     public JPanel getGlassPane() {
+        if (glassPane == null) {
+            glassPane = new JPanel();
+            glassPane.setOpaque(false);
+            glassPane.setLayout(null);
+            glassPane.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    e.consume();
+                }
+            });
+        }
         return glassPane;
     }
 
