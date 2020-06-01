@@ -32,6 +32,7 @@
 	    <ul class="snav">
 		<li><a href="#web">Web Access</a></li>
 		<li><a href="#limitations">Standards and Limitations</a></li>
+        <li><a href="#hwhelp">Creating Help/Web for New Hardware</a></li>
     	<li><a href="#check">Checking Changes</a></li>
         <li><a href="#tocAndIndex">TOC and Index</a></li>
         <li><a href="#jhelpdev">Creating Control Files</a></li>
@@ -108,7 +109,7 @@
 
     <div class="para">      
 
-      It's inconvenient to have to maintain two separate web pages for the main web site and the help
+      It is inconvenient to have to maintain two separate web pages for the main web site and the help
       system. To reduce the need for that, we use a particular form for the web pages in the help system.
       [Additional information can also be found <a href="WebSite.shtml">here.</a>]
 
@@ -229,6 +230,76 @@
              <p><a href="#helpTop">[Go to top of page]</a></p>
        </div>
 
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
+      <a name= "hwhelp" id="hwhelp"></a>
+      <h2>Creating Help/Web Pages for New Hardware</h2>
+
+    <div class="para">      
+      
+      <p>When you integrate support for new hardware into JMRI, you should also create a page or pages for the
+      help system and the web.  There are several steps involved to ensure that your new hardware help is integrated
+      into the JMRI Help system and its web site. All references below to files are to the 
+      <a href="https://github.com/JMRI/JMRI" target="_blank"> JMRI Repository structure</a> in Github. Note use
+      of capitalization in references to (fictitious) product "X" from manufacturer "M":</p>
+
+      <ol>
+        <li>Create the general help page or pages for the new hardware:
+          <ul>
+            <li>See <a href="../../hardware/index.shtml">other hardware help pages linked off the Hardware Index page</a>
+            for examples before beginning.  There are a variety of styles based on how much information you want to provide.
+            You can also provide a link to external manufacturer pages.</li>
+            <li>Create your help page and put it into "/help/en/html/hardware", either directly as "X.shtml" if only a single 
+            file or in its own subdirectory "/help/en/html/hardware/m/" if there are going to be multiple pages.  You should
+            name the first file "index.shtml" when in its own subdirectory.</li>
+            <li>If your help pages have images, create a subdirectory "/help/en/html/hardware/m/images" to store them.</li>
+            <li>Put in the standard sidebar by an "include" of "/help/en/html/hardware/Sidebar.shtml" (using
+            appropriate relative addressing) in your help page or pages.  [Some creators of hardware and hardware families 
+            create their own "SidebarHardwareLocalPart.shtml" file in the "m" subdirectory to have custom information in the 
+            sidebar. This also requires creating a file "Sidebar.shtml" in "standard format" in the "m" subdirectory. See
+            some exising hardware entries such as <a href="../../hardware/arduino/index.shtml">
+            this one</a> for examples.]</li>
+          </ul>
+        </li>
+        <li>Create any "code-specific" help page or pages for the new hardware:
+          <ul>
+            <li>As discussed in the first section of this page, "code-specific" help (i.e. related to a particular window or
+            component) should be in pages in a different part of the file directory tree. Any pages you create to
+            explain windows or code should be placed under "/help/en/package/" branch based on where the actual code is stored.</li>
+            <li>Make sure you provide links to these pages in your general help pages.</li>
+          </ul>
+        </li>
+        <li>Create entries in the Hardware Index page:
+          <ul>
+            <li>Add a hardware listing entry and paragraph in <a href="../../hardware/index.shtml">
+            "/help/en/html/hardware/index.shtml"</a> following the formats and categorization of other similar hardware.</li>
+            <li>Add an entry for "M X" to the Category/Alphabetic Index in the appropriate place near the top of
+            "hardware/index.shtml".</li>
+          </ul>
+        </li>
+        <li>Create an entry in the Supported Hardware "sidebar part":
+          <ul>
+            <li>Add an entry in alphabetic order for "M X" to the hardware sidebar part "/help/en/parts/SidebarSupportedHardware.shtml".</li>
+          </ul>
+        </li>
+        <li>Create Help TOC and Index entries:
+          <ul>
+            <li>Add an entry for "M X" under "Hardware Support" to the file "JMRIHelp_enTOC.xml" found in the /help/en/ directory. </li>
+            <li>Add one or more entries for "M X" such as "X (M)" or other helpful index items to the file "JMRIHelp_enindex.xml" 
+            found in the /help/en/ directory.</li>
+            <li>See the section below on <a href="#tocAndIndex">Help Table of Contents and Index</a> for additional steps to update
+            the TOC and Index.</li>
+          </ul>
+        </li>
+      </ol>
+        
+        <p>Following all these steps will ensure that other users will be able to find and use the new hardware you have integrated
+        into JMRI.</p>
+
+             <p><a href="#helpTop">[Go to top of page]</a></p>
+       </div>
+
+
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = --> 
       <a name= "check" id="check"></a>
       <h2>Checking Your Changes</h2>
@@ -256,13 +327,13 @@
     <div class="para">      
       
       Java Help includes a
-      <a href="http://jmri.org/help/en/webtoc.shtml">table of
+      <a href="../../../webtoc.shtml">table of
       contents</a> and an <a href=
-      "http://jmri.org/help/en/webindex.shtml">index</a>. These are
+      "../../../webindex.shtml">index</a>. These are
       both available as hyperlinks on the web, and provided via a
       nicer user interface when using JavaHelp in the program.
 
-      <p>The underlying information must be manually maintained in
+      <p>The underlying information must be maintained manually in
       the help/en/JmriHelp_enTOC.xml and
       help/en/JmriHelp_enIndex.xml files, respectively. JHelpDev
       then makes the files that Java Help needs, and an "ant" step

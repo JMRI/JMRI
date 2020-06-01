@@ -268,7 +268,7 @@ modified, the Windows package may be created by running the
 
 Apache NetBeans has nice tools for working with XML files, including
 editing and validating them. JMRI uses XInclude to include XML fragments
-in other XML files via URLs to http://jmri.org/xml[the JMRI web site]. JMRI programs convert these at run time to local file references; however Apache NetBeans must be configured to do this if you want to edit JMRI XML files while offline.
+in other XML files via URLs to https://jmri.org/xml[the JMRI web site]. JMRI programs convert these at run time to local file references; however Apache NetBeans must be configured to do this if you want to edit JMRI XML files while offline.
 
 To configure Apache NetBeans to allow offline XML editing:
 

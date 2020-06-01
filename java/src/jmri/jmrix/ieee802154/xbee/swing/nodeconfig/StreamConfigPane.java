@@ -125,6 +125,7 @@ public class StreamConfigPane extends JmrixConfigPane {
      * existing information in an existing StreamConnectionConfig object. It's
      * permitted to call this with a null argument, e.g. for when first
      * configuring the system.
+     * @param original Connection configuration to use
      */
     protected StreamConfigPane(StreamConnectionConfig original) {
         ConnectionConfigManager manager = InstanceManager.getDefault(ConnectionConfigManager.class);

@@ -50,10 +50,10 @@
            height="164" hspace="0" vspace="0">
 
       <p>A large example of this is available as a <a href=
-      "http://jmri.org/community/examples/SPShastaConfigFile.pdf">PDF
+      "https://jmri.org/community/examples/SPShastaConfigFile.pdf">PDF
       file</a>. This is the configuration information, including
       routes, Logix, etc, for the <a href=
-      "http://jmri.org/community/examples/SPShasta.shtml">SP Shasta
+      "https://jmri.org/community/examples/SPShasta.shtml">SP Shasta
       Route</a> layout.</p>
 
       <p>To view your own panel file, the easiest approach is to 

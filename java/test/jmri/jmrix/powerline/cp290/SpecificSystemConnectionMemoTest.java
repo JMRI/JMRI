@@ -1,5 +1,6 @@
 package jmri.jmrix.powerline.cp290;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,44 +13,46 @@ import jmri.jmrix.powerline.SerialListener;
  * Tests for SpecificSystemConnectionMemo class.
  *
  * @author Paul Bender Copyright (C) 2016
- **/
-
-public class SpecificSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+ *
+ */
+public class SpecificSystemConnectionMemoTest extends SystemConnectionMemoTestBase<SpecificSystemConnectionMemo> {
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-   @Override
-   @Before
-   public void setUp() {
-       JUnitUtil.setUp();
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
 
-       jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-       SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
-       memo.setTrafficController(new SpecificTrafficController(memo){
-          @Override
-          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
-          }
-          @Override
-          public void transmitLoop(){
-          }
-          @Override
-          public void receiveLoop(){
-          }
-       });
-       memo.configureManagers();
-       scm = memo;
-   }
+        JUnitUtil.initDefaultUserMessagePreferences();
+        scm = new SpecificSystemConnectionMemo();
+        scm.setTrafficController(new SpecificTrafficController(scm) {
+            @Override
+            public void sendSerialMessage(SerialMessage m, SerialListener reply) {
+            }
 
-   @Override
-   @After
-   public void tearDown(){
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+            @Override
+            public void transmitLoop() {
+            }
+
+            @Override
+            public void receiveLoop() {
+            }
+        });
+        scm.configureManagers();
+    }
+
+    @Override
+    @After
+    public void tearDown() {
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         JUnitUtil.tearDown();
 
-   }
+    }
 
 }

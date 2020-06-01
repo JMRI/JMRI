@@ -72,7 +72,8 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
 
     /**
      * Create a well-formed packet from a String
-     *
+     * 
+     * @param s input contents
      * @return The packet, with contents filled-in
      */
     QsiMessage createPacket(String s) {

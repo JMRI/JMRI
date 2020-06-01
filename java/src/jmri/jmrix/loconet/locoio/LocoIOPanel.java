@@ -267,6 +267,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
      * The SET LOCOIO ADDRESS button was pressed. Since this does a broadcast
      * program-all to every LocoIO board on the LocoNet, it needs to be used
      * with caution.
+     * @return Status of user warning
      */
     protected int cautionAddrSet() {
         log.info("Caution: 'Set LocoIO Address' is a broadcast operation to ALL boards on this connection"); // NOI18N

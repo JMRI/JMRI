@@ -310,6 +310,7 @@ public class FnMapPanel extends JPanel {
     /**
      * Use the "family" and "model" element from the decoder definition file to configure the
      * number of outputs and set up any that are named instead of numbered.
+     * @param model ELement holding content to decode
      */
     protected void configOutputs(Element model) {
         if (model == null) {

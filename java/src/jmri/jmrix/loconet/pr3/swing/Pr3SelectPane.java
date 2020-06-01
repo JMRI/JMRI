@@ -117,8 +117,10 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
+     * @deprecated since 4.19.7; use {@link Pr3SelectPaneAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {

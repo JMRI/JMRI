@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog;
 
+import java.awt.event.FocusEvent;
 import static java.nio.charset.Charset.defaultCharset;
 
 import java.util.HashMap;
@@ -277,7 +278,7 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
-        String match = "[a-zA-Z0-9]*";
+        String match = "[ a-zA-Z0-9]*";
         String termByteStr = "0";
         String padByteStr = "0";
         String charSet = defaultCharset().name();
@@ -312,7 +313,7 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
         resultStr = loadString(testStr, var, name);  // load a value, get the result
         checkResults(beforeStr, testStr, resultStr, cv, match, termByteStr, padByteStr, charSet);
 
-        testStr = "Test Invalid";
+        testStr = "Test Invalid.";
         beforeStr = ((JTextField) var.getCommonRep()).getText();  // get the current contents
         resultStr = loadString(testStr, var, name);  // load a value, get the result
         checkResults(beforeStr, testStr, resultStr, cv, match, termByteStr, padByteStr, charSet);
@@ -421,9 +422,12 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
      * @return The result after loading.
      */
     String loadString(String testStr, SplitTextVariableValue var, String name) {
+
+        FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
+
+        var.focusGained(focusEvent);
         ((JTextField) var.getCommonRep()).setText(testStr);  // load a value
-        var.exitField();
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        var.focusLost(focusEvent);
         return ((JTextField) var.getCommonRep()).getText();  // get the result
     }
 
@@ -448,6 +452,7 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
      */
     public void checkResults(String beforeStr, String testStr, String resultStr, CvValue[] cv,
             String match, String termByteStr, String padByteStr, String charSet) {
+        log.debug("checkResults with beforeStr='{}', testStr='{}', resultStr='{}'", beforeStr, testStr, resultStr);
 
         // check if match parameter applies and modify expectations accordingly
         if (match != null && !match.equals("") && !testStr.matches(match)) {

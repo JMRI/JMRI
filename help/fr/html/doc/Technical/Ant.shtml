@@ -39,7 +39,7 @@
         projet.</li>
 
         <li>Dans ce r&eacute;pertoire de projet, faire un <a href=
-        "http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
+        "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
         checkout Git</a> de "All" les module &agrave; partir de
         notre r&eacute;f&eacute;rentiel (Repository). Cela va
         cr&eacute;er un sous-r&eacute;pertoire "jmri" o&ugrave; Ant

@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2016 -->
+
+  <title>PanelPro: Getting Started with Layout Editor</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+  <style type="text/css">
+    a.reflink, span.reflink {
+        color: #fff;
+        background: #888;
+        background-size: 100% 100%;
+        border-radius: 4px;
+        margin: 2px 2px 2px 2px;
+        padding: .2em .3em;
+    }
+  </style>
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+    <h1>Getting Started with Layout Editor</h1>
+
+    <h2>Introduction</h2>
+
+    <p>As indicated on the PanelPro introduction page, there are several editors within
+    PanelPro and a significant number of other tools that supplement and build upon PanelPro
+    content.  This page provides an overview of creating a layout editor panel and the
+    supporting tools to automatically run a train using Dispatcher.
+    </p>
+
+    <p>While the end point is running a train using Dispatcher, there is no requirement to
+    actually do that.  For some people, an intermediate point is all that they will need
+    since they have other goals for using PanelPro, such as creating a CTC panel, using
+    Entry/Exit or building a separate panel using Control Panel Editor to use Warrants.</p>
+
+    <h3>Table of Contents</h3>
+    <ul>
+      <li><a href="#GandD">Givens and Druthers</a></li>
+      <li><a href="#Setup">Set up PanelPro</a></li>
+      <li><a href="#Phase1">Phase 1 &mdash; The Basic Panel</a>
+        <ul>
+          <li><a href="#TrackPlan">Draw the Track Plan</a></li>
+          <li><a href="#Events">Layout Events</a></li>
+        </ul>
+      </li>
+      <li><a href="#Phase2">Phase 2 &mdash; Signaling</a></li>
+      <li><a href="#Phase3">Phase 3 &mdash; Dispatcher</a></li>
+    </ul>
+
+    <a name="GandD" id="GandD"></a>
+    <h2>Givens and Druthers</h2>
+
+    <p>While this is a term from the NMRA LDSIG (Layout Design Special Interest Group), it
+    helps to set the stage.</p>
+    <ul>
+      <li>The layout connection will use the Digitrax Simulator for layout components.</li>
+      <li>The layout components will be numbered sequentially without reference to any specific hardware</li>
+      <li>Signaling will be based on Signal Masts using Signal Mast Logic (SML)</li>
+      <li>The SML will be based on the <strong>Basic</strong> signaling system.</li>
+      <li>The following description is just one of many possible workflows.</li>
+      <li>JMRI 4.20 is being used.</li>
+      <li>Turnouts have their own blocks.</li>
+      <li>Table items will have user names.  If a connection change is required which results
+      in different system names, the user names can be moved without impacting the
+      configuration.</li>
+      <li>Clickable <span class="reflink">keywords</span> are provided that link to detail help pages.</li>
+    </ul>
+
+    <a name="Setup" id="Setup"></a>
+    <h2>Set up PanelPro if needed</h2>
+
+    <p>The first time PanelPro is started, a connection must be defined.  For this exercise
+    we will be using the Digitrax Loconet Simulator.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-Connection.png">
+    <img src="images/LEGS-Connection.png"
+    alt="JMRI Connection window" width="937" height="464"></a>
+    </div>
+
+    <p>Detail help:
+    <a class="reflink" href="../../../package/apps/TabbedPreferences.shtml#Connection">Connections</a>
+    </p>
+
+    <p>Add the JMRI System Console as a startup action.  When something is not working as expected,
+    having the system console available makes it easy to see if there was an error or a warning.
+    The error might not make sense, but using the <strong>Copy to clipboard</strong> button
+    makes it easy to include the content in a posting to the JMRI users's group.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-StartupActions.png">
+    <img src="images/LEGS-StartupActions.png"
+    alt="JMRI Startup Actions" width="937" height="464"></a>
+    </div>
+
+    <p>Detail help:
+    <a class="reflink" href="../../../package/apps/TabbedPreferences.shtml#Startup">Start Up Actions</a>
+    </p>
+
+    <a name="Phase1" id="Phase1"></a>
+    <h2>Phase 1 &mdash; The Basic Panel</h2>
+    <p>When <strong>Panels >> New Panel >> Layout Editor</strong> is selected, a blank panel
+    will be created with a default name.  The panel will fill the screen, it will have a
+    grid and at the top will be the Layout Editor tool bar.</p>
+
+    <p>Detail help:
+    <a class="reflink" href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
+    </p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-EmptyPanel.png">
+    <img src="images/LEGS-EmptyPanel.png"
+    alt="Empty Layout Editor Panel" width="1440" height="315"></a>
+    </div>
+
+    <p>As the panel is switched between edit and display mode, the tool bar is shown/hidden
+    and the panel shifts. <strong>Options >> Toolbar >> Toolbar Side >> Float</strong>
+    provides a tool box that avoids the shifting behavior.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-Toolbox.png">
+    <img src="images/LEGS-Toolbox.png"
+    alt="Layout Editor Toolbox" width="736" height="640"></a>
+    </div>
+
+    <a name="TrackPlan" id="TrackPlan"></a>
+    <h3>Draw the Track Plan</h3>
+
+    <p>The track plan is a short stretch of track with 2 turnouts and a siding.</p>
+
+    <p>Add a left hand turnout and a right hand turnout to the panel. Rotate the right hand
+    turnout 180 degrees, add two end bumpers and draw the track between the connection
+    points.  The demo uses the mainline option for the main track.  When the connection
+    points turn green, they are valid.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-RoughCut.png">
+    <img src="images/LEGS-RoughCut.png"
+    alt="Initial track plan" width="732" height="315"></a>
+    </div>
+
+    <p>Clean up the track plan by moving components to the grid.  The diverging legs of the
+    turnouts have been extended at a 45&deg; angle.  A label has been added to provide a
+    name for the siding.  Everything on the prototype has a name.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-PanelWithLabel.png">
+    <img src="images/LEGS-PanelWithLabel.png"
+    alt="Initial track plan" width="645" height="244"></a>
+    </div>
+
+    <a name="Events" id="Events"></a>
+    <h3>Layout Events</h3>
+
+    <p>The track, as is, does not do much.  It needs to create and respond to layout events.
+    The primary events are setting turnouts and responding to block occupancy. The
+    implementation of these events is based on the layout connection and related
+    hardware.</p>
+
+    <h4><a class="reflink" href="../../tools/Turnouts.shtml">Turnouts</a></h4>
+
+    <p>Turnouts are defined using PanelPro <strong>Tools >> Tables >> Turnouts</strong>.
+    Click on Add.  Two turnouts are defined and assigned user names:  T-Alpha-Left and T-Alpha-Right.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-AddTurnouts.png">
+    <img src="images/LEGS-AddTurnouts.png"
+    alt="Add turnouts" width="857" height="165"></a>
+    </div>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-RenameTurnouts.png">
+    <img src="images/LEGS-RenameTurnouts.png"
+    alt="Rename turnouts" width="931" height="252"></a>
+    </div>
+
+    <h4><a class="reflink" href="../../tools/Sensors.shtml">Sensors</a></h4>
+
+    <p>Sensors are defined using PanelPro <strong>Tools >> Tables >> Sensors</strong>.
+    Click on Add.For now, create one Internal sensor with an address of 999 and <strong>Reset</strong>
+    as the user name.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-AddResetSensor.png">
+    <img src="images/LEGS-AddResetSensor.png"
+    alt="Add reset sensor" width="931" height="252"></a>
+    </div>
+
+    <h4><a class="reflink" href="../../tools/Routes.shtml">Routes</a></h4>
+
+    <p>Since the connection is simulated, setting the initial value helps with testing later on.</p>
+
+    <p>Routes are defined using PanelPro <strong>Tools >> Tables >> Routes</strong>.
+    Click on Add. Select Automatically generate System Name, enter a Route user name,
+    select the two turnouts and set the state to Close.  Select the Reset sensor from the
+    <strong>Sensor 1</strong> list.  Click on Create.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-TurnoutRoute.png">
+    <img src="images/LEGS-TurnoutRoute.png"
+    alt="Add turnout route" width="1141" height="787"></a>
+    </div>
+
+    <h4><a class="reflink" href="../../tools/LRoutes.shtml">LRoutes</a></h4>
+
+    <p>A LRoute is stored as a Logix. There is a special LRoute know as a
+    <strong>RTXINITIALIZER</strong>.  The Logix created by this LRoute is the very first
+    Logix invoked after loading a data file. This makes it perfect doing the initial setup.</p>
+
+    <p>Use <strong>Tools >> Tables >> LRoutes</strong>.  Click on Add. Click on the
+    <strong>Actions (output)</strong> tab, select the Reset sensor and set the state to Active.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-LRouteAction.png">
+    <img src="images/LEGS-LRouteAction.png"
+    alt="LRoute action tab" width="799" height="290"></a>
+    </div>
+
+    <p>Click on the <strong>LRoute Basics</strong> tab, enter a name in the user name field and
+    select the <strong>Initializer</strong> option.  Click on Create.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-LRouteBasic.png">
+    <img src="images/LEGS-LRouteBasic.png"
+    alt="LRoute basic tab" width="804" height="674"></a>
+    </div>
+
+    When the data file is loaded, the RTXINITIALIZER Logix will set the Reset sensor to Active
+    which will trigger the Turnouts route which will set the turnouts to Closed.
+
+    <h4>Add turnouts and blocks to the panel</h4>
+
+    <p>Right click each turnout to get the context menu and select Edit.
+    Select the turnout name and type the block name in the Block field.  Click Done.  The
+    Block table entry will be automatically created.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-EditTurnout.png">
+    <img src="images/LEGS-EditTurnout.png"
+    alt="Edit turnout" width="467" height="290"></a>
+    </div>
+
+    <p>Repeat the block assignment process for each track segment.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-EditTrackSegment.png">
+    <img src="images/LEGS-EditTrackSegment.png"
+    alt="Edit track segment" width="340" height="240"></a>
+    </div>
+
+    <h4>Assign Occupancy Sensors to Blocks</h4>
+
+    <h5>Create occupancy sensors.</h5>
+
+    <p>Create six LocoNet sensors in the sensor table.  Assign user names based on the block
+    names.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-OccupancySensors.png">
+    <img src="images/LEGS-OccupancySensors.png"
+    alt="Occupancy sensors" width="931" height="366"></a>
+    </div>
+
+    <h5>Create a Route to initialize the sensors.</h5>
+
+    <p>Create a route table entry to initialize the occupancy sensors to Inactive</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-SensorRoute.png">
+    <img src="images/LEGS-SensorRoute.png"
+    alt="Create occupancy sensors route" width="1279" height="787"></a>
+    </div>
+
+    <h5>Add the sensors to the <a class="reflink" href="../../tools/Blocks.shtml">Block</a> table entries.</h5>
+
+    <p>Use <strong>Tools >> Tables >> Blocks</strong> to assign the occupancy sensors to
+    each block. The blocks were automatically created when the block names were assigned
+    using the Layout Editor <strong>Edit</strong> dialog for each piece of track.
+    To simplify the process, drag the Sensor column next to the User Name column.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-BlockSensors.png">
+    <img src="images/LEGS-BlockSensors.png"
+    alt="Assign sensors to blocks" width="669" height="335"></a>
+    </div>
+
+    <h4>Add sensors to the panel</h4>
+    <h5>Reset</h5>
+
+    <p>Add the <strong>Reset</strong> sensor to the panel using the toolbar
+    <strong>Sensor Icon</strong> option.  Use the right click context menu to change the
+    sensor to <strong>Momentary</strong>.</p>
+
+    <p>The next steps are going to covert the sensor icon into a clickable label.  This
+    can help save space on the panel. Use the right context menu <strong>Change To Text</strong>
+    item and then the <strong>Properties</strong> item.</p>
+
+    <p>Set the Active and Inactive Font and Background colors.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-FontProperties.png">
+    <img src="images/LEGS-FontProperties.png"
+    alt="Font properties" width="456" height="674"></a>
+    </div>
+
+    <p>Select the Size &amp; Position tab, set the Width and Height.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-SizeProperties.png">
+    <img src="images/LEGS-SizeProperties.png"
+    alt="Size properties" width="456" height="678"></a>
+    </div>
+
+    <h5>Blocks</h5>
+
+    <p>Add the occupancy sensors to the panel.  Position them near the appropriate track block.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-BasicPanel.png">
+    <img src="images/LEGS-BasicPanel.png"
+    alt="Basic panel" width="633" height="236"></a>
+    </div>
+
+    <h5></h5>
+
+    <p>The basic panel is now done.  It has turnouts, occupancy sensors and blocks.  It can
+    simulate sending turnout commands to the layout and respond to simulated occupancy changes.
+    It includes the ability to initialize after panel loading using Routes, LRoutes and
+    Logix.</p>
+
+    <a name="Phase2" id="Phase2"></a>
+    <h2>Phase 2 &mdash; Signaling</h2>
+
+    <a name="Phase3" id="Phase3"></a>
+    <h2>Phase 3 &mdash; Dispatcher</h2>
+
+    <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

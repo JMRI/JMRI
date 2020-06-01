@@ -8,8 +8,10 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.jmrix.can.ConfigurationManager.SubProtocol;
 import jmri.util.NamedBeanComparator;
 
+import jmri.util.startup.StartupActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +48,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     protected String _protocol = ConfigurationManager.MERGCBUS;
+    protected SubProtocol _subProtocol = SubProtocol.CBUS;
     
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -120,6 +123,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
     
     public void setProtocol(String protocol) {
+        StartupActionFactory old = getActionFactory();
         if (null != protocol) {
             _protocol = protocol;
             switch (protocol) {
@@ -140,8 +144,17 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     break;
             }
         }
-        // make sure appropriate actions in preferences
-        addToActionList();
+        firePropertyChange("actionFactory", old, getActionFactory());
+    }
+
+    public SubProtocol getSubProtocol() {
+        return _subProtocol;
+    }
+    
+    public void setSubProtocol(SubProtocol sp) {
+        if (null != sp) {
+            _subProtocol = sp;
+        }
     }
 
     /**
