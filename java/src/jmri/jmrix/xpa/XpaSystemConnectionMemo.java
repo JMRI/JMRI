@@ -43,7 +43,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
         return new NamedBeanComparator<>();
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    final jmri.jmrix.swing.ComponentFactory cf;
 
 
     /* manage the associated traffic controller */
@@ -126,11 +126,8 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
             return true;
         } else if (type.equals(jmri.PowerManager.class)) {
             return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else {
-            return false;
-        }
+        } else
+            return type.equals(TurnoutManager.class);
     }
 
     @Override
