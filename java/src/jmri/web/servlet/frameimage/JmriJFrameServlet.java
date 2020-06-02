@@ -207,6 +207,30 @@ public class JmriJFrameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // because we work with Swing, we do this on the AWT thread
+        
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            doGetOnSwing(request, response);
+            return;
+        }
+        
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(
+                () -> { 
+                    try {
+                        doGetOnSwing(request, response);
+                    } catch ( ServletException | IOException ex ) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            );
+        } catch (InterruptedException ex) {
+        } catch (java.lang.reflect.InvocationTargetException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    protected void doGetOnSwing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
         if (preferences.isDisableFrames()) {
             if (preferences.isRedirectFramesToPanels()) {
