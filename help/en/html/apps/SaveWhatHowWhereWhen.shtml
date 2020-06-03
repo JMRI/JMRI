@@ -99,11 +99,11 @@
       column labelled <b>"Save Command"</b>, these
       are the places where a command to "save" or "store" will save and store some portion of your work:</p>
       <ol>
-      <li>Preferences: “Save”
+      <li>Preferences: "Save"
       <li>Panel editors: File->Store Panels...  PanelPro main window: Panels->Store Panels...
-      <li>Tables (also Fast Clock): File-> (a)“Store configuration” or (b)“Store configuration and panels” [which does the same as "Store Panels" in the panel editors])
-      <li>Roster entry: (a) automatic (b) File->Save or “Save to Roster” (c) "Write" to Decoder
-      <li>Images/Icons: “Save Image Index”
+      <li>Tables (also Fast Clock): File-> (a) "Store configuration" or (b) "Store configuration and panels" [which does the same as "Store Panels" in the panel editors])
+      <li>Roster entry: (a) automatic (b) File->Save or "Save to Roster" (c) "Write" to Decoder
+      <li>Images/Icons: "Save Image Index"
       <li>Scripts: "Store..." (on Script Entry window)
       </ol>
       
@@ -153,8 +153,8 @@
           <td class="who">UC/US</td>
           <td class="cmd">2, 3(a), 3(b)       
           <!-- "Save->" under the File pulldown on each Table window. Wherever "Store Panels" is a command.
-          In <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>: "Store configuration only” or
-          "Store configuration and panels” which stores tables and panels -->
+          In <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>: "Store configuration only" or
+          "Store configuration and panels" which stores tables and panels -->
           <td class="store">"[user named].xml" files where specified (default is the User Files Location directory)</td>
           <td>&#10004;</td>
         </tr>
@@ -179,8 +179,8 @@
           <td class="who">UC/US</td>
           <td class="cmd">2, 3(a), 3(b)</td>
           <!-- "Save->" under the File pulldown on each Table window. Wherever "Store Panels" is a command.
-          In <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>: "Store configuration only” or
-          "Store configuration and panels” which stores tables and panels -->
+          In <a href="../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>: "Store configuration only" or
+          "Store configuration and panels" which stores tables and panels -->
           <td class="store">"[user named].xml" files where specified (default is the User Files Location directory)</td>
           <td>&#10004;</td>
         </tr>
@@ -188,7 +188,7 @@
         <tr>
           <td class="type">Operations Elements</td>                    
           <td class="data">Block Contents (Value)</td>
-          <td class="where"><a href="">??</a></td>
+          <td class="where">??</td>
           <td class="who">UC/US followed by <b>AS</b></td>
           <td class="cmd">User enters first Block Value, then JMRI updates automatically.</td>
           <td class="store">blockvalues.xml in Preferences location</td>
