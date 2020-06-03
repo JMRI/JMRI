@@ -113,7 +113,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         if (log.isDebugEnabled()) {
             log.debug("received message: {}", l);
         }
-        boolean opt = l.selectModuleFeedback(address);
+        Boolean opt = l.selectModuleFeedback(address);
         if (opt != null) {
             if (log.isDebugEnabled()) {
                         log.debug("Message for sensor {} (Address {} position {})", systemName, baseaddress, address - (baseaddress * 8));
