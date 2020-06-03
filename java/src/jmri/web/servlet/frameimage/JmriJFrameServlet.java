@@ -233,11 +233,12 @@ public class JmriJFrameServlet extends HttpServlet {
             if (ex.getCause() != null) {
                 log.trace("1st level caught", ex.getCause());
                 if (ex.getCause().getCause() != null) {
-                    // have to decode within contact
-                    if (ex.getCause().getCause() instanceof ServletException) {
-                        throw (ServletException) ex.getCause().getCause();
-                    } else if (ex.getCause().getCause() instanceof IOException) {
-                        throw (IOException) ex.getCause().getCause();
+                    // have to decode within content
+                    Throwable ex2 = ex.getCause().getCause();
+                    if ( ex2 instanceof ServletException) {
+                        throw (ServletException) ex2;
+                    } else if ( ex2 instanceof IOException) {
+                        throw (IOException) ex2;
                     } else {
                         // wrap and throw
                         throw new RuntimeException(ex);
