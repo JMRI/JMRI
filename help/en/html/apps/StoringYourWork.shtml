@@ -24,12 +24,19 @@
       data you create and update in JMRI. A companion page with more information for advanced users about when, how, and where JMRI
       stores data is available <a href="DataManagement.shtml"> here.</a></p>
         
-      <p>As you work with JMRI, you will create and update many different items within its various applications and tools.
-      You may also develop and run "scripts" that will do that as well. JMRI may also update some of this data during train operaton.
-      To ensure that data you create (or is created and updated for you) is stored for your future use, you need to know when different
-      things get saved to a disk file (and, in the case of CVs, to your locomotives and other DCC decoders) so that they will be there
-      when you next enter JMRI.  There are also a few things that are saved automatically by JMRI, and some that are not saved at all
-      after you quit.</p>
+      <p>JMRI's model for creating, updating, and storing (or discarding) the information it needs to perform its various functions
+      depends on which JMRI function you are dealing with. Certain kinds of data are handled completely automatically. Others are
+      created by you and updated by JMRI.  For still others, you have the ability to control whether or not to change or keep that
+      data from one run of JMRI to the next. For example, saving changes to roster entries is separate from storing away your 
+      layout configuration.</p>
+      
+      <p>Unfortunately, JMRI does not always notify you if there is unsaved data when it exits (although the community of developers
+      is constantly working to improve this).  For example, when you create a Sensor in the Sensor Table, it will appear in the Sensor
+      Table Window, but it will be gone if you close JMRI - unless you take one of the actions listed below to save it.</p>
+      
+      <p>To ensure that data you create (or is created and updated for you) is kept as you require, you should 
+      understand when and how the different kinds of data get saved to a disk file, or not, and, in the case of CVs, to your locomotives
+      and other DCC decoders.  This page is intended to give you the basic information you need to know.</p>
       
        <ul class="snav">
 		<li><a href="#usave">User initiated</a></li>
@@ -39,15 +46,10 @@
 
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       <a name="usave" id="usave"></a>
-      <h2>Things you need to "store" or "save"</h2>
+      <h2>Things you need to take action to "store" or "save"</h2>
  
       <div class="para">      
       
-      <p>Unfortunately, there is no single command to store all user created or modified data, and JMRI does not always notify you if there
-      is unsaved data when it exits (although the community of developers is constantly working to improve this).  For example,
-      when you create a Sensor in the Sensor Table, it will appear in the Sensor Table Window, but it will be gone if you close JMRI - unless you
-      take one of the actions listed below.  You need to know when and where to take action to make sure your work is still there the next time
-      you come back to JMRI.</p>
             
     <ul>
      <li><a href="DecoderPro/index.shtml">DecoderPro</a>
