@@ -207,6 +207,54 @@ public class JmriJFrameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // because we work with Swing, we do this on the AWT thread
+        
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            doGetOnSwing(request, response);
+            return;
+        }
+        
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(
+                () -> { 
+                    try {
+                        doGetOnSwing(request, response);
+                    } catch ( ServletException | IOException ex ) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            );
+        } catch (InterruptedException ex) {
+            // ignore
+            log.trace("Ignoring InterruptedException");
+        } catch (java.lang.reflect.InvocationTargetException ex) {
+            // exception thrown up, unpack and rethrow?
+            log.trace("top-level caught", ex);
+            if (ex.getCause() != null) {
+                log.trace("1st level caught", ex.getCause());
+                if (ex.getCause().getCause() != null) {
+                    // have to decode within content
+                    Throwable ex2 = ex.getCause().getCause();
+                    if ( ex2 instanceof ServletException) {
+                        throw (ServletException) ex2;
+                    } else if ( ex2 instanceof IOException) {
+                        throw (IOException) ex2;
+                    } else {
+                        // wrap and throw
+                        throw new RuntimeException(ex);
+                    }
+                } else {
+                    // wrap and throw
+                    throw new RuntimeException(ex);
+                }
+            } else {
+                // just wrap and rethrow the InvocationTargetException, but this should never happen
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+    protected void doGetOnSwing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
         if (preferences.isDisableFrames()) {
             if (preferences.isRedirectFramesToPanels()) {
