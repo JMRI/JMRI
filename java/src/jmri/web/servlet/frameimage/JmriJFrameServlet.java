@@ -225,8 +225,31 @@ public class JmriJFrameServlet extends HttpServlet {
                 }
             );
         } catch (InterruptedException ex) {
+            // ignore
+            log.trace("Ignoring InterruptedException");
         } catch (java.lang.reflect.InvocationTargetException ex) {
-            throw new RuntimeException(ex);
+            // exception thrown up, unpack and rethrow?
+            log.trace("top-level caught", ex);
+            if (ex.getCause() != null) {
+                log.trace("1st level caught", ex.getCause());
+                if (ex.getCause().getCause() != null) {
+                    // have to decode within contact
+                    if (ex.getCause().getCause() instanceof ServletException) {
+                        throw (ServletException) ex.getCause().getCause();
+                    } else if (ex.getCause().getCause() instanceof IOException) {
+                        throw (IOException) ex.getCause().getCause();
+                    } else {
+                        // wrap and throw
+                        throw new RuntimeException(ex);
+                    }
+                } else {
+                    // wrap and throw
+                    throw new RuntimeException(ex);
+                }
+            } else {
+                // just wrap and rethrow the InvocationTargetException, but this should never happen
+                throw new RuntimeException(ex);
+            }
         }
     }
 
