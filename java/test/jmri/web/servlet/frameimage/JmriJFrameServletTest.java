@@ -92,8 +92,8 @@ public class JmriJFrameServletTest {
         };
         // invoke and check
         thrown = catchThrowable(() -> { out2.test_doGet(); });
-	    assertThat(thrown).isInstanceOf(IOException.class)
-	                  .hasNoCause();
+        assertThat(thrown).isInstanceOf(IOException.class)
+                            .hasNoCause();
 
         
         // create testable object that throws ServletException
@@ -105,8 +105,8 @@ public class JmriJFrameServletTest {
         };
         // invoke and check
         thrown = catchThrowable(() -> { out3.test_doGet(); });
-	    assertThat(thrown).isInstanceOf(ServletException.class)
-	                  .hasNoCause();
+        assertThat(thrown).isInstanceOf(ServletException.class)
+                            .hasNoCause();
     }
     
     
