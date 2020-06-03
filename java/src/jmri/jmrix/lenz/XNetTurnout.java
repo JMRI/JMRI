@@ -350,7 +350,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      * Listen for the messages to the LI100/LI101.
      */
     @Override
-    public void message(XNetMessage l) {
+    public synchronized void message(XNetMessage l) {
         log.debug("received outgoing message {} for turnout {}",l,getSystemName());
         // we want to verify this is the last message we sent
         // so use == not .equals
