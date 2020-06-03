@@ -695,11 +695,16 @@
         <label xml:lang="de">Serielles Protokoll für C-Sinus</label>
         <label xml:lang="ca">SUSI</label>
     </variable>
-    <variable CV="124" mask="XXXVXXXX" default="1" item="aux9/sensor reserved" exclude="LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-        <label>Adaptive Regulation Frequency</label>
-        <label xml:lang="de">Adaptive Regelfrequenz</label>
-        <label xml:lang="ca">Freqüncia regulable adaptativa </label>
+    <variable CV="124" mask="XXXVXXXX" default="1" item="ESU AUX10/Sensor" exclude="LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 XL,LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC,LokPilot 5 micro Next18,LokPilot 5 micro DCC Next18">
+        <enumVal>
+            <enumChoice value="1">
+                <choice>Use digital wheel sensor</choice>
+            </enumChoice>
+            <enumChoice value="0">
+                <choice>Use output AUX10</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Sensor Settings</label>
     </variable>
     <variables exclude="LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC">
         <variable CV="124" mask="XXVXXXXX" default="0" item="Motor Option 2">
@@ -766,7 +771,7 @@
     </variable>
     <variable CV="141" default="20" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 2">
         <decVal/>
-        <label>Smoke Unit Minimum Steam Chuff Duration</label>
+        <label>Minimum Steam Chuff Duration</label>
         <label xml:lang="it">Durata Min.Chuff per Gener.Fumo</label>
         <label xml:lang="de">Minimale Dauer</label>
         <label xml:lang="ca">Unitat mínima de duració de xuf</label>
@@ -774,7 +779,7 @@
     </variable>
     <variable CV="142" default="122" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 3">
         <decVal/>
-        <label>Smoke Unit Maximum Steam Chuff Duration</label>
+        <label>Maximum Steam Chuff Duration</label>
         <label xml:lang="it">Durata Max.Chuff per Gener.Fumo</label>
         <label xml:lang="de">Maximale Dauer</label>
         <label xml:lang="ca">Unitat màxima de duració de xuf</label>
@@ -782,7 +787,7 @@
     </variable>
     <variable CV="143" default="102" item="ESU V4 Function Settings Smoke Chuffs Slider 1">
         <decVal/>
-        <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
+        <label>Chuff Duration rel. to trig. dist.</label>
         <label xml:lang="it">Durata Suono per Gener.Fumo in funz.dist.Trigger</label>
         <label xml:lang="de">Dauer der Dampfstöße (relativ zu Trigger-Impulsen)</label>
         <label xml:lang="ca">Unitat de xuf en relació a distància</label>
@@ -803,14 +808,14 @@
         </variable>
         <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Function Settings Smoke Unit Slider 1">
             <decVal/>
-            <label>Smoke Unit Automatic Power Off Time</label>
+            <label>Automatic Power Off Time</label>
             <label xml:lang="de"> automatische Abschaltung Rauchentwickler </label>
             <tooltip xml:lang="de">die Einheit sind 5 sec</tooltip>
             <label xml:lang="ca">TEmps apagat del fumigen</label>
         </variable>
         <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4">
             <decVal/>
-            <label>Preheating Temperature for Secondary Smoke Unit</label>
+            <label>Preheat Temp. for Secondary Unit</label>
             <label xml:lang="de">Vorwärmtemperatur für Sekundärraucheinheit</label>
             <label xml:lang="ca">Temperatra de preescalfat de segon fumigen</label>
             <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>

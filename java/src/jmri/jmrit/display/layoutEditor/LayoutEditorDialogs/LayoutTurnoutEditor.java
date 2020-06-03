@@ -81,6 +81,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
      */
     @Override
     public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+        log.trace("LayoutTurnoutEditor.editLayoutTrack({}) of a {}", layoutTrack, layoutTrack.getClass());
         if ( layoutTrack instanceof LayoutTurnout ) {
             this.layoutTurnout = (LayoutTurnout) layoutTrack;
         } else {
@@ -384,9 +385,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
                 newName = "";
             }
             if (!layoutTurnout.getSecondTurnoutName().equals(newName)) {
-            
-            donePressedSecondTurnoutName(newName);
-                
+                donePressedSecondTurnoutName(newName);
             }
         } else {
             layoutTurnout.setSecondTurnout(null);
@@ -434,7 +433,17 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     }
 
     // set the continuing route Turnout State
-    protected void setContinuingRouteTurnoutState() {}
+    protected void setContinuingRouteTurnoutState() {
+        log.info("LayoutTurnoutEditor#setContinuingRouteTurnoutState should have been overridden in class {} object {}", this.getClass(), this);
+        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT)
+                || (layoutTurnout.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT)) {
+            layoutTurnout.setContinuingSense(Turnout.CLOSED);
+            if (editLayoutTurnoutStateComboBox.getSelectedIndex() == editLayoutTurnoutThrownIndex) {
+                layoutTurnout.setContinuingSense(Turnout.THROWN);
+            }
+        }
+    }
 
     protected void checkBlock234Changed() {} 
 

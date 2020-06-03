@@ -1024,5 +1024,21 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.dispose(e);
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+    @Test
+    public void testScrollViewPort() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        javax.swing.JScrollPane scrollPane = e.getPanelScrollPane();
+        java.awt.Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
+        int x = (int) scrollBounds.getX();
+        int y = (int) scrollBounds.getY();
+        int w = (int) scrollBounds.getWidth();
+        int h = (int) scrollBounds.getHeight();
+        // scrollBounds values are platform and OS dependent so specific values cannot be determined.
+        Assert.assertTrue("scroll bound x", x > 0);
+        Assert.assertTrue("scroll bound y", y > 0);
+        Assert.assertTrue("scroll bound w", w > 0);
+        Assert.assertTrue("scroll bound h", h > 0);
+    }
+
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

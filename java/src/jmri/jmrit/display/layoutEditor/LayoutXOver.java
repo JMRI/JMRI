@@ -86,6 +86,8 @@ abstract public class LayoutXOver extends LayoutTurnout {
     public LayoutXOver(@Nonnull String id, TurnoutType t, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
         super(id, t, c, rot, xFactor, yFactor, layoutEditor, 1);
+        
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutXOverEditor(layoutEditor);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);

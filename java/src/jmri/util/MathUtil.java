@@ -21,24 +21,6 @@ import javax.annotation.Nonnull;
  */
 public final class MathUtil {
 
-    /**
-     * @param a the first float
-     * @param b the second float
-     * @return true if a is equal to b
-     */
-    public static boolean equals(float a, float b) {
-        return (Float.floatToIntBits(a) == Float.floatToIntBits(b));
-    }
-
-    /**
-     * @param a the first double
-     * @param b the second double
-     * @return true if a is equal to b
-     */
-    public static boolean equals(double a, double b) {
-        return (Double.doubleToLongBits(a) == Double.doubleToLongBits(b));
-    }
-
     public static final Point2D zeroPoint2D = zeroPoint2D();
     public static final Point2D infinityPoint2D = infinityPoint2D();
     public static final Rectangle2D zeroRectangle2D = zeroRectangle2D();
@@ -81,6 +63,45 @@ public final class MathUtil {
     @CheckReturnValue
     public static Point point2DToPoint(@Nonnull Point2D p) {
         return new Point((int) p.getX(), (int) p.getY());
+    }
+
+    /**
+     * @param a the first float
+     * @param b the second float
+     * @return true if a is equal to b
+     */
+    public static boolean equals(float a, float b) {
+        return (Float.floatToIntBits(a) == Float.floatToIntBits(b));
+    }
+
+    /**
+     * @param a the first double
+     * @param b the second double
+     * @return true if a is equal to b
+     */
+    public static boolean equals(double a, double b) {
+        return (Double.doubleToLongBits(a) == Double.doubleToLongBits(b));
+    }
+
+    /**
+     * @param a the first Rectangle2D
+     * @param b the second Rectangle2D
+     * @return true if a is equal to b
+     */
+    public static boolean equals(Rectangle2D a, Rectangle2D b) {
+        return (equals(a.getMinX(), b.getMinX())
+                && equals(a.getMinY(), b.getMinY())
+                && equals(a.getWidth(), b.getWidth())
+                && equals(a.getHeight(), b.getHeight()));
+    }
+
+    /**
+     * @param a the first Point2D
+     * @param b the second Point2D
+     * @return true if a is equal to b
+     */
+    public static boolean equals(Point2D a, Point2D b) {
+        return (equals(a.getX(), b.getX()) && equals(a.getY(), b.getY()));
     }
 
     /**
@@ -226,7 +247,7 @@ public final class MathUtil {
     }
 
     /**
-     * Ddivide a point by two scalars.
+     * Divide a point by two scalars.
      *
      * @param p the point
      * @param x the X scalar
@@ -1312,6 +1333,16 @@ public final class MathUtil {
      */
     public static double fillBezier(Graphics2D g2, @Nonnull Point2D p[]) {
         return plotBezier(g2, p, 0.0, true);
+    }
+
+    /**
+     * computer the bounds of a Bezier curve.
+     *
+     * @param p the control points
+     * @return the bounds of the Bezier curve
+     */
+    public static Rectangle2D getBezierBounds(@Nonnull Point2D p[]) {
+        return getBezierPath(p).getBounds2D();
     }
 
     /**
