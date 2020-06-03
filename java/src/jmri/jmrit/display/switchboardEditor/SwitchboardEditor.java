@@ -235,8 +235,8 @@ public class SwitchboardEditor extends Editor {
         JLabel beanManuTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ConnectionLabel")));
         beanSetupPane.add(beanManuTitle);
         beanManuNames = new JComboBox<>();
-        if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProxyManager) { // from abstractTableTabAction
-            jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager(beanTypeChar);
+        if (getManager(beanTypeChar) instanceof jmri.managers.AbstractProvidingProxyManager) { // from abstractTableTabAction
+            jmri.managers.AbstractProvidingProxyManager proxy = (jmri.managers.AbstractProvidingProxyManager) getManager(beanTypeChar);
             List<jmri.Manager<?>> managerList = proxy.getManagerList(); // picks up all managers to fetch
             for (int x = 0; x < managerList.size(); x++) {
                 String manuPrefix = managerList.get(x).getSystemPrefix();

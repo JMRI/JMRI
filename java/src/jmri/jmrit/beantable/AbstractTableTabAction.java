@@ -38,9 +38,9 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         dataPanel = new JPanel();
         dataTabs = new JTabbedPane();
         dataPanel.setLayout(new BorderLayout());
-        if (getManager() instanceof jmri.managers.AbstractProxyManager) {
+        if (getManager() instanceof jmri.managers.AbstractProvidingProxyManager) {
             // build the list, with default at start and internal at end (if present)
-            jmri.managers.AbstractProxyManager<E> proxy = (jmri.managers.AbstractProxyManager<E>) getManager();
+            jmri.managers.AbstractProvidingProxyManager<E> proxy = (jmri.managers.AbstractProvidingProxyManager<E>) getManager();
 
             tabbedTableArray.add(new TabbedTableItem<>(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
 

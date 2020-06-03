@@ -613,7 +613,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public static final int WARRANTS = ROUTES + 10;
     public static final int SIGNALMASTLOGICS = WARRANTS + 10;
     public static final int IDTAGS = SIGNALMASTLOGICS + 10;
-    public static final int LOGIXS = IDTAGS + 10;
+    public static final int ANALOG_IO = IDTAGS + 10;
+    public static final int STRING_IO = ANALOG_IO + 10;
+    public static final int LOGIXS = STRING_IO + 10;
     public static final int CONDITIONALS = LOGIXS + 10;
     public static final int AUDIO = LOGIXS + 10;
     public static final int TIMEBASE = AUDIO + 10;

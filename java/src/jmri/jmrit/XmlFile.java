@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
  */
-public abstract class XmlFile {
+public class XmlFile {
 
     /**
      * Define root part of URL for XSLT style page processing instructions.

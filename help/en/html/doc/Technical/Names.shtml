@@ -277,6 +277,8 @@
         <li><strong>B</strong> Block - A software object that keeps track of the
         contents of a specific block of track. Block system names mostly, but not always, start with IB.</li>
 
+        <li><strong>C</strong> String - A string of Characters, like a text or a file name.</li>
+
         <li><strong>D</strong> iDentity - A software object that holds information
         about an identity tag that is, typically, attached to a
         piece of rolling stock. These objects are not
@@ -337,6 +339,10 @@
 
         <li><strong>T</strong> Turnout - actually a general purpose output on the
         layout</li>
+
+        <li><strong>V</strong> Analog value - An item that can have an integer
+        value or a floating value. For example a current meter. The letter V is
+        for Variable.</li>
 
         <li><strong>W</strong> Warrant - a collection of information sufficient
 		to run an automated train.</li>

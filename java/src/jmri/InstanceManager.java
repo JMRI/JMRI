@@ -664,6 +664,36 @@ public final class InstanceManager {
         }
     }
 
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, TurnoutManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
+    static public void setAnalogIOManager(AnalogIOManager p) {
+        log.debug(" setAnalogIOManager");
+        AnalogIOManager apm = getDefault(AnalogIOManager.class);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<AnalogIO>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: AnalogIOManager default isn't an AbstractProxyManager<AnalogIO>");
+        }
+    }
+
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, TurnoutManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
+    static public void setStringIOManager(StringIOManager p) {
+        log.debug(" setStringIOManager");
+        StringIOManager apm = getDefault(StringIOManager.class);
+        if (apm instanceof ProxyManager<?>) { // <?> due to type erasure
+            ((ProxyManager<StringIO>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: StringIOManager default isn't an AbstractProxyManager<StringIO>");
+        }
+    }
+
     /* *************************************************************************** */
 
     /**

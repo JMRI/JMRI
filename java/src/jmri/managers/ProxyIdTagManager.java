@@ -20,7 +20,7 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
  * @author Dave Duchamp Copyright (C) 2004
  * @author Paul Bender Copyright (C) 2019
  */
-public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
+public class ProxyIdTagManager extends AbstractProvidingProxyManager<IdTag>
         implements IdTagManager {
 
     public ProxyIdTagManager() {

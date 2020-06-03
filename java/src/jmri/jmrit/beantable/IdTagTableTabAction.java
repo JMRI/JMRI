@@ -47,9 +47,9 @@ public class IdTagTableTabAction extends AbstractTableTabAction<IdTag> {
         dataPanel = new JPanel();
         dataTabs = new JTabbedPane();
         dataPanel.setLayout(new BorderLayout());
-        if (getManager() instanceof jmri.managers.AbstractProxyManager) {
+        if (getManager() instanceof jmri.managers.AbstractProvidingProxyManager) {
             // build the list, with default at start and internal at end (if present)
-            jmri.managers.AbstractProxyManager<IdTag> proxy = (jmri.managers.AbstractProxyManager<IdTag>) getManager();
+            jmri.managers.AbstractProvidingProxyManager<IdTag> proxy = (jmri.managers.AbstractProvidingProxyManager<IdTag>) getManager();
 
             tabbedTableArray.add(new TabbedTableItem<IdTag>(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
 

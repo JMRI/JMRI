@@ -2,6 +2,7 @@ package jmri.managers;
 
 import java.util.Arrays;
 import java.util.Set;
+import jmri.AnalogIOManager;
 import jmri.AudioManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
@@ -22,6 +23,7 @@ import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
 import jmri.SignalSystemManager;
+import jmri.StringIOManager;
 import jmri.Timebase;
 import jmri.TurnoutManager;
 import jmri.implementation.AbstractInstanceInitializer;
@@ -62,6 +64,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         InternalSystemConnectionMemo memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         // In order for getDefault() to create a new object, the manager also
         // needs to be added to the method getInitalizes() below.
+
+        if (type == AnalogIOManager.class) {
+            return new ProxyAnalogIOManager();
+        }
 
         if (type == AudioManager.class) {
             return new DefaultAudioManager(memo);
@@ -127,6 +133,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultSignalSystemManager(memo);
         }
 
+        if (type == StringIOManager.class) {
+            return new ProxyStringIOManager();
+        }
+
         if (type == Timebase.class) {
             Timebase timebase = new SimpleTimebase();
             InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerConfig(timebase, Manager.TIMEBASE));
@@ -152,6 +162,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
     public Set<Class<?>> getInitalizes() {
         Set<Class<?>> set = super.getInitalizes();
         set.addAll(Arrays.asList(
+                AnalogIOManager.class,
                 AudioManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
@@ -168,6 +179,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 SignalMastLogicManager.class,
                 SignalMastManager.class,
                 SignalSystemManager.class,
+                StringIOManager.class,
                 Timebase.class,
                 TurnoutManager.class,
                 VSDecoderManager.class
