@@ -192,7 +192,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
             cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrainCarType"), new Object[]{carType}));
             addCheckBoxAction(cb);
             trainList.add(cb);
-            boolean trainAcceptsType = train.acceptsTypeName(carType);
+            boolean trainAcceptsType = train.isTypeNameAccepted(carType);
             cb.setSelected(trainAcceptsType);
             addItemLeft(pTrains, cb, 0, x);
             JLabel description = new JLabel(train.getDescription());

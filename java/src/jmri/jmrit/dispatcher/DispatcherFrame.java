@@ -989,6 +989,60 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
+    /**
+     * Checks that exit Signal Heads are in place for all Sections in this
+     * Transit and for Block boundaries at turnouts or level crossings within
+     * Sections of the Transit for the direction defined in this Transit. Signal
+     * Heads are not required at anchor point block boundaries where both blocks
+     * are within the same Section, and for turnouts with two or more
+     * connections in the same Section.
+     *
+     * <p>
+     * Moved from Transit in JMRI 4.19.7
+     * 
+     * @param panel the panel to check against
+     * @return 0 if all Sections have all required signals or the number of
+     *         Sections missing required signals; -1 if the panel is null
+     */
+    private int checkSignals(Transit t, LayoutEditor panel) {
+        if (panel == null) {
+            log.error("checkSignals called with a null LayoutEditor panel");
+            return -1;
+        }
+        int numErrors = 0;
+        for (TransitSection ts : t.getTransitSectionList() ) {
+            numErrors = numErrors + ts.getSection().placeDirectionSensors(panel);
+        }
+        return numErrors;
+    }
+  
+    /**
+     * Validates connectivity through a Transit. Returns the number of errors
+     * found. Sends log messages detailing the errors if break in connectivity
+     * is detected. Checks all Sections before quitting.
+     *
+     * <p>
+     * Moved from Transit in JMRI 4.19.7
+     * 
+     * @param panel the panel containing Sections to validate
+     * @return number of invalid sections or -1 if panel if null
+     */
+    private int validateConnectivity(Transit t, LayoutEditor panel) {
+        if (panel == null) {
+            log.error("validateConnectivity called with a null LayoutEditor panel");
+            return -1;
+        }
+        int numErrors = 0;
+        for (int i = 0; i < t.getTransitSectionList().size(); i++) {
+            String s = t.getTransitSectionList().get(i).getSection().validate(panel);
+            if (!s.equals("")) {
+                log.error(s);
+                numErrors++;
+            }
+        }
+        return numErrors;
+    }
+
     // allocate the next section for an ActiveTrain at dispatcher's request
     void allocateNextRequested(int index) {
         // set up an Allocation Request
@@ -1221,7 +1275,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             // check/set Transit specific items for automatic running
             // validate connectivity for all Sections in this transit
-            int numErrors = t.validateConnectivity(_LE);
+            int numErrors = validateConnectivity(t, _LE);
             if (numErrors != 0) {
                 if (showErrorMessages) {
                     JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
@@ -1232,7 +1286,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             // check/set direction sensors in signal logic for all Sections in this Transit.
             if (getSignalType() == SIGNALHEAD) {
-                numErrors = t.checkSignals(_LE);
+                numErrors = checkSignals(t, _LE);
                 if (numErrors == 0) {
                     t.initializeBlockingSensors();
                 }
@@ -1255,7 +1309,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         } else if (_UseConnectivity && (_LE != null)) {
             // not auto run, set up direction sensors in signals since use connectivity was requested
             if (getSignalType() == SIGNALHEAD) {
-                int numErrors = t.checkSignals(_LE);
+                int numErrors = checkSignals(t, _LE);
                 if (numErrors == 0) {
                     t.initializeBlockingSensors();
                 }
