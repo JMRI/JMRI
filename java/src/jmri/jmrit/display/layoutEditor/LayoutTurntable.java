@@ -2,11 +2,14 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
-import java.beans.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.util.MathUtil;
 

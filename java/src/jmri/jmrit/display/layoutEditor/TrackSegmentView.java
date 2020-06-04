@@ -1,16 +1,18 @@
 package jmri.jmrit.display.layoutEditor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.*;
+import java.util.List;
 import java.util.*;
 import java.util.function.*;
-import javax.annotation.*;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import jmri.*;
+
+import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;

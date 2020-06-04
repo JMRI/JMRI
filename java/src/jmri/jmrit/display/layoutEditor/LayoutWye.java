@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import javax.annotation.*;
-import jmri.*;
+import javax.annotation.Nonnull;
 
 /**
  * A specialization of {@link LayoutTurnout}

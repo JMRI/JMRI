@@ -5,17 +5,24 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.beans.*;
 import java.util.*;
-import javax.annotation.*;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+
 import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.*;
+import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.*;
-import jmri.util.swing.*;
-import org.slf4j.*;
+import jmri.util.JmriJFrame;
+import jmri.util.MathUtil;
+import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.SplitButtonColorChooserPanel;
+
+import org.slf4j.MDC;
 
 /**
  * A LayoutBlock is a group of track segments and turnouts on a LayoutEditor

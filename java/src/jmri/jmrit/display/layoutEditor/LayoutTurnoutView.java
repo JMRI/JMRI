@@ -1,28 +1,24 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.text.MessageFormat;
+import java.awt.geom.*;
+import static java.lang.Float.POSITIVE_INFINITY;
 import java.util.*;
-import javax.annotation.*;
-import javax.swing.*;
-import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.MathUtil;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
-import static jmri.jmrit.display.layoutEditor.LayoutTurnout.LinkType;
-import static jmri.jmrit.display.layoutEditor.LayoutTurnout.Geometry;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.*;
+
+import jmri.*;
+import jmri.jmrit.display.layoutEditor.Bundle;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout.Geometry;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout.LinkType;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
+import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.util.MathUtil;
 
 /**
  * MVC View component for the LayoutTurnout class.

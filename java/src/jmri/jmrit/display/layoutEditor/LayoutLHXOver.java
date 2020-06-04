@@ -1,6 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * A LayoutTurnout corresponds to a turnout on the layout. A LayoutTurnout is an

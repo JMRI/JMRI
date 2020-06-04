@@ -1,6 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 
 /**

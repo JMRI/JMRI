@@ -2,11 +2,13 @@ package jmri.jmrit.display.layoutEditor;
 
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-// import java.awt.Color;
-import java.awt.geom.*;
+
+import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.*;
+
 import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.jmrit.signalling.SignallingGuiTools;
 

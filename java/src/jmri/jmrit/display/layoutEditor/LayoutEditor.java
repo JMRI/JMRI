@@ -1,44 +1,43 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
+
+import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.*;
-import java.beans.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.*;
-import javax.annotation.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import jmri.*;
-import jmri.jmrit.display.EditorManager;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.dispatcher.*;
+import jmri.jmrit.dispatcher.DispatcherAction;
+import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
-import jmri.util.swing.*;
+import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriColorChooser;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)

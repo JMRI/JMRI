@@ -3,8 +3,11 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.*;
-import javax.annotation.*;
-import javax.swing.*;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.JPopupMenu;
+
 import jmri.*;
 import jmri.jmrit.signalling.SignallingGuiTools;
 

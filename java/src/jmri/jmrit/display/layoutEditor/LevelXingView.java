@@ -1,23 +1,23 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-import static java.lang.Math.PI;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.*;
-import java.text.MessageFormat;
+import static java.lang.Float.POSITIVE_INFINITY;
+import static java.lang.Math.PI;
 import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.*;
+import jmri.jmrit.display.layoutEditor.Bundle;
+import jmri.jmrit.display.layoutEditor.LevelXing.Geometry;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.MathUtil;
-import static jmri.jmrit.display.layoutEditor.LevelXing.Geometry;
 
 /**
  * MVC View component for the LevelXing class

@@ -2,12 +2,15 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.geom.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.*;
-import javax.annotation.*;
-import javax.swing.*;
-import jmri.*;
-import jmri.util.*;
+
+import javax.annotation.Nonnull;
+import javax.swing.JPopupMenu;
+
+import jmri.JmriException;
+import jmri.Turnout;
 
 /**
  * Abstract base class for all layout track objects (PositionablePoint,

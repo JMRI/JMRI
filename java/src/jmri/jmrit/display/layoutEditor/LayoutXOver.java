@@ -1,6 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * A LayoutXOver corresponds to a crossover (connection between parallel tracks) on the layout. 

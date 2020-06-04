@@ -2,18 +2,20 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.*;
-import java.text.MessageFormat;
-import java.util.*;
-import java.util.Map.Entry;
-import javax.annotation.*;
+import java.util.List;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import jmri.*;
+
+import jmri.InstanceManager;
+import jmri.Turnout;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.MathUtil;
-
-import static jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
 
 /**
  * MVC View component for the LayoutSlip class.

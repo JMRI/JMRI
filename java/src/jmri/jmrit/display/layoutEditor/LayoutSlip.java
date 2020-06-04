@@ -3,9 +3,14 @@ package jmri.jmrit.display.layoutEditor;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.Map.Entry;
-import javax.annotation.*;
-import javax.swing.*;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.JComboBox;
+import javax.swing.JPopupMenu;
+
 import jmri.*;
+import jmri.jmrit.display.layoutEditor.Bundle;
 
 /**
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as

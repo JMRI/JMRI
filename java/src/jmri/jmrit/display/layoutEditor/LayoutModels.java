@@ -1,12 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.util.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.*;
+import java.util.stream.Stream;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * This interface serves as a manager for the overall layout model via

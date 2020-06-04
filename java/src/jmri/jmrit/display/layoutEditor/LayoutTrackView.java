@@ -5,9 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.*;
-import javax.annotation.*;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import jmri.*;
+
+import jmri.JmriException;
+import jmri.Turnout;
+import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.util.*;
 
 /**

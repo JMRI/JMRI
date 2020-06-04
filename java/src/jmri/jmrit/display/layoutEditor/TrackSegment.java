@@ -1,16 +1,19 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.event.*;
-import java.util.*;
-import javax.annotation.*;
-import jmri.*;
-import jmri.util.*;
 
-// temporary - these need to go
-import jmri.util.swing.JmriColorChooser;
-import java.awt.geom.*;
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.util.*;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
+import jmri.*;
+import jmri.jmrit.display.layoutEditor.Bundle;
+import jmri.util.MathUtil;
+import jmri.util.swing.JmriColorChooser;
 
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the

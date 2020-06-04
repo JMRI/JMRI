@@ -2,30 +2,16 @@ package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.Section;
-import jmri.SectionManager;
-import jmri.Sensor;
-import jmri.SignalMast;
-import jmri.SignalMastLogic;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
+import jmri.*;
 import jmri.implementation.DefaultSignalMastLogic;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
-import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.managers.Bundle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

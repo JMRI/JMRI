@@ -1,24 +1,24 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.*;
+
 import javax.annotation.*;
 import javax.swing.*;
+
 import jmri.*;
 import jmri.jmrit.display.EditorManager;
+import jmri.jmrit.display.layoutEditor.Bundle;
+import jmri.jmrit.display.layoutEditor.PositionablePoint.PointType;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
-import jmri.util.swing.*;
-
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType;
+import jmri.util.swing.JCBHandle;
+import jmri.util.swing.JmriColorChooser;
 
 /**
  * MVC View component for the PositionablePoint class.
@@ -99,6 +99,7 @@ public class PositionablePointView extends LayoutTrackView {
 
    /**
      * Accessor methods
+     * @return Type enum for this Positionable Point
      */
     public PointType getType() {
         return positionablePoint.getType();
