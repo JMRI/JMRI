@@ -43,6 +43,8 @@ public class CbusNewEventPaneTest  {
             memo = new CanSystemConnectionMemo();
             tc = new TrafficControllerScaffold();
             memo.setTrafficController(tc);
+            memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+            memo.configureManagers();
             mainPanel = new CbusEventTablePane();
             mainPanel.initComponents(memo);
         }
