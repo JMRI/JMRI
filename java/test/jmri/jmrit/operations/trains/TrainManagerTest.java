@@ -92,31 +92,31 @@ public class TrainManagerTest extends OperationsTestCase {
         train.addLoadName("Bolts");
         train.addLoadName("Boxcar" + CarLoad.SPLIT_CHAR + "Bolts");
 
-        Assert.assertTrue("confirm load name", train.acceptsLoadName("Nuts"));
-        Assert.assertTrue("confirm load name", train.acceptsLoad("Nuts", "Boxcar"));
-        Assert.assertTrue("confirm load name", train.acceptsLoadName("Bolts"));
-        Assert.assertTrue("confirm load name", train.acceptsLoad("Bolts", "Boxcar"));
-        Assert.assertFalse("confirm load name", train.acceptsLoadName("NUTS"));
-        Assert.assertFalse("confirm load name", train.acceptsLoadName("BOLTS"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Nuts"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Nuts", "Boxcar"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts", "Boxcar"));
+        Assert.assertFalse("confirm load name", train.isLoadNameAccepted("NUTS"));
+        Assert.assertFalse("confirm load name", train.isLoadNameAccepted("BOLTS"));
 
         tmanager.replaceLoad("Boxcar", "Nuts", "NUTS");
 
-        Assert.assertTrue("confirm load name", train.acceptsLoadName("NUTS"));
-        Assert.assertTrue("confirm load name", train.acceptsLoad("NUTS", "Boxcar"));
-        Assert.assertTrue("confirm load name", train.acceptsLoadName("Bolts"));
-        Assert.assertTrue("confirm load name", train.acceptsLoad("Bolts", "Boxcar"));
-        Assert.assertFalse("confirm load name", train.acceptsLoadName("Nuts"));
-        Assert.assertFalse("confirm load name", train.acceptsLoadName("BOLTS"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("NUTS"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("NUTS", "Boxcar"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts", "Boxcar"));
+        Assert.assertFalse("confirm load name", train.isLoadNameAccepted("Nuts"));
+        Assert.assertFalse("confirm load name", train.isLoadNameAccepted("BOLTS"));
         
         // change bolts for all cars except for boxcars and bolts
         tmanager.replaceLoad("Flat", "Bolts", "BOLTS");
         
-        Assert.assertTrue("confirm load name", train.acceptsLoadName("NUTS"));
-        Assert.assertTrue("confirm load name", train.acceptsLoad("NUTS", "Boxcar"));
-        Assert.assertTrue("confirm load name", train.acceptsLoadName("BOLTS"));
-        Assert.assertTrue("confirm load name", train.acceptsLoad("Bolts", "Boxcar")); // not changed
-        Assert.assertFalse("confirm load name", train.acceptsLoadName("Nuts"));
-        Assert.assertFalse("confirm load name", train.acceptsLoadName("bolts"));    
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("NUTS"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("NUTS", "Boxcar"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("BOLTS"));
+        Assert.assertTrue("confirm load name", train.isLoadNameAccepted("Bolts", "Boxcar")); // not changed
+        Assert.assertFalse("confirm load name", train.isLoadNameAccepted("Nuts"));
+        Assert.assertFalse("confirm load name", train.isLoadNameAccepted("bolts"));    
         
 
     }

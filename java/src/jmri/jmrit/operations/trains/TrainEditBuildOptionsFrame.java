@@ -639,7 +639,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             roadCaboose1Box.setEnabled(change1Caboose.isSelected());
             roadCaboose1Box.setSelectedItem(_train.getSecondLegCabooseRoad());
             // adjust radio button text
-            if ((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE) {
+            if (_train.isCabooseNeeded()) {
                 change1Caboose.setText(Bundle.getMessage("ChangeCaboose"));
                 remove1Caboose.setEnabled(true);
             } else {
@@ -691,7 +691,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             roadCaboose2Box.setEnabled(change2Caboose.isSelected());
             roadCaboose2Box.setSelectedItem(_train.getThirdLegCabooseRoad());
             // adjust radio button text
-            if (((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE || change1Caboose.isSelected()) &&
+            if ((_train.isCabooseNeeded() || change1Caboose.isSelected()) &&
                     !remove1Caboose.isSelected()) {
                 change2Caboose.setText(Bundle.getMessage("ChangeCaboose"));
                 remove2Caboose.setEnabled(true);
