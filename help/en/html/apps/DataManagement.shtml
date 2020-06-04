@@ -105,9 +105,9 @@
       are the places where a command to "save" or "store" will save and store some portion of your work:</p>
       <ol>
       <li>Preferences: "Save"
-      <li>Panel editors: File->Store Panels...  PanelPro main window: Panels->Store Panels... (also stores Tables)
-      <li>Tables (also Fast Clock): File-> (a)"Store configuration" or (b)"Store configuration and panels" [which does the same as "Store Panels" in the panel editors])
-      <li>Roster entry: (a) automatic (b) File->Save or "Save to Roster" (c) "Write" to Decoder
+      <li>Panel editors: File-&gt; Store Panels...  PanelPro main window: Panels-&gt; Store Panels... (also stores Tables)
+      <li>Tables (also Fast Clock): File-&gt; (a) "Store configuration" or (b) "Store configuration and panels" [which does the same as "Store Panels" in the panel editors])
+      <li>Roster entry: (a) automatic (b) File-&gt; Save or "Save to Roster" (c) "Write" to Decoder
       <li>Images/Icons: "Save Image Index"
       <li>Scripts: "Store..." (on Script Entry window)
       </ol>
@@ -214,7 +214,7 @@
         <tr>
           <td class="type">Operations Elements</td>                    
           <td class="data">Block Contents (Value)</td>
-          <td class="where"><a href="">??</a></td>
+          <td class="where">??</td>
           <td class="who">UC/US followed by <b>AS</b></td>
           <td class="cmd">User enters first Block Value, then JMRI updates automatically.</td>
           <td class="store">blockvalues.xml in Preferences location</td>
