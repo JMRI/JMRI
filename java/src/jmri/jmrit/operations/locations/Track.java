@@ -1449,7 +1449,7 @@ public class Track extends PropertyChangeSupport {
                 continue;
             }
             for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
-                if (!train.acceptsTypeName(carType) || !acceptsPickupTrain(train)) {
+                if (!train.isTypeNameAccepted(carType) || !acceptsPickupTrain(train)) {
                     continue;
                 }
                 // does the train services this location and track?
@@ -1459,7 +1459,7 @@ public class Track extends PropertyChangeSupport {
                         if (rLoc.getName().equals(getLocation().getName()) &&
                                 rLoc.isPickUpAllowed() &&
                                 rLoc.getMaxCarMoves() > 0 &&
-                                !train.skipsLocation(rLoc.getId()) &&
+                                !train.isLocationSkipped(rLoc.getId()) &&
                                 ((getTrainDirections() & rLoc.getTrainDirection()) != 0 || train.isLocalSwitcher()) &&
                                 ((getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 ||
                                 train.isLocalSwitcher())) {

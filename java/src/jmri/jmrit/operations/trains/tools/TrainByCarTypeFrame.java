@@ -219,15 +219,15 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 }
                 JLabel op = new JLabel();
                 addItemLeft(pRoute, op, 2, y++);
-                if (!_train.acceptsTypeName(carType)) {
+                if (!_train.isTypeNameAccepted(carType)) {
                     op.setText(Bundle.getMessage("X(TrainType)"));
-                } else if (_car != null && !_train.acceptsRoadName(_car.getRoadName())) {
+                } else if (_car != null && !_train.isRoadNameAccepted(_car.getRoadName())) {
                     op.setText(Bundle.getMessage("X(TrainRoad)"));
                 } // TODO need to do the same tests for caboose changes in the
                   // train's route
                 else if (_car != null &&
                         _car.isCaboose() &&
-                        (_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE &&
+                        _train.isCabooseNeeded() &&
                         location.equals(_car.getLocation()) &&
                         track.equals(_car.getTrack()) &&
                         !_train.getCabooseRoad().equals(Train.NONE) &&
@@ -236,7 +236,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(TrainRoad)"));
                 } else if (_car != null &&
                         _car.hasFred() &&
-                        (_train.getRequirements() & Train.FRED) == Train.FRED &&
+                        _train.isFredNeeded() &&
                         location.equals(_car.getLocation()) &&
                         track.equals(_car.getTrack()) &&
                         !_train.getCabooseRoad().equals(Train.NONE) &&
@@ -246,13 +246,13 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 } else if (_car != null &&
                         !_car.isCaboose() &&
                         !_car.isPassenger() &&
-                        !_train.acceptsLoad(_car.getLoadName(), _car.getTypeName())) {
+                        !_train.isLoadNameAccepted(_car.getLoadName(), _car.getTypeName())) {
                     op.setText(Bundle.getMessage("X(TrainLoad)"));
-                } else if (_car != null && !_train.acceptsBuiltDate(_car.getBuilt())) {
+                } else if (_car != null && !_train.isBuiltDateAccepted(_car.getBuilt())) {
                     op.setText(Bundle.getMessage("X(TrainBuilt)"));
-                } else if (_car != null && !_train.acceptsOwnerName(_car.getOwner())) {
+                } else if (_car != null && !_train.isOwnerNameAccepted(_car.getOwner())) {
                     op.setText(Bundle.getMessage("X(TrainOwner)"));
-                } else if (_train.skipsLocation(rl.getId())) {
+                } else if (_train.isLocationSkipped(rl.getId())) {
                     op.setText(Bundle.getMessage("X(TrainSkips)"));
                 } else if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
                     op.setText(Bundle.getMessage("X(Route)"));
