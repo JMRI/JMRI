@@ -405,10 +405,9 @@ public class SplitVariableValue extends VariableValue
     }
 
     /**
-     * ActionListener implementations
-     */
-    /**
-     * Invokes {@link #exitField exitField()}.
+     * ActionListener implementation.
+     * <p>
+     * Invokes {@link #exitField exitField()}
      *
      * @param e the action event
      */
@@ -419,7 +418,7 @@ public class SplitVariableValue extends VariableValue
     }
 
     /**
-     * FocusListener implementations
+     * FocusListener implementations.
      */
     @Override
     public void focusGained(FocusEvent e) {
@@ -694,8 +693,10 @@ public class SplitVariableValue extends VariableValue
                 log.debug("getState() = {}", (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
             }
 
-            if (_progState == IDLE) { // no, just a CV update
-                log.error("Variable={}; Busy goes false with state IDLE", _name);
+            if (_progState == IDLE) { // State machine is idle, so "Busy" transition is the result of a CV update by another source.
+                // The source would be a Read/Write from either the CVs pane or another Variable with one or more overlapping CV(s).
+                // It is definitely not an error condition, but needs to be ignored by this variable's state machine.
+                log.debug("Variable={}; Busy goes false with state IDLE", _name);
             } else if (_progState >= READING_FIRST) {   // reading CVs
                 if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
                     retry = 0;

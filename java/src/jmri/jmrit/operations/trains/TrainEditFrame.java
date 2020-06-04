@@ -323,8 +323,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
             commentTextArea.setText(_train.getComment());
-            cabooseRadioButton.setSelected((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE);
-            fredRadioButton.setSelected((_train.getRequirements() & Train.FRED) == Train.FRED);
+            cabooseRadioButton.setSelected(_train.isCabooseNeeded());
+            fredRadioButton.setSelected(_train.isFredNeeded());
             updateDepartureTime();
             enableButtons(true);
             // listen for train changes
@@ -569,7 +569,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             return true;
         }
         String type = InstanceManager.getDefault(EngineModels.class).getModelType(model);
-        if (!_train.acceptsTypeName(type)) {
+        if (!_train.isTypeNameAccepted(type)) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainModelService"),
                     new Object[]{model, type}), MessageFormat.format(Bundle.getMessage("CanNot"),
                             new Object[]{Bundle.getMessage("save")}), JOptionPane.ERROR_MESSAGE);
@@ -591,7 +591,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             return true;
         }
         for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
-            if (!_train.acceptsTypeName(rs.getTypeName())) {
+            if (!_train.isTypeNameAccepted(rs.getTypeName())) {
                 continue;
             }
             if (rs.getRoadName().equals(road)) {
@@ -758,7 +758,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             checkBox.setText(type);
             addTypeCheckBoxAction(checkBox);
             addItemLeft(typeCarPanelCheckBoxes, checkBox, x++, y);
-            if (_train != null && _train.acceptsTypeName(type)) {
+            if (_train != null && _train.isTypeNameAccepted(type)) {
                 checkBox.setSelected(true);
             }
             if (x > numberOfCheckboxes) {
@@ -796,7 +796,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             checkBox.setText(type);
             addTypeCheckBoxAction(checkBox);
             addItemLeft(typeEnginePanelCheckBoxes, checkBox, x++, y);
-            if (_train != null && _train.acceptsTypeName(type)) {
+            if (_train != null && _train.isTypeNameAccepted(type)) {
                 checkBox.setSelected(true);
             }
             if (x > numberOfCheckboxes) {
@@ -906,7 +906,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     }
                     // check can drop and pick up, and moves > 0
                     if (services && (rl.isDropAllowed() || rl.isPickUpAllowed()) && rl.getMaxCarMoves() > 0) {
-                        checkBox.setSelected(!_train.skipsLocation(rl.getId()));
+                        checkBox.setSelected(!_train.isLocationSkipped(rl.getId()));
                     } else {
                         checkBox.setEnabled(false);
                     }

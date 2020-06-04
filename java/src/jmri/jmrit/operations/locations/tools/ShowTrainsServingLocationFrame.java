@@ -142,9 +142,9 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                     train.getRoute().addPropertyChangeListener(this);
                     if (rl.isPickUpAllowed()
                             && rl.getMaxCarMoves() > 0
-                            && !train.skipsLocation(rl.getId())
+                            && !train.isLocationSkipped(rl.getId())
                             && (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(NONE) || train
-                            .acceptsTypeName((String) typeComboBox.getSelectedItem()))
+                            .isTypeNameAccepted((String) typeComboBox.getSelectedItem()))
                             && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) != 0)
                             && (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
                             .getTrainDirections()) != 0))
@@ -153,9 +153,9 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                     }
                     if (rl.isDropAllowed()
                             && rl.getMaxCarMoves() > 0
-                            && !train.skipsLocation(rl.getId())
+                            && !train.isLocationSkipped(rl.getId())
                             && (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(NONE) || train
-                            .acceptsTypeName((String) typeComboBox.getSelectedItem()))
+                            .isTypeNameAccepted((String) typeComboBox.getSelectedItem()))
                             && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) != 0)
                             && (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
                             .getTrainDirections()) != 0)) 
