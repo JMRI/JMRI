@@ -67,11 +67,19 @@
 
       <p>As you work with JMRI, you will create and update many different items within its various applications and tools.
       You may also develop and run "scripts" (external programs) that will do that as well. JMRI will update some of these
-      at certain points during train operaton. To further your enjoyment of your railroad and all that JMRI can do
-      for it, you should understand something about what data is created when you take various actions, when it gets updated by the
+      at certain points during train operation. 
+      Although JMRI tries to hide lots of technical details from you, some model railroaders want to know 
+      how things work:
+      what data is created when you take various actions, when it gets updated by the
       JMRI programs, and also whether it gets saved once you quit JMRI and come back at another time.  This page provides a
       reference guide to all JMRI data, how it gets created and updated, when it gets saved (some doesn't!), and, for 
       more advanced users, where it gets stored.</p>
+      
+      <p>We want to stress that this is <u>additional technical detail</u>. You should not need to know this
+      for normal operation of the programs.  If you find that you do, perhaps there's something going wrong, and
+      before reading this page you should ask for help on the 
+      <a href="https://groups.io/g/jmriusers/">JmriUsers group</a>
+      or elsewhere.
       
       <p> The <a href="#category">Elements by Category</a> table columns show the following information:
       
@@ -88,7 +96,7 @@
       <li>System Preferences: all the things you enter under Preferences, either in DecoderPro or PanelPro.</li>
       </ul>      
  
-      <p><b>Creates/Stores:</b>What may be confusing to some users is that when it comes to saving what you input and/or what JMRI does with that input, 
+      <p><b>Creates/Stores:</b>When it comes to saving what you input and/or what JMRI does with that input, 
       there are multiple different situations, shown in the table column <b>"Creates/Stores"</b>. There is data that is:</p>
       <ul>
       <li>User created, user stored (e.g. turnout table entries, layout panels, connections, start-up preferences)
@@ -194,7 +202,7 @@
         <tr>
           <td class="type">Operations Elements</td>                    
           <td class="data">Throttles</td>
-          <td class="where"><a href="">??</a></td>
+          <td class="where">??</td>
           <td class="who">UC/US</td>
           <td class="cmd"></td>
           <td class="store"></td>
@@ -204,7 +212,7 @@
         <tr>
           <td class="type">Operations Elements</td>                    
           <td class="data">Consisting</td>
-          <td class="where"><a href="">??</a></td>
+          <td class="where">??</td>
           <td class="who">UC/US</td>
           <td class="cmd"></td>
           <td class="store"></td>
