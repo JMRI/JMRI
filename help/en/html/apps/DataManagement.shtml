@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 
-  <title>JMRI: Understanding the Data/Saving Your Work</title>
+  <title>JMRI: Understanding the Data Management</title>
   <meta name="Author" content="Jerry Grochow">
   <!--#include virtual="/Style.shtml" -->
  
@@ -41,17 +41,18 @@
     clear: both;
   }
   </style>
-  
+    
 </head>
+
 
 <body>
   <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="SidebarNew.shtml" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
         <a id="TopOfPage" name="TopOfPage"></a> 
-        <h1>JMRI: Understanding the Data/Saving Your Work</h1>
+        <h1>JMRI: Understanding the Data Management</h1>
         <p class="subtitle">A Work-In-Progress</p>
         
         <ul class="snav">
@@ -59,14 +60,26 @@
 		<li><a href="#catalpha">Category/Alpha Index</a></li>
 	    </ul>
 
+      <p class="noted">This page includes information intended for advanced users of JMRI.  Basic information on commands to store your
+      work is available <a href="StoringYourWork.shtml">here.</a>  The additional information containted on the current page is not 
+      necessary for ordinary, day-to-day use of JMRI but may be of interest to those who want to understand in more detail when, how,
+      and where JMRI stores the data you and the system create and update.</p>
 
       <p>As you work with JMRI, you will create and update many different items within its various applications and tools.
       You may also develop and run "scripts" (external programs) that will do that as well. JMRI will update some of these
-      at certain points during train operaton. To further your enjoyment of your railroad and all that JMRI can do
-      for it, you should understand something about what data is created when you take various actions, when it gets updated by the
+      at certain points during train operation. 
+      Although JMRI tries to hide lots of technical details from you, some model railroaders want to know 
+      how things work:
+      what data is created when you take various actions, when it gets updated by the
       JMRI programs, and also whether it gets saved once you quit JMRI and come back at another time.  This page provides a
       reference guide to all JMRI data, how it gets created and updated, when it gets saved (some doesn't!), and, for 
       more advanced users, where it gets stored.</p>
+      
+      <p>We want to stress that this is <u>additional technical detail</u>. You should not need to know this
+      for normal operation of the programs.  If you find that you do, perhaps there's something going wrong, and
+      before reading this page you should ask for help on the 
+      <a href="https://groups.io/g/jmriusers/">JmriUsers group</a>
+      or elsewhere.
       
       <p> The <a href="#category">Elements by Category</a> table columns show the following information:
       
@@ -83,14 +96,14 @@
       <li>System Preferences: all the things you enter under Preferences, either in DecoderPro or PanelPro.</li>
       </ul>      
  
-      <p><b>Creates/Saves:</b>What may be confusing to some users is that when it comes to saving what you input and/or what JMRI does with that input, 
-      there are multiple different situations, shown in the table column <b>"Creates/Saves"</b>. There is data that is:</p>
+      <p><b>Creates/Stores:</b>When it comes to saving what you input and/or what JMRI does with that input, 
+      there are multiple different situations, shown in the table column <b>"Creates/Stores"</b>. There is data that is:</p>
       <ul>
-      <li>User created, user saved (e.g. turnout table entries, layout panels, connections, start-up preferences)
-      <li>User created, automatically saved (e.g. size and position of windows, roster entries when change made to the roster table)
-      <li>Automatically created, user saved (e.g. Logix from LRoute)
-      <li>Automatically created, automatically saved (e.g. default profile)
-      <li>Automatically created, not saved!  (e.g. turnout status)
+      <li>User created, user stored (e.g. turnout table entries, layout panels, connections, start-up preferences)
+      <li>User created, automatically stored (e.g. size and position of windows, roster entries when change made to the roster table)
+      <li>Automatically created, user stored (e.g. Logix from LRoute)
+      <li>Automatically created, automatically stored (e.g. default profile)
+      <li>Automatically created, not stored!  (e.g. turnout status)
       </ul>
       <p>The key to successful operation with JMRI is understanding which is which.  And that is what the tables below will show you.</p>
 
@@ -100,19 +113,20 @@
       are the places where a command to "save" or "store" will save and store some portion of your work:</p>
       <ol>
       <li>Preferences: "Save"
-      <li>Panel editors: File->Store Panels...  PanelPro main window: Panels->Store Panels...
-      <li>Tables (also Fast Clock): File-> (a) "Store configuration" or (b) "Store configuration and panels" [which does the same as "Store Panels" in the panel editors])
-      <li>Roster entry: (a) automatic (b) File->Save or "Save to Roster" (c) "Write" to Decoder
+      <li>Panel editors: File-&gt; Store Panels...  PanelPro main window: Panels-&gt; Store Panels... (also stores Tables)
+      <li>Tables (also Fast Clock): File-&gt; (a) "Store configuration" or (b) "Store configuration and panels" [which does the same as "Store Panels" in the panel editors])
+      <li>Roster entry: (a) automatic (b) File-&gt; Save or "Save to Roster" (c) "Write" to Decoder
       <li>Images/Icons: "Save Image Index"
       <li>Scripts: "Store..." (on Script Entry window)
       </ol>
       
+      <p>These commands are identified in the tables by these numbers.</p>
+
       <p><b>Where Stored:</b> Data stored on disk by JMRI is separated into a number of files and directories.  The typical user shouldn't
       have to deal with these, but for those who are interested, see the help page on<a href="../doc/Technical/ProfileFileStructure.shtml">
       Profile File Structure.</a></p>
 
-      <p>These are also identified in the tables by these numbers.</p>
-
+      
    
 <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       <a id="category" name="category"></a>
@@ -120,7 +134,7 @@
       
       <p>This index cross-references JMRI data by <b>Category</b>: Layout Element, Operations Element, Roster Element, Preferences,
       and Other. The column <b>Creates/Saves</b> uses abbreviations for the situations listed above, e.g. "UC/US" means "User Created/
-      User Saved."  The <b>Save Command</b> uses the numbers above for the different commands.</p>
+      User Stored."  The <b>Store Command</b> uses the numbers above for the different commands.</p>
 
       <p>Click a heading to sort the list up or down by that column.</p>
 
@@ -130,8 +144,8 @@
           <th width="8%">Category</th>
           <th width="20%">Data Types</th>
           <th width="15%">Where Created</th>
-          <th>Creates/Saves</th>
-          <th width="10%">Save Command</th>
+          <th>Creates/Stores</th>
+          <th width="10%">Store Command</th>
           <th>Where Stored</th>
           <th></th>
         </tr>
@@ -183,6 +197,26 @@
           "Store configuration and panels" which stores tables and panels -->
           <td class="store">"[user named].xml" files where specified (default is the User Files Location directory)</td>
           <td>&#10004;</td>
+        </tr>
+
+        <tr>
+          <td class="type">Operations Elements</td>                    
+          <td class="data">Throttles</td>
+          <td class="where">??</td>
+          <td class="who">UC/US</td>
+          <td class="cmd"></td>
+          <td class="store"></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td class="type">Operations Elements</td>                    
+          <td class="data">Consisting</td>
+          <td class="where">??</td>
+          <td class="who">UC/US</td>
+          <td class="cmd"></td>
+          <td class="store"></td>
+          <td></td>
         </tr>
 
         <tr>
@@ -243,10 +277,21 @@
         
         <tr>
           <td class="type">Operations Elements</td>                    
+          <td class="data">Speedometer</td>
+          <td class="where"></td>
+          <td class="who">UC/US</td>
+          <td class="cmd">Tools->Speedometer, Hit "Save as default"</td>
+          <td class="store">In ?? in Preferences location. NOTE: <em>Sensor names are saved and reappear when JMRI reopens
+          even though they may not be defined at that point.  You must then load a panel or otherwise define the sensors.</em></td>
+          <td></td>
+        </tr>
+ 
+        <tr>
+          <td class="type">Operations Elements</td>                    
           <td class="data">Timetable data</td>
           <td class="where"></td>
           <td class="who">UC/US</td>
-          <td class="cmd">?</td>
+          <td class="cmd">Tools->Timetable, Hit "Save"</td>
           <td class="store">In timetable/TimeTableData.xml in Preferences location</td>
           <td></td>
         </tr>
@@ -256,7 +301,7 @@
           <td class="data">CTC data</td>
           <td class="where"></td>
           <td class="who">UC/US</td>
-          <td class="cmd">?</td>
+          <td class="cmd">Tools->CTC->Open CTC Configuration Editor->File->Save</td>
           <td class="store">In ctc/ in Preferences location</td>
           <td></td>
         </tr>
@@ -283,12 +328,12 @@
 
         <tr>
           <td class="type">Operations Elements</td>                    
-          <td class="data">Operations data (??)</td>
-          <td class="where"></td>
-          <td class="who">UC/US</td>
-          <td class="cmd">?</td>
-          <td class="store">In dispatcher/traininfo/ in Preferences location</td>
-          <td></td>
+          <td class="data">OperationsPro data</td>
+          <td class="where"><a href="../../package/jmri/jmrit/operations/Operations.shtml">Operations Pro</a> (Operations menu)</td>
+          <td class="who">UC/<b>AS</b></td>
+          <td class="cmd">Appropriate file saved when changes made</td>
+          <td class="store">In six files in operations/ in User Files location</td>
+          <td>&#10004;</td>
         </tr>
  
         <tr>
@@ -306,9 +351,9 @@
           <td class="data">Backup panels</td>
           <td class="where">Whenever panels or tables are stored</td>
           <td class="who"><b>AC/AS</b></td>
-          <td class="cmd">In backupPanels/ in Profile location</td>
-          <td class="store">??</td>
-          <td></td>
+          <td class="cmd">NA</td>
+          <td class="store">In backupPanels/ in Profile location</td>
+          <td>&#10004;</td>
         </tr>
 
         <tr>
@@ -351,15 +396,24 @@
           <td class="store">roster.xml Roster Files Location</td>
           <td>&#10004;</td>
         </tr>
-
+ 
+        <tr>
+          <td class="type">Roster Info</td>                    
+          <td class="data">Consisting</td>
+          <td class="where">Select "Consist" tab on individual roster entry</td>
+          <td class="who">UC/US</td>
+          <td class="cmd"></td>
+          <td class="store">Individual decoder files in Roster Files Location</td>
+          <td></td>
+        </tr>
 
         <tr>
-          <td class="type">MORE</td>                    
-          <td class="data">MORE</td>
-          <td class="where"></td>
-          <td class="who"></td>
-          <td class="cmd">1, 2, 3(a), 3(b), 4(a), 4(b), 4(c), 5, 6?</td>
-          <td class="store"></td>
+          <td class="type">Roster Info</td>                    
+          <td class="data">Consisting</td>
+          <td class="where">Direct Entry to Consisting window</td>
+          <td class="who">UC/<strong>NS</strong></td>
+          <td class="cmd">??</td>
+          <td class="store">Not saved.</td>
           <td></td>
         </tr>
 
@@ -382,6 +436,16 @@
           <td class="store">In several different files in the Settings Location.</td>
           <td>&#10004;</td>
        </tr>
+   
+       <tr>
+          <td class="type">MORE</td>                    
+          <td class="data">MORE</td>
+          <td class="where"></td>
+          <td class="who"></td>
+          <td class="cmd">1, 2, 3(a), 3(b), 4(a), 4(b), 4(c), 5, 6?</td>
+          <td class="store"></td>
+          <td></td>
+        </tr>
 
    </table>
 
@@ -475,3 +539,5 @@
   </div><!-- closes #mBody-->
 </body>
 </html>
+
+      
