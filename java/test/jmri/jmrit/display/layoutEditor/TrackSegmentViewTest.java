@@ -74,31 +74,31 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (segmentView != null)) {
 
-            Rectangle2D expected = new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0);
-            Rectangle2D actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            Rectangle2D expected = new Rectangle2D.Double(210.0, 220.0, 10.0, 13.0);
+            Rectangle2D actual = MathUtil.granulize(segmentView.getBounds(), 0.2); //round to the nearest 2/10th of a pixel
             Assert.assertEquals("segmentView.getBounds(LINE)", expected, actual);
 
             segmentView.setArc(true);
-            expected = new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0);
-            actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            expected = new Rectangle2D.Double(210.0, 220.0, 10.0, 13.0);
+            actual = MathUtil.granulize(segmentView.getBounds(), 0.2); //round to the nearest 2/10th of a pixel
             Assert.assertEquals("segmentView.getBounds(ARC)", expected, actual);
 
             segmentView.setCircle(true);
-            expected = new Rectangle2D.Double(10.0, 20.0, 10.1, 13.0);
-            actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            expected = new Rectangle2D.Double(210.0, 220.0, 10.0, 13.0);
+            actual = MathUtil.granulize(segmentView.getBounds(), 0.2); //round to the nearest 2/10th of a pixel
             Assert.assertEquals("segmentView.getBounds(CIRCLE)", expected, actual);
 
             segmentView.setBezier(true);
-            segmentView.setBezierControlPoint(new Point2D.Double(5.5, 15.5), 0);
-            segmentView.setBezierControlPoint(new Point2D.Double(25.5, 38.5), 1);
+            segmentView.setBezierControlPoint(new Point2D.Double(25.5, 215.5), 0);
+            segmentView.setBezierControlPoint(new Point2D.Double(225.5, 238.5), 1);
 
-            expected = new Rectangle2D.Double(9.3, 19.4, 11.6, 14.4);
-            actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            expected = new Rectangle2D.Double(210.0, 220.0, 10.0, 13.0);
+            actual = MathUtil.granulize(segmentView.getBounds(), 0.2); //round to the nearest 2/10th of a pixel
             Assert.assertEquals("segmentView.getBounds(BEZIER)", expected, actual);
 
             segmentView.setBezier(false);
-            expected = new Rectangle2D.Double(10.0, 20.0, 10.0, 13.0);
-            actual = MathUtil.granulize(segmentView.getBounds(), 0.1); //round to the nearest 1/10th of a pixel
+            expected = new Rectangle2D.Double(210.0, 220.0, 10.0, 13.0);
+            actual = MathUtil.granulize(segmentView.getBounds(), 0.2); //round to the nearest 2/10th of a pixel
             Assert.assertEquals("segmentView.getBounds(LINE)", expected, actual);
         }
     }
@@ -110,24 +110,24 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         
             Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 0", 0, segmentView.getNumberOfBezierControlPoints());
 
-            Point2D p0 = new Point2D.Double(11.1, 22.2);
+            Point2D p0 = new Point2D.Double(211.1, 222.2);
             segmentView.setBezierControlPoint(p0, 0);
             Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 1", 1, segmentView.getNumberOfBezierControlPoints());
             Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0, segmentView.getBezierControlPoint(0));
 
-            Point2D p1 = new Point2D.Double(22.2, 33.3);
+            Point2D p1 = new Point2D.Double(222.2, 233.3);
             segmentView.setBezierControlPoint(p1, 1);
             Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, segmentView.getNumberOfBezierControlPoints());
             Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0, segmentView.getBezierControlPoint(0));
             Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1, segmentView.getBezierControlPoint(1));
 
-            Point2D p0P = new Point2D.Double(33.3, 44.4);
+            Point2D p0P = new Point2D.Double(233.3, 244.4);
             segmentView.setBezierControlPoint(p0P, 0);
             Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, segmentView.getNumberOfBezierControlPoints());
             Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0P, segmentView.getBezierControlPoint(0));
             Assert.assertEquals("trackSegment.getBezierControlPoint(1)", p1, segmentView.getBezierControlPoint(1));
 
-            Point2D p1P = new Point2D.Double(44.4, 55.5);
+            Point2D p1P = new Point2D.Double(244.4, 255.5);
             segmentView.setBezierControlPoint(p1P, -1);
             Assert.assertEquals("trackSegment.getNumberOfBezierControlPoints == 2", 2, segmentView.getNumberOfBezierControlPoints());
             Assert.assertEquals("trackSegment.getBezierControlPoint(0)", p0P, segmentView.getBezierControlPoint(0));
@@ -143,11 +143,11 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (segmentView != null)) {
         
-            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(15.0, 26.5), segmentView.getCentreSeg());
+            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(215.0, 226.5), segmentView.getCentreSeg());
             segmentView.translateCoords((float) 111.1, (float) 222.2);
-            Assert.assertEquals("segmentView.translateCoords()", new Point2D.Double(126.0999984741211, 248.6999969482422), segmentView.getCoordsCenter());
+            Assert.assertEquals("segmentView.translateCoords()", new Point2D.Double(326.0999984741211, 448.6999969482422), segmentView.getCoordsCenter());
             segmentView.scaleCoords((float) 2.2, (float) 3.3);
-            Assert.assertEquals("trackSegment.scaleCoords()", new Point2D.Double(277.4200026559829, 820.7099780702592), segmentView.getCoordsCenter());
+            Assert.assertEquals("trackSegment.scaleCoords()", new Point2D.Double(717.4200121927261, 1480.709968533516), segmentView.getCoordsCenter());
         }
     }
 
@@ -156,8 +156,8 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (segmentView != null)) {
         
-            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(15.0, 26.5), segmentView.getCentreSeg());
-            Point2D newC = new Point2D.Double(111.1, 222.2);
+            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(215.0, 226.5), segmentView.getCentreSeg());
+            Point2D newC = new Point2D.Double(311.1, 422.2);
             segmentView.setCoordsCenter(newC);
             Assert.assertEquals("segmentView.setCoordsCenter(p)", newC, segmentView.getCoordsCenter());
         }
@@ -341,15 +341,12 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             
-//             PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, new Point2D.Double(10.0, 20.0), layoutEditor);
-//             PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, new Point2D.Double(20.0, 33.0), layoutEditor);
             PositionablePoint p1 = new PositionablePoint("A1", PositionablePoint.PointType.ANCHOR, layoutEditor);
-//            PositionablePointView p1v = new PositionablePointView(p1, new Point2D.Double(20.0, 33.0), layoutEditor);
-            PositionablePointView p1v = new PositionablePointView(p1, new Point2D.Double(10.0, 20.0), layoutEditor);
+            PositionablePointView p1v = new PositionablePointView(p1, new Point2D.Double(210.0, 220.0), layoutEditor);
             layoutEditor.addLayoutTrack(p1, p1v);
 
             PositionablePoint p2 = new PositionablePoint("A2", PositionablePoint.PointType.ANCHOR, layoutEditor);
-            PositionablePointView p2v = new PositionablePointView(p2, new Point2D.Double(20.0, 33.0), layoutEditor);
+            PositionablePointView p2v = new PositionablePointView(p2, new Point2D.Double(220.0, 233.0), layoutEditor);
             layoutEditor.addLayoutTrack(p2, p2v);
 
             segment = new TrackSegment("TS01", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, layoutEditor);
