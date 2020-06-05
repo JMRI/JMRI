@@ -3,10 +3,10 @@ It's in no particular order, items are removed as done, so please don't consider
 
 ----
 ## Development Tags
-  - LE-MVC-2 M-V split in place, passing tests
-  - LE-MVC-3 Reducing duplicate code and redirects; passing tests, Javadoc warnings present
-  - LE-MVC-3 More reduction of duplication and redirects; tests clean
-  - LE-MVC-4 Introduce LayoutModels interface; tests, Javadoc, warnings clean
+ - LE-MVC-2 M-V split in place, passing tests
+ - LE-MVC-3 Reducing duplicate code and redirects; passing tests, Javadoc warnings present
+ - LE-MVC-3 More reduction of duplication and redirects; tests clean
+ - LE-MVC-4 Introduce LayoutModels interface; tests, Javadoc, warnings clean
 
 ## Development Branches
  - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
@@ -14,11 +14,10 @@ It's in no particular order, items are removed as done, so please don't consider
  - LE-move-content-MVC-working-on-4 (tagged as LE-MVC-4)
  - LE-move-content-MVC-working-on-5 - #8584, #8591, #8609 merged
  
+ - LE-MVC-head - built from the working development branches for [Jenkins build](https://builds.jmri.org/jenkins/job/testreleases/job/layouteditor/)
 ----
 
 ## MVC work
-
-
 
  - [X] Make up and check a test panel for all 8 track directions (NORTH, NORTH_EAST, etc)
  - [ ] Make up and check an extensive Turnout test panel - rotate, scale, translate plus rays
@@ -33,6 +32,9 @@ It's in no particular order, items are removed as done, so please don't consider
     =========> Referenced from various "Tools" calculations that don't use View, so isHidden() proxied for now
 - [X] flip in View
 - [ ] center in View
+  - [ ] Move geometric direction and distance to (plugin in) LayoutModels 
+            result = Path.computeDirection(getCoordsCenter(), p1);
+  
 - [ ] Decorations only in View
     - [ ] arrowstyle only in View
         =========>  arrows include connectivity, will need additional work
