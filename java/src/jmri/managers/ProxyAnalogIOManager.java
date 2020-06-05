@@ -36,7 +36,7 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
 
     @Override
     public int getXMLOrder() {
-        return jmri.Manager.ANALOG_IO;
+        return jmri.Manager.ANALOGIOS;
     }
 
     @Override

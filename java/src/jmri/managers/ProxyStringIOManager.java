@@ -21,7 +21,7 @@ public class ProxyStringIOManager extends AbstractProxyManager<StringIO>
 
     @Override
     public int getXMLOrder() {
-        return jmri.Manager.STRING_IO;
+        return jmri.Manager.STRINGIOS;
     }
 
     @Override

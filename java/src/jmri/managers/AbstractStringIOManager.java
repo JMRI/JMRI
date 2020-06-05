@@ -29,7 +29,7 @@ public abstract class AbstractStringIOManager extends AbstractManager<StringIO>
     /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
-        return Manager.STRING_IO;
+        return Manager.STRINGIOS;
     }
 
     /**

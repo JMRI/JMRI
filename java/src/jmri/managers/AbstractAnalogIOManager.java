@@ -31,7 +31,7 @@ public abstract class AbstractAnalogIOManager extends AbstractManager<AnalogIO>
     /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
-        return Manager.ANALOG_IO;
+        return Manager.ANALOGIOS;
     }
 
     /**
