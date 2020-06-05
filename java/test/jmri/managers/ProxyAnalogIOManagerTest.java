@@ -4,15 +4,16 @@ import java.beans.PropertyChangeListener;
 import jmri.AnalogIO;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Light;
+import jmri.LightManager;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrix.internal.InternalAnalogIOManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import jmri.AnalogIOManager;
 
 /**
@@ -93,15 +94,12 @@ public class ProxyAnalogIOManagerTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class));
 
-//        jmri.util.JUnitUtil.initInternalAnalogIOManager();
-
         Assert.assertTrue(InstanceManager.getDefault(AnalogIOManager.class) instanceof ProxyAnalogIOManager);
 
         Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class));
         AnalogIO b = newAnalogIO("IV1", null);
         InstanceManager.getDefault(AnalogIOManager.class).register(b);
         Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
-//        Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).provideAnalogIO("IL1"));
 
         InternalAnalogIOManager m = new InternalAnalogIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setAnalogIOManager(m);
@@ -109,11 +107,61 @@ public class ProxyAnalogIOManagerTest {
         b = newAnalogIO("IV2", null);
         InstanceManager.getDefault(AnalogIOManager.class).register(b);
         Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
-//        Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).provideAnalogIO("JL1"));
         b = newAnalogIO("IV3", null);
         InstanceManager.getDefault(AnalogIOManager.class).register(b);
         Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("IV1"));
-//        Assert.assertNotNull(InstanceManager.getDefault(AnalogIOManager.class).provideAnalogIO("IL2"));
+    }
+
+    @Test
+    public void testLights() {
+        // Test that the AnalogIOManager registers variable lights but not
+        // lights that are not variable.
+        
+        Light light = new MyLight("JL1");
+        InstanceManager.getDefault(LightManager.class).register(light);
+        AnalogIO analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL1");
+        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        
+        // Check that we can deregister light without problem
+        InstanceManager.getDefault(LightManager.class).deregister(light);
+        analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL1");
+        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        
+        Light variableLight = new MyVariableLight("JL2");
+        InstanceManager.getDefault(LightManager.class).register(variableLight);
+        analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
+        Assert.assertNotNull("variable light exists in AnalogIOManager", analogIO);
+        
+        // Check that we can deregister light and that it get deregstered from AnalogIOManager as well
+        InstanceManager.getDefault(LightManager.class).deregister(variableLight);
+        analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
+        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+    }
+
+    @Test
+    public void testLights_UserName() {
+        // Test that the AnalogIOManager registers variable lights but not
+        // lights that are not variable.
+        
+        Light light = new MyLight("JL1");
+        InstanceManager.getDefault(LightManager.class).register(light);
+        AnalogIO analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A light");
+        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        
+        // Check that we can deregister light without problem
+        InstanceManager.getDefault(LightManager.class).deregister(light);
+        analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A light");
+        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        
+        Light variableLight = new MyVariableLight("JL2", "A variable light");
+        InstanceManager.getDefault(LightManager.class).register(variableLight);
+        analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A variable light");
+        Assert.assertNotNull("variable light exists in AnalogIOManager", analogIO);
+        
+        // Check that we can deregister light and that it get deregstered from AnalogIOManager as well
+        InstanceManager.getDefault(LightManager.class).deregister(variableLight);
+        analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A variable light");
+        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
     }
 
     /**
@@ -198,5 +246,47 @@ public class ProxyAnalogIOManagerTest {
         }
     
     }
+    
+    
+    private class MyLight extends jmri.implementation.AbstractLight {
+        
+        public MyLight(String systemName) {
+            super(systemName);
+        }
+        
+    }
+    
+    
+    private class MyVariableLight extends jmri.implementation.AbstractVariableLight {
+
+        public MyVariableLight(String systemName) {
+            super(systemName);
+        }
+
+        public MyVariableLight(String systemName, String userName) {
+            super(systemName, userName);
+        }
+
+        @Override
+        protected void sendIntensity(double intensity) {
+            // No need to implement this method for this test
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        protected void sendOnOffCommand(int newState) {
+            // No need to implement this method for this test
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        protected int getNumberOfSteps() {
+            // No need to implement this method for this test
+            throw new UnsupportedOperationException("Not supported");
+        }
+        
+    }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManagerTest.class);
     
 }

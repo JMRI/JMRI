@@ -1,19 +1,7 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.util.*;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
-import jmri.beans.VetoableChangeSupport;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

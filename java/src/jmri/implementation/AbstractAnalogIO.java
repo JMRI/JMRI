@@ -68,7 +68,7 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
         if (value == Double.POSITIVE_INFINITY) {
             throw new IllegalArgumentException("value is positive infinity");
         }
-        if (value == Double.NaN) {
+        if (Double.isNaN(value)) {
             throw new IllegalArgumentException("value is not-a-number");
         }
         

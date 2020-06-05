@@ -66,7 +66,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         // needs to be added to the method getInitalizes() below.
 
         if (type == AnalogIOManager.class) {
-            return new ProxyAnalogIOManager();
+            return new ProxyAnalogIOManager().init();
         }
 
         if (type == AudioManager.class) {

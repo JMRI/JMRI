@@ -155,7 +155,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         return getBySystemName(name);
     }
 
-   /** {@inheritDoc} */
+    /** {@inheritDoc} */
     @Override
     @CheckReturnValue
     @CheckForNull
@@ -274,6 +274,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     public void register(@Nonnull E s) {
         Manager<E> m = getManager(s.getSystemName());
+//        log.warn("AbstractProxyManager.register: {}, {}", s.getSystemName(), m);
         if (m != null) {
             m.register(s);
         }
@@ -374,6 +375,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
+//        log.warn("AbstractProxyManager: event: {}. Bean: {}", e.getPropertyName(), ((jmri.NamedBean)e.getNewValue()).getSystemName());
         PropertyChangeEvent event = e;
         if (event.getPropertyName().equals("beans")) {
             recomputeNamedBeanSet();

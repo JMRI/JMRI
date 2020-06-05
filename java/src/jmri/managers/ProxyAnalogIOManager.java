@@ -1,8 +1,19 @@
 package jmri.managers;
 
+import java.beans.IndexedPropertyChangeEvent;
+import java.beans.PropertyChangeEvent;
+import java.util.Comparator;
+import java.util.Map;
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.AnalogIO;
 import jmri.AnalogIOManager;
+import jmri.InstanceManager;
+import jmri.Light;
+import jmri.LightManager;
+import jmri.Manager;
+import jmri.NamedBean;
 
 /**
  * Implementation of a AnalogIOManager that can serve as a proxy for multiple
@@ -14,9 +25,13 @@ import jmri.AnalogIOManager;
  */
 public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
         implements AnalogIOManager {
+    
+    private boolean muteUpdates = false;
 
-    public ProxyAnalogIOManager() {
-        super();
+    public ProxyAnalogIOManager init() {
+        InstanceManager.getDefault(LightManager.class)
+                .addPropertyChangeListener("beans", this);
+        return this;
     }
 
     @Override
@@ -42,5 +57,64 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
     public Class<AnalogIO> getNamedBeanClass() {
         return AnalogIO.class;
     }
+
+    /* {@inheritDoc} */
+    @Override
+    @CheckReturnValue
+    @CheckForNull
+    public AnalogIO getBySystemName(@Nonnull String systemName) {
+        AnalogIO analogIO = super.getBySystemName(systemName);
+        if (analogIO == null) {
+            analogIO = makeInternalManager().getBySystemName(systemName);
+        }
+        return analogIO;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public AnalogIO getByUserName(@Nonnull String userName) {
+        AnalogIO analogIO = super.getByUserName(userName);
+        if (analogIO == null) {
+            analogIO = makeInternalManager().getByUserName(userName);
+        }
+        return analogIO;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        super.propertyChange(e);
+        
+        // When we add or remove the Light to the internal AnalogIO manager,
+        // we get a propertyChange for that.
+        if (muteUpdates) return;
+        
+        if ("beans".equals(e.getPropertyName())) {
+            
+            // A light is added
+            if ((e.getNewValue() instanceof jmri.Light) && (e.getOldValue() == null)) {
+                Light newLight = (Light) e.getNewValue();
+                if (newLight.isIntensityVariable()) {
+                    Manager<AnalogIO> internalManager = initInternal();
+                    muteUpdates = true;
+                    internalManager.register(newLight);
+                    muteUpdates = false;
+                }
+            }
+            
+            // A light is removed
+            if ((e.getOldValue() instanceof jmri.Light) && (e.getNewValue() == null)) {
+                Light oldLight = (Light) e.getOldValue();
+                if (oldLight.isIntensityVariable()) {
+                    Manager<AnalogIO> internalManager = initInternal();
+                    muteUpdates = true;
+                    internalManager.deregister(oldLight);
+                    muteUpdates = false;
+                }
+            }
+        }
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManager.class);
 
 }
