@@ -111,6 +111,14 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void dispose() {
+        super.dispose();
+        InstanceManager.getDefault(LightManager.class)
+                .removePropertyChangeListener("beans", this);
+    }
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManager.class);
 
 }
