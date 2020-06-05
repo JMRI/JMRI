@@ -1,9 +1,6 @@
 package jmri.managers;
 
-import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
-import java.util.Comparator;
-import java.util.Map;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -13,7 +10,6 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
-import jmri.NamedBean;
 
 /**
  * Implementation of a AnalogIOManager that can serve as a proxy for multiple
@@ -115,6 +111,6 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManager.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManager.class);
 
 }
