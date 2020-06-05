@@ -90,6 +90,35 @@
       an alphabetic list.</p>
       
          <div class="row">
+
+             <div class="column">
+                 
+                <i style="padding-left: 1em;"><a href="#commandstations">Command Stations:</a></i>
+                <ul>
+                  <li><a href="XPressNet/index.shtml">Atlas Commander</a>
+                  <li><a href="easydcc/EasyDCC.shtml">CVP EasyDCC</a>
+                  <li><a href="dccpp/index.shtml">DCC++< (arduino)</a>
+                  <li><a href="digirails/index.shtml">Digikeijs (Digirails)</a>
+                  <li><a href="loconet/Digitrax.shtml">Digitrax</a>
+                  <li><a href="ecos/index.shtml">ESU ECoS</a>
+                  <li><a href="loconet/Fleischmann.shtml">Fleischmann</a>
+                  <li><a href="XPressNet/index.shtml">Hornby</a>
+                  <li><a href="tmcc/index.shtml">Lionel TMCC</a>
+                  <li><a href="marklin/index.shtml">M&auml;rklin CS2</a>
+                  <li><a href="mrc/index.shtml">MRC</a>
+                  <li><a href="nce/NCE.shtml">NCE</a>
+                  <li><a href="XPressNet/index.shtml">Roco</a>
+                  <li><a href="sprog/SPROG.shtml">SPROG</a>
+                  <li><a href="tams/index.shtml">TAMS Master Control</a>
+                  <li><a href="loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
+                  <li><a href="XPressNet/index.shtml">Viessmann Commander</a>
+                  <li><a href="nce/Wangrow.shtml">Wangrow System One</a>
+                  <li><a href="zimo/Zimo.shtml">Zimo MX-1</a>
+                  <li><a href="XPressNet/index.shtml">ZTC Controls</a>
+                </ul>   
+
+              </div>
+
            <div class="column">
      
                 <i style="padding-left: 1em;"><a href="#multi">Multi-purpose:</a></i>
@@ -121,39 +150,13 @@
                 
              </div>
                 
-             <div class="column">
-                 
-                <i style="padding-left: 1em;"><a href="#commandstations">Command Stations:</a></i>
-                <ul>
-                  <li><a href="XPressNet/index.shtml">Atlas Commander</a>
-                  <li><a href="easydcc/EasyDCC.shtml">CVP EasyDCC</a>
-                  <li><a href="dccpp/index.shtml">DCC++</a>
-                  <li><a href="digirails/index.shtml">Digikeijs (Digirails)</a>
-                  <li><a href="ecos/index.shtml">ESU ECoS</a>
-                  <li><a href="loconet/Fleischmann.shtml">Fleischmann</a>
-                  <li><a href="XPressNet/index.shtml">Hornby</a>
-                  <li><a href="tmcc/index.shtml">Lionel TMCC</a>
-                  <li><a href="marklin/index.shtml">M&auml;rklin CS2</a>
-                  <li><a href="mrc/index.shtml">MRC</a>
-                  <li><a href="nce/NCE.shtml">NCE</a>
-                  <li><a href="XPressNet/index.shtml">Roco</a>
-                  <li><a href="sprog/SPROG.shtml">SPROG</a>
-                  <li><a href="tams/index.shtml">TAMS Master Control</a>
-                  <li><a href="loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
-                  <li><a href="XPressNet/index.shtml">Viessmann Commander</a>
-                  <li><a href="nce/Wangrow.shtml">Wangrow System One</a>
-                  <li><a href="zimo/Zimo.shtml">Zimo MX-1</a>
-                  <li><a href="XPressNet/index.shtml">ZTC Controls</a>
-                </ul>   
-
-              </div>
-
               <div class="column">
                    
                 <i style="padding-left: 1em;"><a href="#other">Accessories/Other Devices:</a></i>
 
                 <ul>
                   <li><a href="anyma/index.shtml">Anyma DMX</a>
+                  <li><a href="arduino/index.shtml">Arduinos</a>
                   <li><a href="bachrus/index.shtml">Bachrus</a>
                   <li><a href="dcc4pc/index.shtml">Dcc4Pc</a>
                   <li><a href="misc/DccSpecialties.shtml">DCC Specialties</a>
@@ -362,6 +365,66 @@
           <dd>
             <p class="dl">Configure: <a href=
             "digirails/index.shtml">DR5000</a></p>
+            <p>&nbsp;</p>
+          </dd>
+
+         <dt class="im"><a href="http://www.digitrax.com/" target="_blank">
+          <img src="images/Digitrax-logo.jpg" width="60" height="28" alt="Digitrax"></a></dt>
+          <dt><a href="loconet/Digitrax.shtml">Digitrax</a></dt>
+          <dd>
+            <p class="dl">General information on <a href=
+            "loconet/Digitrax.shtml">connecting JMRI to a Digitrax
+            LocoNet</a></p>
+
+            <p class="dl">Configure: Connections to a LocoNet
+            via</p>
+
+            <ul>
+              <li><a href="loconet/PR3.shtml">Digitrax PR3
+              interface</a></li>
+              
+              <li><a href="loconet/PR4.shtml">Digitrax PR4
+              interface</a></li>
+
+              <li><a href="loconet/LocoBufferUSB.shtml">RR-CirKits
+              LocoBuffer-USB</a></li>
+
+              <li>The older <a href=
+              "loconet/LocoBufferII.shtml">LocoBuffer-II</a>,
+              <a href="loconet/LocoBuffer.shtml">LocoBuffer</a> and
+              <a href="loconet/MS100.shtml">MS100</a>
+              interfaces</li>
+
+              <li><a href="loconet/BTLocoBridge.shtml">Bluetooth
+              LocoBridge</a></li>
+            </ul>
+
+            <p class="dl">Configure: <a href=
+            "loconet/LocoNetSim.shtml">LocoNet Simulator for use
+            when disconnected from a layout</a>.</p>
+
+            <p class="dl">Configure: Remote connection to a LocoNet
+            via <a href="loconet/LocoNetServer.shtml">JMRI LocoNet
+            Server</a>.</p>
+
+            <p class="dl">Configure: Remote connection to a LocoNet
+            via <a href=
+            "loconet/LbServer.shtml">LbServer</a>. More
+            information on <a href=
+            "loconet/LocoNetworking.shtml">connecting multiple
+            computers to a single LocoNet</a></p>
+
+            <p class="dl">Configure: Programming and testing
+            decoders without a command station via a <a href=
+            "loconet/PR2.shtml">Digitrax PR2 interface</a>,
+            <a href="loconet/PR3.shtml">PR3 interface</a>, or
+           <a href="loconet/PR4.shtml">PR4 interface</a>.</p>
+
+            <p class="dl">Configure: Directly connecting to an
+            <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
+
+            <p class="dl">Configure: Connecting to a <a href=
+            "loconet/StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
             <p>&nbsp;</p>
           </dd>
 
@@ -607,8 +670,66 @@
             <p>&nbsp;</p>
           </dd>
 
-<!-- LocoNet goes here -->
+         <dt class="im"><a href="http://www.digitrax.com/" target="_blank">
+          <img src="images/Digitrax-logo.jpg" width="60" height="28" alt="Digitrax"></a></dt>
+          <dt><a href="loconet/Digitrax.shtml">LocoNet (Digitrax)</a></dt>
+          <dd>
+            <p class="dl">General information on <a href=
+            "loconet/Digitrax.shtml">connecting JMRI to a Digitrax
+            LocoNet</a></p>
 
+            <p class="dl">Configure: Connections to a LocoNet
+            via</p>
+
+            <ul>
+              <li><a href="loconet/PR3.shtml">Digitrax PR3
+              interface</a></li>
+              
+              <li><a href="loconet/PR4.shtml">Digitrax PR4
+              interface</a></li>
+
+              <li><a href="loconet/LocoBufferUSB.shtml">RR-CirKits
+              LocoBuffer-USB</a></li>
+
+              <li>The older <a href=
+              "loconet/LocoBufferII.shtml">LocoBuffer-II</a>,
+              <a href="loconet/LocoBuffer.shtml">LocoBuffer</a> and
+              <a href="loconet/MS100.shtml">MS100</a>
+              interfaces</li>
+
+              <li><a href="loconet/BTLocoBridge.shtml">Bluetooth
+              LocoBridge</a></li>
+            </ul>
+
+            <p class="dl">Configure: <a href=
+            "loconet/LocoNetSim.shtml">LocoNet Simulator for use
+            when disconnected from a layout</a>.</p>
+
+            <p class="dl">Configure: Remote connection to a LocoNet
+            via <a href="loconet/LocoNetServer.shtml">JMRI LocoNet
+            Server</a>.</p>
+
+            <p class="dl">Configure: Remote connection to a LocoNet
+            via <a href=
+            "loconet/LbServer.shtml">LbServer</a>. More
+            information on <a href=
+            "loconet/LocoNetworking.shtml">connecting multiple
+            computers to a single LocoNet</a></p>
+
+            <p class="dl">Configure: Programming and testing
+            decoders without a command station via a <a href=
+            "loconet/PR2.shtml">Digitrax PR2 interface</a>,
+            <a href="loconet/PR3.shtml">PR3 interface</a>, or
+           <a href="loconet/PR4.shtml">PR4 interface</a>.</p>
+
+            <p class="dl">Configure: Directly connecting to an
+            <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
+
+            <p class="dl">Configure: Connecting to a <a href=
+            "loconet/StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
+            <p>&nbsp;</p>
+          </dd>
+          
           <dt class="im"><a href="https://www.merg.org.uk/" target="_blank">
           <img src="https://www.merg.org.uk/merg_images/merg_logo.png"
           alt="MERG logo" height="45" width="100"></a></dt>
@@ -751,6 +872,18 @@
 
 <!-- Anyma DMX goes here -->
 
+          <dt class="im"><a href="https://arduino.cc" target="_blank">
+          <img src="arduino/images/arduinologo.png" width="56" height="42" 
+          alt="Arduino (micro-controller)"></a></dt>
+          <dt><a href="arduino/index.shtml">Arduino (micro-controller)</a></dt>
+          <dd>
+            <p class="dl">Configure: See <a href="arduino/index.shtml"> the 
+            JMRI arduino help page</a> for information on configuring for accessory control.
+            See also <a href="dccpp/index.shtml">DCC++</a> for use as a DCC command station.
+            </p>
+            <p>&nbsp;</p>
+          </dd>
+          
           <dt class="im"><a href=
           "https://web.archive.org/web/20170720024241/http://www.bachrus.com:80/index.php" target="_blank">
           <img src="images/Bachrus_Logo.gif" width="100" height="25" alt="Bachrus"></a></dt>

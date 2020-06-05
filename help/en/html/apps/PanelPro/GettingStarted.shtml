@@ -335,7 +335,7 @@
     alt="Basic panel" width="633" height="236"></a>
     </div>
 
-    <h5></h5>
+    <!-- <h5></h5>  -->
 
     <p>The basic panel is now done.  It has turnouts, occupancy sensors and blocks.  It can
     simulate sending turnout commands to the layout and respond to simulated occupancy changes.

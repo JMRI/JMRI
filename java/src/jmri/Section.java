@@ -1,33 +1,24 @@
 package jmri;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
+
+import java.beans.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import jmri.implementation.AbstractNamedBean;
-import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
-import jmri.jmrit.display.layoutEditor.HitPointType;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutSlip;
-import jmri.jmrit.display.layoutEditor.LayoutTurnout;
-import jmri.jmrit.display.layoutEditor.LevelXing;
-import jmri.jmrit.display.layoutEditor.PositionablePoint;
-import jmri.jmrit.display.layoutEditor.TrackNode;
-import jmri.jmrit.display.layoutEditor.TrackSegment;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.JmriJFrame;
 import jmri.util.NonNullArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Sections represent a group of one or more connected Blocks that may be
- * allocated to a train travelling in a given direction.
+ * allocated to a train traveling in a given direction.
  * <p>
  * A Block may be in multiple Sections. All Blocks contained in a given section
  * must be unique. Blocks are kept in order--the first block is connected to the
@@ -47,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * the Blocks in the Section that defines a connection to a Block outside of the
  * Section. EntryPoints are grouped into two lists: "forwardEntryPoints" - entry
  * through which will result in a train traveling in the "forward" direction
- * "reverseEntryPoints" - entry through which will result in a train travelling
+ * "reverseEntryPoints" - entry through which will result in a train traveling
  * in the "reverse" direction Note that "forwardEntryPoints" are also reverse
  * exit points, and vice versa.
  * <p>
@@ -2378,8 +2369,11 @@ public class Section extends AbstractNamedBean {
      * @param frame ignored
      * @param panel the panel containing signals to check
      * @return true if successful; false otherwise
+     * @deprecated 4.19.7  No usages, so no replacement
      */
+    @Deprecated // 4.19.7 for removal;  No usages, so no replacement
     public boolean checkSignals(JmriJFrame frame, LayoutEditor panel) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "checkSignals");
         if (panel == null) {
             log.error("Null Layout Editor panel on call to 'checkSignals'");
             return false;

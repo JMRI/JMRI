@@ -247,7 +247,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             log.debug("windows completed closing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
             // wait for parallel tasks to complete
             try {
-                if (!runnables.isEmpty() && !new ProxyTask(runnables.stream()
+                if (!runnables.isEmpty() && !new ProxyTask(new HashSet<>(runnables).stream()
                         .map(task -> RP.post(task, 0, Thread.currentThread().getPriority()))
                         .collect(Collectors.toSet()))
                                 .waitFinished(timeout)) {
