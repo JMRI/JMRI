@@ -61,7 +61,7 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
     public AnalogIO getBySystemName(@Nonnull String systemName) {
         AnalogIO analogIO = super.getBySystemName(systemName);
         if (analogIO == null) {
-            analogIO = makeInternalManager().getBySystemName(systemName);
+            analogIO = initInternal().getBySystemName(systemName);
         }
         return analogIO;
     }
@@ -72,7 +72,7 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
     public AnalogIO getByUserName(@Nonnull String userName) {
         AnalogIO analogIO = super.getByUserName(userName);
         if (analogIO == null) {
-            analogIO = makeInternalManager().getByUserName(userName);
+            analogIO = initInternal().getByUserName(userName);
         }
         return analogIO;
     }
