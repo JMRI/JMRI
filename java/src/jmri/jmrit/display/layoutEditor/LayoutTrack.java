@@ -104,16 +104,6 @@ abstract public class LayoutTrack {
 
     protected static final int NUM_ARROW_TYPES = 6;  // temporary: why here? now view?
 
-    /**
-     * convenience method for accessing...
-     *
-     * @return the layout editor's toolbar panel
-     */
-//     @Nonnull
-//     final public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
-
     abstract public boolean isMainline();
 
     /**
@@ -133,15 +123,6 @@ abstract public class LayoutTrack {
         layoutEditor.getLayoutTrackView(this).highlightUnconnected(g2);
     }
 
-
-    /**
-     * Draw the turnout controls
-     *
-     * @param g2 the graphics context
-     */
-//     final protected void drawTurnoutControls(Graphics2D g2) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
 
     /**
      * Get the hidden state of the track element.
@@ -218,17 +199,6 @@ abstract public class LayoutTrack {
     }
 
     /**
-     * translate this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
-     */
-//     final public void translateCoords(double xFactor, double yFactor) {
-//         log.error("translateCoords should have been called in view instead of object (temporary)");
-//         layoutEditor.getLayoutTrackView(this).translateCoords(xFactor, yFactor);
-//     }
-
-    /**
      * rotate this LayoutTrack's coordinates by angleDEG's
      *
      * @param angleDEG the amount to rotate in degrees
@@ -254,28 +224,11 @@ abstract public class LayoutTrack {
         return layoutEditor.getLayoutTrackView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
     }
 
-    // optional useRectangles & requireUnconnected parameters default to false
-//     final protected HitPointType findHitPointType(@Nonnull Point2D p) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//     }
 
     // optional requireUnconnected parameter defaults to false
     final protected HitPointType findHitPointType(@Nonnull Point2D p, boolean useRectangles) {
         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
     }
-
-    /**
-     * return the coordinates for a specified connection type (abstract: should
-     * be overridden by ALL subclasses)
-     *
-     * @param connectionType the connection type
-     * @return the coordinates for the specified connection type
-     */
-//     final public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-//         log.error("getCoordsForConnectionType should have called in view instead of object (temporary)",
-//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-//         return layoutEditor.getLayoutTrackView(this).getCoordsForConnectionType(connectionType);
-//     }
 
     /**
      * @return the bounds of this track
@@ -297,18 +250,6 @@ abstract public class LayoutTrack {
         log.error("LayoutTrack.showPopup(mE) should have been called through View");
         return layoutEditor.getLayoutTrackView(this).showPopup(mouseEvent);
     }
-
-    /**
-     * show the popup menu for this layout track
-     *
-     * @param where to show the popup
-     * @return the popup menu for this layout track
-     */
-//     @Nonnull
-//     final protected JPopupMenu showPopup(Point2D where) {
-//         log.error("LayoutTrack.showPopup(P2D) should have been called through View");
-//         return layoutEditor.getLayoutTrackView(this).showPopup(where);
-//     }
 
     /**
      * show the popup menu for this layout track

@@ -1054,17 +1054,16 @@ public class LayoutTurnoutView extends LayoutTrackView {
             double chkSize = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
             double segLength = 0;
             if (!isAutomatic) {
-                Point2D segCenter = trkSeg.getCoordsCenter();
+                Point2D segCenter = getCoordsCenter();
                 segLength = MathUtil.distance(pointCoord, segCenter) * 2;
             }
             if (segLength < chkSize) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Set block:");
-                    log.debug("    seg: {}", trkSeg);
-                    log.debug("    cor: {}", pointCoord);
-                    log.debug("    blk: {}", (currBlk == null) ? "null" : currBlk.getDisplayName());
-                    log.debug("    len: {}", segLength);
-                }
+
+                log.debug("Set block:");
+                log.debug("    seg: {}", trkSeg);
+                log.debug("    cor: {}", pointCoord);
+                log.debug("    blk: {}", (currBlk == null) ? "null" : currBlk.getDisplayName());
+                log.debug("    len: {}", segLength);
 
                 trkSeg.setLayoutBlock(currBlk);
                 layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
