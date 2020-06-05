@@ -1,27 +1,20 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.text.DecimalFormat;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.util.List;
 import java.util.*;
-import javax.annotation.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
-import jmri.*;
+
 import jmri.NamedBean.DisplayOptions;
+import jmri.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.Bundle;
 import jmri.jmrit.display.layoutEditor.*;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;

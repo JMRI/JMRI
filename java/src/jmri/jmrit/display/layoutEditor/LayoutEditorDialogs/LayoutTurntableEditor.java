@@ -2,20 +2,21 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.*;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
+import jmri.NamedBean.DisplayOptions;
 import jmri.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.Bundle;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.*;
-import jmri.NamedBean.DisplayOptions;
+import jmri.util.JmriJFrame;
 
 /**
  * MVC Editor component for PositionablePoint objects.

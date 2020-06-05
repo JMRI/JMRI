@@ -1,20 +1,16 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.text.DecimalFormat;
-import java.util.*;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
 
-import jmri.*;
+import jmri.InstanceManager;
+import jmri.InvokeOnGuiThread;
 import jmri.jmrit.display.layoutEditor.*;
-import jmri.swing.NamedBeanComboBox;
-import jmri.util.*;
 
 /**
  * MVC root Editor component for LayoutTrack hierarchy objects.

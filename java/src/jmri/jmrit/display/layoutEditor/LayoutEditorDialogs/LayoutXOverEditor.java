@@ -1,30 +1,14 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.text.DecimalFormat;
-import java.util.*;
-import javax.annotation.*;
+import java.awt.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
-import jmri.*;
-import jmri.NamedBean.DisplayOptions;
-import jmri.jmrit.display.layoutEditor.*;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
-import jmri.swing.NamedBeanComboBox;
-import jmri.util.JmriJFrame;
-import jmri.util.MathUtil;
+import javax.swing.border.TitledBorder;
+
+import jmri.BlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 
 /**
  * MVC Editor component for LayoutXOver objects.

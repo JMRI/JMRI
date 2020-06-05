@@ -1,21 +1,18 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 
-import java.util.*;
-import java.util.List;
-
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
 
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
+import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.Bundle;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.*;
+import jmri.util.JmriJFrame;
 
 /**
  * MVC Editor component for TrackSegment objects.
