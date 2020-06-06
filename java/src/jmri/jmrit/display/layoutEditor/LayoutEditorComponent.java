@@ -50,8 +50,8 @@ class LayoutEditorComponent extends JComponent {
             if (clipBounds != null) {
                 if ((clipBounds.getWidth() > 0) && (clipBounds.getHeight() > 0)) {
                     if (!clipBounds.equals(g2.getClipBounds())) {
-                        log.error("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
-                                clipBounds, g2.getClipBounds());
+                        //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
+                        //        clipBounds, g2.getClipBounds());
                         g2.setClip(clipBounds);
                     }
                 }
