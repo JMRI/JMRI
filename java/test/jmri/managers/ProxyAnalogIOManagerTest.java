@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.Manager;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrix.internal.InternalAnalogIOManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -15,6 +16,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import jmri.AnalogIOManager;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Test the ProxyAnalogIOManager.
@@ -156,12 +158,43 @@ public class ProxyAnalogIOManagerTest {
         Light variableLight = new MyVariableLight("JL2", "A variable light");
         InstanceManager.getDefault(LightManager.class).register(variableLight);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A variable light");
-        Assert.assertNotNull("variable light exists in AnalogIOManager", analogIO);
+        Assert.assertNotNull("variableLight exists in AnalogIOManager", analogIO);
         
         // Check that we can deregister light and that it get deregstered from AnalogIOManager as well
         InstanceManager.getDefault(LightManager.class).deregister(variableLight);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A variable light");
-        Assert.assertNull("light does not exists in AnalogIOManager", analogIO);
+        Assert.assertNull("variableLight does not exists in AnalogIOManager", analogIO);
+    }
+
+    @Test
+    public void testOtherBean() {
+        // Test that the AnalogIOManager registers a bean from another manager.
+        
+        InstanceManager.setDefault(SomeDeviceManager.class, new SomeDeviceManagerImplementation());
+        
+        SomeDevice someDevice = new SomeDeviceBean("JL1");
+        InstanceManager.getDefault(SomeDeviceManager.class).register(someDevice);
+        AnalogIO analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL1");
+        Assert.assertNull("someDevice does not exists in AnalogIOManager", analogIO);
+        
+        // Check that we can deregister light without problem
+        InstanceManager.getDefault(SomeDeviceManager.class).deregister(someDevice);
+        analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL1");
+        Assert.assertNull("someDevice does not exists in AnalogIOManager", analogIO);
+        
+        // Tell AnalogIOManager to register SomeDevice beans in the manager
+        InstanceManager.getDefault(AnalogIOManager.class)
+                .addBeanType(SomeDevice.class, InstanceManager.getDefault(SomeDeviceManager.class));
+        
+        SomeDevice anotherSomeDevice = new SomeDeviceBean("JL2");
+        InstanceManager.getDefault(SomeDeviceManager.class).register(anotherSomeDevice);
+        analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
+        Assert.assertNotNull("variable anotherSomeDevice exists in AnalogIOManager", analogIO);
+        
+        // Check that we can deregister light and that it get deregstered from AnalogIOManager as well
+        InstanceManager.getDefault(SomeDeviceManager.class).deregister(anotherSomeDevice);
+        analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
+        Assert.assertNull("anotherSomeDevice does not exists in AnalogIOManager", analogIO);
     }
 
     /**
@@ -287,6 +320,96 @@ public class ProxyAnalogIOManagerTest {
         
     }
     
+    
+    private interface SomeDevice extends AnalogIO {
+    }
+    
+    private static class SomeDeviceBean extends AbstractNamedBean implements SomeDevice {
+
+        public SomeDeviceBean(String systemName) {
+            super(systemName);
+        }
+
+        @Override
+        public void setState(int s) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public int getState() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public String getBeanType() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setCommandedAnalogValue(double value) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public double getCommandedAnalogValue() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public double getMin() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public double getMax() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public double getResolution() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public AbsoluteOrRelative getAbsoluteOrRelative() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+        
+    }
+    
+    
+    private interface SomeDeviceManager extends Manager<SomeDevice> {
+    }
+    
+    private static class SomeDeviceManagerImplementation
+            extends AbstractManager<SomeDevice> implements SomeDeviceManager {
+
+        public SomeDeviceManagerImplementation() {
+            super(jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
+        }
+
+        @Override
+        public char typeLetter() {
+            return '$';
+        }
+
+        @Override
+        public Class getNamedBeanClass() {
+            return SomeDevice.class;
+        }
+
+        @Override
+        public int getXMLOrder() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public String getBeanTypeHandled(boolean plural) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+        
+    }
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManagerTest.class);
     
 }

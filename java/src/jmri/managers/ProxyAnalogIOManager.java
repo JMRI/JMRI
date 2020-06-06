@@ -1,15 +1,18 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.AnalogIO;
 import jmri.AnalogIOManager;
 import jmri.InstanceManager;
-import jmri.Light;
+import jmri.VariableLight;
 import jmri.LightManager;
 import jmri.Manager;
+import jmri.NamedBean;
 
 /**
  * Implementation of a AnalogIOManager that can serve as a proxy for multiple
@@ -23,10 +26,12 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
         implements AnalogIOManager {
     
     private boolean muteUpdates = false;
+    private final List<Class<? extends AnalogIO>> registerBeans = new ArrayList<>();
+    private final List<Manager<? extends NamedBean>> registerBeanManagers = new ArrayList<>();
 
     public ProxyAnalogIOManager init() {
-        InstanceManager.getDefault(LightManager.class)
-                .addPropertyChangeListener("beans", this);
+        // Note that not all lights in LightManager are VariableLight.
+        addBeanType(VariableLight.class, InstanceManager.getDefault(LightManager.class));
         return this;
     }
 
@@ -87,24 +92,22 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
         
         if ("beans".equals(e.getPropertyName())) {
             
-            // A light is added
-            if ((e.getNewValue() instanceof jmri.Light) && (e.getOldValue() == null)) {
-                Light newLight = (Light) e.getNewValue();
-                if (newLight.isIntensityVariable()) {
+            for (Class<? extends AnalogIO> clazz : registerBeans) {
+                // A NamedBean is added
+                if ((e.getNewValue() != null)
+                        && clazz.isAssignableFrom(e.getNewValue().getClass())) {
                     Manager<AnalogIO> internalManager = initInternal();
                     muteUpdates = true;
-                    internalManager.register(newLight);
+                    internalManager.register((AnalogIO) e.getNewValue());
                     muteUpdates = false;
                 }
-            }
-            
-            // A light is removed
-            if ((e.getOldValue() instanceof jmri.Light) && (e.getNewValue() == null)) {
-                Light oldLight = (Light) e.getOldValue();
-                if (oldLight.isIntensityVariable()) {
+                
+                // A NamedBean is removed
+                if ((e.getOldValue() != null)
+                        && clazz.isAssignableFrom(e.getOldValue().getClass())) {
                     Manager<AnalogIO> internalManager = initInternal();
                     muteUpdates = true;
-                    internalManager.deregister(oldLight);
+                    internalManager.deregister((AnalogIO) e.getOldValue());
                     muteUpdates = false;
                 }
             }
@@ -115,9 +118,32 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
     @Override
     public void dispose() {
         super.dispose();
-        InstanceManager.getDefault(LightManager.class)
-                .removePropertyChangeListener("beans", this);
+        for (Manager<? extends NamedBean> manager : registerBeanManagers) {
+            manager.removePropertyChangeListener("beans", this);
+        }
     }
+
+    /**
+     * Add a type of NamedBean, for example VariableLight, that should be also registred in AnalogIOManager.
+     * @param clazz the NamedBean class that should be registered in this manager
+     * @param manager the manager that managers the NamedBeans of type clazz
+     */
+    @Override
+    public void addBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
+        registerBeans.add(clazz);
+        manager.addPropertyChangeListener("beans", this);
+    };
+
+    /**
+     * Remove a type of NamedBean, for example VariableLight, from beeing registred in AnalogIOManager.
+     * @param clazz the NamedBean class that should be registered in this manager
+     * @param manager the manager that managers the NamedBeans of type clazz
+     */
+    @Override
+    public void removeBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
+        manager.removePropertyChangeListener("beans", this);
+        registerBeans.remove(clazz);
+    };
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManager.class);
 

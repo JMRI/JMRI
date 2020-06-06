@@ -5,6 +5,7 @@ import java.util.Date;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Timebase;
+import jmri.VariableLight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2008,2009
  * @author Bob Jacobsen Copyright (C) 2008,2009
  */
-public abstract class AbstractVariableLight extends AbstractLight {
+public abstract class AbstractVariableLight extends AbstractLight implements VariableLight {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractVariableLight.class);
 
