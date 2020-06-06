@@ -54,7 +54,7 @@ public final class JUnitSwingUtil {
      * @param component Typically a JComponent, could be a JFrame, the item to
      *                      be returned
      * @param size      dimension of image to capture
-     * @param filename  file to write
+     * @param file      file to write
      */
     public static void writeDisplayedContentToFile(java.awt.Container component, 
                                                     Dimension size, Point upLeft, java.io.File file)
