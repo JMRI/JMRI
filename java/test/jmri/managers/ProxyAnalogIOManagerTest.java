@@ -160,7 +160,7 @@ public class ProxyAnalogIOManagerTest {
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A variable light");
         Assert.assertNotNull("variableLight exists in AnalogIOManager", analogIO);
         
-        // Check that we can deregister light and that it get deregstered from AnalogIOManager as well
+        // Check that we can deregister variableLight and that it get deregstered from AnalogIOManager as well
         InstanceManager.getDefault(LightManager.class).deregister(variableLight);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getByUserName("A variable light");
         Assert.assertNull("variableLight does not exists in AnalogIOManager", analogIO);
@@ -189,9 +189,9 @@ public class ProxyAnalogIOManagerTest {
         SomeDevice anotherSomeDevice = new SomeDeviceBean("JL2");
         InstanceManager.getDefault(SomeDeviceManager.class).register(anotherSomeDevice);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
-        Assert.assertNotNull("variable anotherSomeDevice exists in AnalogIOManager", analogIO);
+        Assert.assertNotNull("anotherSomeDevice exists in AnalogIOManager", analogIO);
         
-        // Check that we can deregister light and that it get deregstered from AnalogIOManager as well
+        // Check that we can deregister anotherSomeDevice and that it get deregstered from AnalogIOManager as well
         InstanceManager.getDefault(SomeDeviceManager.class).deregister(anotherSomeDevice);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
         Assert.assertNull("anotherSomeDevice does not exists in AnalogIOManager", analogIO);
@@ -394,7 +394,7 @@ public class ProxyAnalogIOManagerTest {
         }
 
         @Override
-        public Class getNamedBeanClass() {
+        public Class<SomeDevice> getNamedBeanClass() {
             return SomeDevice.class;
         }
 
