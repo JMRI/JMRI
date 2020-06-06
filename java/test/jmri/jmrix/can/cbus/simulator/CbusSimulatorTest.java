@@ -16,7 +16,7 @@ import org.junit.Test;
  */
 public class CbusSimulatorTest {
     
-    CbusSimulator t;
+    private CbusSimulator t;
 
     @Test
     public void testCTor() {
