@@ -667,8 +667,9 @@ public class TrackSegmentView extends LayoutTrackView {
                         LayoutTrack lt = lf.findObjectByName(getConnect1().getName());
                         // this shouldn't ever be null... however...
                         if (lt != null) {
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                            layoutEditor.setSelectionRect(ltv.getBounds());
+                            ltv.showPopup();
                         }
                     }
                 });
@@ -681,8 +682,9 @@ public class TrackSegmentView extends LayoutTrackView {
                         LayoutTrack lt = lf.findObjectByName(getConnect2().getName());
                         // this shouldn't ever be null... however...
                         if (lt != null) {
-                            layoutEditor.setSelectionRect(lt.getBounds());
-                            lt.showPopup();
+                            LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                            layoutEditor.setSelectionRect(ltv.getBounds());
+                            ltv.showPopup();
                         }
                     }
                 });

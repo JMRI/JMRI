@@ -252,6 +252,15 @@ public class LayoutModelsScaffold implements LayoutModels {
         return layoutShapes;
     }
 
+    public int computeDirection(@Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, 
+                                @Nonnull LayoutTrack trk2, @Nonnull HitPointType h2) {
+//         return Path.computeDirection(
+//                 getCoords(trk1, h1),
+//                 getCoords(trk2, h2)
+//             );  
+        return jmri.Path.EAST;  
+    }
+
     // initialize logging
     private static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
 

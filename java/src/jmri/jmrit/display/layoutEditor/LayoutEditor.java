@@ -3013,10 +3013,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     private void checkControls(boolean useRectangles) {
         selectedObject = null;  // deliberate side-effect
-        for (LayoutTrack theTrack : getLayoutTracks()) {
-            selectedHitPointType = theTrack.findHitPointType(dLoc, useRectangles); // deliberate side-effect
+        for (LayoutTrackView theTrackView : getLayoutTrackViews()) {
+            selectedHitPointType = theTrackView.findHitPointType(dLoc, useRectangles); // deliberate side-effect
             if (HitPointType.isControlHitType(selectedHitPointType)) {
-                selectedObject = theTrack; // deliberate side-effect
+                selectedObject = theTrackView.getLayoutTrack(); // deliberate side-effect
                 return;
             }
         }
@@ -3039,9 +3039,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         foundTrack = null;
         foundHitPointType = HitPointType.NONE;
-        Optional<LayoutTrack> opt = getLayoutTracks().stream().filter(layoutTrack -> {
+        Optional<LayoutTrack> opt = getLayoutTracks().stream().filter(layoutTrack -> {  // != means can't loop over Views
             if ((layoutTrack != avoid) && (layoutTrack != selectedObject)) {
-                foundHitPointType = layoutTrack.findHitPointType(loc, false, requireUnconnected);
+                foundHitPointType = getLayoutTrackView(layoutTrack).findHitPointType(loc, false, requireUnconnected);
             }
             return (HitPointType.NONE != foundHitPointType);
         }).findFirst();
@@ -3253,6 +3253,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * LayoutTrackView object in the current LayoutEditor i.e. window.
      * This allows the same model object in two windows, but not 
      * twice in a single window.
+     * <p>
+     * This is temporary, and needs to go away as
+     * the LayoutTrack doesn't logically have position; just the LayoutTrackView does,
+     * and multiple LayoutTrackViews can refer to one specific LayoutTrack.
      *
      * @param trk    the object (LayoutTrack subclass)
      * @param connectionType the type of connection
@@ -3457,7 +3461,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 LayoutTurnout t = (LayoutTurnout) foundTrack;
                                 t.setState(Turnout.THROWN);
                             } else {
-                                foundTrack.showPopup(event);
+                                LayoutTrackView foundTrackView = getLayoutTrackView(foundTrack);
+                                foundTrackView.showPopup(event);
                             }
                             break;
                         }
@@ -3465,7 +3470,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         case LEVEL_XING_CENTER:
                         case SLIP_RIGHT:
                         case SLIP_LEFT: {
-                            foundTrack.showPopup(event);
+                            LayoutTrackView foundTrackView = getLayoutTrackView(foundTrack);
+                            foundTrackView.showPopup(event);
                             break;
                         }
 
@@ -3537,7 +3543,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.turntableTrackIndex());
                 }
             } else if (HitPointType.isPopupHitType(foundHitPointType)) {
-                foundTrack.showPopup(event);
+                LayoutTrackView foundTrackView = getLayoutTrackView(foundTrack);
+                foundTrackView.showPopup(event);
             } else if (HitPointType.isTurnoutHitType(foundHitPointType)) {
                 // don't curently have edit popup for these
             } else {
@@ -3547,7 +3554,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             do {
                 TrackSegment ts = checkTrackSegmentPopUps(dLoc);
                 if (ts != null) {
-                    ts.showPopup(event);
+                    TrackSegmentView tsv = getTrackSegmentView(ts);
+                    tsv.showPopup(event);
                     break;
                 }
 
@@ -4122,6 +4130,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public  List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
     public  List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
 
+    @Nonnull
+    public List<Positionable> getPositionalSelection() { return _positionableSelection; }
+    
+    @Nonnull
+    public List<LayoutTrack> getLayoutTrackSelection() { return _layoutTrackSelection; }
+    
+    @Nonnull
+    public List<LayoutShape> getLayoutShapeSelection() { return _layoutShapeSelection; }
+    
     private void createSelectionGroups() {
         Rectangle2D selectionRect = getSelectionRect();
 
@@ -7840,6 +7857,21 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         });
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * This implementation is temporary, using the 
+     * on-screen points from the LayoutTrackViews via @{link LayoutEditor#getCoords}.
+     */
+    @Override
+    public int computeDirection(LayoutTrack trk1, HitPointType h1, LayoutTrack trk2, HitPointType h2) {
+        return Path.computeDirection(
+                getCoords(trk1, h1),
+                getCoords(trk2, h2)
+            );    
+    }
+    
+    
     @Override
     public boolean showAlignPopup(@Nonnull Positionable l) {
         return false;

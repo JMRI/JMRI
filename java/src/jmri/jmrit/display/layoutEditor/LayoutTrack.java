@@ -112,16 +112,17 @@ abstract public class LayoutTrack {
      * @param g2           the graphics context
      * @param specificType the specific connection to draw (or NONE for all)
      */
-    final protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-        
-    }
+//     final protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
+//         
+//     }
 
     // optional parameter specificType = NONE
-    final protected void highlightUnconnected(Graphics2D g2) {
-        log.error("highlightUnconnected should have been called in view instead of object (temporary)");
-        layoutEditor.getLayoutTrackView(this).highlightUnconnected(g2);
-    }
+//     final protected void highlightUnconnected(Graphics2D g2) {
+//         log.error("highlightUnconnected should have been called in view instead of object (temporary)",
+//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
+//         layoutEditor.getLayoutTrackView(this).highlightUnconnected(g2);
+//     }
 
 
     /**
@@ -220,7 +221,8 @@ abstract public class LayoutTrack {
      * @since 7.4.3
      */
     final protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        log.info("findHitPointType should have called View instead of temporary");
+        log.info("findHitPointType should have called View instead of temporary",
+                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
         return layoutEditor.getLayoutTrackView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
     }
 
@@ -235,7 +237,8 @@ abstract public class LayoutTrack {
      */
     final public Rectangle2D getBounds() {
         // final here to force pass over to View tree (method is temporary here)
-        log.error("LayoutTrack.getBounds should have been called through View");
+        log.error("LayoutTrack.getBounds should have been called through View",
+                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
         return layoutEditor.getLayoutTrackView(this).getBounds();
     }
 
@@ -245,22 +248,24 @@ abstract public class LayoutTrack {
      * @param mouseEvent the mouse down event that triggered this popup
      * @return the popup menu for this layout track
      */
-    @Nonnull
-    final protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
-        log.error("LayoutTrack.showPopup(mE) should have been called through View");
-        return layoutEditor.getLayoutTrackView(this).showPopup(mouseEvent);
-    }
+//     @Nonnull
+//     final protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
+//         log.error("LayoutTrack.showPopup(mE) should have been called through View",
+//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
+//         return layoutEditor.getLayoutTrackView(this).showPopup(mouseEvent);
+//     }
 
     /**
      * show the popup menu for this layout track
      *
      * @return the popup menu for this layout track
      */
-    @Nonnull
-    final protected JPopupMenu showPopup() {
-        log.error("LayoutTrack.showPopup() should have been called through View");
-        return layoutEditor.getLayoutTrackView(this).showPopup();
-    }
+//     @Nonnull
+//     final protected JPopupMenu showPopup() {
+//         log.error("LayoutTrack.showPopup() should have been called through View",
+//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
+//         return layoutEditor.getLayoutTrackView(this).showPopup();
+//     }
 
     /**
      * get the LayoutTrack connected at the specified connection type

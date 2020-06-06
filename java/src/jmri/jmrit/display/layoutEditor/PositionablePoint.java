@@ -750,20 +750,20 @@ public class PositionablePoint extends LayoutTrack {
         yClick = e.getY();
         // if (debug) log.debug("Pressed: "+where(e));
         if (e.isPopupTrigger()) {
-            showPopup(e);
+            layoutEditor.getLayoutTrackView(this).showPopup(e);
         }
     }
 
     public void mouseReleased(MouseEvent e) {
         // if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
-            showPopup(e);
+            layoutEditor.getLayoutTrackView(this).showPopup(e);
         }
     }
 
     public void mouseClicked(MouseEvent e) {
         if (e.isPopupTrigger()) {
-            showPopup(e);
+            layoutEditor.getLayoutTrackView(this).showPopup(e);
         }
     }
 

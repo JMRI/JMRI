@@ -1351,9 +1351,9 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lt, type1, null);
-                    lc.setDirection(Path.computeDirection(
-                            layoutEditor.getCoords(getConnect2(), type2),
-                            layoutEditor.getCoords(getConnect1(), type1)));
+                    lc.setDirection(layoutEditor.computeDirection(
+                                        getConnect2(), type2,
+                                        getConnect1(), type1 ) );
                     results.add(lc);
                 }
             } else if (HitPointType.isLevelXingHitType(type1)) {
@@ -1369,9 +1369,9 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lx, type1, null);
-                    lc.setDirection(Path.computeDirection(
-                            layoutEditor.getCoords(getConnect2(), type2),
-                            layoutEditor.getCoords(getConnect1(), type1)));
+                    lc.setDirection(layoutEditor.computeDirection(
+                                        getConnect2(), type2,
+                                        getConnect1(), type1 ) );
                     results.add(lc);
                 }
             } else if (HitPointType.isSlipHitType(type1)) {
@@ -1383,8 +1383,9 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type1, null);
-                    lc.setDirection(Path.computeDirection(layoutEditor.getCoords(getConnect2(),
-                            type2), layoutEditor.getCoords(getConnect1(), type1)));
+                    lc.setDirection(layoutEditor.computeDirection(
+                                        getConnect2(), type2,
+                                        getConnect1(), type1 ) );
                     results.add(lc);
                 }
             }
@@ -1410,9 +1411,9 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lt, type2, null);
-                    lc.setDirection(Path.computeDirection(
-                            layoutEditor.getCoords(getConnect1(), type1),
-                            layoutEditor.getCoords(getConnect2(), type2)));
+                    lc.setDirection(layoutEditor.computeDirection(
+                                        getConnect1(), type1,
+                                        getConnect2(), type2 ) );
                     results.add(lc);
                 }
             } else if (HitPointType.isLevelXingHitType(type2)) {
@@ -1428,9 +1429,9 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lx, type2, null);
-                    lc.setDirection(Path.computeDirection(
-                            layoutEditor.getCoords(getConnect1(), type1),
-                            layoutEditor.getCoords(getConnect2(), type2)));
+                    lc.setDirection(layoutEditor.computeDirection(
+                                        getConnect1(), type1,
+                                        getConnect2(), type2 ) );
                     results.add(lc);
                 }
             } else if (HitPointType.isSlipHitType(type2)) {
@@ -1442,9 +1443,9 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type2, null);
-                    lc.setDirection(Path.computeDirection(
-                            layoutEditor.getCoords(getConnect1(), type1),
-                            layoutEditor.getCoords(getConnect2(), type2)));
+                    lc.setDirection(layoutEditor.computeDirection(
+                                        getConnect1(), type1,
+                                        getConnect2(), type2 ) );
                     results.add(lc);
                 }
             }

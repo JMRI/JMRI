@@ -500,13 +500,14 @@ class LayoutEditorComponent extends JComponent {
             g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             for (LayoutTrack lt : layoutEditor.getLayoutTracks()) {
                 if (lt != layoutEditor.beginTrack) {
+                    LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
                     if (lt == layoutEditor.foundTrack) {
-                        lt.highlightUnconnected(g2);
+                        ltv.highlightUnconnected(g2);
                         g2.setColor(connectColor);
-                        lt.highlightUnconnected(g2, layoutEditor.foundHitPointType);
+                        ltv.highlightUnconnected(g2, layoutEditor.foundHitPointType);
                         g2.setColor(highlightColor);
                     } else {
-                        lt.highlightUnconnected(g2);
+                        ltv.highlightUnconnected(g2);
                     }
                 }
             }
@@ -601,14 +602,15 @@ class LayoutEditorComponent extends JComponent {
         g.setColor(new Color(204, 207, 88));
         g.setStroke(new BasicStroke(2.0f));
 
-        layoutEditor._positionableSelection.forEach((c) -> g.drawRect(c.getX(), c.getY(), c.maxWidth(), c.maxHeight()));
+        layoutEditor.getPositionalSelection().forEach((c) -> g.drawRect(c.getX(), c.getY(), c.maxWidth(), c.maxHeight()));
 
         layoutEditor._layoutTrackSelection.stream().map((lt) -> {
-            Rectangle2D r = lt.getBounds();
+            LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+            Rectangle2D r = ltv.getBounds();
             if (r.isEmpty()) {
                 r = MathUtil.inset(r, -4.0);
             }
-            r = MathUtil.centerRectangleOnPoint(r, lt.getCoordsCenter());
+            r = MathUtil.centerRectangleOnPoint(r, ltv.getCoordsCenter());
             return r;
         }).forEachOrdered(g::draw);
 

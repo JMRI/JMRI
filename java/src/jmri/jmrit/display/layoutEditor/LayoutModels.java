@@ -143,4 +143,24 @@ public interface LayoutModels {
     @Nonnull
     List<LayoutShape> getLayoutShapes();
 
+    /**
+     * Compute octagonal direction of vector from p1 to p2.
+     * <p>
+     * The octagonal (8) directions are: North, North-East, East,
+     * South-East, South, South-West, West and North-West; see
+     * @link{jmri.Path} for more on this.
+     *
+     * <p>
+     * This method must eventually be in terms _other_ than
+     * the screen geometry of the associated LayoutTrackView objects, 
+     * as it's meant to be the track connectivity direction not the
+     * on the screen implementation.
+     *
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return the octagonal direction from p1 to p2
+     */
+    public int computeDirection(@Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, 
+                                @Nonnull LayoutTrack trk2, @Nonnull HitPointType h2);
+
 }

@@ -434,8 +434,9 @@ public class LayoutSlipView extends LayoutTurnoutView {
                             LayoutTrack lt = lf.findObjectByName(connectA.getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
-                                layoutEditor.setSelectionRect(lt.getBounds());
-                                lt.showPopup();
+                                LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                                layoutEditor.setSelectionRect(ltv.getBounds());
+                                ltv.showPopup();
                             }
                         }
                     });
@@ -448,8 +449,9 @@ public class LayoutSlipView extends LayoutTurnoutView {
                             LayoutTrack lt = lf.findObjectByName(connectB.getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
-                                layoutEditor.setSelectionRect(lt.getBounds());
-                                lt.showPopup();
+                                LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                                layoutEditor.setSelectionRect(ltv.getBounds());
+                                ltv.showPopup();
                             }
                         }
                     });
@@ -462,8 +464,9 @@ public class LayoutSlipView extends LayoutTurnoutView {
                             LayoutTrack lt = lf.findObjectByName(connectC.getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
-                                layoutEditor.setSelectionRect(lt.getBounds());
-                                lt.showPopup();
+                                LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                                layoutEditor.setSelectionRect(ltv.getBounds());
+                                ltv.showPopup();
                             }
                         }
                     });
@@ -476,8 +479,9 @@ public class LayoutSlipView extends LayoutTurnoutView {
                             LayoutTrack lt = lf.findObjectByName(connectD.getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
-                                layoutEditor.setSelectionRect(lt.getBounds());
-                                lt.showPopup();
+                                LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                                layoutEditor.setSelectionRect(ltv.getBounds());
+                                ltv.showPopup();
                             }
                         }
                     });

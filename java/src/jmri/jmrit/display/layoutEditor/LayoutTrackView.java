@@ -73,6 +73,10 @@ abstract public class LayoutTrackView {
         layoutTrack.setIdent(ident);
     }
     
+    // temporary accessor?  Or is this a long term thing?
+    @Nonnull
+    public LayoutTrack getLayoutTrack() { return layoutTrack; }
+    
     /**
      * Set center coordinates
      *
