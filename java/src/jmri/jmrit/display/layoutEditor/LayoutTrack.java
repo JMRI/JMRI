@@ -36,7 +36,7 @@ import jmri.Turnout;
  */
 abstract public class LayoutTrack {
 
-     // final protected LayoutModels layoutEditor;  // preferred
+    // final protected LayoutModels layoutEditor;  // preferred
     final protected LayoutEditor layoutEditor; // temporarily
 
     /**
@@ -71,7 +71,7 @@ abstract public class LayoutTrack {
     }
     
     /**
-     * Set center coordinates
+     * Set center coordinates - temporary here, needs to be in View
      *
      * @return the center coordinates
      */
@@ -81,52 +81,13 @@ abstract public class LayoutTrack {
         return layoutEditor.getLayoutTrackView(this).getCoordsCenter();
     }
 
-    /**
-     * Set center coordinates.
-     * <p>
-     * Some subtypes may reimplement this is "center" is a more complicated
-     * idea, i.e. for Bezier curves
-     * @param p the coordinates to set
-     */
-    final public void setCoordsCenter(@Nonnull Point2D p) { // temporary until coords always in Views
-        log.error("setCoordsCenter should have called in view instead of object (temporary)",
-                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-        layoutEditor.getLayoutTrackView(this).setCoordsCenter(p);
-    }
-
-    /**
-     * @return true if this track segment has decorations
-     */
-    final public boolean hasDecorations() {
-        log.error("LayoutTrack.hasDecorations() should have been called through View");
-        return layoutEditor.getLayoutTrackView(this).hasDecorations();
-    }
-
     protected static final int NUM_ARROW_TYPES = 6;  // temporary: why here? now view?
 
     abstract public boolean isMainline();
 
-    /**
-     * highlight unconnected connections
-     *
-     * @param g2           the graphics context
-     * @param specificType the specific connection to draw (or NONE for all)
-     */
-//     final protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-//         throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-//         
-//     }
-
-    // optional parameter specificType = NONE
-//     final protected void highlightUnconnected(Graphics2D g2) {
-//         log.error("highlightUnconnected should have been called in view instead of object (temporary)",
-//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-//         layoutEditor.getLayoutTrackView(this).highlightUnconnected(g2);
-//     }
-
 
     /**
-     * Get the hidden state of the track element.
+     * Get the hidden state of the track element - temporary here, needs to be in View
      *
      * @return true if hidden; false otherwise
      */
@@ -189,28 +150,7 @@ abstract public class LayoutTrack {
     abstract public void setObjects(@Nonnull LayoutEditor le);
 
     /**
-     * scale this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
-     */
-    final public void scaleCoords(double xFactor, double yFactor) {
-        log.error("scaleCoords should have been called in view instead of object (temporary)");
-        layoutEditor.getLayoutTrackView(this).scaleCoords(xFactor, yFactor);
-    }
-
-    /**
-     * rotate this LayoutTrack's coordinates by angleDEG's
-     *
-     * @param angleDEG the amount to rotate in degrees
-     */
-    final public void rotateCoords(double angleDEG){
-        log.error("rotateCoords should have been called in view instead of object (temporary)");
-        layoutEditor.getLayoutTrackView(this).rotateCoords(angleDEG);
-    }
-
-    /**
-     * find the hit (location) type for a point
+     * find the hit (location) type for a point - temporary here, needs to be in View
      *
      * @param hitPoint           the point
      * @param useRectangles      whether to use (larger) rectangles or (smaller)
@@ -226,14 +166,8 @@ abstract public class LayoutTrack {
         return layoutEditor.getLayoutTrackView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
     }
 
-
-    // optional requireUnconnected parameter defaults to false
-    final protected HitPointType findHitPointType(@Nonnull Point2D p, boolean useRectangles) {
-        throw new IllegalArgumentException("should have called in Object instead of View (temporary)");
-    }
-
     /**
-     * @return the bounds of this track
+     * @return the display bounds of this track - temporary here, needs to be in View
      */
     final public Rectangle2D getBounds() {
         // final here to force pass over to View tree (method is temporary here)
@@ -241,31 +175,6 @@ abstract public class LayoutTrack {
                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
         return layoutEditor.getLayoutTrackView(this).getBounds();
     }
-
-    /**
-     * show the popup menu for this layout track
-     *
-     * @param mouseEvent the mouse down event that triggered this popup
-     * @return the popup menu for this layout track
-     */
-//     @Nonnull
-//     final protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
-//         log.error("LayoutTrack.showPopup(mE) should have been called through View",
-//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-//         return layoutEditor.getLayoutTrackView(this).showPopup(mouseEvent);
-//     }
-
-    /**
-     * show the popup menu for this layout track
-     *
-     * @return the popup menu for this layout track
-     */
-//     @Nonnull
-//     final protected JPopupMenu showPopup() {
-//         log.error("LayoutTrack.showPopup() should have been called through View",
-//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-//         return layoutEditor.getLayoutTrackView(this).showPopup();
-//     }
 
     /**
      * get the LayoutTrack connected at the specified connection type

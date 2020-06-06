@@ -509,17 +509,19 @@ final public class LayoutEditorChecks {
                             if (ts1.isMainline() != ts2.isMainline()) {
                                 continue;   // skip it
                             }
+                            TrackSegmentView tsv1 = layoutEditor.getTrackSegmentView(ts1);
+                            TrackSegmentView tsv2 = layoutEditor.getTrackSegmentView(ts2);
                             // if track segments isHidden's don't match
-                            if (ts1.isHidden() != ts2.isHidden()) {
+                            if (tsv1.isHidden() != tsv2.isHidden()) {
                                 continue;   // skip it
                             }
                             // if either track segment has decorations
-                            if (ts1.hasDecorations() || ts2.hasDecorations()) {
+                            if (tsv1.hasDecorations() || tsv2.hasDecorations()) {
                                 continue;   // skip it
                             }
                             // if adjacent tracks are collinear...
-                            double dir1 = ts1.getDirectionRAD();
-                            double dir2 = ts2.getDirectionRAD();
+                            double dir1 = tsv1.getDirectionRAD();
+                            double dir2 = tsv2.getDirectionRAD();
                             double diffRAD = MathUtil.absDiffAngleRAD(dir1, dir2);
                             if (MathUtil.equals(diffRAD, 0.0)
                                     || MathUtil.equals(diffRAD, Math.PI)) {

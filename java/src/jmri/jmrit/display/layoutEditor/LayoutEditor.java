@@ -2330,7 +2330,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     public boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
-        getLayoutTracks().forEach((lt) -> lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta)));
+        getLayoutTrackViews().forEach((ltv) -> ltv.setCoordsCenter(MathUtil.add(ltv.getCoordsCenter(), delta)));
         resizePanelBounds(true);
         return true;
     }
@@ -2343,7 +2343,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return true when complete.
      */
     public boolean scaleTrack(float xFactor, float yFactor) {
-        getLayoutTracks().forEach((lt) -> lt.scaleCoords(xFactor, yFactor));
+        getLayoutTrackViews().forEach((ltv) -> ltv.scaleCoords(xFactor, yFactor));
 
         // update the overall scale factors
         gContext.setXScale(gContext.getXScale() * xFactor);
@@ -2403,7 +2403,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
 
             for (LayoutTrack lt : _layoutTrackSelection) {
-                lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta));
+                LayoutTrackView ltv = getLayoutTrackView(lt);
+                ltv.setCoordsCenter(MathUtil.add(ltv.getCoordsCenter(), delta));
             }
 
             for (LayoutShape ls : _layoutShapeSelection) {
@@ -2430,7 +2431,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 c.setLocation((int) newPoint.getX(), (int) newPoint.getY());
             });
 
-            _layoutTrackSelection.forEach((lt) -> lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), undoDelta)));
+            _layoutTrackSelection.forEach(
+                (lt) -> { 
+                    LayoutTrackView ltv = getLayoutTrackView(lt);
+                    ltv.setCoordsCenter(MathUtil.add(ltv.getCoordsCenter(), undoDelta));
+                }
+            );
 
             _layoutShapeSelection.forEach((ls) -> ls.setCoordsCenter(MathUtil.add(ls.getCoordsCenter(), undoDelta)));
 
@@ -2473,8 +2479,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         for (LayoutTrack lt : _layoutTrackSelection) {
-            lt.setCoordsCenter(MathUtil.rotateDEG(lt.getCoordsCenter(), center, 90));
-            lt.rotateCoords(90);
+            LayoutTrackView ltv = getLayoutTrackView(lt);
+            ltv.setCoordsCenter(MathUtil.rotateDEG(ltv.getCoordsCenter(), center, 90));
+            ltv.rotateCoords(90);
         }
 
         for (LayoutShape ls : _layoutShapeSelection) {
@@ -2520,22 +2527,25 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     }
                     positionableLabel.rotate(positionableLabel.getDegrees() + 90);
                 } catch (NullPointerException ex) {
+                    log.warn("previously-ignored NPE", ex);
                 }
             }
             if (reLocateFlag) {
                 try {
                     positionable.setLocation((int) (newTopLeft.getX() - cBounds.getHeight()), (int) newTopLeft.getY());
                 } catch (NullPointerException ex) {
+                    log.warn("previously-ignored NPE", ex);
                 }
             }
         }
 
-        for (LayoutTrack lt : getLayoutTracks()) {
+        for (LayoutTrackView ltv : getLayoutTrackViews()) {
             try {
-                Point2D newPoint = MathUtil.subtract(MathUtil.rotateDEG(lt.getCoordsCenter(), lowerLeft, 90), lowerLeft);
-                lt.setCoordsCenter(newPoint);
-                lt.rotateCoords(90);
+                Point2D newPoint = MathUtil.subtract(MathUtil.rotateDEG(ltv.getCoordsCenter(), lowerLeft, 90), lowerLeft);
+                ltv.setCoordsCenter(newPoint);
+                ltv.rotateCoords(90);
             } catch (NullPointerException ex) {
+                log.warn("previously-ignored NPE", ex);
             }
         }
 
@@ -2584,7 +2594,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             positionable.setLocation((int) (newLocation.getX()), (int) newLocation.getY());
         }
         for (LayoutTrack lt : tracks) {
-            lt.setCoordsCenter(MathUtil.granulize(lt.getCoordsCenter(), gContext.getGridSize()));
+            LayoutTrackView ltv = getLayoutTrackView(lt);
+            ltv.setCoordsCenter(MathUtil.granulize(ltv.getCoordsCenter(), gContext.getGridSize()));
             if (lt instanceof LayoutTurntable) {
                 LayoutTurntable tt = (LayoutTurntable) lt;
                 for (LayoutTurntable.RayTrack rt : tt.getRayTrackList()) {
@@ -4030,6 +4041,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         assert t != null;
 
         LayoutTurnout be = (LayoutTurnout) beginTrack;
+        LayoutTurnoutView bev = getLayoutTurnoutView(be);
 
         if (((beginHitPointType == HitPointType.TURNOUT_A) && ((be.getConnectB() != null) || (be.getConnectC() != null)))
                 || ((beginHitPointType == HitPointType.TURNOUT_B) && ((be.getConnectA() != null) || (be.getConnectC() != null)))
@@ -4095,7 +4107,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         Point2D xy = MathUtil.subtract(diverg, c);
         double radius = Math.toDegrees(Math.atan2(xy.getY(), xy.getX()));
         double eRadius = Math.toDegrees(Math.atan2(xy2.getY(), xy2.getX()));
-        be.rotateCoords(radius - eRadius);
+        bev.rotateCoords(radius - eRadius);
 
         Point2D conCord = be.getCoordsA();
         Point2D tCord = t.getCoordsC();
@@ -4122,12 +4134,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 break;
         }
         xy = MathUtil.subtract(conCord, tCord);
-        Point2D offset = MathUtil.subtract(be.getCoordsCenter(), xy);
-        be.setCoordsCenter(offset);
+        Point2D offset = MathUtil.subtract(bev.getCoordsCenter(), xy);
+        bev.setCoordsCenter(offset);
     }
 
     public  List<Positionable> _positionableSelection = new ArrayList<>();
-    public  List<LayoutTrack> _layoutTrackSelection = new ArrayList<>();
+    public  List<LayoutTrack> _layoutTrackSelection = new ArrayList<>(); // temporary LayoutTrack, long term LayoutTrackView
     public  List<LayoutShape> _layoutShapeSelection = new ArrayList<>();
 
     @Nonnull
@@ -4323,10 +4335,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         _layoutTrackSelection.forEach((lt) -> {
+            LayoutTrackView ltv = getLayoutTrackView(lt);
             if (alignX) {
-                lt.setCoordsCenter(new Point2D.Double(aveX, lt.getCoordsCenter().getY()));
+                ltv.setCoordsCenter(new Point2D.Double(aveX, ltv.getCoordsCenter().getY()));
             } else {
-                lt.setCoordsCenter(new Point2D.Double(lt.getCoordsCenter().getX(), aveY));
+                ltv.setCoordsCenter(new Point2D.Double(ltv.getCoordsCenter().getX(), aveY));
             }
         });
 
@@ -4405,7 +4418,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             _layoutTrackSelection.forEach((lt) -> {
                 Point2D newPoint = MathUtil.add(lt.getCoordsCenter(), delta);
                 newPoint = MathUtil.max(MathUtil.zeroPoint2D, newPoint);
-                lt.setCoordsCenter(newPoint);
+                getLayoutTrackView(lt).setCoordsCenter(newPoint);
             });
 
             _layoutShapeSelection.forEach((ls) -> {
@@ -4578,7 +4591,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         newPoint = MathUtil.add(center, offset);
                         // don't allow negative placement, objects could become unreachable
                         newPoint = MathUtil.max(newPoint, MathUtil.zeroPoint2D);
-                        lt.setCoordsCenter(newPoint);
+                        getLayoutTrackView(lt).setCoordsCenter(newPoint);
                     }
 
                     for (LayoutShape ls : _layoutShapeSelection) {
@@ -4594,13 +4607,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 } else {
                     switch (selectedHitPointType) {
                         case POS_POINT: {
-                            ((PositionablePoint) selectedObject).setCoordsCenter(currentPoint);
+                            getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
                             break;
                         }
 
                         case TURNOUT_CENTER: {
-                            ((LayoutTurnout) selectedObject).setCoordsCenter(currentPoint);
+                            getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
                             break;
                         }
@@ -4626,7 +4639,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
 
                         case LEVEL_XING_CENTER: {
-                            ((LevelXing) selectedObject).setCoordsCenter(currentPoint);
+                            getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
                             break;
                         }
@@ -4653,7 +4666,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                         case SLIP_LEFT:
                         case SLIP_RIGHT: {
-                            ((LayoutSlip) selectedObject).setCoordsCenter(currentPoint);
+                            getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
                             break;
                         }
@@ -4679,7 +4692,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
 
                         case TURNTABLE_CENTER: {
-                            ((LayoutTurntable) selectedObject).setCoordsCenter(currentPoint);
+                            getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
                             break;
                         }
