@@ -17,6 +17,8 @@ import org.junit.Before;
 import org.junit.Test;
 import jmri.AnalogIOManager;
 import jmri.jmrix.SystemConnectionMemo;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test the ProxyAnalogIOManager.
@@ -195,6 +197,23 @@ public class ProxyAnalogIOManagerTest {
         InstanceManager.getDefault(SomeDeviceManager.class).deregister(anotherSomeDevice);
         analogIO = InstanceManager.getDefault(AnalogIOManager.class).getBySystemName("JL2");
         Assert.assertNull("anotherSomeDevice does not exists in AnalogIOManager", analogIO);
+    }
+
+    @Test
+    public void testAnalogIOManager() {
+        AnalogIOManager m = new MyAnalogIOManager();
+        
+        Throwable thrown = catchThrowable(() -> {
+            m.addBeanType(Light.class, InstanceManager.getDefault(LightManager.class));
+        });
+        assertThat(thrown).isInstanceOf(UnsupportedOperationException.class)
+                .hasNoCause();
+        
+        thrown = catchThrowable(() -> {
+            m.removeBeanType(Light.class, InstanceManager.getDefault(LightManager.class));
+        });
+        assertThat(thrown).isInstanceOf(UnsupportedOperationException.class)
+                .hasNoCause();
     }
 
     /**
@@ -410,6 +429,15 @@ public class ProxyAnalogIOManagerTest {
         
     }
 
+
+    private static class MyAnalogIOManager extends AbstractAnalogIOManager {
+    
+        public MyAnalogIOManager() {
+            super(jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
+        }
+
+    }
+    
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManagerTest.class);
     
 }
