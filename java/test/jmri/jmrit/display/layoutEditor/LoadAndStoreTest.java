@@ -101,14 +101,17 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                                             outFile);
         
                 // and compare that file to a reference
-                File compFile = new File(inFile.getCanonicalFile().getParentFile().
-                        getParent() + "/loadref/" + this.file.getName()+"."+index+".png");
+                // right now, we have only macOS reference files
+                if ( jmri.util.SystemType.isMacOSX() ) {
+                    File compFile = new File(inFile.getCanonicalFile().getParentFile().
+                            getParent() + "/loadref/" + this.file.getName()+"."+index+".png");
 
-                int checkVal = compareImageFiles(compFile, outFile);
-                if (checkVal != 0) {
-                    log.error("Fail to compare new: {}", outFile);
-                    log.error("Fail to compare ref: {}", compFile);
-                    Assert.assertEquals("Screenshots didn't compare", 0, checkVal);
+                    int checkVal = compareImageFiles(compFile, outFile);
+                    if (checkVal != 0) {
+                        log.error("Fail to compare new: {}", outFile);
+                        log.error("Fail to compare ref: {}", compFile);
+                        Assert.assertEquals("Screenshots didn't compare", 0, checkVal);
+                    }
                 }
             }
         }
