@@ -468,6 +468,8 @@ public class Path implements Comparable<Path> {
      * @return the octagonal direction from p1 to p2
      */
     public static int computeDirection(Point2D p1, Point2D p2) {
+        log.trace("Path.computeDirection({}, {})", p1, p2);
+        
         double angleDEG = MathUtil.computeAngleDEG(p2, p1);
         angleDEG = MathUtil.wrap360(angleDEG);  // don't want to deal with negative numbers here...
 
@@ -478,8 +480,11 @@ public class Path implements Comparable<Path> {
         int octant = (int) Math.round(angleDEG / 45.0);
 
         // use the octant index to lookup its direction
-        int dirs[] = {SOUTH, SOUTH_EAST, EAST, NORTH_EAST,
+        final int dirs[] = {SOUTH, SOUTH_EAST, EAST, NORTH_EAST,
             NORTH, NORTH_WEST, WEST, SOUTH_WEST, SOUTH};
+            
+        if (log.isTraceEnabled()) log.trace("   returns {} ({})", dirs[octant], decodeDirection(dirs[octant]));
+        
         return dirs[octant];
     }   // computeOctagonalDirection
 
@@ -513,5 +518,5 @@ public class Path implements Comparable<Path> {
         }
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Path.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Path.class);
 }
