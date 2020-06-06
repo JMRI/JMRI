@@ -325,9 +325,9 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 third leg number of engines", "3", t1.getThirdLegNumberEngines());
         Assert.assertEquals("t1 third leg options", Train.HELPER_ENGINES, t1.getThirdLegOptions());
         Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartLocation());
-        Assert.assertEquals("t1 skips location", false, t1.skipsLocation(startC.getId()));
-        Assert.assertEquals("t1 skips location", true, t1.skipsLocation(midC.getId()));
-        Assert.assertEquals("t1 skips location", false, t1.skipsLocation(endC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC.getId()));
+        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
         Assert.assertEquals("t3 build failed", true, t3.getBuildFailed());
@@ -487,9 +487,9 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 third leg number of engines", "3", t1.getThirdLegNumberEngines());
         Assert.assertEquals("t1 third leg options", Train.HELPER_ENGINES, t1.getThirdLegOptions());
         Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartLocation());
-        Assert.assertEquals("t1 skips location", false, t1.skipsLocation(startC.getId()));
-        Assert.assertEquals("t1 skips location", true, t1.skipsLocation(midC.getId()));
-        Assert.assertEquals("t1 skips location", false, t1.skipsLocation(endC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC.getId()));
+        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
         Assert.assertEquals("t3 build failed", true, t3.getBuildFailed());

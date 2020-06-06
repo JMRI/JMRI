@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz;
 
 import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.SpeedStepMode;
@@ -1642,7 +1643,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                                LenzCommandStation.calcLocoAddress(getElement(2), getElement(3)));
                         break;
                     } else if ((getElement(4) & 0xE8) == 0xE8) {
-                        String message = "";
+                        String message;
                         if ((getElement(6) & 0x10) == 0x10) {
                             message ="XNetMessageOpsModeBitVerify";
                         } else {
