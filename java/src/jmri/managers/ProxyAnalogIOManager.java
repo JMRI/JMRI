@@ -132,7 +132,7 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
     public void addBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
         registerBeans.add(clazz);
         manager.addPropertyChangeListener("beans", this);
-    };
+    }
 
     /**
      * Remove a type of NamedBean, for example VariableLight, from beeing registred in AnalogIOManager.
@@ -143,7 +143,7 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
     public void removeBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
         manager.removePropertyChangeListener("beans", this);
         registerBeans.remove(clazz);
-    };
+    }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManager.class);
 

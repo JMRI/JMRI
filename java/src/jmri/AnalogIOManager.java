@@ -14,7 +14,7 @@ public interface AnalogIOManager extends Manager<AnalogIO> {
      */
     public default void addBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
         throw new UnsupportedOperationException();
-    };
+    }
 
     /**
      * Remove a type of NamedBean, for example VariableLight, from beeing registred in AnalogIOManager.
@@ -23,6 +23,6 @@ public interface AnalogIOManager extends Manager<AnalogIO> {
      */
     public default void removeBeanType(Class<? extends AnalogIO> clazz, Manager<? extends NamedBean> manager) {
         throw new UnsupportedOperationException();
-    };
+    }
 
 }
