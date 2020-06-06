@@ -236,6 +236,8 @@ public class ProxyAnalogIOManagerTest {
         // create and register the manager object
         l = new InternalAnalogIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
         jmri.InstanceManager.setAnalogIOManager(l);
+        
+        JUnitUtil.initInternalLightManager();
     }
 
     @After
