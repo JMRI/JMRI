@@ -166,15 +166,15 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         //   LayoutTurntable
 
         // write order specified for compatibility
-        for (LayoutTrack lt : p.getLayoutTurnouts()) {
-            if (! (lt instanceof LayoutSlip) )
-                storeOne(panel, lt); 
+        for (LayoutTrackView lv : p.getLayoutTurnoutViews()) {
+            if (! (lv instanceof LayoutSlipView) )
+                storeOne(panel, lv); 
         }
-        for (LayoutTrackView lv : p.getTrackSegmentViews()) {storeOne(panel, lv); }
-        for (LayoutTrack lt : p.getPositionablePoints())    {storeOne(panel, lt); }
-        for (LayoutTrackView lv : p.getLevelXingViews())    {storeOne(panel, lv); }
-        for (LayoutTrack lt : p.getLayoutSlips())           {storeOne(panel, lt); }
-        for (LayoutTrack lt : p.getLayoutTurntables())      {storeOne(panel, lt); }
+        for (LayoutTrackView lv : p.getTrackSegmentViews())         {storeOne(panel, lv); }
+        for (LayoutTrackView lv : p.getPositionablePointViews())    {storeOne(panel, lv); }
+        for (LayoutTrackView lv : p.getLevelXingViews())            {storeOne(panel, lv); }
+        for (LayoutTrackView lv : p.getLayoutSlipViews())           {storeOne(panel, lv); }
+        for (LayoutTrackView lv : p.getLayoutTurntableViews())      {storeOne(panel, lv); }
         
         // include Layout Shapes
         for (LayoutShape ls : p.getLayoutShapes()) {storeOne(panel, ls); }
@@ -621,8 +621,11 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 }
             }
             try {
+                // get the class name, including migrations
+                adapterName = jmri.configurexml.ConfigXmlManager.currentClassName(adapterName);
+                // get the adapter object
                 XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
-                // and do it
+                // and load with it
                 adapter.load(item, panel);
                 if (!panel.loadOK()) {
                     result = false;

@@ -14,16 +14,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This module handles configuration for display.LayoutSlip objects for a
+ * This module handles configuration for display.LayoutSlipView objects for a
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutDoubleSlipXml extends LayoutSlipXml {
+public class LayoutDoubleSlipViewXml extends LayoutSlipViewXml {
 
-    public LayoutDoubleSlipXml() {
+    public LayoutDoubleSlipViewXml() {
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlipXml.class);
+    protected void addClass(Element element) {
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleSlipXml");
+    }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlipViewXml.class);
 }

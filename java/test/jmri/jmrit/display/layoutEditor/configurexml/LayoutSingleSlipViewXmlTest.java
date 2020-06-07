@@ -7,17 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LayoutSlipXmlTest.java
- *
- * Test for the LayoutSlipXml class
- *
  * @author   George Warner  Copyright (C) 2017
+ * @author   Bob Jacobsen Copyright (C) 2020
  */
-public class LayoutDoubleSlipXmlTest {
+public class LayoutSingleSlipViewXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("LayoutSlipXml constructor", new LayoutDoubleSlipXml());
+      Assert.assertNotNull("LayoutSlipXml constructor", new LayoutSingleSlipViewXml());
     }
 
     @Before

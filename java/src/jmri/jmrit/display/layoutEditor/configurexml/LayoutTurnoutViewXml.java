@@ -17,13 +17,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2019
+ * @author Bob Jacobsen Copyright (c) 2020
  */
-public class LayoutTurnoutXml extends AbstractXmlAdapter {
+public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
 
     static final EnumIO<LayoutTurnout.LinkType> linkEnumMap = new EnumIoNamesNumbers<>(LayoutTurnout.LinkType.class);
     static final EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutTurnout.TurnoutType.class);
     
-    public LayoutTurnoutXml() {
+    public LayoutTurnoutViewXml() {
+    }
+
+    protected void addClass(Element element) {
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml");
     }
 
     /**
@@ -35,7 +40,8 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
 
-        LayoutTurnout p = (LayoutTurnout) o;
+        LayoutTurnoutView pv = (LayoutTurnoutView) o;
+        LayoutTurnout p = pv.getLayoutTurnout();
 
         Element element = new Element("layoutturnout");
 
@@ -70,7 +76,8 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         element.setAttribute("yd", "" + coords.getY());
         
         element.setAttribute("ver", "" + p.getVersion());
-        element.setAttribute("class", getClass().getName());
+        
+        addClass(element);
 
         if (!p.getTurnoutName().isEmpty()) {
             element.setAttribute("turnoutname", p.getTurnoutName());
@@ -443,5 +450,5 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         return "";
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutViewXml.class);
 }

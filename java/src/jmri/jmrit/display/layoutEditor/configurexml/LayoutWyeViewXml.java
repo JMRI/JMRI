@@ -14,17 +14,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This module handles configuration for display.LayoutTurnout objects for a
+ * This module handles configuration for display.LayoutTurnoutView objects for a
  * LayoutEditor.
  *
- * @author Bob Jacobsen Copyright (c) 2020
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2019
  */
-public class LayoutXOverXml extends LayoutTurnoutXml {
+public class LayoutWyeViewXml extends LayoutTurnoutViewXml {
     
-    public LayoutXOverXml() {
+    public LayoutWyeViewXml() {
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOverXml.class);
+    protected void addClass(Element element) {
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutWyeXml");
+    }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWyeViewXml.class);
 }

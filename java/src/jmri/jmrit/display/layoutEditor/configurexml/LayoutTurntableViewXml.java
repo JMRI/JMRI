@@ -20,10 +20,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2018
+ * @author Bob Jacobsen  Copyright (c) 2020
  */
-public class LayoutTurntableXml extends AbstractXmlAdapter {
+public class LayoutTurntableViewXml extends AbstractXmlAdapter {
 
-    public LayoutTurntableXml() {
+    public LayoutTurntableViewXml() {
     }
 
     /**
@@ -35,7 +36,8 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
 
-        LayoutTurntable p = (LayoutTurntable) o;
+        LayoutTurntableView pv = (LayoutTurntableView) o;
+        LayoutTurntable p = pv.getTurntable();
 
         Element element = new Element("layoutturntable");
         boolean turnoutControl = p.isTurnoutControlled();
@@ -49,7 +51,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
         element.setAttribute("turnoutControlled", "" + (turnoutControl ? "yes" : "no"));
-        element.setAttribute("class", getClass().getName());
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml");  // temporary until storage split
         // add ray tracks
         for (int i = 0; i < p.getNumberRays(); i++) {
             Element rElem = new Element("raytrack");
@@ -172,5 +174,5 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntableViewXml.class);
 }

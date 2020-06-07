@@ -1,6 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
-import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -9,23 +9,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LayoutTurnoutXmlTest.java
- *
- * Test for the LayoutTurnoutXml class
- *
  * @author   Paul Bender  Copyright (C) 2016
+ * @author   Bob Jacobsen Copyright (C) 2020
  */
-public class LayoutTurnoutXmlTest {
+public class LayoutTurnoutViewXmlTest {
 
     @Test
     public void testCtor(){
-        Assert.assertNotNull("LayoutTurnoutXml constructor",new LayoutTurnoutXml());
+        Assert.assertNotNull("LayoutTurnoutXml constructor", new LayoutTurnoutViewXml());
     }
 
     @Test
     public void testFromEnum() {
-        LayoutTurnoutXml.EnumIO<LayoutTurnout.LinkType> enumMap = LayoutTurnoutXml.linkEnumMap;
-        LayoutTurnoutXml.EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = LayoutTurnoutXml.tTypeEnumMap;
+        LayoutTurnoutViewXml.EnumIO<LayoutTurnout.LinkType> enumMap         = LayoutTurnoutViewXml.linkEnumMap;
+        LayoutTurnoutViewXml.EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = LayoutTurnoutViewXml.tTypeEnumMap;
         
         Assert.assertEquals("NO_LINK", enumMap.outputFromEnum(LayoutTurnout.LinkType.NO_LINK));
         Assert.assertEquals("SECOND_3_WAY", enumMap.outputFromEnum(LayoutTurnout.LinkType.SECOND_3_WAY));
@@ -37,8 +34,8 @@ public class LayoutTurnoutXmlTest {
     
     @Test
     public void testToEnum() {
-        LayoutTurnoutXml.EnumIO<LayoutTurnout.LinkType> enumMap = LayoutTurnoutXml.linkEnumMap;
-        LayoutTurnoutXml.EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = LayoutTurnoutXml.tTypeEnumMap;
+        LayoutTurnoutViewXml.EnumIO<LayoutTurnout.LinkType> enumMap         = LayoutTurnoutViewXml.linkEnumMap;
+        LayoutTurnoutViewXml.EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = LayoutTurnoutViewXml.tTypeEnumMap;
         
         Assert.assertEquals(LayoutTurnout.LinkType.NO_LINK, enumMap.inputFromString("NO_LINK"));
         Assert.assertEquals(LayoutTurnout.LinkType.NO_LINK, enumMap.inputFromString("0"));
@@ -51,10 +48,6 @@ public class LayoutTurnoutXmlTest {
 
         Assert.assertEquals(LayoutTurnout.TurnoutType.WYE_TURNOUT, tTypeEnumMap.inputFromString("WYE_TURNOUT"));
         Assert.assertEquals(LayoutTurnout.TurnoutType.WYE_TURNOUT, tTypeEnumMap.inputFromString("3"));
-
-        // Assert.assertEquals(null, enumMap.inputFromString("21"));
-        // Assert.assertEquals(null, enumMap.inputFromString("A"));
-        // Assert.assertEquals(null, enumMap.inputFromString(""));
     }
     
     @Before

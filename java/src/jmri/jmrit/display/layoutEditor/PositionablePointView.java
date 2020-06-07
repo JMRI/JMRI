@@ -51,6 +51,8 @@ public class PositionablePointView extends LayoutTrackView {
 
     final private PositionablePoint positionablePoint;
     
+    public PositionablePoint getPoint() { return positionablePoint; }
+    
     // this should only be used for debugging...
     @Override
     public String toString() {

@@ -1,23 +1,22 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LayoutTurntableXmlTest.java
- *
- * Test for the LayoutTurntableXml class
- *
  * @author   Paul Bender  Copyright (C) 2016
+ * @author   Bob Jacobsen Copyright (C) 2020
  */
-public class LayoutTurntableXmlTest {
+public class LayoutRHTurnoutViewXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("LayoutTurntableXml constructor",new LayoutTurntableXml());
+        Assert.assertNotNull("LayoutTurnoutXml constructor",new LayoutRHTurnoutViewXml());
     }
 
     @Before

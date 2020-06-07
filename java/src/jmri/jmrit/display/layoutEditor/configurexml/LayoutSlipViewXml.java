@@ -10,18 +10,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This module handles configuration for display.LayoutSlip objects for a
+ * This module handles configuration for display.LayoutSlipView objects for a
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2018
+ * @author Bob Jacobsen Copyright (c) 2020
  */
-public class LayoutSlipXml extends AbstractXmlAdapter {
+public class LayoutSlipViewXml extends AbstractXmlAdapter {
 
-    public LayoutSlipXml() {
+    public LayoutSlipViewXml() {
     }
 
     final static EnumIO<LayoutSlip.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutSlip.TurnoutType.class);
+
+    protected void addClass(Element element) {
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutSlipXml");
+    }
 
     /**
      * Default implementation for storing the contents of a LayoutSlip
@@ -32,7 +37,8 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
 
-        LayoutSlip p = (LayoutSlip) o;
+        LayoutSlipView pv = (LayoutSlipView) o;
+        LayoutSlip p = pv.getSlip();
 
         Element element = new Element("layoutSlip");
 
@@ -165,7 +171,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
             states.addContent(state);
         }
         element.addContent(states);
-        element.setAttribute("class", getClass().getName());
+        addClass(element);
         return element;
     }
 
@@ -350,5 +356,5 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         return "";
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipViewXml.class);
 }

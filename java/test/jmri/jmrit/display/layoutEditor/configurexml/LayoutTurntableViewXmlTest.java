@@ -7,17 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * PositionablePointXmlTest.java
- *
- * Test for the PositionablePointXml class
- *
  * @author   Paul Bender  Copyright (C) 2016
+ * @author   Bob Jacobsen Copyright (C) 2020
  */
-public class PositionablePointXmlTest {
+public class LayoutTurntableViewXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("PositionablePointXml constructor",new PositionablePointXml());
+      Assert.assertNotNull("LayoutTurntableXml constructor", new LayoutTurntableViewXml());
     }
 
     @Before

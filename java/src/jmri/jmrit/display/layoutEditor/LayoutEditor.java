@@ -7686,6 +7686,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     public @Nonnull
+    List<LayoutTurntableView> getLayoutTurntableViews() {
+        return getLayoutTrackViewsOfClass(LayoutTurntableView.class)
+                .map(LayoutTurntableView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public @Nonnull
     List<LevelXing> getLevelXings() {
         return getLayoutTracksOfClass(LevelXing.class)
                 .map(LevelXing.class::cast)

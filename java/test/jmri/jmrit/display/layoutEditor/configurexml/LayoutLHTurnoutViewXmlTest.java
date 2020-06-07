@@ -9,19 +9,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LayoutTurnoutXmlTest.java
- *
- * Test for the LayoutTurnoutXml class
- *
  * @author   Paul Bender  Copyright (C) 2016
+ * @author   Bob Jacobsen Copyright (C) 2020
  */
-public class LayoutRHTurnoutXmlTest {
+public class LayoutLHTurnoutViewXmlTest {
 
     @Test
     public void testCtor(){
-        Assert.assertNotNull("LayoutTurnoutXml constructor",new LayoutRHTurnoutXml());
+        Assert.assertNotNull("LayoutTurnoutXml constructor",new LayoutLHTurnoutViewXml());
     }
-
+    
     @Before
     public void setUp() {
         JUnitUtil.setUp();

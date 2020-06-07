@@ -14,17 +14,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This module handles configuration for display.LayoutSlip objects for a
+ * This module handles configuration for display.LayoutSlipView objects for a
  * LayoutEditor.
  *
  * @author Bob Jacobsen Copyright (c) 2020
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2018
  */
-public class LayoutSingleSlipXml extends LayoutSlipXml {
+public class LayoutSingleSlipViewXml extends LayoutSlipViewXml {
 
-    public LayoutSingleSlipXml() {
+    public LayoutSingleSlipViewXml() {
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSingleSlipXml.class);
+    protected void addClass(Element element) {
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutSingleSlipXml");
+    }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSingleSlipViewXml.class);
 }

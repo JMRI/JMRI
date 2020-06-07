@@ -7,17 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LayoutSlipXmlTest.java
- *
- * Test for the LayoutSlipXml class
- *
- * @author   George Warner  Copyright (C) 2017
+ * @author   Paul Bender  Copyright (C) 2016
+ * @author   Bob Jacobsen Copyright (C) 2020
  */
-public class LayoutSlipXmlTest {
+public class PositionablePointViewXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("LayoutSlipXml constructor", new LayoutSlipXml());
+      Assert.assertNotNull("PositionablePointXml constructor",new PositionablePointViewXml());
     }
 
     @Before
@@ -30,3 +27,4 @@ public class LayoutSlipXmlTest {
         JUnitUtil.tearDown();
     }
 }
+

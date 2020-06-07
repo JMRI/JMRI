@@ -15,11 +15,11 @@ import org.jdom2.Element;
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2018
  */
-public class PositionablePointXml extends AbstractXmlAdapter {
+public class PositionablePointViewXml extends AbstractXmlAdapter {
 
     static final EnumIO<PositionablePoint.PointType> pTypeEnumMap = new EnumIoNamesNumbers<>(PositionablePoint.PointType.class);
 
-    public PositionablePointXml() {
+    public PositionablePointViewXml() {
     }
 
     /**
@@ -31,7 +31,8 @@ public class PositionablePointXml extends AbstractXmlAdapter {
     @Override
     public Element store(Object o) {
 
-        PositionablePoint p = (PositionablePoint) o;
+        PositionablePointView pv = (PositionablePointView) o;
+        PositionablePoint p = pv.getPoint();
 
         Element element = new Element("positionablepoint");
 
@@ -72,7 +73,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
             element.setAttribute("linkpointid", p.getLinkedPointId());
         }
 
-        element.setAttribute("class", getClass().getName());
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml");
         return element;
     }
 
@@ -163,5 +164,5 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointViewXml.class);
 }
