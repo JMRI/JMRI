@@ -84,11 +84,14 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
             }, 1000);
         jmri.util.JUnitUtil.waitFor(()->{return done;});
         
-        storeImage(this.file);
+        
+        storeAndCompareImage(this.file);
+
     }
     
     // store image(s) of any JFrames
-    public static void storeImage(java.io.File inFile) throws Exception {
+    //  inFile is an XML file
+    public void storeAndCompareImage(java.io.File inFile) throws Exception {
         int index = 0;
         for (jmri.util.JmriJFrame frame : jmri.util.JmriJFrame.getFrameList() ) {
             index++;
@@ -105,10 +108,61 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                 jmri.util.JUnitSwingUtil.writeDisplayedContentToFile(le.getTargetPanel(), 
                                             size, new java.awt.Point(0, 0),
                                             outFile);
+        
+                // and compare that file to a reference
+                // right now, we have only macOS reference files
+                if ( jmri.util.SystemType.isMacOSX() ) {
+                    File compFile = new File(inFile.getCanonicalFile().getParentFile().
+                            getParent() + "/loadref/" + this.file.getName()+"."+index+".png");
+
+                    int checkVal = compareImageFiles(compFile, outFile);
+                    if (checkVal != 0) {
+                        log.error("Fail to compare new: {}", outFile);
+                        log.error("Fail to compare ref: {}", compFile);
+                        Assert.assertEquals("Screenshots didn't compare", 0, checkVal);
+                    }
+                }
             }
         }
     }
     
+    /**
+     * @return 0 if both image files are equal, -1 if exception, else count of different pixels; 0 is good.
+     */
+    public static int compareImageFiles(File fileA, File fileB) {        
+        try {
+            log.info("FileA: "+fileA.toString());
+            log.info("FileB: "+fileB.toString());
+            // get buffer data from both files
+            java.awt.image.BufferedImage biA = javax.imageio.ImageIO.read(fileA);
+            java.awt.image.DataBuffer dbA = biA.getData().getDataBuffer();
+            java.awt.image.BufferedImage biB = javax.imageio.ImageIO.read(fileB);
+            java.awt.image.DataBuffer dbB = biB.getData().getDataBuffer();
+        
+            // check sizes
+            int sizeA = dbA.getSize();                      
+            int sizeB = dbB.getSize();
+            if (sizeA != sizeB) {
+                log.warn("Sizes don't match:  {} != {}", sizeA, sizeB);
+            }
+            
+            int size = Math.min(sizeA, sizeB);
+            // compare pixels in buffers
+            int retval = 0;
+            for (int i=0; i<size; i++) { 
+                if ( dbA.getElem(i) != dbB.getElem(i) ) {
+                    retval++;
+                    // log.warn("{} {} {} {}", retval, i, dbA.getElem(i), dbB.getElem(i));
+                }
+            }
+            return retval;
+        } 
+        catch (Exception e) { 
+            log.error("Exception prevented comparing image files {} {}", fileA, fileB, e);
+            return  -1;
+        }
+    }
+
     @Before
     @Override
     public void setUp() {
@@ -124,4 +178,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         JUnitUtil.resetWindows(false, false);
         super.tearDown();
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadAndStoreTest.class);
+
 }
