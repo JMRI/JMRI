@@ -81,21 +81,9 @@ abstract public class LayoutTrack {
         return layoutEditor.getLayoutTrackView(this).getCoordsCenter();
     }
 
-    protected static final int NUM_ARROW_TYPES = 6;  // temporary: why here? now view?
+    protected static final int NUM_ARROW_TYPES = 6;  // temporary: why here? not view?
 
     abstract public boolean isMainline();
-
-
-    /**
-     * Get the hidden state of the track element - temporary here, needs to be in View
-     *
-     * @return true if hidden; false otherwise
-     */
-    final public boolean isHidden() {
-        log.info("isHidden should have called in view instead of object (temporary)",
-                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-        return layoutEditor.getLayoutTrackView(this).isHidden();
-    }
  
     /*
     * non-accessor methods

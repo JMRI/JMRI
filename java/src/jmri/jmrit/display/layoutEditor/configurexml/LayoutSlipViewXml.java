@@ -46,7 +46,7 @@ public class LayoutSlipViewXml extends AbstractXmlAdapter {
         element.setAttribute("ident", p.getName());
         element.setAttribute("slipType", tTypeEnumMap.outputFromEnum(p.getTurnoutType()));
 
-        element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
+        element.setAttribute("hidden", "" + (pv.isHidden() ? "yes" : "no"));
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
         element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
 

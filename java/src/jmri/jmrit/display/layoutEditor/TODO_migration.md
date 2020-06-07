@@ -7,6 +7,7 @@ It's in no particular order, items are removed as done, so please don't consider
  - LE-MVC-3 Reducing duplicate code and redirects; passing tests, Javadoc warnings present
  - LE-MVC-3 More reduction of duplication and redirects; tests clean
  - LE-MVC-4 Introduce LayoutModels interface; tests, Javadoc, warnings clean
+ - LE-MVC-5 Load/Store via *ViewXml, have LayoutTrack clean of geometry (i.e. no View referrals)
 
 ## Development Branches
  - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
@@ -82,7 +83,7 @@ Go through and confirm individually:
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
  - Complete head comments
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint *TrackSegment 
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
         LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
@@ -107,13 +108,26 @@ LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implem
  
 ---
 
+Tests slow because LayoutEditor ctor creates Catalog, doing a lot of I/O; migrate tests to LayoutModels
+```
+	at com.sun.imageio.spi.InputStreamImageInputStreamSpi.createInputStreamInstance(InputStreamImageInputStreamSpi.java:69)
+	at javax.imageio.ImageIO.createImageInputStream(ImageIO.java:357)
+	at jmri.jmrit.catalog.NamedIcon.<init>(NamedIcon.java:98)
+	at jmri.jmrit.display.layoutEditor.MultiIconEditor.setIcon(MultiIconEditor.java:42)
+	at jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.setupComponents(LayoutEditorToolBarPanel.java:455)
+```
+---
+
 Started to switch to LayoutModels from LayoutEditor
  - [ ] Change the LayoutTrack ctor and member value, then flush out needed routines to add
     - [ ] getLayoutConnectivity should defer to LayoutModels for direction, not just getCoord
     - [ ] getCoord as a bare behavior should not be in LayoutModels
     - [ ] LayoutModels shouldn't provide Views (may need another interface for those?)
  - [ ] Change the tests to no longer use LayoutEditor, hence being faster (and no longer check headless)
- 
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 ---
 
 Concerned over e.g.  `getConnect2() == myTrk` as code transitions LayoutTrack -> LayoutTrackView. 
