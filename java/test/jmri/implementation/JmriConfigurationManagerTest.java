@@ -174,7 +174,7 @@ public class JmriConfigurationManagerTest {
 
         @Override
         public Set<Class<? extends PreferencesManager>> getRequires() {
-            Set<Class<? extends PreferencesManager>> set = new HashSet();
+            Set<Class<? extends PreferencesManager>> set = new HashSet<>();
             set.add(PMC.class);
             set.add(PMD.class);
             return set;
