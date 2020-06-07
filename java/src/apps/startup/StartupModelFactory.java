@@ -9,7 +9,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * instead
  */
 @Deprecated
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_INTERFACE", justification = "Deprecated by refactoring; retaining unchanged until removal")
 public interface StartupModelFactory extends jmri.util.startup.StartupModelFactory {
     
 }
