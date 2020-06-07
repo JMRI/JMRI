@@ -45,6 +45,7 @@ public class CbusNewEventPaneTest  {
             memo.setTrafficController(tc);
             mainPanel = new CbusEventTablePane();
             mainPanel.initComponents(memo);
+            mainPanel.getMenus();
         }
     }
 
