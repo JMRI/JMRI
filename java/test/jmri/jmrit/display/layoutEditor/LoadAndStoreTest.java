@@ -1,6 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.io.File;
+import java.io.*;
 import jmri.util.*;
 import org.junit.runners.Parameterized;
 import org.junit.*;
@@ -100,20 +100,33 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                                             size, new java.awt.Point(0, 0),
                                             outFile);
         
+                boolean first = true;
                 // and compare that file to a reference
                 // right now, we have only macOS reference files
                 if ( jmri.util.SystemType.isMacOSX() ) {
-                    File compFile = new File(inFile.getCanonicalFile().getParentFile().
-                            getParent() + "/loadref/" + this.file.getName()+"."+index+".png");
-
-                    int checkVal = compareImageFiles(compFile, outFile);
-                    if (checkVal != 0) {
-                        log.error("Fail to compare new: {}", outFile);
-                        log.error("Fail to compare ref: {}", compFile);
-                        Assert.assertEquals("Screenshots didn't compare", 0, checkVal);
+                    findAndComparePngFiles(inFile, outFile, index, "macos");
+                } else if ( jmri.util.SystemType.isLinux() ) {
+                    if (System.getProperty("jmri.migrationtests", "false").equals("true")) {
+                        findAndComparePngFiles(inFile, outFile, index, "linux");
+                    } else { 
+                        // skip test that does match from one linux (Jenkins) to another (Travis), but remind about it
+                        if (first) log.info("Skipping tricky comparison of LayoutEditor graphics because jmri.migrationtests not set true");
+                        first = false;
                     }
                 }
             }
+        }
+    }
+    
+    protected void findAndComparePngFiles(File inFile, File outFile, int index, String subdir) throws IOException {
+        File compFile = new File(inFile.getCanonicalFile().getParentFile().
+                getParent() + "/loadref/"+subdir+"/" + this.file.getName()+"."+index+".png");
+
+        int checkVal = compareImageFiles(compFile, outFile);
+        if (checkVal != 0) {
+            log.error("Fail to compare new: {}", outFile);
+            log.error("Fail to compare ref: {}", compFile);
+            Assert.assertEquals("Screenshots didn't compare", 0, checkVal);
         }
     }
     
