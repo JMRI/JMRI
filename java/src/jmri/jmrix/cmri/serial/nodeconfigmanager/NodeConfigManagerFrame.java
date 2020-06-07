@@ -821,7 +821,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("SMINI");
         nodeTypeBox.addItem("USIC_SUSIC");
         nodeTypeBox.addItem("CPNODE");
-
+        nodeTypeBox.addItem("CPMEGA");
         //  Hide the menu item until MRCS are ready to release the cpMega
         //  nodeTypeBox.addItem("CPMEGA");
 
