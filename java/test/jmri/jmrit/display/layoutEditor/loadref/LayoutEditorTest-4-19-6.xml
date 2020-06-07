@@ -112,7 +112,7 @@
           <turnout systemName="IT9" />
         </beansetting>
       </path>
-      <path todir="64" fromdir="128" block="IB7">
+      <path todir="80" fromdir="160" block="IB7">
         <beansetting setting="4">
           <turnout systemName="IT2" />
         </beansetting>
@@ -175,7 +175,7 @@
           <turnout systemName="IT1" />
         </beansetting>
       </path>
-      <path todir="128" fromdir="64" block="IB1">
+      <path todir="160" fromdir="80" block="IB1">
         <beansetting setting="4">
           <turnout systemName="IT2" />
         </beansetting>
@@ -303,7 +303,7 @@
     <positionablepoint ident="A4" type="ANCHOR" x="150.0" y="220.0" connect1name="T18" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="A5" type="ANCHOR" x="420.0" y="240.0" connect1name="T20" connect2name="T21" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="A6" type="ANCHOR" x="500.0" y="140.0" connect1name="T22" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <levelxing ident="X1" blocknameac="Yard" blocknamebd="Yard" connectaname="T10" connectbname="T9" connectdname="T11" xcen="260.0" ycen="70.0" xa="240.0" ya="70.0" xb="246.0" yb="84.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
+    <levelxing ident="X1" blocknameac="Yard" blocknamebd="Yard" connectaname="T10" connectbname="T9" connectdname="T11" xcen="260.0" ycen="70.0" xa="240.0" ya="60.0" xb="240.0" yb="80.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
     <layoutSlip ident="SL1" slipType="DOUBLE_SLIP" hidden="yes" disabled="yes" disableWhenOccupied="yes" xcen="300.0" ycen="90.0" xa="280.0" ya="80.0" xb="280.0" yb="100.0" blockname="Yard" connectbname="T18" connectcname="T22" connectdname="T17" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleSlipXml">
       <turnout>IT5</turnout>
       <turnoutB>IT6</turnoutB>
@@ -326,7 +326,7 @@
         </B-C>
       </states>
     </layoutSlip>
-    <layoutturntable ident="TUR1" radius="25.0" xcen="200.0" ycen="200.0" turnoutControlled="no" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
+    <layoutturntable ident="TUR1" radius="35.0" xcen="200.0" ycen="200.0" turnoutControlled="no" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
       <raytrack angle="0.0" index="0" />
       <raytrack angle="90.0" index="1" />
       <raytrack angle="180.0" index="2" />
@@ -336,7 +336,7 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Tue May 26 16:16:46 PDT 2020</date>
+      <date>Sun Jun 07 09:34:19 PDT 2020</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/LayoutEditorTest-4-19-6.xml</filename>
       <filehistory>
         <operation>
