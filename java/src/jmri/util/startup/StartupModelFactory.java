@@ -58,7 +58,7 @@ public interface StartupModelFactory extends JmriServiceProviderInterface {
     public void editModel(StartupModel model, Component parent);
 
     /**
-     * Provides a mechanism for the {@link apps.StartupActionsManager} to run
+     * Provides a mechanism for the {@link StartupActionsManager} to run
      * any required post-construction initialization.
      */
     public void initialize();
