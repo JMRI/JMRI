@@ -1,7 +1,7 @@
 package apps.configurexml;
 
 import apps.PerformScriptModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;

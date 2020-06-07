@@ -1,7 +1,7 @@
 package jmri.jmrit.withrottle;
 
 import apps.PerformActionModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;

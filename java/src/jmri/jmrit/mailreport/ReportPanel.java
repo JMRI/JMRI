@@ -1,7 +1,7 @@
 package jmri.jmrit.mailreport;
 
 import apps.PerformFileModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import java.awt.FlowLayout;
 import java.io.File;
 import java.io.FileInputStream;

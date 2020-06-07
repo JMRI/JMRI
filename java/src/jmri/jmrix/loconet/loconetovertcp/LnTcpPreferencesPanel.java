@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
 import apps.PerformActionModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;

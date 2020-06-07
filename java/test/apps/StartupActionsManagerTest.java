@@ -1,5 +1,6 @@
 package apps;
 
+import jmri.util.startup.StartupActionsManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
