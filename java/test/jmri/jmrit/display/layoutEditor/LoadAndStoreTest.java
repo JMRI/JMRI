@@ -100,12 +100,19 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                                             size, new java.awt.Point(0, 0),
                                             outFile);
         
+                boolean first = true;
                 // and compare that file to a reference
                 // right now, we have only macOS reference files
                 if ( jmri.util.SystemType.isMacOSX() ) {
                     findAndComparePngFiles(inFile, outFile, index, "macos");
                 } else if ( jmri.util.SystemType.isLinux() ) {
-                    findAndComparePngFiles(inFile, outFile, index, "linux");
+                    if (System.getProperty("jmri.migrationtests", "false").equals("true")) {
+                        findAndComparePngFiles(inFile, outFile, index, "linux");
+                    } else { 
+                        // skip test that does match from one linux (Jenkins) to another (Travis), but remind about it
+                        if (first) log.info("Skipping tricky comparison of LayoutEditor graphics because jmri.migrationtests not set true");
+                        first = false;
+                    }
                 }
             }
         }
