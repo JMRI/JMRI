@@ -48,11 +48,13 @@ class LayoutEditorComponent extends JComponent {
             Graphics2D g2 = (Graphics2D) g;
 
             if (clipBounds != null) {
-                if ((clipBounds.getWidth() > 0) && (clipBounds.getHeight() > 0)) {
-                    if (!clipBounds.equals(g2.getClipBounds())) {
-                        //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
-                        //        clipBounds, g2.getClipBounds());
-                        g2.setClip(clipBounds);
+                if (!clipBounds.isEmpty()) {
+                    if ((clipBounds.getWidth() > 0) && (clipBounds.getHeight() > 0)) {
+                        if (!clipBounds.equals(g2.getClipBounds())) {
+                            //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
+                            //        clipBounds, g2.getClipBounds());
+                            g2.setClip(clipBounds);
+                        }
                     }
                 }
             }
