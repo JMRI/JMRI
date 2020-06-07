@@ -21,7 +21,8 @@ So we keep these around for comparison with the contents of temp/temp after runn
 
 ./runtest.csh java/test/jmri/jmrit/display/layoutEditor/LoadAndStoreTest
 
-
+Because of font differences, the .png files are kept in macos and linux (and eventually windows)
+subdirectories.
 
 Made from 4.19.4 with macOS Mojave Java 1.8.0_151-b12
 
