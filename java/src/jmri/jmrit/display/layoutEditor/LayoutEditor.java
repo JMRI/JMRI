@@ -2131,11 +2131,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
-        for (LayoutTrack o : getLayoutTracks()) {
+        for (LayoutTrackView ov : getLayoutTrackViews()) {
             if (result.isEmpty()) {
-                result = o.getBounds();
+                result = ov.getBounds();
             } else {
-                result = result.createUnion(o.getBounds());
+                result = result.createUnion(ov.getBounds());
             }
         }
 
@@ -2598,9 +2598,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             ltv.setCoordsCenter(MathUtil.granulize(ltv.getCoordsCenter(), gContext.getGridSize()));
             if (lt instanceof LayoutTurntable) {
                 LayoutTurntable tt = (LayoutTurntable) lt;
+                LayoutTurntableView ttv = getLayoutTurntableView(tt);
                 for (LayoutTurntable.RayTrack rt : tt.getRayTrackList()) {
                     int rayIndex = rt.getConnectionIndex();
-                    tt.setRayCoordsIndexed(MathUtil.granulize(tt.getRayCoordsIndexed(rayIndex), gContext.getGridSize()), rayIndex);
+                    ttv.setRayCoordsIndexed(MathUtil.granulize(ttv.getRayCoordsIndexed(rayIndex), gContext.getGridSize()), rayIndex);
                 }
             }
         }
@@ -3830,7 +3831,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
         beginTrack = p;
         beginHitPointType = HitPointType.POS_POINT;
-        Point2D loc = p.getCoordsCenter();
+        PositionablePointView pv = getPositionablePointView(p);
+        Point2D loc = pv.getCoordsCenter();
 
         if (findLayoutTracksHitPoint(loc, true, p)) {
             switch (foundHitPointType) {
@@ -4061,7 +4063,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             xy2 = MathUtil.subtract(c, diverg);
         } else if ((foundHitPointType == HitPointType.TURNOUT_C)
                 && ((beginHitPointType == HitPointType.TURNOUT_A) || (beginHitPointType == HitPointType.TURNOUT_B))) {
-            c = t.getCoordsCenter();
+
+            LayoutTrackView tv = getLayoutTrackView(t);
+            c = tv.getCoordsCenter();
             diverg = t.getCoordsC();
 
             if (beginHitPointType == HitPointType.TURNOUT_A) {
@@ -4082,7 +4086,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     break;
                 case TURNOUT_C:
                 default:
-                    xy2 = MathUtil.subtract(be.getCoordsCenter(), be.getCoordsC());
+                    xy2 = MathUtil.subtract(bev.getCoordsCenter(), be.getCoordsC());
                     break;
             }
         } else if (foundHitPointType == HitPointType.TURNOUT_A) {
@@ -4098,7 +4102,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     break;
                 case TURNOUT_C:
                 default:
-                    xy2 = MathUtil.subtract(be.getCoordsC(), be.getCoordsCenter());
+                    xy2 = MathUtil.subtract(be.getCoordsC(), bev.getCoordsCenter());
                     break;
             }
         } else {
@@ -4165,7 +4169,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         });
 
         getLayoutTracks().forEach((lt) -> {
-            Point2D center = lt.getCoordsCenter();
+            LayoutTrackView ltv = getLayoutTrackView(lt);
+            Point2D center = ltv.getCoordsCenter();
             if (selectionRect.contains(center)) {
                 if (!_layoutTrackSelection.contains(lt)) {
                     _layoutTrackSelection.add(lt);
@@ -4303,7 +4308,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         for (LayoutTrack lt : _layoutTrackSelection) {
-            Point2D p = lt.getCoordsCenter();
+            LayoutTrackView ltv = getLayoutTrackView(lt);
+            Point2D p = ltv.getCoordsCenter();
             minPoint = MathUtil.min(minPoint, p);
             maxPoint = MathUtil.max(maxPoint, p);
             sumPoint = MathUtil.add(sumPoint, p);
@@ -4416,7 +4422,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             });
 
             _layoutTrackSelection.forEach((lt) -> {
-                Point2D newPoint = MathUtil.add(lt.getCoordsCenter(), delta);
+                LayoutTrackView ltv = getLayoutTrackView(lt);
+                Point2D newPoint = MathUtil.add(ltv.getCoordsCenter(), delta);
                 newPoint = MathUtil.max(MathUtil.zeroPoint2D, newPoint);
                 getLayoutTrackView(lt).setCoordsCenter(newPoint);
             });
@@ -4587,7 +4594,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     }
 
                     for (LayoutTrack lt : _layoutTrackSelection) {
-                        Point2D center = lt.getCoordsCenter();
+                        LayoutTrackView ltv = getLayoutTrackView(lt);
+                        Point2D center = ltv.getCoordsCenter();
                         newPoint = MathUtil.add(center, offset);
                         // don't allow negative placement, objects could become unreachable
                         newPoint = MathUtil.max(newPoint, MathUtil.zeroPoint2D);
@@ -4735,7 +4743,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 ((LayoutShape) selectedObject).setPoint(index, currentPoint);
                             } else if (HitPointType.isTurntableRayHitType(selectedHitPointType)) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
-                                turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
+                                LayoutTurntableView turnView = getLayoutTurntableView(turn);
+                                turnView.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
                                         selectedHitPointType.turntableTrackIndex());
                             }
                             break;
@@ -6084,11 +6093,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         // remove connections if any
+        LayoutTurntableView ov = getLayoutTurntableView(o);
         for (int j = 0; j < o.getNumberRays(); j++) {
-            TrackSegment t = o.getRayConnectOrdered(j);
+            TrackSegment t = ov.getRayConnectOrdered(j);
 
             if (t != null) {
-                substituteAnchor(o.getRayCoordsIndexed(j), o, t);
+                substituteAnchor(ov.getRayCoordsIndexed(j), o, t);
             }
         }
 
@@ -7794,6 +7804,18 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
         
     // temporary
+    final public LayoutSlipView getLayoutSlipView(LayoutSlip to) {
+        LayoutTrackView lv = trkToView.get(to);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", to, to.getClass());
+            throw new IllegalArgumentException("No matching View found: "+to);
+        }
+        if (lv instanceof LayoutSlipView) return (LayoutSlipView) lv;
+        else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
+        throw new IllegalArgumentException("Wrong type: "+to.getClass());
+    }
+
+    // temporary
     final public TrackSegmentView getTrackSegmentView(TrackSegment to) {
         LayoutTrackView lv = trkToView.get(to);
         if (lv == null) {
@@ -7801,6 +7823,18 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             throw new IllegalArgumentException("No matching View found: "+to);
         }
         if (lv instanceof TrackSegmentView) return (TrackSegmentView) lv;
+        else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
+        throw new IllegalArgumentException("Wrong type: "+to.getClass());
+    }
+        
+    // temporary
+    final public PositionablePointView getPositionablePointView(PositionablePoint to) {
+        LayoutTrackView lv = trkToView.get(to);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", to, to.getClass());
+            throw new IllegalArgumentException("No matching View found: "+to);
+        }
+        if (lv instanceof PositionablePointView) return (PositionablePointView) lv;
         else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
         throw new IllegalArgumentException("Wrong type: "+to.getClass());
     }
@@ -7891,7 +7925,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             );    
     }
     
+    @Override
+    public int computeDirectionToCenter( @Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, @Nonnull PositionablePoint p) {
+        return Path.computeDirection(
+                getCoords(trk1, h1),
+                getPositionablePointView(p).getCoordsCenter()
+            );    
+    }
     
+    @Override
+    public int computeDirectionFromCenter( @Nonnull PositionablePoint p, @Nonnull LayoutTrack trk1, @Nonnull HitPointType h1) {
+        return Path.computeDirection(
+                getPositionablePointView(p).getCoordsCenter(),
+                getCoords(trk1, h1)
+            );    
+    }
+
     @Override
     public boolean showAlignPopup(@Nonnull Positionable l) {
         return false;
@@ -8465,7 +8514,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     String getUsageData(LayoutTrack track) {
-        Point2D point = track.getCoordsCenter();
+        LayoutTrackView trackView = getLayoutTrackView(track);
+        Point2D point = trackView.getCoordsCenter();
         if (track instanceof TrackSegment) {
             TrackSegment segment = (TrackSegment) track;
             point = new Point2D.Double(segment.getCentreSegX(), segment.getCentreSegY());

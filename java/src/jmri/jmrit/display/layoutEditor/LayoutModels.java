@@ -123,6 +123,9 @@ public interface LayoutModels {
         
     // temporary
     TrackSegmentView getTrackSegmentView(TrackSegment to);
+
+    // temporary
+    PositionablePointView getPositionablePointView(PositionablePoint to);
         
     /**
      * Add a LayoutTrack and LayoutTrackView to the list of 
@@ -162,5 +165,9 @@ public interface LayoutModels {
      */
     public int computeDirection(@Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, 
                                 @Nonnull LayoutTrack trk2, @Nonnull HitPointType h2);
+
+    public int computeDirectionToCenter( @Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, @Nonnull PositionablePoint p);
+    
+    public int computeDirectionFromCenter( @Nonnull PositionablePoint p, @Nonnull LayoutTrack trk1, @Nonnull HitPointType h1);
 
 }

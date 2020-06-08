@@ -65,8 +65,6 @@ public class PositionablePoint extends LayoutTrack {
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
 
-//    public PositionablePoint(String id, PointType t, Point2D c, LayoutEditor layoutEditor) {
-//        super(id, c, layoutEditor);
     public PositionablePoint(String id, PointType t, LayoutEditor layoutEditor) {
         super(id, layoutEditor);
 
@@ -884,13 +882,11 @@ public class PositionablePoint extends LayoutTrack {
 
         TrackSegment ts1 = getConnect1();
         if (ts1 != null) {
-            Point2D p1;
             if (ts1.getConnect1() == this) {
-                p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                result = layoutEditor.computeDirectionFromCenter(this, ts1.getConnect2(), ts1.getType2());
             } else {
-                p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                result = layoutEditor.computeDirectionFromCenter(this, ts1.getConnect1(), ts1.getType1());
             }
-            result = Path.computeDirection(getCoordsCenter(), p1);
         }
         return result;
     }
@@ -1193,15 +1189,17 @@ public class PositionablePoint extends LayoutTrack {
                     lc = new LayoutConnectivity(blk1, blk2);
 
                     // determine direction from block 1 to block 2
+                    int result;
+                    
                     if (ts1.getConnect1() == this) {
-                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
+                        result = layoutEditor.computeDirectionToCenter(ts1.getConnect2(), ts1.getType2(), this);
                     } else {
-                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
+                        result = layoutEditor.computeDirectionToCenter(ts1.getConnect1(), ts1.getType1(), this);
                     }
 
                     //Need to find a way to compute the direction for this for a split over the panel
                     //In this instance work out the direction of the first track relative to the positionable poin.
-                    lc.setDirection(Path.computeDirection(p1, getCoordsCenter()));
+                    lc.setDirection(result);
                     // save Connections
                     lc.setConnections(ts1, ts2, HitPointType.TRACK, this);
                     results.add(lc);

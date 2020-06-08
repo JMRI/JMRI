@@ -55,7 +55,7 @@ public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
 
         element.setAttribute("continuing", "" + p.getContinuingSense());
 
-        Point2D coords = p.getCoordsCenter();
+        Point2D coords = pv.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
         

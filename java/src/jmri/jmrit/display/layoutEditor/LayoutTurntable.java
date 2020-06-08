@@ -1,7 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -418,85 +418,6 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Get the coordinates for the ray with this index.
-     *
-     * @param index the index
-     * @return the coordinates
-     */
-    public Point2D getRayCoordsIndexed(int index) {
-        Point2D result = MathUtil.zeroPoint2D;
-        double rayRadius = radius + LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        for (RayTrack rt : rayTrackList) {
-            if (rt.getConnectionIndex() == index) {
-                double angle = Math.toRadians(rt.getAngle());
-                // calculate coordinates
-                result = new Point2D.Double(
-                        (getCoordsCenter().getX() + (rayRadius * Math.sin(angle))),
-                        (getCoordsCenter().getY() - (rayRadius * Math.cos(angle))));
-                break;
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Get the coordinates for the ray at this index.
-     *
-     * @param i the index; zero point returned if this is out of range
-     * @return the coordinates
-     */
-    public Point2D getRayCoordsOrdered(int i) {
-        Point2D result = MathUtil.zeroPoint2D;
-        if (i < rayTrackList.size()) {
-            RayTrack rt = rayTrackList.get(i);
-            if (rt != null) {
-                double angle = Math.toRadians(rt.getAngle());
-                double rayRadius = radius + LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-                // calculate coordinates
-                result = new Point2D.Double(
-                        (getCoordsCenter().getX() + (rayRadius * Math.sin(angle))),
-                        (getCoordsCenter().getY() - (rayRadius * Math.cos(angle))));
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Set the coordinates for the ray at this index.
-     *
-     * @param x     the x coordinates
-     * @param y     the y coordinates
-     * @param index the index
-     */
-    public void setRayCoordsIndexed(double x, double y, int index) {
-        boolean found = false; // assume failure (pessimist!)
-        for (RayTrack rt : rayTrackList) {
-            if (rt.getConnectionIndex() == index) {
-                // convert these coordinates to an angle
-                double angle = Math.atan2(x - getCoordsCenter().getX(), y - getCoordsCenter().getY());
-                angle = MathUtil.wrapPM360(180.0 - Math.toDegrees(angle));
-                rt.setAngle(angle);
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            log.error("{}.setRayCoordsIndexed({}, {}, {}); Attempt to move a non-existant ray track",
-                    getName(), x, y, index);
-        }
-    }
-
-    /**
-     * Set the coordinates for the ray at this index.
-     *
-     * @param point the new coordinates
-     * @param index the index
-     */
-    public void setRayCoordsIndexed(Point2D point, int index) {
-        setRayCoordsIndexed(point.getX(), point.getY(), index);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -636,68 +557,7 @@ public class LayoutTurntable extends LayoutTrack {
     protected void showRayPopUp(MouseEvent e, int index) {
         throw new IllegalArgumentException("should have called View instead of temporary");
     }
-        //log.info("should have called View instead of temporary");
-        // return layoutEditor.getLevelXingView(this)....;
-        
-//         if (rayPopup != null) {
-//             rayPopup.removeAll();
-//         } else {
-//             rayPopup = new JPopupMenu();
-//         }
-// 
-//         for (RayTrack rt : rayTrackList) {
-//             if (rt.getConnectionIndex() == index) {
-//                 JMenuItem jmi = rayPopup.add("Turntable Ray " + index);
-//                 jmi.setEnabled(false);
-// 
-//                 rayPopup.add(new AbstractAction(
-//                         Bundle.getMessage("MakeLabel",
-//                                 Bundle.getMessage("Connected"))
-//                         + rt.getConnect().getName()) {
-//                     @Override
-//                     public void actionPerformed(ActionEvent e) {
-//                         LayoutEditorFindItems lf = layoutEditor.getFinder();
-//                         LayoutTrack lt = lf.findObjectByName(rt.getConnect().getName());
-//                         // this shouldn't ever be null... however...
-//                         if (lt != null) {
-//                             layoutEditor.setSelectionRect(lt.getBounds());
-//                             lt.showPopup();
-//                         }
-//                     }
-//                 });
-// 
-//                 if (rt.getTurnout() != null) {
-//                     String info = rt.getTurnout().getDisplayName();
-//                     String stateString = getTurnoutStateString(rt.getTurnoutState());
-//                     if (!stateString.isEmpty()) {
-//                         info += " (" + stateString + ")";
-//                     }
-//                     jmi = rayPopup.add(info);
-//                     jmi.setEnabled(false);
-// 
-//                     rayPopup.add(new JSeparator(JSeparator.HORIZONTAL));
-// 
-//                     JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
-//                     cbmi.setSelected(rt.isDisabled());
-//                     rayPopup.add(cbmi);
-//                     cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
-//                         JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
-//                         rt.setDisabled(o.isSelected());
-//                     });
-// 
-//                     cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
-//                     cbmi.setSelected(rt.isDisabledWhenOccupied());
-//                     rayPopup.add(cbmi);
-//                     cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-//                         JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
-//                         rt.setDisabledWhenOccupied(o.isSelected());
-//                     });
-//                 }
-//                 rayPopup.show(e.getComponent(), e.getX(), e.getY());
-//                 break;
-//             }
-//         }
-//    }
+
 
     /**
      * Set turntable position to the ray with this index.
@@ -755,20 +615,6 @@ public class LayoutTurntable extends LayoutTrack {
         layoutEditor.redrawPanel();
         layoutEditor.setDirty();
     }
-
-    /**
-     * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove().
-     */
-//     public void dispose() {
-//         if (popupMenu != null) {
-//             popupMenu.removeAll();
-//         }
-//         popupMenu = null;
-//         rayTrackList.forEach((rt) -> {
-//             rt.dispose();
-//         });
-//     }
 
     /**
      * Remove this object from display and persistance.

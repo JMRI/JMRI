@@ -211,6 +211,18 @@ public class LayoutModelsScaffold implements LayoutModels {
         throw new IllegalArgumentException("Wrong type: "+to.getClass());
     }
         
+    // temporary
+    public PositionablePointView getPositionablePointView(PositionablePoint to) {
+        LayoutTrackView lv = trkToView.get(to);
+        if (lv == null) {
+            log.warn("No View found for {} class {}", to, to.getClass());
+            throw new IllegalArgumentException("No matching View found: "+to);
+        }
+        if (lv instanceof PositionablePointView) return (PositionablePointView) lv;
+        else log.error("wrong type {} {} found {}", to, to.getClass(), lv);
+        throw new IllegalArgumentException("Wrong type: "+to.getClass());
+    }
+        
     /**
      * Add a LayoutTrack and LayoutTrackView to the list of 
      * LayoutTrack family objects.
@@ -254,11 +266,17 @@ public class LayoutModelsScaffold implements LayoutModels {
 
     public int computeDirection(@Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, 
                                 @Nonnull LayoutTrack trk2, @Nonnull HitPointType h2) {
-//         return Path.computeDirection(
-//                 getCoords(trk1, h1),
-//                 getCoords(trk2, h2)
-//             );  
-        return jmri.Path.EAST;  
+        return jmri.Path.EAST;  // fixed result for testing
+    }
+
+    @Override
+    public int computeDirectionToCenter( @Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, @Nonnull PositionablePoint p) {
+        return jmri.Path.EAST;  // fixed result for testing
+    }
+    
+    @Override
+    public int computeDirectionFromCenter( @Nonnull PositionablePoint p, @Nonnull LayoutTrack trk1, @Nonnull HitPointType h1) {
+        return jmri.Path.EAST; // fixed result for testing    
     }
 
     // initialize logging

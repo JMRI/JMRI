@@ -50,7 +50,7 @@ public class LayoutSlipViewXml extends AbstractXmlAdapter {
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
         element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
 
-        Point2D coords = p.getCoordsCenter();
+        Point2D coords = pv.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
         coords = p.getCoordsA();

@@ -29,12 +29,11 @@ It's in no particular order, items are removed as done, so please don't consider
 
 
 - [X] mainline in geometry classes (inc base clases, *Xml)
-- [ ] hidden in View
-    =========> Referenced from various "Tools" calculations that don't use View, so isHidden() proxied for now
+- [X] hidden in View
 - [X] flip in View
 - [ ] center in View
   - [ ] Move geometric direction and distance to (plugin in) LayoutModels 
-            result = Path.computeDirection(getCoordsCenter(), p1);
+            result = Path.computeDirection(getCoordsCenter(), p1);  // has a reference to center we need to understand
   
 - [ ] Decorations only in View
     - [ ] arrowstyle only in View
@@ -48,7 +47,9 @@ It's in no particular order, items are removed as done, so please don't consider
 - [ ] Block and connectivity checks to, well, connectivity
 
 - [ ] The ``*View` classes load a reference to a new `*Editor` in ctor; this needs to be shared or deferred
- 
+         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleSlipEditor(layoutEditor);
+
+
 Go through and confirm individually:
 
  - Remove topology variables from View
@@ -57,7 +58,7 @@ Go through and confirm individually:
         LayoutSlip 
         LayoutXOver
  - Remove view variables from topology
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurntable LevelXing  PositionablePoint TrackSegment 
         LayoutTurnout LayoutWye
         LayoutSlip 
         LayoutXOver
@@ -181,12 +182,6 @@ track object
  
 --- 
 
-  Store is done from LayoutTrack child, without access to View and LayoutEditor (for nav).
-  Need to change the store process in configurexml/LayoutEditorXml to fix that
-  
-  See java/src/jmri/configurexml/ClassMigration.properties 
-  
----
 
 Eventually, *View classes should receive a reference to the *ViewContext object(s) and
 use that as an accessor instead of the LayoutEditor reference.
@@ -507,6 +502,14 @@ to provide a getNextNode that has one argument, i.e. assumes the  TRACKNODE_CONT
  mainline track width, side track width are in both LayoutEditorViewContext and LayoutTrackDrawingOptions.
  Also, why are they floats?  (What's loaded and stored? Is there any calcuation that can make a
  non-integer value?)
+
+---
+
+To store separately
+ - cp *ViewXml  to *Xml to _read_ (but not write) old format with both combined
+    - update from java/src/jmri/configurexml/ClassMigration.properties by removing *View lines
+ - make a new *ModelXml that stores the model; drop that info from *View
+ - figure out who should trigger store of Model, make LayoutModels as a single registered object?
 
 ---
 

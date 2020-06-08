@@ -129,11 +129,11 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         Assert.assertNotNull("exists", pp);
 
         // first, try hit
-        HitPointType hitType = pp.findHitPointType(thePoint, true, false);
+        HitPointType hitType = ppv.findHitPointType(thePoint, true, false);
         Assert.assertTrue("pp.findHitPointType equals POS_POINT", hitType == HitPointType.POS_POINT);
 
         // Now, try miss
-        hitType = pp.findHitPointType(MathUtil.zeroPoint2D, true, false);
+        hitType = ppv.findHitPointType(MathUtil.zeroPoint2D, true, false);
         Assert.assertTrue("pp.findHitPointType equals NONE", hitType == HitPointType.NONE);
     }
 

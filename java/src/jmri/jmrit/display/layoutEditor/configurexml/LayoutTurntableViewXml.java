@@ -47,7 +47,7 @@ public class LayoutTurntableViewXml extends AbstractXmlAdapter {
             element.setAttribute("blockname", p.getBlockName());
         }
         element.setAttribute("radius", "" + p.getRadius());
-        Point2D coords = p.getCoordsCenter();
+        Point2D coords = pv.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
         element.setAttribute("turnoutControlled", "" + (turnoutControl ? "yes" : "no"));

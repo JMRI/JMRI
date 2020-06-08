@@ -306,7 +306,8 @@ final public class LayoutEditorChecks {
         log.debug("docheckUnConnectedTracksMenuItem({})", menuItemName);
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(menuItemName);
         if (layoutTrack != null) {
-            Rectangle2D trackBounds = layoutTrack.getBounds();
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            Rectangle2D trackBounds = layoutTrackView.getBounds();
             layoutEditor.setSelectionRect(trackBounds);
 
             // setSelectionRect calls createSelectionGroups...
@@ -369,7 +370,8 @@ final public class LayoutEditorChecks {
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(menuItemName);
         if (layoutTrack != null) {
-            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            layoutEditor.setSelectionRect(layoutTrackView.getBounds());
             // setSelectionRect calls createSelectionGroups...
             // so we have to clear it before amending to it
             layoutEditor.clearSelectionGroups();
@@ -437,7 +439,8 @@ final public class LayoutEditorChecks {
             Rectangle2D bounds = null;
             for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
                 if (trackNameSet.contains(layoutTrack.getName())) {
-                    Rectangle2D trackBounds = layoutTrack.getBounds();
+                    LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+                    Rectangle2D trackBounds = layoutTrackView.getBounds();
                     if (bounds == null) {
                         bounds = trackBounds.getBounds2D();
                     } else {
@@ -492,14 +495,16 @@ final public class LayoutEditorChecks {
                         String blockName2 = ts2.getBlockName();
                         if (blockName1.equals(blockName2)) {
                             // if length of ts1 is zero...
-                            Rectangle2D bounds1 = ts1.getBounds();
+                            LayoutTrackView ts1v = layoutEditor.getLayoutTrackView(ts1);
+                            Rectangle2D bounds1 = ts1v.getBounds();
                             double length1 = Math.hypot(bounds1.getWidth(), bounds1.getHeight());
                             if (length1 < 1.0) {
                                 aatzlts.add(pp);
                                 continue;   // so we don't get added again
                             }
                             // if length of ts2 is zero...
-                            Rectangle2D bounds = ts2.getBounds();
+                            LayoutTrackView ts2v = layoutEditor.getLayoutTrackView(ts2);
+                            Rectangle2D bounds = ts2v.getBounds();
                             double length = Math.hypot(bounds.getWidth(), bounds.getHeight());
                             if (length < 1.0) {
                                 aatzlts.add(pp);
@@ -563,14 +568,16 @@ final public class LayoutEditorChecks {
         log.debug("doCheckUnnecessaryAnchorsMenuItem({})", anchorName);
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(anchorName);
+
         if (layoutTrack != null) {
-            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            layoutEditor.setSelectionRect(layoutTrackView.getBounds());
             // setSelectionRect calls createSelectionGroups...
             // so we have to clear it before amending to it
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
             // show its popup menu
-            layoutEditor.getLayoutTrackView(layoutTrack).showPopup();
+            layoutTrackView.showPopup();
         } else {
             layoutEditor.clearSelectionGroups();
         }
@@ -651,14 +658,16 @@ final public class LayoutEditorChecks {
         log.debug("doCheckLinearBezierTrackSegmentsMenuItem({})", trackSegmentName);
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(trackSegmentName);
+        
         if (layoutTrack != null) {
-            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            layoutEditor.setSelectionRect(layoutTrackView.getBounds());
             // setSelectionRect calls createSelectionGroups...
             // so we have to clear it before amending to it
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
             // show its popup menu
-            layoutEditor.getLayoutTrackView(layoutTrack).showPopup();
+            layoutTrackView.showPopup();
         } else {
             layoutEditor.clearSelectionGroups();
         }
@@ -773,14 +782,16 @@ final public class LayoutEditorChecks {
         log.debug("doCheckFixedRadiusBezierTrackSegmentsMenuItem({})", trackSegmentName);
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(trackSegmentName);
+        
         if (layoutTrack != null) {
-            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            layoutEditor.setSelectionRect(layoutTrackView.getBounds());
             // setSelectionRect calls createSelectionGroups...
             // so we have to clear it before amending to it
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
             // show its popup menu
-            layoutEditor.getLayoutTrackView(layoutTrack).showPopup();
+            layoutTrackView.showPopup();
         } else {
             layoutEditor.clearSelectionGroups();
         }

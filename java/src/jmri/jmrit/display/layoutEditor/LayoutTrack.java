@@ -1,13 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.*;
 
 import javax.annotation.Nonnull;
-import javax.swing.JPopupMenu;
 
 import jmri.JmriException;
 import jmri.Turnout;
@@ -70,17 +65,6 @@ abstract public class LayoutTrack {
         this.ident = ident;
     }
     
-    /**
-     * Set center coordinates - temporary here, needs to be in View
-     *
-     * @return the center coordinates
-     */
-    final public Point2D getCoordsCenter() {
-        log.debug("getCoordsCenter should have called in view instead of object (temporary)",
-                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-        return layoutEditor.getLayoutTrackView(this).getCoordsCenter();
-    }
-
     protected static final int NUM_ARROW_TYPES = 6;  // temporary: why here? not view?
 
     abstract public boolean isMainline();
@@ -148,21 +132,11 @@ abstract public class LayoutTrack {
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
-    final protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        log.info("findHitPointType should have called View instead of temporary",
-                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-        return layoutEditor.getLayoutTrackView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
-    }
-
-    /**
-     * @return the display bounds of this track - temporary here, needs to be in View
-     */
-    final public Rectangle2D getBounds() {
-        // final here to force pass over to View tree (method is temporary here)
-        log.error("LayoutTrack.getBounds should have been called through View",
-                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-        return layoutEditor.getLayoutTrackView(this).getBounds();
-    }
+//     final protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+//         log.info("findHitPointType should have called View instead of temporary",
+//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
+//         return layoutEditor.getLayoutTrackView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
+//     }
 
     /**
      * get the LayoutTrack connected at the specified connection type
