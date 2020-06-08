@@ -202,6 +202,32 @@ public class XNetInitializationManagerTest {
         softly.assertAll();
     }
 
+    @Test
+    public void testVersion35UnknownCSTypeResponse() {
+        Mockito.when(cs.getCommandStationSoftwareVersion()).thenReturn(3.5f);
+        Mockito.when(cs.getCommandStationSoftwareVersionBCD()).thenReturn(3.5f);
+        Mockito.when(cs.getCommandStationType()).thenReturn(0x42);
+        XNetInitializationManager m = new XNetInitializationManager(memo) {
+            @Override
+            protected int getInitTimeout() {
+                return 50;   // shorten, because this will fail & delay test
+            }
+        };
+        assertThat(m).withFailMessage("exists").isNotNull();
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(memo.getCommandStation()).isEqualTo(cs);
+        softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
+        softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(XNetThrottleManager.class);
+        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
+        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(XNetProgrammer.class);
+        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false,42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
+        softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(XNetTurnoutManager.class);
+        softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
+        softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
+        softly.assertThat(memo.getConsistManager()).isExactlyInstanceOf(XNetConsistManager.class);
+        softly.assertAll();
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
