@@ -15,7 +15,7 @@ public class AutomatTableAction extends AbstractAction {
     }
 
     public AutomatTableAction() {
-        this(Bundle.getMessage("MenuItemMonitor"));
+        this(Bundle.getMessage("TitleAutomatTable"));
     }
 
     AutomatTableDataModel m;
