@@ -106,7 +106,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                 if ( jmri.util.SystemType.isMacOSX() ) {
                     findAndComparePngFiles(inFile, outFile, index, "macos");
                 } else if ( jmri.util.SystemType.isWindows() ) {
-                    findAndComparePngFiles(inFile, outFile, index, "windows7");
+                    findAndComparePngFiles(inFile, outFile, index, "windows");
                 } else if ( jmri.util.SystemType.isLinux() ) {
                     if (System.getProperty("jmri.migrationtests", "false").equals("true")) {
                         findAndComparePngFiles(inFile, outFile, index, "linux");
