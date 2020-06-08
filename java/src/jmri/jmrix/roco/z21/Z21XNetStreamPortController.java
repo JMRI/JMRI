@@ -1,6 +1,8 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.lenz.XNetInitializationManager;
+import jmri.jmrix.roco.RocoXNetThrottleManager;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -30,7 +32,14 @@ public class Z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
         this.getSystemConnectionMemo().setThrottleManager(new Z21XNetThrottleManager(this.getSystemConnectionMemo()));
 
-        new Z21XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .throttleManager(RocoXNetThrottleManager.class)
+                .programmer(Z21XNetProgrammer.class)
+                .programmerManager(Z21XNetProgrammerManager.class)
+                .turnoutManager(Z21XNetTurnoutManager.class)
+                .init();
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(),jmri.jmrix.ConnectionStatus.CONNECTION_UP);
     }
 

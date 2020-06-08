@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
  *
  * @author Paul Bender Copyright (C) 2003-2010
  */
+@Deprecated
 public abstract class AbstractXNetInitializationManager {
 
     protected XNetSystemConnectionMemo systemMemo = null;
@@ -49,7 +50,7 @@ public abstract class AbstractXNetInitializationManager {
 
     protected abstract void init();
 
-    /* Interal class to configure the XNet implementation */
+    /* Internal class to configure the XNet implementation */
     protected class XNetInitializer implements XNetListener {
 
         private javax.swing.Timer initTimer; // Timer used to let he 

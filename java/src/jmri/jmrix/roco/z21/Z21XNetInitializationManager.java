@@ -2,10 +2,7 @@ package jmri.jmrix.roco.z21;
 
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.jmrix.lenz.XNetInitializationManager;
-import jmri.jmrix.lenz.XNetLightManager;
-import jmri.jmrix.lenz.XNetSensorManager;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import jmri.jmrix.lenz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +13,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2015
  */
-public class Z21XNetInitializationManager extends XNetInitializationManager {
+@Deprecated
+public class Z21XNetInitializationManager extends AbstractXNetInitializationManager {
 
     public Z21XNetInitializationManager(XNetSystemConnectionMemo memo) {
         super(memo);

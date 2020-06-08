@@ -24,17 +24,14 @@ public class XNetInitializationManagerTest {
 
         XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(t);
 
-        XNetInitializationManager m = new XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
-            }
-        };
+        XNetInitializationManager m = new XNetInitializationManager();
+        m.memo(memo).setDefaults().setTimeout(50).versionCheck().init();
         Assert.assertNotNull("exists", t);
         Assert.assertNotNull("exists", l);
         Assert.assertNotNull("exists", m);
         Assert.assertNotNull("exists", memo);
         jmri.util.JUnitAppender.assertWarnMessage("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
+        t.terminateThreads();
     }
 
     @Before
@@ -44,7 +41,6 @@ public class XNetInitializationManagerTest {
 
     @After 
     public void tearDown() throws Exception {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
