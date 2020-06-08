@@ -19,8 +19,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base for testing load-and-store of configuration files.
@@ -357,6 +355,6 @@ public class LoadAndStoreTestBase {
         System.setProperty("jmri.test.no-dialogs", "false");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTestBase.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadAndStoreTestBase.class);
 
 }
