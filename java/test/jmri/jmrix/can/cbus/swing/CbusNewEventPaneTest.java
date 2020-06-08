@@ -47,6 +47,7 @@ public class CbusNewEventPaneTest  {
             memo.configureManagers();
             mainPanel = new CbusEventTablePane();
             mainPanel.initComponents(memo);
+            mainPanel.getMenus();
         }
     }
 
