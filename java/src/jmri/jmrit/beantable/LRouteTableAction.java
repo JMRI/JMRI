@@ -2465,7 +2465,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         SET_TO_FLASHYELLOW, SET_TO_GREEN, SET_TO_FLASHGREEN};
 
     private static String getLogixSystemPrefix() {
-        return InstanceManager.getDefault(LogixManager.class).getSystemPrefix() + ":RTX:";
+        // Note: RouteExportToLogix uses ":RTX:" which is right?
+        return InstanceManager.getDefault(LogixManager.class).getSystemNamePrefix() + ":RTX";
     }
 
     // should be private or package protected, but hey, its Logix! so its public
