@@ -1,6 +1,7 @@
-package apps.configurexml;
+package jmri.util.startup.configurexml;
 
 import jmri.util.startup.PerformScriptModel;
+
 import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
@@ -10,13 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of PerformScriptModel objects
+ * Handle XML persistence of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.CreateButtonModelXml} instead
+ * @see jmri.util.startup.PerformScriptModelFactory
  */
-@Deprecated
 public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public PerformScriptModelXml() {

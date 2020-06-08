@@ -1,6 +1,10 @@
-package apps;
+package jmri.util.startup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.event.ActionEvent;
+
+import javax.swing.Action;
+
+import jmri.JmriException;
 
 /**
  * Invokes a Swing Action when the program is started.
@@ -16,14 +20,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  * @author Bob Jacobsen Copyright 2003
  * @see jmri.util.startup.PerformActionModelFactory
- * @author Randall Wood Copyright 2020
- * @deprecated since 4.21.1; use {@link jmri.util.startup.PerformActionModel} instead
  */
-@Deprecated
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
-public class PerformActionModel extends jmri.util.startup.PerformActionModel {
+public class PerformActionModel extends AbstractActionModel {
 
     public PerformActionModel() {
         super();
+    }
+
+    @Override
+    protected void performAction(Action action) throws JmriException {
+        action.actionPerformed(new ActionEvent("prefs", 0, ""));
     }
 }

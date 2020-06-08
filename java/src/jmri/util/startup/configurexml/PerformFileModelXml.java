@@ -1,6 +1,7 @@
-package apps.configurexml;
+package jmri.util.startup.configurexml;
 
-import jmri.util.startup.PerformScriptModel;
+import jmri.util.startup.PerformFileModel;
+
 import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
@@ -10,16 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of PerformScriptModel objects
+ * Handle XML persistence of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @author Ken Cameron Copyright: Copyright (c) 2014
- * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.CreateButtonModelXml} instead
+ * @author Ken Cameron Copyright: 2014(c)
+ * @see jmri.util.startup.PerformFileModelFactory
  */
-@Deprecated
-public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter {
+public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
-    public PerformScriptModelXml() {
+    public PerformFileModelXml() {
     }
 
     /**
@@ -31,10 +31,10 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
     @Override
     public Element store(Object o) {
         Element e = new Element("perform");
-        PerformScriptModel g = (PerformScriptModel) o;
+        PerformFileModel g = (PerformFileModel) o;
 
         e.setAttribute("name", FileUtil.getPortableFilename(g.getFileName()));
-        e.setAttribute("type", "ScriptFile");
+        e.setAttribute("type", "XmlFile");
         e.setAttribute("class", this.getClass().getName());
         return e;
     }
@@ -54,9 +54,8 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        String fileName = shared.getAttribute("name").getValue();
-        fileName = FileUtil.getAbsoluteFilename(fileName);
-        PerformScriptModel m = new PerformScriptModel();
+        String fileName = FileUtil.getAbsoluteFilename(shared.getAttribute("name").getValue());
+        PerformFileModel m = new PerformFileModel();
         m.setFileName(fileName);
         InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         return result;
@@ -73,6 +72,6 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PerformScriptModelXml.class);
+    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class);
 
 }

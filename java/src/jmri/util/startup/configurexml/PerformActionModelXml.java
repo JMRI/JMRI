@@ -1,4 +1,4 @@
-package apps.configurexml;
+package jmri.util.startup.configurexml;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -16,10 +16,8 @@ import jmri.jmrix.swing.SystemConnectionAction;
  * Handle XML persistence of PerformActionModel objects.
  *
  * @author Bob Jacobsen Copyright (c) 2003
- * @see apps.startup.PerformActionModelFactory
- * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.CreateButtonModelXml} instead
+ * @see jmri.util.startup.PerformActionModelFactory
  */
-@Deprecated
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public PerformActionModelXml() {
