@@ -84,9 +84,9 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     String override = StartupActionModelUtil.getDefault().getOverride(name);
                     if (override != null) {
                         action.setAttribute("name", override);
-                        log.info("Overridding startup action class {} with {}", name, override);
+                        log.info("Overriding startup action class {} with {}", name, override);
                         this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override),
-                                Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override)));
+                                Bundle.getMessage("StartupActionsOverriddenClasses", name, override)));
                         name = override; // after logging difference and creating error message
                     }
                     String type = action.getAttributeValue("type"); // NOI18N
