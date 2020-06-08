@@ -1160,9 +1160,10 @@
                       for changing BDL168 Board Address</strong></td>
               <td style="width: 47%" align="center"><strong>Instructions for 
                       changing Board Address (Board ID) when using JMRI</strong></td></tr>
-          <tr><td align="center">0</td><td colspan="2"><strong>(A step <em>not</em> included in Digitrax 
-                  documentation, but one that is necessary regardless of what 
-                  method you use!)</strong><br><br>0. Ensure that <em>NO OTHER ACTIVITY</em> is occurring on LocoNet!<br><br>
+          <tr><td align="center">0</td><td colspan="2"><strong>(A step <em>not</em> 
+                  included in Digitrax documentation, but one that is necessary 
+                  regardless of what method you use!)</strong><br><br>0. Ensure 
+                  that <em>NO OTHER ACTIVITY</em> is occurring on LocoNet!<br><br>
                   If <em>anything</em> causes generation of a LocoNet Turnout Control 
                   message after the device button has been pressed, but before you 
                   issue the turnout control message to the specific number you 
@@ -1171,47 +1172,55 @@
                   number you are expecting!<br><br>Be aware that movement of trains on 
                   layouts where signaling is implemented can cause generation of
                   LocoNet Turnout control messages!</td></tr>
-          <tr><td></td><td>Note: The steps below are from Section "<em>8.1 To set up the BDL168 board address</em>", with some comments added by JMRI developers.)</td><td></td></tr>
-          <tr><td align="center">0.25</td><td></td><td>Configure JMRI to communicate with with your LocoNet hardware.</td></tr>
-          <tr><td align="center">0.5</td><td></td><td>See <a href="#BoardIdNote1">Note 1</a> below before 
-                  proceeding.</td></tr>
-          <tr><td align="center">1</td><td>Power up your BDL168.</td><td>Power up your layout and start JMRI.</td></tr>
-          <tr><td align="center">2</td><td>Press the switch behind the green ID LED for about 1 second, 
-                  then release it. The green ID LED will blink. The red option LED 
-                  will not light. This let's you know that you are in board 
-                  address set up mode.<br><br><em>(Note: These instructions apply to BDL16, 
-                  BDL162, and BDL168 devices.  Other instructions, buttons, and LED color/flashing
-                  conditions may apply for other device types.  See the appropriate manual for device-specific
-                  instructions!)</em></td>
+          <tr><td align="center">0.25</td><td></td><td>Configure JMRI to 
+                  communicate with with your LocoNet hardware.</td></tr>
+          <tr><td align="center">0.5</td><td colspan="2">See <a href="#BoardIdNote1">
+                  Note 1</a> below before proceeding. This step applies <em>both</em>
+                  for the Digitrax procedure and the JMRI-based procedure.</td></tr>
+          <tr><td rowspan="2" align="center">1</td><td align="center">Note: Steps 
+                  1 thru 4 of the Digitrax instructions are from Section "<em>8.1
+                  To set up the BDL168 board address</em>" of the Digitrax BDL168 
+                  manual, with some comments added by JMRI developers.)</td>
+              <td rowspan="2">Power up your layout, BDL168, and start JMRI.</td></tr>
+          <tr><td>Power up your BDL168.</td></tr>
+          <tr><td align="center">2</td><td>Press the switch behind the green ID 
+                  LED for about 1 second, then release it. The green ID LED will 
+                  blink. The red option LED will not light. This let's you know 
+                  that you are in board address set up mode.<br><br><em>(Note: 
+                  These instructions apply to BDL16, BDL162, and BDL168 devices.  
+                  Other instructions, buttons, and LED color/flashing conditions 
+                  may apply for other device types.  See the appropriate manual 
+                  for device-specific instructions!)</em></td>
               <td>Same as per Digitrax instructions.</td></tr>
-          <tr><td align="center">3</td><td>Connect a DT or UT series Digitrax throttle to the BDL168's 
-                  LocoNet connector. (This can only be done with a Digitrax 
-                  LocoNet throttle or equivalent software).</td>
+          <tr><td align="center">3</td><td>Connect a DT or UT series Digitrax 
+                  throttle to the BDL168's LocoNet connector. (This can only be 
+                  done with a Digitrax LocoNet throttle or equivalent software).</td>
               <td>Open JMRI's "Turnout Control" tool, via "Tools->Turnout Control"</td></tr>
-          <tr><td align="center">4</td><td>Go into SWITCH mode on the throttle. Select the switch number 
-                  that corresponds to the board address you want to set and issue 
-                  a closed "c" command to set the board address. The board 
-                  address is changed as soon as you issue the SWITCH command. 
-                  See following instructions for using specific Digitrax throttles 
-                  for setting the address. (Those instructions are not included here!)</td>
+          <tr><td align="center">4</td><td>Go into SWITCH mode on the throttle. 
+                  Select the switch number that corresponds to the board address 
+                  you want to set and issue a closed "c" command to set the 
+                  board address. The board address is changed as soon as you 
+                  issue the SWITCH command. See following instructions for using 
+                  specific Digitrax throttles for setting the address. <em>(Those 
+                  instructions omitted here.)</em></td>
               <td>Enter the switch number which corresponds to the board address
                   you want to set in the number entry box below "Turnout" at the top
                   of the JMRI "Turnout Control" tool.  As an example, to set Board 
                   Address (Board ID) to 4, enter "4" (without quotes".  Then 
                   activate the window's "Closed" button.</td></tr>
-          <tr><td align="center">5</td><td colspan="2">(A JMRI-specific step, not included in Digitrax 
-                  documentation, which applies regardless of which method you use.)<br><br>See <a href="#BoardIdNote2">Note 2</a> and 
-                  <a href="#BoardIdNote3">Note 3</a> below for important information on
-                  JMRI behaviors which may influence how JMRI sees the device and may
-                  require changes to any pre-existing JMRI uses of affected 
-                  Turnout, Sensor, and/or Reporter configurations, and/or customized 
-                  scripts monitoring for LocoNet Power Management messages.</td>
-      </table>
-      <p>After completing the instructions as noted above, the device <em>should</em> be 
-          configured for the selected Device address.</p>
-      <h4>Notes on Board Address (Board ID)</h4>
-      <ul>
-          <li><a name="BoardIdNote1" id="BoardIdNote1">Note 1</a>: Some devices, 
+          <tr><td align="center">5</td><td colspan="2">(A JMRI-specific step, not 
+                  included in Digitrax documentation, which applies regardless of 
+                  which method you use.)<br><br>See <a href="#BoardIdNote2">Note 
+                  2</a> below for important information on JMRI behaviors which 
+                  may influence how JMRI sees the device and which may require 
+                  changes to any pre-existing JMRI uses of affected Turnout, 
+                  Sensor, and/or Reporter configurations, and/or customized 
+                  scripts monitoring for LocoNet Power Management messages.</td></tr>
+          <tr><td align="center">6</td><td></td><td>Quit and Restart JMRI.  See <a href="#BoardIdNote3">
+                  Note 3</a> below, for more information on why this can be 
+                  important.</td></tr>
+          <tr><td align="center"><a name="BoardIdNote1" id="BoardIdNote1"><strong>Note 1</strong></a></td>
+              <td colspan="2">Some devices, 
               by default, get their turnout control messages from 
               the DCC track signal, and rely upon the command station to forward
               the LocoNet turnout control messages as DCC track signal stationary 
@@ -1225,9 +1234,9 @@
                       messages from LocoNet instead of RailSync.  This can be done 
                       using the appropriate JMRI tool in the LocoNet directory, 
                       if one is available for the device type, or, using the JMRI
-                      Roster, if the device type is supported in the Roster.</li></ul>
-          </li>
-          <li><a name="BoardIdNote2" id="BoardIdNote2">Note 2</a>: The Board ID 
+                      Roster, if the device type is supported in the Roster.</li></ul></td></tr>
+          <tr><td align="center"><a name="BoardIdNote2" id="BoardIdNote2"><strong>Note 2</strong></a></td>
+              <td colspan="2">The Board ID 
               number typically implies the Turnout, Sensor, Reporter, 
           and/or power management "addresses" used by the device.  Changing the 
           Board ID number typically forces the device to use different addresses.
@@ -1235,16 +1244,21 @@
           the Board ID number was changed.  If you have used "User Names" to 
           reference those items, it is usually sufficient to give a similar User Name
           to each "relocated" Turnout, Sensor, or Reporter object, and then change
-          each reference to the old object User Name to reflect the new User Name.</li>
-          <li><a name="BoardIdNote3" id="BoardIdNote3">Note 3</a>: If JMRI has "pre-populated" the Turnouts or Sensors table
-          with information about the device, it will be necessary to quit and 
-          restart JMRI so that any information that was "pre-populated" from the 
-          device based on the old Board ID value will _not_ be remembered.  Restarting
-          JMRI causes JMRI to request the "pre-population" information, and if the
+          each reference to the old object User Name to reflect the new User Name.</td></tr>
+          <tr><td align="center"><a name="BoardIdNote3" id="BoardIdNote3"><strong>Note 3</strong></a></td>
+              <td colspan="2">If JMRI has 
+              "pre-populated" the Turnouts or Sensors table with information about 
+              the device, it will be necessary to quit and restart JMRI so that 
+              any information that was "pre-populated" from the device based on 
+              its old Board ID value will _not_ be remembered.  Restarting JMRI 
+              causes JMRI to request the "pre-population" information, and if the
           device responds to the request, the device should respond with its information
-          and the Turnouts and/or Sensors table should be pre-populated.</li>
-      </ul>
-      
+          and the Turnouts and/or Sensors table should be pre-populated.</td></tr>
+          
+      </table>
+      <p>After completing the instructions as noted above, the device <em>should</em> be 
+          configured for the selected Device address.</p>
+     
       <a name="devicetoollimits" id="devicetoollimits"></a><h3>Some JMRI LocoNet-specific device and feature limitations</h3>
 
       <ul>
