@@ -290,6 +290,9 @@ public class CbusEventTablePaneTest {
         
         assertThat(tempDir).isNotNull();
         
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+        memo.configureManagers();
+        
         try {
             JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
         } catch ( java.io.IOException e) {
