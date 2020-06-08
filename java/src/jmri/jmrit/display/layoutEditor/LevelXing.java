@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.geom.Point2D;
@@ -691,7 +690,7 @@ public class LevelXing extends LayoutTrack {
      * Add Layout Blocks.
      * @param newLayoutBlock the layout block to add.
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")  // temporary, as added in error
     public void setLayoutBlockAC(LayoutBlock newLayoutBlock) {
         LayoutBlock blockAC = getLayoutBlockAC();
         LayoutBlock blockBD = getLayoutBlockBD();
@@ -714,7 +713,7 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value") // temporary, as added in error
     public void setLayoutBlockBD(LayoutBlock newLayoutBlock) {
         LayoutBlock blockAC = getLayoutBlockAC();
         LayoutBlock blockBD = getLayoutBlockBD();
@@ -816,21 +815,21 @@ public class LevelXing extends LayoutTrack {
     /*
     * Modify coordinates methods.
      */
-    public void setCoordsA(Point2D p) {
-        layoutEditor.getLevelXingView(this).setCoordsA(p); // temporary
-    }
-
-    public void setCoordsB(Point2D p) {
-        layoutEditor.getLevelXingView(this).setCoordsB(p); // temporary
-    }
-
-    public void setCoordsC(Point2D p) {
-        layoutEditor.getLevelXingView(this).setCoordsC(p); // temporary
-    }
-
-    public void setCoordsD(Point2D p) {
-        layoutEditor.getLevelXingView(this).setCoordsD(p); // temporary
-    }
+//     public void setCoordsA(Point2D p) {
+//         layoutEditor.getLevelXingView(this).setCoordsA(p); // temporary
+//     }
+// 
+//     public void setCoordsB(Point2D p) {
+//         layoutEditor.getLevelXingView(this).setCoordsB(p); // temporary
+//     }
+// 
+//     public void setCoordsC(Point2D p) {
+//         layoutEditor.getLevelXingView(this).setCoordsC(p); // temporary
+//     }
+// 
+//     public void setCoordsD(Point2D p) {
+//         layoutEditor.getLevelXingView(this).setCoordsD(p); // temporary
+//     }
 
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";

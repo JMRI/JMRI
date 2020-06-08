@@ -6,7 +6,6 @@ import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.JPopupMenu;
 
 import jmri.*;
 import jmri.jmrit.signalling.SignallingGuiTools;
@@ -2213,8 +2212,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
         activateTurnout();
     } // setObjects
 
-    private JPopupMenu popup = null;
-
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
         if (isTurnoutTypeTurnout()) {
@@ -2503,14 +2500,9 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see {@link #remove()}
+     * the object is still displayed; see {@link #remove()} - temporary, as should be in view
      */
-    public void dispose() {
-        if (popup != null) {
-            popup.removeAll();
-        }
-        popup = null;
-    }
+    public void dispose() {}
 
     /**
      * Remove this object from display and persistance.

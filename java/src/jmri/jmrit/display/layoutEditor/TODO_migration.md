@@ -59,9 +59,8 @@ Go through and confirm individually:
         LayoutXOver
  - Remove view variables from topology
         LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye
+        LayoutTurnout
         LayoutSlip 
-        LayoutXOver
         
  - [ ] Load & Store: TrackSegmentViewXml et al storing as  class="TrackSegmentView" to ease file comparison & for compatibility; change back after figuring out compatibility
  - load with specific view

@@ -4653,22 +4653,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
 
                         case LEVEL_XING_A: {
-                            ((LevelXing) selectedObject).setCoordsA(currentPoint);
+                            getLevelXingView((LevelXing) selectedObject).setCoordsA(currentPoint);
                             break;
                         }
 
                         case LEVEL_XING_B: {
-                            ((LevelXing) selectedObject).setCoordsB(currentPoint);
+                            getLevelXingView((LevelXing) selectedObject).setCoordsB(currentPoint);
                             break;
                         }
 
                         case LEVEL_XING_C: {
-                            ((LevelXing) selectedObject).setCoordsC(currentPoint);
+                            getLevelXingView((LevelXing) selectedObject).setCoordsC(currentPoint);
                             break;
                         }
 
                         case LEVEL_XING_D: {
-                            ((LevelXing) selectedObject).setCoordsD(currentPoint);
+                            getLevelXingView((LevelXing) selectedObject).setCoordsD(currentPoint);
                             break;
                         }
 
@@ -5939,25 +5939,26 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         // remove connections if any
+        LevelXingView ov = getLevelXingView(o);
+        
         TrackSegment t = (TrackSegment) o.getConnectA();
-
         if (t != null) {
-            substituteAnchor(o.getCoordsA(), o, t);
+            substituteAnchor(ov.getCoordsA(), o, t);
         }
         t = (TrackSegment) o.getConnectB();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsB(), o, t);
+            substituteAnchor(ov.getCoordsB(), o, t);
         }
         t = (TrackSegment) o.getConnectC();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsC(), o, t);
+            substituteAnchor(ov.getCoordsC(), o, t);
         }
         t = (TrackSegment) o.getConnectD();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsD(), o, t);
+            substituteAnchor(ov.getCoordsD(), o, t);
         }
 
         // decrement block use count if any blocks in use
