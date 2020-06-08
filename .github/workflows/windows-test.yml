@@ -30,7 +30,7 @@ jobs:
       run: |
         # run all tests using maven
         mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
-    - name: Upload math result for job 1
+    - name: Upload generated screenshots
       uses: actions/upload-artifact@v2
       with:
         name: screenshots
