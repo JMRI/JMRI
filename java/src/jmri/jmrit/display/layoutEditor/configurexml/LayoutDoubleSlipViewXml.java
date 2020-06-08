@@ -25,6 +25,7 @@ public class LayoutDoubleSlipViewXml extends LayoutSlipViewXml {
     public LayoutDoubleSlipViewXml() {
     }
 
+    @Override
     protected void addClass(Element element) {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleSlipXml");
     }

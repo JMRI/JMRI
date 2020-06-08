@@ -245,23 +245,10 @@ public class LayoutTurnoutView extends LayoutTrackView {
     protected NamedBeanHandle<SignalHead> signalD1HeadNamed = null; // single or double crossover only
     protected NamedBeanHandle<SignalHead> signalD2HeadNamed = null; // LH_Xover and double crossover only
 
-    // protected NamedBeanHandle<SignalMast> signalAMastNamed = null; // Throat
-    // protected NamedBeanHandle<SignalMast> signalBMastNamed = null; // Continuing
-    // protected NamedBeanHandle<SignalMast> signalCMastNamed = null; // diverging
-    // protected NamedBeanHandle<SignalMast> signalDMastNamed = null; // single or double crossover only
-
-    // protected NamedBeanHandle<Sensor> sensorANamed = null; // Throat
-    // protected NamedBeanHandle<Sensor> sensorBNamed = null; // Continuing
-    // protected NamedBeanHandle<Sensor> sensorCNamed = null; // diverging
-    // protected NamedBeanHandle<Sensor> sensorDNamed = null; // single or double crossover only
-
-    // protected final TurnoutType type;
-
     public LayoutTrack connectA = null;      // throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
     public LayoutTrack connectB = null;      // straight leg of LH and RH turnouts
     public LayoutTrack connectC = null;
     public LayoutTrack connectD = null;      // double xover, RH Xover, LH Xover only
-// 
 
     public Point2D dispB = new Point2D.Double(20.0, 0.0);
     public Point2D dispA = new Point2D.Double(20.0, 10.0);
@@ -289,6 +276,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
      */
     // this should only be used for debugging...
     @Override
+    @Nonnull
     public String toString() {
         return "LayoutTurnout " + getName();
     }
@@ -308,10 +296,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return useBlockSpeed;
     }
 
+    @CheckForNull
     public String getTurnoutName() {
         return turnout.getTurnoutName();
     }
 
+    @CheckForNull
     public String getSecondTurnoutName() {
         return turnout.getSecondTurnoutName();
     }
@@ -336,14 +326,17 @@ public class LayoutTurnoutView extends LayoutTrackView {
        return turnout.getBlockDName();
      }
 
+    @CheckForNull
     public SignalHead getSignalHead(Geometry loc) {
         return turnout.getSignalHead(loc);
     }
 
+    @CheckForNull
     public SignalHead getSignalA1() {
         return turnout.getSignalA1();
     }
 
+    @Nonnull
     public String getSignalA1Name() {
         return turnout.getSignalA1Name();
     }
@@ -352,10 +345,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalA1Name(signalHead);
     }
 
+    @CheckForNull
     public SignalHead getSignalA2() {
         return turnout.getSignalA2();
     }
 
+    @Nonnull
     public String getSignalA2Name() {
         return turnout.getSignalA2Name();
     }
@@ -364,22 +359,26 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalA2Name(signalHead);
     }
 
+   @CheckForNull
     public SignalHead getSignalA3() {
         return turnout.getSignalA3();
     }
 
+    @Nonnull
     public String getSignalA3Name() {
         return turnout.getSignalA3Name();
     }
 
-    public void setSignalA3Name(@CheckForNull String signalHead) {
+     public void setSignalA3Name(@CheckForNull String signalHead) {
         turnout.setSignalA3Name(signalHead);
     }
 
+    @CheckForNull
     public SignalHead getSignalB1() {
         return turnout.getSignalB1();
     }
 
+    @Nonnull
     public String getSignalB1Name() {
         return turnout.getSignalB1Name();
     }
@@ -388,10 +387,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalB1Name(signalHead);
     }
 
+    @CheckForNull
     public SignalHead getSignalB2() {
         return turnout.getSignalB2();
     }
 
+    @Nonnull
     public String getSignalB2Name() {
         return turnout.getSignalB2Name();
     }
@@ -400,10 +401,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalB2Name(signalHead);
     }
 
+    @CheckForNull
     public SignalHead getSignalC1() {
         return turnout.getSignalC1();
     }
 
+    @Nonnull
     public String getSignalC1Name() {
         return turnout.getSignalC1Name();
     }
@@ -412,10 +415,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalC1Name(signalHead);
     }
 
+    @CheckForNull
     public SignalHead getSignalC2() {
         return turnout.getSignalC2();
     }
 
+    @Nonnull
     public String getSignalC2Name() {
         return turnout.getSignalC2Name();
     }
@@ -424,10 +429,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalC2Name(signalHead);
     }
 
+    @CheckForNull
     public SignalHead getSignalD1() {
         return turnout.getSignalD1();
     }
 
+    @Nonnull
     public String getSignalD1Name() {
         return turnout.getSignalD1Name();
     }
@@ -436,10 +443,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalD1Name(signalHead);
     }
 
+    @CheckForNull
     public SignalHead getSignalD2() {
         return turnout.getSignalD2();
     }
 
+    @Nonnull
     public String getSignalD2Name() {
         return turnout.getSignalD2Name();
     }
@@ -448,7 +457,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalD2Name(signalHead);
     }
 
-    public void removeBeanReference(jmri.NamedBean nb) {
+    public void removeBeanReference(@CheckForNull jmri.NamedBean nb) {
         turnout.removeBeanReference(nb);
     }
 
@@ -467,6 +476,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
      * @param pointName Specify the point (A-D) or all (All) points.
      * @return a list of bean reference names.
      */
+    @Nonnull
     public ArrayList<String> getBeanReferences(String pointName) {
         throw new IllegalArgumentException("should be called on LayoutTurnout");
     }
@@ -476,6 +486,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return turnout.getSignalAMastName();
     }
 
+    @CheckForNull
     public SignalMast getSignalAMast() {
         return turnout.getSignalAMast();
     }
@@ -484,10 +495,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalAMast(signalMast);
     }
 
+    @Nonnull
     public String getSignalBMastName() {
         return turnout.getSignalBMastName();
     }
 
+    @CheckForNull
     public SignalMast getSignalBMast() {
         return turnout.getSignalBMast();
     }
@@ -496,10 +509,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalBMast(signalMast);
     }
 
+    @Nonnull
     public String getSignalCMastName() {
         return turnout.getSignalCMastName();
     }
 
+    @CheckForNull
     public SignalMast getSignalCMast() {
         return turnout.getSignalCMast();
     }
@@ -508,10 +523,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalCMast(signalMast);
     }
 
+    @Nonnull
     public String getSignalDMastName() {
         return turnout.getSignalDMastName();
     }
 
+    @CheckForNull
     public SignalMast getSignalDMast() {
         return turnout.getSignalDMast();
     }
@@ -520,10 +537,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalDMast(signalMast);
     }
 
+    @Nonnull
     public String getSensorAName() {
         return turnout.getSensorAName();
     }
 
+    @CheckForNull
     public Sensor getSensorA() {
         return turnout.getSensorA();
     }
@@ -532,10 +551,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSensorA(sensorName);
     }
 
+    @Nonnull
     public String getSensorBName() {
         return turnout.getSensorBName();
     }
 
+    @CheckForNull
     public Sensor getSensorB() {
         return turnout.getSensorB();
     }
@@ -544,10 +565,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSensorB(sensorName);
     }
 
+    @Nonnull
     public String getSensorCName() {
         return turnout.getSensorCName();
     }
 
+    @CheckForNull
     public Sensor getSensorC() {
         return turnout.getSensorC();
     }
@@ -556,10 +579,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSensorC(sensorName);
     }
 
+    @Nonnull
     public String getSensorDName() {
         return turnout.getSensorDName();
     }
 
+    @CheckForNull
     public Sensor getSensorD() {
         return turnout.getSensorD();
     }
@@ -606,9 +631,9 @@ public class LayoutTurnoutView extends LayoutTrackView {
     }
 
     /**
-     * @return null if no turnout set
+     * @return null if no turnout set // temporary?  Might want to run all calls through this class; but this is getModel equiv
      */
-    @CheckForNull  // temporary?  Might want to run all calls through this class; but this is getModel equiv
+    @CheckForNull  
     public Turnout getTurnout() {
         return turnout.getTurnout();
     }
@@ -629,6 +654,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setTurnout(tName);
     }
 
+    @CheckForNull
     public Turnout getSecondTurnout() {
         return turnout.getSecondTurnout();
     }
@@ -671,6 +697,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
      * {@inheritDoc}
      */
     @Override
+    @CheckForNull
     public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
         return turnout.getConnection(connectionType);
     }
@@ -679,42 +706,47 @@ public class LayoutTurnoutView extends LayoutTrackView {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws jmri.JmriException {
+    public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws jmri.JmriException {
         turnout.setConnection(connectionType, o, type);
     }
 
-    public void setConnectA(LayoutTrack o, HitPointType type) {
+    public void setConnectA(@CheckForNull LayoutTrack o, HitPointType type) {
         turnout.setConnectA(o, type);
     }
 
-    public void setConnectB(LayoutTrack o, HitPointType type) {
+    public void setConnectB(@CheckForNull LayoutTrack o, HitPointType type) {
         turnout.setConnectB(o, type);
     }
 
-    public void setConnectC(LayoutTrack o, HitPointType type) {
+    public void setConnectC(@CheckForNull LayoutTrack o, HitPointType type) {
         turnout.setConnectC(o, type);
     }
 
-    public void setConnectD(LayoutTrack o, HitPointType type) {
+    public void setConnectD(@CheckForNull LayoutTrack o, HitPointType type) {
         turnout.setConnectD(o, type);
     }
 
+    @CheckForNull
     public LayoutBlock getLayoutBlock() {
         return turnout.getLayoutBlock();
     }
 
+    @CheckForNull
     public LayoutBlock getLayoutBlockB() {
         return turnout.getLayoutBlockB();
     }
 
+    @CheckForNull
     public LayoutBlock getLayoutBlockC() {
         return turnout.getLayoutBlockC();
     }
 
+    @CheckForNull
     public LayoutBlock getLayoutBlockD() {
         return turnout.getLayoutBlockD();
     }
 
+    @Nonnull
     public Point2D getCoordsA() {
         if (isTurnoutTypeXover()) {
             if (version == 2) {
@@ -728,6 +760,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         }
     }
 
+    @Nonnull
     public Point2D getCoordsB() {
         if ((version == 2) && isTurnoutTypeXover()) {
             return pointB;
@@ -735,6 +768,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return MathUtil.add(getCoordsCenter(), dispB);
     }
 
+    @Nonnull
     public Point2D getCoordsC() {
         if ((version == 2) && isTurnoutTypeXover()) {
             return pointC;
@@ -742,6 +776,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return MathUtil.add(getCoordsCenter(), dispA);
     }
 
+    @Nonnull
     public Point2D getCoordsD() {
         if ((version == 2) && isTurnoutTypeXover()) {
             return pointD;
@@ -754,6 +789,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
         Point2D result = getCoordsCenter();
         switch (connectionType) {
@@ -782,6 +818,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Rectangle2D getBounds() {
         Rectangle2D result;
 

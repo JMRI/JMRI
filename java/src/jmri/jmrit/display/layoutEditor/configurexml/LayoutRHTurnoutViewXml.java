@@ -26,6 +26,7 @@ public class LayoutRHTurnoutViewXml extends LayoutTurnoutViewXml {
     public LayoutRHTurnoutViewXml() {
     }
 
+    @Override
     protected void addClass(Element element) {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml");
     }

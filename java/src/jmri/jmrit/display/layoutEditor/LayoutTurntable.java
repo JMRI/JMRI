@@ -79,6 +79,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @return the string
      */
     @Override
+    @Nonnull
     public String toString() {
         return "LayoutTurntable " + getName();
     }
@@ -206,6 +207,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param index the index
      * @return the connection for the ray with this value of getConnectionIndex
      */
+    @CheckForNull
     public TrackSegment getRayConnectIndexed(int index) {
         TrackSegment result = null;
         for (RayTrack rt : rayTrackList) {
@@ -223,6 +225,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param i the index in the rayTrackList
      * @return the connection for the ray at that index in the rayTrackList or null
      */
+    @CheckForNull
     public TrackSegment getRayConnectOrdered(int i) {
         TrackSegment result = null;
 
@@ -241,7 +244,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param ts    the connection
      * @param index the index in the rayTrackList
      */
-    public void setRayConnect(TrackSegment ts, int index) {
+    public void setRayConnect(@CheckForNull TrackSegment ts, int index) {
         for (RayTrack rt : rayTrackList) {
             if (rt.getConnectionIndex() == index) {
                 rt.setConnect(ts);
@@ -251,6 +254,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     // should only be used by xml save code
+    @Nonnull
     public List<RayTrack> getRayTrackList() {
         return rayTrackList;
     }
@@ -301,7 +305,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param turnoutName the turnout name
      * @param state       the state
      */
-    public void setRayTurnout(int index, String turnoutName, int state) {
+    public void setRayTurnout(int index, @Nonnull String turnoutName, int state) {
         boolean found = false; // assume failure (pessimist!)
         for (RayTrack rt : rayTrackList) {
             if (rt.getConnectionIndex() == index) {
@@ -322,6 +326,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param i the index
      * @return name of the turnout for the ray at this index
      */
+    @CheckForNull
     public String getRayTurnoutName(int i) {
         String result = null;
         if (i < rayTrackList.size()) {
@@ -337,6 +342,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param i the index
      * @return the turnout for the ray at this index
      */
+    @CheckForNull
     public Turnout getRayTurnout(int i) {
         Turnout result = null;
         if (i < rayTrackList.size()) {
@@ -438,7 +444,7 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws jmri.JmriException {
+    public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws jmri.JmriException {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
@@ -525,7 +531,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param p the layout editor
      */
     @Override
-    public void setObjects(LayoutEditor p) {
+    public void setObjects(@Nonnull LayoutEditor p) {
         if (tLayoutBlockName != null && !tLayoutBlockName.isEmpty()) {
             setLayoutBlockByName(tLayoutBlockName);
         }
@@ -598,7 +604,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param rayTrack the ray track
      */
-    public void deleteRay(RayTrack rayTrack) {
+    public void deleteRay(@Nonnull RayTrack rayTrack) {
         TrackSegment t = null;
         if (rayTrackList == null) {
             log.error("{}.deleteRay(null); rayTrack is null", getName());
@@ -714,6 +720,7 @@ public class LayoutTurntable extends LayoutTrack {
          *
          * @return the track segment connected to this ray
          */
+        @CheckForNull
         public TrackSegment getConnect() {
             return connect;
         }
@@ -785,7 +792,7 @@ public class LayoutTurntable extends LayoutTrack {
          * @param turnoutName the turnout name
          * @param state       its state
          */
-        public void setTurnout(String turnoutName, int state) {
+        public void setTurnout(@Nonnull String turnoutName, int state) {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
                 mTurnoutListener = (PropertyChangeEvent e) -> {
@@ -833,8 +840,9 @@ public class LayoutTurntable extends LayoutTrack {
         /**
          * Get the turnout for this ray track.
          *
-         * @return the turnout
+         * @return the turnout or null
          */
+        @CheckForNull
         public Turnout getTurnout() {
             if (namedTurnout == null) {
                 return null;
@@ -847,6 +855,7 @@ public class LayoutTurntable extends LayoutTrack {
          *
          * @return the turnout name
          */
+        @CheckForNull
         public String getTurnoutName() {
             if (namedTurnout == null) {
                 return null;
@@ -879,30 +888,6 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-//     @Override
-//     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//     }
-
-    /**
-     * {@inheritDoc}
-     */
-//     @Override
-//     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//     }
-
-    /**
-     * {@inheritDoc}
-     */
-//     @Override
-//     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//     }
-// 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void reCheckBlockBoundary() {
         // nothing to see here... move along...
@@ -912,6 +897,7 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
+    @CheckForNull
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         // nothing to see here... move along...
         return null;
@@ -921,6 +907,7 @@ public class LayoutTurntable extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public List<HitPointType> checkForFreeConnections() {
         List<HitPointType> result = new ArrayList<>();
 

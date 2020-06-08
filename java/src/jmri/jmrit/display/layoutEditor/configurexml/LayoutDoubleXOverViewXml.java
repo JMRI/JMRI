@@ -29,6 +29,7 @@ public class LayoutDoubleXOverViewXml extends LayoutXOverViewXml {
     public LayoutDoubleXOverViewXml() {
     }
 
+    @Override
     protected void addClass(Element element) {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleXOverXml");
     }

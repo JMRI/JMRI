@@ -25,7 +25,8 @@ public class LayoutSingleSlipViewXml extends LayoutSlipViewXml {
 
     public LayoutSingleSlipViewXml() {
     }
-
+    
+    @Override
     protected void addClass(Element element) {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutSingleSlipXml");
     }

@@ -26,6 +26,7 @@ public class LayoutLHXOverViewXml extends LayoutXOverViewXml {
     public LayoutLHXOverViewXml() {
     }
 
+    @Override
     protected void addClass(Element element) {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutLHXOverXml");
     }

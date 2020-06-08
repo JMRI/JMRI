@@ -26,6 +26,7 @@ public class LayoutXOverViewXml extends LayoutTurnoutViewXml {
     public LayoutXOverViewXml() {
     }
 
+    @Override
     protected void addClass(Element element) {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutXOverXml");
     }

@@ -4614,13 +4614,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     _lastY = yLoc;
                 } else {
                     switch (selectedHitPointType) {
-                        case POS_POINT: {
-                            getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
-                            isDragging = true;
-                            break;
-                        }
-
-                        case TURNOUT_CENTER: {
+                        case POS_POINT: 
+                        case TURNOUT_CENTER: 
+                        case LEVEL_XING_CENTER:
+                        case SLIP_LEFT:
+                        case SLIP_RIGHT:
+                        case TURNTABLE_CENTER:
+                        {
                             getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
                             isDragging = true;
                             break;
@@ -4646,12 +4646,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             break;
                         }
 
-                        case LEVEL_XING_CENTER: {
-                            getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
-                            isDragging = true;
-                            break;
-                        }
-
                         case LEVEL_XING_A: {
                             getLevelXingView((LevelXing) selectedObject).setCoordsA(currentPoint);
                             break;
@@ -4672,13 +4666,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             break;
                         }
 
-                        case SLIP_LEFT:
-                        case SLIP_RIGHT: {
-                            getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
-                            isDragging = true;
-                            break;
-                        }
-
                         case SLIP_A: {
                             ((LayoutSlip) selectedObject).setCoordsA(currentPoint);
                             break;
@@ -4696,12 +4683,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                         case SLIP_D: {
                             ((LayoutSlip) selectedObject).setCoordsD(currentPoint);
-                            break;
-                        }
-
-                        case TURNTABLE_CENTER: {
-                            getLayoutTrackView((LayoutTrack)selectedObject).setCoordsCenter(currentPoint);
-                            isDragging = true;
                             break;
                         }
 

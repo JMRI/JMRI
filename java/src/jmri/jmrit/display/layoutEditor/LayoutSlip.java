@@ -498,6 +498,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove()
      */
+    @Override
     public void dispose() {
         if (popup != null) {
             popup.removeAll();

@@ -159,8 +159,6 @@ public interface LayoutModels {
      * as it's meant to be the track connectivity direction not the
      * on the screen implementation.
      *
-     * @param p1 the first point
-     * @param p2 the second point
      * @return the octagonal direction from p1 to p2
      */
     public int computeDirection(@Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, 

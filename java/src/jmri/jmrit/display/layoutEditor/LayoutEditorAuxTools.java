@@ -260,19 +260,21 @@ final public class LayoutEditorAuxTools {
                     LayoutTurnout ltx = (LayoutTurnout) prevConnection;
                     // Track Segment connected to continuing track of turnout?
                     if (lc.getConnectedType() == HitPointType.TURNOUT_B) {
-                        if (ltx.getTurnout() != null) {
-                            bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), ltx.getContinuingSense());
+                        Turnout ltxto = ltx.getTurnout();
+                        if ( ltxto != null) {
+                            bs = new BeanSetting(ltxto, ltx.getTurnoutName(), ltx.getContinuingSense());
                             p.addSetting(bs);
                         } else {
                             log.error("No assigned turnout (A): LTO = {}, blk = {}", ltx.getName(), ltx.getLayoutBlock().getDisplayName());  // NOI18N
                         }
                     } else if (lc.getConnectedType() == HitPointType.TURNOUT_C) {
                         // is Track Segment connected to diverging track of turnout?
-                        if (ltx.getTurnout() != null) {
+                        Turnout ltxto = ltx.getTurnout();
+                        if (ltxto != null) {
                             if (ltx.getContinuingSense() == Turnout.CLOSED) {
-                                bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), Turnout.THROWN);
+                                bs = new BeanSetting(ltxto, ltx.getTurnoutName(), Turnout.THROWN);
                             } else {
-                                bs = new BeanSetting(ltx.getTurnout(), ltx.getTurnoutName(), Turnout.CLOSED);
+                                bs = new BeanSetting(ltxto, ltx.getTurnoutName(), Turnout.CLOSED);
                             }
                             p.addSetting(bs);
                         } else {
@@ -292,8 +294,10 @@ final public class LayoutEditorAuxTools {
                             || ((ltz.getTurnoutType() == LayoutTurnout.TurnoutType.LH_XOVER)
                             && ((lc.getConnectedType() == HitPointType.TURNOUT_A)
                             || (lc.getConnectedType() == HitPointType.TURNOUT_C)))) {
-                        if (ltz.getTurnout() != null) {
-                            bs = new BeanSetting(ltz.getTurnout(), ltz.getTurnoutName(), Turnout.CLOSED);
+                            
+                        Turnout ltzto = ltz.getTurnout();
+                        if (ltzto != null) {
+                            bs = new BeanSetting(ltzto, ltz.getTurnoutName(), Turnout.CLOSED);
                             p.addSetting(bs);
                         } else {
                             log.error("No assigned turnout (C): LTO = {}, blk = {}, TO type = {}, conn type = {}", // NOI18N
@@ -305,28 +309,32 @@ final public class LayoutEditorAuxTools {
                     LayoutSlip lsz = (LayoutSlip) prevConnection;
                     if (lsz.getSlipType() == LayoutSlip.TurnoutType.SINGLE_SLIP) {
                         if (lc.getConnectedType() == HitPointType.SLIP_C) {
-                            if (lsz.getTurnout() != null) {
-                                bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_AC));
+                            Turnout lszto = lsz.getTurnout();
+                            if (lszto != null) {
+                                bs = new BeanSetting(lszto, lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_AC));
                                 p.addSetting(bs);
                             } else {
                                 log.error("No assigned turnout (D): LTO = {}, blk = {}", lsz.getName(), lsz.getLayoutBlock().getDisplayName());  // NOI18N
                             }
-                            if (lsz.getTurnoutB() != null) {
-                                bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_AC));
+                            Turnout lsztob = lsz.getTurnoutB();
+                            if (lsztob != null) {
+                                bs = new BeanSetting(lsztob, lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_AC));
                                 p.addSetting(bs);
                             } else {
                                 log.error("No assigned turnoutB (E): LTO = {}, blk = {}", lsz.getName(), lsz.getLayoutBlock().getDisplayName());  // NOI18N
                             }
                         } else if (lc.getConnectedType() == HitPointType.SLIP_B) {
-                            if (lsz.getTurnout() != null) {
-                                bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_BD));
+                            Turnout lszto = lsz.getTurnout();
+                            if (lszto != null) {
+                                bs = new BeanSetting(lszto, lsz.getTurnoutName(), lsz.getTurnoutState(LayoutTurnout.STATE_BD));
                                 p.addSetting(bs);
                             } else {
                                 log.error("No assigned turnout (F): LTO = {}, blk = {}", lsz.getName(), lsz.getLayoutBlock().getDisplayName());  // NOI18N
                             }
 
-                            if (lsz.getTurnoutB() != null) {
-                                bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_BD));
+                            Turnout lsztob = lsz.getTurnoutB();
+                            if (lsztob != null) {
+                                bs = new BeanSetting(lsztob, lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutTurnout.STATE_BD));
                                 p.addSetting(bs);
                             } else {
                                 log.error("No assigned turnoutB (G): LTO = {}, blk = {}", lsz.getName(), lsz.getLayoutBlock().getDisplayName());  // NOI18N

@@ -830,7 +830,7 @@ public class LayoutTurntableView extends LayoutTrackView {
 
     public static class RayTrackVisuals {
 
-        public final RayTrack track;
+        // public final RayTrack track;
         
         // persistant instance variables
         private double rayAngle = 0.0;
@@ -854,7 +854,7 @@ public class LayoutTurntableView extends LayoutTrackView {
         }
 
         public RayTrackVisuals(RayTrack track) {
-            this.track = track;
+            // this.track = track;
         }
     }
 

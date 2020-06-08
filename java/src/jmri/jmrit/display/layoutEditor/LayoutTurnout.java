@@ -376,6 +376,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      */
     // this should only be used for debugging...
     @Override
+    @Nonnull
     public String toString() {
         return "LayoutTurnout " + getName();
     }
@@ -396,6 +397,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return useBlockSpeed;
     }
 
+    @CheckForNull
     public String getTurnoutName() {
         if (namedTurnout != null) {
             turnoutName = namedTurnout.getName();
@@ -403,6 +405,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return turnoutName;
     }
 
+    @CheckForNull
     public String getSecondTurnoutName() {
         if (secondNamedTurnout != null) {
             secondTurnoutName = secondNamedTurnout.getName();
@@ -450,6 +453,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return result;
     }
 
+    @CheckForNull
     public SignalHead getSignalHead(Geometry loc) {
         NamedBeanHandle<SignalHead> signalHead = null;
         switch (loc) {
@@ -490,10 +494,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return null;
     }
 
+    @CheckForNull
     public SignalHead getSignalA1() {
         return signalA1HeadNamed != null ? signalA1HeadNamed.getBean() : null;
     }
 
+    @Nonnull
     public String getSignalA1Name() {
         if (signalA1HeadNamed != null) {
             return signalA1HeadNamed.getName();
@@ -516,10 +522,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public SignalHead getSignalA2() {
         return signalA2HeadNamed != null ? signalA2HeadNamed.getBean() : null;
     }
 
+    @Nonnull
     public String getSignalA2Name() {
         if (signalA2HeadNamed != null) {
             return signalA2HeadNamed.getName();
@@ -542,10 +550,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public SignalHead getSignalA3() {
         return signalA3HeadNamed != null ? signalA3HeadNamed.getBean() : null;
     }
 
+    @Nonnull
     public String getSignalA3Name() {
         if (signalA3HeadNamed != null) {
             return signalA3HeadNamed.getName();
@@ -568,10 +578,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public SignalHead getSignalB1() {
         return signalB1HeadNamed != null ? signalB1HeadNamed.getBean() : null;
     }
 
+    @Nonnull
     public String getSignalB1Name() {
         if (signalB1HeadNamed != null) {
             return signalB1HeadNamed.getName();
@@ -594,10 +606,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public SignalHead getSignalB2() {
         return signalB2HeadNamed != null ? signalB2HeadNamed.getBean() : null;
     }
 
+    @Nonnull
     public String getSignalB2Name() {
         if (signalB2HeadNamed != null) {
             return signalB2HeadNamed.getName();
@@ -620,10 +634,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public SignalHead getSignalC1() {
         return signalC1HeadNamed != null ? signalC1HeadNamed.getBean() : null;
     }
 
+    @Nonnull
     public String getSignalC1Name() {
         if (signalC1HeadNamed != null) {
             return signalC1HeadNamed.getName();
@@ -646,10 +662,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public SignalHead getSignalC2() {
         return signalC2HeadNamed != null ? signalC2HeadNamed.getBean() : null;
     }
 
+    @Nonnull
     public String getSignalC2Name() {
         if (signalC2HeadNamed != null) {
             return signalC2HeadNamed.getName();
@@ -672,10 +690,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public SignalHead getSignalD1() {
         return signalD1HeadNamed != null ? signalD1HeadNamed.getBean() : null;
     }
 
+    @Nonnull
     public String getSignalD1Name() {
         if (signalD1HeadNamed != null) {
             return signalD1HeadNamed.getName();
@@ -698,10 +718,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public SignalHead getSignalD2() {
         return signalD2HeadNamed != null ? signalD2HeadNamed.getBean() : null;
     }
 
+    @Nonnull
     public String getSignalD2Name() {
         if (signalD2HeadNamed != null) {
             return signalD2HeadNamed.getName();
@@ -724,7 +746,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void removeBeanReference(jmri.NamedBean nb) {
+    public void removeBeanReference(@CheckForNull jmri.NamedBean nb) {
         if (nb == null) {
             return;
         }
@@ -810,6 +832,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * @param pointName Specify the point (A-D) or all (All) points.
      * @return a list of bean reference names.
      */
+    @Nonnull
     public ArrayList<String> getBeanReferences(String pointName) {
         ArrayList<String> references = new ArrayList<>();
         if (pointName.equals("A") || pointName.equals("All")) {  // NOI18N
@@ -882,6 +905,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
+    @CheckForNull
     public SignalMast getSignalAMast() {
         if (signalAMastNamed != null) {
             return signalAMastNamed.getBean();
@@ -904,6 +928,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalBMastName() {
         if (signalBMastNamed != null) {
             return signalBMastNamed.getName();
@@ -911,6 +936,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
+    @CheckForNull
     public SignalMast getSignalBMast() {
         if (signalBMastNamed != null) {
             return signalBMastNamed.getBean();
@@ -933,6 +959,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalCMastName() {
         if (signalCMastNamed != null) {
             return signalCMastNamed.getName();
@@ -940,6 +967,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
+    @CheckForNull
     public SignalMast getSignalCMast() {
         if (signalCMastNamed != null) {
             return signalCMastNamed.getBean();
@@ -962,6 +990,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSignalDMastName() {
         if (signalDMastNamed != null) {
             return signalDMastNamed.getName();
@@ -969,6 +998,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
+    @CheckForNull
     public SignalMast getSignalDMast() {
         if (signalDMastNamed != null) {
             return signalDMastNamed.getBean();
@@ -991,6 +1021,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSensorAName() {
         if (sensorANamed != null) {
             return sensorANamed.getName();
@@ -998,6 +1029,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
+    @CheckForNull
     public Sensor getSensorA() {
         if (sensorANamed != null) {
             return sensorANamed.getBean();
@@ -1019,6 +1051,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSensorBName() {
         if (sensorBNamed != null) {
             return sensorBNamed.getName();
@@ -1026,6 +1059,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
+    @CheckForNull
     public Sensor getSensorB() {
         if (sensorBNamed != null) {
             return sensorBNamed.getBean();
@@ -1047,6 +1081,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSensorCName() {
         if (sensorCNamed != null) {
             return sensorCNamed.getName();
@@ -1054,6 +1089,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
+    @CheckForNull
     public Sensor getSensorC() {
         if (sensorCNamed != null) {
             return sensorCNamed.getBean();
@@ -1075,6 +1111,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getSensorDName() {
         if (sensorDNamed != null) {
             return sensorDNamed.getName();
@@ -1082,6 +1119,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
+    @CheckForNull
     public Sensor getSensorD() {
         if (sensorDNamed != null) {
             return sensorDNamed.getBean();
@@ -1189,6 +1227,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public Turnout getSecondTurnout() {
         Turnout result = null;
         if (secondNamedTurnout == null) {
@@ -1295,6 +1334,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
+    @CheckForNull
     public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
         switch (connectionType) {
@@ -1328,7 +1368,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws jmri.JmriException {
+    public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws jmri.JmriException {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type, new Exception("traceback")); // I18IN
@@ -1356,7 +1396,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setConnectA(LayoutTrack o, HitPointType type) {
+    public void setConnectA(@CheckForNull LayoutTrack o, HitPointType type) {
         connectA = o;
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             log.error("{}.setConnectA({}, {}); unexpected type",
@@ -1364,7 +1404,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setConnectB(LayoutTrack o, HitPointType type) {
+    public void setConnectB(@CheckForNull LayoutTrack o, HitPointType type) {
         connectB = o;
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             log.error("{}.setConnectB({}, {}); unexpected type",
@@ -1372,7 +1412,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setConnectC(LayoutTrack o, HitPointType type) {
+    public void setConnectC(@CheckForNull LayoutTrack o, HitPointType type) {
         connectC = o;
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             log.error("{}.setConnectC({}, {}); unexpected type",
@@ -1380,7 +1420,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void setConnectD(LayoutTrack o, HitPointType type) {
+    public void setConnectD(@CheckForNull LayoutTrack o, HitPointType type) {
         connectD = o;
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             log.error("{}.setConnectD({}, {}); unexpected type",
@@ -1388,18 +1428,22 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @CheckForNull
     public LayoutBlock getLayoutBlock() {
         return (namedLayoutBlockA != null) ? namedLayoutBlockA.getBean() : null;
     }
 
+    @CheckForNull
     public LayoutBlock getLayoutBlockB() {
         return (namedLayoutBlockB != null) ? namedLayoutBlockB.getBean() : getLayoutBlock();
     }
 
+    @CheckForNull
     public LayoutBlock getLayoutBlockC() {
         return (namedLayoutBlockC != null) ? namedLayoutBlockC.getBean() : getLayoutBlock();
     }
 
+    @CheckForNull
     public LayoutBlock getLayoutBlockD() {
         return (namedLayoutBlockD != null) ? namedLayoutBlockD.getBean() : getLayoutBlock();
     }
@@ -1564,7 +1608,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     // @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
-    public void setLayoutBlockC(LayoutBlock newLayoutBlock) {
+    public void setLayoutBlockC(@CheckForNull LayoutBlock newLayoutBlock) {
         if (getLayoutBlock() == null) {
             setLayoutBlock(newLayoutBlock);
         }
@@ -1701,121 +1745,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
             );
         layoutEditor.getLayoutTurnoutView(this).setTrackSegmentBlock(pointType, isAutomatic);
     }
-//         TrackSegment trkSeg;
-//         Point2D pointCoord;
-//         LayoutBlock blockA = getLayoutBlock();
-//         LayoutBlock blockB = getLayoutBlock();
-//         LayoutBlock blockC = getLayoutBlock();
-//         LayoutBlock blockD = getLayoutBlock();
-//         LayoutBlock currBlk = blockA;
-// 
-//         switch (pointType) {
-//             case TURNOUT_A:
-//             case SLIP_A:
-//                 if (signalA1HeadNamed != null) {
-//                     return;
-//                 }
-//                 if (signalA2HeadNamed != null) {
-//                     return;
-//                 }
-//                 if (signalA3HeadNamed != null) {
-//                     return;
-//                 }
-//                 if (getSignalAMast() != null) {
-//                     return;
-//                 }
-//                 if (getSensorA() != null) {
-//                     return;
-//                 }
-//                 trkSeg = (TrackSegment) connectA;
-//                 pointCoord = getCoordsA();
-//                 break;
-//             case TURNOUT_B:
-//             case SLIP_B:
-//                 if (signalB1HeadNamed != null) {
-//                     return;
-//                 }
-//                 if (signalB2HeadNamed != null) {
-//                     return;
-//                 }
-//                 if (getSignalBMast() != null) {
-//                     return;
-//                 }
-//                 if (getSensorB() != null) {
-//                     return;
-//                 }
-//                 trkSeg = (TrackSegment) connectB;
-//                 pointCoord = getCoordsB();
-//                 if (isTurnoutTypeXover()) {
-//                     currBlk = blockB != null ? blockB : blockA;
-//                 }
-//                 break;
-//             case TURNOUT_C:
-//             case SLIP_C:
-//                 if (signalC1HeadNamed != null) {
-//                     return;
-//                 }
-//                 if (signalC2HeadNamed != null) {
-//                     return;
-//                 }
-//                 if (getSignalCMast() != null) {
-//                     return;
-//                 }
-//                 if (getSensorC() != null) {
-//                     return;
-//                 }
-//                 trkSeg = (TrackSegment) connectC;
-//                 pointCoord = getCoordsC();
-//                 if (isTurnoutTypeXover()) {
-//                     currBlk = blockC != null ? blockC : blockA;
-//                 }
-//                 break;
-//             case TURNOUT_D:
-//             case SLIP_D:
-//                 if (signalD1HeadNamed != null) {
-//                     return;
-//                 }
-//                 if (signalD2HeadNamed != null) {
-//                     return;
-//                 }
-//                 if (getSignalDMast() != null) {
-//                     return;
-//                 }
-//                 if (getSensorD() != null) {
-//                     return;
-//                 }
-//                 trkSeg = (TrackSegment) connectD;
-//                 pointCoord = getCoordsD();
-//                 if (isTurnoutTypeXover()) {
-//                     currBlk = blockD != null ? blockD : blockA;
-//                 }
-//                 break;
-//             default:
-//                 log.error("{}.setTrackSegmentBlock({}, {}); Invalid pointType",
-//                         getName(), pointType, isAutomatic ? "AUTO" : "NON-AUTO");
-//                 return;
-//         }
-//         if (trkSeg != null) {
-//             double chkSize = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-//             double segLength = 0;
-//             if (!isAutomatic) {
-//                 Point2D segCenter = trkSeg.getCoordsCenter();
-//                 segLength = MathUtil.distance(pointCoord, segCenter) * 2;
-//             }
-//             if (segLength < chkSize) {
-//                 if (log.isDebugEnabled()) {
-//                     log.debug("Set block:");
-//                     log.debug("    seg: {}", trkSeg);
-//                     log.debug("    cor: {}", pointCoord);
-//                     log.debug("    blk: {}", (currBlk == null) ? "null" : currBlk.getDisplayName());
-//                     log.debug("    len: {}", segLength);
-//                 }
-// 
-//                 trkSeg.setLayoutBlock(currBlk);
-//                 layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-//             }
-//         }
-//     }
 
     /**
      * Test if turnout legs are mainline track or not.
@@ -2134,7 +2063,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * LayoutEditor is loaded to set the specific TrackSegment objects.
      */
     @Override
-    public void setObjects(LayoutEditor p) {
+    public void setObjects(@Nonnull LayoutEditor p) {
         connectA = p.getFinder().findTrackSegmentByName(connectAName);
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
@@ -2348,6 +2277,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return boundaryBetween;
     }   // getBlockBoundaries
 
+    @Nonnull
     public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean) {
         ArrayList<LayoutBlock> ret = new ArrayList<>(2);
         if (getLayoutBlock() == null) {
@@ -2486,7 +2416,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return ret;
     }   // getProtectedBlocks
 
-    protected void removeSML(SignalMast signalMast) {
+    protected void removeSML(@CheckForNull SignalMast signalMast) {
         if (signalMast == null) {
             return;
 
@@ -2770,6 +2700,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         List<LayoutConnectivity> results = new ArrayList<>();
 
@@ -2821,8 +2752,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public @Nonnull
-    List<HitPointType> checkForFreeConnections() {
+    @Nonnull
+    public List<HitPointType> checkForFreeConnections() {
         List<HitPointType> result = new ArrayList<>();
 
         // check the A connection point

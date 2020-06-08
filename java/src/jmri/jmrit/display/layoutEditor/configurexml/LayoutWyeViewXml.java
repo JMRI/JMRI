@@ -25,6 +25,7 @@ public class LayoutWyeViewXml extends LayoutTurnoutViewXml {
     public LayoutWyeViewXml() {
     }
 
+    @Override
     protected void addClass(Element element) {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutWyeXml");
     }
