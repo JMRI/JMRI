@@ -378,7 +378,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                             int slipState = turnoutlist.get(x).getExpectedState();
                                             LayoutSlip ls = (LayoutSlip) turnoutlist.get(x).getObject();
                                             int taState = ls.getTurnoutState(slipState);
-                                            turnoutSettings.put(ls.getTurnout(), taState);
+                                            Turnout t = ls.getTurnout();
+                                            if (t==null) {
+                                                log.warn("Found unexpected Turnout reference at {}: {}",i,ls);
+                                                continue; // not sure what else do to here
+                                            }
+                                            turnoutSettings.put(t, taState);
 
                                             int tbState = ls.getTurnoutBState(slipState);
                                             ls.getTurnoutB().setCommandedState(tbState);
