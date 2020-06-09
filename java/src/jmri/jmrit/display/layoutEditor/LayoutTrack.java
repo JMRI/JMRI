@@ -122,23 +122,6 @@ abstract public class LayoutTrack {
     abstract public void setObjects(@Nonnull LayoutEditor le);
 
     /**
-     * find the hit (location) type for a point - temporary here, needs to be in View
-     *
-     * @param hitPoint           the point
-     * @param useRectangles      whether to use (larger) rectangles or (smaller)
-     *                           circles for hit testing
-     * @param requireUnconnected whether to only return hit types for free
-     *                           connections
-     * @return the location type for the point (or NONE)
-     * @since 7.4.3
-     */
-//     final protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-//         log.info("findHitPointType should have called View instead of temporary",
-//                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-//         return layoutEditor.getLayoutTrackView(this).findHitPointType(hitPoint, useRectangles, requireUnconnected);
-//     }
-
-    /**
      * get the LayoutTrack connected at the specified connection type
      *
      * @param connectionType where on us to get the connection

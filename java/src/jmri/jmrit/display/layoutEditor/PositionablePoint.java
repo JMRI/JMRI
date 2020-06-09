@@ -34,6 +34,8 @@ import jmri.util.swing.JCBHandle;
  * Signal names are saved here at a Block Boundary anchor point by the tool Set
  * Signals at Block Boundary. PositionablePoint does nothing with these signal
  * head names; it only serves as a place to store them.
+ * <p>
+ * Arrows and bumpers are visual, presentation aspects handled in the View.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
@@ -135,22 +137,22 @@ public class PositionablePoint extends LayoutTrack {
         type = PointType.ANCHOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
-                connect1.setArrowEndStart(false);
-                connect1.setBumperEndStart(false);
+                //connect1.setArrowEndStart(false);   // temporary - is this being done in the view?
+                //connect1.setBumperEndStart(false);   // temporary - is this being done in the view?
             }
             if (connect1.getConnect2() == PositionablePoint.this) {
-                connect1.setArrowEndStop(false);
-                connect1.setBumperEndStop(false);
+                //connect1.setArrowEndStop(false);   // temporary - is this being done in the view?
+                //connect1.setBumperEndStop(false);   // temporary - is this being done in the view?
             }
         }
         if (connect2 != null) {
             if (connect2.getConnect1() == PositionablePoint.this) {
-                connect2.setArrowEndStart(false);
-                connect2.setBumperEndStart(false);
+                //connect2.setArrowEndStart(false);   // temporary - is this being done in the view?
+                //connect2.setBumperEndStart(false);   // temporary - is this being done in the view?
             }
             if (connect2.getConnect2() == PositionablePoint.this) {
-                connect2.setArrowEndStop(false);
-                connect2.setBumperEndStop(false);
+                //connect2.setArrowEndStop(false);   // temporary - is this being done in the view?
+                //connect2.setBumperEndStop(false);   // temporary - is this being done in the view?
             }
         }
     }
@@ -160,12 +162,12 @@ public class PositionablePoint extends LayoutTrack {
         type = PointType.END_BUMPER;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
-                connect1.setArrowEndStart(false);
-                connect1.setBumperEndStart(true);
+                //connect1.setArrowEndStart(false);   // temporary - is this being done in the view?
+                //connect1.setBumperEndStart(true);   // temporary - is this being done in the view?
             }
             if (connect1.getConnect2() == PositionablePoint.this) {
-                connect1.setArrowEndStop(false);
-                connect1.setBumperEndStop(true);
+                //connect1.setArrowEndStop(false);   // temporary - is this being done in the view?
+                //connect1.setBumperEndStop(true);   // temporary - is this being done in the view?
             }
         }
     }
@@ -175,10 +177,10 @@ public class PositionablePoint extends LayoutTrack {
         type = PointType.EDGE_CONNECTOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
-                connect1.setBumperEndStart(false);
+                //connect1.setBumperEndStart(false);   // temporary - is this being done in the view?
             }
             if (connect1.getConnect2() == PositionablePoint.this) {
-                connect1.setBumperEndStop(false);
+                //connect1.setBumperEndStop(false);   // temporary - is this being done in the view?
             }
         }
     }

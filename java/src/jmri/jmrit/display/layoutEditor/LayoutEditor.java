@@ -3548,7 +3548,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private void showEditPopUps(@Nonnull MouseEvent event) {
         if (findLayoutTracksHitPoint(dLoc)) {
             if (HitPointType.isBezierHitType(foundHitPointType)) {
-                ((TrackSegment) foundTrack).showBezierPopUp(event, foundHitPointType);
+                getTrackSegmentView((TrackSegment) foundTrack).showBezierPopUp(event, foundHitPointType);
             } else if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
                 LayoutTurntable t = (LayoutTurntable) foundTrack;
                 if (t.isTurnoutControlled()) {

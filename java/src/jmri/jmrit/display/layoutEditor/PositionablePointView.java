@@ -25,6 +25,8 @@ import jmri.util.swing.JmriColorChooser;
  *
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
+ * <p>
+ * Arrows and bumpers are visual, presentation aspects handled in the View.
  */
 public class PositionablePointView extends LayoutTrackView {
 
@@ -138,23 +140,25 @@ public class PositionablePointView extends LayoutTrackView {
         positionablePoint.setTypeAnchor();
 
         if (getConnect1() != null) {
+            TrackSegmentView ctv1 = layoutEditor.getTrackSegmentView(getConnect1());
             if (getConnect1().getConnect1() == positionablePoint) {
-                getConnect1().setArrowEndStart(false);
-                getConnect1().setBumperEndStart(false);
+                ctv1.setArrowEndStart(false);
+                ctv1.setBumperEndStart(false);
             }
             if (getConnect1().getConnect2() == positionablePoint) {
-                getConnect1().setArrowEndStop(false);
-                getConnect1().setBumperEndStop(false);
+                ctv1.setArrowEndStop(false);
+                ctv1.setBumperEndStop(false);
             }
         }
         if (getConnect2() != null) {
+            TrackSegmentView ctv2 = layoutEditor.getTrackSegmentView(getConnect2());
             if (getConnect2().getConnect1() == positionablePoint) {
-                getConnect2().setArrowEndStart(false);
-                getConnect2().setBumperEndStart(false);
+                ctv2.setArrowEndStart(false);
+                ctv2.setBumperEndStart(false);
             }
             if (getConnect2().getConnect2() == positionablePoint) {
-                getConnect2().setArrowEndStop(false);
-                getConnect2().setBumperEndStop(false);
+                ctv2.setArrowEndStop(false);
+                ctv2.setBumperEndStop(false);
             }
         }
     }
@@ -166,13 +170,14 @@ public class PositionablePointView extends LayoutTrackView {
         positionablePoint.setTypeEndBumper();
 
         if (getConnect1() != null) {
+            TrackSegmentView ctv1 = layoutEditor.getTrackSegmentView(getConnect1());
             if (getConnect1().getConnect1() == positionablePoint) {
-                getConnect1().setArrowEndStart(false);
-                getConnect1().setBumperEndStart(true);
+                ctv1.setArrowEndStart(false);
+                ctv1.setBumperEndStart(true);
             }
             if (getConnect1().getConnect2() == positionablePoint) {
-                getConnect1().setArrowEndStop(false);
-                getConnect1().setBumperEndStop(true);
+                ctv1.setArrowEndStop(false);
+                ctv1.setBumperEndStop(true);
             }
         }
     }
@@ -184,11 +189,12 @@ public class PositionablePointView extends LayoutTrackView {
         positionablePoint.setTypeEdgeConnector();
         
         if (getConnect1() != null) {
+            TrackSegmentView ctv1 = layoutEditor.getTrackSegmentView(getConnect1());
             if (getConnect1().getConnect1() == positionablePoint) {
-                getConnect1().setBumperEndStart(false);
+                ctv1.setBumperEndStart(false);
             }
             if (getConnect1().getConnect2() == positionablePoint) {
-                getConnect1().setBumperEndStop(false);
+                ctv1.setBumperEndStop(false);
             }
         }
     }
@@ -930,6 +936,8 @@ public class PositionablePointView extends LayoutTrackView {
             popup.add(decorationsMenu);
 
             JCheckBoxMenuItem jcbmi;
+            TrackSegmentView ctv1 = layoutEditor.getTrackSegmentView(getConnect1());
+            
             if (getType() == PointType.EDGE_CONNECTOR) {
                 JMenu arrowsMenu = new JMenu(Bundle.getMessage("ArrowsMenuTitle"));
                 decorationsMenu.setToolTipText(Bundle.getMessage("ArrowsMenuToolTip"));
@@ -944,19 +952,19 @@ public class PositionablePointView extends LayoutTrackView {
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                     if (getConnect1().getConnect1() == positionablePoint) {
-                        getConnect1().setArrowEndStart(false);
+                        ctv1.setArrowEndStart(false);
                     }
                     if (getConnect1().getConnect2() == positionablePoint) {
-                        getConnect1().setArrowEndStop(false);
+                        ctv1.setArrowEndStop(false);
                     }
-                    if (!getConnect1().isArrowEndStart() && !getConnect1().isArrowEndStop()) {
-                        getConnect1().setArrowStyle(0);
+                    if (!ctv1.isArrowEndStart() && !ctv1.isArrowEndStop()) {
+                        ctv1.setArrowStyle(0);
                     }
                 });
-                boolean etherEnd = ((getConnect1().getConnect1() == positionablePoint) && getConnect1().isArrowEndStart())
-                        || ((getConnect1().getConnect2() == positionablePoint) && getConnect1().isArrowEndStop());
+                boolean etherEnd = ((getConnect1().getConnect1() == positionablePoint) && ctv1.isArrowEndStart())
+                        || ((getConnect1().getConnect2() == positionablePoint) && ctv1.isArrowEndStop());
 
-                jcbmi.setSelected((getConnect1().getArrowStyle() == 0) || !etherEnd);
+                jcbmi.setSelected((ctv1.getArrowStyle() == 0) || !etherEnd);
 
                 // configure the arrows
                 for (int i = 1; i < NUM_ARROW_TYPES; i++) {
@@ -964,14 +972,14 @@ public class PositionablePointView extends LayoutTrackView {
                     final int n = i;
                     jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                         if (getConnect1().getConnect1() == positionablePoint) {
-                            getConnect1().setArrowEndStart(true);
+                            ctv1.setArrowEndStart(true);
                         }
                         if (getConnect1().getConnect2() == positionablePoint) {
-                            getConnect1().setArrowEndStop(true);
+                            ctv1.setArrowEndStop(true);
                         }
-                        getConnect1().setArrowStyle(n);
+                        ctv1.setArrowStyle(n);
                     });
-                    jcbmi.setSelected((getConnect1().getArrowStyle() == i) && etherEnd);             
+                    jcbmi.setSelected((ctv1.getArrowStyle() == i) && etherEnd);             
                 }
 
 
@@ -983,83 +991,91 @@ public class PositionablePointView extends LayoutTrackView {
                 arrowsDirMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    getConnect1().setArrowDirIn(false);
-                    getConnect1().setArrowDirOut(false);
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
+                    ctv.setArrowDirIn(false);
+                    ctv.setArrowDirOut(false);
                 });
-                jcbmi.setSelected(!getConnect1().isArrowDirIn() && !getConnect1().isArrowDirOut());
+                jcbmi.setSelected(!ctv1.isArrowDirIn() && !ctv1.isArrowDirOut());
 
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionInMenuItemTitle"));
                 arrowsDirMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionInMenuItemToolTip"));
                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    getConnect1().setArrowDirIn(true);
-                    getConnect1().setArrowDirOut(false);
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
+                    ctv.setArrowDirIn(true);
+                    ctv.setArrowDirOut(false);
                 });
-                jcbmi.setSelected(getConnect1().isArrowDirIn() && !getConnect1().isArrowDirOut());
+                jcbmi.setSelected(ctv1.isArrowDirIn() && !ctv1.isArrowDirOut());
 
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionOutMenuItemTitle"));
                 arrowsDirMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionOutMenuItemToolTip"));
                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    getConnect1().setArrowDirOut(true);
-                    getConnect1().setArrowDirIn(false);
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
+                    ctv.setArrowDirOut(true);
+                    ctv.setArrowDirIn(false);
                 });
-                jcbmi.setSelected(!getConnect1().isArrowDirIn() && getConnect1().isArrowDirOut());
+                jcbmi.setSelected(!ctv1.isArrowDirIn() && ctv1.isArrowDirOut());
 
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionBothMenuItemTitle"));
                 arrowsDirMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionBothMenuItemToolTip"));
                 jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    getConnect1().setArrowDirIn(true);
-                    getConnect1().setArrowDirOut(true);
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
+                    ctv.setArrowDirIn(true);
+                    ctv.setArrowDirOut(true);
                 });
-                jcbmi.setSelected(getConnect1().isArrowDirIn() && getConnect1().isArrowDirOut());
+                jcbmi.setSelected(ctv1.isArrowDirIn() && ctv1.isArrowDirOut());
 
                 jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
                 jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    Color newColor = JmriColorChooser.showDialog(null, "Choose a color", getConnect1().getArrowColor());
-                    if ((newColor != null) && !newColor.equals(getConnect1().getArrowColor())) {
-                        getConnect1().setArrowColor(newColor);
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
+                    Color newColor = JmriColorChooser.showDialog(null, "Choose a color", ctv.getArrowColor());
+                    if ((newColor != null) && !newColor.equals(ctv.getArrowColor())) {
+                        ctv.setArrowColor(newColor);
                     }
                 });
-                jmi.setForeground(getConnect1().getArrowColor());
-                jmi.setBackground(ColorUtil.contrast(getConnect1().getArrowColor()));
+                jmi.setForeground(ctv1.getArrowColor());
+                jmi.setBackground(ColorUtil.contrast(ctv1.getArrowColor()));
 
                 jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                        Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + getConnect1().getArrowLineWidth()));
+                        Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + ctv1.getArrowLineWidth()));
                 jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
                     //prompt for arrow line width
                     int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                            getConnect1().getArrowLineWidth());
-                    getConnect1().setArrowLineWidth(newValue);
+                            ctv.getArrowLineWidth());
+                    ctv.setArrowLineWidth(newValue);
                 });
 
                 jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                        Bundle.getMessage("DecorationLengthMenuItemTitle")) + getConnect1().getArrowLength()));
+                        Bundle.getMessage("DecorationLengthMenuItemTitle")) + ctv1.getArrowLength()));
                 jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
                     //prompt for arrow length
                     int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                            getConnect1().getArrowLength());
-                    getConnect1().setArrowLength(newValue);
+                            ctv.getArrowLength());
+                    ctv.setArrowLength(newValue);
                 });
 
                 jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                        Bundle.getMessage("DecorationGapMenuItemTitle")) + getConnect1().getArrowGap()));
+                        Bundle.getMessage("DecorationGapMenuItemTitle")) + ctv1.getArrowGap()));
                 jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
                     //prompt for arrow gap
                     int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                             Bundle.getMessage("DecorationGapMenuItemTitle"),
                             Bundle.getMessage("DecorationGapMenuItemTitle"),
-                            getConnect1().getArrowGap());
-                    getConnect1().setArrowGap(newValue);
+                            ctv.getArrowGap());
+                    ctv.setArrowGap(newValue);
                 });
             } // if (getType() == EDGE_CONNECTOR)
 
@@ -1073,65 +1089,69 @@ public class PositionablePointView extends LayoutTrackView {
 
                 endBumperMenu.add(enableCheckBoxMenuItem);
                 enableCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
                     if (getConnect1().getConnect1() == positionablePoint) {
-                        getConnect1().setBumperEndStart(enableCheckBoxMenuItem.isSelected());
+                        ctv.setBumperEndStart(enableCheckBoxMenuItem.isSelected());
                     }
                     if (getConnect1().getConnect2() == positionablePoint) {
-                        getConnect1().setBumperEndStop(enableCheckBoxMenuItem.isSelected());
+                        ctv.setBumperEndStop(enableCheckBoxMenuItem.isSelected());
                     }
                 });
                 if (getConnect1().getConnect1() == positionablePoint) {
-                    enableCheckBoxMenuItem.setSelected(getConnect1().isBumperEndStart());
+                    enableCheckBoxMenuItem.setSelected(ctv1.isBumperEndStart());
                 }
                 if (getConnect1().getConnect2() == positionablePoint) {
-                    enableCheckBoxMenuItem.setSelected(getConnect1().isBumperEndStop());
+                    enableCheckBoxMenuItem.setSelected(ctv1.isBumperEndStop());
                 }
 
                 jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
                 jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    Color newColor = JmriColorChooser.showDialog(null, "Choose a color", getConnect1().getBumperColor());
-                    if ((newColor != null) && !newColor.equals(getConnect1().getBumperColor())) {
-                        getConnect1().setBumperColor(newColor);
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
+                    Color newColor = JmriColorChooser.showDialog(null, "Choose a color", ctv.getBumperColor());
+                    if ((newColor != null) && !newColor.equals(ctv.getBumperColor())) {
+                        ctv.setBumperColor(newColor);
                     }
                 });
-                jmi.setForeground(getConnect1().getBumperColor());
-                jmi.setBackground(ColorUtil.contrast(getConnect1().getBumperColor()));
+                jmi.setForeground(ctv1.getBumperColor());
+                jmi.setBackground(ColorUtil.contrast(ctv1.getBumperColor()));
 
                 jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                        Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + getConnect1().getBumperLineWidth()));
+                        Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + ctv1.getBumperLineWidth()));
                 jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
                     //prompt for width
                     int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
-                            getConnect1().getBumperLineWidth(), t -> {
-                                if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
+                            ctv.getBumperLineWidth(), t -> {
+                                if (t < 0 || t > TrackSegmentView.MAX_BUMPER_WIDTH) {
                                     throw new IllegalArgumentException(
-                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
+                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_WIDTH));
                                 }
                                 return true;
                             });
-                    getConnect1().setBumperLineWidth(newValue);
+                    ctv.setBumperLineWidth(newValue);
                 });
 
                 jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                        Bundle.getMessage("DecorationLengthMenuItemTitle")) + getConnect1().getBumperLength()));
+                        Bundle.getMessage("DecorationLengthMenuItemTitle")) + ctv1.getBumperLength()));
                 jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    TrackSegmentView ctv = layoutEditor.getTrackSegmentView(getConnect1());
                     //prompt for length
                     int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                            getConnect1().getBumperLength(), t -> {
-                                if (t < 0 || t > TrackSegment.MAX_BUMPER_LENGTH) {
+                            ctv.getBumperLength(), t -> {
+                                if (t < 0 || t > TrackSegmentView.MAX_BUMPER_LENGTH) {
                                     throw new IllegalArgumentException(
-                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_LENGTH));
+                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_LENGTH));
                                 }
                                 return true;
                             });
-                    getConnect1().setBumperLength(newValue);
+                    ctv.setBumperLength(newValue);
                 });
             }
         }   // if ((getType() == EDGE_CONNECTOR) || (getType() == END_BUMPER))

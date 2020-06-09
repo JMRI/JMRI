@@ -20,14 +20,19 @@ import jmri.util.swing.JmriColorChooser;
 /**
  * MVC View component for the TrackSegment class.
  *
- * @author Bob Jacobsen  Copyright (c) 2020
+ * <p>
+ * Arrows and bumpers are visual, presentation aspects handled in the View.
  * 
+ * @author Bob Jacobsen  Copyright (c) 2020
  */
 public class TrackSegmentView extends LayoutTrackView {
 
     public TrackSegmentView(@Nonnull TrackSegment track, @Nonnull LayoutEditor layoutEditor) {
         super(track, layoutEditor);
+
         this.trackSegment = track;
+
+        setupDefaultBumperSizes(layoutEditor);
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
     
@@ -39,8 +44,6 @@ public class TrackSegmentView extends LayoutTrackView {
                                 boolean arc, boolean flip, boolean circle
                         ) {
         this(track, layoutEditor);
-                
-        setupDefaultBumperSizes(layoutEditor);
     }
 
     // persistent instances variables (saved between sessions)
@@ -1117,9 +1120,9 @@ public class TrackSegmentView extends LayoutTrackView {
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                         getBumperLineWidth(), t -> {
-                            if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
+                            if (t < 0 || t > MAX_BUMPER_WIDTH) {
                                 throw new IllegalArgumentException(
-                                        Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
+                                        Bundle.getMessage("DecorationLengthMenuItemRange", MAX_BUMPER_WIDTH));
                             }
                             return true;
                         });
@@ -3539,6 +3542,7 @@ public class TrackSegmentView extends LayoutTrackView {
             railWidth = ltdo.getMainRailWidth();
             railGap = ltdo.getMainRailGap();
         }
+
         bumperLineWidth = Math.max(railWidth, ltdo.getMainBlockLineWidth()) * 2;
         bumperLength = railGap + (2 * railWidth);
         if ((tieLength > 0) && (tieWidth > 0)) {

@@ -246,7 +246,138 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         }
     }
 
+    /*
+     *  Arrow Decorations
+     */
+    @Test
+    public void testDefaultGetSetArrowStyle() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        Assert.assertEquals("segmentView.getArrowStyle() == 0 (default).", 0, segmentView.getArrowStyle());
+        segmentView.setArrowStyle(-1);
+        Assert.assertNotEquals("segmentView.setArrowStyle(-1) not allowed.", -1, segmentView.getArrowStyle());
+        segmentView.setArrowStyle(5);
+        Assert.assertEquals("segmentView.getArrowStyle() == 5 (after set).", 5, segmentView.getArrowStyle());
+    }
+
+    @Test
+    public void testDefaultIsSetArrowEndStart() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        Assert.assertFalse("segmentView.isArrowEndStart() == false (after set).", segmentView.isArrowEndStart());
+        segmentView.setArrowEndStart(true);
+        Assert.assertTrue("segmentView.isArrowEndStart() == true (default).", segmentView.isArrowEndStart());
+    }
+
+    @Test
+    public void testDefaultIsSetArrowEndStop() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        Assert.assertFalse("segmentView.isArrowEndStop() == false (after set).", segmentView.isArrowEndStop());
+        segmentView.setArrowEndStop(true);
+        Assert.assertTrue("segmentView.isArrowEndStop() == true (default).", segmentView.isArrowEndStop());
+    }
+
+    @Test
+    public void testDefaultIsSetArrowDirIn() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        Assert.assertFalse("segmentView.isArrowDirIn() == false (after set).", segmentView.isArrowDirIn());
+        segmentView.setArrowDirIn(true);
+        Assert.assertTrue("segmentView.isArrowDirIn() == true (default).", segmentView.isArrowDirIn());
+    }
+
+    @Test
+    public void testDefaultIsSetArrowDirOut() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isArrowDirOut() == true (default).", segmentView.isArrowDirOut());
+            segmentView.setArrowDirOut(true);
+            Assert.assertTrue("segmentView.isArrowDirOut() == false (after set).", segmentView.isArrowDirOut());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetArrowLineWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getArrowLineWidth() == 4 (default).", 4, segmentView.getArrowLineWidth());
+            segmentView.setArrowLineWidth(-1);
+            Assert.assertNotEquals("segmentView.setArrowLineWidth(-1) not allowed.", -1, segmentView.getArrowLineWidth());
+            segmentView.setArrowLineWidth(5);
+            Assert.assertEquals("segmentView.getArrowLineWidth() == 5 (after set).", 5, segmentView.getArrowLineWidth());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetArrowLength() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getArrowLength() == 4 (default).", 4, segmentView.getArrowLength());
+            segmentView.setArrowLength(-1);
+            Assert.assertNotEquals("segmentView.setArrowLength(-1) not allowed.", -1, segmentView.getArrowLength());
+            segmentView.setArrowLength(5);
+            Assert.assertEquals("segmentView.getArrowLength() == 5 (after set).", 5, segmentView.getArrowLength());
+        }
+    }
+
+
+    /*
+        Bumper Decorations
+     */
+    @Test
+    public void testDefaultIsSetBumperEndStart() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isBumperEndStart() == true (default).", segmentView.isBumperEndStart());
+            segmentView.setBumperEndStart(true);
+            Assert.assertTrue("segmentView.isBumperEndStart() == false (after set).", segmentView.isBumperEndStart());
+        }
+    }
+
+    @Test
+    public void testDefaultIsSetBumperEndStop() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isBumperEndStop() == true (default).", segmentView.isBumperEndStop());
+            segmentView.setBumperEndStop(true);
+            Assert.assertTrue("segmentView.isBumperEndStop() == false (after set).", segmentView.isBumperEndStop());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetBumperLineWidth() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getBumperLineWidth() == 8 (default).", 8, segmentView.getBumperLineWidth());
+            segmentView.setBumperLineWidth(-1);
+            Assert.assertNotEquals("segmentView.setBumperLineWidth(-1) not allowed.", -1, segmentView.getBumperLineWidth());
+            segmentView.setBumperLineWidth(5);
+            Assert.assertEquals("segmentView.getBumperLineWidth() == 5 (after set).", 5, segmentView.getBumperLineWidth());
+        }
+    }
+
+    @Test
+    public void testDefaultGetSetBumperLength() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertEquals("segmentView.getBumperLength() == 8 (default).", 8, segmentView.getBumperLength());
+            segmentView.setBumperLength(-1);
+            Assert.assertNotEquals("segmentView.setBumperLength(-1) not allowed.", -1, segmentView.getBumperLength());
+            segmentView.setBumperLength(12);
+            Assert.assertEquals("segmentView.getBumperLength() == 12 (after set).", 12, segmentView.getBumperLength());
+        }
+    }
+
+    @Test
+    public void testDefaultIsSetBumperFlipped() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            Assert.assertFalse("segmentView.isBumperFlipped() == true (default).", segmentView.isBumperFlipped());
+            segmentView.setBumperFlipped(true);
+            Assert.assertTrue("segmentView.isBumperFlipped() == false (after set).", segmentView.isBumperFlipped());
+        }
+    }
 
     /*
         Tunnel Decorations
@@ -326,10 +457,6 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
             Assert.assertEquals("segmentView.getTunnelEntranceWidth() == 5 (after set).", 5, segmentView.getTunnelEntranceWidth());
         }
     }
-
-
-
-
 
 
     TrackSegment segment;

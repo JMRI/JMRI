@@ -29,6 +29,8 @@ import jmri.util.swing.JmriColorChooser;
  * nodes must be via TrackSegments.
  * <p>
  * TrackSegments carry Block information, as do LayoutTurnouts and LevelXings.
+ * <p>
+ * Arrows and bumpers are visual, presentation aspects handled in the View.
  *
  * @author Dave Duchamp Copyright (p) 2004-2009
  * @author George Warner Copyright (c) 2017-2019
@@ -62,7 +64,7 @@ public class TrackSegment extends LayoutTrack {
 
         mainline = main;
 
-        setupDefaultBumperSizes(layoutEditor);
+//        setupDefaultBumperSizes(layoutEditor);
 
         // editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
@@ -82,7 +84,7 @@ public class TrackSegment extends LayoutTrack {
 
         mainline = main;
         
-        setupDefaultBumperSizes(layoutEditor);
+//        setupDefaultBumperSizes(layoutEditor);
         
         // editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
@@ -294,20 +296,6 @@ public class TrackSegment extends LayoutTrack {
         return layoutEditor.getTrackSegmentView(this).getDirectionDEG();
     }
 
-    /**
-     * Determine if we need to redraw a curved piece of track. Saves having to
-     * recalculate the circle details each time.
-     *
-     * @return true if needs redraw, else false.
-     */
-//     public boolean trackNeedsRedraw() {
-//         return changed;
-//     }
-// 
-//     public void trackRedrawn() {
-//         changed = false;
-//     }
-
     public LayoutBlock getLayoutBlock() {
         return (namedLayoutBlock != null) ? namedLayoutBlock.getBean() : null;
     }
@@ -503,112 +491,17 @@ public class TrackSegment extends LayoutTrack {
         return result;
     }
 
-//     @Override
-//     protected HitPointType findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-//         HitPointType result = HitPointType.NONE;  // assume point not on connection
-// 
-//         if (!requireUnconnected) {
-//             // note: optimization here: instead of creating rectangles for all the
-//             // points to check below, we create a rectangle for the test point
-//             // and test if the points below are in that rectangle instead.
-//             Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
-//             Point2D p, minPoint = MathUtil.zeroPoint2D;
-//             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-//             double distance, minDistance = Float.POSITIVE_INFINITY;
-// 
-//             if (isCircle()) {
-//                 p = getCoordsCenterCircle();
-//                 distance = MathUtil.distance(p, hitPoint);
-//                 if (distance < minDistance) {
-//                     minDistance = distance;
-//                     minPoint = p;
-//                     result = HitPointType.TRACK_CIRCLE_CENTRE;
-//                 }
-//             } else if (isBezier()) {
-//                 // hit testing for the control points
-//                 for (int index = 0; index < bezierControlPoints.size(); index++) {
-//                     p = bezierControlPoints.get(index);
-//                     distance = MathUtil.distance(p, hitPoint);
-//                     if (distance < minDistance) {
-//                         minDistance = distance;
-//                         minPoint = p;
-//                         result = HitPointType.bezierPointIndexedValue(index);
-//                     }
-//                 }
-//             }
-//             p = getCentreSeg();
-//             if (r.contains(p)) {
-//                 distance = MathUtil.distance(p, hitPoint);
-//                 if (distance <= minDistance) {
-//                     minDistance = distance;
-//                     minPoint = p;
-//                     result = HitPointType.TRACK;
-//                 }
-//             }
-//             if ((result != HitPointType.NONE) && (useRectangles ? !r.contains(minPoint) : (minDistance > circleRadius))) {
-//                 result = HitPointType.NONE;
-//             }
-//         }
-//         return result;
-//     }   // findHitPointType
-
-    /**
-     * Get the coordinates for a specified connection type.
-     *
-     * @param connectionType the connection type
-     * @return the coordinates for the specified connection type
-     */
-//     @Override
-//     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-//         Point2D result = getCentreSeg();
-//         if (connectionType == HitPointType.TRACK_CIRCLE_CENTRE) {
-//             result = getCoordsCenterCircle();
-//         } else if (HitPointType.isBezierHitType(connectionType)) {
-//             result = getBezierControlPoint(connectionType.bezierPointIndex());
-//         }
-//         return result;
-//     }
-
-    /**
-     * @return the bounds of this track segment
-     */
-//     @Override
-//     public Rectangle2D getBounds() {
-//         Rectangle2D result = MathUtil.setOrigin(MathUtil.zeroRectangle2D, getCoordsCenter());
-// 
-//         if ((getConnect1() != null) && (getConnect2() != null)) {
-//             if (isCircle()) {
-//                 calculateTrackSegmentAngle();
-//                 Arc2D arc = new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN);
-//                 result = arc.getBounds2D();
-//             } else if (isBezier()) {
-//                 result = MathUtil.getBezierBounds(getBezierPoints());
-//             } else {
-//                 result = MathUtil.setOrigin(MathUtil.zeroRectangle2D, LayoutEditor.getCoords(getConnect1(), getType1()));
-//                 result.add(LayoutEditor.getCoords(getConnect2(), getType2()));
-//             }
-//             super.setCoordsCenter(MathUtil.midPoint(result));
-//         }
-//         return result;
-//     }
-// 
-//     private JPopupMenu popupMenu = null;
-//     private final JCheckBoxMenuItem mainlineCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("MainlineCheckBoxMenuItemTitle"));
-//     private final JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HiddenCheckBoxMenuItemTitle"));
-//     private final JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DashedCheckBoxMenuItemTitle"));
-//     private final JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
-// 
     /**
      * Maximum length of the bumper decoration.
      */
-    public static final int MAX_BUMPER_LENGTH = 40;
-    public static final int MAX_BUMPER_WIDTH = 10;
+//     public static final int MAX_BUMPER_LENGTH = 40;
+//     public static final int MAX_BUMPER_WIDTH = 10;
 
-    private static final int MAX_ARROW_LINE_WIDTH = 5;
-    private static final int MAX_ARROW_LENGTH = 60;
-    private static final int MAX_ARROW_GAP = 40;
+//     private static final int MAX_ARROW_LINE_WIDTH = 5;
+//     private static final int MAX_ARROW_LENGTH = 60;
+//     private static final int MAX_ARROW_GAP = 40;
     
-    private static final int MAX_BUMPER_LINE_WIDTH = 9;
+//     private static final int MAX_BUMPER_LINE_WIDTH = 9;
 
     /**
      * {@inheritDoc}
@@ -750,12 +643,12 @@ public class TrackSegment extends LayoutTrack {
      * @param e            mouse event, for co-ordinates of popup.
      * @param hitPointType the hit point type.
      */
-    protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
-        log.error("showBezierPopUp should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        layoutEditor.getTrackSegmentView(this).showBezierPopUp(e, hitPointType);
-    }
+//     protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
+//         log.error("showBezierPopUp should have called View instead of TrackSegment (temporary)"
+//                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+//             );
+//         layoutEditor.getTrackSegmentView(this).showBezierPopUp(e, hitPointType);
+//     }
 
     /**
      * Clean up when this object is no longer needed.
@@ -841,61 +734,6 @@ public class TrackSegment extends LayoutTrack {
         return ((showConstructionLine & SHOWCON) != SHOWCON);
     }
 
-    /**
-     * The following are used only as a local store after a circle or arc has
-     * been calculated. This prevents the need to recalculate the values each
-     * time a re-draw is required.
-     */
-
-//     private double cX;
-// 
-//     public double getCX() {
-//         return cX;
-//     }
-// 
-//     public void setCX(double CX) {
-//         cX = CX;
-//     }
-// 
-//     private double cY;
-// 
-//     public double getCY() {
-//         return cY;
-//     }
-// 
-//     public void setCY(double CY) {
-//         cY = CY;
-//     }
-// 
-//     private double cW;
-// 
-//     public double getCW() {
-//         return cW;
-//     }
-// 
-//     public void setCW(double CW) {
-//         cW = CW;
-//     }
-// 
-//     private double cH;
-// 
-//     public double getCH() {
-//         return cH;
-//     }
-// 
-//     public void setCH(double CH) {
-//         cH = CH;
-//     }
-// 
-//     private double startAdj;
-// 
-//     public double getStartAdj() {
-//         return startAdj;
-//     }
-// 
-//     public void setStartAdj(double startAdj) {
-//         this.startAdj = startAdj;
-//     }
 
     // this is the center of the track segment (it is "on" the track segment)
     public double getCentreSegX() {
@@ -922,49 +760,6 @@ public class TrackSegment extends LayoutTrack {
             );
         return layoutEditor.getTrackSegmentView(this).getCentreSeg();
     }
-
-//         Point2D result = MathUtil.zeroPoint2D;
-// 
-//         if ((connect1 != null) && (connect2 != null)) {
-//             // get the end points
-//             Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
-//             Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
-// 
-//             if (isCircle()) {
-//                 result = getCoordsCenter(); // new Point2D.Double(centreX, centreY);
-//             } else if (isArc()) {
-//                 super.setCoordsCenter(MathUtil.midPoint(getBounds()));
-//                 if (isFlip()) {
-//                     Point2D t = ep1;
-//                     ep1 = ep2;
-//                     ep2 = t;
-//                 }
-//                 Point2D delta = MathUtil.subtract(ep1, ep2);
-//                 // are they of the same sign?
-//                 if ((delta.getX() >= 0.0) != (delta.getY() >= 0.0)) {
-//                     delta = MathUtil.divide(delta, +5.0, -5.0);
-//                 } else {
-//                     delta = MathUtil.divide(delta, -5.0, +5.0);
-//                 }
-//                 result = MathUtil.add(getCoordsCenter(), delta);
-//             } else if (isBezier()) {
-//                 // compute result Bezier point for (t == 0.5);
-//                 Point2D[] points = getBezierPoints();
-// 
-//                 // calculate midpoints of all points (len - 1 order times)
-//                 for (int idx = points.length - 1; idx > 0; idx--) {
-//                     for (int jdx = 0; jdx < idx; jdx++) {
-//                         points[jdx] = MathUtil.midPoint(points[jdx], points[jdx + 1]);
-//                     }
-//                 }
-//                 result = points[0];
-//             } else {
-//                 result = MathUtil.midPoint(ep1, ep2);
-//             }
-//             super.setCoordsCenter(result);
-//         }
-//         return result;
-//     }   // getCentreSeg
 
 
     // this is the center of the track segment when configured as a circle
@@ -1011,15 +806,15 @@ public class TrackSegment extends LayoutTrack {
         return getCentre();
     }
 
-    private double chordLength;
-
-    public double getChordLength() {
-        return chordLength;
-    }
-
-    public void setChordLength(double chord) {
-        chordLength = chord;
-    }
+//     private double chordLength;
+// 
+//     public double getChordLength() {
+//         return chordLength;
+//     }
+// 
+//     public void setChordLength(double chord) {
+//         chordLength = chord;
+//     }
 
     /**
      * Called when the user changes the angle dynamically in edit mode by
@@ -1052,9 +847,9 @@ public class TrackSegment extends LayoutTrack {
      *
      * @return arrow style, 0 is none.
      */
-   public int getArrowStyle() {
-       return arrowStyle;
-   }
+//    public int getArrowStyle() {
+//        return arrowStyle;
+//    }
 
     /**
      * Set the arrow decoration. The 0 (none) and 1 through 5 arrow decorations
@@ -1063,259 +858,259 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param newVal the arrow style index, 0 is none.
      */
-    public void setArrowStyle(int newVal) {
-        log.trace("TrackSegment:setArrowStyle {} {} {}", newVal, arrowEndStart, arrowEndStop);
-        if (arrowStyle != newVal) {
-            if (newVal > 0) {
-                if (!arrowEndStart && !arrowEndStop) {
-                    arrowEndStart = true;
-                    arrowEndStop = true;
-                }
-                if (!arrowDirIn && !arrowDirOut) {
-                    arrowDirOut = true;
-                }
-            } else {
-                newVal = 0; // only positive styles allowed!
-            }
-            arrowStyle = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int arrowStyle = 0;
+//     public void setArrowStyle(int newVal) {
+//         log.trace("TrackSegment:setArrowStyle {} {} {}", newVal, arrowEndStart, arrowEndStop);
+//         if (arrowStyle != newVal) {
+//             if (newVal > 0) {
+//                 if (!arrowEndStart && !arrowEndStop) {
+//                     arrowEndStart = true;
+//                     arrowEndStop = true;
+//                 }
+//                 if (!arrowDirIn && !arrowDirOut) {
+//                     arrowDirOut = true;
+//                 }
+//             } else {
+//                 newVal = 0; // only positive styles allowed!
+//             }
+//             arrowStyle = newVal;
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private int arrowStyle = 0;
+// 
+//     public boolean isArrowEndStart() {
+//         return arrowEndStart;
+//     }
+// 
+//     public void setArrowEndStart(boolean newVal) {
+//         if (arrowEndStart != newVal) {
+//             arrowEndStart = newVal;
+//             if (!arrowEndStart && !arrowEndStop) {
+//                 arrowStyle = 0;
+//             } else if (arrowStyle == 0) {
+//                 arrowStyle = 1;
+//             }
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private boolean arrowEndStart = false;
+// 
+//     public boolean isArrowEndStop() {
+//         return arrowEndStop;
+//     }
+// 
+//     public void setArrowEndStop(boolean newVal) {
+//         if (arrowEndStop != newVal) {
+//             arrowEndStop = newVal;
+//             if (!arrowEndStart && !arrowEndStop) {
+//                 arrowStyle = 0;
+//             } else if (arrowStyle == 0) {
+//                 arrowStyle = 1;
+//             }
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private boolean arrowEndStop = false;
+// 
+//     public boolean isArrowDirIn() {
+//         return arrowDirIn;
+//     }
+// 
+//     public void setArrowDirIn(boolean newVal) {
+//         if (arrowDirIn != newVal) {
+//             arrowDirIn = newVal;
+//             if (!arrowDirIn && !arrowDirOut) {
+//                 arrowStyle = 0;
+//             } else if (arrowStyle == 0) {
+//                 arrowStyle = 1;
+//             }
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private boolean arrowDirIn = false;
+// 
+//     public boolean isArrowDirOut() {
+//         return arrowDirOut;
+//     }
+// 
+//     public void setArrowDirOut(boolean newVal) {
+//         if (arrowDirOut != newVal) {
+//             arrowDirOut = newVal;
+//             if (!arrowDirIn && !arrowDirOut) {
+//                 arrowStyle = 0;
+//             } else if (arrowStyle == 0) {
+//                 arrowStyle = 1;
+//             }
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private boolean arrowDirOut = false;
+// 
+//     public Color getArrowColor() {
+//         return arrowColor;
+//     }
+// 
+//     public void setArrowColor(Color newVal) {
+//         if (arrowColor != newVal) {
+//             arrowColor = newVal;
+//             JmriColorChooser.addRecentColor(newVal);
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private Color arrowColor = Color.BLACK;
 
-    public boolean isArrowEndStart() {
-        return arrowEndStart;
-    }
-
-    public void setArrowEndStart(boolean newVal) {
-        if (arrowEndStart != newVal) {
-            arrowEndStart = newVal;
-            if (!arrowEndStart && !arrowEndStop) {
-                arrowStyle = 0;
-            } else if (arrowStyle == 0) {
-                arrowStyle = 1;
-            }
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean arrowEndStart = false;
-
-    public boolean isArrowEndStop() {
-        return arrowEndStop;
-    }
-
-    public void setArrowEndStop(boolean newVal) {
-        if (arrowEndStop != newVal) {
-            arrowEndStop = newVal;
-            if (!arrowEndStart && !arrowEndStop) {
-                arrowStyle = 0;
-            } else if (arrowStyle == 0) {
-                arrowStyle = 1;
-            }
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean arrowEndStop = false;
-
-    public boolean isArrowDirIn() {
-        return arrowDirIn;
-    }
-
-    public void setArrowDirIn(boolean newVal) {
-        if (arrowDirIn != newVal) {
-            arrowDirIn = newVal;
-            if (!arrowDirIn && !arrowDirOut) {
-                arrowStyle = 0;
-            } else if (arrowStyle == 0) {
-                arrowStyle = 1;
-            }
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean arrowDirIn = false;
-
-    public boolean isArrowDirOut() {
-        return arrowDirOut;
-    }
-
-    public void setArrowDirOut(boolean newVal) {
-        if (arrowDirOut != newVal) {
-            arrowDirOut = newVal;
-            if (!arrowDirIn && !arrowDirOut) {
-                arrowStyle = 0;
-            } else if (arrowStyle == 0) {
-                arrowStyle = 1;
-            }
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean arrowDirOut = false;
-
-    public Color getArrowColor() {
-        return arrowColor;
-    }
-
-    public void setArrowColor(Color newVal) {
-        if (arrowColor != newVal) {
-            arrowColor = newVal;
-            JmriColorChooser.addRecentColor(newVal);
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private Color arrowColor = Color.BLACK;
-
-    public int getArrowLineWidth() {
-        return arrowLineWidth;
-    }
-
-    public void setArrowLineWidth(int newVal) {
-        if (arrowLineWidth != newVal) {
-            arrowLineWidth = MathUtil.pin(newVal, 1, MAX_ARROW_LINE_WIDTH);
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int arrowLineWidth = 4;
-
-    public int getArrowLength() {
-        return arrowLength;
-    }
-
-    public void setArrowLength(int newVal) {
-        if (arrowLength != newVal) {
-            arrowLength = MathUtil.pin(newVal, 2, MAX_ARROW_LENGTH);
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int arrowLength = 4;
-
-    public int getArrowGap() {
-        return arrowGap;
-    }
-
-    public void setArrowGap(int newVal) {
-        if (arrowGap != newVal) {
-            arrowGap = MathUtil.pin(newVal, 0, MAX_ARROW_GAP);
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int arrowGap = 1;
+//     public int getArrowLineWidth() {
+//         return arrowLineWidth;
+//     }
+// 
+//     public void setArrowLineWidth(int newVal) {
+//         if (arrowLineWidth != newVal) {
+//             arrowLineWidth = MathUtil.pin(newVal, 1, MAX_ARROW_LINE_WIDTH);
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private int arrowLineWidth = 4;
+// 
+//     public int getArrowLength() {
+//         return arrowLength;
+//     }
+// 
+//     public void setArrowLength(int newVal) {
+//         if (arrowLength != newVal) {
+//             arrowLength = MathUtil.pin(newVal, 2, MAX_ARROW_LENGTH);
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private int arrowLength = 4;
+// 
+//     public int getArrowGap() {
+//         return arrowGap;
+//     }
+// 
+//     public void setArrowGap(int newVal) {
+//         if (arrowGap != newVal) {
+//             arrowGap = MathUtil.pin(newVal, 0, MAX_ARROW_GAP);
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private int arrowGap = 1;
 
 
     //
     // bumper decoration accessors
     //
-    public boolean isBumperEndStart() {
-        return bumperEndStart;
-    }
-
-    public void setBumperEndStart(boolean newVal) {
-        if (bumperEndStart != newVal) {
-            bumperEndStart = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean bumperEndStart = false;
-
-    public boolean isBumperEndStop() {
-        return bumperEndStop;
-    }
-
-    public void setBumperEndStop(boolean newVal) {
-        if (bumperEndStop != newVal) {
-            bumperEndStop = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean bumperEndStop = false;
-
-    public Color getBumperColor() {
-        return bumperColor;
-    }
-
-    public void setBumperColor(Color newVal) {
-        if (bumperColor != newVal) {
-            bumperColor = newVal;
-            JmriColorChooser.addRecentColor(newVal);
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private Color bumperColor = Color.BLACK;
-
-    public int getBumperLineWidth() {
-        return bumperLineWidth;
-    }
-
-    public void setBumperLineWidth(int newVal) {
-        if (bumperLineWidth != newVal) {
-            bumperLineWidth = MathUtil.pin(newVal, 1, MAX_BUMPER_LINE_WIDTH);
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-
-    private int bumperLineWidth = 3;
-
-    public int getBumperLength() {
-        return bumperLength;
-    }
-
-    public void setBumperLength(int newVal) {
-        if (bumperLength != newVal) {
-            bumperLength = Math.max(8, newVal);   // don't let value be less than 8
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private int bumperLength = 20;
-
-    public boolean isBumperFlipped() {
-        return bumperFlipped;
-    }
-
-    public void setBumperFlipped(boolean newVal) {
-        if (bumperFlipped != newVal) {
-            bumperFlipped = newVal;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-        }
-    }
-    private boolean bumperFlipped = false;
-
-    private void setupDefaultBumperSizes(LayoutEditor layoutEditor) {
-        LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
-
-        // use these as default sizes for end bumpers
-        int tieLength = ltdo.getSideTieLength();
-        int tieWidth = ltdo.getSideTieWidth();
-        int railWidth = ltdo.getSideRailWidth();
-        int railGap = ltdo.getSideRailGap();
-        if (mainline) {
-            tieLength = ltdo.getMainTieLength();
-            tieWidth = ltdo.getMainTieWidth();
-            railWidth = ltdo.getMainRailWidth();
-            railGap = ltdo.getMainRailGap();
-        }
-        bumperLineWidth = Math.max(railWidth, ltdo.getMainBlockLineWidth()) * 2;
-        bumperLength = railGap + (2 * railWidth);
-        if ((tieLength > 0) && (tieWidth > 0)) {
-            bumperLineWidth = tieWidth;
-            bumperLength = tieLength * 3 / 2;
-        }
-        bumperLineWidth = Math.max(1, bumperLineWidth);
-        bumperLength = Math.max(10, bumperLength);
-    }
+//     public boolean isBumperEndStart() {
+//         return bumperEndStart;
+//     }
+// 
+//     public void setBumperEndStart(boolean newVal) {
+//         if (bumperEndStart != newVal) {
+//             bumperEndStart = newVal;
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private boolean bumperEndStart = false;
+// 
+//     public boolean isBumperEndStop() {
+//         return bumperEndStop;
+//     }
+// 
+//     public void setBumperEndStop(boolean newVal) {
+//         if (bumperEndStop != newVal) {
+//             bumperEndStop = newVal;
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private boolean bumperEndStop = false;
+// 
+//     public Color getBumperColor() {
+//         return bumperColor;
+//     }
+// 
+//     public void setBumperColor(Color newVal) {
+//         if (bumperColor != newVal) {
+//             bumperColor = newVal;
+//             JmriColorChooser.addRecentColor(newVal);
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private Color bumperColor = Color.BLACK;
+// 
+//     public int getBumperLineWidth() {
+//         return bumperLineWidth;
+//     }
+// 
+//     public void setBumperLineWidth(int newVal) {
+//         if (bumperLineWidth != newVal) {
+//             bumperLineWidth = MathUtil.pin(newVal, 1, MAX_BUMPER_LINE_WIDTH);
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+// 
+//     private int bumperLineWidth = 3;
+// 
+//     public int getBumperLength() {
+//         return bumperLength;
+//     }
+// 
+//     public void setBumperLength(int newVal) {
+//         if (bumperLength != newVal) {
+//             bumperLength = Math.max(8, newVal);   // don't let value be less than 8
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private int bumperLength = 20;
+// 
+//     public boolean isBumperFlipped() {
+//         return bumperFlipped;
+//     }
+// 
+//     public void setBumperFlipped(boolean newVal) {
+//         if (bumperFlipped != newVal) {
+//             bumperFlipped = newVal;
+//             layoutEditor.redrawPanel();
+//             layoutEditor.setDirty();
+//         }
+//     }
+//     private boolean bumperFlipped = false;
+// 
+//     private void setupDefaultBumperSizes(LayoutEditor layoutEditor) {
+//         LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
+// 
+//         // use these as default sizes for end bumpers
+//         int tieLength = ltdo.getSideTieLength();
+//         int tieWidth = ltdo.getSideTieWidth();
+//         int railWidth = ltdo.getSideRailWidth();
+//         int railGap = ltdo.getSideRailGap();
+//         if (mainline) {
+//             tieLength = ltdo.getMainTieLength();
+//             tieWidth = ltdo.getMainTieWidth();
+//             railWidth = ltdo.getMainRailWidth();
+//             railGap = ltdo.getMainRailGap();
+//         }
+//         bumperLineWidth = Math.max(railWidth, ltdo.getMainBlockLineWidth()) * 2;
+//         bumperLength = railGap + (2 * railWidth);
+//         if ((tieLength > 0) && (tieWidth > 0)) {
+//             bumperLineWidth = tieWidth;
+//             bumperLength = tieLength * 3 / 2;
+//         }
+//         bumperLineWidth = Math.max(1, bumperLineWidth);
+//         bumperLength = Math.max(10, bumperLength);
+//     }
 
 
     /**
