@@ -1,5 +1,6 @@
 package apps.startup;
 
+import jmri.util.startup.StartupActionModelUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
