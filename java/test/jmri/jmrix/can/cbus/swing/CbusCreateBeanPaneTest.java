@@ -7,9 +7,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.datatransfer.Transferable;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.swing.CanPanel;
 import jmri.util.JUnitUtil;
@@ -77,8 +77,8 @@ public class CbusCreateBeanPaneTest  {
 
         t.transferArray[0].importData(new JLabel("NotABeanType"), trnfr);
         
-        NamedBean bean = ((jmri.Manager) InstanceManager.getDefault(jmri.TurnoutManager.class)). getBySystemName("IT+N123E456");
-        NamedBean notAbean = ((jmri.Manager) InstanceManager.getDefault(jmri.TurnoutManager.class)). getBySystemName("NotABean");
+        NamedBean bean = ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).getBySystemName("MT+N123E456"); 
+        NamedBean notAbean = ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).getBySystemName("NotABean");
         
         assertThat(bean).isNotNull();
         assertThat(notAbean).isNull();
@@ -89,8 +89,9 @@ public class CbusCreateBeanPaneTest  {
         
         t.transferArray[2].importData(new JLabel("Light"), trnfr);
         t.transferArray[2].importData(new JLabel("Light"), trnfr);
-        bean = ((jmri.Manager) InstanceManager.getDefault(jmri.LightManager.class)). getBySystemName("IL+7");
-        notAbean = ((jmri.Manager) InstanceManager.getDefault(jmri.LightManager.class)). getBySystemName("NotABean");
+        
+        bean = ((jmri.LightManager) memo.get(jmri.LightManager.class)).getBySystemName("ML+7"); 
+        notAbean = ((jmri.LightManager) memo.get(jmri.LightManager.class)).getBySystemName("NotABean");
         
         assertThat(bean).isNotNull();
         assertThat(notAbean).isNull();
@@ -108,6 +109,8 @@ public class CbusCreateBeanPaneTest  {
     }
     
     private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
+    
     private TestPane mainPane;
     private CbusEventTableDataModel dm;
 
@@ -117,6 +120,10 @@ public class CbusCreateBeanPaneTest  {
         JUnitUtil.resetInstanceManager();
         if(!GraphicsEnvironment.isHeadless()){
             memo = new CanSystemConnectionMemo();
+            memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+            memo.configureManagers();
+            tcis = new TrafficControllerScaffold();
+            memo.setTrafficController(tcis);
             mainPane = new TestPane();
             mainPane.initComponents(memo);
         }
@@ -127,6 +134,8 @@ public class CbusCreateBeanPaneTest  {
         if(!GraphicsEnvironment.isHeadless()){
             memo.dispose();
             memo = null;
+            tcis.terminateThreads();
+            tcis = null;
             mainPane.dispose();
             mainPane = null;
         }
