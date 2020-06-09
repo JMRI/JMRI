@@ -3,6 +3,7 @@ package apps.systemconsole;
 import apps.SystemConsole;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -80,7 +81,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
 
     @Override
     @Nonnull
-    public Iterable<Class<? extends PreferencesManager>> getRequires() {
+    public Collection<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 
