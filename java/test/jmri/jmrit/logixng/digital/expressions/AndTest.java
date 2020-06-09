@@ -126,7 +126,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
                 expression2.getChild(i+1);
             } catch (IndexOutOfBoundsException ex) {
                 hasThrown = true;
-                String msg = String.format("Index: %d, Size: %d", i+1, i+1);
+                String msg = String.format("Index %d out of bounds for length %d", i+1, i+1);
                 Assert.assertEquals("Error message is correct", msg, ex.getMessage());
             }
             Assert.assertTrue("Exception is thrown", hasThrown);
