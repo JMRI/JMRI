@@ -17,7 +17,7 @@ import jmri.jmrix.swing.SystemConnectionAction;
  *
  * @author Bob Jacobsen Copyright (c) 2003
  * @see apps.startup.PerformActionModelFactory
- * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.CreateButtonModelXml} instead
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.PerformActionModelXml} instead
  */
 @Deprecated
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {

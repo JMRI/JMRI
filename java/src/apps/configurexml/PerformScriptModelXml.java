@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: Copyright (c) 2014
- * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.CreateButtonModelXml} instead
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.PerformScriptModelXml} instead
  */
 @Deprecated
 public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter {

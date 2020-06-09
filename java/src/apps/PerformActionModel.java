@@ -5,8 +5,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Invokes a Swing Action when the program is started.
  * <p>
- * The list of actions available is defined in the {@link AbstractActionModel}
- * superclass.
+ * The list of actions available is defined in the
+ * {@link jmri.util.startup.AbstractActionModel} superclass.
  * <p>
  * This is a separate class, even though it has no additional behavior, so that
  * persistence systems realize the type of data being stored.
