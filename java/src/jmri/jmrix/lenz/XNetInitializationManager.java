@@ -2,6 +2,7 @@ package jmri.jmrix.lenz;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.*;
+import jmri.jmrix.roco.RocoXNetThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,10 +20,18 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class XNetInitializationManager {
 
+    /**
+     * Construct a memo using the defaults and a version check.  This Constructor
+     * is included for backwards compatability and should not be used for new code.
+     * @param memo The connectionmemo to initialize.
+     * @deprecated since 4.21.1. Use {@link #XNetInitializationManager()} and the builder
+     * interface instead.
+     */
+    @Deprecated
     public XNetInitializationManager(XNetSystemConnectionMemo memo){
         memo(memo);
         setDefaults();
-        setTimeout(30000);
+        setTimeout(getInitTimeout());
         versionCheck();
         init();
     }
@@ -30,9 +39,20 @@ public class XNetInitializationManager {
     public XNetInitializationManager() {
     }
 
+    /**
+     * Define the default timeout used during initialization
+     * @return timeout value in milliseconds
+     * @deprecated since 4.21.1.  Use {@link #setTimeout(int)} instead.
+     */
+    @Deprecated
+    protected int getInitTimeout() {
+        return initTimeout;
+    }
+
     private XNetSystemConnectionMemo systemMemo;
     private Class<? extends XNetPowerManager> powerManagerClass;
     private Class<? extends XNetThrottleManager> throttleManagerClass;
+    private Class<? extends RocoXNetThrottleManager> rocoThrottleManagerClass;
     private Class<? extends XNetProgrammerManager> programmerManagerClass;
     private Class<? extends XNetProgrammer> programmerClass;
     private Class<? extends XNetConsistManager> consistManagerClass;
@@ -40,7 +60,8 @@ public class XNetInitializationManager {
     private Class<? extends XNetLightManager> lightManagerClass;
     private Class<? extends XNetSensorManager> sensorManagerClass;
     private boolean versionCheck = false;
-    private int initTimeout;
+    private boolean noCommandStation = false;
+    private int initTimeout = 30000;
 
     /**
      * Set the version check flag to true.
@@ -73,11 +94,17 @@ public class XNetInitializationManager {
 
     /**
      * Set the defaults to the default classes in jmri.jmrix.lenz.
+     * <p>
+     * This methods sets the default values for Lenz command stations
+     * and the Roco MultiMaus and LokMaus.  Use with {@link #versionCheck}
+     * and {@link #setTimeout} to automatically configure these systems.
+     * </p>
      * @return this initializer
      */
     public XNetInitializationManager setDefaults(){
         powerManagerClass = XNetPowerManager.class;
         throttleManagerClass = XNetThrottleManager.class;
+        rocoThrottleManagerClass = RocoXNetThrottleManager.class;
         programmerManagerClass = XNetProgrammerManager.class;
         programmerClass = XNetProgrammer.class;
         consistManagerClass = XNetConsistManager.class;
@@ -135,6 +162,19 @@ public class XNetInitializationManager {
         return prog;
     }
 
+    public XNetInitializationManager noCommandStation(){
+        this.noCommandStation = true;
+        return this;
+    }
+
+    private void initCommandStation(){
+        if(!noCommandStation) {
+            /* The "raw" Command Station only works on systems that support Ops Mode Programming */
+            systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
+            InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
+        }
+    }
+
     /**
      * Set the programmer manager to initialize
      * @param programmerManagerClass the programmer class to use.
@@ -152,14 +192,11 @@ public class XNetInitializationManager {
                 Constructor<? extends XNetProgrammerManager> ctor = programmerManagerClass.getConstructor(Programmer.class, XNetSystemConnectionMemo.class);
                 XNetProgrammerManager pm = ctor.newInstance(programmer, systemMemo);
                 systemMemo.setProgrammerManager(pm);
-                if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
-                    InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
-                        /* the "raw" Command Station only works on systems that support
-                        Ops Mode Programming */
-                    systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-                    InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
+                if (pm.isAddressedModePossible()) {
+                    InstanceManager.store(pm, jmri.AddressedProgrammerManager.class);
+                    initCommandStation();
                 }
-                if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
+                if (pm.isGlobalProgrammerAvailable()) {
                     InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
                 }
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
@@ -193,6 +230,30 @@ public class XNetInitializationManager {
     }
 
     /**
+     * Set the Roco Throttle Manager Class
+     * @param rocoThrottleManagerClass the Roco Throttle Manager Class to use.
+     * @return this initializer
+     */
+    public XNetInitializationManager rocoThrottleManager(Class<? extends RocoXNetThrottleManager> rocoThrottleManagerClass){
+        this.rocoThrottleManagerClass = rocoThrottleManagerClass;
+        return this;
+    }
+
+    private void initRocoThrottleManager(){
+        if(rocoThrottleManagerClass != null){
+            try {
+                Constructor<? extends RocoXNetThrottleManager> ctor = rocoThrottleManagerClass.getConstructor(XNetSystemConnectionMemo.class);
+                RocoXNetThrottleManager tm = ctor.newInstance(systemMemo);
+                systemMemo.setThrottleManager(tm);
+                InstanceManager.store(tm, ThrottleManager.class);
+            } catch (NoSuchMethodException | InstantiationException |
+                    IllegalAccessException | InvocationTargetException e){
+                log.warn("Unable to construct throttle manager for XPressNet connection {}", systemMemo.getSystemPrefix());
+            }
+        }
+    }
+
+    /**
      * Set the Turnout Manager Class
      * @param turnoutManagerClass the Turnout Manager Class to use.
      * @return this initializer
@@ -208,7 +269,6 @@ public class XNetInitializationManager {
                 Constructor<? extends XNetTurnoutManager> ctor = turnoutManagerClass.getConstructor(XNetSystemConnectionMemo.class);
                 XNetTurnoutManager tm = ctor.newInstance(systemMemo);
                 systemMemo.setTurnoutManager(tm);
-                //InstanceManager.store(tm, TurnoutManager.class);
                 InstanceManager.setTurnoutManager(tm);
             } catch (NoSuchMethodException | InstantiationException |
                     IllegalAccessException | InvocationTargetException e){
@@ -233,7 +293,6 @@ public class XNetInitializationManager {
                 Constructor<? extends XNetSensorManager> ctor = sensorManagerClass.getConstructor(XNetSystemConnectionMemo.class);
                 XNetSensorManager sm = ctor.newInstance(systemMemo);
                 systemMemo.setSensorManager(sm);
-                //InstanceManager.store(sm, SensorManager.class);
                 InstanceManager.setSensorManager(sm);
             } catch (NoSuchMethodException | InstantiationException |
                     IllegalAccessException | InvocationTargetException e){
@@ -258,7 +317,6 @@ public class XNetInitializationManager {
                 Constructor<? extends XNetLightManager> ctor = lightManagerClass.getConstructor(XNetSystemConnectionMemo.class);
                 XNetLightManager lm = ctor.newInstance(systemMemo);
                 systemMemo.setLightManager(lm);
-                //InstanceManager.store(lm, LightManager.class);
                 InstanceManager.setLightManager(lm);
             } catch (NoSuchMethodException | InstantiationException |
                     IllegalAccessException | InvocationTargetException e){
@@ -297,7 +355,6 @@ public class XNetInitializationManager {
         }
         /* Load managers that should work on all systems */
         initPowerManager();
-        initThrottleManager();
         if (versionCheck) {
             checkVersionAndInit();
         } else {
@@ -308,9 +365,7 @@ public class XNetInitializationManager {
     private void checkVersionAndInit() {
         /* spawn a thread to request version information and wait for the
          command station to respond */
-        if (log.isDebugEnabled()) {
-            log.debug("Starting XpressNet Initialization Process");
-        }
+        log.debug("Starting XpressNet Initialization Process");
         new XNetInitializer(this);
 
         // Since we can't currently reconfigure the user interface after
@@ -338,34 +393,27 @@ public class XNetInitializationManager {
             /* Next we check the command station type, and add the
              appropriate managers */
             if (CSType == 0x02) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is Compact/Commander/Other");
-                }
+                log.debug("Command Station is Compact/Commander/Other");
+                initThrottleManager();
                 initTurnoutManager();
                 initLightManager();
                 initConsistManager();
             } else if (CSType == 0x01) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is LH200");
-                }
+                log.debug("Command Station is LH200");
             } else if (CSType == 0x00) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is LZ100/LZV100");
-                }
+                log.debug("Command Station is LZ100/LZV100");
                 initServices();
             } else if (CSType == 0x04) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is LokMaus II");
-                }
+                log.debug("Command Station is LokMaus II");
+                initRocoThrottleManager();
                 initTurnoutManager();
                 initLightManager();
                 initSensorManager();
                 initProgrammerManager();
                 // LokMaus does not support XpressNET consist commands. Let's the default consist manager be loaded.
             } else if (CSType == 0x10 ) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is multiMaus");
-                }
+                log.debug("Command Station is multiMaus");
+                initRocoThrottleManager();
                 initTurnoutManager();
                 initLightManager();
                 initSensorManager();
@@ -373,18 +421,15 @@ public class XNetInitializationManager {
                 // multMaus does not support XpressNET consist commands. Let's the default consist manager be loaded.
             } else {
                 /* If we still don't  know what we have, load everything */
-                if (log.isDebugEnabled()) {
-                    log.debug("Command Station is Unknown type");
-                }
+                log.debug("Command Station is Unknown type");
                 initServices();
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("XpressNet Initialization Complete");
-        }
+        log.debug("XpressNet Initialization Complete");
     }
 
     private void initServices(){
+        initThrottleManager();
         initProgrammerManager();
         initConsistManager();
         initTurnoutManager();
@@ -395,11 +440,11 @@ public class XNetInitializationManager {
     /* Internal class to retrieve version Information */
     protected class XNetInitializer implements XNetListener {
 
-        private javax.swing.Timer initTimer; // Timer used to let he
+        private final javax.swing.Timer initTimer; // Timer used to let he
         // command station response time
         // out, and configure the defaults.
 
-        private Object parent = null;
+        private final Object parent;
 
         public XNetInitializer(Object Parent) {
 

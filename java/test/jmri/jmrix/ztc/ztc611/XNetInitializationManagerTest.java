@@ -10,14 +10,11 @@ import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * ZTC611XNetInitializationManagerTest.java
- *
- * Test for the
- * jmri.jmrix.ztc.ztc611.ZTC611XNetInitializationManager class
+ * Test for the XNetInitializationManager when configured for the ZTC611.
  *
  * @author Paul Bender
  */
-public class ZTC611XNetInitializationManagerTest {
+public class XNetInitializationManagerTest {
 
     private XNetTrafficController tc;
     private XNetSystemConnectionMemo memo;
@@ -25,13 +22,11 @@ public class ZTC611XNetInitializationManagerTest {
 
     @Test
     public void testCtor() {
-        ZTC611XNetInitializationManager m = new ZTC611XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50; // shorten, because this will fail & delay test
-            }
-        };
-        assertThat(m).withFailMessage("exists").isNotNull();
+        new XNetInitializationManager()
+                .memo(memo)
+                .setDefaults()
+                .turnoutManager(ZTC611XNetTurnoutManager.class)
+                .init();
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(memo.getCommandStation()).isEqualTo(cs);
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));

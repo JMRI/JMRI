@@ -6,7 +6,6 @@ import jmri.jmrix.roco.RocoXNetThrottleManager;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -40,11 +39,11 @@ public class LI100XNetInitializationManagerTest {
     }
 
     @Test
-    @Disabled("Error in LI100XNetInitializationManager. Hold test for new setup")
     public void testNoCSVersionResponse() {
         Mockito.when(cs.getCommandStationSoftwareVersion()).thenReturn(-1.0f);
         Mockito.when(cs.getCommandStationSoftwareVersionBCD()).thenReturn(-1.0f);
         Mockito.when(cs.getCommandStationType()).thenReturn(-1);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {
@@ -72,6 +71,7 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationSoftwareVersion()).thenReturn(2.0f);
         Mockito.when(cs.getCommandStationSoftwareVersionBCD()).thenReturn(2.0f);
         Mockito.when(cs.getCommandStationType()).thenReturn(0x00);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {
@@ -97,6 +97,7 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationSoftwareVersion()).thenReturn(3.5f);
         Mockito.when(cs.getCommandStationSoftwareVersionBCD()).thenReturn(3.5f);
         Mockito.when(cs.getCommandStationType()).thenReturn(0x00);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {
@@ -123,6 +124,7 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationSoftwareVersion()).thenReturn(3.0f);
         Mockito.when(cs.getCommandStationSoftwareVersionBCD()).thenReturn(3.0f);
         Mockito.when(cs.getCommandStationType()).thenReturn(0x01);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(false);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {
@@ -147,6 +149,7 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationSoftwareVersion()).thenReturn(3.2f);
         Mockito.when(cs.getCommandStationSoftwareVersionBCD()).thenReturn(3.2f);
         Mockito.when(cs.getCommandStationType()).thenReturn(0x02);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(false);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {
@@ -167,11 +170,11 @@ public class LI100XNetInitializationManagerTest {
     }
 
     @Test
-    @Disabled("Error in LI100XNetInitializationManager. Hold test for new setup")
     public void testVersion3LokMausResponse() {
         Mockito.when(cs.getCommandStationSoftwareVersion()).thenReturn(3.0f);
         Mockito.when(cs.getCommandStationSoftwareVersionBCD()).thenReturn(3.0f);
         Mockito.when(cs.getCommandStationType()).thenReturn(0x04);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {
@@ -198,6 +201,7 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationSoftwareVersion()).thenReturn(3.0f);
         Mockito.when(cs.getCommandStationSoftwareVersionBCD()).thenReturn(3.0f);
         Mockito.when(cs.getCommandStationType()).thenReturn(0x10);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {
@@ -224,6 +228,7 @@ public class LI100XNetInitializationManagerTest {
         Mockito.when(cs.getCommandStationSoftwareVersion()).thenReturn(3.5f);
         Mockito.when(cs.getCommandStationSoftwareVersionBCD()).thenReturn(3.5f);
         Mockito.when(cs.getCommandStationType()).thenReturn(0x42);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {

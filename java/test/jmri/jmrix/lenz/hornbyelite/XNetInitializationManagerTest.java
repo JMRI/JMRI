@@ -1,5 +1,6 @@
-package jmri.jmrix.ztc.ztc611;
+package jmri.jmrix.lenz.hornbyelite;
 
+import jmri.implementation.NmraConsistManager;
 import jmri.jmrix.lenz.*;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -10,58 +11,57 @@ import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * ZTC611XNetInitializationManagerTest.java
- *
- * Test for the
- * jmri.jmrix.ztc.ztc611.ZTC611XNetInitializationManager class
+ * Test for XNetInitializationManager when configured to use the Hornby Elite
+ * class
  *
  * @author Paul Bender
  */
-public class ZTC611XNetInitializationManagerTest {
+public class XNetInitializationManagerTest {
 
     private XNetTrafficController tc;
     private XNetSystemConnectionMemo memo;
-    private LenzCommandStation cs;
+    private HornbyEliteCommandStation cs;
 
     @Test
     public void testCtor() {
-        ZTC611XNetInitializationManager m = new ZTC611XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50; // shorten, because this will fail & delay test
-            }
-        };
-        assertThat(m).withFailMessage("exists").isNotNull();
+        new XNetInitializationManager()
+                .memo(memo)
+                .powerManager(XNetPowerManager.class)
+                .throttleManager(EliteXNetThrottleManager.class)
+                .programmer(EliteXNetProgrammer.class)
+                .programmerManager(XNetProgrammerManager.class)
+                .turnoutManager(EliteXNetTurnoutManager.class)
+                .lightManager(XNetLightManager.class)
+                .init();
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(memo.getCommandStation()).isEqualTo(cs);
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
-        softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(XNetThrottleManager.class);
+        softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(EliteXNetThrottleManager.class);
         softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
-        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(XNetProgrammer.class);
+        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(EliteXNetProgrammer.class);
         softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false,42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
-        softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(ZTC611XNetTurnoutManager.class);
-        softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
+        softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(EliteXNetTurnoutManager.class);
+        softly.assertThat(memo.getSensorManager()).isNull();
         softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
-        softly.assertThat(memo.getConsistManager()).isExactlyInstanceOf(XNetConsistManager.class);
+        softly.assertThat(memo.getConsistManager()).isExactlyInstanceOf(NmraConsistManager.class);
         softly.assertAll();
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = Mockito.mock(XNetTrafficController.class);
-        cs = Mockito.mock(LenzCommandStation.class);
+        cs = Mockito.mock(HornbyEliteCommandStation.class);
         Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         Mockito.when(tc.getCommandStation()).thenReturn(cs);
-        memo = new XNetSystemConnectionMemo(tc);
+        memo = new EliteXNetSystemConnectionMemo(tc);
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         memo = null;
         tc = null;
         cs = null;
         jmri.util.JUnitUtil.tearDown();
     }
-
 }

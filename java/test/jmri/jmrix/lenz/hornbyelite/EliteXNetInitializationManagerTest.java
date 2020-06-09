@@ -52,6 +52,7 @@ public class EliteXNetInitializationManagerTest {
         jmri.util.JUnitUtil.setUp();
         tc = Mockito.mock(XNetTrafficController.class);
         cs = Mockito.mock(HornbyEliteCommandStation.class);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(true);
         Mockito.when(tc.getCommandStation()).thenReturn(cs);
         memo = new EliteXNetSystemConnectionMemo(tc);
     }
