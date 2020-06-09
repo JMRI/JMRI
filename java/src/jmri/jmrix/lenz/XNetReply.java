@@ -28,7 +28,6 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     private static final String X_NET_REPLY_INVALID = "XNetReplyInvalid";
     private static final String X_NET_REPLY_CONTACT_LABEL = "XNetReplyContactLabel";
     private static final String SPEED_STEP_MODE_X = "SpeedStepModeX";
-    private boolean reallyUnsolicited = true;  // used to override automatic
     // unsolicited by message type.
 
     // Create a new reply.
@@ -240,8 +239,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             int messagetype = this.getFeedbackMessageType();
             if (messagetype == 2) {
                 // This is a feedback encoder message
-                int address = (a1 & 0xff);
-                return (address);
+                return (a1 & 0xff);
             } else {
                 return -1;
             }
@@ -280,8 +278,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             int messagetype = this.getFeedbackMessageType(startByte);
             if (messagetype == 2) {
                 // This is a feedback encoder message
-                int address = (a1 & 0xff);
-                return (address);
+                return (a1 & 0xff);
             } else {
                 return -1;
             }
@@ -620,8 +617,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         // or unsolicited form.  requesting code can mark the reply as solicited
         // by calling the resetUnsolicited function.
         return (super.isUnsolicited()
-                || this.isThrottleTakenOverMessage()
-                || (this.isFeedbackMessage() && reallyUnsolicited));
+                || this.isThrottleTakenOverMessage());
     }
 
     /**
@@ -632,9 +628,11 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * <p>
      * Messages sent as unsolicited by the command station can not be turned 
      * to solicited.
+     * @deprecated since 4.21.1 without replacement
      */
+    @Deprecated
     public final void resetUnsolicited() {
-        reallyUnsolicited = false;
+        // method deprecated
     }
     
     /**
@@ -1058,26 +1056,12 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     text.append(getThrottleMsgAddr()).append(" ");
                     text.append(Bundle.getMessage("XNetReplyLocoOperated"));
                     break;
-                case XNetConstants.LOCO_FUNCTION_STATUS: {
-                    text.append(Bundle.getMessage(RS_TYPE)).append(" "); // "Locomotive", key in NBBundle, shared with Operations
-                    text.append(Bundle.getMessage("XNetReplyFStatusLabel")).append(" ");
-                    // message byte 3, contains F0,F1,F2,F3,F4
-                    int element3 = getElement(2);
-                    // message byte 4, contains F12,F11,F10,F9,F8,F7,F6,F5
-                    int element4 = getElement(3);
-                    text.append(parseFunctionMomentaryStatus(element3, element4));
+                case XNetConstants.LOCO_FUNCTION_STATUS:
+                    locoFunctionStatusText(text);
                     break;
-                }
-                case XNetConstants.LOCO_FUNCTION_STATUS_HIGH: {
-                    text.append(Bundle.getMessage(RS_TYPE)).append(" ");
-                    text.append(Bundle.getMessage("XNetReplyF13StatusLabel")).append(" ");
-                    // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
-                    int element3 = getElement(2);
-                    // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
-                    int element4 = getElement(3);
-                    text.append(parseFunctionHighStatus(element3, element4));
+                case XNetConstants.LOCO_FUNCTION_STATUS_HIGH:
+                    locoFunctionStatusHighText(text);
                     break;
-                }
                 default:
                     text = new StringBuilder(toString());
             }
@@ -1122,6 +1106,26 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
             text = new StringBuilder(toString());
         }
         return text.toString();
+    }
+
+    private void locoFunctionStatusHighText(StringBuilder text) {
+        text.append(Bundle.getMessage(RS_TYPE)).append(" ");
+        text.append(Bundle.getMessage("XNetReplyF13StatusLabel")).append(" ");
+        // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
+        int element3 = getElement(2);
+        // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
+        int element4 = getElement(3);
+        text.append(parseFunctionHighStatus(element3, element4));
+    }
+
+    private void locoFunctionStatusText(StringBuilder text) {
+        text.append(Bundle.getMessage(RS_TYPE)).append(" "); // "Locomotive", key in NBBundle, shared with Operations
+        text.append(Bundle.getMessage("XNetReplyFStatusLabel")).append(" ");
+        // message byte 3, contains F0,F1,F2,F3,F4
+        int element3 = getElement(2);
+        // message byte 4, contains F12,F11,F10,F9,F8,F7,F6,F5
+        int element4 = getElement(3);
+        text.append(parseFunctionMomentaryStatus(element3, element4));
     }
 
     private String getTurnoutReplyMonitorString(int startByte, String typeBundleKey) {
@@ -1179,7 +1183,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      */
     protected String parseSpeedAndDirection(int element1, int element2) {
         String text = "";
-        int speedVal = 0;
+        int speedVal;
         if ((element2 & 0x80) == 0x80) {
             text += Bundle.getMessage("Forward") + ",";
         } else {

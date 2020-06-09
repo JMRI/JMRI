@@ -37,6 +37,8 @@ public class CbusComponentFactoryTest {
 
     @After
     public void tearDown() {
+        m.dispose();
+        m = null;
         JUnitUtil.tearDown();
         // tc = null;
     }

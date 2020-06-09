@@ -12,14 +12,14 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright (C) 2017
  */
 @ServiceProvider(service = StartupActionFactory.class)
-public class UsbBrowserStartupActionFactory extends AbstractStartupActionFactory {
+public final class UsbBrowserStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
     public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
-        if (!clazz.equals(UsbBrowserAction.class)) {
-            throw new IllegalArgumentException();
+        if (clazz.equals(UsbBrowserAction.class)) {
+            return Bundle.getMessage(locale, "StartUsbBrowserAction"); // NOI18N
         }
-        return Bundle.getMessage(locale, "StartUsbBrowserAction"); // NOI18N
+        throw new IllegalArgumentException(clazz.getName() + " is not supported by " + this.getClass().getName());
     }
 
     @Override

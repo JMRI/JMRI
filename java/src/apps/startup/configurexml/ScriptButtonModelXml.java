@@ -1,6 +1,6 @@
 package apps.startup.configurexml;
 
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import apps.startup.ScriptButtonModel;
 import jmri.util.startup.StartupModel;
 import java.io.FileNotFoundException;

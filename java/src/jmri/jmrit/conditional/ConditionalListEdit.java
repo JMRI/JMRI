@@ -1036,7 +1036,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (alreadyEditingActionOrVariable()) {
             return;
         }
-        if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+        if (LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())) {
             JOptionPane.showMessageDialog(_editConditionalFrame,
                     Bundle.getMessage("Error49"),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -1242,7 +1242,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         // clean up empty variable and actions
-        if (!LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+        if (!LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())) {
             for (int i = 0; i < _variableList.size(); i++) {
                 if (_variableList.get(i).getType() == Conditional.Type.NONE) {
                     _variableList.remove(i);
@@ -4436,7 +4436,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     variable.setTriggerActions(!variable.doTriggerActions());
                     break;
                 case EDIT_COLUMN:
-                    if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+                    if (LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())) {
                         JOptionPane.showMessageDialog(_editConditionalFrame,
                                 Bundle.getMessage("Error49"),
                                 Bundle.getMessage("ErrorTitle"), // NOI18N
