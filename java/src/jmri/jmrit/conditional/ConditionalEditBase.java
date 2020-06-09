@@ -288,7 +288,7 @@ public class ConditionalEditBase {
      */
     boolean validateAntecedent(Conditional.AntecedentOperator logicType, String antecedentText, List<ConditionalVariable> variableList, Conditional curConditional) {
         if (logicType != Conditional.AntecedentOperator.MIXED
-                || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())
+                || LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())
                 || antecedentText == null
                 || antecedentText.trim().length() == 0) {
             return true;

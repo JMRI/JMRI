@@ -32,7 +32,7 @@ public class TrainsByCarTypeFrameTest extends OperationsTestCase{
         // confirm that train default accepts Boxcars
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train t = tmanager.newTrain("Test Train Name 2");
-        Assert.assertTrue("accepts Boxcar 1", t.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("accepts Boxcar 1", t.isTypeNameAccepted("Boxcar"));
 
         TrainsByCarTypeFrame f = new TrainsByCarTypeFrame();
         f.initComponents("Boxcar");
@@ -41,13 +41,13 @@ public class TrainsByCarTypeFrameTest extends OperationsTestCase{
         JemmyUtil.enterClickAndLeave(f.clearButton);
         JemmyUtil.enterClickAndLeave(f.saveButton);
 
-        Assert.assertFalse("accepts Boxcar 2", t.acceptsTypeName("Boxcar"));
+        Assert.assertFalse("accepts Boxcar 2", t.isTypeNameAccepted("Boxcar"));
 
         // now add Boxcar to trains
         JemmyUtil.enterClickAndLeave(f.setButton);
         JemmyUtil.enterClickAndLeave(f.saveButton);
 
-        Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("accepts Boxcar 3", t.isTypeNameAccepted("Boxcar"));
 
         JUnitUtil.dispose(f);
     }

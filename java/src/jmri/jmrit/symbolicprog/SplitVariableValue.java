@@ -99,15 +99,12 @@ public class SplitVariableValue extends VariableValue
         for (int i = 0; i < cvCount; i++) {
             cvList.get(i).startOffset = currentOffset;
             String t = cvList.get(i).cvMask;
-            while (t.length() > 0) {
-                if (t.startsWith("V")) {
-                    currentOffset++;
-                }
-                t = t.substring(1);
+            if (t.contains("V")) {
+                currentOffset = currentOffset + t.lastIndexOf("V") - t.indexOf("V") + 1;
+            } else {
+                log.error("Variable={};cvName={};cvMask={} is an invalid bitmask", _name, cvList.get(i).cvName, cvList.get(i).cvMask);
             }
-            if (log.isDebugEnabled()) {
-                log.debug("cvName={};cvMask={};startOffset={}", cvList.get(i).cvName, cvList.get(i).cvMask, cvList.get(i).startOffset);
-            }
+            log.debug("Variable={};cvName={};cvMask={};startOffset={};currentOffset={}", _name, cvList.get(i).cvName, cvList.get(i).cvMask, cvList.get(i).startOffset, currentOffset);
 
             // connect CV for notification
             CvValue cv = (_cvMap.get(cvList.get(i).cvName));

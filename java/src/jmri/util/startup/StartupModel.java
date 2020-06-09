@@ -9,7 +9,7 @@ import javax.annotation.CheckForNull;
 
 /**
  * Startup object models all need to implement this interface. This allows the
- * {@link apps.StartupActionsManager} to handle lists of different model
+ * {@link StartupActionsManager} to handle lists of different model
  * classes.
  *
  * @author Randall Wood Copyright 2015, 2020

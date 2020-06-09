@@ -573,6 +573,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public int getRequirements() {
         return _requires;
     }
+    
+    public boolean isCabooseNeeded() {
+        return (getRequirements() & CABOOSE) == CABOOSE;
+    }
+    
+    public boolean isFredNeeded() {
+        return (getRequirements() & FRED) == FRED;
+    }
 
     public void setRoute(Route route) {
         Route old = _route;
@@ -987,7 +995,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @param locationId The route location id.
      * @return true if the train will not service the location.
      */
-    public boolean skipsLocation(String locationId) {
+    public boolean isLocationSkipped(String locationId) {
         return _skipLocationsList.contains(locationId);
     }
 
@@ -1080,12 +1088,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @param type The car or engine type name.
      * @return true if this train will service the particular type.
      */
-    public boolean acceptsTypeName(String type) {
+    public boolean isTypeNameAccepted(String type) {
         return _typeList.contains(type);
     }
 
     protected void replaceType(String oldType, String newType) {
-        if (acceptsTypeName(oldType)) {
+        if (isTypeNameAccepted(oldType)) {
             deleteTypeName(oldType);
             addTypeName(newType);
             // adjust custom loads
@@ -1200,7 +1208,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @param road the road name to check.
      * @return true if train will service this road name.
      */
-    public boolean acceptsRoadName(String road) {
+    public boolean isRoadNameAccepted(String road) {
         if (_roadOption.equals(ALL_ROADS)) {
             return true;
         }
@@ -1333,7 +1341,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @param load the load name to check.
      * @return true if train will service this load.
      */
-    public boolean acceptsLoadName(String load) {
+    public boolean isLoadNameAccepted(String load) {
         if (_loadOption.equals(ALL_LOADS)) {
             return true;
         }
@@ -1351,7 +1359,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @param type the type of car used to carry the load.
      * @return true if train will service this load.
      */
-    public boolean acceptsLoad(String load, String type) {
+    public boolean isLoadNameAccepted(String load, String type) {
         if (_loadOption.equals(ALL_LOADS)) {
             return true;
         }
@@ -1453,7 +1461,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @param owner the owner name to check.
      * @return true if train will service this owner name.
      */
-    public boolean acceptsOwnerName(String owner) {
+    public boolean isOwnerNameAccepted(String owner) {
         if (_ownerOption.equals(ALL_OWNERS)) {
             return true;
         }
@@ -1513,7 +1521,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @return true is built date is in the acceptable range.
      */
-    public boolean acceptsBuiltDate(String date) {
+    public boolean isBuiltDateAccepted(String date) {
         if (getBuiltStartYear().equals(NONE) && getBuiltEndYear().equals(NONE)) {
             return true; // range dates not defined
         }
@@ -1551,17 +1559,17 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @param car The car to be tested.
      * @return true if this train can service the car.
      */
-    public boolean services(Car car) {
-        return services(null, car);
+    public boolean isServiceable(Car car) {
+        return isServiceable(null, car);
     }
 
     protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 
-    public boolean services(PrintWriter buildReport, Car car) {
+    public boolean isServiceable(PrintWriter buildReport, Car car) {
         boolean addToReport = Setup.getRouterBuildReportLevel().equals(SEVEN);
         setServiceStatus(NONE);
         // check to see if train can carry car
-        if (!acceptsTypeName(car.getTypeName())) {
+        if (!isTypeNameAccepted(car.getTypeName())) {
             if (addToReport) {
                 TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
                         .getMessage("trainCanNotServiceCarType"), new Object[]{getName(), car.toString(),
@@ -1569,7 +1577,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             }
             return false;
         }
-        if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
+        if (!isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
             if (addToReport) {
                 TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
                         .getMessage("trainCanNotServiceCarLoad"), new Object[]{getName(), car.toString(),
@@ -1577,9 +1585,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             }
             return false;
         }
-        if (!acceptsBuiltDate(car.getBuilt())
-                || !acceptsOwnerName(car.getOwner())
-                || !acceptsRoadName(car.getRoadName())) {
+        if (!isBuiltDateAccepted(car.getBuilt())
+                || !isOwnerNameAccepted(car.getOwner())
+                || !isRoadNameAccepted(car.getRoadName())) {
             if (addToReport) {
                 TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(
                         Bundle.getMessage("trainCanNotServiceCar"), new Object[]{getName(), car.toString()}));
@@ -1615,7 +1623,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 if (rLoc.getName().equals(car.getLocationName())
                         && rLoc.isPickUpAllowed()
                         && rLoc.getMaxCarMoves() > 0
-                        && !skipsLocation(rLoc.getId())
+                        && !isLocationSkipped(rLoc.getId())
                         && ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0
                         || isLocalSwitcher())) {
                     if (car.getTrack() != null) {
@@ -1653,7 +1661,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                         if (rldest.getName().equals(car.getDestinationName())
                                 && rldest.isDropAllowed()
                                 && rldest.getMaxCarMoves() > 0
-                                && !skipsLocation(rldest.getId())
+                                && !isLocationSkipped(rldest.getId())
                                 && ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) != 0
                                 || isLocalSwitcher())
                                 && (!Setup.isCheckCarDestinationEnabled() || car.getTrack() == null || car.getTrack()
@@ -2846,17 +2854,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     /**
-     * Deprecated, kept for user scripts. Use isBuilt()
-     *
-     * @return true if the train was successfully built.
-     *
-     */
-    @Deprecated
-    public boolean getBuilt() {
-        return isBuilt();
-    }
-
-    /**
      * Control flag used to decide if this train is to be built.
      *
      * @param build When true, build this train.
@@ -2876,26 +2873,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     public boolean isBuildEnabled() {
         return _build;
-    }
-
-    /**
-     * Deprecated, use setBuildEnabled(build).
-     *
-     * @param build When true, build this train.
-     */
-    @Deprecated
-    public void setBuild(boolean build) {
-        setBuildEnabled(build);
-    }
-
-    /**
-     * Deprecated, use isBuildEnabled()
-     *
-     * @return true if train is to be built.
-     */
-    @Deprecated
-    public boolean getBuild() {
-        return isBuildEnabled();
     }
 
     /**

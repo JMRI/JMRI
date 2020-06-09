@@ -756,7 +756,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 : Bundle.getMessage("StoreClockString") );
         
         // remind to save
-        Object[] options = {Bundle.getMessage("ButtonSaveUser"), Bundle.getMessage("ButtonSaveConfig"),
+        Object[] options = {Bundle.getMessage("ButtonSaveConfig"), Bundle.getMessage("ButtonSaveUser"),
                 Bundle.getMessage("ButtonCancel")};
         int retval = javax.swing.JOptionPane.showOptionDialog(this,
                 messageString,
