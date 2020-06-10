@@ -2042,14 +2042,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return the new scale amount (not necessarily the same as zoomFactor)
      */
     public double setZoom(double zoomFactor) {
-        // re-calculate minZoom (so panel never smaller than view)
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
         Rectangle2D panelBounds = getPanelBounds();
         Dimension panelSize = MathUtil.getSize(panelBounds);
-        minZoom = Math.min(scrollBounds.getWidth() / panelSize.getWidth(),
-                scrollBounds.getHeight() / panelSize.getHeight());
-        enableZoomMenuItem(minZoom);
+        //minZoom = Math.min(scrollBounds.getWidth() / panelSize.getWidth(),
+        //        scrollBounds.getHeight() / panelSize.getHeight());
+        //enableZoomMenuItem(minZoom);
 
         double newZoom = MathUtil.pin(zoomFactor, minZoom, maxZoom);
         selectZoomMenuItem(newZoom);
