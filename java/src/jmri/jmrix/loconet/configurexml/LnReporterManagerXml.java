@@ -24,11 +24,6 @@ public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractRep
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) {
         // load individual Reporters
         return loadReporters(shared);

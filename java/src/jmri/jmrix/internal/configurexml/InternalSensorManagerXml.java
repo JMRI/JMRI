@@ -25,11 +25,6 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public Element store(Object o) {
         Element sensors = new Element("sensors");
 

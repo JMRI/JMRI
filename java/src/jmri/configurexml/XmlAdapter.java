@@ -5,6 +5,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import jmri.configurexml.swing.DialogErrorHandler;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Interface assumed during configuration operations.
@@ -58,7 +60,9 @@ public interface XmlAdapter {
      * @throws JmriConfigureXmlException when a error prevents creating the objects as as
      *                   required by the input XML
      */
-    public void load(Element e, Object o) throws JmriConfigureXmlException;
+    default public void load(Element e, Object o) throws JmriConfigureXmlException {
+        log.error("Invalid method called");
+    }
 
     /**
      * Create a set of configured objects from their XML description, using an
@@ -150,4 +154,6 @@ public interface XmlAdapter {
         }
         return new DialogErrorHandler();
     }
+
+    final static Logger log = LoggerFactory.getLogger(XmlAdapter.class);
 }

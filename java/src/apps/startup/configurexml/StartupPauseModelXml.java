@@ -59,9 +59,4 @@ public class StartupPauseModelXml extends AbstractXmlAdapter {
         return result;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
-    }
-
 }

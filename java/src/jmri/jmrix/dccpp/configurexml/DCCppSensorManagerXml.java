@@ -26,11 +26,6 @@ public class DCCppSensorManagerXml extends jmri.managers.configurexml.AbstractSe
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         // load individual sensors
         return loadSensors(sensors);

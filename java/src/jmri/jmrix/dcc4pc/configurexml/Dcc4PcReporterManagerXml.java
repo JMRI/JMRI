@@ -25,11 +25,6 @@ public class Dcc4PcReporterManagerXml extends jmri.managers.configurexml.Abstrac
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) {
         // create the master object
         //Dcc4PcReporterManager.instance();

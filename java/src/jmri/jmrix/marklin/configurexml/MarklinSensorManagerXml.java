@@ -25,11 +25,6 @@ public class MarklinSensorManagerXml extends jmri.managers.configurexml.Abstract
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // create the master object
         //MarklinSensorManager.instance();
