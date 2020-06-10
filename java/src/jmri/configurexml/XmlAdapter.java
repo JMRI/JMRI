@@ -1,14 +1,10 @@
 package jmri.configurexml;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.GraphicsEnvironment;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import jmri.configurexml.swing.DialogErrorHandler;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Interface assumed during configuration operations.
@@ -154,5 +150,4 @@ public interface XmlAdapter {
         }
         return new DialogErrorHandler();
     }
-
 }
