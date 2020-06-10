@@ -86,5 +86,5 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaSignalHeadXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(AcelaSignalHeadXml.class);
 }

@@ -40,5 +40,5 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosPreferencesXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(EcosPreferencesXml.class);
 }
