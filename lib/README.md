@@ -288,7 +288,8 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ##### PlantUML
 - plantuml.jar
-            from plantuml.org
+        was from plantuml.org, now from https://github.com/plantuml/plantuml.git
+        backdated to v1.2019.8 to resolve state error in umldoclet
 - umldoclet-2.0.9.jar	
     from https://github.com/talsma-ict/umldoclet
     

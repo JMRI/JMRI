@@ -1768,7 +1768,7 @@
 
     <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
-                 maxmemory="512m"
+                 maxmemory="1536m"
                  overview="${source}/jmri/overview.html"
                  destdir="${doctarget}"
                  additionalparam="-breakiterator"
@@ -1869,7 +1869,7 @@
     <target name="javadoc-uml" depends="check-java-version-requirement, init, jjdoc, compile-generated-source, plantuml" 
                     description="create Javadocs with UML, requires Java 11">
         <javadoc packagenames="jmri.*, apps.*"
-                 maxmemory="512m"
+                 maxmemory="1536m"
                  overview="${source}/jmri/overview.html"
                  destdir="${doctarget}"
                  additionalparam="-breakiterator"
@@ -1906,7 +1906,7 @@
             <tag name="navassoc" enabled="false"/>
 
             <doclet name="nl.talsmasoftware.umldoclet.UMLDoclet"
-                    path="${libdir}/umldoclet-2.0.9.jar">
+                    path="${libdir}/plantuml.jar:${libdir}/umldoclet-2.0.9.jar">
                 <param name="-package"/>
                 <param name="--show-members=package"/>
                 <param name="-linksource"/>
@@ -1959,6 +1959,7 @@
         
         </javadoc>
         
+<!-- 
         <apply executable="dot" dest="${doctarget}" parallel="false">
             <arg value="-Tpng"/>
             <arg value="-o"/>
@@ -1967,6 +1968,7 @@
             <fileset dir="${doctarget}" includes="*.dot"/>
             <mapper type="glob" from="*.dot" to="*.png"/>
         </apply>
+ -->
     </target>
 
     <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />
