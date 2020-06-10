@@ -278,6 +278,14 @@
         <decVal/>
         <label xml:lang="de">Startzeit</label>
     </variable>
+    <variable label="Level" CV="16.0.264" default="0" item="ESU V4 Function Output HL-1 Slider 20" mask="XVVVVVVV">
+        <qualifier>
+            <variableref>Headlight [1] Mode</variableref>
+            <relation>eq</relation>
+            <value>19</value>
+        </qualifier>
+        <decVal max="127"/>
+    </variable>
     <!-- Rearlight [1] Mode -->
     <variable label="Rearlight [1] Mode" CV="16.0.267" default="1" item="ESU V4 Function Output RL-1 effect generated" mask="XXXVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -550,6 +558,14 @@
         </qualifier>
         <decVal/>
         <label xml:lang="de">Startzeit</label>
+    </variable>
+    <variable label="Level" CV="16.0.272" default="0" item="ESU V4 Function Output RL-1 Slider 20" mask="XVVVVVVV">
+        <qualifier>
+            <variableref>Rearlight [1] Mode</variableref>
+            <relation>eq</relation>
+            <value>19</value>
+        </qualifier>
+        <decVal max="127"/>
     </variable>
     <!-- AUX1 [1] Mode -->
     <variable label="AUX1 [1] Mode" CV="16.0.275" default="1" item="ESU V4 Function Output A1-1 effect generated" mask="XXXVVVVV">
@@ -824,6 +840,14 @@
         <decVal/>
         <label xml:lang="de">Startzeit</label>
     </variable>
+    <variable label="Level" CV="16.0.280" default="0" item="ESU V4 Function Output A1-1 Slider 20" mask="XVVVVVVV">
+        <qualifier>
+            <variableref>AUX1 [1] Mode</variableref>
+            <relation>eq</relation>
+            <value>19</value>
+        </qualifier>
+        <decVal max="127"/>
+    </variable>
     <!-- AUX2 [1] Mode -->
     <variable label="AUX2 [1] Mode" CV="16.0.283" default="1" item="ESU V4 Function Output A2-1 effect generated" mask="XXXVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -1096,6 +1120,14 @@
         </qualifier>
         <decVal/>
         <label xml:lang="de">Startzeit</label>
+    </variable>
+    <variable label="Level" CV="16.0.288" default="0" item="ESU V4 Function Output A2-1 Slider 20" mask="XVVVVVVV">
+        <qualifier>
+            <variableref>AUX2 [1] Mode</variableref>
+            <relation>eq</relation>
+            <value>19</value>
+        </qualifier>
+        <decVal max="127"/>
     </variable>
     <variables exclude="Essential Sound Unit">
         <!-- AUX3 Mode -->
@@ -1371,6 +1403,14 @@
             <decVal/>
             <label xml:lang="de">Startzeit</label>
         </variable>
+        <variable label="Level" CV="16.0.296" default="0" item="ESU V4 Function Output A3 Slider 20" mask="XVVVVVVV">
+            <qualifier>
+                <variableref>AUX3 Mode</variableref>
+                <relation>eq</relation>
+                <value>19</value>
+            </qualifier>
+            <decVal max="127"/>
+        </variable>
         <!-- AUX4 Mode -->
         <variable label="AUX4 Mode" CV="16.0.299" default="1" item="ESU V4 Function Output A4 effect generated" mask="XXXVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -1643,6 +1683,14 @@
             </qualifier>
             <decVal/>
             <label xml:lang="de">Startzeit</label>
+        </variable>
+        <variable label="Level" CV="16.0.304" default="0" item="ESU V4 Function Output A4 Slider 20" mask="XVVVVVVV">
+            <qualifier>
+                <variableref>AUX4 Mode</variableref>
+                <relation>eq</relation>
+                <value>19</value>
+            </qualifier>
+            <decVal max="127"/>
         </variable>
         <!-- AUX5 Mode -->
         <variable label="AUX5 Mode" CV="16.0.307" default="1" item="ESU V4 Function Output A5 effect generated" mask="XXXVVVVV">
@@ -1917,6 +1965,14 @@
             <decVal/>
             <label xml:lang="de">Startzeit</label>
         </variable>
+        <variable label="Level" CV="16.0.312" default="0" item="ESU V4 Function Output A5 Slider 20" mask="XVVVVVVV">
+            <qualifier>
+                <variableref>AUX5 Mode</variableref>
+                <relation>eq</relation>
+                <value>19</value>
+            </qualifier>
+            <decVal max="127"/>
+        </variable>
         <!-- AUX6 Mode -->
         <variable label="AUX6 Mode" CV="16.0.315" default="1" item="ESU V4 Function Output A6 effect generated" mask="XXXVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -2189,6 +2245,14 @@
             </qualifier>
             <decVal/>
             <label xml:lang="de">Startzeit</label>
+        </variable>
+        <variable label="Level" CV="16.0.320" default="0" item="ESU V4 Function Output A6 Slider 20" mask="XVVVVVVV">
+            <qualifier>
+                <variableref>AUX6 Mode</variableref>
+                <relation>eq</relation>
+                <value>19</value>
+            </qualifier>
+            <decVal max="127"/>
         </variable>
         <variables exclude="LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC">
             <!-- AUX7 Mode -->
@@ -2464,6 +2528,14 @@
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
             </variable>
+            <variable label="Level" CV="16.0.328" default="0" item="ESU V4 Function Output A7 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX7 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
+            </variable>
             <!-- AUX8 Mode -->
             <variable label="AUX8 Mode" CV="16.0.331" default="1" item="ESU V4 Function Output A8 effect generated" mask="XXXVVVVV">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -2736,6 +2808,14 @@
                 </qualifier>
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
+            </variable>
+            <variable label="Level" CV="16.0.336" default="0" item="ESU V4 Function Output A8 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX8 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
             </variable>
             <!-- AUX9 Mode -->
             <variable label="AUX9 Mode" CV="16.0.339" default="1" item="ESU V4 Function Output A9 effect generated" mask="XXXVVVVV">
@@ -3010,6 +3090,14 @@
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
             </variable>
+            <variable label="Level" CV="16.0.344" default="0" item="ESU V4 Function Output A9 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX9 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
+            </variable>
             <!-- AUX10 Mode -->
             <variable label="AUX10 Mode" CV="16.0.347" default="1" item="ESU V4 Function Output A10 effect generated" mask="XXXVVVVV">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -3282,6 +3370,14 @@
                 </qualifier>
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
+            </variable>
+            <variable label="Level" CV="16.0.352" default="0" item="ESU V4 Function Output A10 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX10 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
             </variable>
             <!-- AUX11 Mode -->
             <variable label="AUX11 Mode" CV="16.0.355" default="1" item="ESU V4 Function Output A11 effect generated" mask="XXXVVVVV">
@@ -3567,6 +3663,14 @@
                 </qualifier>
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
+            </variable>
+            <variable label="Level" CV="16.0.360" default="0" item="ESU V4 Function Output A11 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX11 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
             </variable>
             <variable label="Position B" CV="16.0.360" default="0" item="ESU V4 Function Output A11 Slider 19" mask="XXVVVVVV">
                 <qualifier>
@@ -3860,6 +3964,14 @@
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
             </variable>
+            <variable label="Level" CV="16.0.368" default="0" item="ESU V4 Function Output A12 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX12 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
+            </variable>
             <variable label="Position B" CV="16.0.368" default="0" item="ESU V4 Function Output A12 Slider 19" mask="XXVVVVVV">
                 <qualifier>
                     <variableref>AUX12 Mode</variableref>
@@ -4141,6 +4253,14 @@
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
             </variable>
+            <variable label="Level" CV="16.0.376" default="0" item="ESU V4 Function Output A13 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX13 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
+            </variable>
             <!-- AUX14 Mode -->
             <variable label="AUX14 Mode" CV="16.0.379" default="1" item="ESU V4 Function Output A14 effect generated" mask="XXXVVVVV">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -4413,6 +4533,14 @@
                 </qualifier>
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
+            </variable>
+            <variable label="Level" CV="16.0.384" default="0" item="ESU V4 Function Output A14 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX14 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
             </variable>
             <!-- AUX15 Mode -->
             <variable label="AUX15 Mode" CV="16.0.387" default="1" item="ESU V4 Function Output A15 effect generated" mask="XXXVVVVV">
@@ -4697,6 +4825,14 @@
                 </qualifier>
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
+            </variable>
+            <variable label="Level" CV="16.0.392" default="0" item="ESU V4 Function Output A15 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX15 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
             </variable>
             <variable label="Position B" CV="16.0.392" default="0" item="ESU V4 Function Output A15 Slider 19" mask="XXVVVVVV">
                 <qualifier>
@@ -4990,6 +5126,14 @@
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
             </variable>
+            <variable label="Level" CV="16.0.400" default="0" item="ESU V4 Function Output A16 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX16 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
+            </variable>
             <variable label="Position B" CV="16.0.400" default="0" item="ESU V4 Function Output A16 Slider 19" mask="XXVVVVVV">
                 <qualifier>
                     <variableref>AUX16 Mode</variableref>
@@ -5281,6 +5425,14 @@
                 </qualifier>
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
+            </variable>
+            <variable label="Level" CV="16.0.408" default="0" item="ESU V4 Function Output A17 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX17 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
             </variable>
             <variable label="Position B" CV="16.0.408" default="0" item="ESU V4 Function Output A17 Slider 19" mask="XXVVVVVV">
                 <qualifier>
@@ -5574,6 +5726,14 @@
                 <decVal/>
                 <label xml:lang="de">Startzeit</label>
             </variable>
+            <variable label="Level" CV="16.0.416" default="0" item="ESU V4 Function Output A18 Slider 20" mask="XVVVVVVV">
+                <qualifier>
+                    <variableref>AUX18 Mode</variableref>
+                    <relation>eq</relation>
+                    <value>19</value>
+                </qualifier>
+                <decVal max="127"/>
+            </variable>
             <variable label="Position B" CV="16.0.416" default="0" item="ESU V4 Function Output A18 Slider 19" mask="XXVVVVVV">
                 <qualifier>
                     <variableref>AUX18 Mode</variableref>
@@ -5858,6 +6018,14 @@
         <decVal/>
         <label xml:lang="de">Startzeit</label>
     </variable>
+    <variable label="Level" CV="16.0.424" default="0" item="ESU V4 Function Output HL-2 Slider 20" mask="XVVVVVVV">
+        <qualifier>
+            <variableref>Headlight [2] Mode</variableref>
+            <relation>eq</relation>
+            <value>19</value>
+        </qualifier>
+        <decVal max="127"/>
+    </variable>
     <!-- Rearlight [2] Mode -->
     <variable label="Rearlight [2] Mode" CV="16.0.427" default="1" item="ESU V4 Function Output RL-2 effect generated" mask="XXXVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -6130,6 +6298,14 @@
         </qualifier>
         <decVal/>
         <label xml:lang="de">Startzeit</label>
+    </variable>
+    <variable label="Level" CV="16.0.432" default="0" item="ESU V4 Function Output RL-2 Slider 20" mask="XVVVVVVV">
+        <qualifier>
+            <variableref>Rearlight [2] Mode</variableref>
+            <relation>eq</relation>
+            <value>19</value>
+        </qualifier>
+        <decVal max="127"/>
     </variable>
     <!-- AUX1 [2] Mode -->
     <variable label="AUX1 [2] Mode" CV="16.0.435" default="1" item="ESU V4 Function Output A1-2 effect generated" mask="XXXVVVVV">
@@ -6404,6 +6580,14 @@
         <decVal/>
         <label xml:lang="de">Startzeit</label>
     </variable>
+    <variable label="Level" CV="16.0.440" default="0" item="ESU V4 Function Output A1-2 Slider 20" mask="XVVVVVVV">
+        <qualifier>
+            <variableref>AUX1 [2] Mode</variableref>
+            <relation>eq</relation>
+            <value>19</value>
+        </qualifier>
+        <decVal max="127"/>
+    </variable>
     <!-- AUX2 [2] Mode -->
     <variable label="AUX2 [2] Mode" CV="16.0.443" default="1" item="ESU V4 Function Output A2-2 effect generated" mask="XXXVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -6676,5 +6860,13 @@
         </qualifier>
         <decVal/>
         <label xml:lang="de">Startzeit</label>
+    </variable>
+    <variable label="Level" CV="16.0.448" default="0" item="ESU V4 Function Output A2-2 Slider 20" mask="XVVVVVVV">
+        <qualifier>
+            <variableref>AUX2 [2] Mode</variableref>
+            <relation>eq</relation>
+            <value>19</value>
+        </qualifier>
+        <decVal max="127"/>
     </variable>
 </variables>
