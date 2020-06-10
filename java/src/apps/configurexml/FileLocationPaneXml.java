@@ -85,6 +85,6 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(FileLocationPaneXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(FileLocationPaneXml.class);
 
 }

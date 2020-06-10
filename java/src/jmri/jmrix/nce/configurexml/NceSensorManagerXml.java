@@ -30,5 +30,5 @@ public class NceSensorManagerXml extends jmri.managers.configurexml.AbstractSens
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceSensorManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(NceSensorManagerXml.class);
 }

@@ -62,5 +62,5 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSignalHeadXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(SerialSignalHeadXml.class);
 }

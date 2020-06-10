@@ -33,5 +33,5 @@ public class Z21SensorManagerXml extends jmri.managers.configurexml.AbstractSens
         return loadSensors(shared);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Z21SensorManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(Z21SensorManagerXml.class);
 }

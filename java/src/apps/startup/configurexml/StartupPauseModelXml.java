@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StartupPauseModelXml extends AbstractXmlAdapter {
 
-    private final static Logger log = LoggerFactory.getLogger(StartupPauseModelXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(StartupPauseModelXml.class);
 
     public StartupPauseModelXml() {
     }
