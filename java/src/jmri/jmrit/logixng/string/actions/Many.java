@@ -32,12 +32,12 @@ public class Many extends AbstractStringAction
         super(sys, user);
         init();
     }
-
-//    public Many(String sys, String user, List<Map.Entry<String, String>> actionSystemNames)
-//            throws BadUserNameException, BadSystemNameException {
-//        super(sys, user);
-//        setActionSystemNames(actionSystemNames);
-//    }
+    
+    public Many(String sys, String user, List<Map.Entry<String, String>> actionSystemNames)
+            throws BadUserNameException, BadSystemNameException {
+        super(sys, user);
+        setActionSystemNames(actionSystemNames);
+    }
     
     private void init() {
         _actionEntries
@@ -65,16 +65,19 @@ public class Many extends AbstractStringAction
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         return _actionEntries.get(index)._socket;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getChildCount() {
         return _actionEntries.size();
     }
     
+    /** {@inheritDoc} */
     @Override
     public void connected(FemaleSocket socket) {
         boolean hasFreeSocket = false;
@@ -93,7 +96,8 @@ public class Many extends AbstractStringAction
         }
         firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public void disconnected(FemaleSocket socket) {
         for (ActionEntry entry : _actionEntries) {
@@ -105,16 +109,18 @@ public class Many extends AbstractStringAction
         firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
+    /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "Many_Short");
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Many_Long");
     }
-
+    
     private void setActionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_actionEntries.isEmpty()) {
             throw new RuntimeException("action system names cannot be set more than once");
@@ -128,11 +134,11 @@ public class Many extends AbstractStringAction
             _actionEntries.add(new ActionEntry(socket, entry.getValue()));
         }
     }
-
+    
     public String getActionSystemName(int index) {
         return _actionEntries.get(index)._socketSystemName;
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void setup() {

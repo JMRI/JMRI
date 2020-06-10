@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.string.actions;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -10,15 +9,11 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.MaleStringActionSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.StringAction;
-import jmri.jmrit.logixng.StringActionBean;
 import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.StringExpressionBean;
-import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -113,6 +108,59 @@ public class ManyTest extends AbstractStringActionTestBase {
     @Test
     public void testIsExternal() {
         Assert.assertFalse("is external", _base.isExternal());
+    }
+    
+    // Test the methods connected(FemaleSocket) and getActionSystemName(int)
+    @Test
+    public void testConnected_getActionSystemName() throws SocketAlreadyConnectedException {
+        Many action = new Many("IQSA121", null);
+        
+        StringActionMemory stringActionMemory = new StringActionMemory("IQSA122", null);
+        MaleSocket maleSAMSocket =
+                InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionMemory);
+        
+        Assert.assertEquals("Num children is correct", 1, action.getChildCount());
+        
+        // Test connect and disconnect
+        action.getChild(0).connect(maleSAMSocket);
+        Assert.assertEquals("Num children is correct", 2, action.getChildCount());
+        Assert.assertEquals("getActionSystemName(0) is correct", "IQSA122", action.getActionSystemName(0));
+        Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
+        action.getChild(0).disconnect();
+        Assert.assertEquals("Num children is correct", 2, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
+        
+        action.getChild(1).connect(maleSAMSocket);
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertEquals("getActionSystemName(1) is correct", "IQSA122", action.getActionSystemName(1));
+        action.getChild(0).disconnect();    // Test removing child with the wrong index.
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertEquals("getActionSystemName(1) is correct", "IQSA122", action.getActionSystemName(1));
+        action.getChild(1).disconnect();
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
+        
+        action.getChild(1).connect(maleSAMSocket);
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertEquals("getActionSystemName(1) is correct", "IQSA122", action.getActionSystemName(1));
+        Assert.assertNull("getActionSystemName(2) is null", action.getActionSystemName(2));
+        action.getChild(1).disconnect();
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
+        Assert.assertNull("getActionSystemName(2) is null", action.getActionSystemName(2));
+    }
+    
+    @Test
+    public void testDescription() {
+        Many action = new Many("IQSA121", null);
+        Assert.assertEquals("Short description", "Many", action.getShortDescription());
+        Assert.assertEquals("Long description", "Many", action.getLongDescription());
     }
     
     // The minimal setup for log4J

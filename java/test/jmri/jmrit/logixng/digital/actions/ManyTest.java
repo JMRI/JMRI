@@ -144,6 +144,59 @@ public class ManyTest extends AbstractDigitalActionTestBase {
         Assert.assertFalse("is external", _base.isExternal());
     }
     
+    // Test the methods connected(FemaleSocket) and getActionSystemName(int)
+    @Test
+    public void testConnected_getActionSystemName() throws SocketAlreadyConnectedException {
+        Many action = new Many("IQDA121", null);
+        
+        ActionMemory actionMemory = new ActionMemory("IQDA122", null);
+        MaleSocket maleSAMSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory);
+        
+        Assert.assertEquals("Num children is correct", 1, action.getChildCount());
+        
+        // Test connect and disconnect
+        action.getChild(0).connect(maleSAMSocket);
+        Assert.assertEquals("Num children is correct", 2, action.getChildCount());
+        Assert.assertEquals("getActionSystemName(0) is correct", "IQDA122", action.getActionSystemName(0));
+        Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
+        action.getChild(0).disconnect();
+        Assert.assertEquals("Num children is correct", 2, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
+        
+        action.getChild(1).connect(maleSAMSocket);
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertEquals("getActionSystemName(1) is correct", "IQDA122", action.getActionSystemName(1));
+        action.getChild(0).disconnect();    // Test removing child with the wrong index.
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertEquals("getActionSystemName(1) is correct", "IQDA122", action.getActionSystemName(1));
+        action.getChild(1).disconnect();
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
+        
+        action.getChild(1).connect(maleSAMSocket);
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertEquals("getActionSystemName(1) is correct", "IQDA122", action.getActionSystemName(1));
+        Assert.assertNull("getActionSystemName(2) is null", action.getActionSystemName(2));
+        action.getChild(1).disconnect();
+        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
+        Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
+        Assert.assertNull("getActionSystemName(2) is null", action.getActionSystemName(2));
+    }
+    
+    @Test
+    public void testDescription() {
+        Many action = new Many("IQDA121", null);
+        Assert.assertEquals("Short description", "Many", action.getShortDescription());
+        Assert.assertEquals("Long description", "Many", action.getLongDescription());
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
