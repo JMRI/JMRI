@@ -117,19 +117,11 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
         
         for (int i=0; i < 3; i++) {
             Assert.assertTrue("getChildCount() returns "+i, i+1 == expression2.getChildCount());
-
+            
             Assert.assertNotNull("getChild(0) returns a non null value",
                     expression2.getChild(0));
-
-            boolean hasThrown = false;
-            try {
-                expression2.getChild(i+1);
-            } catch (IndexOutOfBoundsException ex) {
-                hasThrown = true;
-                String msg = String.format("Index %d out of bounds for length %d", i+1, i+1);
-                Assert.assertEquals("Error message is correct", msg, ex.getMessage());
-            }
-            Assert.assertTrue("Exception is thrown", hasThrown);
+            
+            assertIndexOutOfBoundsException(expression2::getChild, i+1, i+1);
             
             // Connect a new child expression
             True expr = new True("IQDE"+i, null);

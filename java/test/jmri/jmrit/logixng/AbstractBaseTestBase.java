@@ -859,6 +859,45 @@ public abstract class AbstractBaseTestBase {
         
     }
 
+
+    /**
+     * Executes the method.
+     * This interface is used by the method {@link #assertIndexOutOfBoundsException()}
+     */
+    public interface RunnableWithIndex {
+        /**
+         * Run the method.
+         * @param index the index
+         */
+        public void run(int index);
+    }
+    
+    /**
+     * Assert that an IndexOutOfBoundsException is thrown and has the correct
+     * error message.
+     * <P>
+     * This method is added since different Java versions gives different
+     * error messages.
+     * @param r the method to run
+     * @param index the index
+     * @param arraySize the size of the array
+     */
+    public void assertIndexOutOfBoundsException(RunnableWithIndex r, int index, int arraySize) {
+        boolean hasThrown = false;
+        try {
+            r.run(index);
+        } catch (IndexOutOfBoundsException ex) {
+            hasThrown = true;
+            String msg1 = String.format("Index: %d, Size: %d", index, arraySize);
+            String msg2 = String.format("Index %d out of bounds for length %d", index, arraySize);
+            if (!msg1.equals(ex.getMessage()) && !msg2.equals(ex.getMessage())) {
+                Assert.fail("Wrong error message: " + ex.getMessage());
+            }
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+
+
     private final static Logger log = LoggerFactory.getLogger(AbstractBaseTestBase.class);
 
 }
