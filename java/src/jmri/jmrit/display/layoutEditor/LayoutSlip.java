@@ -52,12 +52,12 @@ abstract public class LayoutSlip extends LayoutTurnout {
      * Constructor method.
      * 
      * @param id slip ID.
-     * @param layoutEditor the layout editor.
+     * @param models the layout editor.
      * @param type slip type, SINGLE_SLIP or DOUBLE_SLIP.
      */
     public LayoutSlip(String id, 
-            LayoutEditor layoutEditor, TurnoutType type) {
-        super(id, layoutEditor, type);
+            LayoutEditor models, TurnoutType type) {
+        super(id, models, type);
 
         turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
         turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
@@ -568,7 +568,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 if (en.getValue().getTurnoutAState() == state_a) {
                     if (en.getValue().getTurnoutBState() == state_b) {
                         currentState = en.getKey();
-                        layoutEditor.redrawPanel();
+                        models.redrawPanel();
                         return;
                     }
                 }

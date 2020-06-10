@@ -50,10 +50,10 @@ public class LayoutTurntable extends LayoutTrack {
      * Constructor method
      *
      * @param id           the name for the turntable
-     * @param layoutEditor what layout editor panel to put it in
+     * @param models what layout editor panel to put it in
      */
-    public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor layoutEditor) {
-        super(id, layoutEditor);
+    public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor models) {
+        super(id, models);
         
         radius = 25.0; // initial default, change asap.
     }
@@ -157,7 +157,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     public void setLayoutBlockByName(@CheckForNull String name) {
         if ((name != null) && !name.isEmpty()) {
-            setLayoutBlock(layoutEditor.provideLayoutBlock(name));
+            setLayoutBlock(models.provideLayoutBlock(name));
         }
     }
 
@@ -577,8 +577,8 @@ public class LayoutTurntable extends LayoutTrack {
                 if (rt.getConnectionIndex() == index) {
                     lastKnownIndex = index;
                     rt.setPosition();
-                    layoutEditor.redrawPanel();
-                    layoutEditor.setDirty();
+                    models.redrawPanel();
+                    models.setDirty();
                     found = true;
                     break;
                 }
@@ -614,12 +614,12 @@ public class LayoutTurntable extends LayoutTrack {
             rayTrack.dispose();
         }
         if (t != null) {
-            layoutEditor.removeTrackSegment(t);
+            models.removeTrackSegment(t);
         }
 
         // update the panel
-        layoutEditor.redrawPanel();
-        layoutEditor.setDirty();
+        models.redrawPanel();
+        models.setDirty();
     }
 
     /**
@@ -677,8 +677,8 @@ public class LayoutTurntable extends LayoutTrack {
         public void setDisabled(boolean boo) {
             if (disabled != boo) {
                 disabled = boo;
-                if (layoutEditor != null) {
-                    layoutEditor.redrawPanel();
+                if (models != null) {
+                    models.redrawPanel();
                 }
             }
         }
@@ -700,8 +700,8 @@ public class LayoutTurntable extends LayoutTrack {
         public void setDisabledWhenOccupied(boolean boo) {
             if (disableWhenOccupied != boo) {
                 disableWhenOccupied = boo;
-                if (layoutEditor != null) {
-                    layoutEditor.redrawPanel();
+                if (models != null) {
+                    models.redrawPanel();
                 }
             }
         }
@@ -798,8 +798,8 @@ public class LayoutTurntable extends LayoutTrack {
                 mTurnoutListener = (PropertyChangeEvent e) -> {
                     if (getTurnout().getKnownState() == turnoutState) {
                         lastKnownIndex = connectionIndex;
-                        layoutEditor.redrawPanel();
-                        layoutEditor.setDirty();
+                        models.redrawPanel();
+                        models.setDirty();
                     }
                 };
             }

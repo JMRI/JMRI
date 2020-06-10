@@ -41,8 +41,8 @@ public class TrackSegment extends LayoutTrack {
             @CheckForNull LayoutTrack c1, HitPointType t1,
             @CheckForNull LayoutTrack c2, HitPointType t2,
             boolean main,
-            @Nonnull LayoutEditor layoutEditor) {
-        super(id, layoutEditor);
+            @Nonnull LayoutEditor models) {
+        super(id, models);
 
         // validate input
         if ((c1 == null) || (c2 == null)) {
@@ -63,10 +63,6 @@ public class TrackSegment extends LayoutTrack {
         }
 
         mainline = main;
-
-//        setupDefaultBumperSizes(layoutEditor);
-
-        // editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
 
     // alternate constructor for loading layout editor panels
@@ -74,8 +70,8 @@ public class TrackSegment extends LayoutTrack {
             @CheckForNull String c1Name, HitPointType t1,
             @CheckForNull String c2Name, HitPointType t2,
             boolean main,
-            @Nonnull LayoutEditor layoutEditor) {
-        super(id, layoutEditor);
+            @Nonnull LayoutEditor models) {
+        super(id, models);
 
         tConnect1Name = c1Name;
         type1 = t1;
@@ -83,10 +79,6 @@ public class TrackSegment extends LayoutTrack {
         type2 = t2;
 
         mainline = main;
-        
-//        setupDefaultBumperSizes(layoutEditor);
-        
-        // editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
 
 
@@ -225,8 +217,8 @@ public class TrackSegment extends LayoutTrack {
     public void setMainline(boolean main) {
         if (mainline != main) {
             mainline = main;
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
+            models.redrawPanel();
+            models.setDirty();
         }
     }
 
@@ -237,7 +229,7 @@ public class TrackSegment extends LayoutTrack {
         log.error("isArc should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        return layoutEditor.getTrackSegmentView(this).isArc();
+        return models.getTrackSegmentView(this).isArc();
     }
 
     /**
@@ -247,14 +239,14 @@ public class TrackSegment extends LayoutTrack {
         log.error("isCircle should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        return layoutEditor.getTrackSegmentView(this).isCircle();
+        return models.getTrackSegmentView(this).isCircle();
     }
 
     public void setCircle(boolean boo) {
         log.error("setCircle should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        layoutEditor.getTrackSegmentView(this).setCircle(boo);
+        models.getTrackSegmentView(this).setCircle(boo);
     }
 
 
@@ -265,7 +257,7 @@ public class TrackSegment extends LayoutTrack {
         log.error("isBezier should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        return layoutEditor.getTrackSegmentView(this).isBezier();
+        return models.getTrackSegmentView(this).isBezier();
     }
 
     /**
@@ -279,7 +271,7 @@ public class TrackSegment extends LayoutTrack {
     public double getDirectionRAD() {
         log.error("getDirectionRAD should have called View instead of TrackSegment (temporary)",
                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-        return layoutEditor.getTrackSegmentView(this).getDirectionRAD();
+        return models.getTrackSegmentView(this).getDirectionRAD();
     }
 
     /**
@@ -293,7 +285,7 @@ public class TrackSegment extends LayoutTrack {
     public double getDirectionDEG() {
         log.error("getDirectionDEG should have called View instead of TrackSegment (temporary)",
                 jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
-        return layoutEditor.getTrackSegmentView(this).getDirectionDEG();
+        return models.getTrackSegmentView(this).getDirectionDEG();
     }
 
     public LayoutBlock getLayoutBlock() {
@@ -352,28 +344,28 @@ public class TrackSegment extends LayoutTrack {
         log.error("getNumberOfBezierControlPoints should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        return layoutEditor.getTrackSegmentView(this).getNumberOfBezierControlPoints();
+        return models.getTrackSegmentView(this).getNumberOfBezierControlPoints();
     }
 
     public Point2D getBezierControlPoint(int index) {
         log.error("getBezierControlPoint should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        return layoutEditor.getTrackSegmentView(this).getBezierControlPoint(index);
+        return models.getTrackSegmentView(this).getBezierControlPoint(index);
     }
 
     public void setBezierControlPoint(@CheckForNull Point2D p, int index) {
         log.error("setBezierControlPoint should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        layoutEditor.getTrackSegmentView(this).setBezierControlPoint(p, index);
+        models.getTrackSegmentView(this).setBezierControlPoint(p, index);
     }
 
     public ArrayList<Point2D> getBezierControlPoints() {
         log.error("getBezierControlPoints should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        return layoutEditor.getTrackSegmentView(this).getBezierControlPoints();
+        return models.getTrackSegmentView(this).getBezierControlPoints();
     }
 
     /**
@@ -405,7 +397,7 @@ public class TrackSegment extends LayoutTrack {
      */
     public void setLayoutBlockByName(@CheckForNull String name) {
         if ((name != null) && !name.isEmpty()) {
-            LayoutBlock b = layoutEditor.provideLayoutBlock(name);
+            LayoutBlock b = models.provideLayoutBlock(name);
             if (b != null) {
                 namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, b);
             } else {
@@ -485,7 +477,7 @@ public class TrackSegment extends LayoutTrack {
                     }
                 }
             } else {
-                result = layoutEditor.getAffectedBlock(connect, type);
+                result = models.getAffectedBlock(connect, type);
             }
         }
         return result;
@@ -638,19 +630,6 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Display popup menu for information and editing.
-     *
-     * @param e            mouse event, for co-ordinates of popup.
-     * @param hitPointType the hit point type.
-     */
-//     protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
-//         log.error("showBezierPopUp should have called View instead of TrackSegment (temporary)"
-//                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
-//             );
-//         layoutEditor.getTrackSegmentView(this).showBezierPopUp(e, hitPointType);
-//     }
-
-    /**
      * Clean up when this object is no longer needed.
      * <p>
      * Should not be called while the object is still displayed.
@@ -661,7 +640,7 @@ public class TrackSegment extends LayoutTrack {
         log.error("dispose should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        layoutEditor.getTrackSegmentView(this).dispose();
+        models.getTrackSegmentView(this).dispose();
     }
 
     /**
@@ -723,8 +702,8 @@ public class TrackSegment extends LayoutTrack {
         } else {
             showConstructionLine = HIDECON;
         }
-        layoutEditor.redrawPanel();
-        layoutEditor.setDirty();
+        models.redrawPanel();
+        models.setDirty();
     }
 
     /**
@@ -740,14 +719,14 @@ public class TrackSegment extends LayoutTrack {
         log.error("getCentreSegX should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        return layoutEditor.getTrackSegmentView(this).getCentreSegX();
+        return models.getTrackSegmentView(this).getCentreSegX();
     }
 
     public double getCentreSegY() {
         log.error("getCentreSegY should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        return layoutEditor.getTrackSegmentView(this).getCentreSegY();
+        return models.getTrackSegmentView(this).getCentreSegY();
     }
 
 
@@ -758,7 +737,7 @@ public class TrackSegment extends LayoutTrack {
         log.error("getCentreSeg should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        return layoutEditor.getTrackSegmentView(this).getCentreSeg();
+        return models.getTrackSegmentView(this).getCentreSeg();
     }
 
 
@@ -827,7 +806,7 @@ public class TrackSegment extends LayoutTrack {
         log.error("reCalculateTrackSegmentAngle should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        layoutEditor.getTrackSegmentView(this).reCalculateTrackSegmentAngle(x, y);
+        models.getTrackSegmentView(this).reCalculateTrackSegmentAngle(x, y);
     }
 
 
@@ -838,279 +817,6 @@ public class TrackSegment extends LayoutTrack {
     public void reCheckBlockBoundary() {
         log.info("reCheckBlockBoundary is temporary, but was invoked", new Exception("traceback"));
     }
-
-
-    /**
-     * Arrow decoration accessor. The 0 (none) and 1 through 5 arrow decorations
-     * are keyed to files like
-     * program:resources/icons/decorations/ArrowStyle1.png et al.
-     *
-     * @return arrow style, 0 is none.
-     */
-//    public int getArrowStyle() {
-//        return arrowStyle;
-//    }
-
-    /**
-     * Set the arrow decoration. The 0 (none) and 1 through 5 arrow decorations
-     * are keyed to files like
-     * program:resources/icons/decorations/ArrowStyle1.png et al.
-     *
-     * @param newVal the arrow style index, 0 is none.
-     */
-//     public void setArrowStyle(int newVal) {
-//         log.trace("TrackSegment:setArrowStyle {} {} {}", newVal, arrowEndStart, arrowEndStop);
-//         if (arrowStyle != newVal) {
-//             if (newVal > 0) {
-//                 if (!arrowEndStart && !arrowEndStop) {
-//                     arrowEndStart = true;
-//                     arrowEndStop = true;
-//                 }
-//                 if (!arrowDirIn && !arrowDirOut) {
-//                     arrowDirOut = true;
-//                 }
-//             } else {
-//                 newVal = 0; // only positive styles allowed!
-//             }
-//             arrowStyle = newVal;
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private int arrowStyle = 0;
-// 
-//     public boolean isArrowEndStart() {
-//         return arrowEndStart;
-//     }
-// 
-//     public void setArrowEndStart(boolean newVal) {
-//         if (arrowEndStart != newVal) {
-//             arrowEndStart = newVal;
-//             if (!arrowEndStart && !arrowEndStop) {
-//                 arrowStyle = 0;
-//             } else if (arrowStyle == 0) {
-//                 arrowStyle = 1;
-//             }
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private boolean arrowEndStart = false;
-// 
-//     public boolean isArrowEndStop() {
-//         return arrowEndStop;
-//     }
-// 
-//     public void setArrowEndStop(boolean newVal) {
-//         if (arrowEndStop != newVal) {
-//             arrowEndStop = newVal;
-//             if (!arrowEndStart && !arrowEndStop) {
-//                 arrowStyle = 0;
-//             } else if (arrowStyle == 0) {
-//                 arrowStyle = 1;
-//             }
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private boolean arrowEndStop = false;
-// 
-//     public boolean isArrowDirIn() {
-//         return arrowDirIn;
-//     }
-// 
-//     public void setArrowDirIn(boolean newVal) {
-//         if (arrowDirIn != newVal) {
-//             arrowDirIn = newVal;
-//             if (!arrowDirIn && !arrowDirOut) {
-//                 arrowStyle = 0;
-//             } else if (arrowStyle == 0) {
-//                 arrowStyle = 1;
-//             }
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private boolean arrowDirIn = false;
-// 
-//     public boolean isArrowDirOut() {
-//         return arrowDirOut;
-//     }
-// 
-//     public void setArrowDirOut(boolean newVal) {
-//         if (arrowDirOut != newVal) {
-//             arrowDirOut = newVal;
-//             if (!arrowDirIn && !arrowDirOut) {
-//                 arrowStyle = 0;
-//             } else if (arrowStyle == 0) {
-//                 arrowStyle = 1;
-//             }
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private boolean arrowDirOut = false;
-// 
-//     public Color getArrowColor() {
-//         return arrowColor;
-//     }
-// 
-//     public void setArrowColor(Color newVal) {
-//         if (arrowColor != newVal) {
-//             arrowColor = newVal;
-//             JmriColorChooser.addRecentColor(newVal);
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private Color arrowColor = Color.BLACK;
-
-//     public int getArrowLineWidth() {
-//         return arrowLineWidth;
-//     }
-// 
-//     public void setArrowLineWidth(int newVal) {
-//         if (arrowLineWidth != newVal) {
-//             arrowLineWidth = MathUtil.pin(newVal, 1, MAX_ARROW_LINE_WIDTH);
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private int arrowLineWidth = 4;
-// 
-//     public int getArrowLength() {
-//         return arrowLength;
-//     }
-// 
-//     public void setArrowLength(int newVal) {
-//         if (arrowLength != newVal) {
-//             arrowLength = MathUtil.pin(newVal, 2, MAX_ARROW_LENGTH);
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private int arrowLength = 4;
-// 
-//     public int getArrowGap() {
-//         return arrowGap;
-//     }
-// 
-//     public void setArrowGap(int newVal) {
-//         if (arrowGap != newVal) {
-//             arrowGap = MathUtil.pin(newVal, 0, MAX_ARROW_GAP);
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private int arrowGap = 1;
-
-
-    //
-    // bumper decoration accessors
-    //
-//     public boolean isBumperEndStart() {
-//         return bumperEndStart;
-//     }
-// 
-//     public void setBumperEndStart(boolean newVal) {
-//         if (bumperEndStart != newVal) {
-//             bumperEndStart = newVal;
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private boolean bumperEndStart = false;
-// 
-//     public boolean isBumperEndStop() {
-//         return bumperEndStop;
-//     }
-// 
-//     public void setBumperEndStop(boolean newVal) {
-//         if (bumperEndStop != newVal) {
-//             bumperEndStop = newVal;
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private boolean bumperEndStop = false;
-// 
-//     public Color getBumperColor() {
-//         return bumperColor;
-//     }
-// 
-//     public void setBumperColor(Color newVal) {
-//         if (bumperColor != newVal) {
-//             bumperColor = newVal;
-//             JmriColorChooser.addRecentColor(newVal);
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private Color bumperColor = Color.BLACK;
-// 
-//     public int getBumperLineWidth() {
-//         return bumperLineWidth;
-//     }
-// 
-//     public void setBumperLineWidth(int newVal) {
-//         if (bumperLineWidth != newVal) {
-//             bumperLineWidth = MathUtil.pin(newVal, 1, MAX_BUMPER_LINE_WIDTH);
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-// 
-//     private int bumperLineWidth = 3;
-// 
-//     public int getBumperLength() {
-//         return bumperLength;
-//     }
-// 
-//     public void setBumperLength(int newVal) {
-//         if (bumperLength != newVal) {
-//             bumperLength = Math.max(8, newVal);   // don't let value be less than 8
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private int bumperLength = 20;
-// 
-//     public boolean isBumperFlipped() {
-//         return bumperFlipped;
-//     }
-// 
-//     public void setBumperFlipped(boolean newVal) {
-//         if (bumperFlipped != newVal) {
-//             bumperFlipped = newVal;
-//             layoutEditor.redrawPanel();
-//             layoutEditor.setDirty();
-//         }
-//     }
-//     private boolean bumperFlipped = false;
-// 
-//     private void setupDefaultBumperSizes(LayoutEditor layoutEditor) {
-//         LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
-// 
-//         // use these as default sizes for end bumpers
-//         int tieLength = ltdo.getSideTieLength();
-//         int tieWidth = ltdo.getSideTieWidth();
-//         int railWidth = ltdo.getSideRailWidth();
-//         int railGap = ltdo.getSideRailGap();
-//         if (mainline) {
-//             tieLength = ltdo.getMainTieLength();
-//             tieWidth = ltdo.getMainTieWidth();
-//             railWidth = ltdo.getMainRailWidth();
-//             railGap = ltdo.getMainRailGap();
-//         }
-//         bumperLineWidth = Math.max(railWidth, ltdo.getMainBlockLineWidth()) * 2;
-//         bumperLength = railGap + (2 * railWidth);
-//         if ((tieLength > 0) && (tieWidth > 0)) {
-//             bumperLineWidth = tieWidth;
-//             bumperLength = tieLength * 3 / 2;
-//         }
-//         bumperLineWidth = Math.max(1, bumperLineWidth);
-//         bumperLength = Math.max(10, bumperLength);
-//     }
 
 
     /**
@@ -1146,7 +852,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lt, type1, null);
-                    lc.setDirection(layoutEditor.computeDirection(
+                    lc.setDirection(models.computeDirection(
                                         getConnect2(), type2,
                                         getConnect1(), type1 ) );
                     results.add(lc);
@@ -1164,7 +870,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lx, type1, null);
-                    lc.setDirection(layoutEditor.computeDirection(
+                    lc.setDirection(models.computeDirection(
                                         getConnect2(), type2,
                                         getConnect1(), type1 ) );
                     results.add(lc);
@@ -1178,7 +884,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type1, null);
-                    lc.setDirection(layoutEditor.computeDirection(
+                    lc.setDirection(models.computeDirection(
                                         getConnect2(), type2,
                                         getConnect1(), type1 ) );
                     results.add(lc);
@@ -1206,7 +912,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lt, type2, null);
-                    lc.setDirection(layoutEditor.computeDirection(
+                    lc.setDirection(models.computeDirection(
                                         getConnect1(), type1,
                                         getConnect2(), type2 ) );
                     results.add(lc);
@@ -1224,7 +930,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lx, type2, null);
-                    lc.setDirection(layoutEditor.computeDirection(
+                    lc.setDirection(models.computeDirection(
                                         getConnect1(), type1,
                                         getConnect2(), type2 ) );
                     results.add(lc);
@@ -1238,7 +944,7 @@ public class TrackSegment extends LayoutTrack {
                     log.debug("Block boundary  (''{}''<->''{}'') found at {}", lb1, lb2, this);
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type2, null);
-                    lc.setDirection(layoutEditor.computeDirection(
+                    lc.setDirection(models.computeDirection(
                                         getConnect1(), type1,
                                         getConnect2(), type2 ) );
                     results.add(lc);

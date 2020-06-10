@@ -49,10 +49,10 @@ public class LevelXing extends LayoutTrack {
     /**
      * Constructor.
      * @param id ID string.
-     * @param layoutEditor the main layout editor.
+     * @param models the main layout editor.
      */
-    public LevelXing(String id, LayoutEditor layoutEditor) {
-        super(id, layoutEditor);
+    public LevelXing(String id, LayoutEditor models) {
+        super(id, models);
     }
 
     // defined constants
@@ -85,7 +85,7 @@ public class LevelXing extends LayoutTrack {
     }
 
     // temporary reference to the Editor that will eventually be part of View
-    //private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LevelXingEditor editor;
+    //private final jmri.jmrit.display.models.LayoutEditorDialogs.LevelXingEditor editor;
 
     // this should only be used for debugging
     @Override
@@ -671,19 +671,19 @@ public class LevelXing extends LayoutTrack {
     }
 
     public Point2D getCoordsA() {
-        return layoutEditor.getLevelXingView(this).getCoordsA();
+        return models.getLevelXingView(this).getCoordsA();
     }
 
     public Point2D getCoordsB() {
-        return layoutEditor.getLevelXingView(this).getCoordsB();
+        return models.getLevelXingView(this).getCoordsB();
     }
 
     public Point2D getCoordsC() {
-        return layoutEditor.getLevelXingView(this).getCoordsC();
+        return models.getLevelXingView(this).getCoordsC();
     }
 
     public Point2D getCoordsD() {
-        return layoutEditor.getLevelXingView(this).getCoordsD();
+        return models.getLevelXingView(this).getCoordsD();
     }
 
     /**
@@ -816,19 +816,19 @@ public class LevelXing extends LayoutTrack {
     * Modify coordinates methods.
      */
 //     public void setCoordsA(Point2D p) {
-//         layoutEditor.getLevelXingView(this).setCoordsA(p); // temporary
+//         models.getLevelXingView(this).setCoordsA(p); // temporary
 //     }
 // 
 //     public void setCoordsB(Point2D p) {
-//         layoutEditor.getLevelXingView(this).setCoordsB(p); // temporary
+//         models.getLevelXingView(this).setCoordsB(p); // temporary
 //     }
 // 
 //     public void setCoordsC(Point2D p) {
-//         layoutEditor.getLevelXingView(this).setCoordsC(p); // temporary
+//         models.getLevelXingView(this).setCoordsC(p); // temporary
 //     }
 // 
 //     public void setCoordsD(Point2D p) {
-//         layoutEditor.getLevelXingView(this).setCoordsD(p); // temporary
+//         models.getLevelXingView(this).setCoordsD(p); // temporary
 //     }
 
     // initialization instance variables (used when loading a LayoutEditor)

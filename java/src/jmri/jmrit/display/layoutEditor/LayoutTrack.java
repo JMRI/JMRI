@@ -31,18 +31,18 @@ import jmri.Turnout;
  */
 abstract public class LayoutTrack {
 
-    // final protected LayoutModels layoutEditor;  // preferred
-    final protected LayoutEditor layoutEditor; // temporarily
+    // final protected LayoutModels models;  // preferred
+    final protected LayoutEditor models; // temporarily
 
     /**
      * Constructor method.
      * @param ident track ID.
-     * @param layoutEditor main layout editor.
+     * @param models main layout editor.
      */
-    // public LayoutTrack(@Nonnull String ident, @Nonnull LayoutModels layoutEditor) { // preferred
-    public LayoutTrack(@Nonnull String ident, @Nonnull LayoutEditor layoutEditor) { // temporary
+    // public LayoutTrack(@Nonnull String ident, @Nonnull LayoutModels models) { // preferred
+    public LayoutTrack(@Nonnull String ident, @Nonnull LayoutEditor models) { // temporary
         this.ident = ident;
-        this.layoutEditor = layoutEditor;
+        this.models = models;
     }
 
     /**
@@ -109,7 +109,7 @@ abstract public class LayoutTrack {
      */
     final public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
         log.error("displayRemoveWarningDialog should have been called in view instead of object (temporary)");
-        layoutEditor.getLayoutTrackView(this).displayRemoveWarningDialog(itemList, typeKey);
+        models.getLayoutTrackView(this).displayRemoveWarningDialog(itemList, typeKey);
     }
 
     /**

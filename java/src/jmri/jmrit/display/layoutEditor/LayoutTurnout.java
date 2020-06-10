@@ -117,33 +117,33 @@ import jmri.jmrit.signalling.SignallingGuiTools;
 abstract public class LayoutTurnout extends LayoutTrack {
 
     protected LayoutTurnout(@Nonnull String id,
-            @Nonnull LayoutEditor layoutEditor, TurnoutType t) {
-        super(id, layoutEditor);
+            @Nonnull LayoutEditor models, TurnoutType t) {
+        super(id, models);
         
         type = t;
     }
 
     protected LayoutTurnout(@Nonnull String id,
-            @Nonnull LayoutEditor layoutEditor) {
-        this(id, layoutEditor, TurnoutType.NONE);
+            @Nonnull LayoutEditor models) {
+        this(id, models, TurnoutType.NONE);
     }
 
     public LayoutTurnout(@Nonnull String id, TurnoutType t,
-            @Nonnull LayoutEditor layoutEditor) {
-        this(id, t, layoutEditor, 1);
+            @Nonnull LayoutEditor models) {
+        this(id, t, models, 1);
     }
 
     /**
      * Main constructor method.
      * @param id Layout Turnout ID.
      * @param t type, e.g. LH_TURNOUT, WYE_TURNOUT
-     * @param layoutEditor main layout editor.
+     * @param models main layout editor.
      * @param v version.
      */
     public LayoutTurnout(@Nonnull String id, TurnoutType t, 
-            @Nonnull LayoutEditor layoutEditor, 
+            @Nonnull LayoutEditor models, 
             int v) {
-        super(id, layoutEditor);
+        super(id, models);
 
         namedTurnout = null;
         turnoutName = "";
@@ -369,7 +369,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     private final boolean useBlockSpeed = false;
     
     // temporary reference to the Editor that will eventually be part of View
-    // private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
+    // private final jmri.jmrit.display.models.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     /**
      * {@inheritDoc}
@@ -1269,7 +1269,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
         activateTurnout(); // Even if secondary is null, the primary Turnout may still need to be re-activated
         if (isTurnoutTypeTurnout()) {
-            LayoutEditorFindItems lf = new LayoutEditorFindItems(layoutEditor);
+            LayoutEditorFindItems lf = new LayoutEditorFindItems(models);
             if (oldSecondTurnoutName != null && !oldSecondTurnoutName.isEmpty()) {
                 Turnout oldTurnout = InstanceManager.turnoutManagerInstance().getTurnout(oldSecondTurnoutName);
                 String oldSystemName = (oldTurnout == null) ? null : oldTurnout.getSystemName();
@@ -1307,8 +1307,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
     public void setDisabled(boolean state) {
         if (disabled != state) {
             disabled = state;
-            if (layoutEditor != null) {
-                layoutEditor.redrawPanel();
+            if (models != null) {
+                models.redrawPanel();
             }
         }
     }
@@ -1320,8 +1320,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
     public void setDisableWhenOccupied(boolean state) {
         if (disableWhenOccupied != state) {
             disableWhenOccupied = state;
-            if (layoutEditor != null) {
-                layoutEditor.redrawPanel();
+            if (models != null) {
+                models.redrawPanel();
             }
         }
     }
@@ -1450,22 +1450,22 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     public Point2D getCoordsA() {
         log.debug("temporary getCoordsA should have been called through View");
-        return layoutEditor.getLayoutTurnoutView(this).getCoordsA();    
+        return models.getLayoutTurnoutView(this).getCoordsA();    
     }
 
     public Point2D getCoordsB() {
         log.debug("temporary getCoordsB should have been called through View");
-        return layoutEditor.getLayoutTurnoutView(this).getCoordsB();    
+        return models.getLayoutTurnoutView(this).getCoordsB();    
     }
 
     public Point2D getCoordsC() {
         log.debug("temporary getCoordsC should have been called through View");
-        return layoutEditor.getLayoutTurnoutView(this).getCoordsC();    
+        return models.getLayoutTurnoutView(this).getCoordsC();    
     }
 
     public Point2D getCoordsD() {
         log.debug("temporary getCoordsD should have been called through View");
-        return layoutEditor.getLayoutTurnoutView(this).getCoordsD();    
+        return models.getLayoutTurnoutView(this).getCoordsD();    
     }
 
 
@@ -1475,7 +1475,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         LayoutBlock bB = null;
         LayoutBlock bC = null;
         LayoutBlock bD = null;
-        layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+        models.getLEAuxTools().setBlockConnectivityChanged();
         if (getLayoutBlock() != null) {
             getLayoutBlock().updatePaths();
         }
@@ -1680,12 +1680,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setLayoutBlockByName(@Nonnull String name) {
-        setLayoutBlock(layoutEditor.provideLayoutBlock(name));
+        setLayoutBlock(models.provideLayoutBlock(name));
     }
 
     public void setLayoutBlockBByName(@Nonnull String name) {
         if (isTurnoutTypeXover() || isTurnoutTypeSlip()) {
-            setLayoutBlockB(layoutEditor.provideLayoutBlock(name));
+            setLayoutBlockB(models.provideLayoutBlock(name));
         } else {
             log.error("{}.setLayoutBlockBByName({}); not a crossover/slip", getName(), name);
         }
@@ -1693,7 +1693,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     public void setLayoutBlockCByName(@Nonnull String name) {
         if (isTurnoutTypeXover() || isTurnoutTypeSlip()) {
-            setLayoutBlockC(layoutEditor.provideLayoutBlock(name));
+            setLayoutBlockC(models.provideLayoutBlock(name));
         } else {
             log.error("{}.setLayoutBlockCByName({}); not a crossover/slip", getName(), name);
         }
@@ -1701,7 +1701,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     public void setLayoutBlockDByName(@Nonnull String name) {
         if (isTurnoutTypeXover() || isTurnoutTypeSlip()) {
-            setLayoutBlockD(layoutEditor.provideLayoutBlock(name));
+            setLayoutBlockD(models.provideLayoutBlock(name));
         } else {
             log.error("{}.setLayoutBlockDByName({}); not a crossover/slip", getName(), name);
         }
@@ -1718,7 +1718,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         log.debug("setTrackSegmentBlocks should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        layoutEditor.getLayoutTurnoutView(this).setTrackSegmentBlocks();
+        models.getLayoutTurnoutView(this).setTrackSegmentBlocks();
     }
 
     /**
@@ -1743,7 +1743,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         log.debug("setTrackSegmentBlock should have called View instead of TrackSegment (temporary)"
                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
-        layoutEditor.getLayoutTurnoutView(this).setTrackSegmentBlock(pointType, isAutomatic);
+        models.getLayoutTurnoutView(this).setTrackSegmentBlock(pointType, isAutomatic);
     }
 
     /**
@@ -1853,22 +1853,22 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     public void setCoordsA(@Nonnull Point2D p) {
         log.debug("temporary setCoordsA should have been called through View");
-        layoutEditor.getLayoutTurnoutView(this).setCoordsA(p);    
+        models.getLayoutTurnoutView(this).setCoordsA(p);    
     }
 
     public void setCoordsB(Point2D p) {
         log.debug("temporary setCoordsB should have been called through View");
-        layoutEditor.getLayoutTurnoutView(this).setCoordsB(p);    
+        models.getLayoutTurnoutView(this).setCoordsB(p);    
     }
 
     public void setCoordsC(Point2D p) {
         log.debug("temporary setCoordsC should have been called through View");
-        layoutEditor.getLayoutTurnoutView(this).setCoordsC(p);    
+        models.getLayoutTurnoutView(this).setCoordsC(p);    
     }
 
     public void setCoordsD(Point2D p) {
         log.debug("temporary setCoordsD should have been called through View");
-        layoutEditor.getLayoutTurnoutView(this).setCoordsD(p);    
+        models.getLayoutTurnoutView(this).setCoordsD(p);    
     }
 
 
@@ -1907,7 +1907,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                                 }
                             }
                         }
-                        layoutEditor.redrawPanel();
+                        models.redrawPanel();
                     },
                     namedTurnout.getName(),
                     "Layout Editor Turnout"

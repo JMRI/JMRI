@@ -67,8 +67,8 @@ public class PositionablePoint extends LayoutTrack {
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
 
-    public PositionablePoint(String id, PointType t, LayoutEditor layoutEditor) {
-        super(id, layoutEditor);
+    public PositionablePoint(String id, PointType t, LayoutEditor models) {
+        super(id, models);
 
         if ((t == PointType.ANCHOR) || (t == PointType.END_BUMPER) || (t == PointType.EDGE_CONNECTOR)) {
             type = t;
@@ -128,12 +128,15 @@ public class PositionablePoint extends LayoutTrack {
                     break;
                 }
             }
-            layoutEditor.repaint();
+                
+            log.info("temporary - repaint was removed here, needs to be rescoped");
+            // models.repaint();
+
         }
     }
 
     void setTypeAnchor() { // temporary: make private once decoupled
-        setIdent(layoutEditor.getFinder().uniqueName("A", 1));
+        setIdent(models.getFinder().uniqueName("A", 1));
         type = PointType.ANCHOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -158,7 +161,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     void setTypeEndBumper() { // temporary: make private once decoupled
-        setIdent(layoutEditor.getFinder().uniqueName("EB", 1));
+        setIdent(models.getFinder().uniqueName("EB", 1));
         type = PointType.END_BUMPER;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -173,7 +176,7 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     void setTypeEdgeConnector() { // temporary: make private once decoupled
-        setIdent(layoutEditor.getFinder().uniqueName("EC", 1));
+        setIdent(models.getFinder().uniqueName("EC", 1));
         type = PointType.EDGE_CONNECTOR;
         if (connect1 != null) {
             if (connect1.getConnect1() == PositionablePoint.this) {
@@ -230,21 +233,28 @@ public class PositionablePoint extends LayoutTrack {
                 TrackSegment ts = oldLinkedPoint.getConnect1();
                 oldLinkedPoint.getLayoutEditor().getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
-                oldLinkedPoint.getLayoutEditor().repaint();
+                
+                log.info("temporary - repaint was removed here, needs to be rescoped");
+                // oldLinkedPoint.getLayoutEditor().repaint();
+
             }
             if (getConnect1() != null) {
-                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+                models.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
-                layoutEditor.repaint();
+                
+                log.info("temporary - repaint was removed here, needs to be rescoped");
+                // models.repaint();
             }
         }
         linkedPoint = p;
         if (p != null) {
             p.setLinkedPoint(this);
             if (getConnect1() != null) {
-                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+                models.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
-                layoutEditor.repaint();
+                
+                log.info("temporary - repaint was removed here, needs to be rescoped");
+                // models.repaint();
             }
         }
     }
@@ -259,7 +269,7 @@ public class PositionablePoint extends LayoutTrack {
 
     @CheckReturnValue
     protected LayoutEditor getLayoutEditor() {
-        return layoutEditor;
+        return models;
     }
 
     @CheckReturnValue
@@ -750,20 +760,20 @@ public class PositionablePoint extends LayoutTrack {
         yClick = e.getY();
         // if (debug) log.debug("Pressed: "+where(e));
         if (e.isPopupTrigger()) {
-            layoutEditor.getLayoutTrackView(this).showPopup(e);
+            models.getLayoutTrackView(this).showPopup(e);
         }
     }
 
     public void mouseReleased(MouseEvent e) {
         // if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
-            layoutEditor.getLayoutTrackView(this).showPopup(e);
+            models.getLayoutTrackView(this).showPopup(e);
         }
     }
 
     public void mouseClicked(MouseEvent e) {
         if (e.isPopupTrigger()) {
-            layoutEditor.getLayoutTrackView(this).showPopup(e);
+            models.getLayoutTrackView(this).showPopup(e);
         }
     }
 
@@ -853,7 +863,10 @@ public class PositionablePoint extends LayoutTrack {
                 LayoutEditor oldLinkedEditor = getLinkedEditor();
                 TrackSegment ts = getConnect2();
                 getLinkedPoint().setLinkedPoint(null);
-                oldLinkedEditor.repaint();
+                
+                log.info("temporary - repaint was removed here, needs to be rescoped");
+                // oldLinkedEditor.repaint();
+
                 oldLinkedEditor.getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
             }
@@ -885,9 +898,9 @@ public class PositionablePoint extends LayoutTrack {
         TrackSegment ts1 = getConnect1();
         if (ts1 != null) {
             if (ts1.getConnect1() == this) {
-                result = layoutEditor.computeDirectionFromCenter(this, ts1.getConnect2(), ts1.getType2());
+                result = models.computeDirectionFromCenter(this, ts1.getConnect2(), ts1.getType2());
             } else {
-                result = layoutEditor.computeDirectionFromCenter(this, ts1.getConnect1(), ts1.getType1());
+                result = models.computeDirectionFromCenter(this, ts1.getConnect1(), ts1.getType1());
             }
         }
         return result;
@@ -933,8 +946,8 @@ public class PositionablePoint extends LayoutTrack {
         Set<LayoutEditor> panels
                 = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
         editorCombo.addItem(new JCBHandle<>("None"));
-        if (panels.contains(layoutEditor)) {
-            panels.remove(layoutEditor);
+        if (panels.contains(models)) {
+            panels.remove(models);
         }
         for (LayoutEditor p : panels) {
             JCBHandle<LayoutEditor> h = new JCBHandle<>(p);
@@ -1012,7 +1025,7 @@ public class PositionablePoint extends LayoutTrack {
                 if (!removelocal.isEmpty()) {
                     jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class
                     ).getSignalHead(removelocal);
-                    layoutEditor.removeSignalHead(sh);
+                    models.removeSignalHead(sh);
                     jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removelocal);
                 }
             }
@@ -1160,18 +1173,18 @@ public class PositionablePoint extends LayoutTrack {
                     // this is a block boundary, create a LayoutConnectivity
                     log.debug("Block boundary (''{}''<->''{}'') found at {}", blk1, blk2, this);
                     lc = new LayoutConnectivity(blk1, blk2);
+
                     // determine direction from block 1 to block 2
-                    if (ts1.getConnect1() == this) {
-                        p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
-                    } else {
-                        p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
-                    }
-                    if (ts2.getConnect1() == this) {
-                        p2 = layoutEditor.getCoords(ts2.getConnect2(), ts2.getType2());
-                    } else {
-                        p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
-                    }
-                    lc.setDirection(Path.computeDirection(p1, p2));
+                    lc.setDirection(
+                        models.computeDirection(
+                            ts1.getConnect1() == this ? ts1.getConnect2()   : ts1.getConnect1(),
+                            ts1.getConnect1() == this ? ts1.getType2()      : ts1.getType1(),
+
+                            ts2.getConnect1() == this ? ts2.getConnect2() : ts2.getConnect1(),
+                            ts2.getConnect1() == this ? ts2.getType2() : ts2.getType1() 
+                        )
+                    );
+
                     // save Connections
                     lc.setConnections(ts1, ts2, HitPointType.TRACK, this);
                     results.add(lc);
@@ -1194,9 +1207,9 @@ public class PositionablePoint extends LayoutTrack {
                     int result;
                     
                     if (ts1.getConnect1() == this) {
-                        result = layoutEditor.computeDirectionToCenter(ts1.getConnect2(), ts1.getType2(), this);
+                        result = models.computeDirectionToCenter(ts1.getConnect2(), ts1.getType2(), this);
                     } else {
-                        result = layoutEditor.computeDirectionToCenter(ts1.getConnect1(), ts1.getType1(), this);
+                        result = models.computeDirectionToCenter(ts1.getConnect1(), ts1.getType1(), this);
                     }
 
                     //Need to find a way to compute the direction for this for a split over the panel
