@@ -862,7 +862,8 @@ public abstract class AbstractBaseTestBase {
 
     /**
      * Executes the method.
-     * This interface is used by the method {@link #assertIndexOutOfBoundsException()}
+     * This interface is used by the method
+     * {@link #assertIndexOutOfBoundsException(RunnableWithIndex, int, int)}
      */
     public interface RunnableWithIndex {
         /**
