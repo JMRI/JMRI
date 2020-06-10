@@ -62,9 +62,7 @@ public interface XmlAdapter {
      * @throws JmriConfigureXmlException when a error prevents creating the objects as as
      *                   required by the input XML
      */
-    default public void load(Element e, Object o) throws JmriConfigureXmlException {
-        log.error("Invalid method called");
-    }
+    public void load(Element e, Object o) throws JmriConfigureXmlException;
 
     /**
      * Create a set of configured objects from their XML description, using an
@@ -157,7 +155,4 @@ public interface XmlAdapter {
         return new DialogErrorHandler();
     }
 
-    @SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",
-            justification = "variable cannot be private in interface")
-    final static Logger log = LoggerFactory.getLogger(XmlAdapter.class);
 }
