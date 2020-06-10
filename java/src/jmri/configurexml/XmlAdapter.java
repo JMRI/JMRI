@@ -1,5 +1,7 @@
 package jmri.configurexml;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.GraphicsEnvironment;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
@@ -155,5 +157,7 @@ public interface XmlAdapter {
         return new DialogErrorHandler();
     }
 
+    @SuppressFBWarnings(value = "SL4J_LOGGER_SHOULD_BE_PRIVATE",
+            justification = "variable cannot be private in interface")
     final static Logger log = LoggerFactory.getLogger(XmlAdapter.class);
 }
