@@ -526,7 +526,7 @@ public class DefaultLogix extends AbstractNamedBean
                             varListenerType = LISTENER_TYPE_ENTRYEXIT;
                             break;
                         default:
-                            if (!LRouteTableAction.LOGIX_INITIALIZER.equals(varName)) {
+                            if (!LRouteTableAction.getLogixInitializer().equals(varName)) {
                                 log.warn("Unhandled conditional variable type: {}", varType);  // NOI18N
                             }
                             break;
@@ -592,7 +592,7 @@ public class DefaultLogix extends AbstractNamedBean
                                         namedBean, varType, conditional);
                                 break;
                             default:
-                                if (!LRouteTableAction.LOGIX_INITIALIZER.equals(varName)) {
+                                if (!LRouteTableAction.getLogixInitializer().equals(varName)) {
                                     log.error("Unknown (new) Variable Listener type= {}, for varName= {}, varType= {} in Conditional, {}", varListenerType, varName, varType, _conditionalSystemNames.get(i));
                                 }
                                 continue;
