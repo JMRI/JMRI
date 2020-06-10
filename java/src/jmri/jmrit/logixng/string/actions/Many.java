@@ -33,11 +33,11 @@ public class Many extends AbstractStringAction
         init();
     }
 
-    public Many(String sys, String user, List<Map.Entry<String, String>> actionSystemNames)
-            throws BadUserNameException, BadSystemNameException {
-        super(sys, user);
-        setActionSystemNames(actionSystemNames);
-    }
+//    public Many(String sys, String user, List<Map.Entry<String, String>> actionSystemNames)
+//            throws BadUserNameException, BadSystemNameException {
+//        super(sys, user);
+//        setActionSystemNames(actionSystemNames);
+//    }
     
     private void init() {
         _actionEntries

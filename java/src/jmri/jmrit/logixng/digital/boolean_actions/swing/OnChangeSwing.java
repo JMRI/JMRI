@@ -45,7 +45,7 @@ public class OnChangeSwing extends AbstractBooleanActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("IfThen_Short");
+        return Bundle.getMessage("OnChange_Short");
     }
     
     @Override
