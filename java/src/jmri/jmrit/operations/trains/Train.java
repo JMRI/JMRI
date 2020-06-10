@@ -1621,7 +1621,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 	 * @param car         The test car
 	 * @param rLoc        Where in the train's route the car was found
 	 * @param rLocations  The ordered routeLocations in this train's route
-	 * @return
+	 * @return true if car's destination can be serviced
 	 */
 	private boolean isServiceableDestination(PrintWriter buildReport, Car car, RouteLocation rLoc,
 			List<RouteLocation> rLocations) {
