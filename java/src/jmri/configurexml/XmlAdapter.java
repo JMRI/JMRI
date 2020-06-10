@@ -157,7 +157,7 @@ public interface XmlAdapter {
         return new DialogErrorHandler();
     }
 
-    @SuppressFBWarnings(value = "SL4J_LOGGER_SHOULD_BE_PRIVATE",
+    @SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",
             justification = "variable cannot be private in interface")
     final static Logger log = LoggerFactory.getLogger(XmlAdapter.class);
 }
