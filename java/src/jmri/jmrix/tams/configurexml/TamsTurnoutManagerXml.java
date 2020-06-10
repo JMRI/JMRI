@@ -33,5 +33,5 @@ public class TamsTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         return loadTurnouts(shared, perNode);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManagerXml.class);
 }

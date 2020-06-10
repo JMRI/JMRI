@@ -29,6 +29,6 @@ public class EliteXNetTurnoutManagerXml extends jmri.managers.configurexml.Abstr
         return loadTurnouts(shared, perNode);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerXml.class);
 
 }

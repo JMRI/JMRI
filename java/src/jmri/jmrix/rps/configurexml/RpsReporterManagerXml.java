@@ -30,6 +30,6 @@ public class RpsReporterManagerXml extends jmri.managers.configurexml.AbstractRe
         return loadReporters(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsReporterManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(RpsReporterManagerXml.class);
 
 }
