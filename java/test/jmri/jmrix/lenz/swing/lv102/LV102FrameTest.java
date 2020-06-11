@@ -37,10 +37,6 @@ public class LV102FrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-        //if(frame!=null) {
-        //    frame.dispose();
-        //    frame = null;
-        //}
         super.tearDown();
     }
 
