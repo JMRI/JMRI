@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.event.MouseEvent;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -559,11 +557,6 @@ public class LayoutTurntable extends LayoutTrack {
     public void setTurnoutControlled(boolean boo) {
         turnoutControlled = boo;
     }
-
-    protected void showRayPopUp(MouseEvent e, int index) {
-        throw new IllegalArgumentException("should have called View instead of temporary");
-    }
-
 
     /**
      * Set turntable position to the ray with this index.

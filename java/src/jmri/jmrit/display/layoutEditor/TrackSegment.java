@@ -2,8 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import java.awt.Color;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.util.*;
 
@@ -13,7 +11,6 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.util.MathUtil;
-import jmri.util.swing.JmriColorChooser;
 
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the
@@ -340,34 +337,34 @@ public class TrackSegment extends LayoutTrack {
         connect2 = o;
     }
     
-    public int getNumberOfBezierControlPoints() {
-        log.error("getNumberOfBezierControlPoints should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        return models.getTrackSegmentView(this).getNumberOfBezierControlPoints();
-    }
-
-    public Point2D getBezierControlPoint(int index) {
-        log.error("getBezierControlPoint should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        return models.getTrackSegmentView(this).getBezierControlPoint(index);
-    }
-
-    public void setBezierControlPoint(@CheckForNull Point2D p, int index) {
-        log.error("setBezierControlPoint should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        models.getTrackSegmentView(this).setBezierControlPoint(p, index);
-    }
-
-    public ArrayList<Point2D> getBezierControlPoints() {
-        log.error("getBezierControlPoints should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        return models.getTrackSegmentView(this).getBezierControlPoints();
-    }
-
+//     public int getNumberOfBezierControlPoints() {
+//         log.error("getNumberOfBezierControlPoints should have called View instead of TrackSegment (temporary)"
+//                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+//             );
+//         return models.getTrackSegmentView(this).getNumberOfBezierControlPoints();
+//     }
+// 
+//     public Point2D getBezierControlPoint(int index) {
+//         log.error("getBezierControlPoint should have called View instead of TrackSegment (temporary)"
+//                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+//             );
+//         return models.getTrackSegmentView(this).getBezierControlPoint(index);
+//     }
+// 
+//     public void setBezierControlPoint(@CheckForNull Point2D p, int index) {
+//         log.error("setBezierControlPoint should have called View instead of TrackSegment (temporary)"
+//                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+//             );
+//         models.getTrackSegmentView(this).setBezierControlPoint(p, index);
+//     }
+// 
+//     public ArrayList<Point2D> getBezierControlPoints() {
+//         log.error("getBezierControlPoints should have called View instead of TrackSegment (temporary)"
+//                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+//             );
+//         return models.getTrackSegmentView(this).getBezierControlPoints();
+//     }
+// 
     /**
      * Set up a LayoutBlock for this Track Segment.
      *
@@ -733,57 +730,57 @@ public class TrackSegment extends LayoutTrack {
     /**
      * @return the location of the middle of the segment (on the segment)
      */
-    public Point2D getCentreSeg() {
-        log.error("getCentreSeg should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        return models.getTrackSegmentView(this).getCentreSeg();
-    }
-
-
-    // this is the center of the track segment when configured as a circle
-    private double centreX;
-
-    public double getCentreX() {
-        return centreX;
-    }
-
-    public void setCentreX(double x) {
-        centreX = x;
-    }
-
-    private double centreY;
-
-    public double getCentreY() {
-        return centreY;
-    }
-
-    public void setCentreY(double y) {
-        centreY = y;
-    }
-
-    public Point2D getCentre() {
-        return new Point2D.Double(centreX, centreY);
-    }
-
-    private double tmpangle;
-
-    public double getTmpAngle() {
-        return tmpangle;
-    }
-
-    public void setTmpAngle(double a) {
-        tmpangle = a;
-    }
-
-    /**
-     * get center coordinates
-     *
-     * @return the center coordinates
-     */
-    public Point2D getCoordsCenterCircle() {
-        return getCentre();
-    }
+//     public Point2D getCentreSeg() {
+//         log.error("getCentreSeg should have called View instead of TrackSegment (temporary)"
+//                 , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+//             );
+//         return models.getTrackSegmentView(this).getCentreSeg();
+//     }
+// 
+// 
+//     // this is the center of the track segment when configured as a circle
+//     private double centreX;
+// 
+//     public double getCentreX() {
+//         return centreX;
+//     }
+// 
+//     public void setCentreX(double x) {
+//         centreX = x;
+//     }
+// 
+//     private double centreY;
+// 
+//     public double getCentreY() {
+//         return centreY;
+//     }
+// 
+//     public void setCentreY(double y) {
+//         centreY = y;
+//     }
+// 
+//     public Point2D getCentre() {
+//         return new Point2D.Double(centreX, centreY);
+//     }
+// 
+//     private double tmpangle;
+// 
+//     public double getTmpAngle() {
+//         return tmpangle;
+//     }
+// 
+//     public void setTmpAngle(double a) {
+//         tmpangle = a;
+//     }
+// 
+//     /**
+//      * get center coordinates
+//      *
+//      * @return the center coordinates
+//      */
+//     public Point2D getCoordsCenterCircle() {
+//         return getCentre();
+//     }
 
 //     private double chordLength;
 // 

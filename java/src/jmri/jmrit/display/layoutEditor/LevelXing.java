@@ -2,7 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import java.awt.geom.Point2D;
+//import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -670,21 +670,21 @@ public class LevelXing extends LayoutTrack {
         return (namedLayoutBlockBD != null) ? namedLayoutBlockBD.getBean() : getLayoutBlockAC();
     }
 
-    public Point2D getCoordsA() {
-        return models.getLevelXingView(this).getCoordsA();
-    }
-
-    public Point2D getCoordsB() {
-        return models.getLevelXingView(this).getCoordsB();
-    }
-
-    public Point2D getCoordsC() {
-        return models.getLevelXingView(this).getCoordsC();
-    }
-
-    public Point2D getCoordsD() {
-        return models.getLevelXingView(this).getCoordsD();
-    }
+//     public Point2D getCoordsA() {
+//         return models.getLevelXingView(this).getCoordsA();
+//     }
+// 
+//     public Point2D getCoordsB() {
+//         return models.getLevelXingView(this).getCoordsB();
+//     }
+// 
+//     public Point2D getCoordsC() {
+//         return models.getLevelXingView(this).getCoordsC();
+//     }
+// 
+//     public Point2D getCoordsD() {
+//         return models.getLevelXingView(this).getCoordsD();
+//     }
 
     /**
      * Add Layout Blocks.

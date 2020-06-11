@@ -3088,9 +3088,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         Rectangle2D r = layoutEditorControlCircleRectAt(loc);
 
         // check Track Segments, if any
-        for (TrackSegment ts : getTrackSegments()) {
-            if (r.contains(ts.getCentreSeg())) {
-                result = ts;
+        for (TrackSegmentView tsv : getTrackSegmentViews()) {
+            if (r.contains(tsv.getCentreSeg())) {
+                result = tsv.getTrackSegment();
                 break;
             }
         }
@@ -3552,7 +3552,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             } else if (HitPointType.isTurntableRayHitType(foundHitPointType)) {
                 LayoutTurntable t = (LayoutTurntable) foundTrack;
                 if (t.isTurnoutControlled()) {
-                    ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType.turntableTrackIndex());
+                    LayoutTurntableView ltview = getLayoutTurntableView((LayoutTurntable) foundTrack);
+                    ltview.showRayPopUp(event, foundHitPointType.turntableTrackIndex());
                 }
             } else if (HitPointType.isPopupHitType(foundHitPointType)) {
                 LayoutTrackView foundTrackView = getLayoutTrackView(foundTrack);
@@ -4716,7 +4717,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         default: {
                             if (HitPointType.isBezierHitType(foundHitPointType)) {
                                 int index = selectedHitPointType.bezierPointIndex();
-                                ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
+                                getTrackSegmentView((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
                             } else if ((selectedHitPointType == HitPointType.SHAPE_CENTER)) {
                                 ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
                             } else if (HitPointType.isShapePointOffsetHitPointType(selectedHitPointType)) {

@@ -54,13 +54,11 @@ Go through and confirm individually:
 
  - Remove topology variables from View
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye
-        LayoutSlip 
+        LayoutTurnout LayoutWye 
         LayoutXOver
  - Remove view variables from topology
-        LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout
-        LayoutSlip 
+        LayoutTurntable  PositionablePoint  
+        LayoutTurnout 
         
  - [ ] Load & Store: TrackSegmentViewXml et al storing as  class="TrackSegmentView" to ease file comparison & for compatibility; change back after figuring out compatibility
  - load with specific view
@@ -116,6 +114,10 @@ Tests slow because LayoutEditor ctor creates Catalog, doing a lot of I/O; migrat
 	at jmri.jmrit.display.layoutEditor.MultiIconEditor.setIcon(MultiIconEditor.java:42)
 	at jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.setupComponents(LayoutEditorToolBarPanel.java:455)
 ```
+---
+
+LyoutSlip has JComboboxen tangled up the LayoutState subclass
+
 ---
 
 Started to switch to LayoutModels from LayoutEditor

@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
-import javax.swing.JPopupMenu;
+//import javax.swing.JPopupMenu;
 
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.Bundle;
@@ -451,7 +451,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
     }
 
 
-    JPopupMenu popup = null;
+//    JPopupMenu popup = null;
 
     @Override
     public String[] getBlockBoundaries() {
@@ -498,13 +498,13 @@ abstract public class LayoutSlip extends LayoutTurnout {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove()
      */
-    @Override
-    public void dispose() {
-        if (popup != null) {
-            popup.removeAll();
-        }
-        popup = null;
-    }
+//     @Override
+//     public void dispose() {
+//         if (popup != null) {
+//             popup.removeAll();
+//         }
+//         popup = null;
+//     }
 
     /**
      * Removes this object from display and persistance

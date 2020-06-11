@@ -4299,8 +4299,10 @@ final public class LayoutEditorTools {
             }
         }
 
-        Point2D coordsA = levelXing.getCoordsA();
-        Point2D coordsC = levelXing.getCoordsC();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsA = levelXingView.getCoordsA();
+        Point2D coordsC = levelXingView.getCoordsC();
         placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsA));
 
         return true;
@@ -4340,7 +4342,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = levelXing.getCoordsA();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsA = levelXingView.getCoordsA();
         Point2D delta = new Point2D.Double(0.0, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -4358,8 +4362,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = levelXing.getCoordsB();
-        Point2D coordsD = levelXing.getCoordsD();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsB = levelXingView.getCoordsB();
+        Point2D coordsD = levelXingView.getCoordsD();
 
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsD));
         Point2D delta = new Point2D.Double(0.0, -shift);
@@ -4379,7 +4385,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsC = levelXing.getCoordsC();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsC = levelXingView.getCoordsC();
         Point2D delta = new Point2D.Double(0.0, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -4397,8 +4405,10 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = levelXing.getCoordsB();
-        Point2D coordsD = levelXing.getCoordsD();
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
+        Point2D coordsB = levelXingView.getCoordsB();
+        Point2D coordsD = levelXingView.getCoordsD();
 
         double directionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsB));
         double diffDirDEG = MathUtil.diffAngleDEG(placeSignalDirectionDEG, directionDEG + 180.0);
@@ -10628,6 +10638,9 @@ final public class LayoutEditorTools {
         SignalMast bMast = getSignalMastFromEntry(xingSignalMastB.getText(), false, setSignalMastsAtLevelXingFrame);
         SignalMast cMast = getSignalMastFromEntry(xingSignalMastC.getText(), false, setSignalMastsAtLevelXingFrame);
         SignalMast dMast = getSignalMastFromEntry(xingSignalMastD.getText(), false, setSignalMastsAtLevelXingFrame);
+
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+
         //if ( !getXingSignalMastInformation() ) return;
         //place or update signals as requested
         if ((aMast != null) && xingSignalMastA.addToPanel()) {
@@ -10643,7 +10656,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(levelXing.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastA.getText());
-                placingBlock(l, xingSignalMastA.isRightSelected(), 0.0, levelXing.getConnectA(), levelXing.getCoordsA());
+                placingBlock(l, xingSignalMastA.isRightSelected(), 0.0, levelXing.getConnectA(), levelXingView.getCoordsA());
                 removeAssignment(aMast);
                 levelXing.setSignalAMast(xingSignalMastA.getText());
                 needRedraw = true;
@@ -10688,7 +10701,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(levelXing.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastB.getText());
-                placingBlock(l, xingSignalMastB.isRightSelected(), 0.0, levelXing.getConnectB(), levelXing.getCoordsB());
+                placingBlock(l, xingSignalMastB.isRightSelected(), 0.0, levelXing.getConnectB(), levelXingView.getCoordsB());
                 removeAssignment(bMast);
                 levelXing.setSignalBMast(xingSignalMastB.getText());
                 needRedraw = true;
@@ -10734,7 +10747,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(levelXing.getSignalCMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastC.getText());
-                placingBlock(l, xingSignalMastC.isRightSelected(), 0.0, levelXing.getConnectC(), levelXing.getCoordsC());
+                placingBlock(l, xingSignalMastC.isRightSelected(), 0.0, levelXing.getConnectC(), levelXingView.getCoordsC());
                 removeAssignment(cMast);
                 levelXing.setSignalCMast(xingSignalMastC.getText());
                 needRedraw = true;
@@ -10779,7 +10792,7 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(levelXing.getSignalDMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastD.getText());
-                placingBlock(l, xingSignalMastD.isRightSelected(), 0.0, levelXing.getConnectD(), levelXing.getCoordsD());
+                placingBlock(l, xingSignalMastD.isRightSelected(), 0.0, levelXing.getConnectD(), levelXingView.getCoordsD());
                 removeAssignment(dMast);
                 levelXing.setSignalDMast(xingSignalMastD.getText());
                 needRedraw = true;
@@ -11560,13 +11573,14 @@ final public class LayoutEditorTools {
                     (dSensor == null) ? "- none- " : dSensor.getDisplayName());  // NOI18N
         }
 
-        //place/remove sensors as requested
+        LevelXingView levelXingView = layoutEditor.getLevelXingView(levelXing);
+        // place/remove sensors as requested
         if (aSensor == null) {
             if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
                 levelXing.setSensorAName(null);
             }
         } else if (xingSensorA != null && levelXing.getConnectA() != null) {
-            setLevelXingSensor(aSensor, currSensorA, xingSensorA, levelXing.getConnectA(), levelXing.getCoordsA(), "A");
+            setLevelXingSensor(aSensor, currSensorA, xingSensorA, levelXing.getConnectA(), levelXingView.getCoordsA(), "A");
         }
 
         if (bSensor == null) {
@@ -11574,7 +11588,7 @@ final public class LayoutEditorTools {
                 levelXing.setSensorBName(null);
             }
         } else if (xingSensorB != null && levelXing.getConnectB() != null) {
-            setLevelXingSensor(bSensor, currSensorB, xingSensorB, levelXing.getConnectB(), levelXing.getCoordsB(), "B");
+            setLevelXingSensor(bSensor, currSensorB, xingSensorB, levelXing.getConnectB(), levelXingView.getCoordsB(), "B");
         }
 
         if (cSensor == null) {
@@ -11582,7 +11596,7 @@ final public class LayoutEditorTools {
                 levelXing.setSensorCName(null);
             }
         } else if (xingSensorC != null && levelXing.getConnectC() != null) {
-            setLevelXingSensor(cSensor, currSensorC, xingSensorC, levelXing.getConnectC(), levelXing.getCoordsC(), "C");
+            setLevelXingSensor(cSensor, currSensorC, xingSensorC, levelXing.getConnectC(), levelXingView.getCoordsC(), "C");
         }
 
         if (dSensor == null) {
@@ -11590,7 +11604,7 @@ final public class LayoutEditorTools {
                 levelXing.setSensorDName(null);
             }
         } else if (xingSensorD != null && levelXing.getConnectD() != null) {
-            setLevelXingSensor(dSensor, currSensorD, xingSensorD, levelXing.getConnectD(), levelXing.getCoordsD(), "D");
+            setLevelXingSensor(dSensor, currSensorD, xingSensorD, levelXing.getConnectD(), levelXingView.getCoordsD(), "D");
         }
 
         //setup logic if requested
