@@ -71,7 +71,7 @@ public class CarRoads extends RollingStockAttribute implements InstanceManagerAu
      *
      */
     public void store(Element root) {
-        store(root, Xml.ROADS, Xml.ROAD, Xml.ROAD_NAMES);
+        store(root, Xml.ROADS, Xml.ROAD);
     }
 
     public void load(Element root) {
