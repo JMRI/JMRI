@@ -1524,7 +1524,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 	 * fewer build report messages.
 	 * 
 	 * @param buildReport PrintWriter
-	 * @param car the car to be tested
+	 * @param car         the car to be tested
 	 * @return true if this train can service the car.
 	 */
 	public boolean isServiceable(PrintWriter buildReport, Car car) {
@@ -1552,7 +1552,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 		if (route == null) {
 			return false;
 		}
-		
+
 		if (car.getLocation() == null || car.getTrack() == null) {
 			return false;
 		}
