@@ -4,6 +4,8 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Tests for the jmri.jmrix.lenz.swing.lv102.LV102Frame class
  *
@@ -15,8 +17,10 @@ public class LV102FrameTest extends jmri.util.JmriJFrameTestBase {
     public void testCloseButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setVisible(true);
+        assertThat(frame.isVisible()).isTrue();
         LV102FrameScaffold operator = new LV102FrameScaffold();
         operator.pushCloseButton();
+        assertThat(frame.isVisible()).isFalse();
     }
 
     @Before
@@ -24,6 +28,7 @@ public class LV102FrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new LV102Frame();
         }
@@ -32,7 +37,10 @@ public class LV102FrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        //if(frame!=null) {
+        //    frame.dispose();
+        //    frame = null;
+        //}
         super.tearDown();
     }
 

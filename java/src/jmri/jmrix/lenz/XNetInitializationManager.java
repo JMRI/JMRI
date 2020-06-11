@@ -197,7 +197,7 @@ public class XNetInitializationManager {
                     initCommandStation();
                 }
                 if (pm.isGlobalProgrammerAvailable()) {
-                    InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
+                    InstanceManager.store(pm, GlobalProgrammerManager.class);
                 }
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 log.warn("Unable to construct programmer manager for XPressNet connection {}", systemMemo.getSystemPrefix(),e);
@@ -389,6 +389,7 @@ public class XNetInitializationManager {
             initServices();
         } else if (CSSoftwareVersion < 3.0) {
             log.error("Command Station does not support XpressNet Version 3 Command Set");
+            initThrottleManager();
         } else {
             /* Next we check the command station type, and add the
              appropriate managers */
@@ -400,6 +401,7 @@ public class XNetInitializationManager {
                 initConsistManager();
             } else if (CSType == 0x01) {
                 log.debug("Command Station is LH200");
+                initThrottleManager();
             } else if (CSType == 0x00) {
                 log.debug("Command Station is LZ100/LZV100");
                 initServices();
