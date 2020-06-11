@@ -1851,25 +1851,25 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return (isMainlineA() || isMainlineB() || isMainlineC() || isMainlineD());
     }
 
-    public void setCoordsA(@Nonnull Point2D p) {
-        log.debug("temporary setCoordsA should have been called through View");
-        models.getLayoutTurnoutView(this).setCoordsA(p);    
-    }
-
-    public void setCoordsB(Point2D p) {
-        log.debug("temporary setCoordsB should have been called through View");
-        models.getLayoutTurnoutView(this).setCoordsB(p);    
-    }
-
-    public void setCoordsC(Point2D p) {
-        log.debug("temporary setCoordsC should have been called through View");
-        models.getLayoutTurnoutView(this).setCoordsC(p);    
-    }
-
-    public void setCoordsD(Point2D p) {
-        log.debug("temporary setCoordsD should have been called through View");
-        models.getLayoutTurnoutView(this).setCoordsD(p);    
-    }
+//     public void setCoordsA(@Nonnull Point2D p) {
+//         log.debug("temporary setCoordsA should have been called through View");
+//         models.getLayoutTurnoutView(this).setCoordsA(p);    
+//     }
+// 
+//     public void setCoordsB(Point2D p) {
+//         log.debug("temporary setCoordsB should have been called through View");
+//         models.getLayoutTurnoutView(this).setCoordsB(p);    
+//     }
+// 
+//     public void setCoordsC(Point2D p) {
+//         log.debug("temporary setCoordsC should have been called through View");
+//         models.getLayoutTurnoutView(this).setCoordsC(p);    
+//     }
+// 
+//     public void setCoordsD(Point2D p) {
+//         log.debug("temporary setCoordsD should have been called through View");
+//         models.getLayoutTurnoutView(this).setCoordsD(p);    
+//     }
 
 
     /**
@@ -2422,9 +2422,9 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
         }
         if (jmri.InstanceManager.getDefault(LayoutBlockManager.class
-        ).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class
-        ).isSignalMastUsed(signalMast)) {
-            SignallingGuiTools.removeSignalMastLogic(null, signalMast);
+            ).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class
+            ).isSignalMastUsed(signalMast)) {
+                SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
 
@@ -2704,9 +2704,22 @@ abstract public class LayoutTurnout extends LayoutTrack {
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         List<LayoutConnectivity> results = new ArrayList<>();
 
+        log.trace("Start in layoutTurnout.getLayoutConnectivity for {}", getName());
+
         LayoutConnectivity lc = null;
 
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
+        
+        log.trace("    type: {}", type);
+        log.trace("     lbA: {}", lbA);
+        log.trace("     lbB: {}", lbB);
+        log.trace("     lbC: {}", lbC);
+        log.trace("     lbD: {}", lbD);
+        log.trace("     coordsA: {}", getCoordsA());
+        log.trace("     coordsB: {}", getCoordsB());
+        log.trace("     coordsC: {}", getCoordsC());
+        log.trace("     coordsD: {}", getCoordsD());
+
         if (hasEnteringDoubleTrack() && (lbA != null)) {
             // have a crossover turnout with at least one block, check for multiple blocks
             if ((lbA != lbB) || (lbA != lbC) || (lbA != lbD)) {
@@ -2717,6 +2730,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     lc = new LayoutConnectivity(lbA, lbB);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AB);
                     lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsB()));
+
+                    log.trace("getLayoutConnectivity lbA != lbB {}, {}, {}",getCoordsA(), getCoordsB(), 
+                                    Path.computeDirection(getCoordsA(), getCoordsB()));
+                    log.trace("Block boundary  ('{}'<->'{}') found at {}", lbA, lbB, this);
+
                     results.add(lc);
                 }
                 if ((getTurnoutType() != TurnoutType.LH_XOVER) && (lbA != lbC)) {
@@ -2725,6 +2743,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     lc = new LayoutConnectivity(lbA, lbC);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
                     lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
+
+                    log.trace("getLayoutConnectivity lbA != lbC {}, {}, {}",getCoordsA(), getCoordsC(), 
+                                    Path.computeDirection(getCoordsA(), getCoordsC()));
+                    log.trace("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
+
                     results.add(lc);
                 }
                 if (lbC != lbD) {
@@ -2733,6 +2756,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     lc = new LayoutConnectivity(lbC, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_CD);
                     lc.setDirection(Path.computeDirection(getCoordsC(), getCoordsD()));
+
+                    log.trace("getLayoutConnectivity lbC != lbD {}, {}, {}",getCoordsC(), getCoordsD(), 
+                                    Path.computeDirection(getCoordsC(), getCoordsD()));
+                    log.trace("Block boundary  ('{}'<->'{}') found at {}", lbC, lbD, this);
+
                     results.add(lc);
                 }
                 if ((getTurnoutType() != TurnoutType.RH_XOVER) && (lbB != lbD)) {
@@ -2741,6 +2769,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     lc = new LayoutConnectivity(lbB, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
                     lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
+
+                    log.trace("getLayoutConnectivity lbB != lbD {}, {}, {}",getCoordsB(), getCoordsD(), 
+                                    Path.computeDirection(getCoordsB(), getCoordsD()));
+                    log.trace("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
+
                     results.add(lc);
                 }
             }

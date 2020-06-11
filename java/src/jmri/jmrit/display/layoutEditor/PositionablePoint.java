@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.BorderLayout;
 import java.awt.event.*;
-import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -1162,7 +1161,6 @@ public class PositionablePoint extends LayoutTrack {
         LayoutConnectivity lc = null;
         LayoutBlock blk1 = null, blk2 = null;
         TrackSegment ts1 = getConnect1();
-        Point2D p1, p2;
 
         if (getType() == PointType.ANCHOR) {
             TrackSegment ts2 = getConnect2();

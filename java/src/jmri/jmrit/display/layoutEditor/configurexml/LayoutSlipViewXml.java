@@ -53,10 +53,10 @@ public class LayoutSlipViewXml extends AbstractXmlAdapter {
         Point2D coords = pv.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
-        coords = p.getCoordsA();
+        coords = pv.getCoordsA();
         element.setAttribute("xa", "" + coords.getX());
         element.setAttribute("ya", "" + coords.getY());
-        coords = p.getCoordsB();
+        coords = pv.getCoordsB();
         element.setAttribute("xb", "" + coords.getX());
         element.setAttribute("yb", "" + coords.getY());
 
@@ -298,14 +298,14 @@ public class LayoutSlipViewXml extends AbstractXmlAdapter {
         try {
             x = element.getAttribute("xa").getFloatValue();
             y = element.getAttribute("ya").getFloatValue();
-            l.setCoordsA(new Point2D.Double(x, y));
+            lv.setCoordsA(new Point2D.Double(x, y));
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert LayoutSlip a coords attribute");
         }
         try {
             x = element.getAttribute("xb").getFloatValue();
             y = element.getAttribute("yb").getFloatValue();
-            l.setCoordsB(new Point2D.Double(x, y));
+            lv.setCoordsB(new Point2D.Double(x, y));
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert LayoutSlip b coords attribute");
         }

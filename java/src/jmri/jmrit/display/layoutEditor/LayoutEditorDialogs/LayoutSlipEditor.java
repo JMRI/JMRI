@@ -202,10 +202,10 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
      */
     private void drawSlipState(Graphics2D g2, int state) {
         Point2D cenP = layoutSlipView.getCoordsCenter();
-        Point2D A = MathUtil.subtract(layoutSlip.getCoordsA(), cenP);
-        Point2D B = MathUtil.subtract(layoutSlip.getCoordsB(), cenP);
-        Point2D C = MathUtil.subtract(layoutSlip.getCoordsC(), cenP);
-        Point2D D = MathUtil.subtract(layoutSlip.getCoordsD(), cenP);
+        Point2D A = MathUtil.subtract(layoutSlipView.getCoordsA(), cenP);
+        Point2D B = MathUtil.subtract(layoutSlipView.getCoordsB(), cenP);
+        Point2D C = MathUtil.subtract(layoutSlipView.getCoordsC(), cenP);
+        Point2D D = MathUtil.subtract(layoutSlipView.getCoordsD(), cenP);
 
         Point2D ctrP = new Point2D.Double(20.0, 20.0);
         A = MathUtil.add(MathUtil.normalize(A, 18.0), ctrP);

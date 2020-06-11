@@ -52,11 +52,10 @@ It's in no particular order, items are removed as done, so please don't consider
 
 Go through and confirm individually:
 
- - Remove topology variables from View
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye 
-        LayoutXOver
- - Remove view variables from topology
+ - [ ] Remove view variables from Model classes   
+        LayoutTurnout 
+        
+ - [ ] Remove swing code from Model classes
         LayoutTurntable  PositionablePoint  
         LayoutTurnout 
         
@@ -66,33 +65,37 @@ Go through and confirm individually:
         LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
- - store from specific view
+ - [ ] store from specific view
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
         LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+
+ - [ ] Remove topology variables from View (decide which are references via forwarding, and which require getTrack-style access; be consistent, document decisions!)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye 
+        LayoutXOver
 
  - [x] Check all ctors handling arguments, storage properly (paired objects for now)
 
- - Editor creates them the right way (addLayoutTurnout, addLayoutSlip, etc in LE)
+ - [X] Editor creates them the right way (addLayoutTurnout, addLayoutSlip, etc in LE)
+
+ - [ ] Complete head comments
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
         LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
- - Complete head comments
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
-
- - Make a final pass to get rid of commented methods (i.e. from migration)
+ - [ ] Make a final pass to get rid of commented methods (i.e. from migration)
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
         LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
 LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implementation, needs to be redone into parts
+ 
+Does getLayoutConnectivity() in LayoutTurnout, LayoutSlip do what the original code did?
+    Need some real test cases.
  
 ## once moved to View, break down to subclasses to removing dynamic typing
 
@@ -116,8 +119,9 @@ Tests slow because LayoutEditor ctor creates Catalog, doing a lot of I/O; migrat
 ```
 ---
 
-LyoutSlip has JComboboxen tangled up the LayoutState subclass
+LayoutSlip has JComboboxen tangled up the LayoutState subclass
 
+- [ ] SignallingGuiTools is invoked from LayoutTurnout and subclasses
 ---
 
 Started to switch to LayoutModels from LayoutEditor

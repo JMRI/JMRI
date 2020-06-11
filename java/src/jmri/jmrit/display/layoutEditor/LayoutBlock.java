@@ -123,7 +123,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     public LayoutBlock(String sName, String uName) {
         super(sName, uName);
-        //_instance = this;
     }
 
     /*

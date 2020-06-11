@@ -874,8 +874,21 @@ abstract public class LayoutSlip extends LayoutTurnout {
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         List<LayoutConnectivity> results = new ArrayList<>();
 
+        log.trace("Start in LayoutSlip.getLayoutConnectivity for {}", getName());
+        
         LayoutConnectivity lc = null;
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
+        
+        log.trace("    type: {}", type);
+        log.trace("     lbA: {}", lbA);
+        log.trace("     lbB: {}", lbB);
+        log.trace("     lbC: {}", lbC);
+        log.trace("     lbD: {}", lbD);
+        log.trace("     coordsA: {}", getCoordsA());
+        log.trace("     coordsB: {}", getCoordsB());
+        log.trace("     coordsC: {}", getCoordsC());
+        log.trace("     coordsD: {}", getCoordsD());
+
         if (lbA != null) {
             if (lbA != lbC) {
                 // have a AC block boundary, create a LayoutConnectivity
@@ -883,6 +896,11 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbA, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
                 lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
+                
+                log.trace("getLayoutConnectivity lbA != lbC {}, {}, {}",getCoordsA(), getCoordsC(), 
+                                Path.computeDirection(getCoordsA(), getCoordsC()));
+                log.trace("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
+                
                 results.add(lc);
             }
             if (lbB != lbD) {
@@ -891,6 +909,11 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbB, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
                 lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
+                
+                log.trace("getLayoutConnectivity lbA != lbC {}, {}, {}",getCoordsA(), getCoordsC(), 
+                                Path.computeDirection(getCoordsB(), getCoordsD()));
+                log.trace("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
+                
                 results.add(lc);
             }
             if (lbA != lbD) {
@@ -899,6 +922,11 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbA, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AD);
                 lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsD()));
+                
+                log.trace("getLayoutConnectivity lbA != lbC {}, {}, {}",getCoordsA(), getCoordsC(), 
+                                Path.computeDirection(getCoordsA(), getCoordsD()));
+                log.trace("Block boundary  ('{}'<->'{}') found at {}", lbA, lbD, this);
+                
                 results.add(lc);
             }
             if ((type == TurnoutType.DOUBLE_SLIP) && (lbB != lbC)) {
@@ -907,11 +935,16 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 lc = new LayoutConnectivity(lbB, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BC);
                 lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsC()));
+                
+                log.trace("getLayoutConnectivity lbA != lbC {}, {}, {}",getCoordsB(), getCoordsC(), 
+                                Path.computeDirection(getCoordsA(), getCoordsC()));
+                log.trace("Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
+                
                 results.add(lc);
             }
         }
         return results;
-    }   // getLayoutConnectivity()
+    }
 
     /**
      * {@inheritDoc}

@@ -121,8 +121,8 @@ final public class LayoutEditorTools {
         LayoutEditor.setupComboBox(throatDivergingSignalHeadComboBox, false, true, false);
         LayoutEditor.setupComboBox(westBoundSignalHeadComboBox, true, true, false);
 
-        //TODO: Set combobox exclude lists for turnouts, blocks and signal heads
-        //that are not part of the current layout
+        // TODO: Set combobox exclude lists for turnouts, blocks and signal heads
+        // that are not part of the current layout panel
     }
 
     /*=====================*\
@@ -724,7 +724,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnout.getCoordsA();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
+        Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(+shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -742,7 +744,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnout.getCoordsA();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(-shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -756,9 +760,11 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout.getCoordsB();
-        Point2D coordsC = layoutTurnout.getCoordsC();
-        Point2D coordsCenter = layoutEditor.getLayoutTurnoutView(layoutTurnout).getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsB = layoutTurnoutView.getCoordsB();
+        Point2D coordsC = layoutTurnoutView.getCoordsC();
+        Point2D coordsCenter = layoutTurnoutView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -780,9 +786,11 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout.getCoordsB();
-        Point2D coordsC = layoutTurnout.getCoordsC();
-        Point2D coordsCenter = layoutEditor.getLayoutTurnoutView(layoutTurnout).getCoordsCenter();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
+        Point2D coordsB = layoutTurnoutView.getCoordsB();
+        Point2D coordsC = layoutTurnoutView.getCoordsC();
+        Point2D coordsCenter = layoutTurnoutView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
         double cDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsC, coordsCenter));
@@ -3374,7 +3382,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnout.getCoordsA();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
+        Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(0.0, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3392,7 +3402,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsA = layoutTurnout.getCoordsA();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
+        Point2D coordsA = layoutTurnoutView.getCoordsA();
         Point2D delta = new Point2D.Double(-2.0 * shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3410,7 +3422,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout.getCoordsB();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
+        Point2D coordsB = layoutTurnoutView.getCoordsB();
         Point2D delta = new Point2D.Double(-shift, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3428,7 +3442,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout.getCoordsB();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
+        Point2D coordsB = layoutTurnoutView.getCoordsB();
         Point2D delta = new Point2D.Double(+shift, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3446,7 +3462,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsC = layoutTurnout.getCoordsC();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
+        Point2D coordsC = layoutTurnoutView.getCoordsC();
         Point2D delta = new Point2D.Double(0.0, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3464,7 +3482,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsC = layoutTurnout.getCoordsC();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
+        Point2D coordsC = layoutTurnoutView.getCoordsC();
         Point2D delta = new Point2D.Double(+2.0 * shift, -shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3482,7 +3502,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsD = layoutTurnout.getCoordsD();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
+        Point2D coordsD = layoutTurnoutView.getCoordsD();
         Point2D delta = new Point2D.Double(+shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -3500,7 +3522,9 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsD = layoutTurnout.getCoordsD();
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
+        Point2D coordsD = layoutTurnoutView.getCoordsD();
         Point2D delta = new Point2D.Double(-shift, +shift);
 
         delta = MathUtil.rotateDEG(delta, placeSignalDirectionDEG);
@@ -5165,8 +5189,8 @@ final public class LayoutEditorTools {
             }
         }
         //have both turnouts, correctly connected - complete initialization
-        Point2D coordsA = layoutTurnout1.getCoordsA();
         LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
+        Point2D coordsA = layoutTurnout1View.getCoordsA();
         Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
         placeSignalDirectionDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsCenter, coordsA));
         return true;
@@ -5621,8 +5645,8 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout1.getCoordsB();
         LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
+        Point2D coordsB = layoutTurnout1View.getCoordsB();
         Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -5639,8 +5663,8 @@ final public class LayoutEditorTools {
         }
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
-        Point2D coordsB = layoutTurnout1.getCoordsB();
         LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
+        Point2D coordsB = layoutTurnout1View.getCoordsB();
         Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -5658,8 +5682,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
-        Point2D coordsB = layoutTurnout1.getCoordsB();
-        Point2D coordsC = layoutTurnout1.getCoordsC();
+        Point2D coordsB = layoutTurnout1View.getCoordsB();
+        Point2D coordsC = layoutTurnout1View.getCoordsC();
         Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -5683,8 +5707,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnout1View = layoutEditor.getLayoutTurnoutView(layoutTurnout1);
-        Point2D coordsB = layoutTurnout1.getCoordsB();
-        Point2D coordsC = layoutTurnout1.getCoordsC();
+        Point2D coordsB = layoutTurnout1View.getCoordsB();
+        Point2D coordsC = layoutTurnout1View.getCoordsC();
         Point2D coordsCenter = layoutTurnout1View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -5708,7 +5732,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnout2View = layoutEditor.getLayoutTurnoutView(layoutTurnout2);
-        Point2D coordsB = layoutTurnout2.getCoordsB();
+        Point2D coordsB = layoutTurnout2View.getCoordsB();
         Point2D coordsCenter = layoutTurnout2View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -5726,7 +5750,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnout2View = layoutEditor.getLayoutTurnoutView(layoutTurnout2);
-        Point2D coordsB = layoutTurnout2.getCoordsB();
+        Point2D coordsB = layoutTurnout2View.getCoordsB();
         Point2D coordsCenter = layoutTurnout2View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -5744,8 +5768,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnout2View = layoutEditor.getLayoutTurnoutView(layoutTurnout2);
-        Point2D coordsB = layoutTurnout2.getCoordsB();
-        Point2D coordsC = layoutTurnout2.getCoordsC();
+        Point2D coordsB = layoutTurnout2View.getCoordsB();
+        Point2D coordsC = layoutTurnout2View.getCoordsC();
         Point2D coordsCenter = layoutTurnout2View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -5769,8 +5793,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnout2View = layoutEditor.getLayoutTurnoutView(layoutTurnout2);
-        Point2D coordsB = layoutTurnout2.getCoordsB();
-        Point2D coordsC = layoutTurnout2.getCoordsC();
+        Point2D coordsB = layoutTurnout2View.getCoordsB();
+        Point2D coordsC = layoutTurnout2View.getCoordsC();
         Point2D coordsCenter = layoutTurnout2View.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -6948,7 +6972,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutAView = layoutEditor.getLayoutTurnoutView(layoutTurnoutA);
-        Point2D coordsA = layoutTurnoutA.getCoordsA();
+        Point2D coordsA = layoutTurnoutAView.getCoordsA();
         Point2D coordsCenter = layoutTurnoutAView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
@@ -6970,7 +6994,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutAView = layoutEditor.getLayoutTurnoutView(layoutTurnoutA);
-        Point2D coordsA = layoutTurnoutA.getCoordsA();
+        Point2D coordsA = layoutTurnoutAView.getCoordsA();
         Point2D coordsCenter = layoutTurnoutAView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
@@ -6992,7 +7016,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutAView = layoutEditor.getLayoutTurnoutView(layoutTurnoutA);
-        Point2D coordsA = layoutTurnoutA.getCoordsA();
+        Point2D coordsA = layoutTurnoutAView.getCoordsA();
         Point2D coordsCenter = layoutTurnoutAView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
@@ -7014,8 +7038,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutAView = layoutEditor.getLayoutTurnoutView(layoutTurnoutA);
-        Point2D coordsB = layoutTurnoutA.getCoordsB();
-        Point2D coordsC = layoutTurnoutA.getCoordsC();
+        Point2D coordsB = layoutTurnoutAView.getCoordsB();
+        Point2D coordsC = layoutTurnoutAView.getCoordsC();
         Point2D coordsCenter = layoutTurnoutAView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -7043,8 +7067,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutBView = layoutEditor.getLayoutTurnoutView(layoutTurnoutB);
-        Point2D coordsB = layoutTurnoutB.getCoordsB();
-        Point2D coordsC = layoutTurnoutB.getCoordsC();
+        Point2D coordsB = layoutTurnoutBView.getCoordsB();
+        Point2D coordsC = layoutTurnoutBView.getCoordsC();
         Point2D coordsCenter = layoutTurnoutBView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -7072,8 +7096,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutTurnoutView layoutTurnoutBView = layoutEditor.getLayoutTurnoutView(layoutTurnoutB);
-        Point2D coordsC = layoutTurnoutB.getCoordsC();
-        Point2D coordsB = layoutTurnoutB.getCoordsB();
+        Point2D coordsC = layoutTurnoutBView.getCoordsC();
+        Point2D coordsB = layoutTurnoutBView.getCoordsB();
         Point2D coordsCenter = layoutTurnoutBView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -9349,6 +9373,8 @@ final public class LayoutEditorTools {
         SignalMast turnoutMastC = getSignalMastFromEntry(turnoutSignalMastC.getText(), false, setSignalsAtTurnoutFrame);
         SignalMast turnoutMastD = getSignalMastFromEntry(turnoutSignalMastD.getText(), false, setSignalsAtTurnoutFrame);
 
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+        
         //place signals as requested
         if (turnoutSignalMastA.addToPanel() && (turnoutMast != null)) {
             if (isSignalMastOnPanel(turnoutMast)
@@ -9363,7 +9389,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutTurnout.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(turnoutSignalMastA.getText());
-                placingBlock(l, turnoutSignalMastA.isRightSelected(), 0.0, layoutTurnout.getConnectA(), layoutTurnout.getCoordsA());
+                placingBlock(l, turnoutSignalMastA.isRightSelected(), 
+                                0.0, layoutTurnout.getConnectA(), layoutTurnoutView.getCoordsA());
                 removeAssignment(turnoutMast);
                 layoutTurnout.setSignalAMast(turnoutSignalMastA.getText());
                 needRedraw = true;
@@ -9404,7 +9431,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutTurnout.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(turnoutSignalMastB.getText());
-                placingBlock(l, turnoutSignalMastB.isRightSelected(), 0.0, layoutTurnout.getConnectB(), layoutTurnout.getCoordsB());
+                placingBlock(l, turnoutSignalMastB.isRightSelected(), 
+                                0.0, layoutTurnout.getConnectB(), layoutTurnoutView.getCoordsB());
                 removeAssignment(turnoutMastB);
                 layoutTurnout.setSignalBMast(turnoutSignalMastB.getText());
                 needRedraw = true;
@@ -9446,7 +9474,8 @@ final public class LayoutEditorTools {
                     removeSignalMastFromPanel(layoutTurnout.getSignalCMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
                     l.setSignalMast(turnoutSignalMastC.getText());
-                    placingBlock(l, turnoutSignalMastC.isRightSelected(), 0.0, layoutTurnout.getConnectC(), layoutTurnout.getCoordsC());
+                    placingBlock(l, turnoutSignalMastC.isRightSelected(), 
+                                    0.0, layoutTurnout.getConnectC(), layoutTurnoutView.getCoordsC());
                     removeAssignment(turnoutMastC);
                     layoutTurnout.setSignalCMast(turnoutSignalMastC.getText());
                     needRedraw = true;
@@ -9493,7 +9522,8 @@ final public class LayoutEditorTools {
                     removeSignalMastFromPanel(layoutTurnout.getSignalDMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
                     l.setSignalMast(turnoutSignalMastD.getText());
-                    placingBlock(l, turnoutSignalMastD.isRightSelected(), 0.0, layoutTurnout.getConnectD(), layoutTurnout.getCoordsD());
+                    placingBlock(l, turnoutSignalMastD.isRightSelected(), 
+                                    0.0, layoutTurnout.getConnectD(), layoutTurnoutView.getCoordsD());
                     removeAssignment(turnoutMastD);
                     layoutTurnout.setSignalDMast(turnoutSignalMastD.getText());
                     needRedraw = true;
@@ -9535,6 +9565,7 @@ final public class LayoutEditorTools {
             layoutEditor.setDirty();
         }
     }   //setSignalMastsDonePressed
+
 
     Set<SignalMast> usedMasts = new HashSet<>();
 
@@ -9745,6 +9776,7 @@ final public class LayoutEditorTools {
     /*============================*\
     |* setSignalMastsAtLayoutSlip *|
     \*============================*/
+    
     //operational variables for Set SignalMast at Slip tool
     private JmriJFrame setSignalMastsAtLayoutSlipFrame = null;
     private boolean setSignalMastsAtLayoutSlipOpenFlag = false;
@@ -10101,10 +10133,14 @@ final public class LayoutEditorTools {
         if (!getSlipMastInformation()) {
             return;
         }
+        
         SignalMast aMast = getSignalMastFromEntry(slipSignalMastA.getText(), false, setSignalMastsAtLayoutSlipFrame);
         SignalMast bMast = getSignalMastFromEntry(slipSignalMastB.getText(), false, setSignalMastsAtLayoutSlipFrame);
         SignalMast cMast = getSignalMastFromEntry(slipSignalMastC.getText(), false, setSignalMastsAtLayoutSlipFrame);
         SignalMast dMast = getSignalMastFromEntry(slipSignalMastD.getText(), false, setSignalMastsAtLayoutSlipFrame);
+        
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        
         //place or update signals as requested
         if ((aMast != null) && slipSignalMastA.addToPanel()) {
             if (isSignalMastOnPanel(aMast)
@@ -10119,7 +10155,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastA.getText());
-                placingBlock(l, slipSignalMastA.isRightSelected(), 0.0, layoutSlip.getConnectA(), layoutSlip.getCoordsA());
+                placingBlock(l, slipSignalMastA.isRightSelected(), 
+                                        0.0, layoutSlip.getConnectA(), layoutSlipView.getCoordsA());
                 removeAssignment(aMast);
                 layoutSlip.setSignalAMast(slipSignalMastA.getText());
                 needRedraw = true;
@@ -10164,7 +10201,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastB.getText());
-                placingBlock(l, slipSignalMastB.isRightSelected(), 0.0, layoutSlip.getConnectB(), layoutSlip.getCoordsB());
+                placingBlock(l, slipSignalMastB.isRightSelected(), 
+                                            0.0, layoutSlip.getConnectB(), layoutSlipView.getCoordsB());
                 removeAssignment(bMast);
                 layoutSlip.setSignalBMast(slipSignalMastB.getText());
                 needRedraw = true;
@@ -10209,7 +10247,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalCMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastC.getText());
-                placingBlock(l, slipSignalMastA.isRightSelected(), 0.0, layoutSlip.getConnectC(), layoutSlip.getCoordsC());
+                placingBlock(l, slipSignalMastA.isRightSelected(), 
+                                                0.0, layoutSlip.getConnectC(), layoutSlipView.getCoordsC());
                 removeAssignment(cMast);
                 layoutSlip.setSignalCMast(slipSignalMastC.getText());
                 needRedraw = true;
@@ -10254,7 +10293,8 @@ final public class LayoutEditorTools {
                 removeSignalMastFromPanel(layoutSlip.getSignalDMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastD.getText());
-                placingBlock(l, slipSignalMastD.isRightSelected(), 0.0, layoutSlip.getConnectD(), layoutSlip.getCoordsD());
+                placingBlock(l, slipSignalMastD.isRightSelected(), 
+                                                0.0, layoutSlip.getConnectD(), layoutSlipView.getCoordsD());
                 removeAssignment(dMast);
                 layoutSlip.setSignalDMast(slipSignalMastD.getText());
                 needRedraw = true;
@@ -11052,13 +11092,15 @@ final public class LayoutEditorTools {
                     (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
 
+        LayoutTurnoutView layoutTurnoutView = layoutEditor.getLayoutTurnoutView(layoutTurnout);
+
         //place/remove sensors as requested
         if (sensorA == null) {
             if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
                 layoutTurnout.setSensorA(null);
             }
         } else if (turnoutSensorA != null && layoutTurnout.getConnectA() != null) {
-            setTurnoutSensor(layoutTurnout, sensorA, currSensorA, turnoutSensorA, layoutTurnout.getConnectA(), layoutTurnout.getCoordsA(), "A");
+            setTurnoutSensor(layoutTurnout, sensorA, currSensorA, turnoutSensorA, layoutTurnout.getConnectA(), layoutTurnoutView.getCoordsA(), "A");
         }
 
         if (sensorB == null) {
@@ -11066,7 +11108,7 @@ final public class LayoutEditorTools {
                 layoutTurnout.setSensorB(null);
             }
         } else if (turnoutSensorB != null && layoutTurnout.getConnectB() != null) {
-            setTurnoutSensor(layoutTurnout, sensorB, currSensorB, turnoutSensorB, layoutTurnout.getConnectB(), layoutTurnout.getCoordsB(), "B");
+            setTurnoutSensor(layoutTurnout, sensorB, currSensorB, turnoutSensorB, layoutTurnout.getConnectB(), layoutTurnoutView.getCoordsB(), "B");
         }
 
         if (sensorC == null) {
@@ -11074,7 +11116,7 @@ final public class LayoutEditorTools {
                 layoutTurnout.setSensorC(null);
             }
         } else if (turnoutSensorC != null && layoutTurnout.getConnectC() != null) {
-            setTurnoutSensor(layoutTurnout, sensorC, currSensorC, turnoutSensorC, layoutTurnout.getConnectC(), layoutTurnout.getCoordsC(), "C");
+            setTurnoutSensor(layoutTurnout, sensorC, currSensorC, turnoutSensorC, layoutTurnout.getConnectC(), layoutTurnoutView.getCoordsC(), "C");
         }
 
         if (sensorD == null) {
@@ -11082,7 +11124,7 @@ final public class LayoutEditorTools {
                 layoutTurnout.setSensorD(null);
             }
         } else if (turnoutSensorD != null && layoutTurnout.getConnectD() != null) {
-            setTurnoutSensor(layoutTurnout, sensorD, currSensorD, turnoutSensorD, layoutTurnout.getConnectD(), layoutTurnout.getCoordsD(), "D");
+            setTurnoutSensor(layoutTurnout, sensorD, currSensorD, turnoutSensorD, layoutTurnout.getConnectD(), layoutTurnoutView.getCoordsD(), "D");
         }
 
         //make sure this layout turnout is not linked to another
@@ -12125,13 +12167,15 @@ final public class LayoutEditorTools {
                     (sensorD == null) ? "- none- " : sensorD.getDisplayName());  // NOI18N
         }
 
+        LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
+        
         //place/remove sensors as requested
         if (sensorA == null) {
             if (currSensorA != null && removeSensorFromPanel(currSensorA)) {
                 layoutSlip.setSensorA(null);
             }
         } else if (slipSensorA != null && layoutSlip.getConnectA() != null) {
-            setTurnoutSensor(layoutSlip, sensorA, currSensorA, slipSensorA, layoutSlip.getConnectA(), layoutSlip.getCoordsA(), "A");
+            setTurnoutSensor(layoutSlip, sensorA, currSensorA, slipSensorA, layoutSlip.getConnectA(), layoutSlipView.getCoordsA(), "A");
         }
 
         if (sensorB == null) {
@@ -12139,7 +12183,7 @@ final public class LayoutEditorTools {
                 layoutSlip.setSensorB(null);
             }
         } else if (slipSensorB != null && layoutSlip.getConnectB() != null) {
-            setTurnoutSensor(layoutSlip, sensorB, currSensorB, slipSensorB, layoutSlip.getConnectB(), layoutSlip.getCoordsB(), "B");
+            setTurnoutSensor(layoutSlip, sensorB, currSensorB, slipSensorB, layoutSlip.getConnectB(), layoutSlipView.getCoordsB(), "B");
         }
 
         if (sensorC == null) {
@@ -12147,7 +12191,7 @@ final public class LayoutEditorTools {
                 layoutSlip.setSensorC(null);
             }
         } else if (slipSensorC != null && layoutSlip.getConnectC() != null) {
-            setTurnoutSensor(layoutSlip, sensorC, currSensorC, slipSensorC, layoutSlip.getConnectC(), layoutSlip.getCoordsC(), "C");
+            setTurnoutSensor(layoutSlip, sensorC, currSensorC, slipSensorC, layoutSlip.getConnectC(), layoutSlipView.getCoordsC(), "C");
         }
 
         if (sensorD == null) {
@@ -12155,7 +12199,7 @@ final public class LayoutEditorTools {
                 layoutSlip.setSensorD(null);
             }
         } else if (slipSensorD != null && layoutSlip.getConnectD() != null) {
-            setTurnoutSensor(layoutSlip, sensorD, currSensorD, slipSensorD, layoutSlip.getConnectD(), layoutSlip.getCoordsD(), "D");
+            setTurnoutSensor(layoutSlip, sensorD, currSensorD, slipSensorD, layoutSlip.getConnectD(), layoutSlipView.getCoordsD(), "D");
         }
 
         //setup logic if requested
@@ -13222,8 +13266,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        Point2D coordsA = layoutSlip.getCoordsA();
-        Point2D coordsD = layoutSlip.getCoordsD();
+        Point2D coordsA = layoutSlipView.getCoordsA();
+        Point2D coordsD = layoutSlipView.getCoordsD();
         Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
@@ -13249,8 +13293,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        Point2D coordsA = layoutSlip.getCoordsA();
-        Point2D coordsD = layoutSlip.getCoordsD();
+        Point2D coordsA = layoutSlipView.getCoordsA();
+        Point2D coordsD = layoutSlipView.getCoordsD();
         Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double aDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsA, coordsCenter));
@@ -13275,7 +13319,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        Point2D coordsB = layoutSlip.getCoordsB();
+        Point2D coordsB = layoutSlipView.getCoordsB();
         Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -13295,7 +13339,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        Point2D coordsB = layoutSlip.getCoordsB();
+        Point2D coordsB = layoutSlipView.getCoordsB();
         Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -13314,8 +13358,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        Point2D coordsB = layoutSlip.getCoordsB();
-        Point2D coordsC = layoutSlip.getCoordsC();
+        Point2D coordsB = layoutSlipView.getCoordsB();
+        Point2D coordsC = layoutSlipView.getCoordsC();
         Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -13341,8 +13385,8 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        Point2D coordsB = layoutSlip.getCoordsB();
-        Point2D coordsC = layoutSlip.getCoordsC();
+        Point2D coordsB = layoutSlipView.getCoordsB();
+        Point2D coordsC = layoutSlipView.getCoordsC();
         Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double bDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsB, coordsCenter));
@@ -13367,7 +13411,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        Point2D coordsD = layoutSlip.getCoordsD();
+        Point2D coordsD = layoutSlipView.getCoordsD();
         Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));
@@ -13387,7 +13431,7 @@ final public class LayoutEditorTools {
         double shift = Math.hypot(testIcon.getIconHeight(), testIcon.getIconWidth()) / 2.0;
 
         LayoutSlipView layoutSlipView = layoutEditor.getLayoutSlipView(layoutSlip);
-        Point2D coordsD = layoutSlip.getCoordsD();
+        Point2D coordsD = layoutSlipView.getCoordsD();
         Point2D coordsCenter = layoutSlipView.getCoordsCenter();
 
         double dDirDEG = MathUtil.wrap360(90.0 - MathUtil.computeAngleDEG(coordsD, coordsCenter));

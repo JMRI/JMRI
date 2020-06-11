@@ -3926,13 +3926,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private void hitPointCheckLayoutTurnouts(@Nonnull LayoutTurnout lt) {
         beginTrack = lt;
 
+        LayoutTurnoutView ltv = getLayoutTurnoutView(lt);
+        
         if (lt.getConnectA() == null) {
             if (lt instanceof LayoutSlip) {
                 beginHitPointType = HitPointType.SLIP_A;
             } else {
                 beginHitPointType = HitPointType.TURNOUT_A;
             }
-            dLoc = lt.getCoordsA();
+            dLoc = ltv.getCoordsA();
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
 
@@ -3942,7 +3944,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             } else {
                 beginHitPointType = HitPointType.TURNOUT_B;
             }
-            dLoc = lt.getCoordsB();
+            dLoc = ltv.getCoordsB();
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
 
@@ -3952,7 +3954,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             } else {
                 beginHitPointType = HitPointType.TURNOUT_C;
             }
-            dLoc = lt.getCoordsC();
+            dLoc = ltv.getCoordsC();
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
 
@@ -3962,7 +3964,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             } else {
                 beginHitPointType = HitPointType.TURNOUT_D;
             }
-            dLoc = lt.getCoordsD();
+            dLoc = ltv.getCoordsD();
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
         beginTrack = null;
@@ -4043,6 +4045,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private void rotateTurnout(@Nonnull LayoutTurnout t) {
         assert t != null;
 
+        LayoutTurnoutView tv = getLayoutTurnoutView(t);
+
         LayoutTurnout be = (LayoutTurnout) beginTrack;
         LayoutTurnoutView bev = getLayoutTurnoutView(be);
 
@@ -4059,51 +4063,50 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         Point2D c, diverg, xy2;
 
         if ((foundHitPointType == HitPointType.TURNOUT_C) && (beginHitPointType == HitPointType.TURNOUT_C)) {
-            c = t.getCoordsA();
-            diverg = t.getCoordsB();
+            c = tv.getCoordsA();
+            diverg = tv.getCoordsB();
             xy2 = MathUtil.subtract(c, diverg);
         } else if ((foundHitPointType == HitPointType.TURNOUT_C)
                 && ((beginHitPointType == HitPointType.TURNOUT_A) || (beginHitPointType == HitPointType.TURNOUT_B))) {
 
-            LayoutTrackView tv = getLayoutTrackView(t);
             c = tv.getCoordsCenter();
-            diverg = t.getCoordsC();
+            diverg = tv.getCoordsC();
 
             if (beginHitPointType == HitPointType.TURNOUT_A) {
-                xy2 = MathUtil.subtract(be.getCoordsB(), be.getCoordsA());
+                xy2 = MathUtil.subtract(bev.getCoordsB(), bev.getCoordsA());
             } else {
-                xy2 = MathUtil.subtract(be.getCoordsA(), be.getCoordsB());
+                xy2 = MathUtil.subtract(bev.getCoordsA(), bev.getCoordsB());
             }
         } else if (foundHitPointType == HitPointType.TURNOUT_B) {
-            c = t.getCoordsA();
-            diverg = t.getCoordsB();
+            c = tv.getCoordsA();
+            diverg = tv.getCoordsB();
 
             switch (beginHitPointType) {
                 case TURNOUT_B:
-                    xy2 = MathUtil.subtract(be.getCoordsA(), be.getCoordsB());
+                    xy2 = MathUtil.subtract(bev.getCoordsA(), bev.getCoordsB());
                     break;
                 case TURNOUT_A:
-                    xy2 = MathUtil.subtract(be.getCoordsB(), be.getCoordsA());
+                    xy2 = MathUtil.subtract(bev.getCoordsB(), bev.getCoordsA());
                     break;
                 case TURNOUT_C:
                 default:
-                    xy2 = MathUtil.subtract(bev.getCoordsCenter(), be.getCoordsC());
+                    xy2 = MathUtil.subtract(bev.getCoordsCenter(), bev.getCoordsC());
                     break;
             }
         } else if (foundHitPointType == HitPointType.TURNOUT_A) {
-            c = t.getCoordsA();
-            diverg = t.getCoordsB();
+            c = tv.getCoordsA();
+            diverg = tv.getCoordsB();
 
             switch (beginHitPointType) {
                 case TURNOUT_A:
-                    xy2 = MathUtil.subtract(be.getCoordsA(), be.getCoordsB());
+                    xy2 = MathUtil.subtract(bev.getCoordsA(), bev.getCoordsB());
                     break;
                 case TURNOUT_B:
-                    xy2 = MathUtil.subtract(be.getCoordsB(), be.getCoordsA());
+                    xy2 = MathUtil.subtract(bev.getCoordsB(), bev.getCoordsA());
                     break;
                 case TURNOUT_C:
                 default:
-                    xy2 = MathUtil.subtract(be.getCoordsC(), bev.getCoordsCenter());
+                    xy2 = MathUtil.subtract(bev.getCoordsC(), bev.getCoordsCenter());
                     break;
             }
         } else {
@@ -4114,26 +4117,26 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         double eRadius = Math.toDegrees(Math.atan2(xy2.getY(), xy2.getX()));
         bev.rotateCoords(radius - eRadius);
 
-        Point2D conCord = be.getCoordsA();
-        Point2D tCord = t.getCoordsC();
+        Point2D conCord = bev.getCoordsA();
+        Point2D tCord = tv.getCoordsC();
 
         if (foundHitPointType == HitPointType.TURNOUT_B) {
-            tCord = t.getCoordsB();
+            tCord = tv.getCoordsB();
         }
 
         if (foundHitPointType == HitPointType.TURNOUT_A) {
-            tCord = t.getCoordsA();
+            tCord = tv.getCoordsA();
         }
 
         switch (beginHitPointType) {
             case TURNOUT_A:
-                conCord = be.getCoordsA();
+                conCord = bev.getCoordsA();
                 break;
             case TURNOUT_B:
-                conCord = be.getCoordsB();
+                conCord = bev.getCoordsB();
                 break;
             case TURNOUT_C:
-                conCord = be.getCoordsC();
+                conCord = bev.getCoordsC();
                 break;
             default:
                 break;
@@ -4628,22 +4631,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
 
                         case TURNOUT_A: {
-                            ((LayoutTurnout) selectedObject).setCoordsA(currentPoint);
+                            getLayoutTurnoutView((LayoutTurnout) selectedObject).setCoordsA(currentPoint);
                             break;
                         }
 
                         case TURNOUT_B: {
-                            ((LayoutTurnout) selectedObject).setCoordsB(currentPoint);
+                            getLayoutTurnoutView((LayoutTurnout) selectedObject).setCoordsB(currentPoint);
                             break;
                         }
 
                         case TURNOUT_C: {
-                            ((LayoutTurnout) selectedObject).setCoordsC(currentPoint);
+                            getLayoutTurnoutView((LayoutTurnout) selectedObject).setCoordsC(currentPoint);
                             break;
                         }
 
                         case TURNOUT_D: {
-                            ((LayoutTurnout) selectedObject).setCoordsD(currentPoint);
+                            getLayoutTurnoutView((LayoutTurnout) selectedObject).setCoordsD(currentPoint);
                             break;
                         }
 
@@ -4668,22 +4671,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
 
                         case SLIP_A: {
-                            ((LayoutSlip) selectedObject).setCoordsA(currentPoint);
+                            getLayoutSlipView((LayoutSlip) selectedObject).setCoordsA(currentPoint);
                             break;
                         }
 
                         case SLIP_B: {
-                            ((LayoutSlip) selectedObject).setCoordsB(currentPoint);
+                            getLayoutSlipView((LayoutSlip) selectedObject).setCoordsB(currentPoint);
                             break;
                         }
 
                         case SLIP_C: {
-                            ((LayoutSlip) selectedObject).setCoordsC(currentPoint);
+                            getLayoutSlipView((LayoutSlip) selectedObject).setCoordsC(currentPoint);
                             break;
                         }
 
                         case SLIP_D: {
-                            ((LayoutSlip) selectedObject).setCoordsD(currentPoint);
+                            getLayoutSlipView((LayoutSlip) selectedObject).setCoordsD(currentPoint);
                             break;
                         }
 
@@ -5818,22 +5821,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         TrackSegment t = (TrackSegment) o.getConnectA();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsA(), o, t);
+            substituteAnchor(getLayoutTurnoutView(o).getCoordsA(), o, t);
         }
         t = (TrackSegment) o.getConnectB();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsB(), o, t);
+            substituteAnchor(getLayoutTurnoutView(o).getCoordsB(), o, t);
         }
         t = (TrackSegment) o.getConnectC();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsC(), o, t);
+            substituteAnchor(getLayoutTurnoutView(o).getCoordsC(), o, t);
         }
         t = (TrackSegment) o.getConnectD();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsD(), o, t);
+            substituteAnchor(getLayoutTurnoutView(o).getCoordsD(), o, t);
         }
 
         // decrement Block use count(s)
@@ -5994,6 +5997,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
+        LayoutTurnoutView ov = getLayoutTurnoutView(o);
+        
         // remove from selection information
         if (selectedObject == o) {
             selectedObject = null;
@@ -6007,22 +6012,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         TrackSegment t = (TrackSegment) o.getConnectA();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsA(), o, t);
+            substituteAnchor(ov.getCoordsA(), o, t);
         }
         t = (TrackSegment) o.getConnectB();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsB(), o, t);
+            substituteAnchor(ov.getCoordsB(), o, t);
         }
         t = (TrackSegment) o.getConnectC();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsC(), o, t);
+            substituteAnchor(ov.getCoordsC(), o, t);
         }
         t = (TrackSegment) o.getConnectD();
 
         if (t != null) {
-            substituteAnchor(o.getCoordsD(), o, t);
+            substituteAnchor(ov.getCoordsD(), o, t);
         }
 
         // decrement block use count if any blocks in use

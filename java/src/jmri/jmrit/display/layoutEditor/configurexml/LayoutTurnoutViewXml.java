@@ -59,19 +59,19 @@ public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
         
-        coords = p.getCoordsA();
+        coords = pv.getCoordsA();
         element.setAttribute("xa", "" + coords.getX());
         element.setAttribute("ya", "" + coords.getY());
         
-        coords = p.getCoordsB();
+        coords = pv.getCoordsB();
         element.setAttribute("xb", "" + coords.getX());
         element.setAttribute("yb", "" + coords.getY());
         
-        coords = p.getCoordsC();
+        coords = pv.getCoordsC();
         element.setAttribute("xc", "" + coords.getX());
         element.setAttribute("yc", "" + coords.getY());
         
-        coords = p.getCoordsD();
+        coords = pv.getCoordsD();
         element.setAttribute("xd", "" + coords.getX());
         element.setAttribute("yd", "" + coords.getY());
         
@@ -409,7 +409,7 @@ public class LayoutTurnoutViewXml extends AbstractXmlAdapter {
         try {
             x = element.getAttribute("xb").getFloatValue();
             y = element.getAttribute("yb").getFloatValue();
-            l.setCoordsB(new Point2D.Double(x, y));
+            lv.setCoordsB(new Point2D.Double(x, y));
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutturnout b coords attribute");
         }
