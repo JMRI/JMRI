@@ -105,6 +105,8 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                 // right now, we have only macOS reference files
                 if ( jmri.util.SystemType.isMacOSX() ) {
                     findAndComparePngFiles(inFile, outFile, index, "macos");
+                } else if ( jmri.util.SystemType.isWindows() ) {
+                    findAndComparePngFiles(inFile, outFile, index, "windows");
                 } else if ( jmri.util.SystemType.isLinux() ) {
                     if (System.getProperty("jmri.migrationtests", "false").equals("true")) {
                         findAndComparePngFiles(inFile, outFile, index, "linux");
@@ -137,9 +139,17 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         try {
             log.info("FileA: "+fileA.toString());
             log.info("FileB: "+fileB.toString());
+            
+            // check comparison file exists
+            if (! fileA.exists()) {
+                log.warn("Comparison file {} doesn't exist, test skipped", fileA.getName());
+                return 0;  // consider this passed with message
+            }
             // get buffer data from both files
             java.awt.image.BufferedImage biA = javax.imageio.ImageIO.read(fileA);
             java.awt.image.DataBuffer dbA = biA.getData().getDataBuffer();
+            
+            
             java.awt.image.BufferedImage biB = javax.imageio.ImageIO.read(fileB);
             java.awt.image.DataBuffer dbB = biB.getData().getDataBuffer();
         

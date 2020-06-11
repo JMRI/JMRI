@@ -26,7 +26,7 @@ public class ResourceBundleStartupActionFactory extends AbstractStartupActionFac
         if (Arrays.asList(getActionClasses()).contains(clazz)) {
             return ResourceBundle.getBundle(bundle.getBaseBundleName(), locale).getString(clazz.getName());
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(clazz.getName() + " is not supported by " + this.getClass().getName());
     }
 
     @Override

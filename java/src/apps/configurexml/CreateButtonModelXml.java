@@ -1,7 +1,7 @@
 package apps.configurexml;
 
 import apps.CreateButtonModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import java.lang.reflect.InvocationTargetException;
 import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemo;
