@@ -198,6 +198,11 @@ public class ManyTest extends AbstractAnalogActionTestBase {
         
         // Since all the sockets are connected, a new socket must have been created.
         Assert.assertEquals("action has 6 female sockets", 6, action.getChildCount());
+        
+        // Try run setup() again. That should not cause any problems.
+        action.setup();
+        
+        Assert.assertEquals("action has 6 female sockets", 6, action.getChildCount());
     }
     
     // Test calling setActionSystemNames() twice
