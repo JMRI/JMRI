@@ -65,11 +65,6 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class);
 
 }
