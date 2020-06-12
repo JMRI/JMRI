@@ -26,11 +26,14 @@ public class Many extends AbstractDigitalAction
         implements FemaleSocketListener {
 
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
+    private boolean disableCheckForUnconnectedSocket = false;
     
     public Many(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        init();
+        _actionEntries
+                .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
+                        .createFemaleSocket(this, this, getNewSocketName())));
     }
 
     public Many(String sys, String user, List<Map.Entry<String, String>> actionSystemNames)
@@ -39,10 +42,61 @@ public class Many extends AbstractDigitalAction
         setActionSystemNames(actionSystemNames);
     }
     
-    private void init() {
-        _actionEntries
-                .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
-                        .createFemaleSocket(this, this, getNewSocketName())));
+    private void setActionSystemNames(List<Map.Entry<String, String>> systemNames) {
+        if (!_actionEntries.isEmpty()) {
+            throw new RuntimeException("action system names cannot be set more than once");
+        }
+        
+        for (Map.Entry<String, String> entry : systemNames) {
+            FemaleDigitalActionSocket socket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .createFemaleSocket(this, this, entry.getKey());
+            
+            _actionEntries.add(new ActionEntry(socket, entry.getValue()));
+        }
+    }
+
+    public String getActionSystemName(int index) {
+        return _actionEntries.get(index)._socketSystemName;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setup() {
+        // We don't want to check for unconnected sockets while setup sockets
+        disableCheckForUnconnectedSocket = true;
+        
+        for (ActionEntry ae : _actionEntries) {
+            try {
+                if ( !ae._socket.isConnected()
+                        || !ae._socket.getConnectedSocket().getSystemName()
+                                .equals(ae._socketSystemName)) {
+
+                    String socketSystemName = ae._socketSystemName;
+                    ae._socket.disconnect();
+                    if (socketSystemName != null) {
+                        MaleSocket maleSocket =
+                                InstanceManager.getDefault(DigitalActionManager.class)
+                                        .getBySystemName(socketSystemName);
+                        if (maleSocket != null) {
+                            ae._socket.connect(maleSocket);
+                            maleSocket.setup();
+                        } else {
+                            log.error("cannot load digital action " + socketSystemName);
+                        }
+                    }
+                } else {
+                    ae._socket.getConnectedSocket().setup();
+                }
+            } catch (SocketAlreadyConnectedException ex) {
+                // This shouldn't happen and is a runtime error if it does.
+                throw new RuntimeException("socket is already connected");
+            }
+        }
+        
+        checkFreeSocket();
+        
+        disableCheckForUnconnectedSocket = false;
     }
     
     /** {@inheritDoc} */
@@ -87,15 +141,10 @@ public class Many extends AbstractDigitalAction
         return _actionEntries.size();
     }
     
-    @Override
-    public void connected(FemaleSocket socket) {
+    private void checkFreeSocket() {
         boolean hasFreeSocket = false;
         for (ActionEntry entry : _actionEntries) {
-            hasFreeSocket = !entry._socket.isConnected();
-            if (socket == entry._socket) {
-                entry._socketSystemName =
-                        socket.getConnectedSocket().getSystemName();
-            }
+            hasFreeSocket |= !entry._socket.isConnected();
         }
         if (!hasFreeSocket) {
             _actionEntries.add(
@@ -103,7 +152,22 @@ public class Many extends AbstractDigitalAction
                             InstanceManager.getDefault(DigitalActionManager.class)
                                     .createFemaleSocket(this, this, getNewSocketName())));
         }
+    }
+    
+    @Override
+    public void connected(FemaleSocket socket) {
+        if (disableCheckForUnconnectedSocket) return;
+        
+        for (ActionEntry entry : _actionEntries) {
+            if (socket == entry._socket) {
+                entry._socketSystemName =
+                        socket.getConnectedSocket().getSystemName();
+            }
+        }
+        
         firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
+        
+        checkFreeSocket();
     }
 
     @Override
@@ -126,58 +190,8 @@ public class Many extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Many_Long");
     }
-
-    private void setActionSystemNames(List<Map.Entry<String, String>> systemNames) {
-        if (!_actionEntries.isEmpty()) {
-            throw new RuntimeException("action system names cannot be set more than once");
-        }
-        
-        for (Map.Entry<String, String> entry : systemNames) {
-            FemaleDigitalActionSocket socket =
-                    InstanceManager.getDefault(DigitalActionManager.class)
-                            .createFemaleSocket(this, this, entry.getKey());
-            
-            _actionEntries.add(new ActionEntry(socket, entry.getValue()));
-        }
-    }
-
-    public String getActionSystemName(int index) {
-        return _actionEntries.get(index)._socketSystemName;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setup() {
-        for (ActionEntry ae : _actionEntries) {
-            try {
-                if ( !ae._socket.isConnected()
-                        || !ae._socket.getConnectedSocket().getSystemName()
-                                .equals(ae._socketSystemName)) {
-
-                    String socketSystemName = ae._socketSystemName;
-                    ae._socket.disconnect();
-                    if (socketSystemName != null) {
-                        MaleSocket maleSocket =
-                                InstanceManager.getDefault(DigitalActionManager.class)
-                                        .getBySystemName(socketSystemName);
-                        if (maleSocket != null) {
-                            ae._socket.connect(maleSocket);
-                            maleSocket.setup();
-                        } else {
-                            log.error("cannot load digital action " + socketSystemName);
-                        }
-                    }
-                } else {
-                    ae._socket.getConnectedSocket().setup();
-                }
-            } catch (SocketAlreadyConnectedException ex) {
-                // This shouldn't happen and is a runtime error if it does.
-                throw new RuntimeException("socket is already connected");
-            }
-        }
-    }
-
-
+    
+    
     private static class ActionEntry {
         private String _socketSystemName;
         private final FemaleDigitalActionSocket _socket;

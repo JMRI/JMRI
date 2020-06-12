@@ -1,16 +1,10 @@
 package jmri.jmrit.logixng.string.actions;
 
+import java.util.*;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.StringActionManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
 import jmri.util.JUnitUtil;
 
@@ -77,7 +71,125 @@ public class ManyTest extends AbstractStringActionTestBase {
     
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new Many("IQSA321", null));
+        Many action = new Many("IQSA321", null);
+        Assert.assertNotNull("exists", action);
+        Assert.assertEquals("action has one female socket", 1, action.getChildCount());
+        Assert.assertEquals("action female socket name is A1", "A1", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringActionSocket",
+                action.getChild(0).getClass().getName());
+    }
+    
+    @Test
+    public void testCtorAndSetup1() {
+        StringActionManager m = InstanceManager.getDefault(StringActionManager.class);
+        
+        List<MaleSocket> maleSockets = new ArrayList<>();
+        maleSockets.add(m.registerAction(new StringActionMemory("IQSA52", null)));
+        maleSockets.add(null);  // This is null by purpose
+        maleSockets.add(m.registerAction(new StringActionMemory("IQSA554", null)));
+        maleSockets.add(m.registerAction(new StringActionMemory("IQSA61232", null)));
+        maleSockets.add(m.registerAction(new StringActionMemory("IQSA3", null)));
+        
+        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSA52"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", null));   // This is null by purpose
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQSA554"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQSA61232"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQSA3"));
+        
+        Many action = new Many("IQSA321", null, actionSystemNames);
+        Assert.assertNotNull("exists", action);
+        Assert.assertEquals("action has 5 female sockets", 5, action.getChildCount());
+        
+        for (int i=0; i < 5; i++) {
+            Map.Entry<String,String> entry = actionSystemNames.get(i);
+            Assert.assertEquals("action female socket name is "+entry.getKey(),
+                    entry.getKey(), action.getChild(i).getName());
+            Assert.assertEquals("action female socket is of correct class",
+                    "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringActionSocket",
+                    action.getChild(i).getClass().getName());
+            Assert.assertFalse("action female socket is not connected",
+                    action.getChild(i).isConnected());
+        }
+        
+        // Setup action. This connects the child actions to this action
+        action.setup();
+        
+        for (int i=0; i < 5; i++) {
+            Map.Entry<String,String> entry = actionSystemNames.get(i);
+            Assert.assertEquals("action female socket name is "+entry.getKey(),
+                    entry.getKey(), action.getChild(i).getName());
+            
+            if (maleSockets.get(i) != null) {
+                Assert.assertTrue("action female socket is connected",
+                        action.getChild(i).isConnected());
+                Assert.assertEquals("child is correct bean",
+                        maleSockets.get(i),
+                        action.getChild(i).getConnectedSocket());
+            } else {
+                Assert.assertFalse("action female socket is not connected",
+                        action.getChild(i).isConnected());
+            }
+        }
+        
+        Assert.assertEquals("action has 5 female sockets", 5, action.getChildCount());
+    }
+    
+    @Test
+    public void testCtorAndSetup2() {
+        StringActionManager m = InstanceManager.getDefault(StringActionManager.class);
+        
+        List<MaleSocket> maleSockets = new ArrayList<>();
+        maleSockets.add(m.registerAction(new StringActionMemory("IQSA52", null)));
+        maleSockets.add(m.registerAction(new StringActionMemory("IQSA99", null)));
+        maleSockets.add(m.registerAction(new StringActionMemory("IQSA554", null)));
+        maleSockets.add(m.registerAction(new StringActionMemory("IQSA61232", null)));
+        maleSockets.add(m.registerAction(new StringActionMemory("IQSA3", null)));
+        
+        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSA52"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", "IQSA99"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQSA554"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQSA61232"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQSA3"));
+        
+        Many action = new Many("IQSA321", null, actionSystemNames);
+        Assert.assertNotNull("exists", action);
+        Assert.assertEquals("action has 5 female sockets", 5, action.getChildCount());
+        
+        for (int i=0; i < 5; i++) {
+            Map.Entry<String,String> entry = actionSystemNames.get(i);
+            Assert.assertEquals("action female socket name is "+entry.getKey(),
+                    entry.getKey(), action.getChild(i).getName());
+            Assert.assertEquals("action female socket is of correct class",
+                    "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringActionSocket",
+                    action.getChild(i).getClass().getName());
+            Assert.assertFalse("action female socket is not connected",
+                    action.getChild(i).isConnected());
+        }
+        
+        // Setup action. This connects the child actions to this action
+        action.setup();
+        
+        for (int i=0; i < 5; i++) {
+            Map.Entry<String,String> entry = actionSystemNames.get(i);
+            Assert.assertEquals("action female socket name is "+entry.getKey(),
+                    entry.getKey(), action.getChild(i).getName());
+            
+            if (maleSockets.get(i) != null) {
+                Assert.assertTrue("action female socket is connected",
+                        action.getChild(i).isConnected());
+                Assert.assertEquals("child is correct bean",
+                        maleSockets.get(i),
+                        action.getChild(i).getConnectedSocket());
+            } else {
+                Assert.assertFalse("action female socket is not connected",
+                        action.getChild(i).isConnected());
+            }
+        }
+        
+        Assert.assertEquals("action has 6 female sockets", 6, action.getChildCount());
     }
     
     @Test
@@ -132,28 +244,17 @@ public class ManyTest extends AbstractStringActionTestBase {
         Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
         
         action.getChild(1).connect(maleSAMSocket);
-        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertEquals("Num children is correct", 2, action.getChildCount());
         Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
         Assert.assertEquals("getActionSystemName(1) is correct", "IQSA122", action.getActionSystemName(1));
         action.getChild(0).disconnect();    // Test removing child with the wrong index.
-        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertEquals("Num children is correct", 2, action.getChildCount());
         Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
         Assert.assertEquals("getActionSystemName(1) is correct", "IQSA122", action.getActionSystemName(1));
         action.getChild(1).disconnect();
-        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
+        Assert.assertEquals("Num children is correct", 2, action.getChildCount());
         Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
         Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
-        
-        action.getChild(1).connect(maleSAMSocket);
-        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
-        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
-        Assert.assertEquals("getActionSystemName(1) is correct", "IQSA122", action.getActionSystemName(1));
-        Assert.assertNull("getActionSystemName(2) is null", action.getActionSystemName(2));
-        action.getChild(1).disconnect();
-        Assert.assertEquals("Num children is correct", 3, action.getChildCount());
-        Assert.assertNull("getActionSystemName(0) is null", action.getActionSystemName(0));
-        Assert.assertNull("getActionSystemName(1) is null", action.getActionSystemName(1));
-        Assert.assertNull("getActionSystemName(2) is null", action.getActionSystemName(2));
     }
     
     @Test
