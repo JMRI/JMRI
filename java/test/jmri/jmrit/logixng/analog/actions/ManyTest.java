@@ -324,7 +324,4 @@ public class ManyTest extends AbstractAnalogActionTestBase {
         JUnitUtil.tearDown();
     }
     
-    
-    private final static Logger log = LoggerFactory.getLogger(Many.class);
-    
 }
