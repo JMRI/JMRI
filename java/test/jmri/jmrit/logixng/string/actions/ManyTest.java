@@ -119,7 +119,7 @@ public class ManyTest extends AbstractStringActionTestBase {
         // Setup action. This connects the child actions to this action
         action.setup();
         
-        jmri.util.JUnitAppender.assertMessage("cannot load digital action IQSA61232");
+        jmri.util.JUnitAppender.assertMessage("cannot load string action IQSA61232");
         
         for (int i=0; i < 5; i++) {
             Map.Entry<String,String> entry = actionSystemNames.get(i);
