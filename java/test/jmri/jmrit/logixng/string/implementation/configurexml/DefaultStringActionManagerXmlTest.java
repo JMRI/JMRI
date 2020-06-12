@@ -33,10 +33,6 @@ public class DefaultStringActionManagerXmlTest {
     public void testLoad() {
         DefaultStringActionManagerXml b = new DefaultStringActionManagerXml();
         
-        // Test the method load(Element element, Object o)
-        b.load((Element)null, (Object)null);
-        JUnitAppender.assertErrorMessage("Invalid method called");
-        
         Element e = new Element("logixngStringExpressions");
         Element e2 = new Element("missing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");

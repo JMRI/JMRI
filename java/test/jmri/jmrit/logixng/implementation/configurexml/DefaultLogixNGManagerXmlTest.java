@@ -32,14 +32,6 @@ public class DefaultLogixNGManagerXmlTest {
         DefaultLogixNGManagerXml b = new DefaultLogixNGManagerXml();
         Assert.assertNotNull("exists", b);
         
-        // Test the method load(Element element, Object o)
-        b.load((Element)null, (Object)null);
-        JUnitAppender.assertErrorMessage("Invalid method called");
-        
-        // Test the method load(Element element, Object o)
-        b.load((Element)null, (Object)null);
-        JUnitAppender.assertErrorMessage("Invalid method called");
-        
         // Test loading a logixng without system name
         Element e = new Element("logixngs");
         Element e2 = new Element("logixng");

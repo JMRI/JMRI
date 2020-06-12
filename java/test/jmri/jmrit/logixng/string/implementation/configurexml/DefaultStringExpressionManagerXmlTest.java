@@ -33,10 +33,6 @@ public class DefaultStringExpressionManagerXmlTest {
     public void testLoad() {
         DefaultStringExpressionManagerXml b = new DefaultStringExpressionManagerXml();
         
-        // Test the method load(Element element, Object o)
-        b.load((Element)null, (Object)null);
-        JUnitAppender.assertErrorMessage("Invalid method called");
-        
         Element e = new Element("logixngAnalogExpressions");
         Element e2 = new Element("missing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");
