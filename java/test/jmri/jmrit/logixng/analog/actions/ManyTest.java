@@ -1,29 +1,18 @@
 package jmri.jmrit.logixng.analog.actions;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
 import jmri.util.JUnitUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test Many
@@ -209,6 +198,32 @@ public class ManyTest extends AbstractAnalogActionTestBase {
         
         // Since all the sockets are connected, a new socket must have been created.
         Assert.assertEquals("action has 6 female sockets", 6, action.getChildCount());
+    }
+    
+    // Test calling setActionSystemNames() twice
+    @Test
+    public void testCtorAndSetup3() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
+        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQAA52"));
+        
+        Many action = new Many("IQAA321", null, actionSystemNames);
+        
+        java.lang.reflect.Method method =
+                action.getClass().getDeclaredMethod("setActionSystemNames", new Class<?>[]{List.class});
+        method.setAccessible(true);
+        
+        boolean hasThrown = false;
+        try {
+            method.invoke(action, new Object[]{null});
+        } catch (InvocationTargetException e) {
+            if (e.getCause() instanceof RuntimeException) {
+                hasThrown = true;
+                Assert.assertEquals("Exception message is correct",
+                        "action system names cannot be set more than once",
+                        e.getCause().getMessage());
+            }
+        }
+        Assert.assertTrue("Exception thrown", hasThrown);
     }
     
     @Test

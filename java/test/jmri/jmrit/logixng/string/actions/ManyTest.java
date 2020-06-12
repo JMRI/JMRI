@@ -1,13 +1,14 @@
 package jmri.jmrit.logixng.string.actions;
 
-import java.util.*;
-
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
 import jmri.util.JUnitUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -190,6 +191,32 @@ public class ManyTest extends AbstractStringActionTestBase {
         }
         
         Assert.assertEquals("action has 6 female sockets", 6, action.getChildCount());
+    }
+    
+    // Test calling setActionSystemNames() twice
+    @Test
+    public void testCtorAndSetup3() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
+        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSA52"));
+        
+        Many action = new Many("IQSA321", null, actionSystemNames);
+        
+        java.lang.reflect.Method method =
+                action.getClass().getDeclaredMethod("setActionSystemNames", new Class<?>[]{List.class});
+        method.setAccessible(true);
+        
+        boolean hasThrown = false;
+        try {
+            method.invoke(action, new Object[]{null});
+        } catch (InvocationTargetException e) {
+            if (e.getCause() instanceof RuntimeException) {
+                hasThrown = true;
+                Assert.assertEquals("Exception message is correct",
+                        "action system names cannot be set more than once",
+                        e.getCause().getMessage());
+            }
+        }
+        Assert.assertTrue("Exception thrown", hasThrown);
     }
     
     @Test
