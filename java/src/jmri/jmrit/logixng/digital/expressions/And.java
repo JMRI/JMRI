@@ -25,11 +25,14 @@ import org.slf4j.LoggerFactory;
 public class And extends AbstractDigitalExpression implements FemaleSocketListener {
 
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
+    private boolean disableCheckForUnconnectedSocket = false;
     
     public And(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        init();
+        _expressionEntries
+                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .createFemaleSocket(this, this, getNewSocketName())));
     }
     
     public And(String sys, String user, List<Map.Entry<String, String>> expressionSystemNames)
@@ -38,10 +41,22 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
         setExpressionSystemNames(expressionSystemNames);
     }
 
-    private void init() {
-        _expressionEntries
-                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, getNewSocketName())));
+    private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
+        if (!_expressionEntries.isEmpty()) {
+            throw new RuntimeException("expression system names cannot be set more than once");
+        }
+        
+        for (Map.Entry<String, String> entry : systemNames) {
+            FemaleDigitalExpressionSocket socket =
+                    InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .createFemaleSocket(this, this, entry.getKey());
+            
+            _expressionEntries.add(new ExpressionEntry(socket, entry.getValue()));
+        }
+    }
+    
+    public String getExpressionSystemName(int index) {
+        return _expressionEntries.get(index)._socketSystemName;
     }
 
     /** {@inheritDoc} */
@@ -96,41 +111,33 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
         return Bundle.getMessage(locale, "And_Long");
     }
 
-    private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
-        if (!_expressionEntries.isEmpty()) {
-            throw new RuntimeException("expression system names cannot be set more than once");
+    private void checkFreeSocket() {
+        boolean hasFreeSocket = false;
+        for (ExpressionEntry entry : _expressionEntries) {
+            hasFreeSocket |= !entry._socket.isConnected();
         }
-        
-        for (Map.Entry<String, String> entry : systemNames) {
-            FemaleDigitalExpressionSocket socket =
-                    InstanceManager.getDefault(DigitalExpressionManager.class)
-                            .createFemaleSocket(this, this, entry.getKey());
-            
-            _expressionEntries.add(new ExpressionEntry(socket, entry.getValue()));
+        if (!hasFreeSocket) {
+            _expressionEntries.add(
+                    new ExpressionEntry(
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .createFemaleSocket(this, this, getNewSocketName())));
         }
     }
     
-    public String getExpressionSystemName(int index) {
-        return _expressionEntries.get(index)._socketSystemName;
-    }
-
     @Override
     public void connected(FemaleSocket socket) {
-        boolean hasFreeSocket = false;
+        if (disableCheckForUnconnectedSocket) return;
+        
         for (ExpressionEntry entry : _expressionEntries) {
-            hasFreeSocket = !entry._socket.isConnected();
             if (socket == entry._socket) {
                 entry._socketSystemName =
                         socket.getConnectedSocket().getSystemName();
             }
         }
-        if (!hasFreeSocket) {
-            _expressionEntries
-                    .add(new ExpressionEntry(
-                            InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .createFemaleSocket(this, this, getNewSocketName())));
-        }
+        
         firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
+        
+        checkFreeSocket();
     }
 
     @Override
@@ -147,6 +154,9 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     /** {@inheritDoc} */
     @Override
     public void setup() {
+        // We don't want to check for unconnected sockets while setup sockets
+        disableCheckForUnconnectedSocket = true;
+        
         for (ExpressionEntry ee : _expressionEntries) {
             try {
                 if ( !ee._socket.isConnected()
@@ -163,7 +173,7 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital action " + socketSystemName);
+                            log.error("cannot load digital expression " + socketSystemName);
                         }
                     }
                 } else {
@@ -174,6 +184,10 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
                 throw new RuntimeException("socket is already connected");
             }
         }
+        
+        checkFreeSocket();
+        
+        disableCheckForUnconnectedSocket = false;
     }
     
     
