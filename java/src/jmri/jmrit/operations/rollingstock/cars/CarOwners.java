@@ -1,9 +1,10 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.jdom2.Element;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import org.jdom2.Element;
 
 /**
  * Represents the owner names that cars can have.
@@ -49,7 +50,7 @@ public class CarOwners extends RollingStockAttribute implements InstanceManagerA
      *
      */
     public void store(Element root) {
-        store(root, Xml.OWNERS, Xml.OWNER, Xml.CAR_OWNERS);
+        store(root, Xml.OWNERS, Xml.OWNER);
     }
 
     public void load(Element root) {

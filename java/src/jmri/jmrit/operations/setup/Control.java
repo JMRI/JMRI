@@ -86,10 +86,6 @@ public class Control {
     
     // Automation name maximum string length
     public static int max_len_string_automation_name = 25;
-
-    // Backward compatibility for xml saves (pre 2013 releases)
-    // backward compatibility to false in 2014
-    public static boolean backwardCompatible = false;
     
     public static int reportFontSize = 10;
     public static String reportFontName = ""; // use default
@@ -103,9 +99,6 @@ public class Control {
         Element values;
         Element length;
         Element e = new Element(Xml.CONTROL);
-        // backward compatibility default set to false as of 3.7.1 (early 2014)
-        e.addContent(values = new Element(Xml.BACKWARD_COMPATIBILITY));
-        values.setAttribute(Xml.SAVE_USING_PRE_2013_FORMAT, backwardCompatible ? Xml.TRUE : Xml.FALSE);
         // maximum string lengths
         e.addContent(values = new Element(Xml.MAXIMUM_STRING_LENGTHS));
         values.addContent(length = new Element(Xml.MAX_LEN_STRING_ATTRIBUTE));
@@ -150,13 +143,6 @@ public class Control {
         Element eControl = e.getChild(Xml.CONTROL);
         if (eControl == null) {
             return;
-        }
-        Element backwardCompatibility = eControl.getChild(Xml.BACKWARD_COMPATIBILITY);
-        if (backwardCompatibility != null) {
-            Attribute format;
-            if ((format = backwardCompatibility.getAttribute(Xml.SAVE_USING_PRE_2013_FORMAT)) != null) {
-                backwardCompatible = format.getValue().equals(Xml.TRUE);
-            }
         }
         Element maximumStringLengths = eControl.getChild(Xml.MAXIMUM_STRING_LENGTHS);
         if (maximumStringLengths != null) {

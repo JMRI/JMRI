@@ -138,7 +138,7 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
      *
      */
     public void store(Element root) {
-        store(root, Xml.TYPES, Xml.TYPE, Xml.CAR_TYPES);
+        store(root, Xml.TYPES, Xml.TYPE);
     }
 
     public void load(Element root) {

@@ -83,11 +83,6 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         return panel;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     /**
      * Create a PanelEditor object, then register and fill it, then pop it in a
      * JFrame.
