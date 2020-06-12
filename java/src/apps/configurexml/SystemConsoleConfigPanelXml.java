@@ -99,16 +99,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         return result;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @param o       ignored
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
-    }
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(SystemConsoleConfigPanelXml.class);
 

@@ -7,7 +7,14 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.beans.Identifiable;
@@ -23,10 +30,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.PhysicalLocation;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a location on the layout
@@ -1507,18 +1510,6 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
         // build list of rolling stock types for this location
         String[] types = getTypeNames();
-        // Old way of saving car types
-        if (Control.backwardCompatible) {
-            StringBuffer buf = new StringBuffer();
-            for (String type : types) {
-                // remove types that have been deleted by user
-                if (InstanceManager.getDefault(CarTypes.class).containsName(type) ||
-                        InstanceManager.getDefault(EngineTypes.class).containsName(type)) {
-                    buf.append(type + "%%"); // NOI18N
-                }
-            }
-            e.setAttribute(Xml.CAR_TYPES, buf.toString());
-        }
         // new way of saving car types
         Element eTypes = new Element(Xml.TYPES);
         for (String type : types) {
