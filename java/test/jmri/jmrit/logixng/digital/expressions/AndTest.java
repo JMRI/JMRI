@@ -296,6 +296,41 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
         Assert.assertFalse("is external", _base.isExternal());
     }
     
+    // Test the methods connected(FemaleSocket) and getExpressionSystemName(int)
+    @Test
+    public void testConnected_getExpressionSystemName() throws SocketAlreadyConnectedException {
+        And expression = new And("IQDE121", null);
+        
+        ExpressionMemory stringExpressionMemory = new ExpressionMemory("IQDE122", null);
+        MaleSocket maleSAMSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(stringExpressionMemory);
+        
+        Assert.assertEquals("Num children is correct", 1, expression.getChildCount());
+        
+        // Test connect and disconnect
+        expression.getChild(0).connect(maleSAMSocket);
+        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
+        Assert.assertEquals("getExpressionSystemName(0) is correct", "IQDE122", expression.getExpressionSystemName(0));
+        Assert.assertNull("getExpressionSystemName(1) is null", expression.getExpressionSystemName(1));
+        expression.getChild(0).disconnect();
+        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
+        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
+        Assert.assertNull("getExpressionSystemName(1) is null", expression.getExpressionSystemName(1));
+        
+        expression.getChild(1).connect(maleSAMSocket);
+        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
+        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
+        Assert.assertEquals("getExpressionSystemName(1) is correct", "IQDE122", expression.getExpressionSystemName(1));
+        expression.getChild(0).disconnect();    // Test removing child with the wrong index.
+        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
+        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
+        Assert.assertEquals("getExpressionSystemName(1) is correct", "IQDE122", expression.getExpressionSystemName(1));
+        expression.getChild(1).disconnect();
+        Assert.assertEquals("Num children is correct", 2, expression.getChildCount());
+        Assert.assertNull("getExpressionSystemName(0) is null", expression.getExpressionSystemName(0));
+        Assert.assertNull("getExpressionSystemName(1) is null", expression.getExpressionSystemName(1));
+    }
+    
     @Test
     public void testDescription() {
         And e1 = new And("IQDE321", null);
