@@ -50,5 +50,5 @@ public class FalseXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(FalseXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(FalseXml.class);
 }

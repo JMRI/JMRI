@@ -80,5 +80,5 @@ public class TriggerOnceXml extends jmri.managers.configurexml.AbstractNamedBean
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(TriggerOnceXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(TriggerOnceXml.class);
 }

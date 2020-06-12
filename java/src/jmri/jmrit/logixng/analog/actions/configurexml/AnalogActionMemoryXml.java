@@ -66,5 +66,5 @@ public class AnalogActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(AnalogActionMemoryXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(AnalogActionMemoryXml.class);
 }

@@ -63,5 +63,5 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ActionSensorXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(ActionSensorXml.class);
 }

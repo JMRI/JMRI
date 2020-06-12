@@ -66,5 +66,5 @@ public class AnalogExpressionMemoryXml extends jmri.managers.configurexml.Abstra
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(AnalogExpressionMemoryXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(AnalogExpressionMemoryXml.class);
 }

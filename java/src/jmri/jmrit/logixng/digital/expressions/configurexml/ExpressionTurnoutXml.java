@@ -75,5 +75,5 @@ public class ExpressionTurnoutXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionTurnoutXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(ExpressionTurnoutXml.class);
 }

@@ -113,5 +113,5 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ActionThrottleXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(ActionThrottleXml.class);
 }

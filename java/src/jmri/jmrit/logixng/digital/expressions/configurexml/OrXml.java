@@ -87,5 +87,5 @@ public class OrXml extends jmri.managers.configurexml.AbstractNamedBeanManagerCo
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(OrXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(OrXml.class);
 }

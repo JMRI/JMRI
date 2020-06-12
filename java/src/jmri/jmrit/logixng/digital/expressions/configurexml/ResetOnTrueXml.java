@@ -103,5 +103,5 @@ public class ResetOnTrueXml extends jmri.managers.configurexml.AbstractNamedBean
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ResetOnTrueXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(ResetOnTrueXml.class);
 }

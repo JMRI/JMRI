@@ -87,5 +87,5 @@ public class AndXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(AndXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(AndXml.class);
 }

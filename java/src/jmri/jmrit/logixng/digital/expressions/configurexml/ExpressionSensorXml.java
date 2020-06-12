@@ -63,5 +63,5 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionSensorXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(ExpressionSensorXml.class);
 }

@@ -55,5 +55,5 @@ public class ExpressionTimerXml extends jmri.managers.configurexml.AbstractNamed
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionTimerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(ExpressionTimerXml.class);
 }

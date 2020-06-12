@@ -91,5 +91,5 @@ public class StringActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(StringActionMemoryXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(StringActionMemoryXml.class);
 }

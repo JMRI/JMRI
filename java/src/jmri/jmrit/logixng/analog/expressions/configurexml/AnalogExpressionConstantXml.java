@@ -56,5 +56,5 @@ public class AnalogExpressionConstantXml extends jmri.managers.configurexml.Abst
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(AnalogExpressionConstantXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(AnalogExpressionConstantXml.class);
 }

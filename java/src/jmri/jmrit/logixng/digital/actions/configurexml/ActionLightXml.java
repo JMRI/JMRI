@@ -63,5 +63,5 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ActionLightXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(ActionLightXml.class);
 }

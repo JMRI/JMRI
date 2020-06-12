@@ -102,5 +102,5 @@ public class AntecedentXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(AntecedentXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(AntecedentXml.class);
 }

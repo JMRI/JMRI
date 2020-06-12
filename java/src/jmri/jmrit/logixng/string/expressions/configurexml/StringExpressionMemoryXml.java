@@ -95,5 +95,5 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(StringExpressionMemoryXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(StringExpressionMemoryXml.class);
 }

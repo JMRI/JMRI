@@ -50,5 +50,5 @@ public class TrueXml extends jmri.managers.configurexml.AbstractNamedBeanManager
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(TrueXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(TrueXml.class);
 }

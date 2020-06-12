@@ -64,5 +64,5 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ActionTurnoutXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(ActionTurnoutXml.class);
 }
