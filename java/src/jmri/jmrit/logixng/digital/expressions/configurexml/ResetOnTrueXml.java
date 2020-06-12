@@ -103,10 +103,5 @@ public class ResetOnTrueXml extends jmri.managers.configurexml.AbstractNamedBean
         return true;
     }
     
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(ResetOnTrueXml.class);
 }

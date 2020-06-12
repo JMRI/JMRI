@@ -55,10 +55,5 @@ public class ExpressionTimerXml extends jmri.managers.configurexml.AbstractNamed
         return true;
     }
     
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(ExpressionTimerXml.class);
 }

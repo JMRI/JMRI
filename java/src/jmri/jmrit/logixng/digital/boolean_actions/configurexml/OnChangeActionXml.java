@@ -78,10 +78,5 @@ public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedB
         return true;
     }
     
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(OnChangeActionXml.class);
 }

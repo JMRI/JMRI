@@ -56,10 +56,5 @@ public class AnalogExpressionConstantXml extends jmri.managers.configurexml.Abst
         return true;
     }
     
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(AnalogExpressionConstantXml.class);
 }

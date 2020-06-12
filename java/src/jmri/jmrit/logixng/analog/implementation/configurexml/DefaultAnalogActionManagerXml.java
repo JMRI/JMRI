@@ -79,11 +79,6 @@ public class DefaultAnalogActionManagerXml extends jmri.managers.configurexml.Ab
         actions.setAttribute("class", this.getClass().getName());  // NOI18N
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");  // NOI18N
-    }
-
     /**
      * Create a AnalogActionManager object of the correct class, then register
      * and fill it.

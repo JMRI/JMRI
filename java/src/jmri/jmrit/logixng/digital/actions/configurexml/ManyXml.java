@@ -136,11 +136,6 @@ public class ManyXml extends jmri.managers.configurexml.AbstractNamedBeanManager
         }
     }
 */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(ManyXml.class);
 
 }

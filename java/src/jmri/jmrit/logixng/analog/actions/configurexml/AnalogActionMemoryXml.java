@@ -66,10 +66,5 @@ public class AnalogActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         return true;
     }
     
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(AnalogActionMemoryXml.class);
 }

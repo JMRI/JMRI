@@ -75,11 +75,6 @@ public class DefaultDigitalExpressionManagerXml extends jmri.managers.configurex
         expressions.setAttribute("class", this.getClass().getName());  // NOI18N
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");  // NOI18N
-    }
-
     /**
      * Create a DigitalExpressionManager object of the correct class, then
      * register and fill it.
