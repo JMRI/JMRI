@@ -27,7 +27,6 @@ public class Many extends AbstractAnalogAction
 
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
     private boolean disableCheckForUnconnectedSocket = false;
-    public boolean _log = false;
     
     public Many(String sys, String user)
             throws BadUserNameException, BadSystemNameException {

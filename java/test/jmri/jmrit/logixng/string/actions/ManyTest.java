@@ -81,6 +81,7 @@ public class ManyTest extends AbstractStringActionTestBase {
                 action.getChild(0).getClass().getName());
     }
     
+    // Test action when at least one child socket is not connected
     @Test
     public void testCtorAndSetup1() {
         StringActionManager m = InstanceManager.getDefault(StringActionManager.class);
@@ -89,13 +90,14 @@ public class ManyTest extends AbstractStringActionTestBase {
         maleSockets.add(m.registerAction(new StringActionMemory("IQSA52", null)));
         maleSockets.add(null);  // This is null by purpose
         maleSockets.add(m.registerAction(new StringActionMemory("IQSA554", null)));
-        maleSockets.add(m.registerAction(new StringActionMemory("IQSA61232", null)));
+        maleSockets.add(null);  // This is null by purpose
         maleSockets.add(m.registerAction(new StringActionMemory("IQSA3", null)));
         
         List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSA52"));
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", null));   // This is null by purpose
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQSA554"));
+        // IQSA61232 doesn't exist by purpose
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQSA61232"));
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQSA3"));
         
@@ -116,6 +118,8 @@ public class ManyTest extends AbstractStringActionTestBase {
         
         // Setup action. This connects the child actions to this action
         action.setup();
+        
+        jmri.util.JUnitAppender.assertMessage("cannot load digital action IQSA61232");
         
         for (int i=0; i < 5; i++) {
             Map.Entry<String,String> entry = actionSystemNames.get(i);

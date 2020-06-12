@@ -90,18 +90,18 @@ public class ManyTest extends AbstractAnalogActionTestBase {
         maleSockets.add(m.registerAction(new AnalogActionMemory("IQAA52", null)));
         maleSockets.add(null);  // This is null by purpose
         maleSockets.add(m.registerAction(new AnalogActionMemory("IQAA554", null)));
-        maleSockets.add(m.registerAction(new AnalogActionMemory("IQAA61232", null)));
+        maleSockets.add(null);  // This is null by purpose
         maleSockets.add(m.registerAction(new AnalogActionMemory("IQAA3", null)));
         
         List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQAA52"));
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", null));   // This is null by purpose
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQAA554"));
+        // IQAA61232 doesn't exist by purpose
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQAA61232"));
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQAA3"));
         
         Many action = new Many("IQAA321", null, actionSystemNames);
-        action._log = true;
         Assert.assertNotNull("exists", action);
         Assert.assertEquals("action has 5 female sockets", 5, action.getChildCount());
         
@@ -116,10 +116,10 @@ public class ManyTest extends AbstractAnalogActionTestBase {
                     action.getChild(i).isConnected());
         }
         
-        Assert.assertEquals("action has 5 female sockets", 5, action.getChildCount());
         // Setup action. This connects the child actions to this action
         action.setup();
-        Assert.assertEquals("action has 5 female sockets", 5, action.getChildCount());
+        
+        jmri.util.JUnitAppender.assertMessage("cannot load digital action IQAA61232");
         
         for (int i=0; i < 5; i++) {
             Map.Entry<String,String> entry = actionSystemNames.get(i);
