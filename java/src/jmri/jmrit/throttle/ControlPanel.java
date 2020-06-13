@@ -230,8 +230,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         // Save the old speed as a float
         float oldSpeed = (speedSlider.getValue() / (maxSpeed * 1.0f));
 
-        speedStepBox.setSelectedItem(speedStepMode);
-
+        if (speedStepMode == SpeedStepMode.UNKNOWN) {
+            speedStepMode = (SpeedStepMode) speedStepBox.getSelectedItem();
+        } else {
+            speedStepBox.setSelectedItem(speedStepMode);
+        }
         intSpeedSteps = speedStepMode.numSteps;
 
         /* Set maximum speed based on the max speed stored in the roster as a percentage of the maximum */
