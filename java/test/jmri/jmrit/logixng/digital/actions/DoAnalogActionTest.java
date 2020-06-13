@@ -79,6 +79,11 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         return new DoAnalogAction(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new DoAnalogAction("IQDA321", null));

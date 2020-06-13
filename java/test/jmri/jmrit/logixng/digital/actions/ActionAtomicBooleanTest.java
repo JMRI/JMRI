@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ActionTurnout
+ * Test ActionAtomicBoolean
  * 
  * @author Daniel Bergqvist 2018
  */
@@ -62,6 +62,11 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     @Override
     public NamedBean createNewBean(String systemName) {
         return new ActionAtomicBoolean(systemName, null);
+    }
+    
+    @Override
+    public boolean addNewSocket() {
+        return false;
     }
     
     @Test

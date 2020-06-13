@@ -1,8 +1,10 @@
 package jmri.jmrit.logixng.string.expressions;
 
+import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -12,6 +14,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -84,6 +87,36 @@ public class FormulaTest extends AbstractStringExpressionTestBase {
         Formula a = new Formula(systemName, null);
 //        a.setFormula("R1");
         return a;
+    }
+    
+    @Test
+    public void testSetChildCount() {
+        Formula a = (Formula)_base;
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            ab.set(true);
+        });
+        
+        ab.set(false);
+        a.setChildCount(a.getChildCount()+1);
+        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        
+        ab.set(false);
+        Assert.assertTrue("We have least two children", a.getChildCount() > 1);
+        a.setChildCount(a.getChildCount()-1);
+        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+    }
+    
+    @Override
+    public boolean addNewSocket() throws SocketAlreadyConnectedException {
+        int count = _base.getChildCount();
+        for (int i=0; i < count; i++) {
+            if (!_base.getChild(i).isConnected()) {
+                _base.getChild(i).connect(getConnectableChild());
+            }
+        }
+        return true;
     }
     
     @Test

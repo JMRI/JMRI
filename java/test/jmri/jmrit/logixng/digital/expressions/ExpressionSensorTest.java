@@ -84,6 +84,11 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         return new ExpressionSensor(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() throws JmriException {
         ExpressionSensor expression2;

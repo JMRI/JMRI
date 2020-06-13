@@ -2,8 +2,11 @@ package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
 import java.util.Locale;
+
 import javax.annotation.CheckForNull;
+
 import jmri.NamedBean;
+import jmri.beans.PropertyChangeProvider;
 
 /**
  * The base interface for LogixNG expressions and actions.
@@ -11,7 +14,7 @@ import jmri.NamedBean;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public interface Base {
+public interface Base extends PropertyChangeProvider {
     
     
     public enum Lock {
@@ -220,6 +223,24 @@ public interface Base {
      * @return the number of children
      */
     public int getChildCount();
+    
+    /**
+     * Can a child be removed?
+     * @param childNo the child
+     * @return true if the child may be removed, false otherwise
+     */
+    default public boolean canRemoveChild(int childNo) {
+        return false;
+    }
+    
+    /**
+     * Remove the child
+     * @param childNo the child
+     */
+    default public void removeChild(int childNo) {
+        throw new UnsupportedOperationException(
+                "Child "+Integer.toString(childNo)+" cannot be removed");
+    }
     
     /**
      * Get the category.

@@ -83,6 +83,11 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         return new ExpressionMemory(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         ExpressionMemory expression2;

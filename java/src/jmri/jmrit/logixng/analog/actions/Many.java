@@ -130,7 +130,9 @@ public class Many extends AbstractAnalogAction
     }
     
     private void checkFreeSocket() {
+        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
+        
         for (ActionEntry entry : _actionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
@@ -139,6 +141,10 @@ public class Many extends AbstractAnalogAction
                     new ActionEntry(
                             InstanceManager.getDefault(AnalogActionManager.class)
                                     .createFemaleSocket(this, this, getNewSocketName())));
+        }
+        
+        if (numChilds != getChildCount()) {
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
         }
     }
     

@@ -29,7 +29,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class OnChangeActionTest extends AbstractBaseTestBase {
+public class OnChangeTest extends AbstractBaseTestBase {
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;
@@ -73,6 +73,11 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
                 "               On change to true%n" +
                 "                  ! A%n" +
                 "                     Set turnout '' to Thrown%n");
+    }
+    
+    @Override
+    public boolean addNewSocket() {
+        return false;
     }
     
     @Test

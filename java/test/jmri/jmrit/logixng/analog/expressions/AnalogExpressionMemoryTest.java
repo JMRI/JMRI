@@ -83,6 +83,11 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         return new AnalogExpressionMemory(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);

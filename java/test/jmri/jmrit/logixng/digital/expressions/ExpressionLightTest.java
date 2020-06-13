@@ -84,6 +84,11 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         return new ExpressionLight(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         ExpressionLight expression2;

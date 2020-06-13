@@ -84,6 +84,11 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         return new ExpressionTurnout(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() throws JmriException {
         ExpressionTurnout expression2;

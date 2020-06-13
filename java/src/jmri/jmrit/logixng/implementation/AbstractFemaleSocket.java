@@ -1,16 +1,11 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.beans.PropertyChangeListener;
 import java.io.PrintWriter;
 import java.util.Locale;
+
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -316,7 +311,37 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
             writer.println();
         }
     }
-    
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
 //    private final static Logger log = LoggerFactory.getLogger(AbstractFemaleSocket.class);
     
 }

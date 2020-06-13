@@ -87,6 +87,11 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         return new Hold(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         Hold expression2;

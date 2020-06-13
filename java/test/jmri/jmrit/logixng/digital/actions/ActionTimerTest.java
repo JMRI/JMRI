@@ -80,6 +80,11 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         return new ActionTimer(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         ActionTimer t = new ActionTimer("IQDA321", null);

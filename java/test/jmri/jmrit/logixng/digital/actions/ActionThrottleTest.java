@@ -96,6 +96,11 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         return new ActionThrottle(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         ActionThrottle action2;

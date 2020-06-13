@@ -132,7 +132,9 @@ public class Many extends AbstractStringAction
     }
     
     private void checkFreeSocket() {
+        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
+        
         for (ActionEntry entry : _actionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
@@ -141,6 +143,10 @@ public class Many extends AbstractStringAction
                     new ActionEntry(
                             InstanceManager.getDefault(StringActionManager.class)
                                     .createFemaleSocket(this, this, getNewSocketName())));
+        }
+        
+        if (numChilds != getChildCount()) {
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
         }
     }
     

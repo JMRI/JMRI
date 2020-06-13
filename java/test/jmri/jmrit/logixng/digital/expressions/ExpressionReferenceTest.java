@@ -93,6 +93,11 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         return new ExpressionReference(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         ExpressionReference expression2;

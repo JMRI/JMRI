@@ -46,6 +46,22 @@ public abstract class AbstractBaseTestBase {
     @CheckForNull
     public abstract MaleSocket getConnectableChild();
     
+    /**
+     * Returns the LogixNG for _base.
+     * @return the LogixNG for _base or null if _base doesn't have any LogixNG
+     */
+    public abstract LogixNG getLogixNG();
+    
+    /**
+     * Creates a new socket.
+     * Some items can create new sockets automaticly and this method is used
+     * to test that.
+     * @return true if a new socket is added. false if this item doesn't
+     * support adding new sockets.
+     * @throws jmri.jmrit.logixng.SocketAlreadyConnectedException if socket is already connected
+     */
+    abstract public boolean addNewSocket() throws SocketAlreadyConnectedException;
+    
     @Test
     public void testGetConditionalNG() {
         if (getConditionalNG() == null) {
@@ -58,12 +74,6 @@ public abstract class AbstractBaseTestBase {
         _base.setParent(null);
         Assert.assertNull("ConditionalNG is null", _base.getConditionalNG());
     }
-    
-    /**
-     * Returns the LogixNG for _base.
-     * @return the LogixNG for _base or null if _base doesn't have any LogixNG
-     */
-    public abstract LogixNG getLogixNG();
     
     @Test
     public void testGetLogixNG() {
@@ -410,6 +420,48 @@ public abstract class AbstractBaseTestBase {
         Assert.assertEquals("description matches",
                 "Unknown",
                 ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN));
+    }
+    
+    @Test
+    public void testAddAndRemoveSocket() throws SocketAlreadyConnectedException {
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            ab.set(true);
+        });
+        
+        ab.set(false);
+        Assume.assumeTrue(addNewSocket());
+        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+    }
+    
+    @Test
+    public void testRemoveChild() {
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            ab.set(true);
+        });
+        
+        for (int i=_base.getChildCount()-1; i > 0; i--) {
+            ab.set(true);
+            boolean hasThrown = false;
+            
+            try {
+                _base.removeChild(i);
+            } catch (UnsupportedOperationException e) {
+                hasThrown = true;
+                Assert.assertEquals("Correct error message",
+                        "Child "+Integer.toString(i)+" cannot be removed",
+                        e.getMessage());
+            }
+            
+            if (_base.canRemoveChild(i)) {
+                Assert.assertTrue("PropertyChange is fired", ab.get());
+            } else {
+                Assert.assertTrue("Exception is thrown", hasThrown);
+            }
+        }
     }
     
     private void connect(FemaleSocket femaleSocket, MaleSocket maleSocket) throws SocketAlreadyConnectedException {

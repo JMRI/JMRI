@@ -205,6 +205,11 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         return new ActionScript(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         ActionScript action2;

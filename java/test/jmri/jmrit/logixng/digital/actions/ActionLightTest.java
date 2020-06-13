@@ -91,6 +91,11 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         return new ActionLight(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);

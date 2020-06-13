@@ -76,6 +76,11 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         return new DoStringAction(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new DoStringAction("IQDA321", null));

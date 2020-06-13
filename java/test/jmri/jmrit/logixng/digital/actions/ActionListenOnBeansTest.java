@@ -68,6 +68,11 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         return new ActionListenOnBeans(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         ActionListenOnBeans t = new ActionListenOnBeans("IQDA1", null);

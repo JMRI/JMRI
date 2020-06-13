@@ -69,6 +69,11 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         return new DigitalActionPluginSocket(systemName, null, new MyDigitalActionPlugin("IQDA3"));
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new DigitalActionPluginSocket("IQDA1", null, new MyDigitalActionPlugin("IQDA2")));

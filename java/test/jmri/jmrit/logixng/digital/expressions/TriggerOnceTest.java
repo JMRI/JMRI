@@ -84,6 +84,11 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
         return new TriggerOnce(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor()
             throws NamedBean.BadUserNameException,

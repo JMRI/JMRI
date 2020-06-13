@@ -133,6 +133,8 @@ public class Formula extends AbstractStringExpression implements FemaleSocketLis
     }
     
     public void setChildCount(int count) {
+        int numChilds = getChildCount();
+        
         // Is there too many children?
         while (_expressionEntries.size() > count) {
             int childNo = _expressionEntries.size()-1;
@@ -147,6 +149,10 @@ public class Formula extends AbstractStringExpression implements FemaleSocketLis
         while (_expressionEntries.size() < count) {
             _expressionEntries
                     .add(new ExpressionEntry(createFemaleSocket(this, this, getNewSocketName())));
+        }
+        
+        if (numChilds != getChildCount()) {
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
         }
     }
     
@@ -182,7 +188,9 @@ public class Formula extends AbstractStringExpression implements FemaleSocketLis
     }
     
     private void checkFreeSocket() {
+        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
+        
         for (ExpressionEntry entry : _expressionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }

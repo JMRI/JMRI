@@ -84,6 +84,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         return new IfThenElse(systemName, null, IfThenElse.Type.CONTINOUS_ACTION);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         DigitalActionBean t = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);

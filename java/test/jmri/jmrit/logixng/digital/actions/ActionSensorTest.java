@@ -91,6 +91,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         return new ActionSensor(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() throws JmriException {
         Assert.assertTrue("object exists", _base != null);

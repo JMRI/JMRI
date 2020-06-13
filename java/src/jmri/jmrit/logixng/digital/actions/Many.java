@@ -142,7 +142,9 @@ public class Many extends AbstractDigitalAction
     }
     
     private void checkFreeSocket() {
+        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
+        
         for (ActionEntry entry : _actionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
@@ -151,6 +153,10 @@ public class Many extends AbstractDigitalAction
                     new ActionEntry(
                             InstanceManager.getDefault(DigitalActionManager.class)
                                     .createFemaleSocket(this, this, getNewSocketName())));
+        }
+        
+        if (numChilds != getChildCount()) {
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
         }
     }
     

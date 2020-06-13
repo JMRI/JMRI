@@ -64,6 +64,11 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         return new ShutdownComputer(systemName, null, 0);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new ShutdownComputer("IQDA321", null, 0));

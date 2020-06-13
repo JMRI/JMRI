@@ -78,6 +78,11 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         return new AnalogExpressionConstant(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);

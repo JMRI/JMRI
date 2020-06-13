@@ -171,6 +171,11 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         return new ExpressionScript(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         ExpressionScript expression2;

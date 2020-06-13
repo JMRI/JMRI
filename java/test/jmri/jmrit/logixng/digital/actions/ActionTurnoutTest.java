@@ -71,6 +71,11 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         return new ActionTurnout(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() throws JmriException {
         Assert.assertTrue("object exists", _base != null);

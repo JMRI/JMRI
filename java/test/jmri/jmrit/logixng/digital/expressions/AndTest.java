@@ -83,6 +83,17 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
         return new And(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() throws SocketAlreadyConnectedException {
+        int count = _base.getChildCount();
+        for (int i=0; i < count; i++) {
+            if (!_base.getChild(i).isConnected()) {
+                _base.getChild(i).connect(getConnectableChild());
+            }
+        }
+        return true;
+    }
+    
     @Test
     public void testCtor() {
         And expression2;

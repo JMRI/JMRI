@@ -76,6 +76,11 @@ public class ExpressionTimerTest extends AbstractDigitalExpressionTestBase {
         return new ExpressionTimer(systemName, null);
     }
     
+    @Override
+    public boolean addNewSocket() {
+        return false;
+    }
+    
     @Test
     public void testCtor() {
         ExpressionTimer expression2;

@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng;
 
+import java.beans.PropertyChangeListener;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
@@ -7,10 +8,13 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.swing.JPanel;
+
 import jmri.NamedBean;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -617,6 +621,36 @@ public abstract class FemaleSocketTestBase {
         @Override
         public boolean isActive() {
             throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void addPropertyChangeListener(PropertyChangeListener listener) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public PropertyChangeListener[] getPropertyChangeListeners() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void removePropertyChangeListener(PropertyChangeListener listener) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+            throw new UnsupportedOperationException("Not supported");
         }
         
     }
