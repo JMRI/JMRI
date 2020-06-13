@@ -132,6 +132,43 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Expected exception thrown", thrown);
     }
     
+    private static int beanID = 901;
+    
+    @Test
+    public void testReset() throws SocketAlreadyConnectedException {
+        ResetOnTrue a = (ResetOnTrue)_base;
+        AtomicBoolean ab1 = new AtomicBoolean(false);
+        AtomicBoolean ab2 = new AtomicBoolean(false);
+        
+        DigitalExpressionBean expr1 = new True("IQDE"+Integer.toString(beanID++), null) {
+            @Override
+            public void reset() {
+                ab1.set(true);
+            }
+        };
+        
+        DigitalExpressionBean expr2 = new True("IQDE"+Integer.toString(beanID++), null) {
+            @Override
+            public void reset() {
+                ab2.set(true);
+            }
+        };
+        
+        a.getChild(0).disconnect();
+        a.getChild(0).connect(
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(expr1));
+        
+        a.getChild(1).disconnect();
+        a.getChild(1).connect(
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(expr2));
+        
+        a.reset();
+        Assert.assertTrue("Child 0 is reset", ab1.get());
+        Assert.assertTrue("Child 1 is reset", ab2.get());
+    }
+    
     @Test
     public void testGetChild() {
         Assert.assertTrue("getChildCount() returns 2", 2 == expressionResetOnTrue.getChildCount());

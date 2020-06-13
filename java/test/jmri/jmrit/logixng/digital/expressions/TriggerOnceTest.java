@@ -1,8 +1,8 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import jmri.InstanceManager;
-import jmri.NamedBean;
+
+import jmri.*;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -11,10 +11,12 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -48,7 +50,7 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        DigitalExpressionBean childExpression = new True("IQDE999", null);
+        DigitalExpressionBean childExpression = new True("IQDE"+Integer.toString(beanID++), null);
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
         return maleSocketChild;
@@ -124,6 +126,44 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
+    }
+    
+    private static int beanID = 901;
+    
+    @Test
+    public void testReset() throws SocketAlreadyConnectedException, JmriException {
+        TriggerOnce a = (TriggerOnce)_base;
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        DigitalExpressionBean expr = new True("IQDE"+Integer.toString(beanID++), null) {
+            @Override
+            public void reset() {
+                ab.set(true);
+            }
+        };
+        
+        a.getChild(0).disconnect();
+        a.getChild(0).connect(
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(expr));
+        
+        a.reset();
+        Assert.assertTrue("Child is reset", ab.get());
+        
+        // Test that reset will run the expression again
+        // For this test to work, make sure the child always return true
+        Assert.assertTrue("Expression returns True", a.evaluate());
+        Assert.assertFalse("Expression returns False", a.evaluate());
+        Assert.assertFalse("Expression returns False", a.evaluate());
+        Assert.assertFalse("Expression returns False", a.evaluate());
+        Assert.assertFalse("Expression returns False", a.evaluate());
+        Assert.assertFalse("Expression returns False", a.evaluate());
+        a.reset();
+        Assert.assertTrue("Expression returns True", a.evaluate());
+        Assert.assertFalse("Expression returns False", a.evaluate());
+        Assert.assertFalse("Expression returns False", a.evaluate());
+        Assert.assertFalse("Expression returns False", a.evaluate());
+        Assert.assertFalse("Expression returns False", a.evaluate());
     }
     
     @Test

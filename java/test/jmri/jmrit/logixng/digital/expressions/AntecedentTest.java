@@ -47,9 +47,11 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         return logixNG;
     }
     
+    private static int beanID = 901;
+    
     @Override
     public MaleSocket getConnectableChild() {
-        DigitalExpressionBean childExpression = new True("IQDE999", null);
+        DigitalExpressionBean childExpression = new True("IQDE"+Integer.toString(beanID++), null);
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
         return maleSocketChild;
@@ -89,25 +91,6 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         Antecedent a = new Antecedent(systemName, null);
         a.setAntecedent("R1");
         return a;
-    }
-    
-    @Test
-    public void testSetChildCount() {
-        Antecedent a = (Antecedent)_base;
-        AtomicBoolean ab = new AtomicBoolean(false);
-        
-        _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
-            ab.set(true);
-        });
-        
-        ab.set(false);
-        a.setChildCount(a.getChildCount()+1);
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
-        
-        ab.set(false);
-        Assert.assertTrue("We have least two children", a.getChildCount() > 1);
-        a.setChildCount(a.getChildCount()-1);
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
     }
     
     @Override
@@ -316,6 +299,58 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
             }
         }
         Assert.assertTrue("Exception thrown", hasThrown);
+    }
+    
+    @Test
+    public void testSetChildCount() throws SocketAlreadyConnectedException {
+        Antecedent a = (Antecedent)_base;
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            ab.set(true);
+        });
+        
+        // Test increase num children
+        ab.set(false);
+        a.setChildCount(a.getChildCount()+1);
+        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        
+        // Test decrease num children
+        ab.set(false);
+        Assert.assertTrue("We have least two children", a.getChildCount() > 1);
+        a.setChildCount(a.getChildCount()-1);
+        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        
+        // Test decrease num children when all children are connected
+        ab.set(false);
+        a.setChildCount(2);
+        a.getChild(0).disconnect();
+        a.getChild(0).connect(getConnectableChild());
+        a.getChild(1).disconnect();
+        a.getChild(1).connect(getConnectableChild());
+        a.setChildCount(a.getChildCount()-1);
+        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+    }
+    
+    @Test
+    public void testReset() throws SocketAlreadyConnectedException {
+        Antecedent a = (Antecedent)_base;
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        DigitalExpressionBean expr = new True("IQDE999", null) {
+            @Override
+            public void reset() {
+                ab.set(true);
+            }
+        };
+        
+        a.getChild(0).disconnect();
+        a.getChild(0).connect(
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(expr));
+        
+        a.reset();
+        Assert.assertTrue("Child is reset", ab.get());
     }
     
     @Test

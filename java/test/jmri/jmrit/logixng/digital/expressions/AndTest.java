@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -23,6 +24,7 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.digital.actions.Many;
 
 /**
  * Test And
@@ -275,6 +277,26 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
             }
         }
         Assert.assertTrue("Exception thrown", hasThrown);
+    }
+    
+    @Test
+    public void testReset() throws SocketAlreadyConnectedException {
+        And a = (And)_base;
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        DigitalExpressionBean expr = new True("IQDE999", null) {
+            @Override
+            public void reset() {
+                ab.set(true);
+            }
+        };
+        
+        a.getChild(0).connect(
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .registerExpression(expr));
+        
+        a.reset();
+        Assert.assertTrue("Child is reset", ab.get());
     }
     
     @Test

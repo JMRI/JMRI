@@ -188,7 +188,6 @@ public class Formula extends AbstractStringExpression implements FemaleSocketLis
     }
     
     private void checkFreeSocket() {
-        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
         
         for (ExpressionEntry entry : _expressionEntries) {

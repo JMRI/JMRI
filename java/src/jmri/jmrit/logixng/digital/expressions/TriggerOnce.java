@@ -1,10 +1,9 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Memory;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -12,19 +11,23 @@ import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * An Expression that returns True only once while its child expression returns
  * True.
- * 
+ * <P>
  * The first time the child expression returns True, this expression returns
  * True. After that, this expression returns False until the child expression
  * returns False and again returns True.
+ * <P>
+ * If the expression is reset, the expression will treat that as if the
+ * child expression had been false. So if the child expression is continously
+ * True, and the expression is reset, the expression will return True once after
+ * the expression is reset.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
@@ -70,6 +73,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     @Override
     public void reset() {
         _childLastState = false;
+        _childExpression.reset();
     }
 
     @Override

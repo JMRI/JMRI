@@ -11,7 +11,6 @@ import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
-import jmri.jmrit.logixng.analog.actions.Many;
 import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
 import jmri.util.JUnitUtil;
 
@@ -47,9 +46,11 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase {
         return logixNG;
     }
     
+    private static int beanID = 901;
+    
     @Override
     public MaleSocket getConnectableChild() {
-        AnalogExpressionBean childExpression = new AnalogExpressionConstant("IQAE999", null);
+        AnalogExpressionBean childExpression = new AnalogExpressionConstant("IQAE"+Integer.toString(beanID++), null);
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(childExpression);
         return maleSocketChild;
@@ -87,25 +88,6 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase {
         Formula a = new Formula(systemName, null);
 //        a.setFormula("R1");
         return a;
-    }
-    
-    @Test
-    public void testSetChildCount() {
-        Formula a = (Formula)_base;
-        AtomicBoolean ab = new AtomicBoolean(false);
-        
-        _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
-            ab.set(true);
-        });
-        
-        ab.set(false);
-        a.setChildCount(a.getChildCount()+1);
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
-        
-        ab.set(false);
-        Assert.assertTrue("We have least two children", a.getChildCount() > 1);
-        a.setChildCount(a.getChildCount()-1);
-        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
     }
     
     @Override
@@ -314,6 +296,58 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase {
             }
         }
         Assert.assertTrue("Exception thrown", hasThrown);
+    }
+    
+    @Test
+    public void testSetChildCount() throws SocketAlreadyConnectedException {
+        Formula a = (Formula)_base;
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            ab.set(true);
+        });
+        
+        // Test increase num children
+        ab.set(false);
+        a.setChildCount(a.getChildCount()+1);
+        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        
+        // Test decrease num children
+        ab.set(false);
+        Assert.assertTrue("We have least two children", a.getChildCount() > 1);
+        a.setChildCount(a.getChildCount()-1);
+        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        
+        // Test decrease num children when all children are connected
+        ab.set(false);
+        a.setChildCount(2);
+        a.getChild(0).disconnect();
+        a.getChild(0).connect(getConnectableChild());
+        a.getChild(1).disconnect();
+        a.getChild(1).connect(getConnectableChild());
+        a.setChildCount(a.getChildCount()-1);
+        Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+    }
+    
+    @Test
+    public void testReset() throws SocketAlreadyConnectedException {
+        Formula a = (Formula)_base;
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        AnalogExpressionBean expr = new AnalogExpressionConstant("IQAE999", null) {
+            @Override
+            public void reset() {
+                ab.set(true);
+            }
+        };
+        
+        a.getChild(0).disconnect();
+        a.getChild(0).connect(
+                InstanceManager.getDefault(AnalogExpressionManager.class)
+                        .registerExpression(expr));
+        
+        a.reset();
+        Assert.assertTrue("Child is reset", ab.get());
     }
     
     @Test
