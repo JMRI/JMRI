@@ -232,4 +232,52 @@ public class ArchitectureTest {
             .that().haveSimpleNameEndingWith("Bundle")
             .should().beAssignableTo(jmri.Bundle.class);
 
+
+
+
+    //******************************
+    // LogixNG classes
+    //******************************
+    
+    /**
+     * Packages outside of jmri.jmrit.logixng should only access the package
+     * jmri.jmrit.logixng itself, not its sub packages
+     */
+    @ArchTest
+    public static final ArchRule checkEverythingOutsideLogixNG = classes()
+            .that().resideOutsideOfPackage("jmri.jmrit.logixng..")
+            .should().onlyAccessClassesThat().resideInAPackage("jmri.jmrit.logixng");
+
+    /**
+     * Packages outside of jmri.jmrit.logixng.analog should not access this package
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNG_Analog = classes()
+            .that().resideOutsideOfPackage("jmri.jmrit.logixng.analog..")
+            .should().onlyAccessClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng.analog..");
+
+    /**
+     * Packages outside of jmri.jmrit.logixng.analog should not access this package
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNG_Digital = classes()
+            .that().resideOutsideOfPackage("jmri.jmrit.logixng.digital..")
+            .should().onlyAccessClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng.digital..");
+
+    /**
+     * Packages outside of jmri.jmrit.logixng.analog should not access this package
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNG_String = classes()
+            .that().resideOutsideOfPackage("jmri.jmrit.logixng.string..")
+            .should().onlyAccessClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng.string..");
+
+    /**
+     * Packages outside of jmri.jmrit.logixng.analog should not access this package
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNG_Implementation = classes()
+            .that().resideOutsideOfPackage("jmri.jmrit.logixng.implementation..")
+            .should().onlyAccessClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng.implementation..");
+
 }
