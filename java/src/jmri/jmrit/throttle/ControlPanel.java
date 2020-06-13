@@ -50,7 +50,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JButton stopButton;
     private JButton idleButton;
     private JPanel buttonPanel;
-    private JPanel topButtonPanel;
     private boolean internalAdjust = false; // protecting the speed slider, continuous slider and spinner when doing internal adjust
 
     private JPopupMenu propertiesPopup;
@@ -263,6 +262,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             } else {
                 speedSliderContinuous.setValue(-(int) (oldSpeed * maxSpeed));
             }
+            speedSliderContinuous.setValue((int) (oldSpeed * maxSpeed));
             speedSliderContinuous.setMajorTickSpacing(maxSpeed / 2);
             labelTable = new java.util.Hashtable<>();
             labelTable.put(maxSpeed / 2, new JLabel("50%"));
@@ -437,49 +437,48 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         return constraints;
     }
 
-    private void layoutTopButtonPanel() {
-        GridBagConstraints constraints = makeDefaultGridBagConstraints();
-
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        topButtonPanel.add(speedStepBox, constraints);
-    }
-
     private void layoutButtonPanel() {
         final ThrottlesPreferences preferences =
                 InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
                 
         GridBagConstraints constraints = makeDefaultGridBagConstraints();
+
         constraints.fill = GridBagConstraints.NONE;
 
-        constraints.gridy = 10;
+        constraints.gridy = 1;
         if (preferences.isUsingIcons()) {
-            constraints.gridx = 2;
+            constraints.gridx = 3;
         }
         buttonPanel.add(forwardButton, constraints);
 
         if (preferences.isUsingIcons()) {
-            constraints.gridx = 0;
+            constraints.gridx = 1;
         } else {
-            constraints.gridy = 20;
+            constraints.gridy = 2;
         }
         buttonPanel.add(reverseButton, constraints);
 
         if (preferences.isUsingIcons()) {
-            constraints.gridx = 1;
-        } else { 
-            constraints.gridy = 30;
+            // TODO(trainman419): determine positioning for icon throttle mode.
+        } else {
+            constraints.gridy = 3;
+            buttonPanel.add(speedStepBox, constraints);
         }
-        buttonPanel.add(idleButton, constraints);
 
         if (preferences.isUsingIcons()) {
-            constraints.gridx = 1;
-        } else {
-            constraints.gridx = 0;
+            constraints.gridx = 2;
         }
-        constraints.gridy = 40;
+
+        constraints.gridy = 4;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
         buttonPanel.add(stopButton, constraints);
+
+        if (preferences.isUsingIcons()) {
+            constraints.gridy = 1;
+        } else {
+            constraints.gridy = 5;
+        }
+        buttonPanel.add(idleButton, constraints);
     }
 
     private void layoutSliderPanel() {
@@ -529,10 +528,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         mainPanel = new JPanel(new BorderLayout());
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-
-        topButtonPanel = new JPanel();
-        topButtonPanel.setLayout(new GridBagLayout());
-        mainPanel.add(topButtonPanel, BorderLayout.NORTH);
 
         speedControlPanel = new JPanel();
         speedControlPanel.setLayout(new BoxLayout(speedControlPanel, BoxLayout.X_AXIS));
@@ -823,7 +818,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 });
 
         layoutButtonPanel();
-        layoutTopButtonPanel();
 
         JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("ControlPanelProperties"));
         propertiesItem.addActionListener(this);
