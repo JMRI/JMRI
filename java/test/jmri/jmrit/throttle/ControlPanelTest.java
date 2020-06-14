@@ -100,23 +100,17 @@ public class ControlPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(false);
         setupControlPanel();
+
         checkFrameOverlap(panel.getContentPane());
 
-        try {
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.STEPDISPLAY);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-        } catch (InterruptedException e) {
-            // Ignore.
-        }
+        panel.setSpeedController(ControlPanel.STEPDISPLAY);
+        checkFrameOverlap(panel.getContentPane());
+
+        panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
+        checkFrameOverlap(panel.getContentPane());
+
+        panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
+        checkFrameOverlap(panel.getContentPane());
     }
 
     @Test
@@ -125,23 +119,17 @@ public class ControlPanelTest {
         InstanceManager.throttleManagerInstance().supportedSpeedModes();
         InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().setUsingFunctionIcon(true);
         setupControlPanel();
+
         checkFrameOverlap(panel.getContentPane());
 
-        try {
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.STEPDISPLAY);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-            panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-            Thread.sleep(1000);
-            checkFrameOverlap(panel.getContentPane());
-        } catch (InterruptedException e) {
-            // Ignore.
-        }
+        panel.setSpeedController(ControlPanel.STEPDISPLAY);
+        checkFrameOverlap(panel.getContentPane());
+
+        panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
+        checkFrameOverlap(panel.getContentPane());
+
+        panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
+        checkFrameOverlap(panel.getContentPane());
     }
 
     @ParameterizedTest
@@ -155,8 +143,9 @@ public class ControlPanelTest {
             new ThrottleListener(){
               @Override
               public void notifyThrottleFound(DccThrottle t) {
-                panel.notifyAddressThrottleFound(t);
                 throttle = t;
+                throttle.setSpeedStepMode(mode);
+                panel.notifyAddressThrottleFound(t);
               }
 
               @Override
@@ -174,6 +163,7 @@ public class ControlPanelTest {
 
         Assert.assertTrue(throttle != null);
         Assert.assertEquals(throttle.getSpeedSetting(), 0.0, 1e-7);
+        Assert.assertEquals(throttle.getSpeedStepMode(), mode);
 
         // Set the speed controller mode to slider.
         panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
