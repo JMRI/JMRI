@@ -111,6 +111,9 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         Assert.assertEquals("Username matches", "My constant", expression2.getUserName());
         Assert.assertEquals("String matches", "Get constant value 98.76", expression2.getLongDescription(Locale.ENGLISH));
         
+        // Call setup(). It doesn't do anything, but we call it for coverage
+        expression2.setup();
+        
         boolean thrown = false;
         try {
             // Illegal system name

@@ -423,9 +423,9 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase {
     public void testConnected_getExpressionSystemName() throws SocketAlreadyConnectedException {
         Formula expression = new Formula("IQDE121", null);
         
-        ExpressionMemory stringExpressionMemory = new ExpressionMemory("IQDE122", null);
+        ExpressionMemory expressionMemory = new ExpressionMemory("IQDE122", null);
         MaleSocket maleSAMSocket =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(stringExpressionMemory);
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionMemory);
         
         Assert.assertEquals("Num children is correct", 1, expression.getChildCount());
         
