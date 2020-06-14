@@ -340,6 +340,12 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase {
         a.setChildCount(2);
         Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        
+        // Test setChildCount to same number of children as before
+        ab.set(false);
+        a.setChildCount(2);
+        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
+        Assert.assertFalse("PropertyChangeEvent not fired", ab.get());
     }
     
     @Test
