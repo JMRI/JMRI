@@ -414,7 +414,7 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase {
     
     @Test
     public void testEvaluateEmptyFormula() throws ParserException, JmriException {
-        Formula expression = new Formula("IQDE321", null);
+        Formula expression = new Formula("IQAE321", null);
         expression.setFormula("");
         Assert.assertTrue("Empty formula returns 0.0", 0.0 == expression.evaluate());
     }
