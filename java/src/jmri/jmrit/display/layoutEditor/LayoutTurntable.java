@@ -303,7 +303,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param turnoutName the turnout name
      * @param state       the state
      */
-    public void setRayTurnout(int index, @Nonnull String turnoutName, int state) {
+    public void setRayTurnout(int index, @CheckForNull String turnoutName, int state) {
         boolean found = false; // assume failure (pessimist!)
         for (RayTrack rt : rayTrackList) {
             if (rt.getConnectionIndex() == index) {
@@ -803,7 +803,7 @@ public class LayoutTurntable extends LayoutTrack {
                 namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
             }
             if (turnout != null && (namedTurnout == null || namedTurnout.getBean() != turnout)) {
-                if ((turnoutName != null) && !turnoutName.isEmpty()) {
+                if (!turnoutName.isEmpty()) {
                     namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
                     turnout.addPropertyChangeListener(mTurnoutListener, turnoutName, "Layout Editor Turntable");
                 }

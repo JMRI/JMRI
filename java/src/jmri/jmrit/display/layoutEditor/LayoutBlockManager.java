@@ -21,8 +21,6 @@ import jmri.Turnout;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a Manager to handle LayoutBlocks. Note: the same
@@ -657,8 +655,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                                 return lt.getSignalHead(LayoutTurnout.Geometry.POINTB2);
                             } else {
                                 //turnout state is UNKNOWN or INCONSISTENT
-                                log.error("Cannot choose signal head because turnout {} is in an UNKNOWN or INCONSISTENT state.",
-                                        lt.getTurnout().getDisplayName());
+                                log.error("LayoutTurnout {} cannot choose signal head because turnout {} is in an UNKNOWN or INCONSISTENT state.",
+                                        lt, lt.getTurnout());
                                 return null;
                             }
                         }

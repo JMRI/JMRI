@@ -27,6 +27,9 @@ It's in no particular order, items are removed as done, so please don't consider
 - [X] Turntable Ray display
   - [ ] Turntable ray location for information split between topo and View classes; add decorator in view.
 
+- [ ] Spotbugs - do getTurnout, getLayoutBlock, getLayoutBlockB, etc _effectively_ never return null due to usage? In certain cases?
+  - [ ]if so, consider documenting that and protecting with asserts
+            (assert before a _later_ use doesn't protect against NP warnings)
 
 - [X] mainline in geometry classes (inc base clases, *Xml)
 - [X] hidden in View
@@ -36,6 +39,10 @@ It's in no particular order, items are removed as done, so please don't consider
             result = Path.computeDirection(getCoordsCenter(), p1);  // has a reference to center we need to understand
   
 - [ ] Decorations only in View
+    - [ ] PositionablePoint.setTypeEndBumper(), .setTypeEdgeConnector(), .setTypeEdgeConnector() seem to need to be in both model and view
+        - [ ] View should _invoke_ Model for relevent parts
+        - [ ] document use pattern for both Model and View methods
+        - [ ] make sure being consistently called
     - [ ] arrowstyle only in View
         =========>  arrows include connectivity, will need additional work
     - [X] bridge only in View
@@ -48,7 +55,8 @@ It's in no particular order, items are removed as done, so please don't consider
 
 - [ ] The ``*View` classes load a reference to a new `*Editor` in ctor; this needs to be shared or deferred
          editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleSlipEditor(layoutEditor);
-
+- [ ] LayoutEditor.setTurnoutName(@Nonnull), .setSecondTurnout(@Nonnull): Very inconsistent use with "" or null, need to clean up 100%
+    - [ ] who uses it through View? Should it be through view?
 
 Go through and confirm individually:
 

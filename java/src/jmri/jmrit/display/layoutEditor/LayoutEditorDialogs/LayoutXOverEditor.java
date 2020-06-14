@@ -112,7 +112,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
             layoutTurnout.setSecondTurnout(newName);
         } else {
             editLayoutTurnout2ndTurnoutCheckBox.setSelected(false);
-            layoutTurnout.setSecondTurnout(null);
+            layoutTurnout.setSecondTurnout("");
             editLayoutTurnout2ndTurnoutComboBox.setSelectedItem(null);
         }
         editLayoutTurnoutNeedRedraw = true;

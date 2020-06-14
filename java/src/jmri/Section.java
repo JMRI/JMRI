@@ -9,12 +9,21 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import jmri.implementation.AbstractNamedBean;
-import jmri.jmrit.display.layoutEditor.*;
+
+import jmri.jmrit.display.layoutEditor.ConnectivityUtil; // normally these would be rolloed
+import jmri.jmrit.display.layoutEditor.HitPointType;     // up into jmri.jmrit.display.layoutEditor.*
+import jmri.jmrit.display.layoutEditor.LayoutBlock;      // but during the LE migration it's
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager; // useful to be able to see 
+import jmri.jmrit.display.layoutEditor.LayoutEditor;     // what specific classe are used.
+import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LevelXing;
+import jmri.jmrit.display.layoutEditor.PositionablePoint;
+import jmri.jmrit.display.layoutEditor.TrackNode;
+import jmri.jmrit.display.layoutEditor.TrackSegment;
+
 import jmri.util.JmriJFrame;
 import jmri.util.NonNullArrayList;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Sections represent a group of one or more connected Blocks that may be
@@ -2745,6 +2754,6 @@ public class Section extends AbstractNamedBean {
         return report;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Section.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Section.class);
 
 }

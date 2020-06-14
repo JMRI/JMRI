@@ -8167,29 +8167,29 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 LayoutTurnout lt = finder.findLayoutTurnoutByBean(nb);
 
                 if (lt != null) {
-                    lt.setTurnout(null);
+                    lt.setTurnout("");
                 }
 
                 for (LayoutTurnout t : getLayoutTurnouts()) {
                     if (t.getLinkedTurnoutName() != null) {
                         if (t.getLinkedTurnoutName().equals(nb.getSystemName())
                                 || ((nb.getUserName() != null) && t.getLinkedTurnoutName().equals(nb.getUserName()))) {
-                            t.setLinkedTurnoutName(null);
+                            t.setLinkedTurnoutName("");
                         }
                     }
 
                     if (nb.equals(t.getSecondTurnout())) {
-                        t.setSecondTurnout(null);
+                        t.setSecondTurnout("");
                     }
                 }
 
                 for (LayoutSlip sl : getLayoutSlips()) {
                     if (nb.equals(sl.getTurnout())) {
-                        sl.setTurnout(null);
+                        sl.setTurnout("");
                     }
 
                     if (nb.equals(sl.getTurnoutB())) {
-                        sl.setTurnoutB(null);
+                        sl.setTurnoutB("");
                     }
                 }
 

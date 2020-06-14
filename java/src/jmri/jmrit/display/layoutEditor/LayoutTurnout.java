@@ -306,8 +306,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
     
     // persistent instances variables (saved between sessions)
     // these should be the system or user name of an existing physical turnout
-    private String turnoutName = "";
-    private String secondTurnoutName = "";
+    @Nonnull private String turnoutName = ""; // "" means none, never null
+    @Nonnull private String secondTurnoutName = ""; // "" means none, never null
     private boolean secondTurnoutInverted = false;
 
     // default is package protected
@@ -363,7 +363,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     private int version = 1;
 
-    public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
+    @Nonnull public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool); "" means none, never null
     public LinkType linkType = LinkType.NO_LINK;
 
     private final boolean useBlockSpeed = false;
@@ -397,7 +397,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return useBlockSpeed;
     }
 
-    @CheckForNull
+    @Nonnull
     public String getTurnoutName() {
         if (namedTurnout != null) {
             turnoutName = namedTurnout.getName();
@@ -405,7 +405,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return turnoutName;
     }
 
-    @CheckForNull
+    @Nonnull
     public String getSecondTurnoutName() {
         if (secondNamedTurnout != null) {
             secondTurnoutName = secondNamedTurnout.getName();
@@ -1141,11 +1141,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    @Nonnull
     public String getLinkedTurnoutName() {
         return linkedTurnoutName;
     }
 
-    public void setLinkedTurnoutName(@CheckForNull String s) {
+    public void setLinkedTurnoutName(@Nonnull String s) {
         linkedTurnoutName = s;
     }  // Could be done with changing over to a NamedBeanHandle
 
@@ -1178,7 +1179,11 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * @return null if no turnout set
+     * Perhaps confusingly, this returns an actual Turnout reference
+     * or null for the turnout associated with this is LayoutTurnout.
+     * This is different from {@link setTurnout()}, which 
+     * takes a name (system or user) or an empty string.
+     * @return Null if no Turnout set
      */
     @CheckForNull
     public Turnout getTurnout() {
@@ -1204,13 +1209,21 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return getState() == continuingSense;
     }
 
-    public void setTurnout(@CheckForNull String tName) {
+    /**
+     * Perhaps confusingly, this takes a Turnout name (system or user) 
+     * to locate and set the turnout associated with this is LayoutTurnout.
+     * This is different from {@link getTurnout()}, which returns an 
+     * actual Turnout reference or null.
+     * @parm tName provide empty string for none; never null
+     */
+    public void setTurnout(@Nonnull String tName) {
+        assert tName != null;
         if (namedTurnout != null) {
             deactivateTurnout();
         }
         turnoutName = tName;
         Turnout turnout = null;
-        if (turnoutName != null && !turnoutName.isEmpty()) {
+        if (!turnoutName.isEmpty()) {
             turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
         }
         if (turnout != null) {
@@ -1240,8 +1253,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return result;
     }
 
-    public void setSecondTurnout(@CheckForNull String tName) {
-        if (tName != null && tName.equals(secondTurnoutName)) {
+    /**
+     * @parm tName provide empty string for none (not null)
+     */
+    public void setSecondTurnout(@Nonnull String tName) {
+        assert tName != null;
+        if (tName.equals(secondTurnoutName)) { // haven't changed anything
             return;
         }
 
@@ -1255,7 +1272,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         String oldSecondTurnoutName = secondTurnoutName;
         secondTurnoutName = tName;
         Turnout turnout = null;
-        if (tName != null) {
+        if (! tName.isEmpty()) {
             turnout = InstanceManager.turnoutManagerInstance().getTurnout(secondTurnoutName);
         }
         if (turnout != null) {
@@ -1281,7 +1298,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                             : lf.findLayoutTurnoutByTurnoutName(oldUserName);
                 }
                 if ((oldLinked != null) && oldLinked.getSecondTurnout() == getTurnout()) {
-                    oldLinked.setSecondTurnout(null);
+                    oldLinked.setSecondTurnout("");
                 }
             }
             if (turnout != null) {

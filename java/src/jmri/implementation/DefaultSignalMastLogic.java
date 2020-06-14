@@ -2235,11 +2235,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             LayoutSlip ls = (LayoutSlip) lt;
                             int slipState = turnoutList.get(x).getExpectedState();
                             int taState = ls.getTurnoutState(slipState);
+                            Turnout tTemp = ls.getTurnout();
+                            if (tTemp == null ) {
+                                log.error("Unexpected null Turnout in {}, skipped", ls);
+                                continue; // skip this one in loop, what else can you do?
+                            }
                             turnoutSettings.put(ls.getTurnout(), taState);
                             int tbState = ls.getTurnoutBState(slipState);
                             turnoutSettings.put(ls.getTurnoutB(), tbState);
                         } else {
                             String t = lt.getTurnoutName();
+                            // temporary = why is this looking up the Turnout instead of using getTurnout()?
                             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
                             if (log.isDebugEnabled()) {
                                 if (    (lt.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT ||
@@ -2258,32 +2264,34 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             if (turnout != null ) {
                                 turnoutSettings.put(turnout, turnoutList.get(x).getExpectedState());
                             }
-                            if (lt.getSecondTurnout() != null) {
-                                turnoutSettings.put(lt.getSecondTurnout(), turnoutList.get(x).getExpectedState());
+                            Turnout tempT;
+                            if ((tempT = lt.getSecondTurnout()) != null) {
+                                turnoutSettings.put(tempT, turnoutList.get(x).getExpectedState());
                             }
                             /* TODO: We could do with a more intelligent way to deal with double crossovers, other than
                                 just looking at the state of the other conflicting blocks, such as looking at Signalmasts
                                 that protect the other blocks and the settings of any other turnouts along the way.
                              */
                             if (lt.getTurnoutType() == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
+                                LayoutBlock tempLB;
                                 if (turnoutList.get(x).getExpectedState() == jmri.Turnout.THROWN) {
                                     if (lt.getLayoutBlock() == lblks.get(i) || lt.getLayoutBlockC() == lblks.get(i)) {
-                                        if (lt.getLayoutBlockB() != null) {
-                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockB().getBlock());
-                                            block.put(lt.getLayoutBlockB().getBlock(), Block.UNOCCUPIED);
+                                        if ((tempLB = lt.getLayoutBlockB()) != null) {
+                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
-                                        if (lt.getLayoutBlockD() != null) {
-                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockD().getBlock());
-                                            block.put(lt.getLayoutBlockD().getBlock(), Block.UNOCCUPIED);
+                                        if ((tempLB = lt.getLayoutBlockD()) != null) {
+                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
                                     } else if (lt.getLayoutBlockB() == lblks.get(i) || lt.getLayoutBlockD() == lblks.get(i)) {
-                                        if (lt.getLayoutBlock() != null) {
-                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlock().getBlock());
-                                            block.put(lt.getLayoutBlock().getBlock(), Block.UNOCCUPIED);
+                                        if ((tempLB = lt.getLayoutBlock()) != null) {
+                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
-                                        if (lt.getLayoutBlockC() != null) {
-                                            dblCrossoverAutoBlocks.add(lt.getLayoutBlockC().getBlock());
-                                            block.put(lt.getLayoutBlockC().getBlock(), Block.UNOCCUPIED);
+                                        if ((tempLB = lt.getLayoutBlockC()) != null) {
+                                            dblCrossoverAutoBlocks.add(tempLB.getBlock());
+                                            block.put(tempLB.getBlock(), Block.UNOCCUPIED);
                                         }
                                     }
                                 }

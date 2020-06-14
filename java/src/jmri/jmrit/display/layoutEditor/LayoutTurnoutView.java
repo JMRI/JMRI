@@ -598,7 +598,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return turnout.getLinkedTurnoutName();
     }
 
-    public void setLinkedTurnoutName(@CheckForNull String s) {
+    public void setLinkedTurnoutName(@Nonnull String s) {
         turnout.setSensorD(s);
     }  // Could be done with changing over to a NamedBeanHandle
 
@@ -650,7 +650,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return turnout.isInContinuingSenseState();
     }
 
-    public void setTurnout(@CheckForNull String tName) {
+    public void setTurnout(@Nonnull String tName) {
         turnout.setTurnout(tName);
     }
 
@@ -659,7 +659,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return turnout.getSecondTurnout();
     }
 
-    public void setSecondTurnout(@CheckForNull String tName) {
+    public void setSecondTurnout(@Nonnull String tName) {
         turnout.setSecondTurnout(tName);
     }
 

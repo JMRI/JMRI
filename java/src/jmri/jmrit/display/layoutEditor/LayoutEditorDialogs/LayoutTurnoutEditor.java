@@ -364,7 +364,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
                     newName, editLayoutTurnoutFrame)) {
                 layoutTurnout.setTurnout(newName);
             } else {
-                layoutTurnout.setTurnout(null);
+                layoutTurnout.setTurnout("");
                 editLayoutTurnout1stTurnoutComboBox.setSelectedItem(null);
             }
             editLayoutTurnoutNeedRedraw = true;
@@ -379,7 +379,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
                 donePressedSecondTurnoutName(newName);
             }
         } else {
-            layoutTurnout.setSecondTurnout(null);
+            layoutTurnout.setSecondTurnout("");
         }
 
         setContinuingRouteTurnoutState();

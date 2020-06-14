@@ -12,6 +12,7 @@ import org.junit.*;
  * Test simple functioning of LayoutTurnout.
  *
  * @author Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2020
  */
 public class LayoutTurnoutTest extends LayoutTrackTest {
 
@@ -668,11 +669,11 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         Assert.assertEquals("t2 THROWN t1 CLOSED INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
 
         // remove turnouts and check num listeners
-        ltRX.setSecondTurnout(null);
+        ltRX.setSecondTurnout("");
         Assert.assertEquals("t1 +1 listeners ", start1Listeners + 1, tOne.getPropertyChangeListeners().length);
         Assert.assertEquals("t2 start listeners", start2Listeners, tTwo.getPropertyChangeListeners().length);
 
-        ltRX.setTurnout(null);
+        ltRX.setTurnout("");
         Assert.assertEquals("t1 start listeners ", start1Listeners, tOne.getPropertyChangeListeners().length);
 
         tOne.dispose();
