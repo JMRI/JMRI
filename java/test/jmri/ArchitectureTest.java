@@ -235,49 +235,53 @@ public class ArchitectureTest {
 
 
 
-    //******************************
+    //********************************************************************
     // LogixNG classes
-    //******************************
+    // These rules both helps keeping the structure clean, and it also
+    // documents the cases when the rules are broken.
+    //********************************************************************
     
     /**
      * Packages outside of jmri.jmrit.logixng should only access the package
      * jmri.jmrit.logixng itself, not its sub packages
      */
     @ArchTest
-    public static final ArchRule checkEverythingOutsideLogixNG = classes()
+    public static final ArchRule checkEverythingOutsideLogixNG = noClasses()
             .that().resideOutsideOfPackage("jmri.jmrit.logixng..")
-            .should().onlyAccessClassesThat().resideInAPackage("jmri.jmrit.logixng");
+            .and().haveNameNotMatching("^jmri.jmrit.beantable.LogixNGTableAction(\\$\\d+)?")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.ToolsMenu")
+            .should().dependOnClassesThat().resideInAPackage("jmri.jmrit.logixng.(**)");
 
-    /*.*
+    /**
      * Packages outside of jmri.jmrit.logixng.analog should not access this package
-     *./
+     */
     @ArchTest
-    public static final ArchRule checkLogixNG_Analog = classes()
+    public static final ArchRule checkLogixNG_Analog = noClasses()
             .that().resideOutsideOfPackage("jmri.jmrit.logixng.analog..")
-            .should().onlyAccessClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng.analog..");
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket")
+            .should().dependOnClassesThat().resideInAPackage("jmri.jmrit.logixng.analog..");
 
-    /*.*
+    /**
      * Packages outside of jmri.jmrit.logixng.analog should not access this package
-     *./
+     */
     @ArchTest
-    public static final ArchRule checkLogixNG_Digital = classes()
+    public static final ArchRule checkLogixNG_Digital = noClasses()
             .that().resideOutsideOfPackage("jmri.jmrit.logixng.digital..")
-            .should().onlyAccessClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng.digital..");
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultConditionalNGManager")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.ImportConditional")
+            .should().dependOnClassesThat().resideInAPackage("jmri.jmrit.logixng.digital..");
 
-    /*.*
+    /**
      * Packages outside of jmri.jmrit.logixng.analog should not access this package
-     *./
+     */
     @ArchTest
-    public static final ArchRule checkLogixNG_String = classes()
+    public static final ArchRule checkLogixNG_String = noClasses()
             .that().resideOutsideOfPackage("jmri.jmrit.logixng.string..")
-            .should().onlyAccessClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng.string..");
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$StringSocket")
+            .should().dependOnClassesThat().resideInAPackage("jmri.jmrit.logixng.string..");
 
-    /*.*
-     * Packages outside of jmri.jmrit.logixng.analog should not access this package
-     *./
-    @ArchTest
-    public static final ArchRule checkLogixNG_Implementation = classes()
-            .that().resideOutsideOfPackage("jmri.jmrit.logixng.implementation..")
-            .should().onlyAccessClassesThat().resideOutsideOfPackage("jmri.jmrit.logixng.implementation..");
-*/
 }

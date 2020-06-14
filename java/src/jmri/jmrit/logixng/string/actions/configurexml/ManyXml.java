@@ -4,14 +4,18 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.jmrit.logixng.DigitalActionManager;
+
+import jmri.jmrit.logixng.StringActionBean;
+import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.digital.actions.Many;
+import jmri.jmrit.logixng.string.actions.Many;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -90,11 +94,11 @@ public class ManyXml extends jmri.managers.configurexml.AbstractNamedBeanManager
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        DigitalActionBean h = new Many(sys, uname, actionSystemNames);
+        StringActionBean h = new Many(sys, uname, actionSystemNames);
         
         loadCommon(h, shared);
         
-        InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
+        InstanceManager.getDefault(StringActionManager.class).registerAction(h);
         
 //        log.warn("Register action: " + h.getSystemName() + ", " + h.getLongDescription());
         return true;
