@@ -217,12 +217,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *                      SpeedStepMode.NMRA_DCC_27,
      *                      SpeedStepMode.NMRA_DCC_14 step mode
      */
-    private void setSpeedStepsMode(SpeedStepMode speedStepMode) {
+    public void setSpeedStepsMode(SpeedStepMode speedStepMode) {
         final ThrottlesPreferences preferences =
                 InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences();
         internalAdjust = true;
         int maxSpeedPCT = 100;
-        if (addressPanel.getRosterEntry() != null) {
+        if (addressPanel != null && addressPanel.getRosterEntry() != null) {
             maxSpeedPCT = addressPanel.getRosterEntry().getMaxSpeedPCT();
         }
 
@@ -736,7 +736,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedStepBox.addActionListener((ActionEvent e) -> {
             SpeedStepMode s = (SpeedStepMode)speedStepBox.getSelectedItem();
             setSpeedStepsMode(s);
-            throttle.setSpeedStepMode(s);
+            if (throttle != null) {
+              throttle.setSpeedStepMode(s);
+            }
         });
 
         buttonPanel = new JPanel();
@@ -750,14 +752,18 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         reverseButton.setFocusable(false);
 
         forwardButton.addActionListener((ActionEvent e) -> {
-            throttle.setIsForward(true);
+            if (throttle != null) {
+              throttle.setIsForward(true);
+            }
             if (speedSliderContinuous != null) {
                 speedSliderContinuous.setValue(java.lang.Math.abs(speedSliderContinuous.getValue()));
             }
         });
 
         reverseButton.addActionListener((ActionEvent e) -> {
-            throttle.setIsForward(false);
+            if (throttle != null) {
+              throttle.setIsForward(false);
+            }
             if (speedSliderContinuous != null) {
                 speedSliderContinuous.setValue(-java.lang.Math.abs(speedSliderContinuous.getValue()));
             }
@@ -1041,6 +1047,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     public JSlider getSpeedSlider() {
         return speedSlider;
+    }
+
+    /**
+     * Intended for throttle scripting and testing.
+     *
+     * @return The continuous (shunting) speed slider.
+     */
+    public JSlider getSpeedSliderContinuous() {
+        return speedSliderContinuous;
     }
 
     // update the state of this panel if any of the properties change
