@@ -1,6 +1,6 @@
 package apps.startup.configurexml;
 
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import jmri.util.startup.StartupModel;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
 public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
 
     private final static Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelXml.class);
-
-    @Override
-    public void load(Element e, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
-    }
 
     /**
      * Arrange for all {@link jmri.util.startup.StartupModel} objects to be stored.

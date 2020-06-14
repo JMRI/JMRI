@@ -22,8 +22,8 @@ import java.util.ArrayList;
  */
 public class RouteExportToLogix {
 
-    private final String LOGIX_SYS_NAME;
-    private final String CONDITIONAL_SYS_PREFIX;
+    private final String logixSysName;
+    private final String conditionalSysPrefix;
     private final String systemName;
     private final RouteManager routeManager;
     private final LogixManager logixManager;
@@ -42,12 +42,12 @@ public class RouteExportToLogix {
         this.conditionalManager = conditionalManager;
 
         String logixPrefix = logixManager.getSystemNamePrefix();
-        LOGIX_SYS_NAME = logixPrefix + ":RTX:";
-        CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+        logixSysName = logixPrefix + ":RTX:";
+        conditionalSysPrefix = logixSysName + "C";
     }
 
     public void export() {
-        String logixSystemName = LOGIX_SYS_NAME + systemName;
+        String logixSystemName = logixSysName + systemName;
         Route route = routeManager.getBySystemName(systemName);
         if(route == null ){
             log.error("Route {} does not exist",systemName);
@@ -147,13 +147,13 @@ public class RouteExportToLogix {
         for (char value : ch) {
             hash += value;
         }
-        String cSystemName = CONDITIONAL_SYS_PREFIX + "T" + hash;
+        String cSystemName = conditionalSysPrefix + "T" + hash;
         removeConditionals(cSystemName, logix);
-        cSystemName = CONDITIONAL_SYS_PREFIX + "F" + hash;
+        cSystemName = conditionalSysPrefix + "F" + hash;
         removeConditionals(cSystemName, logix);
-        cSystemName = CONDITIONAL_SYS_PREFIX + "A" + hash;
+        cSystemName = conditionalSysPrefix + "A" + hash;
         removeConditionals(cSystemName, logix);
-        cSystemName = CONDITIONAL_SYS_PREFIX + "L" + hash;
+        cSystemName = conditionalSysPrefix + "L" + hash;
         removeConditionals(cSystemName, logix);
 
         int n = 0;

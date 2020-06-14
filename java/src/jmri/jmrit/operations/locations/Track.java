@@ -22,7 +22,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -2826,17 +2825,6 @@ public class Track extends PropertyChangeSupport {
         e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));
         // build list of car types for this track
         String[] types = getTypeNames();
-        // Old way of saving car types
-        if (Control.backwardCompatible) {
-            StringBuffer buf = new StringBuffer();
-            for (String type : types) {
-                // remove types that have been deleted by user
-                if (InstanceManager.getDefault(CarTypes.class).containsName(type) || InstanceManager.getDefault(EngineTypes.class).containsName(type)) {
-                    buf.append(type + "%%"); // NOI18N
-                }
-            }
-            e.setAttribute(Xml.CAR_TYPES, buf.toString());
-        }
         // new way of saving car types using elements
         Element eTypes = new Element(Xml.TYPES);
         for (String type : types) {
@@ -2853,20 +2841,10 @@ public class Track extends PropertyChangeSupport {
         }
         e.addContent(eTypes);
 
-        if (Control.backwardCompatible) {
-            e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption()); // early versions had a misspelling
-        }
         // build list of car roads for this track
         if (!getRoadOption().equals(ALL_ROADS)) {
             e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
             String[] roads = getRoadNames();
-            if (Control.backwardCompatible) {
-                StringBuffer buf = new StringBuffer();
-                for (String road : roads) {
-                    buf.append(road + "%%"); // NOI18N
-                }
-                e.setAttribute(Xml.CAR_ROADS, buf.toString());
-            }
             // new way of saving road names
             Element eRoads = new Element(Xml.CAR_ROADS);
             for (String road : roads) {
@@ -2881,13 +2859,6 @@ public class Track extends PropertyChangeSupport {
         if (!getLoadOption().equals(ALL_LOADS)) {
             e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
             String[] loads = getLoadNames();
-            if (Control.backwardCompatible) {
-                StringBuffer buf = new StringBuffer();
-                for (String load : loads) {
-                    buf.append(load + "%%"); // NOI18N
-                }
-                e.setAttribute(Xml.CAR_LOADS, buf.toString());
-            }
             // new way of saving car loads using elements
             Element eLoads = new Element(Xml.CAR_LOADS);
             for (String load : loads) {
@@ -2916,13 +2887,6 @@ public class Track extends PropertyChangeSupport {
             e.setAttribute(Xml.DROP_OPTION, getDropOption());
             // build list of drop ids for this track
             String[] dropIds = getDropIds();
-            if (Control.backwardCompatible) {
-                StringBuffer buf = new StringBuffer();
-                for (String id : dropIds) {
-                    buf.append(id + "%%"); // NOI18N
-                }
-                e.setAttribute(Xml.DROP_IDS, buf.toString());
-            }
             // new way of saving drop ids using elements
             Element eDropIds = new Element(Xml.DROP_IDS);
             for (String id : dropIds) {
@@ -2937,13 +2901,6 @@ public class Track extends PropertyChangeSupport {
             e.setAttribute(Xml.PICKUP_OPTION, getPickupOption());
             // build list of pickup ids for this track
             String[] pickupIds = getPickupIds();
-            if (Control.backwardCompatible) {
-                StringBuffer buf = new StringBuffer();
-                for (String id : pickupIds) {
-                    buf.append(id + "%%"); // NOI18N
-                }
-                e.setAttribute(Xml.PICKUP_IDS, buf.toString());
-            }
             // new way of saving pick up ids using elements
             Element ePickupIds = new Element(Xml.PICKUP_IDS);
             for (String id : pickupIds) {
@@ -3003,9 +2960,6 @@ public class Track extends PropertyChangeSupport {
                 }
                 e.addContent(destinations);
             }
-        }
-        if (Control.backwardCompatible) {
-            e.setAttribute(Xml.COMMENT, getComment());
         }
         // save manifest track comments if they exist
         if (!getComment().equals(NONE) ||

@@ -52,11 +52,6 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         return result;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     /**
      * common part of store - create the element and store the name and the
      * class
