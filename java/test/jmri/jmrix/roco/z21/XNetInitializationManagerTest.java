@@ -12,15 +12,13 @@ import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Z21XNetInitializationManagerTest.java
- *
- * Test for the jmri.jmrix.roco.z21.z21XNetInitializationManager
+ * Test for the XNetInitializationManager  when configured for the Roco Z21
  * class
  *
- * @author Paul Bender Copyright (C) 2015
+ * @author Paul Bender Copyright (C) 2015,2020
  *
  */
-public class Z21XNetInitializationManagerTest {
+public class XNetInitializationManagerTest {
 
     private XNetTrafficController tc;
     private XNetSystemConnectionMemo memo;
@@ -28,13 +26,16 @@ public class Z21XNetInitializationManagerTest {
 
     @Test
     public void testCtor() {
-        Z21XNetInitializationManager m = new Z21XNetInitializationManager(memo) {
-            @Override
-            protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
-            }
-        };
-        assertThat(m).withFailMessage("exists").isNotNull();
+        new XNetInitializationManager()
+                .memo(memo)
+                .setDefaults()
+                .throttleManager(Z21XNetThrottleManager.class)
+                .programmer(Z21XNetProgrammer.class)
+                .programmerManager(Z21XNetProgrammerManager.class)
+                .turnoutManager(Z21XNetTurnoutManager.class)
+                .consistManager(null)
+                .noCommandStation()
+                .init();
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(memo.getCommandStation()).isNull();
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));

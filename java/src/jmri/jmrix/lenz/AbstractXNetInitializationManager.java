@@ -12,10 +12,12 @@ import java.awt.event.ActionEvent;
  * the Initialization Manager based on the Command Station Type.
  *
  * @author Paul Bender Copyright (C) 2003-2010
+ * @deprecated since 4.21.1.  Use {@link XNetInitializationManager} instead.
  */
+@Deprecated
 public abstract class AbstractXNetInitializationManager {
 
-    protected XNetSystemConnectionMemo systemMemo = null;
+    protected final XNetSystemConnectionMemo systemMemo;
 
     /**
      * Define timeout used during initialization
@@ -49,14 +51,14 @@ public abstract class AbstractXNetInitializationManager {
 
     protected abstract void init();
 
-    /* Interal class to configure the XNet implementation */
+    /* Internal class to configure the XNet implementation */
     protected class XNetInitializer implements XNetListener {
 
-        private javax.swing.Timer initTimer; // Timer used to let he 
+        private final javax.swing.Timer initTimer; // Timer used to let he
         // command station response time 
         // out, and configure the defaults.
 
-        private Object parent = null;
+        private final Object parent;
 
         public XNetInitializer(Object Parent) {
 
