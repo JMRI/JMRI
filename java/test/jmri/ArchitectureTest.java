@@ -239,10 +239,10 @@ public class ArchitectureTest {
     // LogixNG classes
     //******************************
     
-    /*.*
+    /**
      * Packages outside of jmri.jmrit.logixng should only access the package
      * jmri.jmrit.logixng itself, not its sub packages
-     *./
+     */
     @ArchTest
     public static final ArchRule checkEverythingOutsideLogixNG = classes()
             .that().resideOutsideOfPackage("jmri.jmrit.logixng..")
