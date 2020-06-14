@@ -5,10 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.NamedBean;
-import jmri.Turnout;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.digital.expressions.Formula.ExpressionEntry;
@@ -21,6 +18,7 @@ import org.junit.Test;
 
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.junit.*;
 
@@ -314,26 +312,52 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase {
             ab.set(true);
         });
         
+        a.setChildCount(1);
+        Assert.assertEquals("numChilds are correct", 1, a.getChildCount());
+        
         // Test increase num children
         ab.set(false);
         a.setChildCount(a.getChildCount()+1);
+        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
         
         // Test decrease num children
         ab.set(false);
         Assert.assertTrue("We have least two children", a.getChildCount() > 1);
-        a.setChildCount(a.getChildCount()-1);
+        a.setChildCount(1);
+        Assert.assertEquals("numChilds are correct", 1, a.getChildCount());
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
         
         // Test decrease num children when all children are connected
         ab.set(false);
-        a.setChildCount(2);
         a.getChild(0).disconnect();
         a.getChild(0).connect(getConnectableChild());
         a.getChild(1).disconnect();
         a.getChild(1).connect(getConnectableChild());
-        a.setChildCount(a.getChildCount()-1);
+        a.getChild(2).disconnect();
+        a.getChild(2).connect(getConnectableChild());
+        Assert.assertEquals("numChilds are correct", 4, a.getChildCount());
+        a.setChildCount(2);
+        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+    }
+    
+    @Test
+    public void testFormula() throws ParserException, SocketAlreadyConnectedException {
+        Formula a = (Formula)_base;
+        
+        a.getChild(0).disconnect();
+        a.getChild(0).connect(getConnectableChild());
+        a.getChild(0).setName("Abc");
+        a.getChild(1).disconnect();
+        a.getChild(1).connect(getConnectableChild());
+        a.getChild(1).setName("Xyz");
+        
+        a.setFormula("Xyz + Abc");
+        Assert.assertEquals("Formula is correct", "Xyz + Abc", a.getFormula());
+        
+        a.setFormula("Abc - Xyz");
+        Assert.assertEquals("Formula is correct", "Abc - Xyz", a.getFormula());
     }
     
     @Test
@@ -425,9 +449,16 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
-        Formula e1 = new Formula("IQDE321", null);
-        Assert.assertEquals("strings matches", "Formula", e1.getShortDescription());
-        Assert.assertEquals("strings matches", "Formula: empty", e1.getLongDescription());
+        Formula expression = new Formula("IQDE321", null);
+        Assert.assertEquals("strings matches", "Formula", expression.getShortDescription());
+        Assert.assertEquals("strings matches", "Formula: empty", expression.getLongDescription());
+    }
+    
+    @Test
+    public void testEvaluateEmptyFormula() throws ParserException, JmriException {
+        Formula expression = new Formula("IQDE321", null);
+        expression.setFormula("");
+        Assert.assertFalse("Empty formula returns false", expression.evaluate());
     }
 /*    
     private void testValidate(boolean expectedResult, String formula, List<DigitalExpressionBean> conditionalVariablesList) throws Exception {

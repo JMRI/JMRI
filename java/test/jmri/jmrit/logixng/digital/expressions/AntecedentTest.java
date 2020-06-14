@@ -310,25 +310,33 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
             ab.set(true);
         });
         
+        a.setChildCount(1);
+        Assert.assertEquals("numChilds are correct", 1, a.getChildCount());
+        
         // Test increase num children
         ab.set(false);
         a.setChildCount(a.getChildCount()+1);
+        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
         
         // Test decrease num children
         ab.set(false);
         Assert.assertTrue("We have least two children", a.getChildCount() > 1);
-        a.setChildCount(a.getChildCount()-1);
+        a.setChildCount(1);
+        Assert.assertEquals("numChilds are correct", 1, a.getChildCount());
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
         
         // Test decrease num children when all children are connected
         ab.set(false);
-        a.setChildCount(2);
         a.getChild(0).disconnect();
         a.getChild(0).connect(getConnectableChild());
         a.getChild(1).disconnect();
         a.getChild(1).connect(getConnectableChild());
-        a.setChildCount(a.getChildCount()-1);
+        a.getChild(2).disconnect();
+        a.getChild(2).connect(getConnectableChild());
+        Assert.assertEquals("numChilds are correct", 4, a.getChildCount());
+        a.setChildCount(2);
+        Assert.assertEquals("numChilds are correct", 2, a.getChildCount());
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
     }
     
