@@ -1,20 +1,24 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.*;
 import java.util.function.*;
+
 import javax.annotation.*;
 import javax.swing.*;
+
 import jmri.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
-import org.slf4j.*;
 
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the
@@ -61,7 +65,7 @@ public class TrackSegment extends LayoutTrack {
     private final ArrayList<Point2D> bezierControlPoints = new ArrayList<>(); // list of control point displacements
 
     // temporary reference to the Editor that will eventually be part of View
-    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
+    private final TrackSegmentEditor editor;
 
     public TrackSegment(@Nonnull String id,
             @CheckForNull LayoutTrack c1, HitPointType t1,
@@ -101,7 +105,7 @@ public class TrackSegment extends LayoutTrack {
 
         setupDefaultBumperSizes(layoutEditor);
 
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
+        editor = new TrackSegmentEditor(layoutEditor);
     }
 
     // alternate constructor for loading layout editor panels
@@ -125,7 +129,7 @@ public class TrackSegment extends LayoutTrack {
 
         setupDefaultBumperSizes(layoutEditor);
 
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
+        editor = new TrackSegmentEditor(layoutEditor);
     }
 
     /**
@@ -456,9 +460,9 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
     @Override
-    public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(HitPointType connectionType) throws JmriException {
         // nothing to see here, move along
-        throw new jmri.JmriException("Use getConnect1() or getConnect2() instead.");
+        throw new JmriException("Use getConnect1() or getConnect2() instead.");
     }
 
     /**
@@ -469,9 +473,9 @@ public class TrackSegment extends LayoutTrack {
      */
     // only implemented here to suppress "does not override abstract method " error in compiler
     @Override
-    public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws jmri.JmriException {
+    public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws JmriException {
         // nothing to see here, move along
-        throw new jmri.JmriException("Use setConnect1() or setConnect2() instead.");
+        throw new JmriException("Use setConnect1() or setConnect2() instead.");
     }
 
     public int getNumberOfBezierControlPoints() {
@@ -811,7 +815,7 @@ public class TrackSegment extends LayoutTrack {
         JMenuItem jmi = menu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                 Bundle.getMessage(titleKey)) + oldVal));
         jmi.setToolTipText(Bundle.getMessage(toolTipKey));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jmi.addActionListener((ActionEvent e3) -> {
             // prompt for lineWidth
             int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                     Bundle.getMessage(titleKey),
@@ -895,23 +899,23 @@ public class TrackSegment extends LayoutTrack {
         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
         popupMenu.add(mainlineCheckBoxMenuItem);
-        mainlineCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setMainline(mainlineCheckBoxMenuItem.isSelected()));
+        mainlineCheckBoxMenuItem.addActionListener((ActionEvent e3) -> setMainline(mainlineCheckBoxMenuItem.isSelected()));
         mainlineCheckBoxMenuItem.setToolTipText(Bundle.getMessage("MainlineCheckBoxMenuItemToolTip"));
         mainlineCheckBoxMenuItem.setSelected(mainline);
 
         popupMenu.add(hiddenCheckBoxMenuItem);
-        hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
+        hiddenCheckBoxMenuItem.addActionListener((ActionEvent e3) -> setHidden(hiddenCheckBoxMenuItem.isSelected()));
         hiddenCheckBoxMenuItem.setToolTipText(Bundle.getMessage("HiddenCheckBoxMenuItemToolTip"));
         hiddenCheckBoxMenuItem.setSelected(isHidden());
 
         popupMenu.add(dashedCheckBoxMenuItem);
-        dashedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setDashed(dashedCheckBoxMenuItem.isSelected()));
+        dashedCheckBoxMenuItem.addActionListener((ActionEvent e3) -> setDashed(dashedCheckBoxMenuItem.isSelected()));
         dashedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("DashedCheckBoxMenuItemToolTip"));
         dashedCheckBoxMenuItem.setSelected(dashed);
 
         if (isArc()) {
             popupMenu.add(flippedCheckBoxMenuItem);
-            flippedCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> setFlip(flippedCheckBoxMenuItem.isSelected()));
+            flippedCheckBoxMenuItem.addActionListener((ActionEvent e3) -> setFlip(flippedCheckBoxMenuItem.isSelected()));
             flippedCheckBoxMenuItem.setToolTipText(Bundle.getMessage("FlippedCheckBoxMenuItemToolTip"));
             flippedCheckBoxMenuItem.setSelected(isFlip());
         }
@@ -955,7 +959,7 @@ public class TrackSegment extends LayoutTrack {
             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jcbmi.addActionListener((ActionEvent e3) -> {
                 setArrowEndStart(false);
                 setArrowEndStop(false);
                 // setArrowStyle(0);
@@ -966,7 +970,7 @@ public class TrackSegment extends LayoutTrack {
             for (int i = 1; i < NUM_ARROW_TYPES; i++) {
                 jcbmi = loadArrowImageToJCBItem(i, arrowsCountMenu);
                 final int n = i;
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                jcbmi.addActionListener((ActionEvent e3) -> {
                     setArrowEndStart((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
                     setArrowEndStop((type2 == HitPointType.POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
                     setArrowStyle(n);
@@ -982,7 +986,7 @@ public class TrackSegment extends LayoutTrack {
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
                 arrowsEndMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                jcbmi.addActionListener((ActionEvent e3) -> {
                     setArrowEndStart(false);
                     setArrowEndStop(false);
                 });
@@ -991,7 +995,7 @@ public class TrackSegment extends LayoutTrack {
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
                 arrowsEndMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                jcbmi.addActionListener((ActionEvent e3) -> {
                     setArrowEndStart(true);
                     setArrowEndStop(false);
                 });
@@ -1000,7 +1004,7 @@ public class TrackSegment extends LayoutTrack {
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
                 arrowsEndMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                jcbmi.addActionListener((ActionEvent e3) -> {
                     setArrowEndStop(true);
                     setArrowEndStart(false);
                 });
@@ -1009,7 +1013,7 @@ public class TrackSegment extends LayoutTrack {
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
                 arrowsEndMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                jcbmi.addActionListener((ActionEvent e3) -> {
                     setArrowEndStart(true);
                     setArrowEndStop(true);
                 });
@@ -1023,7 +1027,7 @@ public class TrackSegment extends LayoutTrack {
             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
             arrowsDirMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jcbmi.addActionListener((ActionEvent e3) -> {
                 setArrowDirIn(false);
                 setArrowDirOut(false);
             });
@@ -1032,7 +1036,7 @@ public class TrackSegment extends LayoutTrack {
             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionInMenuItemTitle"));
             arrowsDirMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionInMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jcbmi.addActionListener((ActionEvent e3) -> {
                 setArrowDirIn(true);
                 setArrowDirOut(false);
             });
@@ -1041,7 +1045,7 @@ public class TrackSegment extends LayoutTrack {
             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionOutMenuItemTitle"));
             arrowsDirMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionOutMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jcbmi.addActionListener((ActionEvent e3) -> {
                 setArrowDirOut(true);
                 setArrowDirIn(false);
             });
@@ -1050,7 +1054,7 @@ public class TrackSegment extends LayoutTrack {
             jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionBothMenuItemTitle"));
             arrowsDirMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionBothMenuItemToolTip"));
-            jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jcbmi.addActionListener((ActionEvent e3) -> {
                 setArrowDirIn(true);
                 setArrowDirOut(true);
             });
@@ -1058,7 +1062,7 @@ public class TrackSegment extends LayoutTrack {
 
             jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
             jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jmi.addActionListener((ActionEvent e3) -> {
                 Color newColor = JmriColorChooser.showDialog(null, "Choose a color", arrowColor);
                 if ((newColor != null) && !newColor.equals(arrowColor)) {
                     setArrowColor(newColor);
@@ -1070,7 +1074,7 @@ public class TrackSegment extends LayoutTrack {
             jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + arrowLineWidth));
             jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jmi.addActionListener((ActionEvent e3) -> {
                 // prompt for arrow line width
                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
@@ -1082,7 +1086,7 @@ public class TrackSegment extends LayoutTrack {
             jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("DecorationLengthMenuItemTitle")) + arrowLength));
             jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jmi.addActionListener((ActionEvent e3) -> {
                 // prompt for arrow length
                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
@@ -1094,7 +1098,7 @@ public class TrackSegment extends LayoutTrack {
             jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("DecorationGapMenuItemTitle")) + arrowGap));
             jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jmi.addActionListener((ActionEvent e3) -> {
                 // prompt for arrow gap
                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                         Bundle.getMessage("DecorationGapMenuItemTitle"),
@@ -1118,7 +1122,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
         bridgeSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setBridgeSideLeft(false);
             setBridgeSideRight(false);
         });
@@ -1127,7 +1131,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideLeftMenuItemTitle"));
         bridgeSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideLeftMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setBridgeSideLeft(true);
             setBridgeSideRight(false);
         });
@@ -1136,7 +1140,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideRightMenuItemTitle"));
         bridgeSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setBridgeSideRight(true);
             setBridgeSideLeft(false);
         });
@@ -1145,7 +1149,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
         bridgeSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setBridgeSideLeft(true);
             setBridgeSideRight(true);
         });
@@ -1158,7 +1162,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
         bridgeEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setBridgeHasEntry(false);
             setBridgeHasExit(false);
         });
@@ -1167,7 +1171,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
         bridgeEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setBridgeHasEntry(true);
             setBridgeHasExit(false);
         });
@@ -1176,7 +1180,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
         bridgeEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setBridgeHasExit(true);
             setBridgeHasEntry(false);
         });
@@ -1185,7 +1189,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
         bridgeEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setBridgeHasEntry(true);
             setBridgeHasExit(true);
         });
@@ -1193,7 +1197,7 @@ public class TrackSegment extends LayoutTrack {
 
         jmi = bridgeMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jmi.addActionListener((ActionEvent e3) -> {
             Color newColor = JmriColorChooser.showDialog(null, "Choose a color", bridgeColor);
             if ((newColor != null) && !newColor.equals(bridgeColor)) {
                 setBridgeColor(newColor);
@@ -1249,7 +1253,7 @@ public class TrackSegment extends LayoutTrack {
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
                 endBumperEndMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                jcbmi.addActionListener((ActionEvent e3) -> {
                     setBumperEndStart(false);
                     setBumperEndStop(false);
                 });
@@ -1258,7 +1262,7 @@ public class TrackSegment extends LayoutTrack {
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationStartMenuItemTitle"));
                 endBumperEndMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationStartMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                jcbmi.addActionListener((ActionEvent e3) -> {
                     setBumperEndStart(true);
                     setBumperEndStop(false);
                 });
@@ -1267,7 +1271,7 @@ public class TrackSegment extends LayoutTrack {
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEndMenuItemTitle"));
                 endBumperEndMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                jcbmi.addActionListener((ActionEvent e3) -> {
                     setBumperEndStart(false);
                     setBumperEndStop(true);
                 });
@@ -1276,7 +1280,7 @@ public class TrackSegment extends LayoutTrack {
                 jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
                 endBumperEndMenu.add(jcbmi);
                 jcbmi.setToolTipText(Bundle.getMessage("DecorationEndMenuItemToolTip"));
-                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                jcbmi.addActionListener((ActionEvent e3) -> {
                     setBumperEndStart(true);
                     setBumperEndStop(true);
                 });
@@ -1286,7 +1290,7 @@ public class TrackSegment extends LayoutTrack {
                 enableCheckBoxMenuItem.setToolTipText(Bundle.getMessage("EndBumperEnableMenuItemToolTip"));
 
                 endBumperMenu.add(enableCheckBoxMenuItem);
-                enableCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                enableCheckBoxMenuItem.addActionListener((ActionEvent e3) -> {
                     if ((type1 == HitPointType.POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.PointType.END_BUMPER)) {
                         setBumperEndStart(enableCheckBoxMenuItem.isSelected());
                     }
@@ -1299,7 +1303,7 @@ public class TrackSegment extends LayoutTrack {
 
             jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
             jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jmi.addActionListener((ActionEvent e3) -> {
                 Color newColor = JmriColorChooser.showDialog(null, "Choose a color", bumperColor);
                 if ((newColor != null) && !newColor.equals(bumperColor)) {
                     setBumperColor(newColor);
@@ -1311,7 +1315,7 @@ public class TrackSegment extends LayoutTrack {
             jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + bumperLineWidth));
             jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jmi.addActionListener((ActionEvent e3) -> {
                 // prompt for width
                 int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
@@ -1329,7 +1333,7 @@ public class TrackSegment extends LayoutTrack {
             jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                     Bundle.getMessage("DecorationLengthMenuItemTitle")) + bumperLength));
             jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+            jmi.addActionListener((ActionEvent e3) -> {
                 // prompt for length
                 int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
@@ -1359,7 +1363,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
         tunnelSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setTunnelSideLeft(false);
             setTunnelSideRight(false);
         });
@@ -1368,7 +1372,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideLeftMenuItemTitle"));
         tunnelSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideLeftMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setTunnelSideLeft(true);
             setTunnelSideRight(false);
         });
@@ -1377,7 +1381,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationSideRightMenuItemTitle"));
         tunnelSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationSideRightMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setTunnelSideRight(true);
             setTunnelSideLeft(false);
         });
@@ -1386,7 +1390,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
         tunnelSideMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setTunnelSideLeft(true);
             setTunnelSideRight(true);
         });
@@ -1399,7 +1403,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
         tunnelEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setTunnelHasEntry(false);
             setTunnelHasExit(false);
         });
@@ -1408,7 +1412,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationEntryMenuItemTitle"));
         tunnelEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationEntryMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setTunnelHasEntry(true);
             setTunnelHasExit(false);
         });
@@ -1417,7 +1421,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationExitMenuItemTitle"));
         tunnelEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationExitMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setTunnelHasExit(true);
             setTunnelHasEntry(false);
         });
@@ -1426,7 +1430,7 @@ public class TrackSegment extends LayoutTrack {
         jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationBothMenuItemTitle"));
         tunnelEndMenu.add(jcbmi);
         jcbmi.setToolTipText(Bundle.getMessage("DecorationBothMenuItemToolTip"));
-        jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jcbmi.addActionListener((ActionEvent e3) -> {
             setTunnelHasEntry(true);
             setTunnelHasExit(true);
         });
@@ -1434,7 +1438,7 @@ public class TrackSegment extends LayoutTrack {
 
         jmi = tunnelMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
         jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
-        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+        jmi.addActionListener((ActionEvent e3) -> {
             Color newColor = JmriColorChooser.showDialog(null, "Choose a color", tunnelColor);
             if ((newColor != null) && !newColor.equals(tunnelColor)) {
                 setTunnelColor(newColor);
