@@ -288,13 +288,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ##### PlantUML
 - plantuml.jar
-        was from plantuml.org, now from https://github.com/plantuml/plantuml.git
-        backdated to v1.2019.8 to resolve state error in umldoclet
+    was from plantuml.org, now from https://github.com/plantuml/plantuml.git
 - umldoclet.jar
     downloaded umldoclet-2.0.10-20200614.124810-9.jar 
     from https://oss.sonatype.org/content/repositories/snapshots/nl/talsmasoftware/umldoclet/2.0.10-SNAPSHOT/
-- umldoclet-2.0.9.jar	
-    from https://github.com/talsma-ict/umldoclet
+    see https://github.com/talsma-ict/umldoclet
     
 ##### rscbundlecheck.jar
 - check for duplicated properties
