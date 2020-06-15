@@ -18,7 +18,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 
 /**
- * Base class for classes that tests DigitalAction
+ * Test AbstractDigitalExpression
  */
 public class AbstractDigitalExpressionTest {
 

@@ -24,9 +24,11 @@ public class ShutdownComputer extends AbstractDigitalAction {
     public ShutdownComputer(String sys, String user, int seconds)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+        setSeconds(seconds);
     }
     
     public void setSeconds(int seconds) {
+        if (seconds < 0) throw new IllegalArgumentException("seconds must not be negative");
         _seconds = seconds;
     }
     

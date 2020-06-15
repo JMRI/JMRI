@@ -118,6 +118,28 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         JUnitAppender.suppressMessage(Level.ERROR, "exec is not allowed during test of ShutdownComputer");
     }
     
+    @Test
+    public void testSetSeconds() {
+        ShutdownComputer action = new ShutdownComputer("IQDA321", null, 52);
+        Assert.assertEquals("Correct number of seconds", 52, action.getSeconds());
+        action.setSeconds(7);
+        Assert.assertEquals("Correct number of seconds", 7, action.getSeconds());
+        boolean hasThrown = false;
+        try {
+            action.setSeconds(-12);
+        } catch (IllegalArgumentException e) {
+            hasThrown = true;
+            Assert.assertEquals("error message is correct", "seconds must not be negative", e.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+        Assert.assertEquals("Correct number of seconds", 7, action.getSeconds());
+        action.setSeconds(0);
+        Assert.assertEquals("Correct number of seconds", 0, action.getSeconds());
+        
+        // This shouldn't do anything but we call setup() for coverage
+        action.setup();
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {

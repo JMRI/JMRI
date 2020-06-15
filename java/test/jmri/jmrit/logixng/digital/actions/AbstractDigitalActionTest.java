@@ -5,20 +5,15 @@ import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 
 /**
- * Base class for classes that tests DigitalAction
+ * Test AbstractDigitalAction
  */
 public class AbstractDigitalActionTest {
 

@@ -9,8 +9,6 @@ import jmri.jmrit.logixng.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.logixng.digital.actions.Bundle;
-
 /**
  * Emulates Logix.
  * 
