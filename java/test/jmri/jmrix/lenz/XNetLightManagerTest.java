@@ -38,7 +38,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         if (log.isDebugEnabled()) {
             log.debug("received light value {}", tl);
         }
-        Assert.assertTrue(null != (XNetLight) tl);
+        Assert.assertNotNull((XNetLight) tl);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -48,8 +48,8 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != l.getBySystemName("XL21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertNotNull(l.getBySystemName("XL21"));
+        Assert.assertNotNull(l.getByUserName("my name"));
     }
 
     @Test

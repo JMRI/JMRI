@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class AbstractXNetInitializationManagerTest {
 
     private XNetTrafficController tc;
@@ -22,6 +23,11 @@ public class AbstractXNetInitializationManagerTest {
         AbstractXNetInitializationManager t = new AbstractXNetInitializationManager(memo){
             @Override
             public void init(){
+            }
+
+            @Override
+            protected int getInitTimeout() {
+                return 5;
             }
         };
         assertThat(t).withFailMessage("exists").isNotNull();
