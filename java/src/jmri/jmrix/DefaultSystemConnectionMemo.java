@@ -318,6 +318,6 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     private ConsistManager consistManager = null;
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemConnectionMemo.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSystemConnectionMemo.class);
 
 }
