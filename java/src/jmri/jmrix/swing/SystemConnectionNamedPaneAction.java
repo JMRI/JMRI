@@ -1,7 +1,7 @@
 package jmri.jmrix.swing;
 
 import javax.swing.Icon;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.swing.JmriNamedPaneAction;
 import jmri.util.swing.WindowInterface;
 
@@ -11,7 +11,7 @@ import jmri.util.swing.WindowInterface;
  * @author Randall Wood Copyright 2020
  * @param <M> the supported subclass of {@link SystemConnectionMemo}
  */
-public abstract class SystemConnectionNamedPaneAction<M extends SystemConnectionMemo> extends JmriNamedPaneAction implements SystemConnectionAction<M> {
+public abstract class SystemConnectionNamedPaneAction<M extends DefaultSystemConnectionMemo> extends JmriNamedPaneAction implements SystemConnectionAction<M> {
 
     protected M memo;
 

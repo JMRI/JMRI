@@ -3,19 +3,20 @@ package jmri.jmrix;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.SystemConnectionMemo;
 import jmri.beans.Bean;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
 import jmri.util.NamedBeanComparator;
 
 import jmri.util.startup.StartupActionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight abstract class to denote that a system is active, and provide
@@ -26,11 +27,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public abstract class SystemConnectionMemo extends Bean {
+public abstract class DefaultSystemConnectionMemo extends Bean implements SystemConnectionMemo {
 
-    public static final String DISABLED = "ConnectionDisabled";
-    public static final String USER_NAME = "ConnectionNameChanged";
-    public static final String SYSTEM_PREFIX = "ConnectionPrefixChanged";
     private boolean disabled = false;
     private Boolean disabledAsLoaded = null; // Boolean can be true, false, or null
     private String prefix;
@@ -39,7 +37,7 @@ public abstract class SystemConnectionMemo extends Bean {
     private String userNameAsLoaded;
 
     @SuppressWarnings("deprecation")
-    protected SystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
+    protected DefaultSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         if (this instanceof ConflictingSystemConnectionMemo) {
             this.prefix = prefix;
             this.userName = userName;
@@ -320,6 +318,6 @@ public abstract class SystemConnectionMemo extends Bean {
 
     private ConsistManager consistManager = null;
 
-    private static final Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemConnectionMemo.class);
 
 }

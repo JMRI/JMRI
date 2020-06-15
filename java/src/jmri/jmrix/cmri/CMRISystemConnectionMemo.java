@@ -12,7 +12,7 @@ import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrix.AbstractNode;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialLightManager;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
@@ -27,7 +27,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Randall Wood
  */
-public class CMRISystemConnectionMemo extends SystemConnectionMemo {
+public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public CMRISystemConnectionMemo() {
         this("C", CMRIConnectionTypeList.CMRI); // default to "C" prefix

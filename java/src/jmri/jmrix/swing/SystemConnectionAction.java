@@ -3,7 +3,7 @@ package jmri.jmrix.swing;
 import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Interface for a {@link javax.swing.Action} that is bound to a

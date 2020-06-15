@@ -21,7 +21,7 @@ import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.PowerManager;
 import jmri.ThrottleManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.profile.Profile;

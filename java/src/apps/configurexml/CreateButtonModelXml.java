@@ -4,7 +4,7 @@ import apps.CreateButtonModel;
 import jmri.util.startup.StartupActionsManager;
 import java.lang.reflect.InvocationTargetException;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 import org.jdom2.Element;
 import org.slf4j.Logger;

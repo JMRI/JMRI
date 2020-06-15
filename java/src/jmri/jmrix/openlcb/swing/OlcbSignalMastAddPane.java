@@ -2,7 +2,7 @@ package jmri.jmrix.openlcb.swing;
 
 import jmri.*;
 import jmri.jmrit.beantable.signalmast.SignalMastAddPane;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 import jmri.jmrix.openlcb.*;
 

@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
-public class RpsSystemConnectionMemo extends SystemConnectionMemo {
+public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public RpsSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name);

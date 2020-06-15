@@ -3,7 +3,7 @@ package jmri.util;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Common utility method for returning the System Connection Name from the
