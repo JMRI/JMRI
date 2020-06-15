@@ -20,8 +20,6 @@ import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.string.expressions.Formula;
-import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -534,6 +532,79 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         // Test execute when loco address socket is disconnected
         actionThrottle2.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).disconnect();
         actionThrottle2.execute();
+        
+        Assert.assertEquals("Throttle is used 1 times", 1,
+                InstanceManager.getDefault(ThrottleManager.class).getThrottleUsageCount(locoAddress2));
+        
+        // Test disposeMe(). ActionThrottle does not have a throttle now.
+        actionThrottle2.disposeMe();
+        
+        Assert.assertEquals("Throttle is used 1 times", 1,
+                InstanceManager.getDefault(ThrottleManager.class).getThrottleUsageCount(locoAddress2));
+    }
+    
+    @Test
+    public void testDisposeMe() throws Exception {
+        ConditionalNG conditionalNG_2 = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A second conditionalNG");  // NOI18N
+        logixNG.addConditionalNG(conditionalNG_2);
+        ActionThrottle actionThrottle2 = new ActionThrottle("IQDA999", null);
+        MaleSocket maleSocket2 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle2);
+        conditionalNG_2.getChild(0).connect(maleSocket2);
+        
+        logixNG.setParentForAllChildren();
+        
+        int locoAddress = 1234;
+        AtomicReference<DccThrottle> myThrottleRef = new AtomicReference<>();
+        
+        MyThrottleListener myThrottleListener = new MyThrottleListener(myThrottleRef);
+        
+        boolean result = InstanceManager.getDefault(ThrottleManager.class)
+                .requestThrottle(locoAddress, myThrottleListener);
+
+        if (!result) {
+            log.error("loco {} cannot be aquired", locoAddress);
+        }
+        
+        Assert.assertNotNull("has throttle", myThrottleRef.get());
+        
+        Memory locoAddressMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco address memory");
+        locoAddressMemory.setValue(locoAddress);
+        AnalogExpressionMemory locoAddressExpression = new AnalogExpressionMemory("IQAE111", null);
+        locoAddressExpression.setMemory(locoAddressMemory);
+        
+        Memory locoSpeedMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco speed memory");
+        locoSpeedMemory.setValue(0);
+        AnalogExpressionMemory locoSpeedExpression = new AnalogExpressionMemory("IQAE112", null);
+        locoSpeedExpression.setMemory(locoSpeedMemory);
+        
+        Sensor locoDirectionSensor = InstanceManager.getDefault(SensorManager.class).provide("Loco direction sensor");
+        locoDirectionSensor.setState(Sensor.ACTIVE);
+        ExpressionSensor locoDirectionExpression = new ExpressionSensor("IQDE113", null);
+        locoDirectionExpression.setSensor(locoDirectionSensor);
+        
+        // Set loco address of actionThrottle2
+        MaleSocket locoAddressSocket =
+                InstanceManager.getDefault(AnalogExpressionManager.class)
+                        .registerExpression(locoAddressExpression);
+        actionThrottle2.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).connect(locoAddressSocket);
+        
+        Assert.assertEquals("Throttle is used 1 times", 1,
+                InstanceManager.getDefault(ThrottleManager.class).getThrottleUsageCount(locoAddress));
+        
+        // Test execute when loco address socket is connected
+        actionThrottle2.execute();
+        Assert.assertEquals("loco speed is correct", 0.0, myThrottleRef.get().getSpeedSetting(), 0.0001);
+        
+        Assert.assertEquals("Throttle is used 2 times", 2,
+                InstanceManager.getDefault(ThrottleManager.class).getThrottleUsageCount(locoAddress));
+        
+        // Test disposeMe(). ActionThrottle has a throttle now which must be released.
+        actionThrottle2.disposeMe();
+        
+        Assert.assertEquals("Throttle is used 1 times", 1,
+                InstanceManager.getDefault(ThrottleManager.class).getThrottleUsageCount(locoAddress));
     }
     
     @Test

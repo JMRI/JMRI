@@ -22,6 +22,32 @@ public class AbstractScriptDigitalActionTest {
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private AbstractScriptDigitalAction actionAbstractScriptDigitalAction;
+    
+    @Test
+    public void testgetCategory() {
+        Assert.assertEquals("Correct category",
+                Category.ITEM,
+                actionAbstractScriptDigitalAction.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("isEnabled() returns true by default",
+                actionAbstractScriptDigitalAction.isExternal());
+    }
+    
+    @Test
+    public void testGetChild() {
+        Assert.assertEquals("isEnabled() returns true by default", 0,
+                actionAbstractScriptDigitalAction.getChild(0));
+    }
+    
+    @Test
+    public void testGetChildCount() {
+        Assert.assertEquals("action has no children", 0,
+                actionAbstractScriptDigitalAction.getChildCount());
+    }
+    
 /*    
     @Override
     public ConditionalNG getConditionalNG() {
