@@ -167,7 +167,7 @@ public class FormulaTest extends AbstractStringExpressionTestBase {
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQSE61232"));
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQSE3"));
         
-        jmri.jmrit.logixng.string.expressions.Formula expression = new jmri.jmrit.logixng.string.expressions.Formula("IQSE321", null, actionSystemNames);
+        Formula expression = new Formula("IQSE321", null, actionSystemNames);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         
@@ -275,7 +275,7 @@ public class FormulaTest extends AbstractStringExpressionTestBase {
         List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSE52"));
         
-        jmri.jmrit.logixng.string.expressions.Formula expression = new jmri.jmrit.logixng.string.expressions.Formula("IQSE321", null, actionSystemNames);
+        Formula expression = new Formula("IQSE321", null, actionSystemNames);
         
         java.lang.reflect.Method method =
                 expression.getClass().getDeclaredMethod("setExpressionSystemNames", new Class<?>[]{List.class});
