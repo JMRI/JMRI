@@ -65,7 +65,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
             }
              cached = messageCache[replyIndex];
              if (cached == null) {
-                messagePending[bitIdx] |= bitMask;
+                messagePending[bitIdx] |= (1 << bitMask);
              }
         }
         if (cached != null) {

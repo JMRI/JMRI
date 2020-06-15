@@ -232,7 +232,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         boolean trainServicesCar = false; // specific train
         Train testTrain = null;
         if (_train != null) {
-            trainServicesCar = _train.services(_buildReport, clone);
+            trainServicesCar = _train.isServiceable(_buildReport, clone);
         }
         if (trainServicesCar) {
             testTrain = _train; // use the specific train
@@ -313,7 +313,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 clone.getDestinationTrack().getAlternateTrack() != car.getTrack()) {
             String status = car.setDestination(clone.getDestination(), clone.getDestinationTrack().getAlternateTrack());
             if (status.equals(Track.OKAY)) {
-                if (_train == null || _train.services(car)) {
+                if (_train == null || _train.isServiceable(car)) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSendCarToAlternative"),
                             new Object[]{car.toString(), clone.getDestinationTrack().getAlternateTrack().getName(),
                                     clone.getDestination().getName()}));
@@ -352,7 +352,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             for (Track track : yards) {
                 String status = car.setDestination(dest, track);
                 if (status.equals(Track.OKAY)) {
-                    if (_train != null && !_train.services(car)) {
+                    if (_train != null && !_train.isServiceable(car)) {
                         log.debug("Train ({}) can not deliver car ({}) to yard ({})", _train.getName(), car,
                                 track.getName());
                         continue;
@@ -998,7 +998,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (_train == null) {
             return NO_SPECIFIC_TRAIN;
         }
-        if (_train.services(car)) {
+        if (_train.isServiceable(car)) {
             return YES;
         } // is the reason this train can't service route moves or train length?
         else if (!_train.getServiceStatus().equals(Train.NONE)) {

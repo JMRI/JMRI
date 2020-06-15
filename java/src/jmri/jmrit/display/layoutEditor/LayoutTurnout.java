@@ -356,8 +356,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     private final boolean useBlockSpeed = false;
     
-    // temporary reference to the Editor that will eventually be part of View
-    private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
+    // temporary reference to the Editor that will eventually be part of View - should be moved to ctors and final
+    protected jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor, TurnoutType t) {
@@ -2751,6 +2751,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     @Override
     @Nonnull
     protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
+        log.trace("start LayoutTurnout.showPopup from {} of type {}", this, this.getClass() );
         if (popup != null) {
             popup.removeAll();
         } else {

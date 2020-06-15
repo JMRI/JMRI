@@ -1,11 +1,7 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li>A number of hardware-specific actions now require the system
-          connection be associated with them when used as a startup action.
-          In many cases, these actions will continue to "just work", but it is
-          recommended that actions be verified to be associated with the
-          correct connection in the Startup Actions Preferences.</li>
+          <li></li>
         </ul>
 
 	    <h4>Anyma DMX512</h4>
@@ -55,7 +51,10 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li><a href="https://www.jmri.org/help/en/html/hardware/loconet/Digitrax.shtml#deviceBoardId">
+                    Instructions</a> detailing how to change the Board ID (Board 
+                    Address) of certain Digitrax LocoNet-based devices using 
+                    JMRI have been added to the Digitrax hardware page.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -475,21 +474,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Added key shortcuts to the throttle window. Hold the shift
-                down, press and release key
-            <ul>
-                <li>A to switch to the "Address" section
-                <li>F to switch to the "Functions" section
-                <li>C to switch to the "Control" section which sets speed
-            </ul>
-                This is in addition to left arrow and right arrow, which 
-                move from one throttle to the next if you have more than one open.
-                Please note that this act when the key is released.
-            </li>
-            <li>
-                Chris Why fixed a bug in the speed-profiling support.
-            </li>
-            
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -531,7 +516,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Documentation updated regarding "VSD headless mode", "steam1 top speed reverse" and "sleep interval".</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>

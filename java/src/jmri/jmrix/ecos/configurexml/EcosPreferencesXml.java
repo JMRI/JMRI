@@ -24,11 +24,6 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
         return null;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     protected void register() {
         //log.error("unexpected call to register()", new Exception());
         ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -45,5 +40,5 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosPreferencesXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(EcosPreferencesXml.class);
 }

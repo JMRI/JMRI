@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.lenz.LenzCommandStation;
+import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 import org.slf4j.Logger;
@@ -110,7 +111,13 @@ public class LI100Adapter extends XNetSerialPortController {
         // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
-        new LI100XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .programmer(LI100XNetProgrammer.class)
+                .init();
     }
 
     /**

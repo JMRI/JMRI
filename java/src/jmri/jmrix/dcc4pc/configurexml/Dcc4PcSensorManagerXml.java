@@ -26,11 +26,6 @@ public class Dcc4PcSensorManagerXml extends jmri.managers.configurexml.AbstractS
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // create the master object
         //Dcc4PcSensorManager.instance();
@@ -38,5 +33,5 @@ public class Dcc4PcSensorManagerXml extends jmri.managers.configurexml.AbstractS
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManagerXml.class);
 }

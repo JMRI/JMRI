@@ -103,7 +103,12 @@ public class ZTC640Adapter extends XNetSerialPortController {
         packets.connectPort(this);
 
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     // base class methods for the XNetSerialPortController interface

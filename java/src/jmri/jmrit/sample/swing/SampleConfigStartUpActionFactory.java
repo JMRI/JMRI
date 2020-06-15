@@ -16,10 +16,10 @@ public class SampleConfigStartUpActionFactory extends AbstractStartupActionFacto
 
     @Override
     public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
-        if (!clazz.equals(SampleConfigPane.Default.class)) {
-            throw new IllegalArgumentException();
+        if (clazz.equals(SampleConfigPane.Default.class)) {
+            return "Open Sample Config"; // Bundle.getMessage(locale, "RosterFrameAction"); // NOI18N
         }
-        return "Open Sample Config"; // Bundle.getMessage(locale, "RosterFrameAction"); // NOI18N
+        throw new IllegalArgumentException(clazz.getName() + " is not supported by " + this.getClass().getName());
     }
 
     @Override

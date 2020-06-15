@@ -5,9 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetSerialPortController;
-import jmri.jmrix.lenz.XNetTrafficController;
+
+import jmri.jmrix.lenz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -103,8 +102,15 @@ public class EliteAdapter extends XNetSerialPortController {
 
         // start operation
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-
-        new EliteXNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .powerManager(XNetPowerManager.class)
+                .throttleManager(EliteXNetThrottleManager.class)
+                .programmer(EliteXNetProgrammer.class)
+                .programmerManager(XNetProgrammerManager.class)
+                .turnoutManager(EliteXNetTurnoutManager.class)
+                .lightManager(XNetLightManager.class)
+                .init();
     }
 
     // base class methods for the XNetSerialPortController interface

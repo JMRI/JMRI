@@ -34,28 +34,26 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
         this.setLenzCommandStation(xt.getCommandStation());
-        register(); // registers general type
-        InstanceManager.store(this, XNetSystemConnectionMemo.class); // also register as specific type
-
-        // create and register the XNetComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.lenz.swing.XNetComponentFactory(this),
-                jmri.jmrix.swing.ComponentFactory.class);
-
-        log.debug("Created XNetSystemConnectionMemo");
+        commonInit();
     }
 
     public XNetSystemConnectionMemo() {
         super("X", Bundle.getMessage("MenuXpressNet"));
+        commonInit();
+    }
+
+    private void commonInit() {
         register(); // registers general type
         InstanceManager.store(this, XNetSystemConnectionMemo.class); // also register as specific type
 
         // create and register the XNetComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.lenz.swing.XNetComponentFactory(this), jmri.jmrix.swing.ComponentFactory.class);
+        cf = new jmri.jmrix.lenz.swing.XNetComponentFactory(this);
+        InstanceManager.store(cf, jmri.jmrix.swing.ComponentFactory.class);
 
         log.debug("Created XNetSystemConnectionMemo");
     }
 
-    jmri.jmrix.swing.ComponentFactory cf;
+    private jmri.jmrix.swing.ComponentFactory cf;
 
     /**
      * Provide access to the TrafficController for this particular connection.
@@ -96,14 +94,6 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the Throttle Manager for this particular connection.
      */
     public ThrottleManager getThrottleManager() {
-        if (throttleManager == null) {
-           if (xt.getCommandStation().getCommandStationType() == 0x10 ||
-               xt.getCommandStation().getCommandStationType() == 0x04 ) {
-              throttleManager = new jmri.jmrix.roco.RocoXNetThrottleManager(this);
-           } else {
-              throttleManager = new XNetThrottleManager(this);
-           }
-        }
         return throttleManager;
     }
 
@@ -117,9 +107,6 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      * Provide access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
-        if (powerManager == null) {
-            powerManager = new XNetPowerManager(this);
-        }
         return powerManager;
     }
 
@@ -223,16 +210,10 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
             return false;
         } else if (type.equals(GlobalProgrammerManager.class)) {
             GlobalProgrammerManager p = getProgrammerManager();
-            if (p == null) {
-                return false;
-            }
-            return p.isGlobalProgrammerAvailable();
+            return ( p!=null && p.isGlobalProgrammerAvailable());
         } else if (type.equals(AddressedProgrammerManager.class)) {
             AddressedProgrammerManager p = getProgrammerManager();
-            if (p == null) {
-                return false;
-            }
-            return p.isAddressedModePossible();
+            return ( p!=null && p.isAddressedModePossible());
         } else if (type.equals(jmri.ThrottleManager.class)) {
             return true;
         } else if (type.equals(jmri.PowerManager.class)) {
@@ -277,7 +258,6 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
-
         if (T.equals(jmri.ThrottleManager.class)) {
             return (T) getThrottleManager();
         }

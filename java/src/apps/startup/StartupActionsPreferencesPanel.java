@@ -2,7 +2,7 @@ package apps.startup;
 
 import jmri.util.startup.StartupModel;
 import apps.ConfigBundle;
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

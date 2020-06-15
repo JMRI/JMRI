@@ -45,14 +45,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     // Abstract methods for the XNetInterface
 
     /**
-     * Forward a preformatted XNetMessage to the actual interface.
-     *
-     * @param m Message to send; will be updated with CRC
-     */
-    @Override
-    abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
-
-    /**
      * Make connection to existing PortController object.
      */
     @Override
@@ -278,6 +270,14 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         super.handleTimeout(msg, l);
         if (l != null) {
             ((XNetListener) l).notifyTimeout((XNetMessage) msg);
+        }
+    }
+
+    @Override
+    protected void notifyMessage(AbstractMRMessage m, AbstractMRListener notMe) {
+        super.notifyMessage(m, notMe);
+        if(notMe!=null) {
+            forwardMessage(notMe, m);
         }
     }
 

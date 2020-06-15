@@ -21,11 +21,6 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element sharedOperations, Element perNodeOperations) {
         boolean result = true;
         TurnoutOperationManager manager = InstanceManager.getDefault(TurnoutOperationManager.class);

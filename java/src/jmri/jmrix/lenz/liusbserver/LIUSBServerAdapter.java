@@ -145,7 +145,12 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         startCommThread();
         startBCastThread();
 
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     /**

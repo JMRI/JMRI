@@ -218,11 +218,6 @@ public class DefaultSignalGroupManagerXml
         return true;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private int getIntFromColour(String color) {
         switch (color) {
             case "RED":
