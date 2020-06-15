@@ -1,7 +1,8 @@
 package jmri.jmrit.logixng.digital.actions;
 
-import jmri.InstanceManager;
-import jmri.NamedBean;
+import java.lang.reflect.Field;
+
+import jmri.*;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -10,8 +11,8 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
+
 import org.apache.log4j.Level;
 import org.junit.After;
 import org.junit.Assert;
@@ -29,6 +30,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private ShutdownComputer actionShutdownComputer;
+    private String lastExecutedCommand;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -140,6 +142,58 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         action.setup();
     }
     
+    @Test
+    public void testExecute() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        ShutdownComputer action = new ShutdownComputer("IQDA321", null, 52);
+        
+        // During this test, we change SystemType.type, but we reset it in tearDown()
+        
+        Field privateField = SystemType.class.
+                getDeclaredField("type");
+        
+        privateField.setAccessible(true);
+        
+        privateField.set(SystemType.class, SystemType.WINDOWS);
+        action.execute();
+        Assert.assertEquals("Shutdown command is correct", "shutdown.exe", lastExecutedCommand);
+        JUnitAppender.assertErrorMessage("Shutdown failed");
+        
+        privateField.set(SystemType.class, SystemType.MACOSX);
+        action.execute();
+        Assert.assertEquals("Shutdown command is correct", "shutdown", lastExecutedCommand);
+        JUnitAppender.assertErrorMessage("Shutdown failed");
+        
+        privateField.set(SystemType.class, SystemType.LINUX);
+        action.execute();
+        Assert.assertEquals("Shutdown command is correct", "shutdown", lastExecutedCommand);
+        JUnitAppender.assertErrorMessage("Shutdown failed");
+        
+        privateField.set(SystemType.class, SystemType.UNIX);
+        action.execute();
+        Assert.assertEquals("Shutdown command is correct", "shutdown", lastExecutedCommand);
+        JUnitAppender.assertErrorMessage("Shutdown failed");
+        
+        boolean hasThrown = false;
+        try {
+            privateField.set(SystemType.class, SystemType.MACCLASSIC);
+            action.execute();
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", e.getMessage().startsWith("Unknown OS: "));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+        
+        hasThrown = false;
+        try {
+            privateField.set(SystemType.class, SystemType.OS2);
+            action.execute();
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", e.getMessage().startsWith("Unknown OS: "));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -173,19 +227,45 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         logixNG.activateLogixNG();
         JUnitAppender.assertErrorMessageStartsWith("Shutdown failed");
     }
-
+    
+    private void resetSystemType() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        // Ensure we reset SystemType
+        Field privateField = SystemType.class.
+                getDeclaredField("isSet");
+        
+        privateField.setAccessible(true);
+        
+        // Save original value
+        boolean origValue = (Boolean) privateField.get(SystemType.class);
+        // Do assert to check that the code works
+        Assert.assertTrue("SystemType.isSet is true", origValue);
+        
+        privateField.set(SystemType.class, false);
+        origValue = (Boolean) privateField.get(SystemType.class);
+        // Do assert to check that the code works
+        Assert.assertFalse("SystemType.isSet is false", origValue);
+    }
+    
     @After
-    public void tearDown() {
+    public void tearDown() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        // We change SystemType.type in the method testExecute(). But we
+        // cannot reset SystemType in that method since if an assert fails,
+        // or if an exception is thrown and not catched, we will leave that
+        // method without SystemType being reset. So we must reset SystemType
+        // here.
+        resetSystemType();
+        
         // Clear security mananger
         System.setSecurityManager(null);
         JUnitUtil.tearDown();
     }
     
     
-    private static class MySecurityManager extends SecurityManager {
+    private class MySecurityManager extends SecurityManager {
         
         @Override
         public void checkExec(String cmd) {
+            lastExecutedCommand = cmd;
             throw new SecurityException("exec is not allowed during test of ShutdownComputer");
         }
         
