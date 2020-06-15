@@ -301,7 +301,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * enabled.
      *
      * If the implementing class does not use a
-     * {@link jmri.jmrix.SystemConnectionMemo}, this method must be overridden.
+     * {@link SystemConnectionMemo}, this method must be overridden.
      * Overriding methods must call <code>super.setDisabled(boolean)</code> to
      * ensure the configuration change state is correctly set.
      *
@@ -390,7 +390,7 @@ abstract public class AbstractPortController implements PortAdapter {
     }
     
     /**
-     * Get the {@link jmri.jmrix.SystemConnectionMemo} associated with this
+     * Get the {@link SystemConnectionMemo} associated with this
      * object.
      * <p>
      * This method should only be overridden to ensure that a specific subclass
@@ -408,7 +408,7 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     /**
-     * Set the {@link jmri.jmrix.SystemConnectionMemo} associated with this
+     * Set the {@link SystemConnectionMemo} associated with this
      * object.
      * <p>
      * Overriding implementations must call

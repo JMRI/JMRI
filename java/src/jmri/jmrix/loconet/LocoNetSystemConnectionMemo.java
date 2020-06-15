@@ -76,7 +76,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     /**
      * Do both the default parent
-     * {@link SystemConnectionMemo} registration,
+     * {@link jmri.SystemConnectionMemo} registration,
      * and register this specific type.
      */
     @Override

@@ -9,7 +9,7 @@ import jmri.util.swing.WindowInterface;
  * {@link JmriNamedPaneAction} that implements {@link SystemConnectionAction}.
  * 
  * @author Randall Wood Copyright 2020
- * @param <M> the supported subclass of {@link SystemConnectionMemo}
+ * @param <M> the supported subclass of {@link jmri.SystemConnectionMemo}
  */
 public abstract class SystemConnectionNamedPaneAction<M extends DefaultSystemConnectionMemo> extends JmriNamedPaneAction implements SystemConnectionAction<M> {
 

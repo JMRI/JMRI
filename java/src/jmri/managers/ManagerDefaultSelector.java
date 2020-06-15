@@ -47,7 +47,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2015, 2017
  * @since 2.9.4
- * @see jmri.jmrix.SystemConnectionMemo#provides(java.lang.Class)
+ * @see jmri.SystemConnectionMemo#provides(java.lang.Class)
  */
 @ServiceProvider(service = PreferencesManager.class)
 public class ManagerDefaultSelector extends AbstractPreferencesManager {

@@ -60,7 +60,7 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
 
     /**
      * Get the Comparator to be used for two NamedBeans. This is typically an
-     * {@link NamedBeanComparator}, but may be any Comparator that works for
+     * {@link jmri.util.NamedBeanComparator}, but may be any Comparator that works for
      * this connection type.
      *
      * @param <B>  the type of NamedBean
