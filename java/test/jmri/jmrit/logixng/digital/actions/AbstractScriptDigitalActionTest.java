@@ -38,8 +38,15 @@ public class AbstractScriptDigitalActionTest {
     
     @Test
     public void testGetChild() {
-        Assert.assertEquals("isEnabled() returns true by default", 0,
-                actionAbstractScriptDigitalAction.getChild(0));
+        boolean hasThrown = false;
+        try {
+            actionAbstractScriptDigitalAction.getChild(0);
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct",
+                    "Not supported", e.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     @Test

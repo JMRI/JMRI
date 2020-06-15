@@ -56,7 +56,7 @@ public abstract class AbstractScriptDigitalAction extends AbstractDigitalAction
     
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        throw new UnsupportedOperationException("Not supported.");
+        throw new UnsupportedOperationException("Not supported");
     }
     
     @Override
