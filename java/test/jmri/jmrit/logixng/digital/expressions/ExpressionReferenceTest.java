@@ -356,19 +356,19 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initRouteManager();
+//        JUnitUtil.initRouteManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initReporterManager();
-        JUnitUtil.initOBlockManager();
-        JUnitUtil.initWarrantManager();
+//        JUnitUtil.initOBlockManager();
+//        JUnitUtil.initWarrantManager();
         JUnitUtil.initSignalMastLogicManager();
-        JUnitUtil.initLayoutBlockManager();
+//        JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initSectionManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDefaultSignalMastManager();
-        JUnitUtil.initIdTagManager();
-        JUnitUtil.initLogixManager();
-        JUnitUtil.initConditionalManager();
+//        JUnitUtil.initIdTagManager();
+//        JUnitUtil.initLogixManager();
+//        JUnitUtil.initConditionalManager();
         
         _category = Category.ITEM;
         _isExternal = true;

@@ -1,25 +1,22 @@
 package jmri.jmrit.logixng.digital.expressions;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 
 /**
  * Test Hold
@@ -126,7 +123,155 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
     }
+/*    
+    // Test action when at least one child socket is not connected
+    @Test
+    public void testCtorAndSetup1() {
+        StringExpressionManager m = InstanceManager.getDefault(StringExpressionManager.class);
+        
+        List<MaleSocket> maleSockets = new ArrayList<>();
+        maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE52", null)));
+        maleSockets.add(null);  // This is null by purpose
+        maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE554", null)));
+        maleSockets.add(null);  // This is null by purpose
+        maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE3", null)));
+        
+        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSE52"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", null));   // This is null by purpose
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQSE554"));
+        // IQSE61232 doesn't exist by purpose
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQSE61232"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQSE3"));
+        
+        Hold expression = new Hold("IQSE321", null, actionSystemNames);
+        Assert.assertNotNull("exists", expression);
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        
+        for (int i=0; i < 5; i++) {
+            Map.Entry<String,String> entry = actionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+entry.getKey(),
+                    entry.getKey(), expression.getChild(i).getName());
+            Assert.assertEquals("expression female socket is of correct class",
+                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
+                    expression.getChild(i).getClass().getName());
+            Assert.assertFalse("expression female socket is not connected",
+                    expression.getChild(i).isConnected());
+        }
+        
+        // Setup action. This connects the child actions to this action
+        expression.setup();
+        
+        jmri.util.JUnitAppender.assertMessage("cannot load string expression IQSE61232");
+        
+        for (int i=0; i < 5; i++) {
+            Map.Entry<String,String> entry = actionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+entry.getKey(),
+                    entry.getKey(), expression.getChild(i).getName());
+            
+            if (maleSockets.get(i) != null) {
+                Assert.assertTrue("expression female socket is connected",
+                        expression.getChild(i).isConnected());
+                Assert.assertEquals("child is correct bean",
+                        maleSockets.get(i),
+                        expression.getChild(i).getConnectedSocket());
+            } else {
+                Assert.assertFalse("expression female socket is not connected",
+                        expression.getChild(i).isConnected());
+            }
+        }
+        
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+    }
     
+    @Test
+    public void testCtorAndSetup2() {
+        StringExpressionManager m = InstanceManager.getDefault(StringExpressionManager.class);
+        
+        List<MaleSocket> maleSockets = new ArrayList<>();
+        maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE52", null)));
+        maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE99", null)));
+        maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE554", null)));
+        maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE61232", null)));
+        maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE3", null)));
+        
+        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSE52"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", "IQSE99"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQSE554"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQSE61232"));
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQSE3"));
+        
+        Hold expression = new Hold("IQSE321", null, actionSystemNames);
+        Assert.assertNotNull("exists", expression);
+        Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
+        
+        for (int i=0; i < 5; i++) {
+            Map.Entry<String,String> entry = actionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+entry.getKey(),
+                    entry.getKey(), expression.getChild(i).getName());
+            Assert.assertEquals("expression female socket is of correct class",
+                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
+                    expression.getChild(i).getClass().getName());
+            Assert.assertFalse("expression female socket is not connected",
+                    expression.getChild(i).isConnected());
+        }
+        
+        // Setup action. This connects the child actions to this action
+        expression.setup();
+        
+        for (int i=0; i < 5; i++) {
+            Map.Entry<String,String> entry = actionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+entry.getKey(),
+                    entry.getKey(), expression.getChild(i).getName());
+            
+            if (maleSockets.get(i) != null) {
+                Assert.assertTrue("expression female socket is connected",
+                        expression.getChild(i).isConnected());
+                Assert.assertEquals("child is correct bean",
+                        maleSockets.get(i),
+                        expression.getChild(i).getConnectedSocket());
+            } else {
+                Assert.assertFalse("expression female socket is not connected",
+                        expression.getChild(i).isConnected());
+            }
+        }
+        
+        // Since all the sockets are connected, a new socket must have been created.
+        Assert.assertEquals("expression has 6 female sockets", 6, expression.getChildCount());
+        
+        // Try run setup() again. That should not cause any problems.
+        expression.setup();
+        
+        Assert.assertEquals("expression has 6 female sockets", 6, expression.getChildCount());
+    }
+    
+    // Test calling setActionSystemNames() twice
+    @Test
+    public void testCtorAndSetup3() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
+        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSE52"));
+        
+        Hold expression = new Hold("IQSE321", null, actionSystemNames);
+        
+        java.lang.reflect.Method method =
+                expression.getClass().getDeclaredMethod("setExpressionSystemNames", new Class<?>[]{List.class});
+        method.setAccessible(true);
+        
+        boolean hasThrown = false;
+        try {
+            method.invoke(expression, new Object[]{null});
+        } catch (InvocationTargetException e) {
+            if (e.getCause() instanceof RuntimeException) {
+                hasThrown = true;
+                Assert.assertEquals("Exception message is correct",
+                        "expression system names cannot be set more than once",
+                        e.getCause().getMessage());
+            }
+        }
+        Assert.assertTrue("Exception thrown", hasThrown);
+    }
+*/    
     @Test
     public void testReset() throws SocketAlreadyConnectedException {
         Hold a = (Hold)_base;

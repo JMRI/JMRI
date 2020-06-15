@@ -207,8 +207,6 @@ public class FormulaTest extends AbstractStringExpressionTestBase {
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
     }
     
-    // Test action when at least one child socket is not connected.
-    // This should never happen, but test it anyway.
     @Test
     public void testCtorAndSetup2() {
         StringExpressionManager m = InstanceManager.getDefault(StringExpressionManager.class);
@@ -227,7 +225,7 @@ public class FormulaTest extends AbstractStringExpressionTestBase {
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQSE61232"));
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQSE3"));
         
-        jmri.jmrit.logixng.string.expressions.Formula expression = new jmri.jmrit.logixng.string.expressions.Formula("IQSE321", null, actionSystemNames);
+        Formula expression = new Formula("IQSE321", null, actionSystemNames);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         

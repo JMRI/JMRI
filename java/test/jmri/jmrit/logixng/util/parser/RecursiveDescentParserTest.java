@@ -11,6 +11,7 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -28,7 +29,7 @@ public class RecursiveDescentParserTest {
     
     // This test is only to check how Jython handles different types.
     // This test must be removed later.
-//    @Ignore("Test used only to check how jython handles things.")
+    @Ignore("Test used only to check how jython handles things.")
     @Test
     public void testDaniel() throws ScriptException {
         
@@ -338,7 +339,6 @@ public class RecursiveDescentParserTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     

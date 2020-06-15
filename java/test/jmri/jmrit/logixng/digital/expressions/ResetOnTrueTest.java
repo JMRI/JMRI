@@ -1,28 +1,24 @@
 package jmri.jmrit.logixng.digital.expressions;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBean;
 import jmri.Turnout;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
+
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 
 /**
  * Test ResetOnTrue
@@ -132,6 +128,136 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Expected exception thrown", thrown);
     }
     
+    // Test action when at least one child socket is not connected
+    @Test
+    public void testCtorAndSetup1() {
+        DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
+        
+//        MaleSocket childSocket0 = m.registerExpression(new ExpressionMemory("IQDE52", null));
+//        MaleSocket childSocket1 = m.registerExpression(new ExpressionMemory("IQDE554", null));
+        
+        ResetOnTrue expression = new ResetOnTrue("IQDE321", null);
+        Assert.assertNotNull("exists", expression);
+        Assert.assertEquals("expression has 2 female sockets", 2, expression.getChildCount());
+        expression.getChild(0).setName("XYZ123");
+        expression.setPrimaryExpressionSocketSystemName("IQDE52");
+        expression.getChild(1).setName("ZH12");
+        expression.setSecondaryExpressionSocketSystemName("IQDE554");
+        
+        Assert.assertEquals("expression female socket name is XYZ123",
+                "XYZ123", expression.getChild(0).getName());
+        Assert.assertEquals("expression female socket is of correct class",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                expression.getChild(0).getClass().getName());
+        Assert.assertFalse("expression female socket is not connected",
+                expression.getChild(0).isConnected());
+        
+        Assert.assertEquals("expression female socket name is ZH12",
+                "ZH12", expression.getChild(1).getName());
+        Assert.assertEquals("expression female socket is of correct class",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                expression.getChild(1).getClass().getName());
+        Assert.assertFalse("expression female socket is not connected",
+                expression.getChild(1).isConnected());
+        
+        // Setup action. This connects the child actions to this action
+        expression.setup();
+        
+        jmri.util.JUnitAppender.assertMessage("cannot load digital expression IQDE52");
+        jmri.util.JUnitAppender.assertMessage("cannot load digital expression IQDE554");
+        
+        Assert.assertEquals("expression female socket name is XYZ123",
+                "XYZ123", expression.getChild(0).getName());
+        Assert.assertEquals("expression female socket is of correct class",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                expression.getChild(0).getClass().getName());
+        Assert.assertFalse("expression female socket is not connected",
+                expression.getChild(0).isConnected());
+        
+        Assert.assertEquals("expression female socket name is ZH12",
+                "ZH12", expression.getChild(1).getName());
+        Assert.assertEquals("expression female socket is of correct class",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                expression.getChild(1).getClass().getName());
+        Assert.assertFalse("expression female socket is not connected",
+                expression.getChild(1).isConnected());
+    }
+    
+    @Test
+    public void testCtorAndSetup2() {
+        DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
+        
+        MaleSocket childSocket0 = m.registerExpression(new ExpressionMemory("IQDE52", null));
+        MaleSocket childSocket1 = m.registerExpression(new ExpressionMemory("IQDE554", null));
+        
+        ResetOnTrue expression = new ResetOnTrue("IQDE321", null);
+        Assert.assertNotNull("exists", expression);
+        Assert.assertEquals("expression has 2 female sockets", 2, expression.getChildCount());
+        expression.getChild(0).setName("XYZ123");
+        expression.setPrimaryExpressionSocketSystemName("IQDE52");
+        expression.getChild(1).setName("ZH12");
+        expression.setSecondaryExpressionSocketSystemName("IQDE554");
+        
+        Assert.assertEquals("expression female socket name is XYZ123",
+                "XYZ123", expression.getChild(0).getName());
+        Assert.assertEquals("expression female socket is of correct class",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                expression.getChild(0).getClass().getName());
+        Assert.assertFalse("expression female socket is not connected",
+                expression.getChild(0).isConnected());
+        
+        Assert.assertEquals("expression female socket name is ZH12",
+                "ZH12", expression.getChild(1).getName());
+        Assert.assertEquals("expression female socket is of correct class",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                expression.getChild(1).getClass().getName());
+        Assert.assertFalse("expression female socket is not connected",
+                expression.getChild(1).isConnected());
+        
+        // Setup action. This connects the child actions to this action
+        expression.setup();
+        
+        Assert.assertTrue("expression female socket is connected",
+                expression.getChild(0).isConnected());
+        Assert.assertEquals("child is correct bean",
+                childSocket0,
+                expression.getChild(0).getConnectedSocket());
+        Assert.assertEquals("expression has 2 female sockets", 2, expression.getChildCount());
+        
+        Assert.assertTrue("expression female socket is connected",
+                expression.getChild(1).isConnected());
+        Assert.assertEquals("child is correct bean",
+                childSocket1,
+                expression.getChild(1).getConnectedSocket());
+        Assert.assertEquals("expression has 2 female sockets", 2, expression.getChildCount());
+    }
+/*    
+    // Test calling setActionSystemNames() twice
+    @Test
+    public void testCtorAndSetup3() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
+        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQDE52"));
+        
+        ResetOnTrue expression = new ResetOnTrue("IQDE321", null, actionSystemNames);
+        
+        java.lang.reflect.Method method =
+                expression.getClass().getDeclaredMethod("setExpressionSystemNames", new Class<?>[]{List.class});
+        method.setAccessible(true);
+        
+        boolean hasThrown = false;
+        try {
+            method.invoke(expression, new Object[]{null});
+        } catch (InvocationTargetException e) {
+            if (e.getCause() instanceof RuntimeException) {
+                hasThrown = true;
+                Assert.assertEquals("Exception message is correct",
+                        "expression system names cannot be set more than once",
+                        e.getCause().getMessage());
+            }
+        }
+        Assert.assertTrue("Exception thrown", hasThrown);
+    }
+*/    
     private static int beanID = 901;
     
     @Test

@@ -206,8 +206,6 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase {
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
     }
     
-    // Test action when at least one child socket is not connected.
-    // This should never happen, but test it anyway.
     @Test
     public void testCtorAndSetup2() {
         AnalogExpressionManager m = InstanceManager.getDefault(AnalogExpressionManager.class);

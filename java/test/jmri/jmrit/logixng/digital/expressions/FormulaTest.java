@@ -213,8 +213,6 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
     }
     
-    // Test action when at least one child socket is not connected.
-    // This should never happen, but test it anyway.
     @Test
     public void testCtorAndSetup2() {
         DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
@@ -233,7 +231,7 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase {
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQDE61232"));
         actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQDE3"));
         
-        jmri.jmrit.logixng.digital.expressions.Formula expression = new jmri.jmrit.logixng.digital.expressions.Formula("IQDE321", null, actionSystemNames);
+        Formula expression = new Formula("IQDE321", null, actionSystemNames);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         
