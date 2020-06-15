@@ -10,7 +10,6 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.NamedBean.BadSystemNameException;
 import jmri.NamedBean.DuplicateSystemNameException;
-import jmri.SystemConnectionMemo;
 import jmri.beans.PropertyChangeProvider;
 import jmri.beans.VetoableChangeProvider;
 

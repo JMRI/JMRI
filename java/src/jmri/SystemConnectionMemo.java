@@ -6,7 +6,6 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import jmri.NamedBean;
 import jmri.util.startup.StartupActionFactory;
 
 /**
