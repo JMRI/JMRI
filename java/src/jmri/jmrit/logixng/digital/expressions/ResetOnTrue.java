@@ -3,15 +3,7 @@ package jmri.jmrit.logixng.digital.expressions;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

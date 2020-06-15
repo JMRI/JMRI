@@ -1,13 +1,9 @@
 package jmri.jmrit.logixng.digital.expressions;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
-import jmri.Memory;
 import jmri.NamedBean;
-import jmri.Turnout;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
@@ -18,7 +14,6 @@ import org.junit.Test;
 
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
-import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 
 /**
  * Test ResetOnTrue

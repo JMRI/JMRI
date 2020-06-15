@@ -156,7 +156,7 @@ public class DoStringAction
                         _stringExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load string expression " + socketSystemName);
                     }
                 }
             } else {
@@ -179,7 +179,7 @@ public class DoStringAction
                         _stringActionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital action " + socketSystemName);
+                        log.error("cannot load string action " + socketSystemName);
                     }
                 }
             } else {

@@ -185,7 +185,7 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
                         _triggerExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital action " + socketSystemName);
+                        log.error("cannot load digital expression " + socketSystemName);
                     }
                 }
             } else {
