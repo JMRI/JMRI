@@ -1906,11 +1906,12 @@
             <tag name="navassoc" enabled="false"/>
 
             <doclet name="nl.talsmasoftware.umldoclet.UMLDoclet"
-                    path="${libdir}/plantuml.jar:${libdir}/umldoclet-2.0.9.jar">
+                    path="${libdir}/umldoclet.jar">
                 <param name="-package"/>
                 <param name="--show-members=package"/>
                 <param name="-linksource"/>
                 <param name="-use"/>
+                <param name="--uml-timeout=1800"/> <!-- timeout passed to plantuml -->
             </doclet>
             
             <group title="Core" packages="jmri"/>
