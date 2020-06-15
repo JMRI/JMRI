@@ -1,8 +1,8 @@
 #
-#Mon Jun 15 07:48:37 PDT 2020
-classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrit..',\ 'apps..']=43584a34-ede9-4223-b3be-36efe2509048
-no\ classes\ that\ reside\ in\ a\ package\ 'jmri.util..'\ should\ depend\ on\ classes\ that\ reside\ outside\ of\ packages\ ['jmri',\ 'jmri.util..',\ 'java..',\ 'javax..',\ 'org..']=1d46097e-ad2a-4f96-89c1-26b33443d047
-classes\ that\ reside\ in\ a\ package\ 'jmri.jmrix..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrix..',\ 'apps..']=3d80424b-f1d3-4605-bb5c-133d739b6d0f
-no\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmris'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=c4b353e5-9817-4cd4-9672-b8b4150544d7
-no\ classes\ that\ reside\ in\ a\ package\ 'jmri'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=10319f6f-901b-48a6-8a5e-483103dddc21
-classes\ that\ reside\ in\ a\ package\ 'apps..'\ should\ only\ be\ accessed\ by\ any\ package\ ['apps..']=f6610449-23bd-48c8-a5c1-99de40e7b760
+#Mon Jun 15 11:46:25 PDT 2020
+classes\ that\ reside\ in\ a\ package\ 'apps..'\ should\ only\ be\ accessed\ by\ any\ package\ ['apps..']=b7df4569-2375-48e5-b44a-7af6bf4a9839
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmris'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=7ef65ad0-504d-4a5c-b174-9b06767a5e45
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri.util..'\ should\ depend\ on\ classes\ that\ reside\ outside\ of\ packages\ ['jmri',\ 'jmri.util..',\ 'java..',\ 'javax..',\ 'org..']=a0087403-671a-4d43-af49-8657e57d7503
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=ad536971-4977-4772-980a-94398d971002
+classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrit..',\ 'apps..']=c0cecc31-c2cb-4fec-92cd-dc2d84700764
+classes\ that\ reside\ in\ a\ package\ 'jmri.jmrix..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrix..',\ 'apps..']=1e1bd6c8-b823-4494-b01c-d8c911fdd30e
