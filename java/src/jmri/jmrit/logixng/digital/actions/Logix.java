@@ -1,20 +1,15 @@
 package jmri.jmrit.logixng.digital.actions;
 
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
+
+import jmri.jmrit.logixng.digital.actions.Bundle;
 
 /**
  * Emulates Logix.
@@ -114,6 +109,7 @@ public class Logix extends AbstractDigitalAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
     
     /** {@inheritDoc} */
@@ -126,12 +122,13 @@ public class Logix extends AbstractDigitalAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "IfThenElse_Short");
+        return Bundle.getMessage(locale, "Logix_Short");
     }
     
     /** {@inheritDoc} */
@@ -206,7 +203,7 @@ public class Logix extends AbstractDigitalAction
                         _actionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital action " + socketSystemName);
+                        log.error("cannot load digital boolean action " + socketSystemName);
                     }
                 }
             } else {
