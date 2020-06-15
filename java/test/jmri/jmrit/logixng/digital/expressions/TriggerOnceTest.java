@@ -123,7 +123,7 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
     // Test action when at least one child socket is not connected
     @Test
     public void testCtorAndSetup1() {
-        DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
+//        DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
         
 //        MaleSocket childSocket = m.registerExpression(new ExpressionMemory("IQDE52", null));
         

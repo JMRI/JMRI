@@ -131,7 +131,7 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
     // Test action when at least one child socket is not connected
     @Test
     public void testCtorAndSetup1() {
-        DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
+//        DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
         
 //        MaleSocket childSocket0 = m.registerExpression(new ExpressionMemory("IQDE52", null));
 //        MaleSocket childSocket1 = m.registerExpression(new ExpressionMemory("IQDE554", null));
