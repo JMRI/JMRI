@@ -18,7 +18,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public EcosSystemConnectionMemo(EcosTrafficController et) {
         super("U", "ECoS");

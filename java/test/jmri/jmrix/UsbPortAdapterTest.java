@@ -16,7 +16,7 @@ public class UsbPortAdapterTest {
 
     @Test
     public void testCTor() {
-        UsbPortAdapter t = new UsbPortAdapter(new SystemConnectionMemo("I", "test") {
+        UsbPortAdapter t = new UsbPortAdapter(new DefaultSystemConnectionMemo("I", "test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;

@@ -3,6 +3,7 @@ package jmri.jmrix;
 import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.SystemConnectionMemo;
 
 import java.util.Comparator;
 
@@ -15,9 +16,9 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class SystemConnectionMemoTest {
+public class DefaultSystemConnectionMemoTest {
 
-    private SystemConnectionMemo _memo = null;
+    private DefaultSystemConnectionMemo _memo = null;
 
     @Test
     public void testCTor() {
@@ -36,7 +37,7 @@ public class SystemConnectionMemoTest {
 
     @Test
     public void testGetConsistManagerWithCS() {
-        SystemConnectionMemo m = new SystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo m = new DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -70,7 +71,7 @@ public class SystemConnectionMemoTest {
 
     @Test
     public void testProvidesConsistManagerWithCS() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo t = new DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -103,7 +104,7 @@ public class SystemConnectionMemoTest {
 
     @Test
     public void testGetConsistManagerWithAPM() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo t = new DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -137,7 +138,7 @@ public class SystemConnectionMemoTest {
 
     @Test
     public void testProvidesConsistManagerWithAPM() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo t = new DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -173,7 +174,7 @@ public class SystemConnectionMemoTest {
         JUnitUtil.setUp();
         JUnitUtil.initDebugCommandStation();
         JUnitUtil.initDebugProgrammerManager();
-        _memo = new SystemConnectionMemo("T", "Test") {
+        _memo = new DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -191,5 +192,5 @@ public class SystemConnectionMemoTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemoTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(DefaultSystemConnectionMemoTest.class);
 }

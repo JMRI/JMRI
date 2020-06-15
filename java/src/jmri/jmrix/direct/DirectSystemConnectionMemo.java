@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
-public class DirectSystemConnectionMemo extends SystemConnectionMemo {
+public class DirectSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
