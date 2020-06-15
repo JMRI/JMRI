@@ -8,7 +8,7 @@ import jmri.LightManager;
 import jmri.NamedBean;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
-public class OakTreeSystemConnectionMemo extends SystemConnectionMemo {
+public class OakTreeSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public OakTreeSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);

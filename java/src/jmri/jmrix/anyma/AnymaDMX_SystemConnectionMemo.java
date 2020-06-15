@@ -8,7 +8,7 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBean;
 import jmri.Manager.NameValidity;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
-public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
+public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     private boolean configured = false;
 

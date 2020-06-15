@@ -211,6 +211,8 @@
          </ul></li>
 
         <li><a href="#RoadOptions">Road Options</a></li>
+        
+        <li><a href="#TrackWorkComments">Manifest Comments</a></li>
 
         <li><a href="#Pools">Track Pools</a></li>
 
@@ -2908,6 +2910,14 @@
     service, you will see "E" and the number of roads that you want to exclude from this track.
    </p>
 
+   <a name="TrackWorkComments" id="TrackWorkComments"></a>
+   <h4>Manifest Comments</h4>
+
+   You can optionally add a comment to your Manifest or switch lists when a pick up, set out, or
+   pickup and set out occurs to a track. Only one of the three messages will be added to your
+   paperwork when there's work for the selected track. The checkboxes at the bottom of the window
+   allow you to decide which paperwork gets the comment. 
+   
    <a name="Pools" id="Pools"></a>
    <h4>Track Pools</h4>
    OperationsPro&trade; allows you to "pool" a set of tracks at a location. Tracks in a pool share

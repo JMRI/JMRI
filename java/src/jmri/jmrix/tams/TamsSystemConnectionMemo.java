@@ -18,7 +18,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class TamsSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public TamsSystemConnectionMemo(TamsTrafficController et) {
         super("T", "Tams");

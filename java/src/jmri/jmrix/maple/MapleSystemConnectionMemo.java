@@ -8,7 +8,7 @@ import jmri.LightManager;
 import jmri.NamedBean;
 import jmri.TurnoutManager;
 import jmri.SensorManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
-public class MapleSystemConnectionMemo extends SystemConnectionMemo {
+public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public MapleSystemConnectionMemo() {
         this("K", SerialConnectionTypeList.MAPLE);

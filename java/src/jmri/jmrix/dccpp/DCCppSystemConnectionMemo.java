@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2015
  */
-public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class DCCppSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public DCCppSystemConnectionMemo(@Nonnull DCCppTrafficController xt) {
         super("D", "DCC++");
