@@ -12,7 +12,6 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.analog.implementation.Bundle;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.implementation.LogixNGPreferences;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;

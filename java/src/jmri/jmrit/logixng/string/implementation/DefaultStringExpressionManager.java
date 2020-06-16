@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractManager;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.implementation.LogixNGPreferences;
-import jmri.jmrit.logixng.string.implementation.Bundle;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**

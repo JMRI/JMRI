@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.managers.AbstractManager;
-import jmri.jmrit.logixng.string.implementation.Bundle;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
