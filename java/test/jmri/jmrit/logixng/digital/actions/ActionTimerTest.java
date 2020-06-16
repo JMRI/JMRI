@@ -1,10 +1,5 @@
 package jmri.jmrit.logixng.digital.actions;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -14,13 +9,10 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.digital.expressions.True;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -91,6 +83,105 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         Assert.assertNotNull("exists",t);
         t = new ActionTimer("IQDA321", null);
         Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testCtorAndSetup1() {
+        ActionTimer action = new ActionTimer("IQDA321", null);
+        Assert.assertNotNull("exists", action);
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        action.getChild(0).setName("ZH12");
+        action.setTimerActionSocketSystemName("IQDA554");
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        // Setup action. This connects the child actions to this action
+        action.setup();
+        
+        jmri.util.JUnitAppender.assertMessage("cannot load digital action IQDA554");
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+    }
+    
+    @Test
+    public void testCtorAndSetup2() {
+        ActionTimer action = new ActionTimer("IQDA321", null);
+        Assert.assertNotNull("exists", action);
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        action.getChild(0).setName("ZH12");
+        action.setTimerActionSocketSystemName(null);
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        // Setup action. This connects the child actions to this action
+        action.setup();
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+    }
+    
+    @Test
+    public void testCtorAndSetup3() {
+        DigitalActionManager m1 = InstanceManager.getDefault(DigitalActionManager.class);
+        
+        MaleSocket childSocket0 = m1.registerAction(new ActionMemory("IQDA554", null));
+        
+        ActionTimer action = new ActionTimer("IQDA321", null);
+        Assert.assertNotNull("exists", action);
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        action.getChild(0).setName("ZH12");
+        action.setTimerActionSocketSystemName("IQDA554");
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        // Setup action. This connects the child actions to this action
+        action.setup();
+        
+        Assert.assertTrue("action female socket is connected",
+                action.getChild(0).isConnected());
+        Assert.assertEquals("child is correct bean",
+                childSocket0,
+                action.getChild(0).getConnectedSocket());
+        
+        Assert.assertEquals("action has 1 female sockets", 1, action.getChildCount());
+        
+        // Try run setup() again. That should not cause any problems.
+        action.setup();
+        
+        Assert.assertEquals("action has 1 female sockets", 1, action.getChildCount());
     }
     
     @Test
