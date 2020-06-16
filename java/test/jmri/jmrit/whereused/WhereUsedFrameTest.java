@@ -191,6 +191,16 @@ public class WhereUsedFrameTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initReporterManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.initOBlockManager();
+        JUnitUtil.initRouteManager();
+        JUnitUtil.initWarrantManager();
+        JUnitUtil.initSectionManager();
         if(!GraphicsEnvironment.isHeadless()) {
             java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");  // NOI18N
             InstanceManager.getDefault(ConfigureManager.class).load(f);
