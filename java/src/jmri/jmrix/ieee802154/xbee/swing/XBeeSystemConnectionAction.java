@@ -3,7 +3,7 @@ package jmri.jmrix.ieee802154.xbee.swing;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.swing.AbstractSystemConnectionAction;
 

@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.SystemConnectionMemo;
 
 /**
  * Provide an abstract implementation of a *StreamPortController for stream

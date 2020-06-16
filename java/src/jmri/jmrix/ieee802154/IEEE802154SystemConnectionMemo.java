@@ -19,7 +19,7 @@ import jmri.util.NamedBeanComparator;
  * by
  * @author Paul Bender Copyright (C) 2013
  */
-public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class IEEE802154SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public IEEE802154SystemConnectionMemo() {
         this("Z", "IEEE802.15.4");

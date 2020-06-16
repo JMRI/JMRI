@@ -15,7 +15,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class SpeedoSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public SpeedoSystemConnectionMemo(SpeedoTrafficController tc) {
         super("A", "Speedo");
