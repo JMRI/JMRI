@@ -5,22 +5,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ServiceLoader;
+
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
+import jmri.jmrit.logixng.*;
 import jmri.util.Log4JUtil;
 import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleAnalogActionSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.MaleAnalogActionSocket;
+
 import jmri.managers.AbstractManager;
-import jmri.jmrit.logixng.AnalogActionFactory;
-import jmri.jmrit.logixng.AnalogActionBean;
+import jmri.jmrit.logixng.analog.implementation.Bundle;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
@@ -114,11 +112,8 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
-            return NameValidity.VALID;
-        } else {
-            return NameValidity.INVALID;
-        }
+        return LogixNG_Manager.validSystemNameFormat(
+                getSubSystemNamePrefix(), systemName);
     }
 
     @Override

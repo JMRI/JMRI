@@ -1,21 +1,18 @@
 package jmri.jmrit.logixng;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.NamedBean;
 import jmri.jmrit.logixng.Base.Lock;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.jmrit.logixng.digital.actions.Many;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**

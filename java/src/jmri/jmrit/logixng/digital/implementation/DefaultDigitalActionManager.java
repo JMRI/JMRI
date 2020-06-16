@@ -120,11 +120,8 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
-            return NameValidity.VALID;
-        } else {
-            return NameValidity.INVALID;
-        }
+        return LogixNG_Manager.validSystemNameFormat(
+                getSubSystemNamePrefix(), systemName);
     }
 
     @Override

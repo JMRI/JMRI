@@ -1,7 +1,11 @@
 package jmri.jmrit.logixng;
 
 import java.util.List;
+
 import jmri.Manager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manager for LogixNG
@@ -31,18 +35,6 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     public LogixNG createLogixNG(String userName)
             throws IllegalArgumentException;
     
-    /*.*
-     * Creates the initial items in the LogixNG tree.
-     * 
-     * By default, this is as following:
-     * + ActionMany
-     *   + ActionHoldAnything
-     *   + ActionDoIf
-     * 
-     * @param conditionalNG the ConditionalNG to be initialized with a tree
-     *./
-    public void setupInitialConditionalNGTree(ConditionalNG conditionalNG);
-*/
     /**
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
@@ -115,5 +107,40 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @return list of factories
      */
     public List<FemaleSocketFactory> getFemaleSocketFactories();
+    
+    /**
+     * Test if parameter is a properly formatted system name.
+     * <P>
+     * This method should only be used by the managers of the LogixNG system.
+     *
+     * @param subSystemNamePrefix the sub system prefix
+     * @param systemName the system name
+     * @return enum indicating current validity, which might be just as a prefix
+     */
+    public static NameValidity validSystemNameFormat(String subSystemNamePrefix, String systemName) {
+        // System names with digits. :AUTO: is generated system names
+        if (systemName.matches(subSystemNamePrefix+"(:AUTO:)?\\d+")) {
+            return NameValidity.VALID;
+            
+        // System names with dollar sign allow any characters in the name
+        } else if (systemName.matches(subSystemNamePrefix+"\\$.+")) {
+            return NameValidity.VALID;
+            
+        // System names with :JMRI: belongs to JMRI itself
+        } else if (systemName.matches(subSystemNamePrefix+":JMRI:.+")) {
+            return NameValidity.VALID;
+            
+        // System names with :JMRI-LIB: belongs to software that uses JMRI as a lib
+        } else if (systemName.matches(subSystemNamePrefix+":JMRI-LIB:.+")) {
+            return NameValidity.VALID;
+            
+        // Other system names are not valid
+        } else {
+//            LoggerFactory.getLogger(LogixNG_Manager.class)
+//                    .warn("system name {} is invalid for sub system prefix {}",
+//                            systemName, subSystemNamePrefix);
+            return NameValidity.INVALID;
+        }
+    }
     
 }

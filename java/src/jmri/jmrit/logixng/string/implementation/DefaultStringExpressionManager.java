@@ -5,26 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InvokeOnGuiThread;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.MaleStringExpressionSocket;
+import jmri.jmrit.logixng.*;
 import jmri.util.Log4JUtil;
 import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.FemaleStringExpressionSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
+
 import jmri.managers.AbstractManager;
-import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
-import jmri.jmrit.logixng.StringExpressionFactory;
-import jmri.jmrit.logixng.StringExpressionBean;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.implementation.LogixNGPreferences;
+import jmri.jmrit.logixng.string.implementation.Bundle;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
@@ -122,11 +120,8 @@ public class DefaultStringExpressionManager extends AbstractManager<MaleStringEx
      */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
-            return NameValidity.VALID;
-        } else {
-            return NameValidity.INVALID;
-        }
+        return LogixNG_Manager.validSystemNameFormat(
+                getSubSystemNamePrefix(), systemName);
     }
 
     @Override
