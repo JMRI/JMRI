@@ -751,8 +751,10 @@
         <a href="https://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk and Western signal definition</a>, 
         the <a href=
         "https://jmri.org/xml/signals/B&amp;O-1980/index.shtml">B&amp;O
-        1980 signal definition</a>, and the
-        <a href="https://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>.
+        1980 signal definition</a>, the
+        <a href="https://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>,
+        and
+        the <a href="https:/jmri.org/xml/signals/C&O-1980/index.shtml">C&O 1980 system</a>.
         </li>
 
         <li>Bob McCown, who helped with the migration of the jmriusers list to 
