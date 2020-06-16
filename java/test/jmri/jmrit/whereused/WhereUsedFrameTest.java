@@ -201,6 +201,7 @@ public class WhereUsedFrameTest {
         JUnitUtil.initRouteManager();
         JUnitUtil.initWarrantManager();
         JUnitUtil.initSectionManager();
+        JUnitUtil.clearBlockBossLogic();
         if(!GraphicsEnvironment.isHeadless()) {
             java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");  // NOI18N
             InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -215,6 +216,7 @@ public class WhereUsedFrameTest {
         }
         frame = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }
 
