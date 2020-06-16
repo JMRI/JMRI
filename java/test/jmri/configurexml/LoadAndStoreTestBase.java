@@ -343,6 +343,8 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initMemoryManager();
         System.setProperty("jmri.test.no-dialogs", "true");
     }
