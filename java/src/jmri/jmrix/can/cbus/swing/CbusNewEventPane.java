@@ -24,8 +24,8 @@ public class CbusNewEventPane extends JPanel {
     private final CbusEventRequestTablePane _evReqPanel;
     
     private jmri.UserPreferencesManager p;
-    private final String eventNumPref = "EventNum"; // NOI18N
-    private final String nodeNumPref = "NodeNum"; // NOI18N
+    private static final String EVENTNUM_PREF = "EventNum"; // NOI18N
+    private static final String NODENUM_PREF = "NodeNum"; // NOI18N
     
     public CbusNewEventPane(CbusEventTablePane evPanel){
         super();
@@ -47,11 +47,11 @@ public class CbusNewEventPane extends JPanel {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         int nodenum = 0; // default node 0
         int eventnum = 1; // default event 1
-        Object nn = p.getProperty(this.getClass().getName(), nodeNumPref);
+        Object nn = p.getProperty(this.getClass().getName(), NODENUM_PREF);
         if ( nn!=null ){
             nodenum = (Integer) nn;
         }
-        Object en = p.getProperty(this.getClass().getName(), eventNumPref);
+        Object en = p.getProperty(this.getClass().getName(), EVENTNUM_PREF);
         if ( en!=null ){
             eventnum = (Integer) en;
         }
@@ -94,8 +94,8 @@ public class CbusNewEventPane extends JPanel {
         else if (_evReqPanel!=null){
             _evReqPanel.tableChanged(null);
         }
-        p.setProperty(this.getClass().getName(), nodeNumPref, newnodenumberSpinner.getValue());
-        p.setProperty(this.getClass().getName(), eventNumPref, newevnumberSpinner.getValue());
+        p.setProperty(this.getClass().getName(), NODENUM_PREF, newnodenumberSpinner.getValue());
+        p.setProperty(this.getClass().getName(), EVENTNUM_PREF, newevnumberSpinner.getValue());
     }
     
     public void setNewButtonActive(boolean newState){
