@@ -346,7 +346,6 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
-        System.out.println("Instance Manager contents " + InstanceManager.contentsToString());
         System.setProperty("jmri.test.no-dialogs", "true");
     }
 
