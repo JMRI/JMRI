@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.Collection;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.SignalMastLogicManager;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
@@ -19,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.picocontainer.behaviors.Stored;
 
 /**
  * Base for testing load-and-store of configuration files.
@@ -343,14 +345,14 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initMemoryManager();
+        System.out.println("Instance Manager contents " + InstanceManager.contentsToString());
         System.setProperty("jmri.test.no-dialogs", "true");
     }
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(SignalMastLogicManager.class).dispose();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
