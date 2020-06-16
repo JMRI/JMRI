@@ -16,6 +16,7 @@ import jmri.util.junit.annotations.ToDo;
 import jmri.util.swing.JemmyUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
@@ -29,6 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests for the WhereUsedFrame Class
  * @author Dave Sand Copyright (C) 2020
  */
+@Disabled("check to see if disabling suite fixes other test")
 public class WhereUsedFrameTest {
 
     private WhereUsedFrame frame;
