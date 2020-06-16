@@ -187,13 +187,13 @@ public class WhereUsedFrameTest {
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initRosterConfigManager();
         if(!GraphicsEnvironment.isHeadless()) {
-            jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
             java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");  // NOI18N
-            cm.load(f);
+            InstanceManager.getDefault(ConfigureManager.class).load(f);
             frame = new WhereUsedFrame();
         }
    }
