@@ -1,8 +1,8 @@
-package jmri.jmrit.catalog;
+package jmri;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import javax.swing.tree.DefaultMutableTreeNode;
+import jmri.util.swing.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 /**
@@ -39,21 +39,6 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
      * @param path path to the new leaf
      */
     public void addLeaf(String name, String path) {
-        // check path
-        //        NamedIcon icon = NamedIcon.getIconByName(path);
-        //        if (icon == null) {
-        //            log.warn("path \" {} \" is not a NamedIcon.", path);
-        //            return;
-        //        }
-        //        int h = icon.getIconHeight();
-        //        log.debug("_leafs size {}", _leafs.size());
-        //        for (int i = 0; i < _leafs.size(); i++) {
-        //            CatalogTreeLeaf leaf = _leafs.get(i);
-        //            if (h < leaf.getSize()) {
-        //                _leafs.add(i + 1, new CatalogTreeLeaf(name, path, h));
-        //                return;
-        //            }
-        //        }
         int h = 0;
         _leafs.add(new CatalogTreeLeaf(name, path, h)); //  name is non-localized
     }

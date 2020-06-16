@@ -67,8 +67,6 @@ Constructor <jmri.web.server.WebServerPreferencesInstanceInitializer$1.<init>(jm
 Constructor <jmri.web.servlet.operations.HtmlTrainCommon.<init>(java.util.Locale, jmri.jmrit.operations.trains.Train)> calls constructor <jmri.jmrit.operations.trains.TrainCommon.<init>()> in (HtmlTrainCommon.java:47)
 Method <jmri.BlockManager$1.run()> calls constructor <jmri.jmrit.display.layoutEditor.BlockValueFile.<init>()> in (BlockManager.java:47)
 Method <jmri.BlockManager$1.run()> calls method <jmri.jmrit.display.layoutEditor.BlockValueFile.writeBlockValues()> in (BlockManager.java:47)
-Method <jmri.BlockManager.lambda$getBlocksOccupiedByRosterEntry$1(jmri.jmrit.roster.RosterEntry, java.util.List, jmri.Block)> calls method <jmri.jmrit.roster.RosterEntry.getDccAddress()> in (BlockManager.java:265)
-Method <jmri.BlockManager.lambda$getBlocksOccupiedByRosterEntry$1(jmri.jmrit.roster.RosterEntry, java.util.List, jmri.Block)> calls method <jmri.jmrit.roster.RosterEntry.getId()> in (BlockManager.java:264)
 Method <jmri.ConditionalVariable.evaluate()> calls method <jmri.jmrit.logix.OBlock.statusIs(java.lang.String)> in (ConditionalVariable.java:622)
 Method <jmri.ConditionalVariable.evaluate()> calls method <jmri.jmrit.logix.OBlockManager.getOBlock(java.lang.String)> in (ConditionalVariable.java:617)
 Method <jmri.ConditionalVariable.evaluate()> calls method <jmri.jmrit.logix.Warrant.getRunMode()> in (ConditionalVariable.java:595)

@@ -1,4 +1,4 @@
-package jmri.jmrit.catalog;
+package jmri;
 
 /**
  * Leaf of a CatalogTree.

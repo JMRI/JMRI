@@ -1,4 +1,4 @@
-package jmri.jmrit.catalog;
+package jmri;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
