@@ -187,8 +187,8 @@ public class WhereUsedFrameTest {
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
         JUnitUtil.initRosterConfigManager();
         if(!GraphicsEnvironment.isHeadless()) {
             jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
