@@ -3,7 +3,7 @@ package jmri.managers;
 import javax.annotation.Nonnull;
 import jmri.StringIO;
 import jmri.Manager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.StringIOManager;
 
 /**
