@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.nio.file.Path;
 
 import jmri.*;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
@@ -16,7 +17,6 @@ import jmri.util.junit.annotations.ToDo;
 import jmri.util.swing.JemmyUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
@@ -30,7 +30,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests for the WhereUsedFrame Class
  * @author Dave Sand Copyright (C) 2020
  */
-@Disabled("check to see if disabling suite fixes other test")
 public class WhereUsedFrameTest {
 
     private WhereUsedFrame frame;
@@ -215,6 +214,9 @@ public class WhereUsedFrameTest {
     public  void tearDown() {
         if(frame!=null){
             JUnitUtil.dispose(frame);
+            new EditorFrameOperator("LE Panel").closeFrameWithConfirmations();
+            new EditorFrameOperator("CPE Panel").closeFrameWithConfirmations();
+            new EditorFrameOperator("Sensor SB").closeFrameWithConfirmations();
         }
         frame = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
