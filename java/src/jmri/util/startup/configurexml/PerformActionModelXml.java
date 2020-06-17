@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import jmri.util.startup.PerformActionModel;
 import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 
 /**
@@ -96,17 +96,6 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         });
         InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
         return result;
-    }
-
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @param o       ignored
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
     }
 
     // initialize logging

@@ -745,9 +745,7 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("AutoEngineTest");
         train.setNumberEngines(Train.AUTO);
 
-        createThreeLocationRoute();
-        Route route = rmanager.getRouteByName("Three Location Route");
-        Assert.assertNotNull(route);
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
         train.setRoute(route);
 
         // Auto Engines calculates the number of engines based on requested moves in the route
@@ -761,24 +759,30 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("AutoEngineTest");
         train.setNumberEngines(Train.AUTO);
 
-        createThreeLocationRoute();
-        Route route = rmanager.getRouteByName("Three Location Route");
-        Assert.assertNotNull(route);
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
         RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
 
-        Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
-        Assert.assertEquals("confirm location", "location B", rB.getLocation().getName());
-        Assert.assertEquals("confirm location", "location C", rC.getLocation().getName());
+        Assert.assertEquals("confirm location", "Acton", rA.getLocation().getName());
+        Assert.assertEquals("confirm location", "Boston", rB.getLocation().getName());
+        Assert.assertEquals("confirm location", "Chelmsford", rC.getLocation().getName());
 
         // place four engines at the start of the route
         Location A = rA.getLocation();
-        Track spurA = A.getTrackByName("spurA", null);
-        Assert.assertNotNull(spurA);
-        placeFourEngines(spurA);
+        Track actonYard1 = A.getTrackByName("Acton Yard 1", null);
+        Assert.assertNotNull(actonYard1);
+        placeFourEngines(actonYard1);
+        
+        // 7 moves per location requires 2 engines, build should fail
+        Assert.assertFalse(train.build());
+        Assert.assertFalse("Train should not build, needs 2 engines", train.isBuilt());
+        
+        rA.setMaxCarMoves(5);
+        rB.setMaxCarMoves(5);
+        rC.setMaxCarMoves(5);
 
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, only needs a single engine", train.isBuilt());
@@ -792,29 +796,15 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("AutoEngineTest");
         train.setNumberEngines(Train.AUTO);
 
-        createThreeLocationRoute();
-        Route route = rmanager.getRouteByName("Three Location Route");
-        Assert.assertNotNull(route);
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
         train.setRoute(route);
 
-        RouteLocation rA = route.getDepartsRouteLocation();
-        RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
-        RouteLocation rC = route.getTerminatesRouteLocation();
-
-        Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
-        Assert.assertEquals("confirm location", "location B", rB.getLocation().getName());
-        Assert.assertEquals("confirm location", "location C", rC.getLocation().getName());
-
-        // change requirements to demand 2 engines
-        rA.setMaxCarMoves(12);
-        rB.setMaxCarMoves(12);
-        rC.setMaxCarMoves(12);
-
         // place four engines at the start of the route
+        RouteLocation rA = route.getDepartsRouteLocation();
         Location A = rA.getLocation();
-        Track spurA = A.getTrackByName("spurA", null);
-        Assert.assertNotNull(spurA);
-        placeFourEngines(spurA);
+        Track actonYard1 = A.getTrackByName("Acton Yard 1", null);
+        Assert.assertNotNull(actonYard1);
+        placeFourEngines(actonYard1);
 
         Assert.assertFalse(train.build());
         Assert.assertFalse("Train should not build, only single engines", train.isBuilt());
@@ -842,18 +832,12 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("AutoEngineTest");
         train.setNumberEngines(Train.AUTO);
 
-        createThreeLocationRoute();
-        Route route = rmanager.getRouteByName("Three Location Route");
-        Assert.assertNotNull(route);
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
         RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
-
-        Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
-        Assert.assertEquals("confirm location", "location B", rB.getLocation().getName());
-        Assert.assertEquals("confirm location", "location C", rC.getLocation().getName());
 
         // create demand for 4 engines
         rA.setMaxCarMoves(12);
@@ -863,9 +847,9 @@ public class TrainTest extends OperationsTestCase {
 
         // place four engines at the start of the route
         Location A = rA.getLocation();
-        Track spurA = A.getTrackByName("spurA", null);
-        Assert.assertNotNull(spurA);
-        placeFourEngines(spurA);
+        Track actonYard1 = A.getTrackByName("Acton Yard 1", null);
+        Assert.assertNotNull(actonYard1);
+        placeFourEngines(actonYard1);
 
         Consist c = emanager.newConsist("c");
         Engine e1 = emanager.getByRoadAndNumber("E", "1");
@@ -896,18 +880,12 @@ public class TrainTest extends OperationsTestCase {
         Train train = tmanager.newTrain("AutoEngineTest");
         train.setNumberEngines(Train.AUTO);
 
-        createThreeLocationRoute();
-        Route route = rmanager.getRouteByName("Three Location Route");
-        Assert.assertNotNull(route);
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
         train.setRoute(route);
 
         RouteLocation rA = route.getDepartsRouteLocation();
         RouteLocation rB = route.getRouteLocationBySequenceNumber(2);
         RouteLocation rC = route.getTerminatesRouteLocation();
-
-        Assert.assertEquals("confirm location", "location A", rA.getLocation().getName());
-        Assert.assertEquals("confirm location", "location B", rB.getLocation().getName());
-        Assert.assertEquals("confirm location", "location C", rC.getLocation().getName());
 
         // create demand for 4 engines
         rA.setMaxCarMoves(12);
@@ -917,9 +895,9 @@ public class TrainTest extends OperationsTestCase {
 
         // place four engines at the start of the route
         Location A = rA.getLocation();
-        Track spurA = A.getTrackByName("spurA", null);
-        Assert.assertNotNull(spurA);
-        placeFourEngines(spurA);
+        Track actonYard1 = A.getTrackByName("Acton Yard 1", null);
+        Assert.assertNotNull(actonYard1);
+        placeFourEngines(actonYard1);
 
         Consist c = emanager.newConsist("c");
         Engine e1 = emanager.getByRoadAndNumber("E", "1");
@@ -4437,7 +4415,7 @@ public class TrainTest extends OperationsTestCase {
     @Test
     public void testTrainServicesCar() {
 
-        Route route = JUnitOperationsUtil.createThreeLocationTurnRoute();
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
 
         // to increase test coverage place the two cars in a kernel
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", null, 0);
@@ -4455,39 +4433,153 @@ public class TrainTest extends OperationsTestCase {
         // car not on track
         Assert.assertFalse(train1.isServiceable(c1));
 
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+
+        Assert.assertEquals("Place car on track", Track.OKAY, c1.setLocation(boston, bostonSpur1));
+
+        // should be serviced by train
+        Assert.assertTrue(train1.isServiceable(c1));
+        
+        // give the car a destination
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        c1.setDestination(chelmsford, null);
+        
+        // should be serviced by train
+        Assert.assertTrue(train1.isServiceable(c1));
+        
+        // don't allow boxcars
+        chelmsford.deleteTypeName("Boxcar");
+        Assert.assertFalse(train1.isServiceable(c1));
+        chelmsford.addTypeName("Boxcar");
+        Assert.assertTrue(train1.isServiceable(c1));
+        
+        // don't allow Boston spur to service train
+        bostonSpur1.setPickupOption(Track.EXCLUDE_TRAINS);
+        bostonSpur1.addPickupId(train1.getId());
+        Assert.assertFalse(train1.isServiceable(c1));
+        bostonSpur1.setPickupOption(Track.ANY);
+        Assert.assertTrue(train1.isServiceable(c1));
+        
+        // train is to skip Boston
+        RouteLocation bostonRl = route.getLastLocationByName("Boston");
+        train1.addTrainSkipsLocation(bostonRl.getId());
+        Assert.assertFalse(train1.isServiceable(c1));       
+        train1.deleteTrainSkipsLocation(bostonRl.getId());
+        Assert.assertTrue(train1.isServiceable(c1));
+        
+        // train is to skip Chelmsford
+        RouteLocation chelmsfordRl = route.getLastLocationByName("Chelmsford");
+        train1.addTrainSkipsLocation(chelmsfordRl.getId());
+        Assert.assertFalse(train1.isServiceable(c1));       
+        train1.deleteTrainSkipsLocation(chelmsfordRl.getId());
+        Assert.assertTrue(train1.isServiceable(c1));
+        
+        // only allow car to terminal
+        train1.setSendCarsToTerminalEnabled(true);
+        Assert.assertFalse(train1.isServiceable(c1)); 
+        train1.setSendCarsToTerminalEnabled(false);
+        Assert.assertTrue(train1.isServiceable(c1));
+        
+        // don't allow destination track to service train
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        c1.setDestination(chelmsford, chelmsfordSpur1);
+        chelmsfordSpur1.setDropOption(Track.EXCLUDE_TRAINS);
+        chelmsfordSpur1.addDropId(train1.getId());
+        Assert.assertFalse(train1.isServiceable(c1));
+        chelmsfordSpur1.setDropOption(Track.ANY);
+        Assert.assertTrue(train1.isServiceable(c1));
+        
+        // give car a destination that can't be reached
         Location acton = lmanager.getLocationByName("Acton");
         Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        
+        c1.setDestination(acton, actonSpur1);
+        Assert.assertFalse(train1.isServiceable(c1));
+    }
+    
+    @Test
+    public void testTrainServicesCarNoThrough() {
+
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
+        Train train1 = tmanager.newTrain("testTrainServicesCar");
+        train1.setRoute(route);
+        
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", null, 0);
+
+        // place car at start of route, send to last location of route
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        // give the car a destination
+        Location essex = lmanager.getLocationByName("Essex");
+        c1.setDestination(essex, null);
 
         Assert.assertEquals("Place car on track", Track.OKAY, c1.setLocation(acton, actonSpur1));
 
         // should be serviced by train
         Assert.assertTrue(train1.isServiceable(c1));
-
+        
+        // don't allow through cars
+        train1.setAllowThroughCarsEnabled(false);
+        Assert.assertFalse(train1.isServiceable(c1));
+        
+        // caboose, car with FRED, and passenger cars are exceptions
+        c1.setCaboose(true);
+        Assert.assertTrue(train1.isServiceable(c1));
+        c1.setCaboose(false);
+        Assert.assertFalse(train1.isServiceable(c1));
+        
+        c1.setFred(true);
+        Assert.assertTrue(train1.isServiceable(c1));
+        c1.setFred(false);
+        Assert.assertFalse(train1.isServiceable(c1));
+        
+        c1.setPassenger(true);
+        Assert.assertTrue(train1.isServiceable(c1));
+        c1.setPassenger(false);
+        Assert.assertFalse(train1.isServiceable(c1));
     }
+    
+    @Test
+    public void testTrainServicesCarLocal() {
 
-    private void createThreeLocationRoute() {
+        Route route = JUnitOperationsUtil.createFiveLocationRoute();
+        Train train1 = tmanager.newTrain("testTrainServicesCar");
+        train1.setRoute(route);
+        
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", null, 0);
 
-        Setup.setMaxTrainLength(1000);
+        // place car at start of route
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        // give the car a destination
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        c1.setDestination(acton, actonYard1);
 
-        Route route = rmanager.newRoute("Three Location Route");
+        Assert.assertEquals("Place car on track", Track.OKAY, c1.setLocation(acton, actonSpur1));
 
-        Location locationA = lmanager.newLocation("location A");
-        Location locationB = lmanager.newLocation("location B");
-        Location locationC = lmanager.newLocation("location C");
-        Track trackA = locationA.addTrack("spurA", Track.SPUR);
-        Track trackB = locationB.addTrack("spurB", Track.SPUR);
-        Track trackC = locationC.addTrack("spurC", Track.SPUR);
-        trackA.setLength(300);
-        trackB.setLength(300);
-        trackC.setLength(300);
-
-        RouteLocation rA = route.addLocation(locationA);
-        RouteLocation rB = route.addLocation(locationB);
-        RouteLocation rC = route.addLocation(locationC);
-
-        rA.setMaxCarMoves(5);
-        rB.setMaxCarMoves(5);
-        rC.setMaxCarMoves(5);
+        // should be serviced by train
+        Assert.assertTrue(train1.isServiceable(c1));
+        
+        // don't allow local moves
+        train1.setAllowLocalMovesEnabled(false);
+        Assert.assertFalse(train1.isServiceable(c1));
+        
+        // caboose, car with FRED, and passenger cars are exceptions
+        c1.setCaboose(true);
+        Assert.assertTrue(train1.isServiceable(c1));
+        c1.setCaboose(false);
+        Assert.assertFalse(train1.isServiceable(c1));
+        
+        c1.setFred(true);
+        Assert.assertTrue(train1.isServiceable(c1));
+        c1.setFred(false);
+        Assert.assertFalse(train1.isServiceable(c1));
+        
+        c1.setPassenger(true);
+        Assert.assertTrue(train1.isServiceable(c1));
+        c1.setPassenger(false);
+        Assert.assertFalse(train1.isServiceable(c1));
     }
 
     private void placeFourEngines(Track track) {
@@ -4518,9 +4610,6 @@ public class TrainTest extends OperationsTestCase {
     @Before
     public void setUp() {
         super.setUp();
-//        jmri.util.JUnitUtil.resetProfileManager();
-//
-//        JUnitOperationsUtil.resetOperationsManager();
 
         tmanager = InstanceManager.getDefault(TrainManager.class);
         rmanager = InstanceManager.getDefault(RouteManager.class);

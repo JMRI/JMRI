@@ -22,7 +22,7 @@ public class StealingThrottleManager extends DebugThrottleManager {
     /**
      * Constructor.
      */
-    public StealingThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
+    public StealingThrottleManager(jmri.SystemConnectionMemo memo) {
         super(memo);
     }
 

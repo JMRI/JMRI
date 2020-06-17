@@ -172,11 +172,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         messages.setAttribute("class", "jmri.jmrit.entryexit.configurexml.EntryExitPairsXml");  // NOI18N
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");  // NOI18N
-    }
-
     /**
      * Load, starting with the layoutBlock element, then all the value-icon
      * pairs.

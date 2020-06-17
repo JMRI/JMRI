@@ -85,7 +85,6 @@ import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.JFrameInterface;
-import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
 import jmri.util.usb.RailDriverMenuItem;
 import jmri.web.server.WebServerAction;
@@ -125,9 +124,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         jmri.Application.setLogo(logo());
         log.trace("setURL");
         jmri.Application.setURL(line2());
-
-        // Enable proper snapping of JSliders
-        SliderSnap.init();
 
         // Get configuration profile
         log.trace("start to get configuration profile - locate files");

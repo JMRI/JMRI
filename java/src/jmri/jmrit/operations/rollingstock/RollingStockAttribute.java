@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
@@ -177,18 +176,9 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
      * @param root Common Element for storage.
      * @param eNames New format Element group name
      * @param eName New format Element name
-     * @param oldName Backwards compatibility Element name
      *
      */
-    public void store(Element root, String eNames, String eName, String oldName) {
-        if (Control.backwardCompatible) {
-            Element values = new Element(oldName);
-            for (String name : getNames()) {
-                values.addContent(name + "%%"); // NOI18N
-            }
-            root.addContent(values);
-        }
-        // new format using elements
+    public void store(Element root, String eNames, String eName) {
         Element names = new Element(eNames);
         for (String name : getNames()) {
             Element e = new Element(eName);

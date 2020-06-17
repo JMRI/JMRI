@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.0</revnumber>
+      <date>2016-12-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial Version</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Corrected typo and removed ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>
+	<revision>
+      <revnumber>2</revnumber>
+      <date>2020-03-05</date>
+      <authorinitials>GM</authorinitials>
+      <revremark>Initial version of the 1980 C&amp;O Signal rules.  This set was created by back dating the CSX-2014-Chessie rule set created by Suzi Tall.  Back dating required removal of some aspects and altering the mapping to compensate for their removal.  While based on the 1980 rule book, they are the same rules that were in affect in 1969.</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>C&amp;O 1980</aspecttable>
+  <name>1 Head Permissive Dwarf Signal</name>
+  <reference>As described in the 1980 version of the Chessie System Operating Rules "Signal Rules - 281-292".</reference>
+  <description>Appearances for a permissive single head dwarf mast with a number plate</description>
+  
+  <appearances>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <reference>Rule 281</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3p-lo/rule-C1281.gif</imagelink>
+    </appearance>
+    
+	<appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <reference>Rule 285</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3p-lo/rule-C1285.gif</imagelink>
+    </appearance>
+    
+	<appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>red</show>
+      <reference>Rule 291</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3p-lo/rule-C1291.gif</imagelink>
+    </appearance>
+    
+	<appearance>
+      <aspectname>Unlit</aspectname>
+      <show>dark</show>
+      <reference>-</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-2014-Chessie/CO-3p-lo/CO-3p-lo.gif</imagelink>
+    </appearance>
+  
+  </appearances>
+  
+  <specificappearances>
+    
+	<danger>
+      <aspect>Stop and Proceed</aspect>
+    </danger>
+    
+	<permissive>
+      <aspect>Stop and Proceed</aspect>
+    </permissive>
+   
+    <held>
+      <aspect>Stop and Proceed</aspect>
+    </held>
+    
+	<dark>
+      <aspect>Unlit</aspect>
+    </dark>
+  
+  </specificappearances>
+  
+  <aspectMappings>
+    
+	<aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Medium Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Medium Approach Slow</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Approach Slow</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Medium Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+	<aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+  </aspectMappings>
+  
+</appearancetable>

@@ -17,7 +17,7 @@ public class EngineerTest {
     public void testCTor() {
         Warrant warrant = new Warrant("IW0", "AllTestWarrant");
         jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
-        jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
+        jmri.SystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
         jmri.DccThrottle throttle = new jmri.jmrix.debugthrottle.DebugThrottle(addr,memo);
         Engineer t = new Engineer(warrant, throttle);
         Assert.assertNotNull("exists",t);

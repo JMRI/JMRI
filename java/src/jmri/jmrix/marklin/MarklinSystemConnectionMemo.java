@@ -16,7 +16,7 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public MarklinSystemConnectionMemo(MarklinTrafficController et) {
         super("M", "Marklin-CS2");

@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class EasyDccSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public EasyDccSystemConnectionMemo() {
         this("E", EasyDccConnectionTypeList.EASYDCC);
