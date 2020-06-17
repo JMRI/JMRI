@@ -24,7 +24,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import jmri.*;
-import jmri.implementation.Bundle;
 import jmri.jmrit.Sound;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;

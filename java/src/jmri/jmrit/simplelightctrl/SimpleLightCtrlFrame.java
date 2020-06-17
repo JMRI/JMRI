@@ -9,7 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import jmri.*;
-import jmri.jmrit.simplelightctrl.Bundle;
 import jmri.swing.NamedBeanComboBox;
 
 import org.slf4j.Logger;
