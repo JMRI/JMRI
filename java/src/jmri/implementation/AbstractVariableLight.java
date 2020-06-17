@@ -76,7 +76,7 @@ public abstract class AbstractVariableLight
      * System independent operational instance variables (not saved between
      * runs).
      */
-    protected double mCurrentIntensity = 0.0;
+//    protected double mCurrentIntensity = 0.0; // Uncomment when mCurrentIntensity is removed from AbstractLight due to deprecation
 
     @Override
     @Nonnull
