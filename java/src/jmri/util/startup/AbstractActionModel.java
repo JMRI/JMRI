@@ -9,7 +9,7 @@ import javax.annotation.CheckForNull;
 import javax.swing.Action;
 
 import jmri.JmriException;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.ConnectionNameFromSystemName;
