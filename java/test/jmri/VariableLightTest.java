@@ -13,7 +13,7 @@ public class VariableLightTest {
 
     @Test
     public void testIsConsistentState() {
-        MyVariableLight light = new MyVariableLight("Analog");
+        MyVariableLight light = new MyVariableLight("IL1");
         
         light.setState(VariableLight.ON);
         Assert.assertTrue("State is consistent", light.isConsistentState());

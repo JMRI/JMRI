@@ -1,7 +1,8 @@
 package jmri;
 
-import org.junit.Assert;
-import org.junit.Test;
+import jmri.implementation.AbstractLight;
+
+import org.junit.*;
 
 /**
  * Tests for the Light class
@@ -30,4 +31,37 @@ public class LightTest {
         Assert.assertTrue("TRANSITIONINGLOWER overlap", (Light.TRANSITIONINGLOWER & Light.TRANSITIONING) != 0);
         Assert.assertTrue("TRANSITIONINGTOFULLOFF overlap", (Light.TRANSITIONINGTOFULLOFF & Light.TRANSITIONING) != 0);
     }
+    
+    @SuppressWarnings("deprecation")
+    @Test
+    public void testIsConsistentState() {
+        MyLight light = new MyLight("IL1");
+        Assert.assertFalse("State is is not intensity variable",
+                light.isIntensityVariable());
+    }
+    
+    @Before
+    public void setUp() {
+          jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+          jmri.util.JUnitUtil.tearDown();
+    }
+
+    
+    private static class MyLight extends AbstractLight {
+
+        public MyLight(String systemName) {
+            super(systemName);
+        }
+
+        @Override
+        public void setState(int newState) {
+            mState = newState;
+        }
+        
+    }
+    
 }
