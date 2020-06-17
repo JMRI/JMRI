@@ -68,7 +68,7 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
      *                   programmer is available
      * @param memo       the associated connection
      */
-    public DefaultProgrammerManager(@CheckForNull Programmer programmer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
+    public DefaultProgrammerManager(@CheckForNull Programmer programmer, @Nonnull jmri.SystemConnectionMemo memo) {
         this(programmer);
         this.userName = memo.getUserName();
     }

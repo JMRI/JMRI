@@ -111,9 +111,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected static final int OFFSENT = 1;
     protected static final int COMMANDSENT = 2;
     protected static final int STATUSREQUESTSENT = 4;
+    protected static final int QUEUEDMESSAGE = 8;
     protected static final int IDLE = 0;
     protected int internalState = IDLE;
-    
+
     /* Static arrays to hold Lenz specific feedback mode information */
     static String[] modeNames = null;
     static int[] modeValues = null;
@@ -123,8 +124,18 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     @GuardedBy("this")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
-    protected String _prefix = "X"; // default
-    protected XNetTrafficController tc = null;
+    protected int mNumber;   // XpressNet turnout number
+    final XNetTurnoutStateListener _stateListener;  // Internal class object
+
+    // A queue to hold outstanding messages
+    @GuardedBy("this")
+    protected final Queue<RequestMessage> requestList;
+
+    @GuardedBy("this")
+    protected RequestMessage lastMsg = null;
+
+    protected final String _prefix; // default
+    protected final XNetTrafficController tc;
 
     public XNetTurnout(String prefix, int pNumber, XNetTrafficController controller) {  // a human-readable turnout number must be specified!
         super(prefix + "T" + pNumber);
@@ -134,7 +145,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
         requestList = new LinkedList<>();
 
-        /* Add additiona feedback types information */
+        /* Add additional feedback types information */
         _validFeedbackTypes |= MONITORING | EXACT | SIGNAL;
 
         // Default feedback mode is MONITORING
@@ -339,7 +350,16 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      * Listen for the messages to the LI100/LI101.
      */
     @Override
-    public void message(XNetMessage l) {
+    public synchronized void message(XNetMessage l) {
+        log.debug("received outgoing message {} for turnout {}",l,getSystemName());
+        // we want to verify this is the last message we sent
+        // so use == not .equals
+        if(lastMsg!=null && l == lastMsg.msg){
+            //if this is the last message we sent, set the state appropriately
+            internalState = lastMsg.getState();
+            // and set lastMsg to null
+            lastMsg = null;
+        }
     }
 
     /**
@@ -377,10 +397,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
          */
 
         log.debug("Handle Message for turnout {} in DIRECT feedback mode   ", mNumber);
-        if (internalState == STATUSREQUESTSENT && l.isUnsolicited()) {
-            // set the reply as being solicited
-            l.resetUnsolicited();
-        }
         if (getCommandedState() != getKnownState() || internalState == COMMANDSENT) {
             if (l.isOkMessage()) {
                 // Finally, we may just receive an OK message.
@@ -391,10 +407,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                     return;
                 }
                 log.debug("Turnout {} DIRECT feedback mode - directed reply received.", mNumber);
-                // set the reply as being solicited
-                if (l.isUnsolicited()) {
-                    l.resetUnsolicited();
-                }
             }
             sendOffMessage();
             // Explicitly send two off messages in Direct Mode
@@ -526,19 +538,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             log.debug("Current Thread ID: {} Thread Name {}", java.lang.Thread.currentThread().getId(), java.lang.Thread.currentThread().getName());
         }
         XNetMessage msg = getOffMessage();
-        // Set the known state to the commanded state.
-        // To avoid some of the command station busy
-        // messages, add a short delay before sending the
-        // first off message.
-            if (internalState != OFFSENT) {
-            jmri.util.ThreadingUtil.runOnLayoutDelayed( () ->
-               tc.sendHighPriorityXNetMessage(msg, this), 30);
-            newKnownState(getCommandedState());
-            internalState = OFFSENT;
-            return;
-        }
+        lastMsg = new RequestMessage(msg,OFFSENT,this);
+        this.internalState = OFFSENT;
         newKnownState(getCommandedState());
-        internalState = OFFSENT;
         // Then send the message.
         tc.sendHighPriorityXNetMessage(msg, this);
     }
@@ -560,9 +562,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      */
     private synchronized boolean parseFeedbackMessage(FeedbackItem l) {
         log.debug("Message for turnout {}", mNumber);
-        if (internalState != IDLE && l.isUnsolicited()) {
-            l.resetUnsolicited();
-        }
         switch (l.getTurnoutStatus()) {
             case THROWN:
                 newKnownState(_mThrown);
@@ -594,7 +593,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      */
     private static class XNetTurnoutStateListener implements java.beans.PropertyChangeListener {
 
-        XNetTurnout _turnout = null;
+        final XNetTurnout _turnout;
 
         XNetTurnoutStateListener(XNetTurnout turnout) {
             _turnout = turnout;
@@ -620,8 +619,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                     // Check to see if this is a change in the status
                     // triggered by a device on the layout, or a change in
                     // status we triggered.
-                    int oldKnownState = ((Integer) event.getOldValue()).intValue();
-                    int curKnownState = ((Integer) event.getNewValue()).intValue();
+                    int oldKnownState = (Integer) event.getOldValue();
+                    int curKnownState = (Integer) event.getNewValue();
                     log.debug("propertyChange KnownState - old value {} new value {}", oldKnownState, curKnownState);
                     if (curKnownState != INCONSISTENT
                             && _turnout.getCommandedState() == oldKnownState) {
@@ -649,30 +648,26 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     }
 
-    // data members
-    protected int mNumber;   // XpressNet turnout number
-    XNetTurnoutStateListener _stateListener;  // Internal class object
-
-    // A queue to hold outstanding messages
-    @GuardedBy("this")
-    protected final Queue<RequestMessage> requestList;
-
     /**
      * Send message from queue.
      */
     protected synchronized void sendQueuedMessage() {
 
-        RequestMessage msg = null;
+        lastMsg = null;
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
-        msg = requestList.poll();
+        lastMsg = requestList.poll();
         // if the queue is not empty, remove the first message
         // from the queue, send the message, and set the state machine
-        // to the requried state.
-        if (msg != null) {
+        // to the required state.
+        if (lastMsg != null) {
             log.debug("sending message to traffic controller");
-            internalState = msg.getState();
-            tc.sendXNetMessage(msg.getMsg(), msg.getListener());
+            if(lastMsg.listener!=null) {
+                internalState = QUEUEDMESSAGE;
+            } else {
+                internalState = lastMsg.state;
+            }
+            tc.sendXNetMessage(lastMsg.getMsg(), lastMsg.getListener());
         } else {
             log.debug("message queue empty");
             // if the queue is empty, set the state to idle.
@@ -703,9 +698,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      */
     protected static class RequestMessage {
 
-        private int state;
-        private XNetMessage msg;
-        private XNetListener listener;
+        private final int state;
+        private final XNetMessage msg;
+        private final XNetListener listener;
 
         RequestMessage(XNetMessage m, int s, XNetListener listener) {
             state = s;

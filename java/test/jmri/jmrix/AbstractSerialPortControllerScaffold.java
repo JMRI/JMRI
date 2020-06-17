@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import jmri.SystemConnectionMemo;
+
 /**
  * Scaffold for port controller objects.
  *

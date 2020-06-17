@@ -1,6 +1,6 @@
 package jmri.jmrix.xpa;
 
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Abstract base for classes representing an XPA+Modem communications port

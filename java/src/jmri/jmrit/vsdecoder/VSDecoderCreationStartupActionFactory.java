@@ -12,14 +12,14 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright (C) 2016
  */
 @ServiceProvider(service = StartupActionFactory.class)
-public class VSDecoderCreationStartupActionFactory extends AbstractStartupActionFactory {
+public final class VSDecoderCreationStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
     public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
-        if (!clazz.equals(VSDecoderCreationAction.class)) {
-            throw new IllegalArgumentException();
+        if (clazz.equals(VSDecoderCreationAction.class)) {
+            return Bundle.getMessage(locale, "VSDStartupActionText"); // NOI18N
         }
-        return Bundle.getMessage(locale, "VSDStartupActionText"); // NOI18N
+        throw new IllegalArgumentException(clazz.getName() + " is not supported by " + this.getClass().getName());
     }
 
     @Override

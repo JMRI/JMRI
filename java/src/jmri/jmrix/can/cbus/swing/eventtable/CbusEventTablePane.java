@@ -34,6 +34,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     protected CbusEventTableDataModel eventModel;
     protected JTable eventTable;
     protected CbusPreferences preferences;
+    private jmri.UserPreferencesManager p;
     
     private CbusCreateBeanPane newBeanPanel;
     protected CbusNewEventPane neweventcontainer;
@@ -49,6 +50,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     protected final JMenu evStatMenu = new JMenu(Bundle.getMessage("evStatMenuName")); // NOI18N
     protected final JMenu evJmMenu = new JMenu(Bundle.getMessage("latestEvCols")); // NOI18N
     protected final JMenu buttonMenu = new JMenu(Bundle.getMessage("buttonCols")); // NOI18N
+    
+    private StayOpenCheckBoxItem showfilterpanel;
+    private StayOpenCheckBoxItem shownewevent;
+    private StayOpenCheckBoxItem showNewBeanPanel;
+    private StayOpenCheckBoxItem showSendEventPanel;
 
     private final XTableColumnModel tcm;
     
@@ -62,6 +68,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         super.initComponents(memo);
         
         preferences = InstanceManager.getDefault(CbusPreferences.class);
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         
         CbusEventTableDataModel.checkCreateNewEventModel(memo);
         eventModel = InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
@@ -86,11 +93,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         neweventcontainer = new CbusNewEventPane(this);
         cbEvTable = new CbusEventTable(this);
-        newBeanPanel = new CbusCreateBeanPane(this);
-        newBeanPanel.setVisible(false);
-        
+        newBeanPanel = new CbusCreateBeanPane(this);        
         sendPane = new CbusSendEventPane(this);
-        sendPane.setVisible(false);
         
         _toppanelcontainer.add(newBeanPanel);
         _toppanelcontainer.add(getFilterPanel());
@@ -105,6 +109,30 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         cbEvTable.tableChanged(null);
         
+    }
+    
+    private void setPanesVisibleFromSettings() {
+        
+        if ( p.getSimplePreferenceState(this.getClass().getName() + ".Notfirstrun") ) { // NOI18N
+            showfilterpanel.setSelected(p.getSimplePreferenceState(getClass().getName() + ".Showfilterpanel")); // NOI18N
+            shownewevent.setSelected(p.getSimplePreferenceState(getClass().getName() + ".Shownewevent")); // NOI18N
+            showNewBeanPanel.setSelected(p.getSimplePreferenceState(getClass().getName() + ".ShowNewBeanPanel")); // NOI18N
+            showSendEventPanel.setSelected(p.getSimplePreferenceState(getClass().getName() + ".ShowSendEventPanel")); // NOI18N
+            
+            filterpanel.setVisible(p.getSimplePreferenceState(getClass().getName() + ".Showfilterpanel")); // NOI18N
+            neweventcontainer.setVisible(p.getSimplePreferenceState(getClass().getName() + ".Shownewevent")); // NOI18N
+            newBeanPanel.setVisible(p.getSimplePreferenceState(getClass().getName() + ".ShowNewBeanPanel")); // NOI18N
+            sendPane.setVisible(p.getSimplePreferenceState(getClass().getName() + ".ShowSendEventPanel")); // NOI18N
+            
+        } else {
+            // set virgin load view
+            showfilterpanel.setSelected(true);
+            shownewevent.setSelected(true);
+            showNewBeanPanel.setSelected(false);
+            showSendEventPanel.setSelected(false);
+            newBeanPanel.setVisible(false);
+            sendPane.setVisible(false);
+        }
     }
     
     private JPanel getFilterPanel(){
@@ -182,24 +210,23 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     
         JMenu displayMenu = new JMenu(Bundle.getMessage("Display")); // NOI18N
         
-        StayOpenCheckBoxItem showNewBeanPanel = new StayOpenCheckBoxItem(Bundle.getMessage("NewTsl")); // NOI18N
-        showNewBeanPanel.setSelected(false);
+        showNewBeanPanel = new StayOpenCheckBoxItem(Bundle.getMessage("NewTsl")); // NOI18N
         showNewBeanPanel.addActionListener((ActionEvent e) ->
             newBeanPanel.setVisible(showNewBeanPanel.isSelected()) );
         
-        StayOpenCheckBoxItem shownewevent = new StayOpenCheckBoxItem((Bundle.getMessage("NewEvent"))); // NOI18N
-        shownewevent.setSelected(true);
+        shownewevent = new StayOpenCheckBoxItem((Bundle.getMessage("NewEvent"))); // NOI18N
         shownewevent.addActionListener((ActionEvent e) ->
             neweventcontainer.setVisible(shownewevent.isSelected()) );
         
-        StayOpenCheckBoxItem showfilterpanel = new StayOpenCheckBoxItem(Bundle.getMessage("FilterSurround")); // NOI18N
-        showfilterpanel.setSelected(true);
+        showfilterpanel = new StayOpenCheckBoxItem(Bundle.getMessage("FilterSurround")); // NOI18N
         showfilterpanel.addActionListener((ActionEvent e) -> 
             filterpanel.setVisible(showfilterpanel.isSelected()) );
 
-        StayOpenCheckBoxItem showSendEventPanel = new StayOpenCheckBoxItem(Bundle.getMessage("ButtonSendEvent")); // NOI18N
+        showSendEventPanel = new StayOpenCheckBoxItem(Bundle.getMessage("ButtonSendEvent")); // NOI18N
         showSendEventPanel.addActionListener((ActionEvent e) ->
             sendPane.setVisible(showSendEventPanel.isSelected()) );
+        
+        setPanesVisibleFromSettings();
         
         displayMenu.add(showfilterpanel);        
         displayMenu.add(shownewevent);
@@ -231,6 +258,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             tpm.stopPersisting(eventTable);
         });
         
+        p.setSimplePreferenceState(getClass().getName() + ".Notfirstrun", true); // NOI18N
+        p.setSimplePreferenceState(getClass().getName() + ".Showfilterpanel", showfilterpanel.isSelected()); // NOI18N
+        p.setSimplePreferenceState(getClass().getName() + ".Shownewevent", shownewevent.isSelected()); // NOI18N
+        p.setSimplePreferenceState(getClass().getName() + ".ShowNewBeanPanel", showNewBeanPanel.isSelected()); // NOI18N
+        p.setSimplePreferenceState(getClass().getName() + ".ShowSendEventPanel", showSendEventPanel.isSelected()); // NOI18N
         super.dispose();
     }
 

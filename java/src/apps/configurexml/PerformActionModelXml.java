@@ -6,10 +6,10 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import apps.PerformActionModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.PerformActionModel;
+import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 
 /**
@@ -17,7 +17,9 @@ import jmri.jmrix.swing.SystemConnectionAction;
  *
  * @author Bob Jacobsen Copyright (c) 2003
  * @see apps.startup.PerformActionModelFactory
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.PerformActionModelXml} instead
  */
+@Deprecated
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public PerformActionModelXml() {

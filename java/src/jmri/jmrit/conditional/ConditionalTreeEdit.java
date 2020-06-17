@@ -739,7 +739,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Create a new variable Can be invoked by a Variables or Variable node.
      */
     void newVariable() {
-        if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+        if (LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())) {
             JOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("Error49"), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);

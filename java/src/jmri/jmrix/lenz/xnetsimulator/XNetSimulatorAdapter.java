@@ -141,7 +141,12 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         sourceThread = new Thread(this);
         sourceThread.start();
 
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     // Base class methods for the XNetSimulatorPortController interface

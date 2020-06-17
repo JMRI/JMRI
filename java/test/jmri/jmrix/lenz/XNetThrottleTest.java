@@ -1614,11 +1614,10 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // infrastructure objects
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         memo = new XNetSystemConnectionMemo(tc);
+        XNetThrottleManager tm = new XNetThrottleManager(memo);
+        memo.setThrottleManager(tm);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, memo.getThrottleManager());
         XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
-        // uncommenting the next two lines causes the base throttle tests to hang.
-        //int n = tc.outbound.size();
-        //initThrottlev35(t,n);
         instance = t;
     }
 
@@ -1629,7 +1628,11 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             ((XNetThrottle) instance).throttleDispose();
         }
         finally {
-            JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+            tc.terminateThreads();
+            tc = null;
+            memo.dispose();
+            memo = null;
+            instance = null;
             JUnitUtil.tearDown();
         }
     }

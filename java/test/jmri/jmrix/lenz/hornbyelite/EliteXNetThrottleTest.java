@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * EliteXNetThrottleTest.java
@@ -383,6 +384,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         memo = new EliteXNetSystemConnectionMemo(tc);
+        memo.setThrottleManager(Mockito.mock(EliteXNetThrottleManager.class));
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, memo.getThrottleManager());
         instance = new EliteXNetThrottle(memo, new jmri.DccLocoAddress(42, false), tc);
     }
