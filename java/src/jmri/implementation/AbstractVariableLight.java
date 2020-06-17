@@ -69,8 +69,8 @@ public abstract class AbstractVariableLight
     /**
      * System independent instance variables (saved between runs).
      */
-    protected double mMaxIntensity = 1.0;
-    protected double mMinIntensity = 0.0;
+//    protected double mMaxIntensity = 1.0;     // Uncomment when mMaxIntensity is removed from AbstractLight due to deprecation
+//    protected double mMinIntensity = 0.0;     // Uncomment when mMinIntensity is removed from AbstractLight due to deprecation
 
     /**
      * System independent operational instance variables (not saved between
