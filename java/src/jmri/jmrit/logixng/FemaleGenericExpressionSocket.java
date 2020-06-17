@@ -1,13 +1,11 @@
 package jmri.jmrit.logixng;
 
 import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.JmriException;
 
 /**
- *
+ * A generic female socket
  */
 public interface FemaleGenericExpressionSocket
         extends FemaleSocket {

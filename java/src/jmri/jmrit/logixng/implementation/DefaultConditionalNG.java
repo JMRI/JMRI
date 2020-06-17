@@ -37,6 +37,7 @@ public class DefaultConditionalNG extends AbstractBase
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleActionSocket;
     private boolean _enabled = true;
+    private Base.Lock _lock = Base.Lock.NONE;
     private final ExecuteLock executeLock = new ExecuteLock();
     private boolean _runOnGUIDelayed = true;
     
@@ -73,21 +74,30 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public boolean supportsEnableExecution() {
         
-        // This action does not support EnableExecution if the user may change
-        // the child.
-        if (getLock().isChangeableByUser()) {
+//        // This action does not support EnableExecution if the user may change
+//        // the child.
+//        if (getLock().isChangeableByUser()) {
+//            return false;
+//        }
+        
+        if (_femaleActionSocket.isConnected()) {
+            return _femaleActionSocket.supportsEnableExecution();
+        } else {
+            // ConditionalNGs without a connected socket does not support
+            // enableExecution.
             return false;
         }
-        
-        return _femaleActionSocket.supportsEnableExecution();
     }
     
     /** {@inheritDoc} */
     @Override
     public void setEnableExecution(boolean b) {
         if (supportsEnableExecution()
-                && (_femaleActionSocket instanceof DigitalActionWithEnableExecution)) {
-            ((DigitalActionWithEnableExecution)_femaleActionSocket).setEnableExecution(b);
+                && (_femaleActionSocket.isConnected())
+                && (_femaleActionSocket.getConnectedSocket().getObject()
+                        instanceof DigitalActionWithEnableExecution)) {
+            Base action = _femaleActionSocket.getConnectedSocket().getObject();
+            ((DigitalActionWithEnableExecution)action).setEnableExecution(b);
         } else {
             log.error("This conditionalNG does not supports the method setEnableExecution()");
             throw new UnsupportedOperationException("This digital action does not supports the method setEnableExecution()");
@@ -98,8 +108,11 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public boolean isExecutionEnabled() {
         if (supportsEnableExecution()
-                && (_femaleActionSocket instanceof DigitalActionWithEnableExecution)) {
-            return ((DigitalActionWithEnableExecution)_femaleActionSocket).isExecutionEnabled();
+                && (_femaleActionSocket.isConnected())
+                && (_femaleActionSocket.getConnectedSocket().getObject()
+                        instanceof DigitalActionWithEnableExecution)) {
+            Base action = _femaleActionSocket.getConnectedSocket().getObject();
+            return ((DigitalActionWithEnableExecution)action).isExecutionEnabled();
         } else {
             log.error("This conditionalNG does not supports the method isExecutionEnabled()");
             throw new UnsupportedOperationException("This digital action does not supports the method isExecutionEnabled()");
@@ -263,12 +276,12 @@ public class DefaultConditionalNG extends AbstractBase
 
     @Override
     public Lock getLock() {
-        return Lock.NONE;
+        return _lock;
     }
 
     @Override
     public void setLock(Lock lock) {
-        throw new UnsupportedOperationException("Not supported.");
+        _lock = lock;
     }
 
     public void setSocketSystemName(String systemName) {

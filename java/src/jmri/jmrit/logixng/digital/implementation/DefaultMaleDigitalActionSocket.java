@@ -6,20 +6,18 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
+
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
+
 import javax.annotation.Nonnull;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.MaleDigitalActionSocket;
-import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.jmrit.logixng.LogixNG;
+
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
 import jmri.util.Log4JUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +26,8 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class DefaultMaleDigitalActionSocket extends AbstractMaleSocket implements MaleDigitalActionSocket {
+public class DefaultMaleDigitalActionSocket
+        extends AbstractMaleSocket implements MaleDigitalActionSocket {
 
     private final DigitalActionBean _action;
     private DebugConfig _debugConfig = null;
@@ -104,7 +103,21 @@ public class DefaultMaleDigitalActionSocket extends AbstractMaleSocket implement
     /** {@inheritDoc} */
     @Override
     public boolean supportsEnableExecution() {
-        return _action.supportsEnableExecution();
+        if (_action instanceof DigitalActionWithEnableExecution) {
+            if (_action.supportsEnableExecution()) {
+                return true;
+            } else {
+                throw new RuntimeException(
+                        _action.getClass().getName()
+                                + ".supportsEnableExecution() returns true "
+                                + "despite not inherit the interface "
+                                + "DigitalActionWithEnableExecution");
+            }
+        } else {
+            return false;
+        }
+//        return (_action instanceof DigitalActionWithEnableExecution)
+//                && _action.supportsEnableExecution();
     }
     
     /** {@inheritDoc} */

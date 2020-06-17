@@ -1,7 +1,7 @@
 package jmri.jmrit.logixng;
 
 /**
- * A female digital expression socket
+ * A female socket for DigitalExpression
  */
 public interface FemaleDigitalExpressionSocket extends FemaleSocket, DigitalExpression {
 

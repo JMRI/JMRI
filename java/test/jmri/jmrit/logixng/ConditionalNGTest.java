@@ -179,7 +179,7 @@ public class ConditionalNGTest {
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A new conditionalng for test");  // NOI18N
         Assert.assertEquals("conditionalNG is not locked", Lock.NONE, conditionalNG.getLock());
     }
-    
+/*    
     @Test
     public void testSetLock() {
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A new conditionalng for test");  // NOI18N
@@ -191,7 +191,7 @@ public class ConditionalNGTest {
         }
         Assert.assertTrue("exception thrown", hasThrown);
     }
-    
+*/    
     // The minimal setup for log4J
     @Before
     public void setUp() {

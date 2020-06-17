@@ -6,7 +6,6 @@ import java.util.*;
 
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
