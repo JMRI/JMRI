@@ -1,15 +1,11 @@
 package jmri.jmrix;
 
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import jmri.ConsistManager;
-import jmri.InstanceManager;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.SystemConnectionMemo;
 import jmri.beans.Bean;
 import jmri.implementation.DccConsistManager;
@@ -35,9 +31,11 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     private String prefixAsLoaded;
     private String userName;
     private String userNameAsLoaded;
+    private Map<Class,Object> classObjectMap;
 
     @SuppressWarnings("deprecation")
     protected DefaultSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
+        classObjectMap = new HashMap<>();
         if (this instanceof ConflictingSystemConnectionMemo) {
             this.prefix = prefix;
             this.userName = userName;
@@ -165,16 +163,9 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     @OverridingMethodsMustInvokeSuper
     public boolean provides(Class<?> c) {
         if (c.equals(jmri.ConsistManager.class)) {
-            if (consistManager != null) {
-                return true; // we have a consist manager already
-            } else if (provides(jmri.CommandStation.class)) {
-                return true; // we can construct an NMRAConsistManager
-            } else {
-                // true if we can construct a DccConsistManager
-                return provides(jmri.AddressedProgrammerManager.class);
-            }
+            return classObjectMap.get(c) != null || provides(CommandStation.class) || provides(AddressedProgrammerManager.class);
         } else {
-            return false; // nothing, by default
+            return classObjectMap.containsKey(c);
         }
     }
 
@@ -295,28 +286,31 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     /**
      * Provide access to the ConsistManager for this particular connection.
-     *
+
      * @return the provided ConsistManager or null if the connection does not
      *         provide a ConsistManager
      */
     public ConsistManager getConsistManager() {
-        if (consistManager == null) {
-            // a consist manager doesn't exist, so we can create it.
-            if (provides(jmri.CommandStation.class)) {
-                setConsistManager(new NmraConsistManager(get(jmri.CommandStation.class)));
-            } else if (provides(jmri.AddressedProgrammerManager.class)) {
-                setConsistManager(new DccConsistManager(get(jmri.AddressedProgrammerManager.class)));
-            }
+        return (ConsistManager) classObjectMap.computeIfAbsent(ConsistManager.class,(Class c) -> { return generateDefaultConsistManagerForConnection(); });
+    }
+
+    private ConsistManager generateDefaultConsistManagerForConnection(){
+        if (provides(jmri.CommandStation.class)) {
+            return new NmraConsistManager(get(jmri.CommandStation.class));
+        } else if (provides(jmri.AddressedProgrammerManager.class)) {
+            return new DccConsistManager(get(jmri.AddressedProgrammerManager.class));
         }
-        return consistManager;
+        return null;
     }
 
     public void setConsistManager(ConsistManager c) {
-        consistManager = c;
-        jmri.InstanceManager.store(consistManager, ConsistManager.class);
+        store(c, ConsistManager.class);
+        jmri.InstanceManager.store(c, ConsistManager.class);
     }
 
-    private ConsistManager consistManager = null;
+    public <T> void store(@Nonnull T item, @Nonnull Class<T> type){
+        classObjectMap.put(type,item);
+    }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSystemConnectionMemo.class);
 
