@@ -44,23 +44,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
-import jmri.Audio;
-import jmri.Conditional;
+
+import jmri.*;
 import jmri.Conditional.Operator;
-import jmri.ConditionalAction;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Logix;
-import jmri.Route;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.Turnout;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
+import jmri.jmrit.conditional.Bundle;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.util.FileUtil;
@@ -4330,7 +4322,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     if (lgtx == null) {
                         return false;
                     }
-                    if (!lgtx.isIntensityVariable()) {
+                    if (!(lgtx instanceof VariableLight)) {
                         JOptionPane.showMessageDialog(_editLogixFrame,
                                 Bundle.getMessage("Error45", name), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),
@@ -4347,7 +4339,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     if (lgtx == null) {
                         return false;
                     }
-                    if (!lgtx.isTransitionAvailable()) {
+                    if ( !(lgtx instanceof VariableLight)
+                            || !((VariableLight)lgtx).isTransitionAvailable()) {
                         JOptionPane.showMessageDialog(_editLogixFrame,
                                 Bundle.getMessage("Error40", name), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),

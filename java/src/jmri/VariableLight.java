@@ -1,7 +1,7 @@
 package jmri;
 
 /**
- * Represent a single visible Light on the physical layout.
+ * Represent a single visible Variable Light on the physical layout.
  * <p>
  * Each Light may have one or more control mechanisms. Control mechanism types
  * are defined here. If a Light has any controls, the information is contained
@@ -58,21 +58,39 @@ package jmri;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface Light extends CommonLight {
+public interface VariableLight extends CommonLight, AnalogIO {
 
-    /**
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    default public void requestUpdateFromLayout() {
+        // Do nothing
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentState() {
+        return (getState() == DigitalIO.ON)
+                || (getState() == DigitalIO.OFF)
+                || (getState() == INTERMEDIATE);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentValue() {
+        // Assume that the value is consistent if the state is consistent.
+        return isConsistentState();
+    }
+    
+    /*.*
      * Check if this object can handle variable intensity.
      * <p>
      * Unbound property.
      *
      * @return false if only ON/OFF is available.
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
-     */
-//    @Deprecated
-//    default public boolean isIntensityVariable() {
-//        return false;
-//    }
-
+     *./
+    public boolean isIntensityVariable();
+*/
     /**
      * Set the intended new intensity value for the Light. If transitions are in
      * use, they will be applied.
@@ -108,11 +126,9 @@ public interface Light extends CommonLight {
      * @throws IllegalArgumentException if isIntensityVariable is false and the
      *                                  new value is between MaxIntensity and
      *                                  MinIntensity
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    @InvokeOnLayoutThread
-//    public void setTargetIntensity(double intensity);
+    @InvokeOnLayoutThread
+    public void setTargetIntensity(double intensity);
 
     /**
      * Get the current intensity value. If the Light is currently transitioning,
@@ -122,10 +138,8 @@ public interface Light extends CommonLight {
      * full on.
      *
      * @return the current brightness
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    public double getCurrentIntensity();
+    public double getCurrentIntensity();
 
     /**
      * Get the target intensity value for the current transition, if any. If the
@@ -138,10 +152,8 @@ public interface Light extends CommonLight {
      * Bound property
      *
      * @return the desired brightness
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    public double getTargetIntensity();
+    public double getTargetIntensity();
 
     /**
      * Set the value of the maxIntensity property.
@@ -157,11 +169,9 @@ public interface Light extends CommonLight {
      * @throws IllegalArgumentException when intensity is not greater than the
      *                                  current value of the minIntensity
      *                                  property
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    @InvokeOnLayoutThread
-//    public void setMaxIntensity(double intensity);
+    @InvokeOnLayoutThread
+    public void setMaxIntensity(double intensity);
 
     /**
      * Get the current value of the maxIntensity property.
@@ -170,10 +180,8 @@ public interface Light extends CommonLight {
      * full on.
      *
      * @return the maximum brightness
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    public double getMaxIntensity();
+    public double getMaxIntensity();
 
     /**
      * Set the value of the minIntensity property.
@@ -189,11 +197,9 @@ public interface Light extends CommonLight {
      * @throws IllegalArgumentException when intensity is not less than the
      *                                  current value of the maxIntensity
      *                                  property
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    @InvokeOnLayoutThread
-//    public void setMinIntensity(double intensity);
+    @InvokeOnLayoutThread
+    public void setMinIntensity(double intensity);
 
     /**
      * Get the current value of the minIntensity property.
@@ -202,10 +208,8 @@ public interface Light extends CommonLight {
      * full on.
      *
      * @return the minimum brightness
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    public double getMinIntensity();
+    public double getMinIntensity();
 
     /**
      * Can the Light change its intensity setting slowly?
@@ -217,10 +221,8 @@ public interface Light extends CommonLight {
      * Unbound property
      *
      * @return true if brightness can fade between two states; false otherwise
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    public boolean isTransitionAvailable();
+    public boolean isTransitionAvailable();
 
     /**
      * Set the fast-clock duration for a transition from full ON to full OFF or
@@ -237,21 +239,17 @@ public interface Light extends CommonLight {
      * @throws IllegalArgumentException if isTransitionAvailable() is false and
      *                                  minutes is not 0.0
      * @throws IllegalArgumentException if minutes is negative
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    @InvokeOnLayoutThread
-//    public void setTransitionTime(double minutes);
+    @InvokeOnLayoutThread
+    public void setTransitionTime(double minutes);
 
     /**
      * Get the number of fastclock minutes taken by a transition from full ON to
      * full OFF or vice versa.
      * <p>
      * @return 0.0 if the output intensity transition is instantaneous
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    public double getTransitionTime();
+    public double getTransitionTime();
 
     /**
      * Convenience method for checking if the intensity of the light is
@@ -261,9 +259,7 @@ public interface Light extends CommonLight {
      * transition is over.
      *
      * @return true if light is between two states; false otherwise
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
      */
-//    @Deprecated
-//    public boolean isTransitioning();
+    public boolean isTransitioning();
 
 }
