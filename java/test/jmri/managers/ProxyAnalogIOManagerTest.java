@@ -1,12 +1,7 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
-import jmri.AnalogIO;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.Manager;
+import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrix.internal.InternalAnalogIOManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -15,8 +10,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.AnalogIOManager;
-import jmri.jmrix.SystemConnectionMemo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 

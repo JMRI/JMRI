@@ -2,19 +2,15 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
-import jmri.StringIO;
-import jmri.InstanceManager;
-import jmri.JmriException;
+import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrix.internal.InternalStringIOManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import jmri.StringIOManager;
 
 /**
  * Test the ProxyStringIOManager.
