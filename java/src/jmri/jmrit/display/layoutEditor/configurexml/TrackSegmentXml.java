@@ -45,9 +45,9 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             element.setAttribute("blockname", p.getBlockName());
         }
         element.setAttribute("connect1name", p.getConnect1Name());
-        element.setAttribute("type1", "" + htpMap.outputFromEnum(p.getType1()) );
+        element.setAttribute("type1", "" + htpMap.outputFromEnum(p.getType1()));
         element.setAttribute("connect2name", p.getConnect2Name());
-        element.setAttribute("type2", "" + htpMap.outputFromEnum(p.getType2()) );
+        element.setAttribute("type2", "" + htpMap.outputFromEnum(p.getType2()));
         element.setAttribute("dashed", "" + (p.isDashed() ? "yes" : "no"));
         element.setAttribute("mainline", "" + (p.isMainline() ? "yes" : "no"));
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
@@ -302,14 +302,6 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
                 } catch (NullPointerException e) {  // considered normal if the attribute is not present
                 }
             }
-            try {
-                if (element.getAttribute("hideConLines").getBooleanValue()) {
-                    l.hideConstructionLines(TrackSegment.HIDECON);
-                }
-            } catch (DataConversionException e) {
-                log.warn("unable to convert track segment hideConLines attribute");
-            } catch (NullPointerException e) {  // considered normal if the attribute is not present
-            }
         }
 
         try {
@@ -347,6 +339,15 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             }
         } catch (DataConversionException e) {
             log.error("failed to convert tracksegment attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        }
+
+        try {
+            if (element.getAttribute("hideConLines").getBooleanValue()) {
+                l.hideConstructionLines(TrackSegment.HIDECON);
+            }
+        } catch (DataConversionException e) {
+            log.warn("unable to convert track segment hideConLines attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
 
@@ -622,6 +623,6 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
     }
 
     static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentXml.class);
 }

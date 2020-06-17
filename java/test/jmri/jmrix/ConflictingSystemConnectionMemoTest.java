@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.SystemConnectionMemo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

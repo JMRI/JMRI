@@ -4,7 +4,7 @@ import java.util.*;
 import javax.annotation.*;
 
 import jmri.implementation.AbstractSignalMast;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 import org.openlcb.Connection;
 import org.openlcb.EventID;

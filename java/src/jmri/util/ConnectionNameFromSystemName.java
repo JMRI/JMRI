@@ -3,7 +3,7 @@ package jmri.util;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Common utility method for returning the System Connection Name from the
@@ -45,7 +45,7 @@ public class ConnectionNameFromSystemName {
     }
 
     /**
-     * Get the {@link jmri.jmrix.SystemConnectionMemo} for a given system
+     * Get the {@link SystemConnectionMemo} for a given system
      * prefix.
      *
      * @param systemPrefix the system prefix
@@ -62,7 +62,7 @@ public class ConnectionNameFromSystemName {
     }
 
     /**
-     * Get the {@link jmri.jmrix.SystemConnectionMemo} for a given user name.
+     * Get the {@link SystemConnectionMemo} for a given user name.
      *
      * @param userName the user name
      * @return the SystemConnectionMemo or null if no memo exists

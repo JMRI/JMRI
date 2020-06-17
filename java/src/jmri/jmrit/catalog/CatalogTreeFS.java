@@ -2,6 +2,7 @@ package jmri.jmrit.catalog;
 
 import java.io.File;
 import java.util.HashMap;
+import jmri.CatalogTreeNode;
 import org.apache.commons.io.FilenameUtils;
 
 /**

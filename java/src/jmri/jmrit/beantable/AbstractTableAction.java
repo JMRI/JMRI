@@ -16,7 +16,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.ProxyManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.swing.ManagerComboBox;
 

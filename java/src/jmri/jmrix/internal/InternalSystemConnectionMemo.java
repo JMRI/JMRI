@@ -25,7 +25,7 @@ import jmri.util.NamedBeanPreferNumericComparator;
  *
  * @author Bob Jacobsen Copyright (C) 2010, 2016
  */
-public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
+public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
     public InternalSystemConnectionMemo(String prefix, String name, boolean defaultInstanceType) {
         super(prefix, name);
