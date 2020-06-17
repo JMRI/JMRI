@@ -5,11 +5,11 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- Updated by Blorec Herv&#233;  2013-09-02-->
+  <!-- Updated by Blorec Herv&#233;  2020-06-17-->
 
-  <title>JMRI: PanelPro, Fabriquer de Panneaux de Commande</title>
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
+   <title>JMRI: PanelPro, an application for making Control
+  Panels</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -20,30 +20,36 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+  <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
 
 <H1>JMRI: PanelPro, Une Application pour Fabriquer des Panneaux de Commande</H1>
 
 Les biblioth&#232;ques JMRI contiennent l'application PanelPro pour la cr&#233;ation de tableaux de commande.
-Cette page d&#233;crit cette application, et comment l'utiliser.
+Cette page d&#233;crit l'application, et comment l'utiliser.
 <p>
-PanelPro propose deux m&#233;thodes distinctes pour cr&#233;er des panneaux de contr&#244;le.
+PanelPro propose quatre m&#233;thodes distinctes pour cr&#233;er des panneaux de contr&#244;le.
 	<ul>
-	<li>
-	L'<a href="#pe"> &#201;diteur de Panneau </a>
+	<li>	L'<a href="#pe"> &#201;diteur de Panneau </a>
 	vous permet de dessiner graphiquement un panneau exactement 
 	comme vous le voulez, puis animer les pi&#232;ces pour montrer l'&#233;tat de 
 	votre r&#233;seau et vous laissez cliquez dessus pour la commande.</li>
- 	<li><a href="#cpe">l'&#201;diteur de Panneau de Commande </a>travaille comme l'&#201;diteur de Panneau mais fournit une interface 
-	alternative.</li>
+ 	
+	<li><a href="#cpe">l'&#201;diteur de Panneau de Commande </a>travaille comme l'&#201;diteur de Panneau mais fournit une interface 
+	 alternative.</li>
+	
 	<li><a href="#le">L'&#201;diteur de R&#233;seau</a>
 	fournit des outils pour dessiner votre r&#233;seau 
 	tout en construisant la logique des signaux, etc. Cela limite un 
 	peu la fa&#231;on dont le panneau apparait, mais il peut vous faire &#233;conomiser beaucoup de temps 
 	lors votre premier sch&#233;ma.
+	
+	<li><a href="#swb">Edite de Panneaux de Commandeur  </a> est une interface de commande graphique et simple, montrant une série de touches de commutation pour surveiller et contrôler des éléments.
+	
 	</ul>
 
 <h2>Lequel utiliser? L'&#201;diteur de R&#233;seau ou l'&#201;diteur de Panneau? </h2>
@@ -72,7 +78,7 @@ contraintes sur l'apparence d'&#233;l&#233;ments de voie et comment ils sont uti
 
 <p> 
 L'&#201;diteur de Panneau (de Commande) construit un des Panneaux de Commandes<i> graphiques </i>. Vous pouvez avoir 
-autant de panneaux que vous le souhaitez, couvrant autant ou aussi un peu de
+autant de panneaux que vous le souhaitez, couvrant atout ou  un peu de
 votre r&#233;seau comme vous le souhaitez, avec des chevauchements dans la r&#233;gion ou la fonctionnalit&#233; si n&#233;cessaire.
 Les panneaux peuvent &#234;tre des diagrammes montrant l'&#233;tat de la voie et des signaux, ou
 ils pourraient &#234;tre des Panneaus prototype de signalisation et de Dispatcheur. Ou toute autre chose que
@@ -93,6 +99,8 @@ les apparences d&#233;sir&#233;es. Par exemple, Bob Bucklew a pr&#233;par&#233; 
 <a href="http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html "></a>
 qui d&#233;crit comment Panel Pro et l'&#201;diteur de R&#233;seau peuvent &#234;tre utilis&#233;s ensembles.
 <p>
+<p>Le tableau de Commande est plus facile à mettre en place, grâce à une simple grille de boutons ou d'indicateurs prédéfinis. Il est limité aux entrées (capteurs) et aux sorties de base (aiguillages et lumières) de base.</p>
+
 SVP voir notre
 <a href="http://jmri.org/community/examples/Gallery.shtml">page gallery</a>
 pour des exemples pour voir comment des mod&#233;listes ont utilis&#233; ceci sur leur propre r&#233;seau.
@@ -143,7 +151,7 @@ Pour plus d'informations sur la logique &#224; ajouter pour exploiter les signau
 pa la  commande de votre panneau.
 
 <h3>Le Fonctionnement du Panneau</h3>
-Cliquer sur un symbole d'aiguillage le commande de direct &#224; d&#233;vi&#233; et vice-versa.
+Cliquer sur un symbole d'aiguillage le bascule de direct &#224; d&#233;vi&#233; et vice-versa.
 Un aiguillage a &#233;galement des  &#233;tats "inconnu" et "incoh&#233;rent", repr&#233;sent&#233;s par une
 ic&#244;ne avec un point d'interrogation et un X respectivement . Celles-ci repr&#233;sentent un &#233;tat o&#249;
 aucune information n'a &#233;t&#233; re&#231;ue, et o&#249; l'information est intrins&#232;quement contradictoire
