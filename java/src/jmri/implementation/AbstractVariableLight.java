@@ -374,16 +374,16 @@ public abstract class AbstractVariableLight
      * change anything in the hardware
      */
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floating point")
-//    @Override
+    @Override
     protected void notifyTargetIntensityChange(double intensity) {
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
         if (oldValue != intensity) {
-            firePropertyChange("TargetIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
+            firePropertyChange("TargetIntensity", oldValue, intensity);
         }
     }
 
-    /**
+    /*.*
      * Check if this object can handle variable intensity.
      * <p>
      * @return true, as this abstract class implements variable intensity.
