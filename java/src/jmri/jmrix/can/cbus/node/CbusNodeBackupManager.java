@@ -506,7 +506,7 @@ public class CbusNodeBackupManager {
     }
     
     protected void setNodeInSlim() {
-        log.info("Node {} in SLiM mode",this);
+        log.info("Node {} in SLiM mode",_node);
         if (getBackupStarted()) { // 1st time in this session
             doLoad();
             nodeInSLiM();
