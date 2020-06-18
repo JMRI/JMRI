@@ -10,4 +10,3 @@ Method <jmri.util.HelpUtil.makeHelpMenu(java.lang.String, boolean)> calls constr
 Method <jmri.util.HelpUtil.makeHelpMenu(java.lang.String, boolean)> calls constructor <apps.LicenseAction.<init>()> in (HelpUtil.java:77)
 Method <jmri.util.HelpUtil.makeHelpMenu(java.lang.String, boolean)> calls constructor <apps.ReportContextAction.<init>()> in (HelpUtil.java:89)
 Method <jmri.util.HelpUtil.makeHelpMenu(java.lang.String, boolean)> calls constructor <apps.SystemConsoleAction.<init>()> in (HelpUtil.java:93)
-Method <jmri.util.Log4JUtil.initLog4J(java.lang.String)> calls method <apps.SystemConsole.create()> in (Log4JUtil.java:178)
