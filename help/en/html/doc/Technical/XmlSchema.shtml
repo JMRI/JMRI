@@ -214,7 +214,7 @@
       command line via e.g.:</p>
       <pre>
 <code>
-./runtest.csh jmri/jmrit/XmlFileValidateAction xml/decoders/0NMRA.xml 
+./runtest.csh apps/jmrit/XmlFileValidateAction xml/decoders/0NMRA.xml 
 </code>
 </pre>
 

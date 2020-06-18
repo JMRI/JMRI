@@ -1,13 +1,15 @@
 package jmri;
 
 import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
 import jmri.NamedBean.BadSystemNameException;
 import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.beans.PropertyChangeProvider;
@@ -483,7 +485,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @CheckForNull
     @Deprecated // 4.19.1
     public default E getBeanBySystemName(@Nonnull String systemName) {
-        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
+        jmri.util.LoggingUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
         return getBySystemName(systemName);
     }
 
@@ -498,7 +500,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @CheckForNull
     @Deprecated // 4.19.1
     public default E getBeanByUserName(@Nonnull String userName) {
-        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
+        jmri.util.LoggingUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
         return getByUserName(userName);
     }
 

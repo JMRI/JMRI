@@ -1,6 +1,9 @@
-package jmri.jmrit.decoderdefn;
+package apps.jmrit.decoderdefn;
+
+import apps.jmrit.decoderdefn.DecoderIndexBuilder;
 
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

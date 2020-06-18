@@ -575,7 +575,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
-        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
+        // jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
         List<E> list = getNamedBeanList();
         ArrayList<String> retval = new ArrayList<>(list.size());
         list.forEach(e -> retval.add(e.getSystemName()));
@@ -587,7 +587,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @Nonnull
     public List<E> getNamedBeanList() {
-        // jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
+        // jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
         // by doing this in order by manager and from each managers ordered sets, its finally in order
         ArrayList<E> tl = new ArrayList<>();
         mgrs.forEach(m -> tl.addAll(m.getNamedBeanSet()));

@@ -6560,7 +6560,7 @@ public class LlnmonTest {
         lnsm = new LnSensorManager(memo);
         lnrm = new LnReporterManager(memo);
 
-        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
+        JUnitLoggingUtil.setDeprecatedLogging(false); // testing deprecated method
         f = new Llnmon(lntm, lnsm, lnrm);
 
         jmri.InstanceManager.setTurnoutManager(lntm);
