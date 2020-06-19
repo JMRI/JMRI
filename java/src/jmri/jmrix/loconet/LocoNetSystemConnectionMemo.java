@@ -19,7 +19,7 @@ import jmri.ReporterManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
+public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
 
     /**
@@ -76,7 +76,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Do both the default parent
-     * {@link SystemConnectionMemo} registration,
+     * {@link jmri.SystemConnectionMemo} registration,
      * and register this specific type.
      */
     @Override

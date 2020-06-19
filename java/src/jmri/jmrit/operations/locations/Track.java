@@ -22,7 +22,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -43,8 +42,6 @@ public class Track extends PropertyChangeSupport {
     protected String _name = NONE;
     protected String _trackType = NONE; // yard, spur, interchange or staging
     protected Location _location; // the location for this track
-    protected String _alternateTrackId = NONE; // the alternate track id
-    protected String _roadOption = ALL_ROADS; // controls which car roads are accepted
     protected int _trainDir = EAST + WEST + NORTH + SOUTH; // train direction served by this track
     protected int _numberRS = 0; // number of cars and engines
     protected int _numberCars = 0; // number of cars
@@ -59,7 +56,11 @@ public class Track extends PropertyChangeSupport {
     protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
     protected int _moves = 0; // count of the drops since creation
     protected int _blockingOrder = 0; // defines the order tracks are serviced by trains
+    protected String _alternateTrackId = NONE; // the alternate track id
     protected String _comment = NONE;
+    
+    // car types serviced by this track
+    protected List<String> _typeList = new ArrayList<>();
 
     // Manifest and switch list comments
     protected boolean _printCommentManifest = true;
@@ -67,11 +68,20 @@ public class Track extends PropertyChangeSupport {
     protected String _commentPickup = NONE;
     protected String _commentSetout = NONE;
     protected String _commentBoth = NONE;
-
+    
+    // road options
+    protected String _roadOption = ALL_ROADS; // controls which car roads are accepted
+    protected List<String> _roadList = new ArrayList<>();
+    
+    // load options
     protected String _loadOption = ALL_LOADS; // receive track load restrictions
+    protected List<String> _loadList = new ArrayList<>();
     protected String _shipLoadOption = ALL_LOADS; // ship track load restrictions
+    protected List<String> _shipLoadList = new ArrayList<>();
 
+    // destinations that this track will service
     protected String _destinationOption = ALL_DESTINATIONS; // track destination restriction
+    protected List<String> _destinationIdList = new ArrayList<>();
 
     // schedule options
     protected String _scheduleName = NONE; // Schedule name if there's one
@@ -91,6 +101,8 @@ public class Track extends PropertyChangeSupport {
     public static final String ROUTES = "routes"; // track only accepts certain routes // NOI18N
     public static final String EXCLUDE_TRAINS = "excludeTrains"; // track excludes certain trains // NOI18N
     public static final String EXCLUDE_ROUTES = "excludeRoutes"; // track excludes certain routes // NOI18N
+    protected  List<String> _dropList = new ArrayList<>();
+    protected  List<String> _pickupList = new ArrayList<>();
 
     // load options
     protected int _loadOptions = 0;
@@ -776,8 +788,6 @@ public class Track extends PropertyChangeSupport {
         setDirtyAndFirePropertyChange("trackPrintSwitchListComment", old, enable);
     }
 
-    List<String> _typeList = new ArrayList<>();
-
     /**
      * Returns all of the rolling stock type names serviced by this track.
      *
@@ -886,8 +896,6 @@ public class Track extends PropertyChangeSupport {
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _roadList = new ArrayList<>();
-
     public String[] getRoadNames() {
         String[] roads = new String[_roadList.size()];
         for (int i = 0; i < _roadList.size(); i++) {
@@ -981,8 +989,6 @@ public class Track extends PropertyChangeSupport {
         _loadOption = option;
         setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, old, option);
     }
-
-    List<String> _loadList = new ArrayList<>();
 
     private void setLoadNames(String[] loads) {
         if (loads.length == 0) {
@@ -1124,8 +1130,6 @@ public class Track extends PropertyChangeSupport {
         _shipLoadOption = option;
         setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, old, option);
     }
-
-    List<String> _shipLoadList = new ArrayList<>();
 
     private void setShipLoadNames(String[] loads) {
         if (loads.length == 0) {
@@ -1278,8 +1282,6 @@ public class Track extends PropertyChangeSupport {
         setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _dropList = new ArrayList<>();
-
     public String[] getDropIds() {
         String[] ids = new String[_dropList.size()];
         for (int i = 0; i < _dropList.size(); i++) {
@@ -1354,8 +1356,6 @@ public class Track extends PropertyChangeSupport {
     public boolean containsDropId(String id) {
         return _dropList.contains(id);
     }
-
-    List<String> _pickupList = new ArrayList<>();
 
     public String[] getPickupIds() {
         String[] ids = new String[_pickupList.size()];
@@ -1448,7 +1448,7 @@ public class Track extends PropertyChangeSupport {
                 continue;
             }
             for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
-                if (!train.acceptsTypeName(carType) || !acceptsPickupTrain(train)) {
+                if (!train.isTypeNameAccepted(carType) || !acceptsPickupTrain(train)) {
                     continue;
                 }
                 // does the train services this location and track?
@@ -1458,7 +1458,7 @@ public class Track extends PropertyChangeSupport {
                         if (rLoc.getName().equals(getLocation().getName()) &&
                                 rLoc.isPickUpAllowed() &&
                                 rLoc.getMaxCarMoves() > 0 &&
-                                !train.skipsLocation(rLoc.getId()) &&
+                                !train.isLocationSkipped(rLoc.getId()) &&
                                 ((getTrainDirections() & rLoc.getTrainDirection()) != 0 || train.isLocalSwitcher()) &&
                                 ((getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 ||
                                 train.isLocalSwitcher())) {
@@ -1550,7 +1550,7 @@ public class Track extends PropertyChangeSupport {
             if (checkPlannedPickUps(length)) {
                 return OKAY;
             }
-            // Note that a lot of the code checks for track length being an issue, therefore it has to be the last
+            // Note that much of the code checks for track length being an issue, therefore it has to be the last
             // check.
             // Is rolling stock too long for this track?
             if ((getLength() < length && getPool() == null) ||
@@ -1560,45 +1560,52 @@ public class Track extends PropertyChangeSupport {
             }
             log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(), getLocation()
                     .getName(), getName()); // NOI18N
-            // calculate the available space
-            int available = getLength() -
-                    (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
-                            getReserved());
-            // could be less
-            int available3 = getLength() + (getLength() * getIgnoreUsedLengthPercentage() / 100) - getUsedLength() - getReserved();
-            if (available3 < available) {
-                available = available3;
-            }
-            // could be less based on track length
-            int available2 = getLength() - getReservedLengthDrops();
-            if (available2 < available) {
-                available = available2;
-            }
+  
             return MessageFormat.format(Bundle.getMessage("lengthIssue"), new Object[]{LENGTH, length,
-                    Setup.getLengthUnit().toLowerCase(), available});
+                    Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace()});
         }
         return OKAY;
     }
-
+    
     /**
-     *
+     * Performs two checks, number of new set outs shouldn't exceed the track
+     * length. The second check protects against overloading, the total number
+     * of cars shouldn't exceed the track length plus the number of cars to
+     * ignore.
+     * 
+     * @param length rolling stock length
      * @return true if the program should ignore some percentage of the car's
      *         length currently consuming track space.
      */
     private boolean checkPlannedPickUps(int length) {
-        if (getIgnoreUsedLengthPercentage() > 0) {
-            // two checks, number of new set outs shouldn't exceed the track length. The second check protects against
-            // overloading, the total number of cars shouldn't exceed the track length plus the number of cars to
-            // ignore.
-            if (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
-                    getReservedLengthDrops() +
-                    length <= getLength() &&
-                    getUsedLength() + getReserved() + length <= getLength() +
-                            (getLength() * getIgnoreUsedLengthPercentage() / 100)) {
-                return true;
-            }
+        if (getIgnoreUsedLengthPercentage() > 0 && getAvailableTrackSpace() >= length) {
+            return true;
         }
         return false;
+    }
+    
+    /**
+     * Available track space. Adjusted when a track is using the planned pickups
+     * feature
+     * 
+     * @return available track space
+     */
+    public int getAvailableTrackSpace() {
+        // calculate the available space
+        int available = getLength() -
+                (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
+                        getReserved());
+        // could be less if track is overloaded
+        int available3 = getLength() + (getLength() * getIgnoreUsedLengthPercentage() / 100) - getUsedLength() - getReserved();
+        if (available3 < available) {
+            available = available3;
+        }
+        // could be less based on track length
+        int available2 = getLength() - getReservedLengthDrops();
+        if (available2 < available) {
+            available = available2;
+        }
+        return available;
     }
 
     public int getReservedLengthDrops() {
@@ -2355,8 +2362,6 @@ public class Track extends PropertyChangeSupport {
         return NONE;
     }
 
-    List<String> _destinationIdList = new ArrayList<>();
-
     public int getDestinationListSize() {
         return _destinationIdList.size();
     }
@@ -2820,17 +2825,6 @@ public class Track extends PropertyChangeSupport {
         e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));
         // build list of car types for this track
         String[] types = getTypeNames();
-        // Old way of saving car types
-        if (Control.backwardCompatible) {
-            StringBuffer buf = new StringBuffer();
-            for (String type : types) {
-                // remove types that have been deleted by user
-                if (InstanceManager.getDefault(CarTypes.class).containsName(type) || InstanceManager.getDefault(EngineTypes.class).containsName(type)) {
-                    buf.append(type + "%%"); // NOI18N
-                }
-            }
-            e.setAttribute(Xml.CAR_TYPES, buf.toString());
-        }
         // new way of saving car types using elements
         Element eTypes = new Element(Xml.TYPES);
         for (String type : types) {
@@ -2847,20 +2841,10 @@ public class Track extends PropertyChangeSupport {
         }
         e.addContent(eTypes);
 
-        if (Control.backwardCompatible) {
-            e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption()); // early versions had a misspelling
-        }
         // build list of car roads for this track
         if (!getRoadOption().equals(ALL_ROADS)) {
             e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
             String[] roads = getRoadNames();
-            if (Control.backwardCompatible) {
-                StringBuffer buf = new StringBuffer();
-                for (String road : roads) {
-                    buf.append(road + "%%"); // NOI18N
-                }
-                e.setAttribute(Xml.CAR_ROADS, buf.toString());
-            }
             // new way of saving road names
             Element eRoads = new Element(Xml.CAR_ROADS);
             for (String road : roads) {
@@ -2875,13 +2859,6 @@ public class Track extends PropertyChangeSupport {
         if (!getLoadOption().equals(ALL_LOADS)) {
             e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
             String[] loads = getLoadNames();
-            if (Control.backwardCompatible) {
-                StringBuffer buf = new StringBuffer();
-                for (String load : loads) {
-                    buf.append(load + "%%"); // NOI18N
-                }
-                e.setAttribute(Xml.CAR_LOADS, buf.toString());
-            }
             // new way of saving car loads using elements
             Element eLoads = new Element(Xml.CAR_LOADS);
             for (String load : loads) {
@@ -2910,13 +2887,6 @@ public class Track extends PropertyChangeSupport {
             e.setAttribute(Xml.DROP_OPTION, getDropOption());
             // build list of drop ids for this track
             String[] dropIds = getDropIds();
-            if (Control.backwardCompatible) {
-                StringBuffer buf = new StringBuffer();
-                for (String id : dropIds) {
-                    buf.append(id + "%%"); // NOI18N
-                }
-                e.setAttribute(Xml.DROP_IDS, buf.toString());
-            }
             // new way of saving drop ids using elements
             Element eDropIds = new Element(Xml.DROP_IDS);
             for (String id : dropIds) {
@@ -2931,13 +2901,6 @@ public class Track extends PropertyChangeSupport {
             e.setAttribute(Xml.PICKUP_OPTION, getPickupOption());
             // build list of pickup ids for this track
             String[] pickupIds = getPickupIds();
-            if (Control.backwardCompatible) {
-                StringBuffer buf = new StringBuffer();
-                for (String id : pickupIds) {
-                    buf.append(id + "%%"); // NOI18N
-                }
-                e.setAttribute(Xml.PICKUP_IDS, buf.toString());
-            }
             // new way of saving pick up ids using elements
             Element ePickupIds = new Element(Xml.PICKUP_IDS);
             for (String id : pickupIds) {
@@ -2997,9 +2960,6 @@ public class Track extends PropertyChangeSupport {
                 }
                 e.addContent(destinations);
             }
-        }
-        if (Control.backwardCompatible) {
-            e.setAttribute(Xml.COMMENT, getComment());
         }
         // save manifest track comments if they exist
         if (!getComment().equals(NONE) ||

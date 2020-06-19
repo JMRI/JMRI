@@ -12,6 +12,8 @@ import jmri.SpeedStepMode;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.SystemConnectionMemo;
+import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.beans.PropertyChangeSupport;
 
@@ -36,18 +38,20 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     /**
      * Array of Function values.
      * <p>
-     * Contains current Boolean value for functions 0-28.
+     * Contains current Boolean value for functions.
      * This array should not be accessed directly by Throttles,
-     * use setFunction / getFunction.
+     * use setFunction / getFunction / updateFunction.
+     * Needs to be same length as FUNCTION_MOMENTARY_BOOLEAN_ARRAY.
      */
-    protected boolean[] FUNCTION_BOOLEAN_ARRAY;
+    private final boolean[] FUNCTION_BOOLEAN_ARRAY;
 
     /**
      * Array of Momentary Function values.
      * <p>
-     * Contains current Boolean value for Momentary functions 0-28.
+     * Contains current Boolean value for Momentary function settings.
+     * Needs to be same length as FUNCTION_BOOLEAN_ARRAY.
      */
-    protected boolean[] FUNCTION_MOMENTARY_BOOLEAN_ARRAY;
+    private final boolean[] FUNCTION_MOMENTARY_BOOLEAN_ARRAY;
     
     /**
      * Is this object still usable? Set false after dispose, this variable is
@@ -56,7 +60,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     protected boolean active;
 
     /**
-     * Create a new AbstractThrottle.
+     * Create a new AbstractThrottle with Functions 0-28..
      * <p>
      * All function and momentary functions set to Off.
      * @param memo System Connection.
@@ -66,6 +70,20 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         adapterMemo = memo;
         FUNCTION_BOOLEAN_ARRAY = new boolean[29];
         FUNCTION_MOMENTARY_BOOLEAN_ARRAY = new boolean[29];
+    }
+    
+    /**
+     * Create a new AbstractThrottle with custom number of functions.
+     * <p>
+     * All function and momentary functions set to Off.
+     * @param memo System Connection.
+     * @param totalFunctions total number of functions available, including 0.
+     */
+    public AbstractThrottle(SystemConnectionMemo memo, int totalFunctions) {
+        active = true;
+        adapterMemo = memo;
+        FUNCTION_BOOLEAN_ARRAY = new boolean[totalFunctions];
+        FUNCTION_MOMENTARY_BOOLEAN_ARRAY = new boolean[totalFunctions];
     }
 
     /**
@@ -154,6 +172,23 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * implication; see also DccThrottle interface
      */
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean[] getFunctions() {
+        return Arrays.copyOf(FUNCTION_BOOLEAN_ARRAY,FUNCTION_BOOLEAN_ARRAY.length);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean[] getFunctionsMomentary() {
+        return Arrays.copyOf(FUNCTION_MOMENTARY_BOOLEAN_ARRAY,
+            FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length);
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -383,7 +418,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         boolean old = FUNCTION_BOOLEAN_ARRAY[functionNum];
         FUNCTION_BOOLEAN_ARRAY[functionNum] = newState;
         sendFunctionGroup(functionNum,false);
-        firePropertyChange("F"+functionNum, old, newState);
+        firePropertyChange(Throttle.getFunctionString(functionNum), old, newState);
     }
 
     /**
@@ -400,7 +435,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         }
         boolean old = FUNCTION_BOOLEAN_ARRAY[fn];
         FUNCTION_BOOLEAN_ARRAY[fn] = state;
-        firePropertyChange("F"+fn, old, state);
+        firePropertyChange(Throttle.getFunctionString(fn), old, state);
     }
     
     /**
@@ -411,14 +446,14 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @param fn    Momentary Function Number 0-28
      * @param state On - True, Off - False
      */
-    protected void updateFunctionMomentary(int fn, boolean state) {
+    public void updateFunctionMomentary(int fn, boolean state) {
         if (fn < 0 || fn > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1) {
             log.warn("Unhandled update momentary function number: {}", fn);
             return;
         }
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fn];
         FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fn] = state;
-        firePropertyChange(FUNCTION_MOMENTARY_STRING_ARRAY[fn], old, state);
+        firePropertyChange(Throttle.getFunctionMomentaryString(fn), old, state);
     }
 
     /**
@@ -529,7 +564,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[momFuncNum];
         FUNCTION_MOMENTARY_BOOLEAN_ARRAY[momFuncNum] = state;
         sendFunctionGroup(momFuncNum,true);
-        firePropertyChange("F" + momFuncNum + "Momentary", old, state);
+        firePropertyChange(Throttle.getFunctionMomentaryString(momFuncNum), old, state);
     }
 
     /**

@@ -4,14 +4,14 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 /**
  *
  * @author Lionel Jeanson
  */
-public class MqttSystemConnectionMemo extends SystemConnectionMemo {
+public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     private MqttAdapter mqttAdapter;
 

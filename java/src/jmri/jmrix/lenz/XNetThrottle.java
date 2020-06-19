@@ -595,6 +595,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     // Used for return values from Status requests.
     /**
      * Get SpeedStep and availability information.
+     * @param b1 1st byte of message to examine
      */
     protected void parseSpeedAndAvailability(int b1) {
         /* the first data bite indicates the speed step mode, and
@@ -631,6 +632,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     /**
      * Get Speed and Direction information.
+     * @param b2 2nd byte of message to examine
      */
     protected void parseSpeedAndDirection(int b2) {
         /* the second byte indicates the speed and direction setting */
@@ -900,6 +902,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     /**
      * Queue a message.
+     * @param m message to send
+     * @param s state
      */
     protected synchronized void queueMessage(XNetMessage m, int s) {
         log.debug("adding message to message queue");

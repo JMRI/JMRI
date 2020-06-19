@@ -1,17 +1,19 @@
 package jmri.server.json;
 
 import java.util.Locale;
+import jmri.util.startup.AbstractStartupActionFactory;
+import jmri.util.startup.StartupActionFactory;
+import org.openide.util.lookup.ServiceProvider;
 
-import apps.startup.AbstractStartupActionFactory;
-
-public class JsonServerStartupActionFactory extends AbstractStartupActionFactory {
+@ServiceProvider(service = StartupActionFactory.class)
+public final class JsonServerStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
     public String getTitle(Class<?> clazz, Locale locale) {
-        if (!clazz.equals(JsonServerAction.class)) {
-            throw new IllegalArgumentException();
+        if (clazz.equals(JsonServerAction.class)) {
+            return Bundle.getMessage(locale, "StartJsonServerAction"); // NOI18N
         }
-        return Bundle.getMessage(locale, "StartJsonServerAction"); // NOI18N
+        throw new IllegalArgumentException(clazz.getName() + " is not supported by " + this.getClass().getName());
     }
 
     @Override

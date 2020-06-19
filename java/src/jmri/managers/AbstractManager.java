@@ -16,7 +16,7 @@ import jmri.NamedBean;
 import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.beans.VetoableChangeSupport;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Abstract partial implementation for all Manager-type classes.

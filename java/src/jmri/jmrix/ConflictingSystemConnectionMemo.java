@@ -19,7 +19,7 @@ import jmri.util.NamedBeanPreferNumericComparator;
  * remove immediately when no longer used
  */
 @Deprecated
-public class ConflictingSystemConnectionMemo extends SystemConnectionMemo {
+public class ConflictingSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public ConflictingSystemConnectionMemo(String prefix, String userName) {
         super(prefix, userName);

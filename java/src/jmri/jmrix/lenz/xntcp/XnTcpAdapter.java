@@ -224,6 +224,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
      * than that of commands sent, but this fact simply implies that we may have
      * a higher number of pending commands for a while, without any negative
      * consequence (the maximum is however arbitrary).
+     *
+     * @param s number to send
      */
     protected synchronized void xnTcpSetPendingPackets(int s) {
         pendingPackets += s;
@@ -277,7 +279,12 @@ public class XnTcpAdapter extends XNetNetworkPortController {
         XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
 // Base class methods for the XNetNetworkPortController interface

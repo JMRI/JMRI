@@ -48,17 +48,17 @@
 
       <ul>
         <li><a href=
-        "http://jmri.org/install/WindowsNew.shtml">Windows</a></li>
+        "https://jmri.org/install/WindowsNew.shtml">Windows</a></li>
 
-        <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS
+        <li><a href="https://jmri.org/install/MacOSX.shtml">Mac OS
         X</a></li>
 
         <li>
-          <a href="http://jmri.org/install/Linux.shtml">Linux</a>
+          <a href="https://jmri.org/install/Linux.shtml">Linux</a>
 
           <ul>
             <li><a href=
-            "http://jmri.org/install/Raspbian.shtml">RasPi</a></li>
+            "https://jmri.org/install/Raspbian.shtml">RasPi</a></li>
           </ul>
         </li>
       </ul>
@@ -129,13 +129,13 @@
       <h2>Fixing Problems</h2>
 
       <ul>
-        <li><a href="http://jmri.org/install/Debug.shtml">Debugging
+        <li><a href="https://jmri.org/install/Debug.shtml">Debugging
         an installation</a></li>
 
         <li><a href="../setup/Errors.shtml">Error Codes</a></li>
 
         <li><a href=
-        "http://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a>
+        "https://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a>
         (Windows only)</li>
 
         <li><a href="Faq.shtml">Frequently Asked Questions</a></li>

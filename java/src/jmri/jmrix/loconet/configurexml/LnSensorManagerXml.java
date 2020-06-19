@@ -25,16 +25,11 @@ public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSenso
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // load individual sensors
         loadSensors(shared);
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerXml.class);
 }

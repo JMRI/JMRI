@@ -9,6 +9,8 @@ import jmri.InstanceManager;
 import jmri.MultiMeter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing a simple LCD-based display of track current.
@@ -23,7 +25,7 @@ import jmri.util.JmriJFrame;
  * 
  * [AC] The code had diverged from the clocks, with a new image scaling method
  * which, unfortunately, did not work very well. It now takes account of the
- * last saved window size and revalidates on each scaling (found to be neccessary
+ * last saved window size and re-validates on each scaling (found to be necessary
  * on Raspberry Pis.
  */
 public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -68,10 +70,11 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         // listen for changes to the meter parameters
         meter.addPropertyChangeListener(this);
 
-        // mA current readings are displayed as integers.
-        // Start with 4 digits '0000' for mA, with an extra non-displayed decimal
-        // place to reduce the need to rescale the image or resize the window
-        // when an extra digit is added
+        // mA current readings are displayed as integers. An extra, non-displayed
+        // decimal place is included to match amp and percentage displays.
+        // Start with 4 digits '0000' for mA, to reduce the need to rescale the
+        // image or resize the window when an extra digit is added. 9999mA will
+        // be enough for most systems before rescaling is needed.
         switch (meter.getCurrentUnits()) {
             case CURRENT_UNITS_MILLIAMPS:
                 displayLength = 5;
@@ -187,12 +190,17 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
      */
     synchronized void update() {
         float val = meter.getCurrent();
+        LOG.debug("update for value {}", val);
         int value = (int)Math.floor(val *10); // keep one decimal place.
+        LOG.debug("integer value with one dp preserved {}", value);
         boolean scaleChanged = false;
         // autoscale the array of labels.
-        while( (value) > ((Math.pow(10,digitIcons.size()-1))-1)) {
-           digitIcons.add(0,new JLabel(digits[0]));
-           scaleChanged = true;
+        while( (value) > (Math.pow(10,digitIcons.size())-1)) {
+            LOG.debug("digitIcons size {} {}", digitIcons.size(), Math.pow(10,digitIcons.size()-1)-1);
+            digitIcons.add(0,new JLabel(digits[0]));
+            scaleChanged = true;
+            displayLength = digitIcons.size();
+            LOG.debug("displayLength now {}", displayLength);
         }
 
         if (scaleChanged){
@@ -241,4 +249,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
          */
     }
 
+    private final static Logger LOG = LoggerFactory.getLogger(AmpMeterFrame.class);
+    
 }

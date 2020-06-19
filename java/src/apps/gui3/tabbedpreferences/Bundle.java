@@ -21,7 +21,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends apps.Bundle {
+public class Bundle extends apps.gui3.Bundle {
 
     @CheckForNull
     private static final String name = null; // no local resources

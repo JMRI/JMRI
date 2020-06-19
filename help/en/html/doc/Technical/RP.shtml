@@ -183,7 +183,7 @@
       a while, marking it as "deprecated" so that people can
       discover that it will eventually go away. 
       (The current list of those is available as
-      <a href="http://jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>)
+      <a href="https://jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>)
       The sequence is then:
       <ul>
         <li>Write the new methods.

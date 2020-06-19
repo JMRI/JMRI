@@ -1,25 +1,25 @@
 package jmri.jmrit.ctc;
 
-import apps.startup.AbstractStartupActionFactory;
-import apps.startup.StartupActionFactory;
+import jmri.util.startup.AbstractStartupActionFactory;
+import jmri.util.startup.StartupActionFactory;
 import java.util.Locale;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * {@link apps.startup.StartupActionFactory} for the
+ * {@link jmri.util.startup.StartupActionFactory} for the
  * {@link jmri.jmrit.ctc.editor.CtcEditorAction}.
  *
  * @author Dave Sand Copyright (C) 2018
  */
 @ServiceProvider(service = StartupActionFactory.class)
-public class CtcRunStartup extends AbstractStartupActionFactory {
+public final class CtcRunStartup extends AbstractStartupActionFactory {
 
     @Override
     public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
-        if (!clazz.equals(CtcRunAction.class)) {
-            throw new IllegalArgumentException();
+        if (clazz.equals(CtcRunAction.class)) {
+            return Bundle.getMessage(locale, "CtcRunAction"); // NOI18N
         }
-        return Bundle.getMessage(locale, "CtcRunAction"); // NOI18N
+        throw new IllegalArgumentException(clazz.getName() + " is not supported by " + this.getClass().getName());
     }
 
     @Override

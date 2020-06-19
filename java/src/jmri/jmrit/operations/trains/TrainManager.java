@@ -486,7 +486,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                 continue;
             }
             // does this train service this car?
-            if (train.services(buildReport, car)) {
+            if (train.isServiceable(buildReport, car)) {
                 return train;
             }
         }
@@ -668,7 +668,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         box.removeAllItems();
         box.addItem(null);
         for (Train train : getTrainsByNameList()) {
-            if (train.services(car)) {
+            if (train.isServiceable(car)) {
                 box.addItem(train);
             }
         }

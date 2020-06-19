@@ -8,7 +8,7 @@ import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.RailComManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.managers.DefaultRailComManager;
 import jmri.util.NamedBeanComparator;
 
@@ -21,7 +21,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public Dcc4PcSystemConnectionMemo(Dcc4PcTrafficController tc) {
         super("D", "Dcc4Pc");

@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
 import jmri.beans.VetoableChangeSupport;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;

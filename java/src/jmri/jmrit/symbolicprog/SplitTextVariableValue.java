@@ -230,25 +230,26 @@ public class SplitTextVariableValue extends SplitVariableValue {
     /**
      * Contains byte-value specific code.
      * <br><br>
-     * invokes {@link #updatedTextField updatedTextField()}
-     * <br><br>
+     * invokes {@link #exitField exitField()} to process text and
      * firePropertyChange for "Value" with new contents of _textField
      *
      * @param e the action event
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Variable={}; actionPerformed", _name);
-        }
-        byte[] newVal = getBytesFromText(_textField.getText());
-        updatedTextField();
-        prop.firePropertyChange("Value", null, newVal);
+        log.debug("Variable={}; actionPerformed", _name);
+        exitField();
     }
 
     @Override
     public int getIntValue() {
         log.error("getValue doesn't make sense for a split text value");
+        return 0;
+    }
+
+    @Override
+    public long getLongValue() {
+        log.error("getLongValue doesn't make sense for a split text value");
         return 0;
     }
 
@@ -262,9 +263,9 @@ public class SplitTextVariableValue extends SplitVariableValue {
             log.debug("Variable={}; setValue with new value {} old value {}", _name, value, oldVal);
         }
         _textField.setText(value);
-        if (!oldVal.equals(value) || getState() == VariableValue.UNKNOWN) {
-            actionPerformed(null);
-        }
+//        if (!oldVal.equals(value) || getState() == VariableValue.UNKNOWN) {
+//            actionPerformed(null);
+//        }
         prop.firePropertyChange("Value", oldVal, value);
         if (log.isDebugEnabled()) {
             log.debug("Variable={}; exit setValue {}", _name, value);
@@ -275,6 +276,11 @@ public class SplitTextVariableValue extends SplitVariableValue {
     @Override
     public void setIntValue(int i) {
         log.warn("setIntValue doesn't make sense for a split text value: {}", i);
+    }
+
+    @Override
+    public void setLongValue(long i) {
+        log.warn("setLongValue doesn't make sense for a split text value: {}", i);
     }
 
     // initialize logging

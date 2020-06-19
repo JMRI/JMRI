@@ -6,7 +6,7 @@ import java.beans.VetoableChangeListener;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import javax.annotation.*;

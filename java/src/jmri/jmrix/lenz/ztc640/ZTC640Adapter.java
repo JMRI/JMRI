@@ -103,7 +103,12 @@ public class ZTC640Adapter extends XNetSerialPortController {
         packets.connectPort(this);
 
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     // base class methods for the XNetSerialPortController interface
@@ -137,6 +142,7 @@ public class ZTC640Adapter extends XNetSerialPortController {
 
     /**
      * Local method to do specific configuration.
+     * @throws UnsupportedCommOperationException if the underlying port can't comply with the settings
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

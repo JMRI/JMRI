@@ -148,7 +148,9 @@ public class SerialDriverAdapter extends SerialPortAdapter {
     }
 
     /**
-     * Local method to do specific port configuration
+     * Local method to do specific port configuration.
+     * 
+     * @throws UnsupportedCommOperationException when underlying port can't do what's requested
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

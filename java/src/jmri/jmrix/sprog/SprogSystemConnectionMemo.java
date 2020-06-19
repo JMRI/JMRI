@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class SprogSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public SprogSystemConnectionMemo(SprogTrafficController st, SprogMode sm) {
         super(st.getController().getSystemConnectionMemo().getSystemPrefix(), SprogConnectionTypeList.SPROG);

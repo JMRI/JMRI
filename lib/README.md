@@ -34,6 +34,11 @@ which checks the dates of the control files to make sure they've benen updated w
 
 ### Specific components:
 
+##### jetty-*.jar
+- version 9.4.28.v20200408
+- provides the HTTP and WebSocket servers
+- from https://search.maven.org/search?q=g:org.eclipse.jetty%20v:9.4.28.v20200428
+
 ##### jsplitbutton-1.3.1.jar
 - version 1.3.1
 - provides a Swing split button
@@ -283,9 +288,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ##### PlantUML
 - plantuml.jar
-            from plantuml.org
-- umldoclet-2.0.9.jar	
-    from https://github.com/talsma-ict/umldoclet
+    was from plantuml.org, now from https://github.com/plantuml/plantuml.git
+- umldoclet.jar
+    downloaded umldoclet-2.0.10-20200614.124810-9.jar 
+    from https://oss.sonatype.org/content/repositories/snapshots/nl/talsmasoftware/umldoclet/2.0.10-SNAPSHOT/
+    see https://github.com/talsma-ict/umldoclet
     
 ##### rscbundlecheck.jar
 - check for duplicated properties

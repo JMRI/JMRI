@@ -11,8 +11,6 @@ import javax.annotation.Nonnull;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
-import jmri.ShutDownTask;
-import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractAudioManager;
 import org.slf4j.Logger;
@@ -57,13 +55,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private final TreeSet<Audio> buffers = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
     private final TreeSet<Audio> sources = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
 
-    public final ShutDownTask audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
-        @Override
-        public boolean execute() {
-            InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
-            return true;
-        }
-    };
+    public final Runnable audioShutDownTask = this::cleanup;
 
     @Override
     public int getXMLOrder() {

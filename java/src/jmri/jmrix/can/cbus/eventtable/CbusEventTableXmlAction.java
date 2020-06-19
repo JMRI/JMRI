@@ -93,7 +93,7 @@ public class CbusEventTableXmlAction {
      * @param model Table Model to save.
      */
     protected static void storeEventsToXml(CbusEventTableDataModel model) {
-        jmri.util.ThreadingUtil.runOnLayout(()->{  layoutEventsToXml(model); });
+        layoutEventsToXml(model);
     }
     
     private static void layoutEventsToXml(CbusEventTableDataModel model) {

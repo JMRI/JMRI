@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import java.util.Enumeration;
 import java.util.Vector;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -355,7 +356,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Set event logging
+     * Set event logging.
+     * @param port Serial port to configure
      */
     protected void setPortEventLogging(SerialPort port) {
         // arrange to notify later

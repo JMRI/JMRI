@@ -337,7 +337,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
             Train train = rs.getTrain();
             if (train != null) {
                 // determine if train services this rs's type
-                if (!train.acceptsTypeName(rs.getTypeName())) {
+                if (!train.isTypeNameAccepted(rs.getTypeName())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServType"), new Object[]{rs.getTypeName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
@@ -347,7 +347,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's road
-                if (!train.acceptsRoadName(rs.getRoadName())) {
+                if (!train.isRoadNameAccepted(rs.getRoadName())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServRoad"), new Object[]{rs.getRoadName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
@@ -357,7 +357,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's built date
-                if (!train.acceptsBuiltDate(rs.getBuilt())) {
+                if (!train.isBuiltDateAccepted(rs.getBuilt())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServBuilt"), new Object[]{rs.getBuilt(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
@@ -367,7 +367,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's owner
-                if (!train.acceptsOwnerName(rs.getOwner())) {
+                if (!train.isOwnerNameAccepted(rs.getOwner())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}), getRb()
                                     .getString("rsNotMove"),

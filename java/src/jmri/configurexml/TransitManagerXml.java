@@ -117,11 +117,6 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         transits.setAttribute("class", "jmri.configurexml.TransitManagerXml");
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     /**
      * Create a TransitManager object of the correct class, then register and
      * fill it.

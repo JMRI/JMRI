@@ -139,6 +139,8 @@ public class LayoutLHTurnout extends LayoutTurnout {
     public LayoutLHTurnout(@Nonnull String id, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
         super(id, TurnoutType.LH_TURNOUT, c, rot, xFactor, yFactor, layoutEditor, 1);
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutLHTurnoutEditor(layoutEditor);
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHTurnout.class);

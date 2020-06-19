@@ -12,6 +12,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
+import jmri.SystemConnectionMemo;
 import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
@@ -859,6 +860,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * <p>
      * Managers still need to advise listeners that the session has 
      * been cancelled and actually dispose of the throttle
+     * @param la address release
      */
     protected void forceDisposeThrottle(LocoAddress la) {
         log.debug("force dispose address {}",la);
@@ -920,6 +922,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * Release a Throttle from a ThrottleListener.
+     * @param la address release
+     * @param l listening object
      * @return True if throttle still has listeners or a positive use count, else False.
      */
     protected boolean addressReleased(LocoAddress la, ThrottleListener l) {
@@ -952,6 +956,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * specific implementations can override this function to get updates
      *
      * @param la the Loco Address which has been updated
+     * @param numUsers current number of users
      */
     protected void updateNumUsers( LocoAddress la, int numUsers ){
         log.debug("Throttle {} now has {} users",la,numUsers);
@@ -979,8 +984,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                 return t.getSpeedStepMode();
             }
         }
-        for ( int i = 0; i< Throttle.FUNCTION_STRING_ARRAY.length; i++ ) {
-            if (item.equals(Throttle.FUNCTION_STRING_ARRAY[i])) {
+        for ( int i = 0; i< t.getFunctions().length; i++ ) {
+            if (item.equals(Throttle.getFunctionString(i))) {
                 return t.getFunction(i);
             }
         }

@@ -42,13 +42,12 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     private final String powerManagerChangeName;
     public final ShutDownTask shutDownTask = new AbstractShutDownTask("Writing Blocks") {
         @Override
-        public boolean execute() {
+        public void run() {
             try {
                 new BlockValueFile().writeBlockValues();
             } catch (IOException ex) {
                 log.error("Exception writing blocks", ex);
             }
-            return true;
         }
     };
     
@@ -256,12 +255,12 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      */
     @CheckReturnValue
     @Nonnull
-    public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
+    public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull BasicRosterEntry re) {
         List<Block> blockList = new ArrayList<>();
         getNamedBeanSet().stream().forEach(b -> {
             if (b != null) {
                 Object obj = b.getValue();
-                if ((obj instanceof RosterEntry && obj == re) ||
+                if ((obj instanceof BasicRosterEntry && obj == re) ||
                         obj.toString().equals(re.getId()) ||
                         obj.toString().equals(re.getDccAddress())) {
                     blockList.add(b);

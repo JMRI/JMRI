@@ -794,29 +794,32 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             OBlock endBlock = oldWarrant.getLastOrder().getBlock();
             long time = 0;
             String msg = null;
-            try {
-                while (time < 10000) {
-                    if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
-                        break;
-                    }
-                    synchronized (this) {
-                        wait(200);
-                        time += 200;
-                    }
+            while (time < 10000) {
+                if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
+                    break;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(100);
+                    time += 100;
+                } catch (InterruptedException ie) {
+                    time = 10000;
+                    msg = Bundle.getMessage(CANNOT_RUN, newWarrant.getDisplayName(), ie);
+                } finally {
+                    Thread.currentThread().setPriority(priority);
                 }
                 if (time >= 10000) {
-                    log.trace(Bundle.getMessage("cannotLaunch",
-                            newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName()));
+                    msg = Bundle.getMessage("cannotLaunch",
+                            newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName());
                 }
-            } catch (InterruptedException ie) {
-                log.warn("Warrant \"{}\" InterruptedException message= \"{}\" time= {}",
-                        oldWarrant.getDisplayName(), ie, time);
-                Thread.currentThread().interrupt();
             }
             if (log.isDebugEnabled()) log.debug("CheckForTermination waited {}ms. runMode={} ", time, oldWarrant.getRunMode());
 
             java.awt.Color color = java.awt.Color.red;
-            msg = newWarrant.setRoute(false, null);
+            if (msg == null) {
+                msg = newWarrant.setRoute(false, null);
+            }
             if (msg == null) {
                 msg = newWarrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
             }

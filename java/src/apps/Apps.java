@@ -27,7 +27,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.Locale;
-import javax.help.SwingHelpUtilities;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
@@ -86,7 +85,6 @@ import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.JFrameInterface;
-import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
 import jmri.util.usb.RailDriverMenuItem;
 import jmri.web.server.WebServerAction;
@@ -126,9 +124,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         jmri.Application.setLogo(logo());
         log.trace("setURL");
         jmri.Application.setURL(line2());
-
-        // Enable proper snapping of JSliders
-        SliderSnap.init();
 
         // Get configuration profile
         log.trace("start to get configuration profile - locate files");
@@ -685,7 +680,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         JMenu helpMenu = HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
 
         // tell help to use default browser for external types
-        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
         // use as main help menu
         menuBar.add(helpMenu);

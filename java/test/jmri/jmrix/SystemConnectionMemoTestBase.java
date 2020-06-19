@@ -1,10 +1,16 @@
 package jmri.jmrix;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assumptions.assumeThat;
+
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
-
+import jmri.SystemConnectionMemo;
+import jmri.util.startup.StartupActionFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,10 +20,11 @@ import org.junit.Test;
  * Abstract base class for SystemConnectionMemo objects.
  *
  * @author Paul Bender Copyright (C) 2017
+ * @param <M> the supported memo class
  */
-abstract public class SystemConnectionMemoTestBase {
+abstract public class SystemConnectionMemoTestBase<M extends DefaultSystemConnectionMemo> {
 
-    protected SystemConnectionMemo scm = null;
+    protected M scm = null;
 
     public void getTest(Class t) {
         if (scm.provides(t)) {
@@ -26,6 +33,17 @@ abstract public class SystemConnectionMemoTestBase {
         } else {
             Assert.assertNull("Provides Class " + t.getName(), scm.get(t));
         }
+    }
+
+    @Test
+    public void testGetActionFactory() {
+        assumeThat(scm.getActionModelResourceBundle()).as("provides ResourceBundle").isNotNull();
+        StartupActionFactory f = scm.getActionFactory();
+        assertThat(f).as("provides StartupActionFactory").isNotNull();
+        Arrays.stream(f.getActionClasses()).forEach(a -> {
+            assertThat(f.getTitle(a)).as("has title for %s", a).isNotNull();
+            assertThatCode(() -> a.getDeclaredConstructor().newInstance()).doesNotThrowAnyException();
+        });
     }
 
     @Test
@@ -76,7 +94,7 @@ abstract public class SystemConnectionMemoTestBase {
 
     @Test
     public void testMultipleMemosSamePrefix() {
-        SystemConnectionMemo t = new SystemConnectionMemo("t", "test") {
+        SystemConnectionMemo t = new DefaultSystemConnectionMemo("t", "test") {
             @Override
             protected ResourceBundle getActionModelResourceBundle() {
                 return null;

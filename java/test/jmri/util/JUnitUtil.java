@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import apps.SystemConsole;
+import java.util.concurrent.Callable;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
@@ -742,6 +743,9 @@ public class JUnitUtil {
     }
 
     public static void deregisterBlockManagerShutdownTask() {
+        if (! InstanceManager.isInitialized(ShutDownManager.class)) return;
+        if (! InstanceManager.isInitialized(BlockManager.class)) return;
+        
         InstanceManager
                 .getDefault(ShutDownManager.class)
                 .deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
@@ -974,6 +978,18 @@ public class JUnitUtil {
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
         }
+        List<Callable<Boolean>> callables = sm.getCallables();
+        while (!callables.isEmpty()) {
+            Callable<Boolean> callable = callables.get(0);
+            sm.deregister(callable);
+            callables = sm.getCallables(); // avoid ConcurrentModificationException
+        }
+        List<Runnable> runnables = sm.getRunnables();
+        while (!runnables.isEmpty()) {
+            Runnable runnable = runnables.get(0);
+            sm.deregister(runnable);
+            runnables = sm.getRunnables(); // avoid ConcurrentModificationException
+        }
     }
 
     /**
@@ -991,10 +1007,26 @@ public class JUnitUtil {
         List<ShutDownTask> list = sm.tasks();
         while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
-            log.error("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
+            log.error("Test {} left ShutDownTask registered: {} (of type {})", getTestClassName(), task.getName(), task.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
+        }
+        List<Callable<Boolean>> callables = sm.getCallables();
+        while (!callables.isEmpty()) {
+            Callable<Boolean> callable = callables.get(0);
+            log.error("Test {} left registered shutdown callable of type {}", getTestClassName(), callable.getClass(), 
+                        Log4JUtil.shortenStacktrace(new Exception("traceback")));
+            sm.deregister(callable);
+            callables = sm.getCallables(); // avoid ConcurrentModificationException
+        }
+        List<Runnable> runnables = sm.getRunnables();
+        while (!runnables.isEmpty()) {
+            Runnable runnable = runnables.get(0);
+            log.error("Test {} left registered shutdown runnable of type {}", getTestClassName(), runnable.getClass(), 
+                        Log4JUtil.shortenStacktrace(new Exception("traceback")));
+            sm.deregister(runnable);
+            runnables = sm.getRunnables(); // avoid ConcurrentModificationException
         }
 
         // use reflection to reset static fields in the class.
@@ -1033,8 +1065,8 @@ public class JUnitUtil {
 
     public static void initStartupActionsManager() {
         InstanceManager.store(
-                new apps.StartupActionsManager(),
-                apps.StartupActionsManager.class);
+                new jmri.util.startup.StartupActionsManager(),
+                jmri.util.startup.StartupActionsManager.class);
     }
 
     public static void initConnectionConfigManager() {

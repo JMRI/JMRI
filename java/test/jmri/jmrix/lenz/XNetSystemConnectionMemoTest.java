@@ -1,10 +1,12 @@
 package jmri.jmrix.lenz;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * XNetSystemConnectionMemoTest.java
@@ -13,66 +15,51 @@ import org.junit.Test;
  *
  * @author Paul Bender
  */
-public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class XNetSystemConnectionMemoTest extends SystemConnectionMemoTestBase<XNetSystemConnectionMemo> {
+
+    private XNetTrafficController trafficController;
+    private LenzCommandStation commandStation;
 
     @Test
     @Override
     public void testCtor() {
-        XNetSystemConnectionMemo t = (XNetSystemConnectionMemo) scm;
-        Assert.assertNotNull(t);
-        Assert.assertNotNull(t.getXNetTrafficController());
-        // While we are constructing the memo, we should also set the 
+        Assert.assertNotNull(scm);
+        Assert.assertNotNull(scm.getXNetTrafficController());
+        Assert.assertEquals(trafficController,scm.getXNetTrafficController());
+        // While we are constructing the memo, we should also set the
         // SystemMemo parameter in the traffic controller.
-        Assert.assertNotNull(t.getXNetTrafficController().getSystemConnectionMemo());
+        Mockito.verify(trafficController).setSystemConnectionMemo(scm);
     }
 
     @Test
     public void testXNetTrafficControllerSetCtor() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-
-        XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
-        Assert.assertNotNull(t);
+        XNetTrafficController tc2 = Mockito.mock(XNetTrafficController.class);
+        LenzCommandStation cs = Mockito.mock(LenzCommandStation.class);
+        Mockito.when(tc2.getCommandStation()).thenReturn(cs);
+        Assert.assertNotNull(scm);
         // the default constructor does not set the traffic controller
-        Assert.assertNull(t.getXNetTrafficController());
+        Assert.assertNotEquals(tc2, scm.getXNetTrafficController());
         // so we need to do this ourselves.
-        t.setXNetTrafficController(tc);
-        Assert.assertNotNull(t.getXNetTrafficController());
-        // and while we're doing that, we should also set the SystemConnectionMemo
+        scm.setXNetTrafficController(tc2);
+        Assert.assertNotNull(scm.getXNetTrafficController());
+        Assert.assertEquals(tc2,scm.getXNetTrafficController());
+        // and while we're doing that, we should also set the SystemMemo
         // parameter in the traffic controller.
-        Assert.assertNotNull(t.getXNetTrafficController().getSystemConnectionMemo());
+        Mockito.verify(tc2).setSystemConnectionMemo(scm);
     }
 
     @Test
     public void testProivdesConsistManagerMultiMaus() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation() {
-            @Override
-            public int getCommandStationType() {
-                return (0x10); // MultiMaus
-            }
-        });
-
-        XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
-        t.setXNetTrafficController(tc);
-        t.setCommandStation(tc.getCommandStation());
-        Assert.assertFalse(t.provides(jmri.ConsistManager.class));
+        Mockito.when(commandStation.getCommandStationType()).thenReturn(0x10); // MultiMaus
+        scm.setCommandStation(trafficController.getCommandStation());
+        Assert.assertFalse(scm.provides(jmri.ConsistManager.class));
     }
 
     @Test
     public void testProivdesCommandStaitonCompact() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation() {
-            @Override
-            public int getCommandStationType() {
-                return (0x02); // Lenz Compact/Atlas Commander
-            }
-        });
-
-        XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
-        t.setXNetTrafficController(tc);
-        t.setCommandStation(tc.getCommandStation());
-        Assert.assertFalse(t.provides(jmri.CommandStation.class));
+        Mockito.when(commandStation.getCommandStationType()).thenReturn(0x02); // Lenz Compact/Atlas Commander
+        scm.setCommandStation(trafficController.getCommandStation());
+        Assert.assertFalse(scm.provides(jmri.CommandStation.class));
     }
 
     @Override
@@ -80,24 +67,26 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation() {
-            @Override
-            public int getCommandStationType() {
-                return (0x00); // LZV100
-            }
-        });
+        commandStation = Mockito.mock(LenzCommandStation.class);
+        trafficController = Mockito.mock(XNetTrafficController.class);
+        Mockito.when(trafficController.getCommandStation()).thenReturn(commandStation);
+        Mockito.when(commandStation.getCommandStationType()).thenReturn(0x00); // LZV100
 
-        XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(tc);
-        memo.setSensorManager(new XNetSensorManager(memo));
-        memo.setLightManager(new XNetLightManager(memo));
-        memo.setTurnoutManager(new XNetTurnoutManager(memo));
-        scm = memo;
+        scm = new XNetSystemConnectionMemo(trafficController);
+        scm.setPowerManager(Mockito.mock(XNetPowerManager.class));
+        scm.setThrottleManager(Mockito.mock(XNetThrottleManager.class));
+        scm.setSensorManager(Mockito.mock(XNetSensorManager.class));
+        scm.setLightManager(Mockito.mock(XNetLightManager.class));
+        scm.setTurnoutManager(Mockito.mock(XNetTurnoutManager.class));
+        scm.setProgrammerManager(Mockito.mock(XNetProgrammerManager.class));
+        scm.setConsistManager(Mockito.mock(XNetConsistManager.class));
     }
 
     @After
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        scm.dispose();
+        scm = null;
         JUnitUtil.tearDown();
     }
 

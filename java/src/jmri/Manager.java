@@ -11,7 +11,6 @@ import jmri.NamedBean.BadSystemNameException;
 import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.beans.PropertyChangeProvider;
 import jmri.beans.VetoableChangeProvider;
-import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Basic interface for access to named, managed objects.
@@ -216,7 +215,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * default implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)} and
      * abstracted out of that method so this can be used by validation
-     * implementations in {@link jmri.jmrix.SystemConnectionMemo}s to avoid
+     * implementations in {@link jmri.SystemConnectionMemo}s to avoid
      * duplicating code in all managers relying on a single subclass of
      * SystemConnectionMemo.
      *

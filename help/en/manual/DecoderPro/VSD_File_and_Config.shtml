@@ -54,7 +54,7 @@
 
       <p>The <strong>config.xml</strong> file can be created or edited using a
        standard text editor or a
-        <a href="http://jmri.org/help/en/html/doc/Technical/XmlEditors.shtml">
+        <a href="https://jmri.org/help/en/html/doc/Technical/XmlEditors.shtml">
         XML editor</a>.
       </p>
       <p>A value in XML is described as a <strong>tag</strong>, e.g.

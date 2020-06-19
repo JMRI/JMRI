@@ -54,10 +54,10 @@ public final class JUnitSwingUtil {
      * @param component Typically a JComponent, could be a JFrame, the item to
      *                      be returned
      * @param size      dimension of image to capture
-     * @param filename  filename to write
+     * @param file      file to write
      */
     public static void writeDisplayedContentToFile(java.awt.Container component, 
-                                                    Dimension size, Point upLeft, java.io.File filename)
+                                                    Dimension size, Point upLeft, java.io.File file)
                                     throws java.io.IOException {
         BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2 = image.createGraphics();
@@ -65,8 +65,10 @@ public final class JUnitSwingUtil {
 
         g2.dispose();
 
-        javax.imageio.ImageIO.write(image, "png", filename); // NOI18N
-
+        java.io.FileOutputStream fos = new java.io.FileOutputStream(file);
+        javax.imageio.ImageIO.write(image, "png", fos); // NOI18N
+        fos.flush();
+        fos.close();
     }
 
     public static enum Pixel {

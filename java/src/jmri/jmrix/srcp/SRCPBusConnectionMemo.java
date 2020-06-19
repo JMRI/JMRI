@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements SRCPListener {
+public class SRCPBusConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements SRCPListener {
 
     private int _bus = 0;
     private boolean configured = false;

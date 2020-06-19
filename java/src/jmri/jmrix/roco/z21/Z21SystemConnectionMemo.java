@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2011 copied from PowerLine into z21 by
  * @author Paul Bender Copyright (C) 2013,2019
  */
-public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     private Z21XPressNetTunnel _xnettunnel = null;
     private Z21LocoNetTunnel _loconettunnel = null;

@@ -40,7 +40,7 @@
        Since JMRI 4.15.2 you can run VSD in a so called "headless" mode,
        i.e. running JMRI (and VSD) without a graphical user interface.<br>
        VSD headless is tested to work with
-        <a href="http://jmri.org/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">
+        <a href="https://jmri.org/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">
        JMRI webThrottle</a>.
        </span>
       </p>
@@ -51,7 +51,7 @@
         <li>Consider the creation of a new JMRI Profile</li>
 
         <li>Configure a throttle key for every one of the VSD files to start/stop the engine or activate the "Auto Start Engine" option
-          <p>See <a href="http://jmri.org/help/en/manual/DecoderPro/VSD_File_and_Config.shtml#engine-startstop">
+          <p>See <a href="https://jmri.org/help/en/manual/DecoderPro/VSD_File_and_Config.shtml#engine-startstop">
            the details</a> how to do this configuration.<br>
            Alternatively or additionally you can activate the VSD 
            Preference option "Auto Start Engine". Though, I recommend
@@ -126,7 +126,7 @@
       </ul>
 
       <p>For further explanations how to use web access please see
-       <a href="http://jmri.org/help/en/html/web/index.shtml"> JMRI Web Access</a>.</p>
+       <a href="https://jmri.org/help/en/html/web/index.shtml"> JMRI Web Access</a>.</p>
 
       <div align="right">
         <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>

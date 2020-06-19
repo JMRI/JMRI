@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.ShutDownManager;
 import jmri.util.NamedBeanComparator;
 
 
@@ -17,7 +18,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public EcosSystemConnectionMemo(EcosTrafficController et) {
         super("U", "ECoS");
@@ -97,7 +98,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private EcosSensorManager sensorManager;
     private EcosTurnoutManager turnoutManager;
     protected EcosLocoAddressManager locoManager;
-    private EcosPreferences prefManager;
+    private final EcosPreferences prefManager;
     private EcosDccThrottleManager throttleManager;
     private EcosPowerManager powerManager;
     private EcosReporterManager reporterManager;
@@ -139,7 +140,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Tell which managers this class provides.
+     * {@inheritDoc}
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -235,7 +236,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
-
+        InstanceManager.getDefault(ShutDownManager.class).deregister(prefManager.ecosPreferencesShutDownTask);
         super.dispose();
     }
 

@@ -1,5 +1,7 @@
 <!-- SidebarSupportedHardware.shtml -->
 <!-- This is the common sidebar definition for supported hardware pages -->
+<!-- CATEGORY ORDER -->
+
         <dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
         <dd>Devices, command stations, networks, and protocols:
             <ul>
@@ -10,7 +12,6 @@
                   <li><a href="/help/en/html/hardware/loconet/Digitrax.shtml">Digitrax</a>
                   <li><a href="/help/en/html/hardware/XPressNet/index.shtml">Lenz</a>
                   <li><a href="/help/en/html/hardware/pi/index.shtml">Raspberry Pi</a>                
-                  <li><a href="/help/en/html/hardware/sprog/SPROG.shtml">SPROG</a>
                 </ul>
 
                 <li><i style="padding-left: 1em;">Command Stations:</i></li>
@@ -27,6 +28,7 @@
                   <li><a href="/help/en/html/hardware/mrc/index.shtml">MRC</a>
                   <li><a href="/help/en/html/hardware/nce/NCE.shtml">NCE</a>
                   <li><a href="/help/en/html/hardware/XPressNet/index.shtml">Roco</a>
+                  <li><a href="/help/en/html/hardware/sprog/SPROG.shtml">SPROG</a>
                   <li><a href="/help/en/html/hardware/tams/index.shtml">TAMS Master Control</a>
                   <li><a href="/help/en/html/hardware/loconet/Digitrax.shtml">Uhlenbrock Intellibox</a>
                   <li><a href="/help/en/html/hardware/XPressNet/index.shtml">Viessmann Commander</a>
@@ -48,7 +50,7 @@
                   <li><a href="/help/en/html/hardware/XPressNet/index.shtml">OpenDCC</a>
                   <li><a href="/help/en/html/hardware/openlcb/index.shtml">OpenLCB</a>
                   <li><a href="/help/en/html/hardware/SRCP/index.shtml">SRCP server</a>
-                  <li><a href="/help/en/html/hardware/powerline/index.shtml">X10</a>
+                  <li><a href="/help/en/html/hardware/powerline/index.shtml">Powerline</a>
                   <li><a href="/help/en/html/hardware/XPressNet/index.shtml">XPressNet</a>
                 </ul>
 
@@ -65,6 +67,7 @@
                   <li><a href="/help/en/html/hardware/bachrus/index.shtml">Bachrus</a>
                   <li><a href="/help/en/html/hardware/dcc4pc/index.shtml">Dcc4Pc</a>
                   <li><a href="/help/en/html/hardware/misc/DccSpecialties.shtml">DCC Specialties</a>
+                  <li><a href="/help/en/html/hardware/powerline/Compatibility.shtml">Insteon (Powerline)</a>                  
                   <li><a href="/help/en/html/hardware/maple/index.shtml">Maple Systems</a>
                   <li><a href="/help/en/html/hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
                   <li><a href="/help/en/html/hardware/grapevine/index.shtml">Protrak Grapevine</a>
@@ -73,6 +76,7 @@
                   <li><a href="/help/en/html/hardware/secsi/index.shtml">TracTronics SECSI</a>
                   <li><a href="/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml">WiFi Throttles</a>
                              <!-- Prior line will need to be changed when referenced page is reorganized @jerryg2003 01-14-2020 -->
+                  <li><a href="/help/en/html/hardware/powerline/Compatibility.shtml">X10 (Powerline)</a>                  
                 </ul>
                 
             </ul>

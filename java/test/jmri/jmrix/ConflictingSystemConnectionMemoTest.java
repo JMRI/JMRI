@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.SystemConnectionMemo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright 2017
  * @author Randall Wood Copyright 2019
  */
-public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTestBase {
+public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTestBase<ConflictingSystemConnectionMemo> {
 
     @Override
     @Test

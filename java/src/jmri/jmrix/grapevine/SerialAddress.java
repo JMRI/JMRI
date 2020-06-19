@@ -175,6 +175,7 @@ public class SerialAddress {
     /**
      * Parse for secondary letters.
      *
+     * @param type Secondary letter from message
      * @return offset for type letter, or -1 if none
      */
     static int typeOffset(String type) {

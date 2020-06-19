@@ -104,7 +104,12 @@ public class LIUSBAdapter extends XNetSerialPortController {
         // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     // base class methods for the XNetSerialPortController interface
@@ -137,6 +142,7 @@ public class LIUSBAdapter extends XNetSerialPortController {
 
     /**
      * Local method to do specific configuration.
+     * @throws UnsupportedCommOperationException if port can't do as asked
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options

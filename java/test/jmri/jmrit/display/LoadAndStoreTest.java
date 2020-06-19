@@ -25,6 +25,6 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     }
 
     public LoadAndStoreTest(File file, boolean pass) {
-        super(file, pass, SaveType.Config, true); // isGUEonly, as these contain panels, no not headless
+        super(file, pass, SaveType.User, true); // isGUEonly, as these contain panels, no not headless
     }
 }

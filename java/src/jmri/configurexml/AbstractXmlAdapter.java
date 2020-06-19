@@ -1,5 +1,6 @@
 package jmri.configurexml;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,12 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     @Override
     public boolean load(Element e) throws JmriConfigureXmlException {
         throw new UnsupportedOperationException("One of the other load methods must be implemented.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void load(Element e, Object o) throws JmriConfigureXmlException {
+        log.error("Invalid method called");
     }
 
     /** {@inheritDoc} */
@@ -102,7 +109,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * @return boolean value of attribute, else default if not present or error.
      */
     final public boolean getAttributeBooleanValue(@Nonnull Element element, @Nonnull String name, boolean def) {
-        Attribute a = null;
+        Attribute a;
         String val = null;
         try {
             a = element.getAttribute(name);
@@ -135,7 +142,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * @return integer value of attribute, else default if not present or error.
      */
     final public int getAttributeIntegerValue(@Nonnull Element element, @Nonnull String name, int def) {
-        Attribute a = null;
+        Attribute a;
         String val = null;
         try {
             a = element.getAttribute(name);
@@ -166,7 +173,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * @return double value of attribute, else default if not present or error.
      */
     final public double getAttributeDoubleValue(@Nonnull Element element, @Nonnull String name, double def) {
-        Attribute a = null;
+        Attribute a;
         String val = null;
         try {
             a = element.getAttribute(name);
@@ -198,7 +205,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * @return float value of attribute, else default if not present or error.
      */
     final public float getAttributeFloatValue(@Nonnull Element element, @Nonnull String name, float def) {
-        Attribute a = null;
+        Attribute a;
         String val = null;
         try {
             a = element.getAttribute(name);
@@ -237,7 +244,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
          * @return enum value.
          */
         @Nonnull
-        abstract public T inputFromString(@Nonnull String s);
+        abstract public T inputFromString(@CheckForNull String s);
 
         /**
          * Convert a JDOM Attribute from an XML file to an enum value
@@ -276,9 +283,19 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         /** {@inheritDoc} */
         @Override
         @Nonnull
-        public T inputFromString(@Nonnull String s) {
-            int content = Integer.parseInt(s);
-            return clazz.getEnumConstants()[content];
+        public T inputFromString(@CheckForNull String s) {
+            if (s == null) {
+                log.error("from String null get {} for {}", clazz.getEnumConstants()[0].name(), clazz);
+                return clazz.getEnumConstants()[0];
+            }
+            
+            try {
+                int content = Integer.parseInt(s);
+                return clazz.getEnumConstants()[content];
+            } catch (RuntimeException e) {
+                log.error("from String {} get {} for {}", s, clazz.getEnumConstants()[0].name(), clazz, e);
+                return clazz.getEnumConstants()[0];
+            }
         }
 
     }
@@ -297,9 +314,9 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         public EnumIoNames(@Nonnull Class<T> clazz) {
             this.clazz = clazz;
             
-            mapToEnum = new HashMap<String, T>();
+            mapToEnum = new HashMap<>();
             for (T t : clazz.getEnumConstants() ) {
-                mapToEnum.put(t.toString(), t);
+                mapToEnum.put(t.name(), t);
             }
             
         }
@@ -311,18 +328,28 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         @Override
         @Nonnull
         public String outputFromEnum(@Nonnull T e) {
-                String retval = e.toString();
-                log.trace("from {} make String {}} for {}", e, retval, clazz);
-                return retval;
+            String retval = e.name();
+            log.trace("from {} make String {} for {}", e, retval, clazz);
+            return retval;
         }
         
         /** {@inheritDoc} */
         @Override
         @Nonnull
-        public T inputFromString(@Nonnull String s) {
-                T retval = mapToEnum.get(s);
-                log.trace("from String {} get {}} for {}", s, retval, clazz);
+        public T inputFromString(@CheckForNull String s) {
+            if (s == null) {
+                log.error("from String null get {} for {}", clazz.getEnumConstants()[0].name(), clazz);
+                return clazz.getEnumConstants()[0];
+            }
+            
+            T retval = mapToEnum.get(s);
+            if (retval == null) {
+                log.error("from String {} get {} for {}", s, clazz.getEnumConstants()[0].name(), clazz);
+                return clazz.getEnumConstants()[0];
+            } else {
+                log.trace("from String {} get {} for {}", s, retval, clazz);
                 return retval;
+            }
         }
     }
 
@@ -389,9 +416,9 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
             
             this.mapToEnum = mapToEnum;
             
-            this.mapFromEnum = new HashMap<T, String>();
+            this.mapFromEnum = new HashMap<>();
             for (T t : clazz.getEnumConstants() ) {
-                this.mapFromEnum.put(t, t.toString());
+                this.mapFromEnum.put(t, t.name());
             }
         }
 
@@ -404,17 +431,32 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         @Nonnull
         public String outputFromEnum(@Nonnull T e) {
             String retval = mapFromEnum.get(e);
-            log.trace("from {} make String {}} for {}", e, retval, clazz);
+            log.trace("from {} make String {} for {}", e, retval, clazz);
             return retval;
         }
         
         /** {@inheritDoc} */
         @Override
         @Nonnull
-        public T inputFromString(@Nonnull String s) {
-            T retval = mapToEnum.get(s);
-            log.trace("from String {} get {}} for {}", s, retval, clazz);
-            return retval;
+        public T inputFromString(@CheckForNull String s) {
+            if (s == null) {
+                log.error("from String null get {} for {}", clazz.getEnumConstants()[0].name(), clazz);
+                return clazz.getEnumConstants()[0];
+            }
+            
+            try {
+                T retval = mapToEnum.get(s);
+                if (retval == null) {
+                    log.error("from String {} get {} for {}", s, clazz.getEnumConstants()[0].name(), clazz);
+                    return clazz.getEnumConstants()[0];
+                } else {
+                    log.trace("from String {} get {} for {}", s, retval, clazz);
+                    return retval;
+                }
+            } catch (RuntimeException e) {
+                log.error("from String {} get {} for {}", s, clazz.getEnumConstants()[0].name(), clazz, e);
+                return clazz.getEnumConstants()[0];
+            }
         }
     }
 

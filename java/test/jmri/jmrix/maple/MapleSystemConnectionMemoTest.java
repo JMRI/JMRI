@@ -1,5 +1,6 @@
 package jmri.jmrix.maple;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -9,10 +10,10 @@ import org.junit.Test;
 /**
  * JUnit tests for the MapleSystemConnectionMemo class
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class MapleSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
-     
+public class MapleSystemConnectionMemoTest extends SystemConnectionMemoTestBase<MapleSystemConnectionMemo> {
+
     @Test
     public void systemPrefixTest() {
         // default values would be changed to K2 as there is already a connection with prefix [K] active
@@ -22,35 +23,37 @@ public class MapleSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
     @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       MapleSystemConnectionMemo memo = new MapleSystemConnectionMemo();
-       memo.setTrafficController(new SerialTrafficController() {
-          @Override
-          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
-          }
-          @Override
-          public void transmitLoop(){
-          }
-          @Override
-          public void receiveLoop(){
-          }
-       });
-       memo.configureManagers();
-       scm = memo;
+    public void setUp() {
+        JUnitUtil.setUp();
+        scm = new MapleSystemConnectionMemo();
+        scm.setTrafficController(new SerialTrafficController() {
+            @Override
+            public void sendSerialMessage(SerialMessage m, SerialListener reply) {
+            }
+
+            @Override
+            public void transmitLoop() {
+            }
+
+            @Override
+            public void receiveLoop() {
+            }
+        });
+        scm.configureManagers();
     }
 
     @Override
     @After
-    public void tearDown(){
+    public void tearDown() {
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         scm = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }
