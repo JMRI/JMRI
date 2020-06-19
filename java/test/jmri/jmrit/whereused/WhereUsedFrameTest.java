@@ -1,6 +1,5 @@
 package jmri.jmrit.whereused;
 
-import java.awt.GraphicsEnvironment;
 import java.nio.file.Path;
 
 import jmri.*;
@@ -30,12 +29,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests for the WhereUsedFrame Class
  * @author Dave Sand Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class WhereUsedFrameTest {
 
     private WhereUsedFrame frame;
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testTypeSelection() {
         frame.setVisible(true);
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("TitleWhereUsed"));  // NOI18N
@@ -125,7 +124,6 @@ public class WhereUsedFrameTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @ToDo("Add appropriate assertions for thee result of creating the report.")
     public void testCreateReportForTurnoutObject() {
         frame.setVisible(true);
@@ -145,19 +143,18 @@ public class WhereUsedFrameTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testSave() {
         frame.setVisible(true);
 
         // Cancel save request
         Thread cancelFile = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonCancel"));  // NOI18N
         frame.saveWhereUsedPressed();
-        JUnitUtil.waitFor(()->{return !(cancelFile.isAlive());}, "cancelFile finished");  // NOI18N
+        JUnitUtil.waitFor(()-> !(cancelFile.isAlive()), "cancelFile finished");  // NOI18N
 
         // Complete save request
         Thread saveFile = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"));  // NOI18N
         frame.saveWhereUsedPressed();
-        JUnitUtil.waitFor(()->{return !(saveFile.isAlive());}, "saveFile finished");  // NOI18N
+        JUnitUtil.waitFor(()-> !(saveFile.isAlive()), "saveFile finished");  // NOI18N
 
         // Replace duplicate file
         checkDuplicateFileOperation("SaveDuplicateReplace");
@@ -173,14 +170,9 @@ public class WhereUsedFrameTest {
         Thread saveFile4 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("SaveDialogTitle"), Bundle.getMessage("ButtonSave"));  // NOI18N
         Thread cancelFile2 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("SaveDuplicateTitle"), Bundle.getMessage(operation));  // NOI18N
         frame.saveWhereUsedPressed();
-        JUnitUtil.waitFor(() -> {
-            return !(saveFile4.isAlive());
-        }, "save " + operation + " finished");  // NOI18N
-        JUnitUtil.waitFor(() -> {
-            return !(cancelFile2.isAlive());
-        }, "cancel " + operation + " finished");  // NOI18N
+        JUnitUtil.waitFor(() -> !(saveFile4.isAlive()), "save " + operation + " finished");  // NOI18N
+        JUnitUtil.waitFor(() -> !(cancelFile2.isAlive()), "cancel " + operation + " finished");  // NOI18N
     }
-
 
     @TempDir
     protected Path tempDir;
@@ -189,7 +181,6 @@ public class WhereUsedFrameTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
-        JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -203,22 +194,19 @@ public class WhereUsedFrameTest {
         JUnitUtil.initWarrantManager();
         JUnitUtil.initSectionManager();
         JUnitUtil.clearBlockBossLogic();
-        if(!GraphicsEnvironment.isHeadless()) {
-            java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");  // NOI18N
-            InstanceManager.getDefault(ConfigureManager.class).load(f);
-            frame = new WhereUsedFrame();
-        }
+
+        java.io.File f = new java.io.File("java/test/jmri/jmrit/whereused/load/WhereUsedTesting.xml");  // NOI18N
+        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        frame = new WhereUsedFrame();
    }
 
     @AfterEach
     public  void tearDown() {
-        if(frame!=null){
-            JUnitUtil.dispose(frame);
-            new EditorFrameOperator("LE Panel").closeFrameWithConfirmations();
-            new EditorFrameOperator("CPE Panel").closeFrameWithConfirmations();
-            new EditorFrameOperator("Sensor SB").closeFrameWithConfirmations();
-        }
+        JUnitUtil.dispose(frame);
         frame = null;
+        new EditorFrameOperator("LE Panel").closeFrameWithConfirmations();
+        new EditorFrameOperator("CPE Panel").closeFrameWithConfirmations();
+        new EditorFrameOperator("Sensor SB").closeFrameWithConfirmations();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();

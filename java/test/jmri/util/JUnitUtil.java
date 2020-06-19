@@ -12,6 +12,7 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
@@ -948,9 +949,11 @@ public class JUnitUtil {
      * End any running BlockBossLogic (Simple Signal Logic) objects
      */
     public static void clearBlockBossLogic() {
-        jmri.jmrit.blockboss.BlockBossLogic.stopAllAndClear();
+        if(InstanceManager.containsDefault(BlockBossLogicProvider.class)) {
+            InstanceManager.getDefault(BlockBossLogicProvider.class).dispose();
+        }
     }
-    
+
     /**
      * Leaves ShutDownManager, if any, in place,
      * but removes its contents.  Instead of using this,

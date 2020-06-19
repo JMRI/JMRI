@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
@@ -201,6 +200,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     String distantBoxTooltip = Bundle.getMessage("Mirrors_the_protected_(following)_signals_status")
             + " " + Bundle.getMessage("unless_over_ridden_by_an_intermediate_stop_sensor.");
 
+    private final BlockBossLogicProvider blockBossLogicProvider;
+
     /**
      * Ctor for default SSL edit frame.
      */
@@ -217,6 +218,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         // create the frame
         super(frameName, false, true);
+
+        blockBossLogicProvider = InstanceManager.getDefault(BlockBossLogicProvider.class);
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -272,12 +275,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         g.add(buttonTrailMain);
         g.add(buttonTrailDiv);
         g.add(buttonFacing);
-        ActionListener a = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonClicked();
-            }
-        };
+        ActionListener a = e -> buttonClicked();
 
         buttonSingle.addActionListener(a);
         buttonTrailMain.addActionListener(a);
@@ -363,12 +361,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         setupComboBox(outSignalHeadComboBox, true, true, true);
         line.add(outSignalHeadComboBox);
         outSignalHeadComboBox.setToolTipText(outSignalHeadTooltip);
-        outSignalHeadComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // user hit enter, use this name to fill in the rest of the fields
-                activate();
-            }
+        outSignalHeadComboBox.addActionListener(e -> {
+            // user hit enter, use this name to fill in the rest of the fields
+            activate();
         });
 
         getContentPane().add(line);
@@ -426,21 +421,11 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         // add OK button at bottom
         cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         buttons.add(cancel);
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelPressed();
-            }
-        });
+        cancel.addActionListener(e -> cancelPressed());
         JButton apply = new JButton(Bundle.getMessage("ButtonApply"));
         apply.setToolTipText(Bundle.getMessage("ApplyToolTip"));
         buttons.add(apply);
-        apply.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                applyPressed();
-            }
-        });
+        apply.addActionListener(e -> applyPressed());
         getContentPane().add(buttons);
 
         pack();
@@ -922,7 +907,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         b.setComment(commentField.getText());
 
-        b.retain();
+        blockBossLogicProvider.register(b);
         b.start();
     }
 
@@ -944,7 +929,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         b.setComment(commentField.getText());
 
-        b.retain();
+        blockBossLogicProvider.register(b);
         b.start();
     }
 
@@ -966,7 +951,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         b.setComment(commentField.getText());
 
-        b.retain();
+        blockBossLogicProvider.register(b);
         b.start();
     }
 
@@ -997,7 +982,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         b.setComment(commentField.getText());
 
-        b.retain();
+        blockBossLogicProvider.register(b);
         b.start();
     }
 
@@ -1012,9 +997,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         // find existing logic
         BlockBossLogic b;
         if (sh != null) {
-            b = BlockBossLogic.getExisting(sh);
+            b = blockBossLogicProvider.provide(sh);
         } else {
-            b = BlockBossLogic.getExisting(outSignalHeadComboBox.getSelectedItem());
+            b = blockBossLogicProvider.provide(outSignalHeadComboBox.getSelectedItem());
         }
 
         setTitle(Bundle.getMessage("SignalLogicForX", outSignalHeadComboBox.getSelectedItemDisplayName()));

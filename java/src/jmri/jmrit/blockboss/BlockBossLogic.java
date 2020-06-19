@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import javax.annotation.Nonnull;
-import jmri.ConfigureManager;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -724,12 +724,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         // act if the signals appearance changes (to
         // avoid a loop, or avoid somebody changing appearance
         // manually and having it instantly recomputed & changed back
-        driveSignal.getBean().addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals(Bundle.getMessage("Held"))) {
-                    setOutput();
-                }
+        driveSignal.getBean().addPropertyChangeListener(e -> {
+            if (e.getPropertyName().equals(Bundle.getMessage("Held"))) {
+                setOutput();
             }
         }, driveSignal.getName(), "BlockBossLogic:" + name);
     }
@@ -1148,39 +1145,18 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         }
     }
 
-    // Due to an older configuration & storage paradigm, this class
-    // has to add itself to the configuration manager, but only once.
-    // We do that the first time an instance is created and added to the active list
-    private static volatile boolean addedToConfig = false;
-
-    // The list of existing instances. When the first is added,
-    // the configuration connection is made.
-    static List<BlockBossLogic> bblList = Collections.synchronizedList(
-                        new ArrayList<BlockBossLogic>() {
-                            @Override
-                            public boolean add(BlockBossLogic bbl) {
-                                if (!addedToConfig) {
-                                    addedToConfig = true;
-                                    ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-                                    if (cm != null) {
-                                        cm.registerConfig(bbl, jmri.Manager.BLOCKBOSS);
-                                    }
-                                    log.debug("added to config for {}", bbl.name);
-                                }
-                                return super.add(bbl);
-                            }
-                        }
-            );
-
+    @Deprecated
     public static Enumeration<BlockBossLogic> entries() {
-        return Collections.enumeration(bblList);
+        return Collections.enumeration(InstanceManager.getDefault(BlockBossLogicProvider.class).provideAll());
     }
 
     /**
      * Ensure that this BlockBossLogic object is available for later retrieval.
+     * @deprecated Since 4.21.1 use {@link BlockBossLogicProvider#register(BlockBossLogic)} instead.
      */
+    @Deprecated
     public void retain() {
-        bblList.add(this);
+        InstanceManager.getDefault(BlockBossLogicProvider.class).register(this);
     }
 
     /**
@@ -1212,7 +1188,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
     public static BlockBossLogic getStoppedObject(@Nonnull SignalHead sh) {
         BlockBossLogic b = null;
 
-        for (BlockBossLogic bbl : bblList) {
+        for (BlockBossLogic bbl : InstanceManager.getDefault(BlockBossLogicProvider.class).provideAll()) {
             if (bbl.getDrivenSignalNamedBean().getBean() == sh) {
                 b = bbl;
                 break;
@@ -1221,7 +1197,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
 
         if (b != null) {
             // found an existing one, remove it from the map and stop its thread
-            bblList.remove(b);
+            InstanceManager.getDefault(BlockBossLogicProvider.class).remove(b);
             b.stop();
             return b;
         } else {
@@ -1238,15 +1214,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      *
      * @param signal SignalHead system or user name
      * @return never null - creates new object if none exists
+     * @deprecated Since 4.21.1 use {@link BlockBossLogicProvider#provide(String)} instead.
      */
     @Nonnull
+    @Deprecated
     public static BlockBossLogic getExisting(@Nonnull String signal) {
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal);
-        if (head == null) {
-            log.error("SignalHead {} doesn't exist, BlockBossLogic.getExisting(\"{}\") cannot continue", signal, signal);
-            throw new IllegalArgumentException("Requested signal head doesn't exist");
-        }
-        return getExisting(head);
+        return InstanceManager.getDefault(BlockBossLogicProvider.class).provide(signal);
     }
 
     /**
@@ -1257,16 +1230,12 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      *
      * @param sh Existing SignalHead object
      * @return never null - creates new object if none exists
+     * @deprecated Since 4.21.1 use {@link BlockBossLogicProvider#provide(SignalHead)} instead.
      */
     @Nonnull
+    @Deprecated
     public static BlockBossLogic getExisting(@Nonnull SignalHead sh) {
-        for (BlockBossLogic bbl : bblList) {
-            if (bbl.getDrivenSignalNamedBean().getBean() == sh) {
-                return bbl;
-            }
-        }
-
-        return (new BlockBossLogic(sh.getDisplayName()));
+        return InstanceManager.getDefault(BlockBossLogicProvider.class).provide(sh);
     }
 
     @Override
@@ -1341,7 +1310,8 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             if (nb instanceof SignalHead) {
                 if (nb.equals(getDrivenSignalNamedBean().getBean())) {
                     stop();
-                    bblList.remove(this);
+
+                    InstanceManager.getDefault(BlockBossLogicProvider.class).remove(this);
                 }
                 if (watchedSignal1 != null && watchedSignal1.getBean().equals(nb)) {
                     stop();
@@ -1428,12 +1398,11 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * Stop() all existing objects and clear the list.
      * <p>
      * Intended to be only used during testing.
+     * @deprecated Since 4.21.1 use {@link BlockBossLogicProvider#dispose()} instead.
      */
+    @Deprecated
     public static void stopAllAndClear() {
-        for (BlockBossLogic b : bblList) {
-            b.stop();
-        }
-        bblList.clear();
+        InstanceManager.getDefault(BlockBossLogicProvider.class).dispose();
     }
 
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
