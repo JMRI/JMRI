@@ -1,8 +1,7 @@
 package jmri;
 
 import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
+import java.beans.*;
 import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -769,7 +768,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * @param propertyName the name of the property to mute
      * @param muted        true if events are to be suppressed; false otherwise
      */
-    public void mutePropertyChanges(@Nonnull String propertyName, boolean muted);
+    public void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted);
 
     /**
      * Intended to be equivalent to {@link javax.swing.event.ListDataListener}

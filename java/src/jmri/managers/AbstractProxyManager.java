@@ -620,7 +620,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void mutePropertyChanges(String propertyName, boolean muted) {
+    public void setPropertyChangesMuted(String propertyName, boolean muted) {
         mutedProperties.put(propertyName, muted);
         if (propertyName.equals("beans") && !muted) {
             fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);

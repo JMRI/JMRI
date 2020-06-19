@@ -1390,7 +1390,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void mutePropertyChanges(@Nonnull String propertyName, boolean muted) {
+    public void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted) {
         mutedProperties.put(propertyName, muted);
         if (propertyName.equals("beans") && !muted) {
             fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);

@@ -229,7 +229,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         List<Element> list = sharedBlocks.getChildren("block");
         log.debug("Found {} objects", list.size());
 
-        InstanceManager.getDefault(jmri.BlockManager.class).mutePropertyChanges("beans", true);
+        InstanceManager.getDefault(jmri.BlockManager.class).setPropertyChangesMuted("beans", true);
         // first pass don't load full contents (just create all the blocks)
         for (Element block : list) {
             loadBlock(block, false);
@@ -239,7 +239,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         for (Element block : list) {
             loadBlock(block, true);
         }
-        InstanceManager.getDefault(jmri.BlockManager.class).mutePropertyChanges("beans", false);
+        InstanceManager.getDefault(jmri.BlockManager.class).setPropertyChangesMuted("beans", false);
         
         return result;
     }

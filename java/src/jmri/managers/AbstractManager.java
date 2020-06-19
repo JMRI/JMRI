@@ -525,7 +525,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void mutePropertyChanges(@Nonnull String propertyName, boolean muted) {
+    public void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted) {
         mutedProperties.put(propertyName, muted);
         if (propertyName.equals("beans") && !muted) {
             fireIndexedPropertyChange("beans", _beans.size(), null, null);
