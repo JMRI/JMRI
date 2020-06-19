@@ -251,14 +251,11 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
 
     // not efficient, but does job for now
     private int getPosition(E s) {
-        int position = 0;
-        for (E bean : _beans) {
-            if (s == bean) {
-                return position;
-            }
-            position++;
+        if (_beans.contains(s)) {
+            return _beans.headSet(s, false).size();
+        } else {
+            return -1;
         }
-        return -1;
     }
 
     /**
