@@ -121,6 +121,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         List<Element> lightList = lights.getChildren("light");
         log.debug("Found {} lights", lightList.size());
         LightManager lm = InstanceManager.lightManagerInstance();
+        lm.mutePropertyChanges("beans", true);
 
         for (Element el : lightList) {
             String sysName = getSystemName(el);
@@ -303,6 +304,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             lgt.activateLight();
         }
 
+        lm.mutePropertyChanges("beans", false);
         return result;
     }
 

@@ -49,6 +49,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     protected final TreeSet<E> _beans;
     protected final Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected final Hashtable<String, E> _tuser = new Hashtable<>();  // stores known E (NamedBean, i.e. Turnout) instances by user name
+    protected final Map<String, Boolean> mutedProperties = new HashMap<>();
 
     // caches
     private ArrayList<String> cachedSystemNameList = null;
@@ -240,7 +241,9 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         // notifications
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
-        fireIndexedPropertyChange("beans", position, null, s);
+        if (!mutedProperties.getOrDefault("beans", false)) {
+            fireIndexedPropertyChange("beans", position, null, s);
+        }
         firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this);
@@ -316,7 +319,9 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         
         // notifications
         fireDataListenersRemoved(position, position, s);
-        fireIndexedPropertyChange("beans", position, s, null);
+        if (!mutedProperties.getOrDefault("beans", false)) {
+            fireIndexedPropertyChange("beans", position, s, null);
+        }
         firePropertyChange("length", null, _beans.size());
     }
 
@@ -513,6 +518,18 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @Nonnull
     public final String getSystemPrefix() {
         return memo.getSystemPrefix();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void mutePropertyChanges(@Nonnull String propertyName, boolean muted) {
+        mutedProperties.put(propertyName, muted);
+        if (propertyName.equals("beans") && !muted) {
+            fireIndexedPropertyChange("beans", _beans.size(), null, null);
+        }
     }
 
     /** {@inheritDoc} */
