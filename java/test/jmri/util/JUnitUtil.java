@@ -17,6 +17,7 @@ import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
+import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.operators.AbstractButtonOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
@@ -1468,7 +1469,19 @@ public class JUnitUtil {
     public static void closeAllPanels() {
         InstanceManager.getOptionalDefault(EditorManager.class)
                 .ifPresent(m -> m.getAll()
-                        .forEach(e -> new EditorFrameOperator(e).closeFrameWithConfirmations()));
+                        .forEach(e -> {
+                            if(e.isVisible()){
+                               e.requestFocus();
+                               try {
+                                   EditorFrameOperator editorFrameOperator = new EditorFrameOperator(e);
+                                   editorFrameOperator.closeFrameWithConfirmations();
+                               } catch (TimeoutExpiredException timeoutException ) {
+                                   log.warn("Failed to close panel {} with exception {}",e.getTitle(),
+                                           timeoutException.getMessage(),
+                                           Log4JUtil.shortenStacktrace(timeoutException));
+                               }
+                            }
+                        }));
     }
 
     /* GraphicsEnvironment utility methods */
