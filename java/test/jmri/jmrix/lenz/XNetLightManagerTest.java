@@ -38,7 +38,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         if (log.isDebugEnabled()) {
             log.debug("received light value {}", tl);
         }
-        Assert.assertNotNull((XNetLight) tl);
+        Assert.assertNotNull(tl);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
