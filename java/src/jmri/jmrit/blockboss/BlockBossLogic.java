@@ -1,9 +1,6 @@
 package jmri.jmrit.blockboss;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;
@@ -1186,24 +1183,9 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      */
     @Nonnull
     public static BlockBossLogic getStoppedObject(@Nonnull SignalHead sh) {
-        BlockBossLogic b = null;
-
-        for (BlockBossLogic bbl : InstanceManager.getDefault(BlockBossLogicProvider.class).provideAll()) {
-            if (bbl.getDrivenSignalNamedBean().getBean() == sh) {
-                b = bbl;
-                break;
-            }
-        }
-
-        if (b != null) {
-            // found an existing one, remove it from the map and stop its thread
-            InstanceManager.getDefault(BlockBossLogicProvider.class).remove(b);
-            b.stop();
-            return b;
-        } else {
-            // no existing one, create a new one
-            return new BlockBossLogic(sh.getDisplayName());
-        }
+        BlockBossLogic b = InstanceManager.getDefault(BlockBossLogicProvider.class).provide(sh);
+        b.stop();
+        return b;
     }
 
     /**
