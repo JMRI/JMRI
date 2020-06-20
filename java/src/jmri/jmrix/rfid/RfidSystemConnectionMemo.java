@@ -28,7 +28,7 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
  */
-public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class RfidSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     private RfidTrafficController rt;
     protected RfidSensorManager sensorManager;

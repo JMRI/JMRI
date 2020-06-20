@@ -3,7 +3,7 @@ package jmri.jmrix.cmri.swing;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.swing.AbstractSystemConnectionAction;
 

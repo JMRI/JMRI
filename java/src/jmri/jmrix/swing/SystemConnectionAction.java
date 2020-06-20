@@ -3,11 +3,11 @@ package jmri.jmrix.swing;
 import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Interface for a {@link javax.swing.Action} that is bound to a
- * {@link jmri.jmrix.SystemConnectionMemo}.
+ * {@link SystemConnectionMemo}.
  *
  * @author Randall Wood (c) 2016
  * @param <M> the supported subclass of SystemConnectionMemo
@@ -15,7 +15,7 @@ import jmri.jmrix.SystemConnectionMemo;
 public interface SystemConnectionAction<M extends SystemConnectionMemo> {
 
     /**
-     * Get the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
+     * Get the {@link SystemConnectionMemo} this action is bound to.
      * 
      * @return the SystemConnectionMemo or null if not bound.
      */
@@ -23,7 +23,7 @@ public interface SystemConnectionAction<M extends SystemConnectionMemo> {
     public M getSystemConnectionMemo();
 
     /**
-     * Set the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
+     * Set the {@link SystemConnectionMemo} this action is bound to.
      * <p>
      * Implementing classes may throw an IllegalArgumentException if the
      * implementing class requires a specific subclass of SystemConnectionMemo.
@@ -34,7 +34,7 @@ public interface SystemConnectionAction<M extends SystemConnectionMemo> {
     public void setSystemConnectionMemo(@Nonnull M memo);
 
     /**
-     * Get a list of {@link jmri.jmrix.SystemConnectionMemo} subclasses that the
+     * Get a list of {@link SystemConnectionMemo} subclasses that the
      * implementing class accepts.
      * <p>
      * If the implementing class is a subclass of a class that does accept

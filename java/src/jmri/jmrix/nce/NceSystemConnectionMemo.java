@@ -17,7 +17,7 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
  */
-public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class NceSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public NceSystemConnectionMemo() {
         super("N", "NCE");

@@ -7,7 +7,7 @@ import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -16,7 +16,7 @@ import jmri.util.NamedBeanComparator;
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  * @author Paul Bender Copyright (C) 2016
  */
-public class XpaSystemConnectionMemo extends SystemConnectionMemo {
+public class XpaSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public XpaSystemConnectionMemo() {
         this("P", "XPA"); // Prefix from XpaTurnoutManager, UserName from XpaThrottleManager

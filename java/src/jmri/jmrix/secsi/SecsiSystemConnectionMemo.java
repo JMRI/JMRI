@@ -3,7 +3,7 @@ package jmri.jmrix.secsi;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import jmri.LightManager;
 import jmri.NamedBean;
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
-public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
+public class SecsiSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public SecsiSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name);

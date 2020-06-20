@@ -36,7 +36,7 @@ public abstract class AbstractPortControllerTestBase {
     public static class AbstractPortControllerScaffold extends AbstractPortController {
 
         public AbstractPortControllerScaffold() {
-            super(new SystemConnectionMemo("", "") {
+            super(new DefaultSystemConnectionMemo("", "") {
 
                 @Override
                 protected ResourceBundle getActionModelResourceBundle() {
