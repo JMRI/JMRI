@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.junit.*;
 
-import jmri.NamedBean;
 import jmri.NamedBeanUsageReport;
 import jmri.jmrit.logix.OBlock;
 
@@ -24,8 +23,11 @@ public class OBlockWhereUsedTest {
         
         // Pay the ransom to free PR#8715 to be merged
         OBlock b = new OBlock("OB1");
-        List<NamedBeanUsageReport> list = b.getUsageReport(b);
-        Assert.assertNotNull("exists", list);
+        try {
+            List<NamedBeanUsageReport> list = b.getUsageReport(b);
+        } catch (java.lang.NullPointerException npe) {
+            Assert.assertFalse("NullPointerException", true);
+        }
     }
 
     @Before
