@@ -1473,7 +1473,7 @@ public class JUnitUtil {
                             if(e.isVisible()){
                                e.requestFocus();
                                try {
-                                   EditorFrameOperator editorFrameOperator = new EditorFrameOperator(e);
+                                   EditorFrameOperator editorFrameOperator = new EditorFrameOperator(e.getTargetFrame());
                                    editorFrameOperator.closeFrameWithConfirmations();
                                } catch (TimeoutExpiredException timeoutException ) {
                                    log.error("Failed to close panel {} with exception {}",e.getTitle(),
