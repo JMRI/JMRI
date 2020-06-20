@@ -1,10 +1,10 @@
 package jmri.jmrit.blockboss;
 
 import jmri.*;
-import org.assertj.swing.dependency.jsr305.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class BlockBossLogicProvider implements Disposable, InstanceManagerAutoDefault {
