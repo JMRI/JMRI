@@ -1476,7 +1476,7 @@ public class JUnitUtil {
                                    EditorFrameOperator editorFrameOperator = new EditorFrameOperator(e);
                                    editorFrameOperator.closeFrameWithConfirmations();
                                } catch (TimeoutExpiredException timeoutException ) {
-                                   log.warn("Failed to close panel {} with exception {}",e.getTitle(),
+                                   log.error("Failed to close panel {} with exception {}",e.getTitle(),
                                            timeoutException.getMessage(),
                                            Log4JUtil.shortenStacktrace(timeoutException));
                                }
