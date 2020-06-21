@@ -81,10 +81,11 @@ abstract public class AbstractReporterTestBase {
     
     @Test
     public void testDispose() {
+        Assert.assertEquals("starts 0 listeners", 0, r.getNumPropertyChangeListeners());
         r.addPropertyChangeListener(new TestReporterListener());
         Assert.assertEquals("controller listener added", 1, r.getNumPropertyChangeListeners());
         r.dispose();
-        Assert.assertEquals("controller listeners remaining", 0, r.getNumPropertyChangeListeners());
+        Assert.assertTrue("controller listeners remaining < 1", r.getNumPropertyChangeListeners() < 1);
     }
 
     protected boolean currentReportSeen = false;
