@@ -6,7 +6,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2016 -->
 
-  <title>PanelPro: Getting Started with Layout Editor</title>
+  <title>PanelPro: Getting Started with PanelPro</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -41,7 +41,7 @@
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-    <h1>Getting Started with Layout Editor</h1>
+    <h1>Getting Started with PanelPro</h1>
 
     <h2>Introduction</h2>
 
@@ -50,10 +50,11 @@
     content.  This page provides an overview of creating a layout editor panel with
     turnout control, block detection and signaling.</p>
 
-    <p>The goal is to provide an introduction to creating a Layout Editor panel.  When done,
-    the panel and its data provide the fondation for other PanelPro activities such as
-    creating a CTC panel, using Entry/Exit, using Dispatcher to run trains, or building a
-    separate panel using Control Panel Editor to use Warrants.</p>
+    <p>The goal is to provide an introduction to the main PanelPro tables while creating a
+    Layout Editor panel.  When done, the panel and its table data provide the foundation
+    for other PanelPro activities such as creating a CTC panel, using Entry/Exit,
+    using Dispatcher to run trains, or building a separate panel using Control Panel Editor
+    to use Warrants.</p>
 
     <h3>Table of Contents</h3>
     <ul>
@@ -80,7 +81,8 @@
     helps to set the stage.</p>
     <ul>
       <li>The layout connection will use the Digitrax Simulator for turnouts and occupancy sensors.</li>
-      <li>The layout components will be numbered sequentially without reference to any specific hardware</li>
+      <li>The layout components will be numbered sequentially without reference to any specific
+      LocoNet hardware.</li>
       <li>Signaling will be based on Signal Masts using Signal Mast Logic (SML)</li>
       <li>The SML will be based on the <strong>Basic</strong> signaling system.</li>
       <li>The following description is just one of many possible workflows.</li>
@@ -90,7 +92,8 @@
       in different system names, the user names can be moved without impacting the
       configuration.</li>
       <li>Clickable <span class="reflink">keywords</span> are provided that link to detail help pages.</li>
-      <li>The Store and Load process is documented at <a href="../StoringYourWork.shtml">Storing your work</a>.
+      <li>The screenshots are based on macOS 10.15.5, they will look different depending on the operating system.</li>
+      <li>The Store and Load process is documented at <a href="../StoringYourWork.shtml">Storing your work</a></li>.
     </ul>
 
     <p>A <a href="GettingStarted.zip">GettingStarted.zip</a> file is available
@@ -103,7 +106,7 @@
     <p>Download the zip file and unzip it.  Use the OS file manager to move the resulting
     profile and its contents to the <strong>settings</strong> location.  When starting JMRI,
     select the GettingStart profile.  If the profile selector is not active, use
-    <strong>Preferences >> Config Profiles</strong> to select the profile.</p>
+    <strong>Preferences &rArr; Config Profiles</strong> to select the profile.</p>
 
     <p>The <strong>settings</strong> location is an OS specific location that provides access to the user data.
     <ul>
@@ -117,7 +120,7 @@
     <h2>Set up PanelPro if needed</h2>
 
     <p>The first time PanelPro is started, a connection must be defined.  For this exercise
-    we will be using the Digitrax Loconet Simulator.</p>
+    the Digitrax LocoNet Simulator will be used.</p>
 
     <div style="margin-left: 2em">
     <a href="images/LEGS-Connection.png">
@@ -132,7 +135,8 @@
     <p>Add the JMRI System Console as a startup action.  When something is not working as expected,
     having the system console available makes it easy to see if there was an error or a warning.
     The error might not make sense, but using the <strong>Copy to clipboard</strong> button
-    makes it easy to include the content in a posting to the JMRI users's group.</p>
+    makes it easy to include the content in a posting to the JMRI users's group at groups.io:
+    <a href="https://groups.io/g/jmriusers">JMRI Users Group</a>.</p>
 
     <div style="margin-left: 2em">
     <a href="images/LEGS-StartupActions.png">
@@ -146,7 +150,7 @@
 
     <a name="Phase1" id="Phase1"></a>
     <h2>The Basic Panel</h2>
-    <p>When <strong>Panels >> New Panel >> Layout Editor</strong> is selected, a blank panel
+    <p>When PanelPro <strong>Panels &rArr; New Panel &rArr; Layout Editor</strong> is selected, a blank panel
     will be created with a default name.  The panel will fill the screen, it will have a
     grid and at the top will be the Layout Editor tool bar.</p>
 
@@ -161,8 +165,10 @@
     </div>
 
     <p>As the panel is switched between edit and display mode, the tool bar is shown/hidden
-    and the panel shifts. <strong>Options >> Toolbar >> Toolbar Side >> Float</strong>
-    provides a tool box that avoids the shifting behavior.</p>
+    and the panel shifts. Layout Editor <strong>Options &rArr; Toolbar &rArr; Toolbar Side &rArr; Float</strong>
+    provides a floating tool box that avoids the shifting behavior.  The tool box can be
+    closed or minimized.  To re-open the tool box use the <strong>Window</strong> menu (next to Help).
+    The window name will start with <strong>Tool Box:</strong> followed by the panel name.</p>
 
     <div style="margin-left: 2em">
     <a href="images/LEGS-Toolbox.png">
@@ -172,6 +178,17 @@
 
     <a name="TrackPlan" id="TrackPlan"></a>
     <h3>Draw the Track Plan</h3>
+
+    <p>Click on Layout Editor <strong>Options &rArr; Show Help Bar in Edit Mode</strong>.
+    This will add a help bar to the bottom of the panel window or the floating tool box.
+    It shows the mouse and keyboard actions to add and move layout components. The third line
+    changes based on the operating system.  The image shows the macOS version.</p>
+
+    <div style="margin-left: 2em">
+    <a href="images/LEGS-HelpBar.png">
+    <img src="images/LEGS-HelpBar.png"
+    alt="Layout Editor toolbox help bar" width="766" height="57"></a>
+    </div>
 
     <p>The track plan is a short stretch of track with 2 turnouts and a siding.</p>
 
@@ -187,7 +204,7 @@
     </div>
 
     <p>Clean up the track plan by moving components to the grid.  The <strong>snap to grid</strong>
-    settings for adding and moving items can be set using <strong>Options >> Grid Options</strong>.
+    settings for adding and moving items can be set using Layout Editor <strong>Options &rArr; Grid Options</strong>.
     The diverging legs of the turnouts have been extended at a 45&deg; angle.  A label has
     been added to provide a name for the siding.  Everything on the prototype has a name.</p>
 
@@ -207,8 +224,8 @@
 
     <h4><a class="reflink" href="../../tools/Turnouts.shtml">Turnouts</a></h4>
 
-    <p>Turnouts are defined using PanelPro <strong>Tools >> Tables >> Turnouts</strong>.
-    Click on Add.  Two turnouts are defined and assigned user names:  T-Alpha-Left and T-Alpha-Right.</p>
+    <p>Turnouts are defined using PanelPro <strong>Tools &rArr; Tables &rArr; Turnouts</strong>.
+    Click on <strong>Add</strong>.  Two turnouts are defined and assigned user names:  T-Alpha-Left and T-Alpha-Right.</p>
 
     <div style="margin-left: 2em">
     <a href="images/LEGS-AddTurnouts.png">
@@ -224,10 +241,14 @@
 
     <h4><a class="reflink" href="../../tools/Sensors.shtml">Sensors</a></h4>
 
-    <p>Sensors are defined using PanelPro <strong>Tools >> Tables >> Sensors</strong>.
-    Click on Add.  For now, create one <strong>Internal</strong> sensor with an address of
+    <p>Sensors are defined using PanelPro <strong>Tools &rArr; Tables &rArr; Sensors</strong>.
+    Click on <strong>Add</strong>.  For now, create one <strong>Internal</strong> sensor with an address of
     999 and <strong>Reset</strong> as the user name.  This will create a sensor with a
     system name of IS999.</p>
+
+    <p>Note: The Reset sensor is <strong>Internal</strong> because it is not physically
+    on the layout.  It is used for internal JMRI purposes.  It could easily be a physical
+    push button on the layout. Then the system name would be LS999.</p>
 
     <div style="margin-left: 2em">
     <a href="images/LEGS-AddResetSensor.png">
@@ -239,8 +260,8 @@
 
     <p>Since the connection is simulated, setting the initial value helps with testing later on.</p>
 
-    <p>Routes are defined using PanelPro <strong>Tools >> Tables >> Routes</strong>.
-    Click on Add. Select Automatically generate System Name, enter a Route user name,
+    <p>Routes are defined using PanelPro <strong>Tools &rArr; Tables &rArr; Routes</strong>.
+    Click on <strong>Add</strong>. Select Automatically generate System Name, enter a Route user name,
     select the two turnouts and set the state to Close.  Select the Reset sensor from the
     <strong>Sensor 1</strong> list.  Click on Create.</p>
 
@@ -254,9 +275,9 @@
 
     <p>A LRoute is stored as a Logix. There is a special LRoute know as a
     <strong>RTXINITIALIZER</strong>.  The Logix created by this LRoute is the very first
-    Logix invoked after loading a data file. This makes it perfect doing the initial setup.</p>
+    Logix invoked after loading a data file. This makes it perfect for doing the initial setup.</p>
 
-    <p>Use <strong>Tools >> Tables >> LRoutes</strong>.  Click on Add. Click on the
+    <p>Use PanelPro <strong>Tools &rArr; Tables &rArr; LRoutes</strong>.  Click on <strong>Add</strong>. Click on the
     <strong>Actions (output)</strong> tab, select the Reset sensor and set the state to Active.</p>
 
     <div style="margin-left: 2em">
@@ -283,7 +304,7 @@
     <strong>Sensor Icon</strong> option.  Use the right click context menu to change the
     sensor to <strong>Momentary</strong>.</p>
 
-    <p>The next steps are going to covert the sensor icon into a clickable label.  This
+    <p>The next steps are going to convert the sensor icon into a clickable label.  This
     can help save space on the panel. Use the right click context menu <strong>Change To Text</strong>
     item and then the <strong>Properties</strong> item.</p>
 
@@ -309,7 +330,7 @@
 
     <h4>Add turnouts and blocks to the panel</h4>
 
-    <p>Right click each turnout to get the context menu and select Edit.
+    <p>Right click each turnout to get the context menu and select <strong>Edit</strong>.
     Select the turnout name and type the block name in the Block field.  Click Done.  The
     Block table entry will be automatically created.</p>
 
@@ -333,8 +354,8 @@
 
     <h5>Create occupancy sensors.</h5>
 
-    <p>Create six LocoNet sensors in the sensor table.  Assign user names based on the block
-    names.</p>
+    <p>Go to the sensor table and create six LocoNet sensors in the sensor table.
+    Assign user names based on the block names.</p>
 
     <div style="margin-left: 2em">
     <a href="images/LEGS-OccupancySensors.png">
@@ -344,7 +365,9 @@
 
     <h5>Create a Route to initialize the sensors.</h5>
 
-    <p>Create a route table entry to initialize the occupancy sensors to Inactive</p>
+    <p>Go to the route table and create a route table entry to initialize the occupancy
+    sensors to Inactive. Select the Reset sensor from the <strong>Sensor 1</strong> list.
+    Click on Create.</p>
 
     <div style="margin-left: 2em">
     <a href="images/LEGS-SensorRoute.png">
@@ -354,7 +377,7 @@
 
     <h5>Add the sensors to the <a class="reflink" href="../../tools/Blocks.shtml">Block</a> table entries.</h5>
 
-    <p>Use <strong>Tools >> Tables >> Blocks</strong> to assign the occupancy sensors to
+    <p>Use PanelPro <strong>Tools &rArr; Tables &rArr; Blocks</strong> to assign the occupancy sensors to
     each block. The blocks were automatically created when the block names were assigned
     using the Layout Editor <strong>Edit</strong> dialog for each piece of track.
     To simplify the process, drag the Sensor column next to the User Name column.</p>
@@ -369,7 +392,7 @@
 
     <p>Add the occupancy sensors to the panel.  The sensors on the panel are used to simulate
     train occupancy.  They can be used to see how the track responds to occupancy changes.
-    They will be used later to validate signal mast logic.</p>
+    They will be used later to validate the signal mast logic.</p>
 
     <p>If desired, there is a context menu item to <strong>Hide when not editing</strong>.
     This can be used to reduce clutter on the screen when not in edit mode.</p>
@@ -397,10 +420,11 @@
     <p>The above link provides an overview of signaling support in JMRI along with links to
     specific topics.</p>
 
-    <p>The sample layout will be using signal masts based on the <strong>Basic</strong> signaling system.
-    The signaling system provides the aspects and appearances of signal masts, their icons, and
-    the rules for determining the signal mast aspect.  JMRI provides signaling systems for
-    many prototypes.  The logic to set the mast aspects will be done using signal mast logic (SML).</p>
+    <p>The sample layout will be using signal masts based on the <strong>Basic</strong>
+    signaling system.  The selected signaling system provides the aspects, the appearances
+    of signal masts, their icons, and the rules for determining the signal mast aspect.
+    JMRI provides signaling systems for many prototypes.  The logic to set the mast aspects
+    will be done using signal mast logic (SML).</p>
 
     <a name="Masts" id="Masts"></a>
     <h3>Signal Masts</h3>
@@ -411,12 +435,12 @@
 
     <p>The turnouts on the panel at Alpha have their own blocks which means they provide
     3 block boundaries.  The two end bumpers are also considered block boundaries.  Block
-    boundaries can also occur at anchor points and edge connectors. Most layouts are not
-    large enough to have long mainlines with intermediate signals.</p>
+    boundaries can also occur at level crossings, anchor points and edge connectors. Most
+    layouts are not large enough to have long mainlines with intermediate signals.</p>
 
     <h4>Add Signal Masts to the <a class="reflink" href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a></h4>
 
-    <p>Signal masts are created using <strong>Tools >> Tables >> Signals >> Signal Masts</strong>.
+    <p>Signal masts are created using PanelPro <strong>Tools &rArr; Tables &rArr; Signals &rArr; Signal Masts</strong>.
 
     <p>Select <strong>Add</strong> to create a new signal mast.</p>
 
@@ -479,11 +503,9 @@
     alt="Turnout signal mast dialog" width="572" height="518"></a>
     </div>
 
-    <p>The number of boxes depends on the number of block boundaries.  Crossovers and level
-    crossings can have 4.  Anchor points and Edge Connectors will have two and End bumpers
-    will have one.  A common practice is to use the block of the track segment at the
-    throat of the turnout as the turnout block.  This results in no block boundary at the
-    throat which means only two signals can be assigned to the turnout.</p>
+    <p>The number of boxes depends on the number of block boundaries.  Standard turnouts (
+    LH, RH, Wye) can have up to 3. Crossovers and level crossings can have up to 4.  Anchor
+    Points and Edge Connectors will have two and End Bumpers will have one.</p>
 
     <div style="margin-left: 2em">
     <a href="images/LEGS-EndBumper.png">
@@ -526,10 +548,11 @@
 
     <h4><a class="reflink" href="../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">Signal Mast Logic Table</a></h4>
 
-    <p>Signal mast logic is maintained at <strong>Tools >> Tables >> Signals >> Signal Mast Logic</strong>.</p>
+    <p>Signal mast logic is maintained at PanelPro <strong>Tools &rArr; Tables &rArr;
+    Signals &rArr; Signal Mast Logic</strong>.</p>
 
     <p>While it is possible to use the Add button to create each set of signal mast logic, use
-    the <strong>Tools >> Auto Generate Signaling Pairs</strong> menu item.  This will
+    the <strong>Tools &rArr; Auto Generate Signaling Pairs</strong> menu item.  This will
     discover all the signal mast pairs and build the signal mast logic definitions.</p>
 
     <p>The first time SML is created, a system setting needs to be updated.  Click on Yes.</p>
@@ -569,10 +592,11 @@
 
     <h4>Signal Mast Logic Detail</h4>
 
-    <p>To see the detail for specific mast, select <strong>Edit Logic</strong> from the
+    <p>To see the detail for a specific mast, select <strong>Edit Logic</strong> from the
     entry in <strong>Signal Mast</strong> table or select <strong>Edit</strong> from the
     <strong>Signal Mast Logic</strong> table or select <strong>Signal Mast Logic</strong>
-    in the right click context menu for the mast icon.</p>
+    in the right click context menu for the mast icon.  Yes, those are 3 different ways to
+    get to the same place.</p>
 
     <div style="margin-left: 2em">
     <a href="images/LEGS-SelectSML.png">
