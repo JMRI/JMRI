@@ -132,6 +132,7 @@ public class CbusReporter extends AbstractReporter implements CanListener {
     @Override
     public void dispose() {
         tc.removeCanListener(this);
+        super.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusReporter.class);

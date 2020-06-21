@@ -78,6 +78,14 @@ abstract public class AbstractReporterTestBase {
         // Check that LastReport was not seen (no change on null)
         Assert.assertFalse("LastReport seen after null", lastReportSeen);
     }
+    
+    @Test
+    public void testDispose() {
+        r.addPropertyChangeListener(new TestReporterListener());
+        Assert.assertEquals("controller listener added", 1, r.getNumPropertyChangeListeners());
+        r.dispose();
+        Assert.assertEquals("controller listeners remaining", 0, r.getNumPropertyChangeListeners());
+    }
 
     protected boolean currentReportSeen = false;
     protected boolean lastReportSeen = false;
