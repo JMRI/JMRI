@@ -71,27 +71,27 @@ public class DefaultConditionalNGTest {
                 conditionalNG.supportsEnableExecution());
     }
     
-    @Test
-    public void testIsExecutionEnabled() {
-        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+//AAA    @Test
+//AAA    public void testIsExecutionEnabled() {
+//AAA        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
+//AAA        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         
 //        conditionalNG.isExecutionEnabled();
         
-        DigitalActionBean actionSupportExecution = new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION);
-        conditionalNG = new DefaultConditionalNG("IQC123", null);
-    }
+//AAA        DigitalActionBean actionSupportExecution = new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION);
+//AAA        conditionalNG = new DefaultConditionalNG("IQC123", null);
+//AAA    }
     
-    @Test
-    public void testSetEnableExecution() {
-        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+//AAA    @Test
+//AAA    public void testSetEnableExecution() {
+//AAA        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
+//AAA        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         
 //        conditionalNG.setEnableExecution(true);
         
-        DigitalActionBean actionSupportExecution = new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION);
-        conditionalNG = new DefaultConditionalNG("IQC123", null);
-    }
+//AAA        DigitalActionBean actionSupportExecution = new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION);
+//AAA        conditionalNG = new DefaultConditionalNG("IQC123", null);
+//AAA    }
     
     @Test
     public void testLock() {
