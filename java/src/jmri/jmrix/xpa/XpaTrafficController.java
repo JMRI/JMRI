@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class XpaTrafficController implements XpaInterface, Runnable {
 
     // Linked list to store the transmit queue.
-    LinkedList<byte[]> xmtList = new LinkedList<>();
+    final LinkedList<byte[]> xmtList = new LinkedList<>();
 
     /**
      * (local class) object to implement the transmit thread
@@ -69,9 +69,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
     @Override
     public synchronized void removeXpaListener(XpaListener l) {
-        if (cmdListeners.contains(l)) {
-            cmdListeners.remove(l);
-        }
+        cmdListeners.remove(l);
     }
 
     /**
@@ -156,7 +154,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         int len = m.getNumDataElements();
         int cr = 1;  // space for carriage return linefeed
 
-        byte msg[] = new byte[len + cr];
+        byte[] msg = new byte[len + cr];
 
         for (int i = 0; i < len; i++) {
             msg[i] = (byte) m.getElement(i);
@@ -249,8 +247,8 @@ public class XpaTrafficController implements XpaInterface, Runnable {
             final XpaTrafficController thisTc = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
-                XpaMessage msgForLater = thisMsg;
-                XpaTrafficController myTc = thisTc;
+                final XpaMessage msgForLater = thisMsg;
+                final XpaTrafficController myTc = thisTc;
 
                 @Override
                 public void run() {
@@ -278,7 +276,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
                     if (log.isDebugEnabled()) {
                         log.debug("check for input");
                     }
-                    byte msg[];
+                    byte[] msg;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
                     }
