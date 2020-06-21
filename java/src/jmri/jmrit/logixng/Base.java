@@ -339,7 +339,7 @@ public interface Base extends PropertyChangeProvider {
      *./
     public void unregisterListeners();
 */    
-     /**
+    /**
      * Print the tree to a stream.
      * 
      * @param writer the stream to print the tree to
@@ -347,7 +347,7 @@ public interface Base extends PropertyChangeProvider {
      */
     public void printTree(PrintWriter writer, String indent);
     
-     /**
+    /**
      * Print the tree to a stream.
      * 
      * @param locale The locale to be used
@@ -356,7 +356,7 @@ public interface Base extends PropertyChangeProvider {
      */
     public void printTree(Locale locale, PrintWriter writer, String indent);
     
-     /**
+    /**
      * Print the tree to a stream.
      * 
      * @param locale The locale to be used

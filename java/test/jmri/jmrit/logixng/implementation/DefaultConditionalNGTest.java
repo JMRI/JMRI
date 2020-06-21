@@ -72,6 +72,17 @@ public class DefaultConditionalNGTest {
     }
     
     @Test
+    public void testIsExecutionEnabled() {
+        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        
+//        conditionalNG.isExecutionEnabled();
+        
+        DigitalActionBean actionSupportExecution = new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION);
+        conditionalNG = new DefaultConditionalNG("IQC123", null);
+    }
+    
+    @Test
     public void testSetEnableExecution() {
         MyDigitalAction action = new MyDigitalAction("IQDA1", null);
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
