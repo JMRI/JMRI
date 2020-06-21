@@ -252,17 +252,21 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         roadEngineBox.setMinimumSize(new Dimension(120, 20));
         roadEngineBox.setToolTipText(Bundle.getMessage("RoadEngineTip"));
         addItem(trainReq, roadEngineBox, 6, 1);
+        
+        JPanel trainLastCar = new JPanel();
+        trainLastCar.setLayout(new GridBagLayout());
+        trainLastCar.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainLastCar")));
 
-        addItem(trainReq, noneRadioButton, 2, 2);
+        addItem(trainLastCar, noneRadioButton, 2, 2);
         noneRadioButton.setToolTipText(Bundle.getMessage("TipNoCabooseOrFRED"));
-        addItem(trainReq, fredRadioButton, 3, 2);
+        addItem(trainLastCar, fredRadioButton, 3, 2);
         fredRadioButton.setToolTipText(Bundle.getMessage("TipFRED"));
-        addItem(trainReq, cabooseRadioButton, 4, 2);
+        addItem(trainLastCar, cabooseRadioButton, 4, 2);
         cabooseRadioButton.setToolTipText(Bundle.getMessage("TipCaboose"));
-        addItem(trainReq, textRoad3, 5, 2);
+        addItem(trainLastCar, textRoad3, 5, 2);
         roadCabooseBox.setMinimumSize(new Dimension(120, 20));
         roadCabooseBox.setToolTipText(Bundle.getMessage("RoadCabooseTip"));
-        addItem(trainReq, roadCabooseBox, 6, 2);
+        addItem(trainLastCar, roadCabooseBox, 6, 2);
         group.add(noneRadioButton);
         group.add(cabooseRadioButton);
         group.add(fredRadioButton);
@@ -291,6 +295,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         getContentPane().add(typeEnginePane);
         getContentPane().add(roadAndLoadStatusPanel);
         getContentPane().add(trainReq);
+        getContentPane().add(trainLastCar);
         getContentPane().add(pC);
         getContentPane().add(pB);
 
