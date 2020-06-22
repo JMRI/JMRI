@@ -145,7 +145,6 @@ public class Z21XNetProgrammer extends XNetProgrammer {
     synchronized public void message(XNetReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
-            return;
 
         } else if (progState == REQUESTSENT
                 || progState == INQUIRESENT) {
@@ -168,7 +167,6 @@ public class Z21XNetProgrammer extends XNetProgrammer {
                 // if this was a read, we cached the value earlier.  If its a
                 // write, we're to return the original write value
                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-                return;
             } else {
                 super.message(m);
             }

@@ -80,9 +80,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(() -> {
-            return l.getRcvdInvoked() != 0;
-        }, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
 
     }
 
@@ -137,9 +135,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(() -> {
-            return l.getRcvdInvoked() != 0;
-        }, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
 
     }
@@ -194,9 +190,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(() -> {
-            return l.getRcvdInvoked() != 0;
-        }, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 48, l.getRcvdValue());
 
     }
@@ -254,9 +248,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(() -> {
-            return l.getRcvdInvoked() != 0;
-        }, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
 
     }
