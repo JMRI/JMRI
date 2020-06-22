@@ -1,4 +1,4 @@
-package jmri.plaf.macosx;
+package apps.plaf.macosx;
 
 import java.awt.Desktop;
 import java.io.InputStreamReader;
@@ -35,9 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (c) 2016
  * @see Application
- * @deprecated since 4.21.1
  */
-@Deprecated
 class Jdk9Application extends Application {
 
     private static final Logger log = LoggerFactory.getLogger(Jdk9Application.class);

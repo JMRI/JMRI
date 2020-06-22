@@ -1,4 +1,4 @@
-package jmri.plaf.macosx;
+package apps.plaf.macosx;
 
 import com.apple.eawt.AppEvent.AboutEvent;
 import com.apple.eawt.AppEvent.PreferencesEvent;
@@ -25,9 +25,7 @@ import com.apple.eawt.QuitResponse;
  *
  * @author Randall Wood (c) 2016
  * @see com.apple.eawt.Application
- * @deprecated since 4.21.1
  */
-@Deprecated
 class EawtApplication extends Application {
 
     private com.apple.eawt.Application application = null;

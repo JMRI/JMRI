@@ -1,24 +1,16 @@
-package jmri.swing;
+package apps.swing;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import java.util.Locale;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import jmri.Application;
-import jmri.InstanceManager;
-import jmri.Version;
+
+import javax.swing.*;
+
+import jmri.*;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
+import jmri.swing.ConnectionLabel;
 import jmri.util.FileUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,9 +18,7 @@ import org.slf4j.LoggerFactory;
  * About dialog.
  *
  * @author Randall Wood Copyright (C) 2012
- * @deprecated since 4.21.1; use {@link apps.swing.AboutDialog} instead
  */
-@Deprecated
 public final class AboutDialog extends JDialog {
 
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.

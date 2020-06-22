@@ -1,17 +1,20 @@
-package jmri.swing;
+package apps.swing;
+
+import apps.*;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.Icon;
+
+import jmri.swing.AboutDialog;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 
 /**
  *
- * @author Randall Wood
- * @deprecated since 4.21.1; use {@link apps.swing.AboutAction} instead
+ * @author Randall Wood Copyright 2020
  */
-@Deprecated
 public class AboutAction extends JmriAbstractAction {
 
     public AboutAction(String s, WindowInterface wi) {
