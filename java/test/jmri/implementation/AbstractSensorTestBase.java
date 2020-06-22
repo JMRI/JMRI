@@ -93,7 +93,7 @@ public abstract class AbstractSensorTestBase {
         try {
             Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
         }
-        catch ( Exception e){
+        catch ( RuntimeException e){
             Assert.assertTrue("Either <1 listeners or exception expected", true);
         }
     }
