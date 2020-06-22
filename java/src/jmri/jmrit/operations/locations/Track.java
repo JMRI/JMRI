@@ -126,8 +126,8 @@ public class Track extends PropertyChangeSupport {
     public static final String STAGING = "Staging";
     public static final String INTERCHANGE = "Interchange";
     public static final String YARD = "Yard";
-    public static final String SPUR = "Spur"; // note that code before 2020 used Siding as the spur type // NOI18N
-    public static final String SIDING = "Siding";
+    public static final String SPUR = "Spur"; // note that code before 2020 (4.21.1) used Siding as the spur type // NOI18N
+    private static final String SIDING = "Siding"; // For loading older files
 
     // train directions serviced by this track
     public static final int EAST = 1;
