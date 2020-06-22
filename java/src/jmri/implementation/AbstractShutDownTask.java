@@ -37,7 +37,7 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     @SuppressWarnings("deprecation")
     public boolean isShutdownAllowed() {
-    	Log4JUtil.deprecationWarning(log, "isShutdownAllowed");
+        Log4JUtil.deprecationWarning(log, "isShutdownAllowed");
         return call();
     }
 
@@ -60,7 +60,7 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     @SuppressWarnings("deprecation")
     public final boolean execute() {
-    	Log4JUtil.deprecationWarning(log, "execute");
+        Log4JUtil.deprecationWarning(log, "execute");
         run();
         return true;
     }
@@ -73,17 +73,17 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     @SuppressWarnings("deprecation")
     public boolean isParallel() {
-    	Log4JUtil.deprecationWarning(log, "isParallel");
+        Log4JUtil.deprecationWarning(log, "isParallel");
         return false;
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public boolean isComplete() {
-    	Log4JUtil.deprecationWarning(log, "isComplete");
+        Log4JUtil.deprecationWarning(log, "isComplete");
         return !this.isParallel();
     }
-    
+
     /**
      * {@inheritDoc}
      * 
