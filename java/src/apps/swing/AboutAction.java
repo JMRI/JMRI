@@ -1,15 +1,10 @@
 package apps.swing;
 
-import apps.*;
-
 import java.awt.event.ActionEvent;
 
 import javax.swing.Icon;
 
-import jmri.swing.AboutDialog;
-import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.JmriPanel;
-import jmri.util.swing.WindowInterface;
+import jmri.util.swing.*;
 
 /**
  *

@@ -27,6 +27,7 @@ public class AboutAction extends JmriAbstractAction {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void actionPerformed(ActionEvent e) {
         new AboutDialog(null, true).setVisible(true);
     }
