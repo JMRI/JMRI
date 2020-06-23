@@ -7,6 +7,11 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 import java.util.*;
 
+/**
+ * Provider for {@link BlockBossLogic} objects
+ *
+ * @author Paul Bender Copyright (C) 2020
+ */
 public class BlockBossLogicProvider implements Disposable, InstanceManagerAutoDefault {
 
     private final SignalHeadManager signalHeadManager;
@@ -57,6 +62,6 @@ public class BlockBossLogicProvider implements Disposable, InstanceManagerAutoDe
         headToBlockBossLogicMap.clear();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockBossLogicProvider.class);
+    private static final Logger log = LoggerFactory.getLogger(BlockBossLogicProvider.class);
 
 }
