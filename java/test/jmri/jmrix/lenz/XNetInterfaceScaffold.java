@@ -27,7 +27,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     /**
      * Record XNet messages sent, provide access for making sure they are OK.
      */
-    public Vector<XNetMessage> outbound = new Vector<XNetMessage>();  // public OK here, so long as this is a test class
+    public Vector<XNetMessage> outbound = new Vector<>();  // public OK here, so long as this is a test class
 
     @Override
     public void sendXNetMessage(XNetMessage m, XNetListener replyTo) {

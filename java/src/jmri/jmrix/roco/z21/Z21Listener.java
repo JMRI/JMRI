@@ -14,7 +14,7 @@ public interface Z21Listener extends jmri.jmrix.AbstractMRListener {
      * @param msg The received z21 reply. Note that this same object may be
      * presented to multiple users. It should not be modified here.
      */
-    public void reply(Z21Reply msg);
+    void reply(Z21Reply msg);
 
     /**
      * Member function that will be invoked by a z21Interface implementation to
@@ -24,6 +24,6 @@ public interface Z21Listener extends jmri.jmrix.AbstractMRListener {
      * @param msg The received z21 message. Note that this same object may be
      * presented to multiple users. It should not be modified here.
      */
-    public void message(Z21Message msg);
+    void message(Z21Message msg);
 
 }

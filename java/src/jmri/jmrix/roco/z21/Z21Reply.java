@@ -167,7 +167,7 @@ public class Z21Reply extends AbstractMRReply {
                int value1 = (getElement(10)&0xFF) + ((getElement(11)&0xFF) << 8);
                int value2 = (getElement(12)&0xFF) + ((getElement(13)&0xFF) << 8);
                String typeString = "";
-               String value1String = "";
+               String value1String;
                String value2String = "";
                switch(type){
                     case 0x01:
