@@ -115,7 +115,7 @@ public class DefaultConditionalNG extends AbstractBase
             return ((DigitalActionWithEnableExecution)action).isExecutionEnabled();
         } else {
             log.error("This conditionalNG does not supports the method isExecutionEnabled()");
-            throw new UnsupportedOperationException("This digital action does not supports the method isExecutionEnabled()");
+            throw new UnsupportedOperationException("This conditionalNG does not supports the method isExecutionEnabled()");
         }
     }
     

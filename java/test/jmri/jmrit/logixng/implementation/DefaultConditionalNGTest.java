@@ -8,6 +8,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.AbstractDigitalAction;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -71,16 +72,39 @@ public class DefaultConditionalNGTest {
                 conditionalNG.supportsEnableExecution());
     }
     
-//AAA    @Test
-//AAA    public void testIsExecutionEnabled() {
-//AAA        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
-//AAA        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+    @Test
+    public void testIsExecutionEnabled() throws SocketAlreadyConnectedException {
+        // Test an action that doesn't support enable execution
+        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(action);
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        conditionalNG.getChild(0).connect(socket);
         
-//        conditionalNG.isExecutionEnabled();
+        boolean hasThrown = false;
+        try {
+            conditionalNG.isExecutionEnabled();
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "This conditionalNG does not supports the method isExecutionEnabled()", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", hasThrown);
+        JUnitAppender.assertErrorMessage("This conditionalNG does not supports the method isExecutionEnabled()");
         
-//AAA        DigitalActionBean actionSupportExecution = new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION);
-//AAA        conditionalNG = new DefaultConditionalNG("IQC123", null);
-//AAA    }
+        
+        // Test an action that support enable execution
+        conditionalNG.getChild(0).disconnect();
+        
+        IfThenElse action2 = new IfThenElse("IQDA2", null, IfThenElse.Type.TRIGGER_ACTION);
+        MaleSocket socket2 = InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(action2);
+        conditionalNG.getChild(0).connect(socket2);
+        Assert.assertFalse("execution is not enabled", conditionalNG.isExecutionEnabled());
+        
+        // Turn off enable execution on the action
+        action2.setEnableExecution(false);
+        Assert.assertFalse("execution is not enabled", conditionalNG.isExecutionEnabled());
+    }
     
 //AAA    @Test
 //AAA    public void testSetEnableExecution() {
