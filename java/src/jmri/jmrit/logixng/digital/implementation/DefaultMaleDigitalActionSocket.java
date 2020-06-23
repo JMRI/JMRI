@@ -120,11 +120,11 @@ public class DefaultMaleDigitalActionSocket
                     // We don't show a dialog box yet so fall thrue.
                     // fall through
                 case LOG_ERROR:
-                    log.error("action {} thrown an exception: {}", _action.toString(), e);
+                    log.error("action {} thrown an exception: {}", _action.toString(), e, e);
                     break;
                     
                 case LOG_ERROR_ONCE:
-                    Log4JUtil.warnOnce(log, "action {} thrown an exception: {}", _action.toString(), e);
+                    Log4JUtil.warnOnce(log, "action {} thrown an exception: {}", _action.toString(), e, e);
                     break;
                     
                 case THROW:

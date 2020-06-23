@@ -226,7 +226,7 @@ public class DefaultConditionalNG extends AbstractBase
 
     @Override
     public String getShortDescription(Locale locale) {
-        throw new UnsupportedOperationException("Not supported.");
+        return "ConditionalNG: "+getDisplayName();
     }
 
     @Override

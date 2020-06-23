@@ -177,10 +177,74 @@ public class DefaultConditionalNGTest {
     public void testState() throws JmriException {
         DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         conditionalNG.setState(NamedBean.INCONSISTENT);
-//        JUnitAppender.assertWarnMessage("Unexpected call to getState in DefaultConditionalNG.");
+        JUnitAppender.assertWarnMessage("Unexpected call to setState in DefaultConditionalNG.");
         
         Assert.assertEquals("State is correct", NamedBean.UNKNOWN, conditionalNG.getState());
-//        JUnitAppender.assertWarnMessage("Unexpected call to getState in DefaultConditionalNG.");
+        JUnitAppender.assertWarnMessage("Unexpected call to getState in DefaultConditionalNG.");
+    }
+    
+    @Test
+    public void testExecute() throws SocketAlreadyConnectedException, JmriException {
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        conditionalNG.setRunOnGUIDelayed(false);
+        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(action);
+        conditionalNG.getChild(0).connect(socket);
+        
+        action.throwOnExecute = false;
+        action.hasExecuted = false;
+        conditionalNG.execute();
+        Assert.assertTrue("Action is executed", action.hasExecuted);
+        
+        action.throwOnExecute = true;
+        action.hasExecuted = false;
+        conditionalNG.execute();
+        // Currently, this logs an error
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.SHOW_DIALOG_BOX);
+        JUnitAppender.assertErrorMessage("action IQDA1 thrown an exception: jmri.JmriException: An error has occured");
+        
+        action.throwOnExecute = true;
+        action.hasExecuted = false;
+        conditionalNG.execute();
+        // Currently, this logs an error
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR);
+        JUnitAppender.assertErrorMessage("action IQDA1 thrown an exception: jmri.JmriException: An error has occured");
+        
+        action.throwOnExecute = true;
+        action.hasExecuted = false;
+        conditionalNG.execute();
+        // Currently, this logs an error
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR_ONCE);
+        JUnitAppender.assertErrorMessage("action IQDA1 thrown an exception: jmri.JmriException: An error has occured");
+        
+        action.throwOnExecute = true;
+        action.hasExecuted = false;
+        conditionalNG.execute();
+        // Currently, this logs an error
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        JUnitAppender.assertErrorMessage("action IQDA1 thrown an exception: jmri.JmriException: An error has occured");
+    }
+    
+    @Test
+    public void testDescription() {
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        Assert.assertEquals("Short description is correct", "ConditionalNG: IQC123", conditionalNG.getShortDescription());
+        Assert.assertEquals("Long description is correct", "ConditionalNG: IQC123", conditionalNG.getLongDescription());
+    }
+    
+    @Test
+    public void testErrorHandlingType() {
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LOG_ERROR, conditionalNG.getErrorHandlingType());
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.SHOW_DIALOG_BOX);
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.SHOW_DIALOG_BOX, conditionalNG.getErrorHandlingType());
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR);
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LOG_ERROR, conditionalNG.getErrorHandlingType());
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR_ONCE);
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.LOG_ERROR_ONCE, conditionalNG.getErrorHandlingType());
+        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        Assert.assertEquals("Error handling type is correct", MaleSocket.ErrorHandlingType.THROW, conditionalNG.getErrorHandlingType());
     }
     
     // The minimal setup for log4J
@@ -201,6 +265,9 @@ public class DefaultConditionalNGTest {
     
     private static class MyDigitalAction extends AbstractDigitalAction {
 
+        private boolean hasExecuted;
+        private boolean throwOnExecute;
+        
         public MyDigitalAction(String sys, String user) throws BadUserNameException, BadSystemNameException {
             super(sys, user);
         }
@@ -257,7 +324,11 @@ public class DefaultConditionalNGTest {
 
         @Override
         public void execute() throws JmriException {
-            throw new UnsupportedOperationException("Not supported");
+            if (throwOnExecute) {
+                throw new JmriException ("An error has occured");
+            } else {
+                hasExecuted = true;
+            }
         }
         
     }
