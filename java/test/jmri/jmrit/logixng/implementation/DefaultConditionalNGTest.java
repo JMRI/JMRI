@@ -65,14 +65,26 @@ public class DefaultConditionalNGTest {
     
     @Test
     public void testIsExecutionEnabled() throws SocketAlreadyConnectedException {
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        
+        boolean hasThrown = false;
+        try {
+            conditionalNG.isExecutionEnabled();
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "This conditionalNG does not supports the method isExecutionEnabled()", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", hasThrown);
+        JUnitAppender.assertErrorMessage("This conditionalNG does not supports the method isExecutionEnabled()");
+        
+        
         // Test an action that doesn't support enable execution
         MyDigitalAction action = new MyDigitalAction("IQDA1", null);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action);
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         conditionalNG.getChild(0).connect(socket);
         
-        boolean hasThrown = false;
+        hasThrown = false;
         try {
             conditionalNG.isExecutionEnabled();
         } catch (UnsupportedOperationException e) {
@@ -99,14 +111,26 @@ public class DefaultConditionalNGTest {
     
     @Test
     public void testSetEnableExecution() throws SocketAlreadyConnectedException {
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        
+        boolean hasThrown = false;
+        try {
+            conditionalNG.setEnableExecution(true);
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "This conditionalNG does not supports the method setEnableExecution()", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", hasThrown);
+        JUnitAppender.assertErrorMessage("This conditionalNG does not supports the method setEnableExecution()");
+        
+        
         // Test an action that doesn't support enable execution
         MyDigitalAction action = new MyDigitalAction("IQDA1", null);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action);
-        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
         conditionalNG.getChild(0).connect(socket);
         
-        boolean hasThrown = false;
+        hasThrown = false;
         try {
             conditionalNG.setEnableExecution(true);
         } catch (UnsupportedOperationException e) {
@@ -147,6 +171,16 @@ public class DefaultConditionalNGTest {
         
         conditionalNG.setLock(Base.Lock.HARD_LOCK);
         Assert.assertEquals("Lock is correct", Base.Lock.HARD_LOCK, conditionalNG.getLock());
+    }
+    
+    @Test
+    public void testState() throws JmriException {
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        conditionalNG.setState(NamedBean.INCONSISTENT);
+//        JUnitAppender.assertWarnMessage("Unexpected call to getState in DefaultConditionalNG.");
+        
+        Assert.assertEquals("State is correct", NamedBean.UNKNOWN, conditionalNG.getState());
+//        JUnitAppender.assertWarnMessage("Unexpected call to getState in DefaultConditionalNG.");
     }
     
     // The minimal setup for log4J
