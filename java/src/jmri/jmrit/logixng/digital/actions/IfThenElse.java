@@ -53,7 +53,7 @@ public class IfThenElse extends AbstractDigitalAction
         CONTINOUS_ACTION,
     }
 
-    private boolean _enableExecution;
+    private boolean _enableExecution = true;
     private Type _type;
     private boolean _lastExpressionResult = false;
     private String _ifExpressionSocketSystemName;
@@ -82,12 +82,6 @@ public class IfThenElse extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean supportsEnableExecution() {
-        return true;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void setEnableExecution(boolean b) {
         _enableExecution = b;
     }
@@ -113,11 +107,13 @@ public class IfThenElse extends AbstractDigitalAction
     @Override
     public void execute() throws JmriException {
         _lastExpressionResult = _ifExpressionSocket.evaluate();
-
-        if (_lastExpressionResult) {
-            _thenActionSocket.execute();
-        } else {
-            _elseActionSocket.execute();
+        
+        if (_enableExecution) {
+            if (_lastExpressionResult) {
+                _thenActionSocket.execute();
+            } else {
+                _elseActionSocket.execute();
+            }
         }
     }
 

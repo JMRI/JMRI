@@ -102,26 +102,6 @@ public class DefaultMaleDigitalActionSocket
     
     /** {@inheritDoc} */
     @Override
-    public boolean supportsEnableExecution() {
-        if (_action instanceof DigitalActionWithEnableExecution) {
-            if (_action.supportsEnableExecution()) {
-                return true;
-            } else {
-                throw new RuntimeException(
-                        _action.getClass().getName()
-                                + ".supportsEnableExecution() returns true "
-                                + "despite not inherit the interface "
-                                + "DigitalActionWithEnableExecution");
-            }
-        } else {
-            return false;
-        }
-//        return (_action instanceof DigitalActionWithEnableExecution)
-//                && _action.supportsEnableExecution();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         if (! _enabled) {
             return;

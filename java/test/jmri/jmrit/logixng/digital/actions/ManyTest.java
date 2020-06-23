@@ -255,45 +255,6 @@ public class ManyTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    @Override
-    public void testSupportsEnableExecution() throws SocketAlreadyConnectedException {
-        DigitalAction da = new Many("IQDA321", null);
-        
-//        // By default, doesn't support enable execution
-        Assert.assertFalse("supportsEnableExecution() returns correct value",
-                da.supportsEnableExecution());
-/*        
-        // Support enable execution if hard lock
-        da.setLock(Base.Lock.HARD_WITH_CHILDREN_LOCK);
-        Assert.assertTrue("supportsEnableExecution() returns correct value",
-                da.supportsEnableExecution());
-        
-        // Support enable execution if hard lock
-        da.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertTrue("supportsEnableExecution() returns correct value",
-                da.supportsEnableExecution());
-        
-        // Doesn't support enable execution if any of the children doesn't
-        // support it.
-        DigitalActionBean da2 = new Many("IQDA322", null);
-        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
-                .registerAction(da2);
-        da.getChild(0).connect(socket);
-        Assert.assertFalse("supportsEnableExecution() returns correct value",
-                ((MaleDigitalActionSocket)socket).supportsEnableExecution());
-        Assert.assertFalse("supportsEnableExecution() returns correct value",
-                da.supportsEnableExecution());
-        
-        // But support enable execution if all children supports enabled execution
-        socket.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertTrue("supportsEnableExecution() returns correct value",
-                ((MaleDigitalActionSocket)socket).supportsEnableExecution());
-        Assert.assertTrue("supportsEnableExecution() returns correct value",
-                da.supportsEnableExecution());
-*/
-    }
-    
-    @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
     }

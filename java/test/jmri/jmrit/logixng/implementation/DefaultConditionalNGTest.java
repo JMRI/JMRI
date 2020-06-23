@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.beans.PropertyChangeListener;
-import java.io.*;
 import java.util.*;
 
 import jmri.*;
@@ -52,13 +50,6 @@ public class DefaultConditionalNGTest {
         
         conditionalNG.getChild(0).connect(socket);
         
-        action._supportsEnableExecution = false;
-        Assert.assertFalse("Enable execution is not supported",
-                conditionalNG.supportsEnableExecution());
-        
-        // Enable execution cannot be enabled for actions that don't implement
-        // the DigitalActionWithEnableExecution interface
-        action._supportsEnableExecution = true;
         Assert.assertFalse("Enable execution is not supported",
                 conditionalNG.supportsEnableExecution());
         
@@ -99,23 +90,50 @@ public class DefaultConditionalNGTest {
         MaleSocket socket2 = InstanceManager.getDefault(DigitalActionManager.class)
                 .registerAction(action2);
         conditionalNG.getChild(0).connect(socket2);
-        Assert.assertFalse("execution is not enabled", conditionalNG.isExecutionEnabled());
+        Assert.assertTrue("execution is enabled", conditionalNG.isExecutionEnabled());
         
         // Turn off enable execution on the action
         action2.setEnableExecution(false);
         Assert.assertFalse("execution is not enabled", conditionalNG.isExecutionEnabled());
     }
     
-//AAA    @Test
-//AAA    public void testSetEnableExecution() {
-//AAA        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
-//AAA        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+    @Test
+    public void testSetEnableExecution() throws SocketAlreadyConnectedException {
+        // Test an action that doesn't support enable execution
+        MyDigitalAction action = new MyDigitalAction("IQDA1", null);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(action);
+        DefaultConditionalNG conditionalNG = new DefaultConditionalNG("IQC123", null);
+        conditionalNG.getChild(0).connect(socket);
         
-//        conditionalNG.setEnableExecution(true);
+        boolean hasThrown = false;
+        try {
+            conditionalNG.setEnableExecution(true);
+        } catch (UnsupportedOperationException e) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "This conditionalNG does not supports the method setEnableExecution()", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", hasThrown);
+        JUnitAppender.assertErrorMessage("This conditionalNG does not supports the method setEnableExecution()");
         
-//AAA        DigitalActionBean actionSupportExecution = new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION);
-//AAA        conditionalNG = new DefaultConditionalNG("IQC123", null);
-//AAA    }
+        
+        // Test an action that support enable execution
+        conditionalNG.getChild(0).disconnect();
+        
+        IfThenElse action2 = new IfThenElse("IQDA2", null, IfThenElse.Type.TRIGGER_ACTION);
+        MaleSocket socket2 = InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(action2);
+        conditionalNG.getChild(0).connect(socket2);
+        Assert.assertTrue("execution is enabled", conditionalNG.isExecutionEnabled());
+        
+        // Turn off enable execution on the action
+        conditionalNG.setEnableExecution(false);
+        Assert.assertFalse("execution is not enabled", conditionalNG.isExecutionEnabled());
+        
+        // Turn on enable execution on the action
+        conditionalNG.setEnableExecution(true);
+        Assert.assertTrue("execution is enabled", conditionalNG.isExecutionEnabled());
+    }
     
     @Test
     public void testLock() {
@@ -149,17 +167,10 @@ public class DefaultConditionalNGTest {
     
     private static class MyDigitalAction extends AbstractDigitalAction {
 
-        boolean _supportsEnableExecution = false;
-        
         public MyDigitalAction(String sys, String user) throws BadUserNameException, BadSystemNameException {
             super(sys, user);
         }
 
-        @Override
-        public boolean supportsEnableExecution() {
-            return _supportsEnableExecution;
-        }
-        
         @Override
         protected void registerListenersForThisClass() {
             throw new UnsupportedOperationException("Not supported");

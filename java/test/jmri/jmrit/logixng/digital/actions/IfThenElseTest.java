@@ -324,8 +324,6 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     @Test
     @Override
     public void testSupportsEnableExecution() throws SocketAlreadyConnectedException {
-        Assert.assertTrue("supportsEnableExecution() returns correct value",
-                ((DigitalAction)_base).supportsEnableExecution());
         Assert.assertTrue("digital action implements DigitalActionWithEnableExecution",
                 _base instanceof DigitalActionWithEnableExecution);
     }

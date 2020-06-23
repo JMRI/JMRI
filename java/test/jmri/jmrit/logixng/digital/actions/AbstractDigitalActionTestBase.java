@@ -48,10 +48,8 @@ public abstract class AbstractDigitalActionTestBase extends AbstractBaseTestBase
     @Test
     public void testSupportsEnableExecution() throws SocketAlreadyConnectedException {
         // If the digital action implements the interface DigitalActionWithEnableExecution
-        // then this method must be overridden to check supportsEnableExecution().
+        // then this method must be overridden.
         
-        Assert.assertFalse("supportsEnableExecution() returns correct value",
-                ((DigitalAction)_base).supportsEnableExecution());
         Assert.assertFalse("digital action does not implement DigitalActionWithEnableExecution",
                 _base instanceof DigitalActionWithEnableExecution);
     }

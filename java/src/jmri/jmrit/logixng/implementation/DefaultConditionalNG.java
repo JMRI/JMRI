@@ -73,15 +73,9 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public boolean supportsEnableExecution() {
-        
-//        // This action does not support EnableExecution if the user may change
-//        // the child.
-//        if (getLock().isChangeableByUser()) {
-//            return false;
-//        }
-        
         if (_femaleActionSocket.isConnected()) {
-            return _femaleActionSocket.supportsEnableExecution();
+            return _femaleActionSocket.getConnectedSocket().getObject()
+                    instanceof DigitalActionWithEnableExecution;
         } else {
             // ConditionalNGs without a connected socket does not support
             // enableExecution.
@@ -100,7 +94,7 @@ public class DefaultConditionalNG extends AbstractBase
             ((DigitalActionWithEnableExecution)action).setEnableExecution(b);
         } else {
             log.error("This conditionalNG does not supports the method setEnableExecution()");
-            throw new UnsupportedOperationException("This digital action does not supports the method setEnableExecution()");
+            throw new UnsupportedOperationException("This conditionalNG does not supports the method setEnableExecution()");
         }
     }
     

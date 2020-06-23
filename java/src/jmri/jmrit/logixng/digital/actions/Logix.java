@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class Logix extends AbstractDigitalAction
         implements FemaleSocketListener, DigitalActionWithEnableExecution {
 
-    private boolean _enableExecution;
+    private boolean _enableExecution = true;
     private boolean _lastExpressionResult = false;
     private String _expressionSocketSystemName;
     private String _actionSocketSystemName;
@@ -38,12 +38,6 @@ public class Logix extends AbstractDigitalAction
         return Category.OTHER;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean supportsEnableExecution() {
-        return true;
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void setEnableExecution(boolean b) {
@@ -72,7 +66,9 @@ public class Logix extends AbstractDigitalAction
     @Override
     public void execute() throws JmriException {
         _lastExpressionResult = _expressionSocket.evaluate();
-        _actionSocket.execute(_lastExpressionResult);
+        if (_enableExecution) {
+            _actionSocket.execute(_lastExpressionResult);
+        }
     }
     
     /** {@inheritDoc} */

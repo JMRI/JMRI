@@ -31,18 +31,6 @@ public final class DefaultFemaleDigitalActionSocket
         return socket instanceof MaleDigitalActionSocket;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public boolean supportsEnableExecution() {
-        
-        if (isConnected()) {
-            return ((MaleDigitalActionSocket)getConnectedSocket())
-                    .supportsEnableExecution();
-        } else {
-            throw new UnsupportedOperationException("Socket is not connected");
-        }
-    }
-    
     @Override
     public void execute() throws JmriException {
         if (isConnected()) {
