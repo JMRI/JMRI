@@ -58,16 +58,6 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
         return _action.getRoot();
     }
     
-    @Override
-    public Base getParent() {
-        return _action.getParent();
-    }
-    
-    @Override
-    public void setParent(Base parent) {
-        _action.setParent(parent);
-    }
-    
     /** {@inheritDoc} */
     @Override
     public Lock getLock() {

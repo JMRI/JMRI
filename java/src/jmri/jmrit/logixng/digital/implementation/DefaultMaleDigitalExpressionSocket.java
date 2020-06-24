@@ -59,16 +59,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         return _expression.getRoot();
     }
     
-    @Override
-    public Base getParent() {
-        return _expression.getParent();
-    }
-
-    @Override
-    public void setParent(Base parent) {
-        _expression.setParent(parent);
-    }
-
     /** {@inheritDoc} */
     @Override
     public Lock getLock() {

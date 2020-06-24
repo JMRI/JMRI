@@ -58,16 +58,6 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
         return _action.getRoot();
     }
     
-    @Override
-    public Base getParent() {
-        return _action.getParent();
-    }
-    
-    @Override
-    public void setParent(Base parent) {
-        _action.setParent(parent);
-    }
-    
     /** {@inheritDoc} */
     @Override
     public Lock getLock() {

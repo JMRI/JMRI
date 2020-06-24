@@ -1,20 +1,21 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.FemaleSocketTestBase;
-import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
+
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.FemaleGenericExpressionSocket.SocketType;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalExpressionSocket;
+import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
+import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
 
 /**
  * Test DefaultFemaleGenericExpressionSocket
@@ -183,6 +184,43 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         testGetSocketException(socket);
     }
     
+    @Test
+    public void testIsCompatible() {
+        AnalogExpressionMemory analogExpression = new AnalogExpressionMemory("IQAE351", null);
+        MaleSocket analogMaleSocket =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpression);
+        
+        ExpressionMemory digitalExpression = new ExpressionMemory("IQDE351", null);
+        MaleSocket digitalMaleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
+        
+        StringExpressionMemory stringExpression = new StringExpressionMemory("IQSE351", null);
+        MaleSocket stringMaleSocket =
+                InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
+        
+        DefaultFemaleGenericExpressionSocket socket;
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.ANALOG, null, null, "E");
+        Assert.assertTrue("Analog male socket is compatible", socket.isCompatible(analogMaleSocket));
+        Assert.assertTrue("Digital male socket is compatible", socket.isCompatible(digitalMaleSocket));
+        Assert.assertTrue("String male socket is compatible", socket.isCompatible(stringMaleSocket));
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        Assert.assertTrue("Analog male socket is compatible", socket.isCompatible(analogMaleSocket));
+        Assert.assertTrue("Digital male socket is compatible", socket.isCompatible(digitalMaleSocket));
+        Assert.assertTrue("String male socket is compatible", socket.isCompatible(stringMaleSocket));
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        Assert.assertTrue("Analog male socket is compatible", socket.isCompatible(analogMaleSocket));
+        Assert.assertTrue("Digital male socket is compatible", socket.isCompatible(digitalMaleSocket));
+        Assert.assertTrue("String male socket is compatible", socket.isCompatible(stringMaleSocket));
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.STRING, null, null, "E");
+        Assert.assertTrue("Analog male socket is compatible", socket.isCompatible(analogMaleSocket));
+        Assert.assertTrue("Digital male socket is compatible", socket.isCompatible(digitalMaleSocket));
+        Assert.assertTrue("String male socket is compatible", socket.isCompatible(stringMaleSocket));
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -195,8 +233,10 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         errorFlag = new AtomicBoolean();
         _expression = new MyExpressionTurnout("IQDE321");
         ExpressionTurnout otherExpression = new ExpressionTurnout("IQDE322", null);
-        maleSocket = new DefaultMaleDigitalExpressionSocket(_expression);
-        otherMaleSocket = new DefaultMaleDigitalExpressionSocket(otherExpression);
+        maleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(_expression);
+        otherMaleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(otherExpression);
         femaleGenericSocket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {

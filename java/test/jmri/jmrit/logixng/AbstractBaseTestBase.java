@@ -116,13 +116,8 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testGetParent() {
-        if (_base.getParent() != _baseMaleSocket.getParent()) {
-            log.error("Invalid parent for objects: {}, {}", _base, _baseMaleSocket);
-        }
-        Assert.assertTrue("parent is equal", _base.getParent() == _baseMaleSocket.getParent());
-        _base.getConditionalNG().setEnabled(false);
-        _base.setParent(null);
-        Assert.assertTrue("parent is equal", _base.getParent() == _baseMaleSocket.getParent());
+        Assert.assertTrue("Object of _baseMaleSocket is _base", _base == _baseMaleSocket.getObject());
+        Assert.assertTrue("Parent of _base is _baseMaleSocket", _base.getParent() == _baseMaleSocket);
     }
     
     /**

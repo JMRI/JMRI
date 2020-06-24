@@ -12,6 +12,18 @@ import jmri.jmrit.logixng.MaleSocket;
  */
 public abstract class AbstractMaleSocket implements Base, InternalBase {
 
+    private Base _parent;
+    
+    @Override
+    public final Base getParent() {
+        return _parent;
+    }
+    
+    @Override
+    public final void setParent(Base parent) {
+        _parent = parent;
+    }
+    
     /** {@inheritDoc} */
     @Override
     public final void setParentForAllChildren() {

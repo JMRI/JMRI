@@ -393,11 +393,13 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         // Socket LOCO_ADDRESS_SOCKET is loco address
         Assert.assertTrue("Child LOCO_ADDRESS_SOCKET supports analog male socket",
                 _base.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).isCompatible(analogExpressionMaleSocket));
+        
         // Socket LOCO_SPEED_SOCKET is loco speed
         Assert.assertTrue("Child LOCO_SPEED_SOCKET supports analog male socket",
                 _base.getChild(ActionThrottle.LOCO_SPEED_SOCKET).isCompatible(analogExpressionMaleSocket));
+        
         // Socket LOCO_DIRECTION_SOCKET is loco direction
-        Assert.assertTrue("Child LOCO_DIRECTION_SOCKET supports analog male socket",
+        Assert.assertTrue("Child LOCO_DIRECTION_SOCKET supports digital male socket",
                 _base.getChild(ActionThrottle.LOCO_DIRECTION_SOCKET).isCompatible(digitalExpressionMaleSocket));
         
         boolean hasThrown = false;
