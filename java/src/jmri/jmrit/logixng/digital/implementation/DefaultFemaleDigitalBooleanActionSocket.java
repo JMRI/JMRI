@@ -5,17 +5,11 @@ import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
-import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
-import jmri.jmrit.logixng.MaleDigitalBooleanAction;
 
 /**
- *
+ * Default implementation of the Female Digital Boolean Action socket
  */
 public final class DefaultFemaleDigitalBooleanActionSocket
         extends AbstractFemaleSocket

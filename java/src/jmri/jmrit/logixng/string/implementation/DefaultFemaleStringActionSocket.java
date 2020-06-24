@@ -16,7 +16,7 @@ import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 
 /**
- *
+ * Default implementation of the Female String Action socket
  */
 public final class DefaultFemaleStringActionSocket
         extends AbstractFemaleSocket

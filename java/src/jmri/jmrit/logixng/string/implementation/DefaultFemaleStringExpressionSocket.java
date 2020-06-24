@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 
 /**
- *
+ * Default implementation of the Female String Expression socket
  */
 public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
         implements FemaleStringExpressionSocket {

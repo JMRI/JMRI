@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 
 /**
- *
+ * Default implementation of the Female Analog Action socket
  */
 public final class DefaultFemaleAnalogActionSocket
         extends AbstractFemaleSocket

@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 
 /**
- *
+ * Default implementation of the Female Digital Expression socket
  */
 public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
         implements FemaleDigitalExpressionSocket {
