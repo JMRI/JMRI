@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
-import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;

@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.boolean_actions;
 
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -17,19 +18,21 @@ import jmri.jmrit.logixng.digital.actions.Logix;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
-import jmri.jmrit.logixng.digital.actions.Many;
+import jmri.jmrit.logixng.digital.actions.*;
+import jmri.jmrit.logixng.digital.boolean_actions.OnChange.ChangeType;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test IfThenElse
+ * Test OnChange
  * 
  * @author Daniel Bergqvist 2018
  */
-public class OnChangeTest extends AbstractBaseTestBase {
+public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;
@@ -50,6 +53,11 @@ public class OnChangeTest extends AbstractBaseTestBase {
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(childAction);
         return maleSocketChild;
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new OnChange(systemName, null, ChangeType.CHANGE);
     }
     
     @Override

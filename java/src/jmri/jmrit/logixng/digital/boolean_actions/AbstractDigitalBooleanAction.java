@@ -11,7 +11,7 @@ import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
 
 /**
- * The base class for LogixNG Actions
+ * The base class for LogixNG Boolean Actions
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
@@ -30,7 +30,7 @@ public abstract class AbstractDigitalBooleanAction extends AbstractBase
         // Do this test here to ensure all the tests are using correct system names
         Manager.NameValidity isNameValid = InstanceManager.getDefault(DigitalBooleanActionManager.class).validSystemNameFormat(mSystemName);
         if (isNameValid != Manager.NameValidity.VALID) {
-            throw new IllegalArgumentException("system name is not valid");
+            throw new IllegalArgumentException("system name is not valid: "+mSystemName);
         }
     }
     
@@ -79,7 +79,7 @@ public abstract class AbstractDigitalBooleanAction extends AbstractBase
 
     @Override
     public String getBeanType() {
-        return Bundle.getMessage("BeanNameDigitalActionWithChange");
+        return Bundle.getMessage("BeanNameDigitalBooleanAction");
     }
 
     @Override
