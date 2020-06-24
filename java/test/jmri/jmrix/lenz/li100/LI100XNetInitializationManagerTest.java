@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender
  */
+@SuppressWarnings("deprecation")
 public class LI100XNetInitializationManagerTest {
 
     private XNetTrafficController tc;

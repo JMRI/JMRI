@@ -15,7 +15,7 @@ public class XpaComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         this.memo = memo;
     }
 
-    XpaSystemConnectionMemo memo;
+    final XpaSystemConnectionMemo memo;
 
     /**
      * Provide a menu with all items attached to this system connection

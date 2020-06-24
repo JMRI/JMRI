@@ -13,7 +13,7 @@ import jmri.managers.AbstractPowerManager;
  */
 public class XpaPowerManager extends AbstractPowerManager<XpaSystemConnectionMemo> implements XpaListener {
 
-    XpaTrafficController tc = null;
+    XpaTrafficController tc;
     boolean waiting = false;
     int onReply = UNKNOWN;
 
@@ -46,7 +46,7 @@ public class XpaPowerManager extends AbstractPowerManager<XpaSystemConnectionMem
 
     // to free resources when no longer used
     @Override
-    public void dispose() throws JmriException {
+    public void dispose() {
         tc.removeXpaListener(this);
         tc = null;
     }

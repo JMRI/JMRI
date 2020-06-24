@@ -178,7 +178,7 @@ public class TrainBuilder extends TrainCommon {
         checkStuckCarsInStaging(); // determine if cars are stuck in staging, throws BuildFailedException       
         showTrainBuildStatus(); // show how well the build went with regards to cars requested and actual
         checkEngineHP(); // check that engine assigned to the train has the appropriate HP
-        checkNumnberOfEnginesNeeded(); // check to see if additional engines are needed for this train
+        checkNumnberOfEnginesNeededHPT(); // check to see if additional engines are needed for this train
         showCarsNotRoutable(); // list cars that couldn't be routed
 
         //done building
@@ -1144,13 +1144,6 @@ public class TrainBuilder extends TrainCommon {
             }
             // is this engine part of a consist?
             if (engine.getConsist() == null) {
-                // TODO Would be nice if blocking order was only set once for B unit engines.
-                // today a B unit is associated with a model
-                if (engine.isBunit()) {
-                    engine.setBlocking(Engine.B_UNIT_BLOCKING);
-                } else {
-                    engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
-                }
                 // single engine, but does the train require a consist?
                 if (numberOfEngines > 1) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineSingle"),
@@ -5156,7 +5149,7 @@ public class TrainBuilder extends TrainCommon {
      *
      * @throws BuildFailedException
      */
-    private void checkNumnberOfEnginesNeeded() throws BuildFailedException {
+    private void checkNumnberOfEnginesNeededHPT() throws BuildFailedException {
         if (_reqNumEngines == 0 || !_train.isBuildConsistEnabled() || Setup.getHorsePowerPerTon() == 0) {
             return;
         }
