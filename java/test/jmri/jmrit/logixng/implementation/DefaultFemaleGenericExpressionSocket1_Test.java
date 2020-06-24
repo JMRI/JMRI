@@ -22,7 +22,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBase {
+public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTestBase {
 
     private MyExpressionTurnout _expression;
     private FemaleGenericExpressionSocket femaleGenericSocket;

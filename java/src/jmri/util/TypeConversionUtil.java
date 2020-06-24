@@ -163,6 +163,7 @@ public final class TypeConversionUtil {
         } else if (value instanceof Boolean) {
             return (Boolean)value;
         } else {
+            if (value == null) return false;
             return convertStringToBoolean(value.toString(), do_i18n);
         }
     }
@@ -217,6 +218,7 @@ public final class TypeConversionUtil {
         } else if (value instanceof Boolean) {
             return ((Boolean)value) ? 1 : 0;
         } else {
+            if (value == null) return 0;
             return convertStringToLong(value.toString());
         }
     }
@@ -273,6 +275,8 @@ public final class TypeConversionUtil {
         } else if (value instanceof Boolean) {
             return ((Boolean)value) ? 1 : 0;
         } else {
+            if (value == null) return 0.0;
+            
             if (do_i18n) {
                 // try to parse the string as a number
                 try {

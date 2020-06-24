@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Locale;
+
 import javax.annotation.CheckForNull;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.AnalogExpressionManager;
@@ -195,10 +197,22 @@ public class DefaultFemaleGenericExpressionSocket
     @Override
     public boolean evaluateBoolean() throws JmriException {
         if (isConnected()) {
-            if (_currentSocketType == SocketType.DIGITAL) {
-                return ((MaleDigitalExpressionSocket)getConnectedSocket()).evaluate();
-            } else {
-                return TypeConversionUtil.convertToBoolean(evaluateBoolean(), _do_i18n);
+            switch (_currentSocketType) {
+                case DIGITAL:
+                    return ((MaleDigitalExpressionSocket)getConnectedSocket()).evaluate();
+
+                case ANALOG:
+                    return TypeConversionUtil.convertToBoolean(
+                            ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate(),
+                            _do_i18n);
+
+                case STRING:
+                    return TypeConversionUtil.convertToBoolean(
+                            ((MaleStringExpressionSocket)getConnectedSocket()).evaluate(),
+                            _do_i18n);
+
+                default:
+                    throw new RuntimeException("socketType has invalid value: "+_currentSocketType.name());
             }
         } else {
             return false;
@@ -208,10 +222,22 @@ public class DefaultFemaleGenericExpressionSocket
     @Override
     public double evaluateDouble() throws JmriException {
         if (isConnected()) {
-            if (_currentSocketType == SocketType.ANALOG) {
-                return ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate();
-            } else {
-                return TypeConversionUtil.convertToDouble(evaluateDouble(), _do_i18n);
+            switch (_currentSocketType) {
+                case DIGITAL:
+                    return TypeConversionUtil.convertToDouble(
+                            ((MaleDigitalExpressionSocket)getConnectedSocket()).evaluate(),
+                            _do_i18n);
+
+                case ANALOG:
+                    return ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate();
+
+                case STRING:
+                    return TypeConversionUtil.convertToDouble(
+                            ((MaleStringExpressionSocket)getConnectedSocket()).evaluate(),
+                            _do_i18n);
+
+                default:
+                    throw new RuntimeException("socketType has invalid value: "+_currentSocketType.name());
             }
         } else {
             return 0.0f;
@@ -221,10 +247,22 @@ public class DefaultFemaleGenericExpressionSocket
     @Override
     public String evaluateString() throws JmriException {
         if (isConnected()) {
-            if (_currentSocketType == SocketType.STRING) {
-                return ((MaleStringExpressionSocket)getConnectedSocket()).evaluate();
-            } else {
-                return TypeConversionUtil.convertToString(evaluateString(), _do_i18n);
+            switch (_currentSocketType) {
+                case DIGITAL:
+                    return TypeConversionUtil.convertToString(
+                            ((MaleDigitalExpressionSocket)getConnectedSocket()).evaluate(),
+                            _do_i18n);
+
+                case ANALOG:
+                    return TypeConversionUtil.convertToString(
+                            ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate(),
+                            _do_i18n);
+
+                case STRING:
+                    return ((MaleStringExpressionSocket)getConnectedSocket()).evaluate();
+
+                default:
+                    throw new RuntimeException("socketType has invalid value: "+_currentSocketType.name());
             }
         } else {
             return "";
@@ -958,4 +996,6 @@ public class DefaultFemaleGenericExpressionSocket
 
     }
     
+    private final static org.slf4j.Logger log =
+            org.slf4j.LoggerFactory.getLogger(DefaultFemaleGenericExpressionSocket.class);
 }
