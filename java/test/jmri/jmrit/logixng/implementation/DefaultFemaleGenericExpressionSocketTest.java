@@ -136,7 +136,7 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         
         exceptionThrown = false;
         try {
-            socket.getAnalogSocket();
+            socket.getDigitalSocket();
         } catch (RuntimeException e) {
             exceptionThrown = true;
             Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
@@ -145,7 +145,7 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         
         exceptionThrown = false;
         try {
-            socket.getAnalogSocket();
+            socket.getGenericSocket();
         } catch (RuntimeException e) {
             exceptionThrown = true;
             Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
@@ -154,7 +154,7 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         
         exceptionThrown = false;
         try {
-            socket.getAnalogSocket();
+            socket.getStringSocket();
         } catch (RuntimeException e) {
             exceptionThrown = true;
             Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
