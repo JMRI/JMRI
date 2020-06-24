@@ -34,6 +34,10 @@ public class AbstractDigitalBooleanActionTest {
             hasThrown = true;
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
+        
+        
+        OnChange action2 = new OnChange("IQDB1", null, OnChange.ChangeType.CHANGE);
+        Assert.assertEquals("New socket name is correct", "A1", action2.getNewSocketName());
     }
 
     // The minimal setup for log4J
