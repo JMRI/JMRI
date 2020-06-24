@@ -1,23 +1,9 @@
 package jmri.jmrit.logixng.digital.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -91,6 +77,29 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
             Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("is external", _base.isExternal());
+    }
+    
+    @Test
+    public void testShortDescription() {
+        Assert.assertEquals("String matches", "Listen on beans", _base.getShortDescription());
+    }
+    
+    @Test
+    public void testLongDescription() {
+        ActionListenOnBeans a1 = new ActionListenOnBeans("IQDA321", null);
+        Assert.assertEquals("strings are equal", "Listen on beans", a1.getShortDescription());
+        ActionListenOnBeans a2 = new ActionListenOnBeans("IQDA321", null);
+        Assert.assertEquals("strings are equal", "Listen on beans", a2.getLongDescription());
     }
     
     // The minimal setup for log4J

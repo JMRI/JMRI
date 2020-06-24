@@ -1,24 +1,11 @@
 package jmri.jmrit.logixng.digital.boolean_actions;
 
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.jmrit.logixng.AbstractBaseTestBase;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
-import jmri.jmrit.logixng.digital.actions.Logix;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
-import jmri.jmrit.logixng.DigitalBooleanActionBean;
 import jmri.jmrit.logixng.digital.actions.*;
+import jmri.jmrit.logixng.digital.actions.Logix;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange.ChangeType;
 import jmri.util.JUnitUtil;
 
@@ -92,6 +79,16 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     public void testCtor() {
         DigitalBooleanActionBean t = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
         Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertFalse("is external", _base.isExternal());
     }
     
     @Test
