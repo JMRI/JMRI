@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  */
 public class XpaThrottleManager extends AbstractThrottleManager {
 
-    private XpaTrafficController tc = null;
+    private final XpaTrafficController tc;
 
     /**
      * Create a throttle manager.

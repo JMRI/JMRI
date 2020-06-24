@@ -180,9 +180,9 @@ public class LI101Adapter extends XNetSerialPortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{Bundle.getMessage("LIBaud19200"), Bundle.getMessage("Baud38400"),
+    protected final String[] validSpeeds = new String[]{Bundle.getMessage("LIBaud19200"), Bundle.getMessage("Baud38400"),
             Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
-    protected int[] validSpeedValues = new int[]{19200, 38400, 57600, 115200};
+    protected final int[] validSpeedValues = new int[]{19200, 38400, 57600, 115200};
 
     @Override
     public int defaultBaudIndex() {
@@ -190,7 +190,7 @@ public class LI101Adapter extends XNetSerialPortController {
     }
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
+    protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
     private boolean opened = false;
     InputStream serialStream = null;

@@ -332,13 +332,13 @@
         <tr>
           <td>Linux</td>
 
-          <td>(depends, but<br>generally current)</td>
+          <td>(depends, but<br>generally 11+)</td>
         </tr>
 
         <tr>
-          <td>Win 10 (64-bit)</td>
+          <td>Win 1!+ (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
@@ -380,25 +380,25 @@
         <tr>
           <td>Win 8 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 R2 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
           <td>Win 7 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
@@ -422,7 +422,7 @@
         <tr>
           <td>Win Vista (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
@@ -470,11 +470,11 @@
         <tr>
           <td>Mac OS X 10.10 and later</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
-          <td>Mac OS X 10.8.3</td>
+          <td>Mac OS X 10.8.3 Mountain Lion</td>
 
           <td>8</td>
         </tr>

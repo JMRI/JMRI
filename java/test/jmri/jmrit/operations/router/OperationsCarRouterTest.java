@@ -3696,7 +3696,6 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Track danversSpur1 = danvers.getTrackByName("Danvers Spur 1", Track.SPUR);
         Track danversSpur2 = danvers.getTrackByName("Danvers Spur 2", Track.SPUR);
         Track essexSpur1 = essex.getTrackByName("Essex Spur 1", Track.SPUR);
-        //Track essexSpur2 = essex.getTrackByName("Essex Spur 2", Track.SIDING);
         Track foxboroSpur1 = Foxboro.getTrackByName("Foxboro Spur 1", Track.SPUR);
 
         // set the depart track Acton to service by local train only
