@@ -16,6 +16,8 @@ import org.junit.Test;
 
 /**
  * Test AbstractDigitalBooleanAction
+ * 
+ * @author Daniel Bergqvist 2020
  */
 public class AbstractDigitalBooleanActionTest {
 
