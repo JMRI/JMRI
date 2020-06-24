@@ -16,7 +16,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  */
 public abstract class AbstractXPressNetAction extends AbstractAction implements jmri.jmrix.swing.SystemConnectionAction {
 
-    protected XNetSystemConnectionMemo _memo = null;
+    protected XNetSystemConnectionMemo _memo;
 
     public AbstractXPressNetAction(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super(s);

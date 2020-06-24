@@ -160,7 +160,6 @@
         <h4>BLI</h4>
             <ul>
                 <li>
-                    Marc Fourier updated a "Service Mode PWM Duty" slider
                 </li>
             </ul>
 
@@ -271,10 +270,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>Marc Fournier added 
-                    the Alco PA-PB and F7A-B to the
-                    SoundTraxx SndVal Diesel Walthers Mainline
-                    decoder definition.
+                <li>
                 </li>
             </ul>
 
@@ -445,8 +441,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Greg McCartney provided a 
-                    <a href="https:/jmri.org/xml/signals/C&O-1980/index.shtml">C&O 1980 signal system</a>.
+                <li>
                 </li>
             </ul>
 

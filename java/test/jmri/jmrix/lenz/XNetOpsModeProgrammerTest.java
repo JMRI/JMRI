@@ -153,12 +153,9 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
 
         op = new XNetOpsModeProgrammer(5, tc);
 
-        pl = new jmri.ProgListener(){
-           @Override
-           public void programmingOpReply(int value, int status){
-                 lastValue = value;
-                 lastStatus = status;
-           }
+        pl = (value, status) -> {
+              lastValue = value;
+              lastStatus = status;
         };
 
         lastValue = -1;

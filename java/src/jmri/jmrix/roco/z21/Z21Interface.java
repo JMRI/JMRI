@@ -7,9 +7,9 @@ package jmri.jmrix.roco.z21;
  */
 public interface Z21Interface {
 
-    public void addz21Listener(Z21Listener l);
+    void addz21Listener(Z21Listener l);
 
-    public void removez21Listener(Z21Listener l);
+    void removez21Listener(Z21Listener l);
 
     //boolean status();   // true if the implementation is operational
     void sendz21Message(Z21Message m, Z21Listener l);  // 2nd arg gets the reply
