@@ -291,13 +291,6 @@ public class DefaultFemaleGenericExpressionSocket
         return Bundle.getMessage(locale, "DefaultFemaleGenericExpressionSocket_Long", getName());
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public String getNewSystemName() {
-        return InstanceManager.getDefault(DigitalExpressionManager.class)
-                .getAutoSystemName();
-    }
-
     private void addClassesToMap(
             Map<Category, List<Class<? extends Base>>> destinationClasses,
             Map<Category, List<Class<? extends Base>>> sourceClasses) {
@@ -961,13 +954,6 @@ public class DefaultFemaleGenericExpressionSocket
         @Override
         public String getLongDescription(Locale locale) {
             return DefaultFemaleGenericExpressionSocket.this.getLongDescription(locale);
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public String getNewSystemName() {
-            return InstanceManager.getDefault(DigitalExpressionManager.class)
-                    .getAutoSystemName();
         }
 
     }

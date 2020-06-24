@@ -43,13 +43,6 @@ public final class DefaultFemaleDigitalBooleanActionSocket
         return Bundle.getMessage(locale, "DefaultFemaleDigitalActionWithChangeSocket_Long", getName());
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public String getNewSystemName() {
-        return InstanceManager.getDefault(DigitalBooleanActionManager.class)
-                .getAutoSystemName();
-    }
-
     @Override
     public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
         return InstanceManager.getDefault(DigitalBooleanActionManager.class).getActionClasses();

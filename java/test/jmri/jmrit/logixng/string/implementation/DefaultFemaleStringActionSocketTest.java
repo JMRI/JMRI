@@ -75,11 +75,6 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     }
     
     @Test
-    public void testSystemName() {
-        Assert.assertEquals("String matches", "IQSA:AUTO:0001", femaleSocket.getNewSystemName());
-    }
-    
-    @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
         Assert.assertNotNull("femaleSocket is not null", femaleSocket);

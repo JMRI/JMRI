@@ -48,12 +48,6 @@ public final class DefaultFemaleStringActionSocket
         return Bundle.getMessage(locale, "DefaultFemaleStringActionSocket_Long", getName());
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public String getNewSystemName() {
-        return InstanceManager.getDefault(StringActionManager.class).getAutoSystemName();
-    }
-
     @Override
     public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
         return InstanceManager.getDefault(StringActionManager.class).getActionClasses();

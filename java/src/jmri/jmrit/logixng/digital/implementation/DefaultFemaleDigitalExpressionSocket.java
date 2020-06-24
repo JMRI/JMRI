@@ -61,13 +61,6 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
         return Bundle.getMessage(locale, "DefaultFemaleDigitalExpressionSocket_Long", getName());
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public String getNewSystemName() {
-        return InstanceManager.getDefault(DigitalExpressionManager.class)
-                .getAutoSystemName();
-    }
-
     @Override
     public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
         return InstanceManager.getDefault(DigitalExpressionManager.class).getExpressionClasses();

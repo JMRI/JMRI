@@ -59,13 +59,6 @@ public final class DefaultFemaleAnalogActionSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getNewSystemName() {
-        return InstanceManager.getDefault(AnalogActionManager.class)
-                .getAutoSystemName();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
         // Do nothing
     }

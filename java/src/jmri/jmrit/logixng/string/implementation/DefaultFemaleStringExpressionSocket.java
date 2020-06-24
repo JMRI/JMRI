@@ -62,13 +62,6 @@ public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getNewSystemName() {
-        return InstanceManager.getDefault(StringExpressionManager.class)
-                .getAutoSystemName();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
         return InstanceManager.getDefault(StringExpressionManager.class).getExpressionClasses();
     }

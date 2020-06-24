@@ -73,14 +73,6 @@ public interface FemaleSocket extends Base {
     public String getName();
     
     /**
-     * Create a new system name for a new object that can be connected to this
-     * socket.
-     *
-     * @return a new system name
-     */
-    public String getNewSystemName();
-    
-    /**
      * Get a set of classes that are compatible with this female socket.
      * 
      * @return a set of entries with category and class

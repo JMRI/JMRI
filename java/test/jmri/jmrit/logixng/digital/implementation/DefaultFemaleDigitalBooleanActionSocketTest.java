@@ -74,11 +74,6 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
     }
     
     @Test
-    public void testSystemName() {
-        Assert.assertEquals("String matches", "IQDB:AUTO:0001", femaleSocket.getNewSystemName());
-    }
-    
-    @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
         Assert.assertNotNull("femaleSocket is not null", femaleSocket);

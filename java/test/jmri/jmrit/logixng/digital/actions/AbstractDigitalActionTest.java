@@ -150,11 +150,6 @@ public class AbstractDigitalActionTest {
         }
 
         @Override
-        public String getNewSystemName() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
         public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
             throw new UnsupportedOperationException("Not supported.");
         }
