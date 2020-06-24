@@ -105,6 +105,84 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         // Do nothing
     }
     
+    @Test
+    public void testGetAndSetSocketType() throws SocketAlreadyConnectedException {
+        femaleGenericSocket.setSocketType(SocketType.ANALOG);
+        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket", femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
+        
+        femaleGenericSocket.setSocketType(SocketType.DIGITAL);
+        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket", femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
+        
+        femaleGenericSocket.setSocketType(SocketType.GENERIC);
+        Assert.assertNull("Active socket is null", femaleGenericSocket.getCurrentActiveSocket());
+        
+        femaleGenericSocket.setSocketType(SocketType.STRING);
+        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringExpressionSocket", femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
+    }
+    
+    private void testGetSocketException(
+            DefaultFemaleGenericExpressionSocket socket) {
+        
+        boolean exceptionThrown;
+        
+        exceptionThrown = false;
+        try {
+            socket.getAnalogSocket();
+        } catch (RuntimeException e) {
+            exceptionThrown = true;
+            Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", exceptionThrown);
+        
+        exceptionThrown = false;
+        try {
+            socket.getAnalogSocket();
+        } catch (RuntimeException e) {
+            exceptionThrown = true;
+            Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", exceptionThrown);
+        
+        exceptionThrown = false;
+        try {
+            socket.getAnalogSocket();
+        } catch (RuntimeException e) {
+            exceptionThrown = true;
+            Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", exceptionThrown);
+        
+        exceptionThrown = false;
+        try {
+            socket.getAnalogSocket();
+        } catch (RuntimeException e) {
+            exceptionThrown = true;
+            Assert.assertEquals("Error message is correct", "internal socket cannot be set more than once", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", exceptionThrown);
+    }
+    
+    @Test
+    public void testGetSocket() {
+        DefaultFemaleGenericExpressionSocket socket;
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.ANALOG, null, null, "E");
+        socket.getAnalogSocket();
+        testGetSocketException(socket);
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        socket.getDigitalSocket();
+        testGetSocketException(socket);
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket.getGenericSocket();
+        testGetSocketException(socket);
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.STRING, null, null, "E");
+        socket.getStringSocket();
+        testGetSocketException(socket);
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {

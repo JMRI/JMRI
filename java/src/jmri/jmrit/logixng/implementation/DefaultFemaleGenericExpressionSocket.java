@@ -38,7 +38,7 @@ public class DefaultFemaleGenericExpressionSocket
 
     private SocketType _socketType;             // The type of the socket the user has selected
     private SocketType _currentSocketType;      // The current type of the socket.
-    private FemaleSocket _internalSocket;       //
+    private FemaleSocket _internalSocket;       // The socket that the owner of this female socket uses.
     private FemaleSocket _currentActiveSocket;  // The socket that is currently in use, if any. Null otherwise.
     private final FemaleSocketListener _socketListener;
     private final FemaleAnalogExpressionSocket _analogSocket = new DefaultFemaleAnalogExpressionSocket(this, this, "A");
@@ -143,52 +143,33 @@ public class DefaultFemaleGenericExpressionSocket
             return;
         }
         
+        if ((_currentActiveSocket != null) && (_currentActiveSocket.isConnected())) {
+            throw new SocketAlreadyConnectedException("Socket is already connected");
+        }
+        
         switch (socketType) {
             case DIGITAL:
-                if ((_currentActiveSocket == null)
-                        || (_currentActiveSocket == _digitalSocket)) {
-                    
-                    _socketType = SocketType.DIGITAL;
-                    _currentSocketType = SocketType.DIGITAL;
-                    _currentActiveSocket = _digitalSocket;
-                } else {
-                    throw new SocketAlreadyConnectedException("Socket is already connected");
-                }
+                _socketType = SocketType.DIGITAL;
+                _currentSocketType = SocketType.DIGITAL;
+                _currentActiveSocket = _digitalSocket;
                 break;
                 
             case ANALOG:
-                if ((_currentActiveSocket == null)
-                        || (_currentActiveSocket == _analogSocket)) {
-                    
-                    _socketType = SocketType.ANALOG;
-                    _currentSocketType = SocketType.ANALOG;
-                    _currentActiveSocket = _analogSocket;
-                } else {
-                    throw new SocketAlreadyConnectedException("Socket is already connected");
-                }
+                _socketType = SocketType.ANALOG;
+                _currentSocketType = SocketType.ANALOG;
+                _currentActiveSocket = _analogSocket;
                 break;
                 
             case STRING:
-                if ((_currentActiveSocket == null)
-                        || (_currentActiveSocket == _stringSocket)) {
-                    
-                    _socketType = SocketType.STRING;
-                    _currentSocketType = SocketType.STRING;
-                    _currentActiveSocket = _stringSocket;
-                } else {
-                    throw new SocketAlreadyConnectedException("Socket is already connected");
-                }
+                _socketType = SocketType.STRING;
+                _currentSocketType = SocketType.STRING;
+                _currentActiveSocket = _stringSocket;
                 break;
                 
             case GENERIC:
                 _socketType = SocketType.GENERIC;
                 _currentSocketType = SocketType.GENERIC;
-                
-                if ((_currentActiveSocket != null)
-                        && !_currentActiveSocket.isConnected()) {
-                    
-                    _currentActiveSocket = null;
-                }
+                _currentActiveSocket = null;
                 break;
                 
             default:
