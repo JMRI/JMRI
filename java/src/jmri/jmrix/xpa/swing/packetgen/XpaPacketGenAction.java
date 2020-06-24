@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XpaPacketGenAction extends AbstractAction {
 
-    XpaSystemConnectionMemo memo = null;
+    final XpaSystemConnectionMemo memo;
 
     public XpaPacketGenAction(String s,XpaSystemConnectionMemo m) {
         super(s);
