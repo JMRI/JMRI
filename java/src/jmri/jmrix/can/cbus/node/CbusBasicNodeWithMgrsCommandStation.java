@@ -95,10 +95,8 @@ public class CbusBasicNodeWithMgrsCommandStation extends CbusBasicNodeWithManage
     }
 
     private void setTrackPower(boolean powerOn) {
-        // TODO: Must use the PowerManager returned by _memo.get(), since it is
-        // not valid to assume the default power manager is a CbusPowerManager
-        ((CbusPowerManager) InstanceManager.getDefault(PowerManager.class))
-                .updatePower(powerOn ? PowerManager.ON : PowerManager.OFF);
+        CbusPowerManager pm = (CbusPowerManager) _memo.get(PowerManager.class);
+        pm.updatePower(powerOn ? PowerManager.ON : PowerManager.OFF);
     }
 
     private void checkSingleFlag(int flagNum, String errorText) {

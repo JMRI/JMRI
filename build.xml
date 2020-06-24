@@ -1960,16 +1960,25 @@
         
         </javadoc>
         
-<!-- 
-        <apply executable="dot" dest="${doctarget}" parallel="false">
-            <arg value="-Tpng"/>
-            <arg value="-o"/>
-            <targetfile/>
-            <srcfile/>
-            <fileset dir="${doctarget}" includes="*.dot"/>
-            <mapper type="glob" from="*.dot" to="*.png"/>
-        </apply>
- -->
+        <!-- sparsify and reprocess some too-busy diagrams -->
+        <exec executable="./scripts/tighten-puml"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="${doctarget}/package-dependencies.puml"/>
+        </exec>
+        <exec executable="./scripts/tighten-puml"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="${doctarget}/jmri/package-dependencies.puml"/>
+        </exec>
+        
+        <plantuml output="${doctarget}" >
+        <fileset dir="${source}">
+                <include name="${doctarget}/package-dependencies.puml"/>
+                <include name="${doctarget}/jmri/package-dependencies.puml"/>
+        </fileset>
+        </plantuml>
+        
     </target>
 
     <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />

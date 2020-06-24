@@ -1,13 +1,15 @@
 package jmri.jmrit.operations.locations;
 
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OpsPropertyChangeListener;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Pool class Last manually cross-checked on ?????
@@ -254,8 +256,8 @@ public class OperationsPoolTest extends OperationsTestCase {
         Location l = locMan.newLocation("TestTrackPoolsLocation");
         Track t1 = l.addTrack("Yard 1", Track.YARD);
         Track t2 = l.addTrack("Yard 2", Track.YARD);
-        Track t3 = l.addTrack("Siding 1", Track.SPUR);
-        Track t4 = l.addTrack("Siding 2", Track.SPUR);
+        Track t3 = l.addTrack("Spur 1", Track.SPUR);
+        Track t4 = l.addTrack("Spur 2", Track.SPUR);
         Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
         Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
         Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);

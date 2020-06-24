@@ -15,7 +15,7 @@ public class PacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
     public void testPacketNull() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XNetMessage m = ((PacketGenFrame)frame).createPacket("");
-        Assert.assertEquals("null pointer", null, m);
+        Assert.assertNull("null pointer", m);
     }
 
     @Test

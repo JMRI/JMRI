@@ -106,7 +106,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         javax.swing.SwingUtilities.invokeLater(r);
 
         // stream to port in single write, as that's needed by serial
-        byte msg[] = new byte[lengthOfByteStream(m)];
+        byte[] msg = new byte[lengthOfByteStream(m)];
         // add header
         int offset = addHeaderToOutput(msg, m);
 
@@ -121,8 +121,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         try {
             if (log.isDebugEnabled()) {
                 StringBuilder f = new StringBuilder("formatted message: ");
-                for (int i = 0; i < msg.length; i++) {
-                    f.append(Integer.toHexString(0xFF & msg[i]));
+                for (byte b : msg) {
+                    f.append(Integer.toHexString(0xFF & b));
                     f.append(" ");
                 }
                 log.debug(new String(f));
@@ -131,7 +131,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 if (portReadyToSend(controller)) {
                     // create a datagram with the data from the
                     // message.
-                    byte data[] = ((Z21Message) m).getBuffer();
+                    byte[] data = ((Z21Message) m).getBuffer();
                     DatagramPacket sendPacket
                             = new DatagramPacket(data, ((Z21Message) m).getLength(), host, port);
                     // and send it.
@@ -215,29 +215,21 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             }
         }
         // and start threads
-        xmtThread = new Thread(xmtRunnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    transmitLoop();
-                } catch (Throwable e) {
-                    if(!threadStopRequest)
-                        log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
-                    // ThreadDeath must be thrown per Java API JavaDocs
-                    if (e instanceof ThreadDeath) {
-                        throw e;
-                    }
+        xmtThread = new Thread(xmtRunnable = () -> {
+            try {
+                transmitLoop();
+            } catch (Throwable e) {
+                if(!threadStopRequest)
+                    log.error("Transmit thread terminated prematurely by: {}", e.toString(), e);
+                // ThreadDeath must be thrown per Java API JavaDocs
+                if (e instanceof ThreadDeath) {
+                    throw e;
                 }
             }
         });
         xmtThread.setName("z21.Z21TrafficController Transmit thread");
         xmtThread.start();
-        rcvThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                receiveLoop();
-            }
-        });
+        rcvThread = new Thread(this::receiveLoop);
         rcvThread.setName("z21.Z21TrafficController Receive thread");
         int xr = rcvThread.getPriority();
         xr++;
@@ -282,7 +274,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         // threading to let other stuff happen
 
         // create a buffer to hold the incoming data.
-        byte buffer[] = new byte[100];  // the size here just needs to be longer
+        byte[] buffer = new byte[100];  // the size here just needs to be longer
         // than the longest protocol message.  
         // Otherwise, the receive will truncate.
 
@@ -390,7 +382,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                 }
                 default: {
                     replyInDispatch = false;
-                    if (allowUnexpectedReply == true) {
+                    if (allowUnexpectedReply) {
                         if (log.isDebugEnabled()) {
                             log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
                         }
