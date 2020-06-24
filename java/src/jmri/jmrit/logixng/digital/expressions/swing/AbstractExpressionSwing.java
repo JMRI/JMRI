@@ -33,6 +33,12 @@ public abstract class AbstractExpressionSwing implements SwingConfiguratorInterf
     
     /** {@inheritDoc} */
     @Override
+    public String getExampleSystemName() {
+        return InstanceManager.getDefault(DigitalExpressionManager.class).getSystemNamePrefix() + "DE10";
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public String getAutoSystemName() {
         return InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName();
     }

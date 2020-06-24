@@ -293,13 +293,6 @@ public class DefaultFemaleGenericExpressionSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getExampleSystemName() {
-        throw new RuntimeException("This method must be moved to the configuration of new expression");
-//        return getConditionalNG().getSystemName() + ":DE10";
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getNewSystemName() {
         return InstanceManager.getDefault(DigitalExpressionManager.class)
                 .getAutoSystemName();
@@ -968,12 +961,6 @@ public class DefaultFemaleGenericExpressionSocket
         @Override
         public String getLongDescription(Locale locale) {
             return DefaultFemaleGenericExpressionSocket.this.getLongDescription(locale);
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public String getExampleSystemName() {
-            return InstanceManager.getDefault(DigitalExpressionManager.class).getSystemNamePrefix() + "DE10";
         }
 
         /** {@inheritDoc} */

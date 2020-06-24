@@ -50,12 +50,6 @@ public final class DefaultFemaleDigitalActionSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getExampleSystemName() {
-        return InstanceManager.getDefault(DigitalActionManager.class).getSystemNamePrefix() + "DA10";
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getNewSystemName() {
         return InstanceManager.getDefault(DigitalActionManager.class)
                 .getAutoSystemName();

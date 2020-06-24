@@ -5,24 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
+
+import jmri.*;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.FemaleSocketTestBase;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrit.logixng.AnalogExpressionBean;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.swing.SwingTools;
+
+import jmri.jmrit.logixng.*;
+
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -40,6 +37,11 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
+    @Override
+    protected Manager<? extends NamedBean> getManager() {
+        return InstanceManager.getDefault(AnalogExpressionManager.class);
+    }
+    
     @Test
     public void testGetName() {
         Assert.assertTrue("String matches", "E1".equals(femaleSocket.getName()));
@@ -71,7 +73,6 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     
     @Test
     public void testSystemName() {
-        Assert.assertEquals("String matches", "IQAE10", femaleSocket.getExampleSystemName());
         Assert.assertEquals("String matches", "IQAE:AUTO:0001", femaleSocket.getNewSystemName());
     }
     

@@ -51,12 +51,6 @@ public final class DefaultFemaleDigitalBooleanActionSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getExampleSystemName() {
-        return InstanceManager.getDefault(DigitalBooleanActionManager.class).getSystemNamePrefix() + "DB10";
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getNewSystemName() {
         return InstanceManager.getDefault(DigitalBooleanActionManager.class)
                 .getAutoSystemName();

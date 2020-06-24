@@ -59,12 +59,6 @@ public final class DefaultFemaleAnalogActionSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getExampleSystemName() {
-        return InstanceManager.getDefault(AnalogActionManager.class).getSystemNamePrefix() + "AA10";
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getNewSystemName() {
         return InstanceManager.getDefault(AnalogActionManager.class)
                 .getAutoSystemName();

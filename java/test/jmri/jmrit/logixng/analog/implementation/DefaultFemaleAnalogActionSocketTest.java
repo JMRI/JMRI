@@ -6,23 +6,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.FemaleSocketTestBase;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrit.logixng.AnalogActionBean;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.swing.SwingTools;
+
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -40,6 +34,11 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
+    @Override
+    protected Manager<? extends NamedBean> getManager() {
+        return InstanceManager.getDefault(AnalogActionManager.class);
+    }
+    
     @Test
     public void testBundleClass() {
         Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage("TestBundle", "aa", "bb", "cc"));
@@ -78,7 +77,6 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
     
     @Test
     public void testSystemName() {
-        Assert.assertEquals("String matches", "IQAA10", femaleSocket.getExampleSystemName());
         Assert.assertEquals("String matches", "IQAA:AUTO:0001", femaleSocket.getNewSystemName());
     }
     

@@ -33,6 +33,12 @@ public abstract class AbstractBooleanActionSwing implements SwingConfiguratorInt
     
     /** {@inheritDoc} */
     @Override
+    public String getExampleSystemName() {
+        return InstanceManager.getDefault(DigitalBooleanActionManager.class).getSystemNamePrefix() + "DB10";
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public String getAutoSystemName() {
         return InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName();
     }

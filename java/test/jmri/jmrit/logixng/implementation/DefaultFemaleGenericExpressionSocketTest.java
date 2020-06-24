@@ -2,7 +2,7 @@ package jmri.jmrit.logixng.implementation;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.FemaleGenericExpressionSocket.SocketType;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
@@ -26,6 +26,17 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
 
     private MyExpressionTurnout _expression;
     private FemaleGenericExpressionSocket femaleGenericSocket;
+    
+    @Override
+    protected Manager<? extends NamedBean> getManager() {
+        return null;
+    }
+    
+    @Ignore("Different types of beans may be able to connect to a generic socket, which makes this test difficult")
+    @Test
+    @Override
+    public void testSWISystemName() {
+    }
     
     @Test
     @Override

@@ -160,11 +160,6 @@ public class AbstractDigitalExpressionTest {
         }
 
         @Override
-        public String getExampleSystemName() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
         public String getNewSystemName() {
             throw new UnsupportedOperationException("Not supported.");
         }

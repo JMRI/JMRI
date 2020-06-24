@@ -33,6 +33,12 @@ public abstract class AbstractActionSwing implements SwingConfiguratorInterface 
     
     /** {@inheritDoc} */
     @Override
+    public String getExampleSystemName() {
+        return InstanceManager.getDefault(StringActionManager.class).getSystemNamePrefix() + "SA10";
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public String getAutoSystemName() {
         return InstanceManager.getDefault(StringActionManager.class).getAutoSystemName();
     }

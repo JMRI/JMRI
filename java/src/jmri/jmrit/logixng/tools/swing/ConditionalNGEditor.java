@@ -582,9 +582,10 @@ public final class ConditionalNGEditor extends JmriJFrame {
             _addUserName.setText("");
         }
         
-        _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));    // NOI18N
+        _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));
 //        _addUserName.setToolTipText("LogixNGUserNameHint");    // NOI18N
-        _systemName.setToolTipText(Bundle.getMessage("SystemNameHint", femaleSocket.getExampleSystemName()));   // NOI18N
+        _systemName.setToolTipText(Bundle.getMessage("SystemNameHint",
+                swingConfiguratorInterface.getExampleSystemName()));
 //        _systemName.setToolTipText("LogixNGSystemNameHint");   // NOI18N
         contentPanel.add(p);
         // set up message

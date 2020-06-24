@@ -6,15 +6,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.FemaleSocketTestBase;
-import jmri.jmrit.logixng.digital.actions.ActionListenOnBeans;
-import jmri.jmrit.logixng.digital.actions.ActionScript;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
+import jmri.jmrit.logixng.digital.implementation.Bundle;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,6 +32,11 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
+    @Override
+    protected Manager<? extends NamedBean> getManager() {
+        return InstanceManager.getDefault(DigitalActionManager.class);
+    }
+    
     @Test
     public void testBundleClass() {
         Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage("TestBundle", "aa", "bb", "cc"));
@@ -72,7 +75,6 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
     
     @Test
     public void testSystemName() {
-        Assert.assertEquals("String matches", "IQDA10", femaleSocket.getExampleSystemName());
         Assert.assertEquals("String matches", "IQDA:AUTO:0001", femaleSocket.getNewSystemName());
     }
     

@@ -50,6 +50,12 @@ public interface SwingConfiguratorInterface {
 //    public boolean validate(@Nonnull StringBuilder errorMessage);
     
     /**
+     * Get an example of a system name
+     * @return the system name
+     */
+    public String getExampleSystemName();
+    
+    /**
      * Create a new system name.
      * @return a new system name
      */

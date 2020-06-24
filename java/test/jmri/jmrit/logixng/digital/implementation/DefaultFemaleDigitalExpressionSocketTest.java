@@ -5,18 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Turnout;
-import jmri.TurnoutManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.FemaleSocketTestBase;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,6 +30,11 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
+    @Override
+    protected Manager<? extends NamedBean> getManager() {
+        return InstanceManager.getDefault(DigitalExpressionManager.class);
+    }
+    
     @Test
     public void testGetName() {
         Assert.assertTrue("String matches", "E1".equals(femaleSocket.getName()));
@@ -67,7 +66,6 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
     
     @Test
     public void testSystemName() {
-        Assert.assertEquals("String matches", "IQDE10", femaleSocket.getExampleSystemName());
         Assert.assertEquals("String matches", "IQDE:AUTO:0001", femaleSocket.getNewSystemName());
     }
     

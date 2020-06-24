@@ -11,6 +11,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
+import jmri.Manager;
+import jmri.Manager.NameValidity;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
@@ -30,6 +32,14 @@ public abstract class FemaleSocketTestBase {
     protected MaleSocket maleSocket;
     protected MaleSocket otherMaleSocket;
     protected FemaleSocket femaleSocket;
+    
+    
+    /**
+     * Get the manager that handles the type of beans that can connect to this
+     * female socket
+     * @return the manager
+     */
+    protected abstract Manager<? extends NamedBean> getManager();
     
     
     private SortedSet<String> getClassNames(List<Class<? extends Base>> classes) {
@@ -465,6 +475,25 @@ public abstract class FemaleSocketTestBase {
                 iface.getConfigPanel(new JPanel());
                 Base obj = iface.createNewObject(iface.getAutoSystemName(), null);
                 Assert.assertEquals("category is correct for "+obj.getShortDescription(), entry.getKey(), obj.getCategory());
+            }
+        }
+    }
+    
+    @Test
+    public void testSWISystemName() {   // SWI = SwingConfiguratorInterface
+        Map<Category, List<Class<? extends Base>>> map = femaleSocket.getConnectableClasses();
+        
+        for (Map.Entry<Category, List<Class<? extends Base>>> entry : map.entrySet()) {
+            
+            for (Class<? extends Base> clazz : entry.getValue()) {
+                // The class SwingToolsTest does not have a swing configurator
+                SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
+                Assert.assertEquals("example system name is correct for "+clazz,
+                        NameValidity.VALID,
+                        getManager().validSystemNameFormat(iface.getExampleSystemName()));
+                Assert.assertEquals("auto system name is correct for "+clazz,
+                        NameValidity.VALID,
+                        getManager().validSystemNameFormat(iface.getAutoSystemName()));
             }
         }
     }
