@@ -14,6 +14,8 @@ Distributed installers built from a released version will identify themselves wi
  
 Periodically, a release version is flagging as a default for new/novice users to install by default.  It will be referred to by year and month: YYYY-MM, i.e 2020-07. It's contents will be identical to an already-released version.  Distributed installers will identify themselves using first the date, then the underlying release, i.e. JMRI-2020-07-21.4.2+Rbab3d0f33
 
+__Question__: What version will these 'release' versions report themselves as? JMRI 2020-07-21.4.2? Or JMRI 21.4.2? Aside from the filename, are these otherwise _identical_ to the already-released version (i.e. identical SHA256)?
+
 _Before_ a release, the development installers will be named with the branch being built and the data-time of the build (see below for discussion of those), for example JMRI-dev-major+20200622T0419Z+Re0a5fed223
  
 ## Identifying Change Types
