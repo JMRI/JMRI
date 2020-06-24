@@ -121,8 +121,6 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
     public void testGetAndSetSocketType() throws SocketAlreadyConnectedException {
         boolean exceptionThrown;
         
-        
-        
         AnalogExpressionMemory analogExpression = new AnalogExpressionMemory("IQAE351", null);
         MaleSocket analogMaleSocket =
                 InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpression);
@@ -135,11 +133,10 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         MaleSocket stringMaleSocket =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
         
-        
-        
         // This should work
         femaleGenericSocket.setSocketType(SocketType.ANALOG);
         femaleGenericSocket.setSocketType(SocketType.ANALOG);   // Test calling setSocketType() twice
+        Assert.assertEquals("Socket type is correct", SocketType.ANALOG, femaleGenericSocket.getSocketType());
         Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket", femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
         
         // We can't change socket type if it's connected
@@ -158,6 +155,7 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         // This should work
         femaleGenericSocket.setSocketType(SocketType.DIGITAL);
         femaleGenericSocket.setSocketType(SocketType.DIGITAL);   // Test calling setSocketType() twice
+        Assert.assertEquals("Socket type is correct", SocketType.DIGITAL, femaleGenericSocket.getSocketType());
         Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket", femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
         
         // We can't change socket type if it's connected
@@ -176,6 +174,7 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         // This should work
         femaleGenericSocket.setSocketType(SocketType.GENERIC);
         femaleGenericSocket.setSocketType(SocketType.GENERIC);   // Test calling setSocketType() twice
+        Assert.assertEquals("Socket type is correct", SocketType.GENERIC, femaleGenericSocket.getSocketType());
         Assert.assertNull("Active socket is null", femaleGenericSocket.getCurrentActiveSocket());
         
         // We can't change socket type if it's connected
@@ -194,6 +193,7 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         // This should work
         femaleGenericSocket.setSocketType(SocketType.STRING);
         femaleGenericSocket.setSocketType(SocketType.STRING);   // Test calling setSocketType() twice
+        Assert.assertEquals("Socket type is correct", SocketType.STRING, femaleGenericSocket.getSocketType());
         Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringExpressionSocket", femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
         
         // We can't change socket type if it's connected
@@ -307,6 +307,17 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
         Assert.assertTrue("Analog male socket is compatible", socket.isCompatible(analogMaleSocket));
         Assert.assertTrue("Digital male socket is compatible", socket.isCompatible(digitalMaleSocket));
         Assert.assertTrue("String male socket is compatible", socket.isCompatible(stringMaleSocket));
+    }
+    
+    @Test
+    public void testDoI18N() {
+        DefaultFemaleGenericExpressionSocket socket =
+                new DefaultFemaleGenericExpressionSocket(SocketType.ANALOG, null, null, "E");
+        Assert.assertFalse("do_i18n is false", socket.getDoI18N());
+        socket.setDoI18N(true);
+        Assert.assertTrue("do_i18n is true", socket.getDoI18N());
+        socket.setDoI18N(false);
+        Assert.assertFalse("do_i18n is false", socket.getDoI18N());
     }
     
     // The minimal setup for log4J

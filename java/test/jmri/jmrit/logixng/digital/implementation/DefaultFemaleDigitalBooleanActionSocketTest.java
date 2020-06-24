@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
-import jmri.jmrit.logixng.digital.implementation.Bundle;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
