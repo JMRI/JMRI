@@ -108,17 +108,94 @@ public class DefaultFemaleGenericExpressionSocketTest extends FemaleSocketTestBa
     
     @Test
     public void testGetAndSetSocketType() throws SocketAlreadyConnectedException {
+        boolean exceptionThrown;
+        
+        
+        
+        AnalogExpressionMemory analogExpression = new AnalogExpressionMemory("IQAE351", null);
+        MaleSocket analogMaleSocket =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpression);
+        
+        ExpressionMemory digitalExpression = new ExpressionMemory("IQDE351", null);
+        MaleSocket digitalMaleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
+        
+        StringExpressionMemory stringExpression = new StringExpressionMemory("IQSE351", null);
+        MaleSocket stringMaleSocket =
+                InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
+        
+        
+        
+        // This should work
         femaleGenericSocket.setSocketType(SocketType.ANALOG);
+        femaleGenericSocket.setSocketType(SocketType.ANALOG);   // Test calling setSocketType() twice
         Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket", femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
         
+        // We can't change socket type if it's connected
+        femaleGenericSocket.connect(analogMaleSocket);
+        exceptionThrown = false;
+        try {
+            femaleGenericSocket.setSocketType(SocketType.DIGITAL);
+        } catch (SocketAlreadyConnectedException e) {
+            exceptionThrown = true;
+            Assert.assertEquals("Error message is correct", "Socket is already connected", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", exceptionThrown);
+        femaleGenericSocket.disconnect();
+        
+        
+        // This should work
         femaleGenericSocket.setSocketType(SocketType.DIGITAL);
+        femaleGenericSocket.setSocketType(SocketType.DIGITAL);   // Test calling setSocketType() twice
         Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket", femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
         
+        // We can't change socket type if it's connected
+        femaleGenericSocket.connect(digitalMaleSocket);
+        exceptionThrown = false;
+        try {
+            femaleGenericSocket.setSocketType(SocketType.GENERIC);
+        } catch (SocketAlreadyConnectedException e) {
+            exceptionThrown = true;
+            Assert.assertEquals("Error message is correct", "Socket is already connected", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", exceptionThrown);
+        femaleGenericSocket.disconnect();
+        
+        
+        // This should work
         femaleGenericSocket.setSocketType(SocketType.GENERIC);
+        femaleGenericSocket.setSocketType(SocketType.GENERIC);   // Test calling setSocketType() twice
         Assert.assertNull("Active socket is null", femaleGenericSocket.getCurrentActiveSocket());
         
+        // We can't change socket type if it's connected
+        femaleGenericSocket.connect(stringMaleSocket);
+        exceptionThrown = false;
+        try {
+            femaleGenericSocket.setSocketType(SocketType.STRING);
+        } catch (SocketAlreadyConnectedException e) {
+            exceptionThrown = true;
+            Assert.assertEquals("Error message is correct", "Socket is already connected", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", exceptionThrown);
+        femaleGenericSocket.disconnect();
+        
+        
+        // This should work
         femaleGenericSocket.setSocketType(SocketType.STRING);
+        femaleGenericSocket.setSocketType(SocketType.STRING);   // Test calling setSocketType() twice
         Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringExpressionSocket", femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
+        
+        // We can't change socket type if it's connected
+        femaleGenericSocket.connect(stringMaleSocket);
+        exceptionThrown = false;
+        try {
+            femaleGenericSocket.setSocketType(SocketType.DIGITAL);
+        } catch (SocketAlreadyConnectedException e) {
+            exceptionThrown = true;
+            Assert.assertEquals("Error message is correct", "Socket is already connected", e.getMessage());
+        }
+        Assert.assertTrue("Exception thrown", exceptionThrown);
+        femaleGenericSocket.disconnect();
     }
     
     private void testGetSocketException(
