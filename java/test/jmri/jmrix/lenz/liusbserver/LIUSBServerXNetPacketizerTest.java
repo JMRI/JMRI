@@ -26,7 +26,7 @@ public class LIUSBServerXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketize
         c.sendXNetMessage(m, null);
 
         p.flush();
-        jmri.util.JUnitUtil.waitFor(()->{return p.tostream.available()==13;},"total length 13");
+        jmri.util.JUnitUtil.waitFor(()-> p.tostream.available()==13,"total length 13");
 
         Assert.assertEquals("total length ", 13, p.tostream.available());
         Assert.assertEquals("Char 0", '5', p.tostream.readByte() & 0xff);

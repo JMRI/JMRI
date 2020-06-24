@@ -83,6 +83,20 @@ public abstract class AbstractSensorTestBase {
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }
+    
+    @Test
+    public void testRemoveListenerOnDispose() {
+        Assert.assertEquals("starts 0 listeners", 0, t.getNumPropertyChangeListeners());
+        t.addPropertyChangeListener(new Listen());
+        Assert.assertEquals("controller listener added", 1, t.getNumPropertyChangeListeners());
+        t.dispose();
+        try {
+            Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
+        }
+        catch ( RuntimeException e){
+            Assert.assertTrue("Either <1 listeners or exception expected", true);
+        }
+    }
 
     @Test
     public void testCommandInactive() throws JmriException {

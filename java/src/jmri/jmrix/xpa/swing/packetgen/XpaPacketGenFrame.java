@@ -1,22 +1,22 @@
-/**
- * Frame for user input of Xpa+Modem (dialing) messages.
- *
- * @author Paul Bender Copyright (C) 2004
- */
 package jmri.jmrix.xpa.swing.packetgen;
 
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.xpa.XpaMessage;
 
+/**
+ * Frame for user input of Xpa+Modem (dialing) messages.
+ *
+ * @author Paul Bender Copyright (C) 2004
+ */
 public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 
     // member declarations
-    javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-    javax.swing.JButton sendButton = new javax.swing.JButton();
-    javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
+    final javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+    final javax.swing.JButton sendButton = new javax.swing.JButton();
+    final javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    jmri.jmrix.xpa.XpaSystemConnectionMemo memo = null;
+    final jmri.jmrix.xpa.XpaSystemConnectionMemo memo;
 
     public XpaPacketGenFrame(jmri.jmrix.xpa.XpaSystemConnectionMemo m) {
         super();
@@ -52,12 +52,7 @@ public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         getContentPane().add(packetTextField);
         getContentPane().add(sendButton);
 
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendButtonActionPerformed(e);
-            }
-        });
+        sendButton.addActionListener(this::sendButtonActionPerformed);
 
         // pack for display
         pack();
