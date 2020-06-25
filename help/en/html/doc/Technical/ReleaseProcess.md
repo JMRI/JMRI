@@ -69,6 +69,35 @@ How do we decide when to do that if we don't have a monthly cadence?
    - If desired, we could have all four (master, dev-major, dev-minor, dev-branch) on the web at slightly different URLs; that just moves the question to which should be the default
     
 
+ ## Merging and Release Process Examples
+ 
+ In all of these, assume that the most recent release numbers are 5.6.3, 5.7.0 and 6.0.0; various people are test/using all three.
+ 
+ ### Update
+ 
+Somebody as a small bug to fix.  He edits in the fix on a branch from master.  This gets merged into all three branches. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) If it's significant enough, or enough has accumulated, this will get released as part of 5.6.4, in which case it'll be tagged there as v5.6.4 and master will be reset to that tag.
+ 
+  ### Minor Change
+  
+Somebody has a minor change (new feature that appears in API). He edits it in on a branch from master. This gets merged via PR into the dev-minor branch and dev-major branch. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) When that, and perhaps other, minor changes are ready to be made available to the user community, a 5.8.0 release will be made, tagged as v5.8.0.
+  
+At this point, master remains at 5.6.3. At some later point, when 5.8.0 or perhaps 5.8.1 is viewed as stable enough that it can become the default, both the master and dev-update branches will be reset to (say) 5.8.1 so that becomes the base for further development.
+  
+  ### Fix to Minor Change
+  
+Say that something was broken by the minor change above.  A developer can edit in that fix on a branch from v5.8.0, make a PR against the dev-minor branch, get it merged, and then a v5.8.1 can be released.  That can be made the base for development or not as needed.
+  
+  ### Merging updates to a Minor Change
+  
+Alternately, after v5.8.0 is out, a developer might want to fix an issue in 5.6.3 that identically affects (because that code was unchanged) the 5.8.0 release.  He edits on a branch off master, does a PR against dev-update, that gets merged and then that branch is merged upward (as usual) into the dev-minor branch.  This allows a v.5.8.1 to be created as needed. That can be made the base for development or not as needed.
+   
+   ### Major Changes
+   
+Major changes go basically as above.  They're created off master if possible, or off the dev-major branch if (more likely) they're cumulative on other major changes. Then the various operations go through as above.
+
+The hardest thing for "major change" releases will be developing a consensus around when they should become the default.  That's a community quality control issue, not a git technology one.
+
+  
  ## Other Things to Note
  
 JMRI has, for a long time, followed a Linux-like release numbering system where odd-numbered minor releases were for development and tests, whilst even numbered releases were for production. That distinction is no longer present here.
