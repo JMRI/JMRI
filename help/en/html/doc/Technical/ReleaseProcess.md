@@ -61,13 +61,11 @@ How do we decide when to do that if we don't have a monthly cadence?
 
  - What process is needed to identify when a release is good enough as one that should be made the default? Both the large scale, so we can talk in advance about the "October 2020" (2020-10) release, and at the event, as we try to get something usable to converge. For the last few years, we've needed several test releases to converge on a quality level; June 2020 was no different in that respect. How do we get that done in this model?
  
-## Other questions?
+## Web Contents
 
- - What should populate the web? 
-   - By doing that from `master`, it'll automatically be stable; some people like that.
-   - We don't know a-priori what will be released next, so we can't populate it from the _next_ changes as they're developed
-   - If desired, we could have all four (master, dev-major, dev-minor, dev-branch) on the web at slightly different URLs; that just moves the question to which should be the default
-    
+The default web content (from [https://jmri.org](https://jmri.org)) will be from the HEAD of the dev-update branch.  This allows minor content fixes to get on the web immediately.
+
+Simultaneously, the HEAD of the dev-minor and dev-major branches will populate web content starting at [https://jmri.org/minor](https://jmri.org/minor) and [https://jmri.org/major](https://jmri.org/major)  This will allow people to see Javadoc, point people to recently updated pages, etc.
 
  ## Other Things to Note
  
