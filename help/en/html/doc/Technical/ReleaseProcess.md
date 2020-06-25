@@ -49,7 +49,7 @@ The periodic upward merges are meant to find conflicts where a major change turn
 
 ## Release Timing
 
-We need a process to decide when releases should be made from the branches. Making a release, which can be done from any of the three branches is basically just making new installers (with a different name injected, as we do now) and changing a few web pages, so with a bit more automatiopn it'll be quick to do.  
+We need a process to decide when releases should be made from the branches. Making a release, which can be done from any of the three branches is basically just making new installers (with a different name injected, as we do now) and changing a few web pages, so with a bit more automation it'll be quick to do.  
 
 How do we decide when to do that if we don't have a monthly cadence?
 
@@ -73,15 +73,15 @@ How do we decide when to do that if we don't have a monthly cadence?
  
 JMRI has, for a long time, followed a Linux-like release numbering system where odd-numbered minor releases were for development and tests, whilst even numbered releases were for production. That distinction is no longer present here.
 
-There is no longer an explicit [deprecation cycle](https://www.jmri.org/help/en/html/doc/Technical/RP.shtml#deprecating). One can certain mark parts of the API as deprecated in a update or minor change; that's polite.  But when the change gets into the major branch, the deprecations should have been removed:  A breaking change is a breaking change.
+There is no longer an explicit [deprecation cycle](https://www.jmri.org/help/en/html/doc/Technical/RP.shtml#deprecating). One can certain mark parts of the API as deprecated in a update or minor change; that's polite.  But when the change gets into the major branch, the deprecations should have been removed:  That's part of why the changes are considered "breaking changes".
 
 This entire system is well suited to "point" releases to fix things.  For example, say the most recent releases have been 5.6.3, 5.7.0 and 6.0.0.  Then
- - Jim finds a bug and fixes it starting with master (5.6.6)
+ - Jim finds a bug and fixes it starting with master (same as 5.6.3)
  - Because it started on master, that can be merged anywhere
  - It's a _bug_, so it can be released as 5.6.4 so that people using that as a long-term thing get the fix with minor disruption.
  - But it will also be included in a 5.7.1 and 6.0.1 when those get released, so we can decide when to release them and make them available.
 
-It's even possible to make e.g. 5.6.3.1 with _just_ a specific change, and not the other updates that have accumulated on 5.6.3 since it was created.
+It's even possible to make e.g. 5.6.3.1 with _just_ one specific change, and not the other updates that have accumulated on 5.6.3 since it was created.
  
  
 
