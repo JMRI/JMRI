@@ -1,14 +1,18 @@
 package jmri;
 
+
 import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
+
 import java.beans.*;
 import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
 import jmri.NamedBean.BadSystemNameException;
 import jmri.NamedBean.DuplicateSystemNameException;
-import jmri.beans.PropertyChangeProvider;
+import jmri.beans.SilenceablePropertyChangeProvider;
 import jmri.beans.VetoableChangeProvider;
 
 /**
@@ -47,7 +51,7 @@ import jmri.beans.VetoableChangeProvider;
  * @param <E> the type of NamedBean supported by this manager
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public interface Manager<E extends NamedBean> extends PropertyChangeProvider, VetoableChangeProvider {
+public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeProvider, VetoableChangeProvider {
 
     /**
      * Get the system connection for this manager.
@@ -761,14 +765,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @Deprecated
     public default void setDataListenerMute(boolean muted) {
     }
-
-    /**
-     * Suppress sending {@link PropertyChangeEvent}s for the named property.
-     *
-     * @param propertyName the name of the property to mute
-     * @param muted        true if events are to be suppressed; false otherwise
-     */
-    public void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted);
 
     /**
      * Intended to be equivalent to {@link javax.swing.event.ListDataListener}
