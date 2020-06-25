@@ -90,7 +90,7 @@
         </tr>
 
         <tr>
-          <td>Multi-version JARs can help with migration from then one, see
+          <td>Multi-version JARs can help with migration from then on, see
           <a href="https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a></td>
 
           <td>9</td>
