@@ -759,7 +759,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      *
      * @param muted true if notifications should be suppressed; false otherwise
      * @deprecated since 4.19.7 without direct replacement;
-     *             {@link #setPropertyChangesMuted(java.lang.String, boolean)}
+     *             {@link #setPropertyChangesSilenced(java.lang.String, boolean)}
      *             can be used to similar effect
      */
     @Deprecated
