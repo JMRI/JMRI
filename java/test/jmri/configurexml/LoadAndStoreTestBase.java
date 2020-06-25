@@ -339,16 +339,20 @@ public class LoadAndStoreTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.clearBlockBossLogic();
         System.setProperty("jmri.test.no-dialogs", "true");
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.closeAllPanels();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
