@@ -40,7 +40,7 @@ public class ScheduleEditFrameTest extends OperationsTestCase {
 
         Location l = lManager.getLocationByName("Test Loc C");
         Assert.assertNotNull("Location exists", l);
-        Track t = l.addTrack("3rd siding track", Track.SPUR);
+        Track t = l.addTrack("3rd spur track", Track.SPUR);
         Assert.assertNotNull("Track exists", t);
         ScheduleEditFrame f = new ScheduleEditFrame(null, t);
         f.setTitle("Test Schedule Frame");
