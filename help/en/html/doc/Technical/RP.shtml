@@ -377,17 +377,21 @@ you should add an annotation so that others know why it's OK and don't have to w
 </pre>
 </ul>
 
+<a id="Optional" name="Optional"></a>
 <h2>Use of Optional</h2>
 
 The 
-A, href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a>
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a>
 class is the right way to provide 
 "a method return type where there is a clear need to represent 'no result,' and where using <code>null</code> is likely to cause errors".
 There's some good background on use of Optional in an
-<a href="https://blogs.oracle.com/javamagazine/12-recipes-for-using-the-optional-class-as-its-meant-to-be-used?source=:em:nw:mt::RC_WWMK200429P00043:NSL400064893&elq_mid=165759&sh=2512251726241225082213103419031133&cmid=WWMK200429P00043C0002">introductory Java Magazine article<a/>.
+<a href="https://blogs.oracle.com/javamagazine/12-recipes-for-using-the-optional-class-as-its-meant-to-be-used">introductory Java Magazine article</a>.
 There's more info about how <code>null</code> makes errors likely is dicussed in a 
-<a href="https://www.oracle.com/technical-resources/articles/java/java8-optional.html?source=:em:nw:mt::RC_WWMK200429P00043:NSL400064893">related article</a>.
-As Tony Hoare - one of the giants of computer science - wrote, "I call it my billion-dollar mistake. It was the invention of the null reference in 1965. I couldn't resist the temptation to put in a null reference, simply because it was so easy to implement."
+<a href="https://www.oracle.com/technical-resources/articles/java/java8-optional.html">related article</a>.
+As Tony Hoare - one of the giants of computer science - wrote, "I call it my billion-dollar mistake. 
+    It was the invention of the null reference in 1965. 
+    I couldn't resist the temptation to put in a null reference, 
+    simply because it was so easy to implement."
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
