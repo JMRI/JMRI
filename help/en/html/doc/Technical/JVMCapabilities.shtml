@@ -90,7 +90,7 @@
         </tr>
 
         <tr>
-          <td>Multi-version JARs can help with migration, see
+          <td>Multi-version JARs can help with migration from then one, see
           <a href="https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a></td>
 
           <td>9</td>
@@ -124,6 +124,14 @@
         </tr>
         
         <tr>
+          <td>JLink - improve packaging, faster startup</td>
+
+          <td>9</td>
+
+          <td>9</td>
+        </tr>
+        
+        <tr>
           <td><A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
                 More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
                 worse code) of JMRI independent.</td>
@@ -133,14 +141,6 @@
           <td>9</td>
         </tr>
 
-        <tr>
-          <td>JLink - improve packaging, faster startup</td>
-
-          <td>9</td>
-
-          <td>9</td>
-        </tr>
-        
         <tr>
           <td>var syntax - improves readability of code, use of generics</td>
 
@@ -155,6 +155,30 @@
           <td>10</td>
 
           <td>10</td>
+        </tr>
+
+        <tr>
+          <td>Improvements in Optional:  or(), ifPresentOrElse()</td>
+
+          <td>9</td>
+
+          <td>9</td>
+        </tr>
+ 
+        <tr>
+          <td>More improvements in Optional: orElseThrow()</td>
+
+          <td>10</td>
+
+          <td>10</td>
+        </tr>
+ 
+        <tr>
+          <td>Completion of Optional class:  isEmpty()</td>
+
+          <td>11</td>
+
+          <td>11</td>
         </tr>
  
         <tr>
@@ -192,9 +216,9 @@
           need to migrate away from these before using a more 
           advanced JRE or JDK.</td>
 
-          <td>&gt; 11</td>
+          <td>&gt; >11</td>
 
-          <td>&gt; 11</td>
+          <td>&gt; >11</td>
 
         </tr>
 
@@ -237,6 +261,7 @@
           Although this is "far from complete", 
           no other project appears to be emerging
           to include Python 3 support in i.e. Jython.
+          Having this available can let JMRI start a gentler migration.
           </td>
 
           <td>11</td>
