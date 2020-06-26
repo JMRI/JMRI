@@ -128,29 +128,35 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     @Override
     public void testDisconnect() throws SocketAlreadyConnectedException {
         try {
-            Field _currentActiveSocketField = _femaleSocket.getClass()
+            ExpressionMemory digitalExpression = new ExpressionMemory("IQDE351", null);
+            MaleSocket digitalMaleSocket =
+                    InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
+            
+            DefaultFemaleGenericExpressionSocket femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+            
+            Field _currentActiveSocketField = femaleSocket.getClass()
                     .getDeclaredField("_currentActiveSocket");
             
             _currentActiveSocketField.setAccessible(true);
             
             Assert.assertNull("_currentActiveSocket is null",
-                    _currentActiveSocketField.get(_femaleSocket));
+                    _currentActiveSocketField.get(femaleSocket));
             
             // Test disconnect() without connected socket
-            _femaleSocket.disconnect();
+            femaleSocket.disconnect();
             
             Assert.assertNull("_currentActiveSocket is null",
-                    _currentActiveSocketField.get(_femaleSocket));
+                    _currentActiveSocketField.get(femaleSocket));
             
             // Test disconnect() without connected socket
-            _femaleSocket.connect(maleSocket);
+            femaleSocket.connect(digitalMaleSocket);
             
-            log.warn("_currentActiveSocket: {}", _currentActiveSocketField.get(_femaleSocket).getClass().getName());
+            log.warn("_currentActiveSocket: {}", _currentActiveSocketField.get(femaleSocket).getClass().getName());
             Assert.assertEquals("_currentActiveSocket is has correct class",
                     "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
-                    _currentActiveSocketField.get(_femaleSocket).getClass().getName());
+                    _currentActiveSocketField.get(femaleSocket).getClass().getName());
             
-            _femaleSocket.disconnect();
+            femaleSocket.disconnect();
         } catch (SocketAlreadyConnectedException | IllegalAccessException
                 | NoSuchFieldException | SecurityException e) {
             throw new RuntimeException(e);
