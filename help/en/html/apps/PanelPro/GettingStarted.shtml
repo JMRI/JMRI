@@ -82,18 +82,18 @@
     <ul>
       <li>The layout connection will use the Digitrax Simulator for turnouts and occupancy sensors.</li>
       <li>The layout components will be numbered sequentially without reference to any specific
-      LocoNet hardware.</li>
+            LocoNet hardware.</li>
       <li>Signaling will be based on Signal Masts using Signal Mast Logic (SML)</li>
       <li>The SML will be based on the <strong>Basic</strong> signaling system.</li>
       <li>The following description is just one of many possible workflows.</li>
       <li>JMRI 4.20 is being used.</li>
       <li>Turnouts have their own blocks.</li>
       <li>Table items will have user names.  If a connection change is required which results
-      in different system names, the user names can be moved without impacting the
-      configuration.</li>
+            in different system names, the user names can be moved without impacting the
+            configuration.</li>
       <li>Clickable <span class="reflink">keywords</span> are provided that link to detail help pages.</li>
       <li>The screenshots are based on macOS 10.15.5, they will look different depending on the operating system.</li>
-      <li>The Store and Load process is documented at <a href="../StoringYourWork.shtml">Storing your work</a></li>.
+      <li>The Store and Load process is documented at <a href="../StoringYourWork.shtml">Storing your work</a>.</li>
     </ul>
 
     <p>A <a href="GettingStarted.zip">GettingStarted.zip</a> file is available
@@ -108,13 +108,12 @@
     select the GettingStart profile.  If the profile selector is not active, use
     <strong>Preferences &rArr; Config Profiles</strong> to select the profile.</p>
 
-    <p>The <strong>settings</strong> location is an OS specific location that provides access to the user data.
+    <p>The <strong>settings</strong> location is an OS specific location that provides access to the user data. </p>
     <ul>
       <li>Windows:  C:\Users\&lt;username&gt;\JMRI</li>
       <li>Linux:    /home/&lt;username&gt;/.jmri</li>
       <li>macOS:  /Users/&lt;username&gt;/Library/Preferences/JMRI</li>
     </ul>
-    </p>
 
     <a name="Setup" id="Setup"></a>
     <h2>Set up PanelPro if needed</h2>
