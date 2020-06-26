@@ -23,6 +23,6 @@ public class DefaultErrorNotifier implements ErrorNotifier {
         return Bundle.getMessage("DefaultErrorNotifierName");
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultErrorNotifierManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultErrorNotifier.class);
     
 }
