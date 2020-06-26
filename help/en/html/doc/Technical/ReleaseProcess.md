@@ -42,7 +42,7 @@ Each PR that's merged for inclusion can require an increment of the first, secon
  
 Since we'll now be requiring a review, the reviewer can also encourage reasonable additions to the release note. A more-automated process for creating release notes with useful content would help this succeed.
 
-__Question__: if the first commit to a PR follows [Conventional Commits rules](https://www.conventionalcommits.org/en/v1.0.0/), can that be a replacement for the label?
+We recommend that people use [Conventional Commits rules](https://www.conventionalcommits.org/en/v1.0.0/) in their commit comments to help identify how a PR should be labelled.  GitHub makes the comment for the first commit in a PR particularly visible.  We can't count on that instead of a label, though, because the impact of a PR might have changed since its first PR, and/or because the proper label for the PR might not be what the developer thought when writing that first comment. 
 
 ## Use of Git to Accumulate Changes
  
