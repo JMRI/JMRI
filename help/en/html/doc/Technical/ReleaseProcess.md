@@ -52,7 +52,8 @@ We recommend that people use [Conventional Commits rules](https://www.convention
      - This means that new Git users who checkout `master` will be working on a mergeable base for the next release(s)
   - PRs labelled with _Breaking Change_ will be merged to a 'dev-major' branch, those labelled _Feature_ will be merged to a 'dev-minor' branch and those labelled with _Fix_ will be merged to a 'dev-update' branch.
   - Often, those perhaps not on every PR, the branches will be merged upwards: dev-update into dev-minor, dev-minor into dev-major
-  - __Question__ Do _Chore_ PRs just get committed to master?
+
+_Chore_ PRs should be put into affect in the infrastucture as soon as possible, but we don't want them to burden developers with minimal git capability, i.e. working directly from `master`. Hence they should be merged to the `dev-update`, and from there merged upward to the other branches as needed.  They'll then get back to `master` when a branch is next released. (Keeping master exactly fixed helps us check for and prevent inadvertant merges of other changes via PRs)
   
 The goal of this is to make it possible to work on i.e. updates from a stable base of either the last numbered release (`master`, which people get by default) or the current contents of the relevant branch.  Because it makes all three branches available, it allows accumulating and collaborating on all three kinds of changes.
 
