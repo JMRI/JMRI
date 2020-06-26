@@ -1,6 +1,6 @@
 package jmri.jmrit.logixng;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Manager for ErrorNotifier implementations.
@@ -31,7 +31,7 @@ public interface ErrorNotifierManager {
     
     public void clearErrorNotifiers();
     
-    public List<ErrorNotifier> getErrorNotifiers();
+    public Set<ErrorNotifier> getErrorNotifiers();
     
     /**
      * Response from the ErrorNotifier that it's OK to send more error messages

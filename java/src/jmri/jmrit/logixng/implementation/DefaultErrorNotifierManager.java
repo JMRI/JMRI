@@ -1,42 +1,34 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.managers.AbstractManager;
-import jmri.util.Log4JUtil;
-import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Class providing the basic logic of the LogixNG_Manager interface.
+ * Class providing the basic logic of the ErrorNotifierManager interface.
  * 
- * @author Dave Duchamp       Copyright (C) 2007
- * @author Daniel Bergqvist   Copyright (C) 2018
+ * @author Daniel Bergqvist   Copyright (C) 2020
  */
 public class DefaultErrorNotifierManager implements ErrorNotifierManager {
 
-    List<ErrorNotifierHolder> _errorNotifiers = new ArrayList<>();
+    Map<ErrorNotifier, ErrorNotifierHolder> _errorNotifiers = new ConcurrentHashMap<>();
     
     
     public DefaultErrorNotifierManager() {
+        ErrorNotifier errorNotifier = new DefaultErrorNotifier();
+        _errorNotifiers.put(errorNotifier, new ErrorNotifierHolder(errorNotifier));
     }
     
     @Override
     public void notifyError(Base object, String msg, Exception e) {
         // Uncomment this when the DefaultErrorNotifier class is written.
-//        if (_errorNotifiers.isEmpty()) {
-//            log.warn("No error notifier is registred");
-//        }
-        for (ErrorNotifierHolder errorNotifierHolder : _errorNotifiers) {
+        if (_errorNotifiers.isEmpty()) {
+            log.warn("No error notifier is registred");
+        }
+        for (ErrorNotifierHolder errorNotifierHolder : _errorNotifiers.values()) {
             if (errorNotifierHolder._state == State.READY) {
                 if (errorNotifierHolder._errorNotifier.notifyError(object, msg, e)) {
                     errorNotifierHolder._state = State.WAITING;
@@ -47,32 +39,32 @@ public class DefaultErrorNotifierManager implements ErrorNotifierManager {
     
     @Override
     public void registerErrorNotifier(ErrorNotifier errorNotifier) {
-        throw new UnsupportedOperationException("Not supported");
+        _errorNotifiers.put(errorNotifier, new ErrorNotifierHolder(errorNotifier));
     }
     
     @Override
     public void unregisterErrorNotifier(ErrorNotifier errorNotifier) {
-        throw new UnsupportedOperationException("Not supported");
+        _errorNotifiers.remove(errorNotifier);
     }
     
     @Override
     public void clearErrorNotifiers() {
-        throw new UnsupportedOperationException("Not supported");
+        _errorNotifiers.clear();
     }
     
     @Override
-    public List<ErrorNotifier> getErrorNotifiers() {
-        throw new UnsupportedOperationException("Not supported");
+    public Set<ErrorNotifier> getErrorNotifiers() {
+        return Collections.unmodifiableSet(_errorNotifiers.keySet());
     }
     
     @Override
     public void responseOK(ErrorNotifier errorNotifier) {
-        throw new UnsupportedOperationException("Not supported");
+        _errorNotifiers.get(errorNotifier)._state = State.READY;
     }
     
     @Override
     public void responseMute(ErrorNotifier errorNotifier) {
-        throw new UnsupportedOperationException("Not supported");
+        _errorNotifiers.get(errorNotifier)._state = State.MUTED;
     }
     
     
@@ -87,5 +79,5 @@ public class DefaultErrorNotifierManager implements ErrorNotifierManager {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(DefaultErrorNotifierManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultErrorNotifierManager.class);
 }
