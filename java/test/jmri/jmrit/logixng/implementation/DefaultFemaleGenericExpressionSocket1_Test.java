@@ -134,13 +134,13 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
             _currentActiveSocketField.setAccessible(true);
             
             Assert.assertNull("_currentActiveSocket is null",
-                    (FemaleSocket) _currentActiveSocketField.get(_femaleSocket));
+                    _currentActiveSocketField.get(_femaleSocket));
             
             // Test disconnect() without connected socket
             _femaleSocket.disconnect();
             
             Assert.assertNull("_currentActiveSocket is null",
-                    (FemaleSocket) _currentActiveSocketField.get(_femaleSocket));
+                    _currentActiveSocketField.get(_femaleSocket));
             
             // Test disconnect() without connected socket
             _femaleSocket.connect(maleSocket);
