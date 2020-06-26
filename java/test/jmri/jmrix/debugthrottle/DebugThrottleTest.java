@@ -1,15 +1,14 @@
 package jmri.jmrix.debugthrottle;
 
-import jmri.NamedBean;
 import jmri.SpeedStepMode;
+import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-
-import java.util.Comparator;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  *
@@ -213,17 +212,9 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.SystemConnectionMemo memo = new jmri.jmrix.DefaultSystemConnectionMemo("T", "Test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-
-            @Override
-            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
-                return null;
-            }
-        };
+        SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
+        Mockito.when(memo.getUserName()).thenReturn("Test");
+        Mockito.when(memo.getSystemPrefix()).thenReturn("T");
         JUnitUtil.initDebugThrottleManager();
         instance = new DebugThrottle(new jmri.DccLocoAddress(100,true),memo);
     }

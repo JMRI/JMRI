@@ -31,7 +31,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     private String prefixAsLoaded;
     private String userName;
     private String userNameAsLoaded;
-    private Map<Class,Object> classObjectMap;
+    protected Map<Class,Object> classObjectMap;
 
     @SuppressWarnings("deprecation")
     protected DefaultSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
@@ -64,8 +64,10 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     }
 
     /**
-     * Store in InstanceManager with proper ID for later retrieval as a generic
-     * system.
+     * Register with the SystemConnectionMemoManager and InstanceManager with proper
+     * ID for later retrieval as a generic system.
+     * <p>
+     * This operation should occur only when the SystemConnectionMemo is ready for use.
      */
     public void register() {
         log.debug("register as SystemConnectionMemo, really of type {}", this.getClass());
@@ -186,7 +188,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
         if (type.equals(ConsistManager.class)) {
             return (T) getConsistManager();
         } else {
-            return null; // nothing, by default
+            return (T) classObjectMap.get(type); // nothing, by default
         }
     }
 
@@ -310,6 +312,10 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     public <T> void store(@Nonnull T item, @Nonnull Class<T> type){
         classObjectMap.put(type,item);
+    }
+
+    public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type){
+        classObjectMap.remove(type,item);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSystemConnectionMemo.class);
