@@ -47,7 +47,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * VetoableChangeListeners.
      */
     private final List<String> vetoablePropertyNames = new ArrayList<>();
-    
+    protected final Map<String, Boolean> mutedProperties = new HashMap<>();
+
     /**
      * {@inheritDoc}
      */
@@ -374,14 +375,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * {@inheritDoc}
      */
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
-//        log.warn("AbstractProxyManager: event: {}. Bean: {}", e.getPropertyName(), ((jmri.NamedBean)e.getNewValue()).getSystemName());
-        PropertyChangeEvent event = e;
+    public void propertyChange(PropertyChangeEvent event) {
         if (event.getPropertyName().equals("beans")) {
             recomputeNamedBeanSet();
         }
         event.setPropagationId(this);
-        firePropertyChange(event);
+        if (!mutedProperties.getOrDefault(event.getPropertyName(), false)) {
+            firePropertyChange(event);
+        }
     }
     
     /**
@@ -479,6 +480,18 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
             recomputeNamedBeanSet();
         }
         return Collections.unmodifiableSortedSet(namedBeanSet);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setPropertyChangesMuted(String propertyName, boolean muted) {
+        mutedProperties.put(propertyName, muted);
+        if (propertyName.equals("beans") && !muted) {
+            fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);
+        }
     }
 
     /** {@inheritDoc} */

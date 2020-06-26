@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -53,6 +54,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
     public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
     private final SystemConnectionMemo memo;
+    private final Map<String, Boolean> mutedProperties = new HashMap<>();
 
     private int settingTimer = 2000;
 
@@ -1381,6 +1383,18 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
     @Override
     public Class<DestinationPoints> getNamedBeanClass() {
         return DestinationPoints.class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted) {
+        mutedProperties.put(propertyName, muted);
+        if (propertyName.equals("beans") && !muted) {
+            fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);
+        }
     }
 
     /** {@inheritDoc} */
