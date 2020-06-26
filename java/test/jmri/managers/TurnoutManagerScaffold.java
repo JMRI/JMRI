@@ -127,6 +127,11 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    public void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted) {
+        // do nothing
+    }
+
+    @Override
     public void dispose() {
     }
 
