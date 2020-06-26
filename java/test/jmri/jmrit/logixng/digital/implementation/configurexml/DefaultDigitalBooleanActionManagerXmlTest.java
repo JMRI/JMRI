@@ -137,7 +137,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
                         instanceof DefaultDigitalBooleanActionManagerXmlTest.MyManager);
     }
     
-    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
+//    @Ignore("When debug is enabled, jmri.configurexml.ConfigXmlManager.registerConfig checks if the manager has a XML class, which our fake manager doesn't have")
     @Test
     public void testReplaceActionManagerWithConfigManager() {
         
