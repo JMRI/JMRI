@@ -6,20 +6,15 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
+
 import javax.annotation.Nonnull;
-import jmri.jmrit.logixng.AnalogActionBean;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.MaleAnalogActionSocket;
-import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
 import jmri.util.Log4JUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,10 +65,12 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
         _action.setLock(lock);
     }
     
+    @Override
     public ErrorHandlingType getErrorHandlingType() {
         return _errorHandlingType;
     }
     
+    @Override
     public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
     {
         _errorHandlingType = errorHandlingType;
@@ -124,8 +121,10 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
         } catch (JmriException e) {
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
-                    // We don't show a dialog box yet so fall thrue.
-                    // fall through
+                    InstanceManager.getDefault(ErrorNotifierManager.class)
+                            .notifyError(this, Bundle.getMessage("ExceptionSetValue", e), e);
+                    break;
+                    
                 case LOG_ERROR:
                     log.error("action {} thrown an exception: {}", _action.toString(), e);
                     break;

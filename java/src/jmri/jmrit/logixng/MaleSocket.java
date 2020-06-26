@@ -33,6 +33,18 @@ public interface MaleSocket extends Debugable {
     public boolean isEnabled();
     
     /**
+     * Get the error handling type for this socket.
+     * @return the error handling type
+     */
+    public ErrorHandlingType getErrorHandlingType();
+    
+    /**
+     * Set the error handling type for this socket.
+     * @param errorHandlingType the error handling type
+     */
+    public void setErrorHandlingType(ErrorHandlingType errorHandlingType);
+    
+    /**
      * Get the object that this male socket holds.
      * This method is used when the object is going to be configured.
      * 

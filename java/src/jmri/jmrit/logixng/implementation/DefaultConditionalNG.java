@@ -3,24 +3,16 @@ package jmri.jmrit.logixng.implementation;
 import static jmri.NamedBean.UNKNOWN;
 
 import java.util.Locale;
+
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.jmrit.logixng.*;
 import jmri.util.ThreadingUtil;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
-import jmri.jmrit.logixng.FemaleDigitalActionSocket;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.util.Log4JUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,22 +132,25 @@ public class DefaultConditionalNG extends AbstractBase
             runOnGUI(() -> {
                 while (executeLock.loop()) {
                     if (isEnabled()) {
-//                        _femaleActionSocket.execute();
                         try {
                             _femaleActionSocket.execute();
                         } catch (JmriException | RuntimeException e) {
                             switch (_errorHandlingType) {
                                 case LOG_ERROR_ONCE:
-                                    Log4JUtil.warnOnce(log, "female socket {} thrown an exception: {}", _femaleActionSocket.toString(), e);
+                                    Log4JUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
+                                            getSystemName(), e, e);
                                     break;
                                     
                                 case SHOW_DIALOG_BOX:
-                                    // We don't show a dialog box yet so fall thrue.
-                                    // fall through
+                                    InstanceManager.getDefault(ErrorNotifierManager.class)
+                                            .notifyError(this, Bundle.getMessage("ExceptionExecute", getSystemName(), e), e);
+                                    break;
+                                    
                                 case LOG_ERROR:
                                     // fall through
                                 default:
-                                    log.error("female socket {} thrown an exception: {}", _femaleActionSocket.toString(), e);
+                                    log.error("ConditionalNG {} got an exception during execute: {}",
+                                            getSystemName(), e, e);
                             }
                         }
                     }

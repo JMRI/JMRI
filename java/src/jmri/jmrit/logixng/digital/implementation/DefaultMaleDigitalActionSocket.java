@@ -13,7 +13,9 @@ import jmri.jmrit.logixng.Category;
 
 import javax.annotation.Nonnull;
 
+import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.digital.implementation.Bundle;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
 import jmri.util.Log4JUtil;
@@ -69,10 +71,12 @@ public class DefaultMaleDigitalActionSocket
         _action.setLock(lock);
     }
     
+    @Override
     public ErrorHandlingType getErrorHandlingType() {
         return _errorHandlingType;
     }
 
+    @Override
     public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
     {
         _errorHandlingType = errorHandlingType;
@@ -107,8 +111,10 @@ public class DefaultMaleDigitalActionSocket
         } catch (JmriException | RuntimeException e) {
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
-                    // We don't show a dialog box yet so fall thrue.
-                    // fall through
+                    InstanceManager.getDefault(ErrorNotifierManager.class)
+                            .notifyError(this, Bundle.getMessage("ExceptionExecuteAction", e), e);
+                    break;
+                    
                 case LOG_ERROR:
                     log.error("action {} thrown an exception: {}", _action.toString(), e, e);
                     break;

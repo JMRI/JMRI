@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-import javax.annotation.Nonnull;
 import jmri.JmriException;
 
 /**
@@ -26,5 +24,5 @@ public interface MaleAnalogExpressionSocket
      */
     @Override
     public double evaluate() throws JmriException;
-
+    
 }

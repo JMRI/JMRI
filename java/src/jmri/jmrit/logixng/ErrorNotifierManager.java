@@ -19,9 +19,11 @@ public interface ErrorNotifierManager {
      * Note that the manager must ensure that ErrorNotifiers that hasn't
      * responded, or responded with "mute", shouldn't get more notifiers.
      * 
-     * @param msg the error message
+     * @param object the object that notifies about the error
+     * @param msg the message
+     * @param e the exception or null if no exception
      */
-    public void notify(String msg);
+    public void notifyError(Base object, String msg, Exception e);
     
     public void registerErrorNotifier(ErrorNotifier errorNotifier);
     
@@ -68,7 +70,7 @@ public interface ErrorNotifierManager {
         
         /**
          * The ErrorNotifier is muted and will not receive any more notfications
-         * yntil it's un.muted.
+         * until it's un.muted.
          */
         MUTED,
     }

@@ -192,6 +192,8 @@ public class DefaultConditionalNGTest {
                 .registerAction(action);
         conditionalNG.getChild(0).connect(socket);
         
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        
         action.throwOnExecute = false;
         action.hasExecuted = false;
         conditionalNG.execute();
@@ -199,31 +201,27 @@ public class DefaultConditionalNGTest {
         
         action.throwOnExecute = true;
         action.hasExecuted = false;
-        conditionalNG.execute();
-        // Currently, this logs an error
         conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.SHOW_DIALOG_BOX);
-        JUnitAppender.assertErrorMessage("action IQDA1 thrown an exception: jmri.JmriException: An error has occured");
+        conditionalNG.execute();
+//        JUnitAppender.assertErrorMessage("action IQDA1 thrown an exception: jmri.JmriException: An error has occured");
         
         action.throwOnExecute = true;
         action.hasExecuted = false;
-        conditionalNG.execute();
-        // Currently, this logs an error
         conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR);
-        JUnitAppender.assertErrorMessage("action IQDA1 thrown an exception: jmri.JmriException: An error has occured");
+        conditionalNG.execute();
+        JUnitAppender.assertErrorMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
         
         action.throwOnExecute = true;
         action.hasExecuted = false;
-        conditionalNG.execute();
-        // Currently, this logs an error
         conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.LOG_ERROR_ONCE);
-        JUnitAppender.assertErrorMessage("action IQDA1 thrown an exception: jmri.JmriException: An error has occured");
+        conditionalNG.execute();
+        JUnitAppender.assertWarnMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
         
         action.throwOnExecute = true;
         action.hasExecuted = false;
-        conditionalNG.execute();
-        // Currently, this logs an error
         conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
-        JUnitAppender.assertErrorMessage("action IQDA1 thrown an exception: jmri.JmriException: An error has occured");
+        conditionalNG.execute();
+        JUnitAppender.assertErrorMessage("ConditionalNG IQC123 got an exception during execute: jmri.JmriException: An error has occured");
     }
     
     @Test

@@ -681,6 +681,16 @@ public abstract class FemaleSocketTestBase {
         public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
             throw new UnsupportedOperationException("Not supported");
         }
+
+        @Override
+        public ErrorHandlingType getErrorHandlingType() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setErrorHandlingType(ErrorHandlingType errorHandlingType) {
+            throw new UnsupportedOperationException("Not supported");
+        }
         
     }
     

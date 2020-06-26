@@ -6,20 +6,16 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
+
 import javax.annotation.Nonnull;
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.DigitalBooleanActionBean;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.MaleDigitalBooleanAction;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.LogixNG;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.digital.implementation.Bundle;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
 import jmri.util.Log4JUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,10 +66,12 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
         _action.setLock(lock);
     }
     
+    @Override
     public ErrorHandlingType getErrorHandlingType() {
         return _errorHandlingType;
     }
 
+    @Override
     public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
     {
         _errorHandlingType = errorHandlingType;
@@ -108,8 +106,10 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
         } catch (JmriException | RuntimeException e) {
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
-                    // We don't show a dialog box yet so fall thrue.
-                    // fall through
+                    InstanceManager.getDefault(ErrorNotifierManager.class)
+                            .notifyError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e), e);
+                    break;
+                    
                 case LOG_ERROR:
                     log.error("action {} thrown an exception: {}", _action.toString(), e);
                     break;
