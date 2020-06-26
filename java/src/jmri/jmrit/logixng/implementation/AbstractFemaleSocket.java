@@ -182,26 +182,12 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
      */
     @Override
     public void registerListeners() {
-//    public void registerListenersInternal() {
         registerListenersForThisClass();
         if (isConnected()) {
             ((InternalBase)getConnectedSocket()).registerListeners();
-//            ((InternalBase)getConnectedSocket()).registerListenersInternal();
         }
     }
     
-    /*.*
-     * Register listeners if this object needs that.
-     *./
-    @Override
-    public void registerListeners() {
-        registerListenersInternal();
-//        registerListenersForThisClass();
-//        if (isConnected()) {
-//            getConnectedSocket().registerListeners();
-//        }
-    }
-*/    
     /**
      * Register listeners if this object needs that.
      */

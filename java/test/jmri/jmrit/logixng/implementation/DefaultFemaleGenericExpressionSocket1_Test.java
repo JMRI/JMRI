@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
@@ -127,40 +126,29 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     @Test
     @Override
     public void testDisconnect() throws SocketAlreadyConnectedException {
-        try {
-            ExpressionMemory digitalExpression = new ExpressionMemory("IQDE351", null);
-            MaleSocket digitalMaleSocket =
-                    InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
-            
-            DefaultFemaleGenericExpressionSocket femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
-            
-            Field _currentActiveSocketField = femaleSocket.getClass()
-                    .getDeclaredField("_currentActiveSocket");
-            
-            _currentActiveSocketField.setAccessible(true);
-            
-            Assert.assertNull("_currentActiveSocket is null",
-                    _currentActiveSocketField.get(femaleSocket));
-            
-            // Test disconnect() without connected socket
-            femaleSocket.disconnect();
-            
-            Assert.assertNull("_currentActiveSocket is null",
-                    _currentActiveSocketField.get(femaleSocket));
-            
-            // Test disconnect() without connected socket
-            femaleSocket.connect(digitalMaleSocket);
-            
-            log.warn("_currentActiveSocket: {}", _currentActiveSocketField.get(femaleSocket).getClass().getName());
-            Assert.assertEquals("_currentActiveSocket is has correct class",
-                    "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
-                    _currentActiveSocketField.get(femaleSocket).getClass().getName());
-            
-            femaleSocket.disconnect();
-        } catch (SocketAlreadyConnectedException | IllegalAccessException
-                | NoSuchFieldException | SecurityException e) {
-            throw new RuntimeException(e);
-        }
+        ExpressionMemory digitalExpression = new ExpressionMemory("IQDE351", null);
+        MaleSocket digitalMaleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
+        
+        DefaultFemaleGenericExpressionSocket femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        
+        Assert.assertNull("_currentActiveSocket is null",
+                femaleSocket.getCurrentActiveSocket());
+        
+        // Test disconnect() without connected socket
+        femaleSocket.disconnect();
+        
+        Assert.assertNull("_currentActiveSocket is null",
+                femaleSocket.getCurrentActiveSocket());
+        
+        // Test disconnect() without connected socket
+        femaleSocket.connect(digitalMaleSocket);
+        
+        Assert.assertEquals("_currentActiveSocket is has correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                femaleSocket.getCurrentActiveSocket().getClass().getName());
+
+        femaleSocket.disconnect();
     }
     
     @Test

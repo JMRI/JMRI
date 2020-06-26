@@ -340,26 +340,6 @@ public class DefaultFemaleGenericExpressionSocket
         return classes;
     }
     
-    /*.* {@inheritDoc} *./
-    @Override
-    public Lock getLock() {
-        if ((_currentActiveSocket != null) && (_currentActiveSocket.isConnected())) {
-            return _currentActiveSocket.getLock();
-        } else {
-            throw new UnsupportedOperationException("Socket is not connected");
-        }
-    }
-    
-    /*.* {@inheritDoc} *./
-    @Override
-    public void setLock(Lock lock) {
-        if ((_currentActiveSocket != null) && (_currentActiveSocket.isConnected())) {
-            _currentActiveSocket.setLock(lock);
-        } else {
-            throw new UnsupportedOperationException("Socket is not connected");
-        }
-    }
-*/    
     /** {@inheritDoc} */
     @Override
     public void connect(MaleSocket socket) throws SocketAlreadyConnectedException {
@@ -375,7 +355,6 @@ public class DefaultFemaleGenericExpressionSocket
                 throw new SocketAlreadyConnectedException("Socket is already connected");
             } else {
                 _currentActiveSocket.connect(socket);
-                getConnectedSocket().getSystemName();
                 return;
             }
         }
@@ -427,7 +406,7 @@ public class DefaultFemaleGenericExpressionSocket
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        if (_currentSocketType == SocketType.GENERIC) {
+        if (_socketType == SocketType.GENERIC) {
             _currentActiveSocket = null;
         }
     }
