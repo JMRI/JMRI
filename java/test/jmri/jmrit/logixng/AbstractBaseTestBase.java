@@ -12,7 +12,6 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -218,10 +217,13 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testMaleSocketGetPrintTreeWithStandardLocale() {
+        Locale oldLocale = Locale.getDefault();
+        Locale.setDefault(Locale.ENGLISH);
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         _baseMaleSocket.printTree(printWriter, TREE_INDENT);
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
+        Locale.setDefault(oldLocale);
     }
     
     /**
@@ -425,7 +427,11 @@ public abstract class AbstractBaseTestBase {
         });
         
         ab.set(false);
-        Assume.assumeTrue(addNewSocket());
+        
+        // Some item doesn't support adding new sockets.
+        // Return if the item under test doesn't.
+        if (!addNewSocket()) return;
+        
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
     }
     
@@ -543,7 +549,11 @@ public abstract class AbstractBaseTestBase {
     // * getPropertyChangeListeners()
     @Test
     public void testPropertyChangeListener1() throws SocketAlreadyConnectedException {
-        Assume.assumeTrue("We need at least one child to do this test", _base.getChildCount() > 0);
+        // We need at least one child to do this test.
+        // Some item doesn't have children.
+        // Return if the item under test doesn't.
+        if (_base.getChildCount() == 0) return;
+        
         MaleSocket maleSocket = getConnectableChild();
         
         FemaleSocket child = _base.getChild(0);
@@ -608,7 +618,11 @@ public abstract class AbstractBaseTestBase {
     // * getNumPropertyChangeListeners()
     @Test
     public void testPropertyChangeListener2() throws SocketAlreadyConnectedException {
-        Assume.assumeTrue("We need at least one child to do this test", _base.getChildCount() > 0);
+        // We need at least one child to do this test.
+        // Some item doesn't have children.
+        // Return if the item under test doesn't.
+        if (_base.getChildCount() == 0) return;
+        
         MaleSocket maleSocket = getConnectableChild();
         
         FemaleSocket child = _base.getChild(0);
@@ -711,7 +725,11 @@ public abstract class AbstractBaseTestBase {
     // * getPropertyChangeListeners()
     @Test
     public void testPropertyChangeListener3() throws SocketAlreadyConnectedException {
-        Assume.assumeTrue("We need at least one child to do this test", _base.getChildCount() > 0);
+        // We need at least one child to do this test.
+        // Some item doesn't have children.
+        // Return if the item under test doesn't.
+        if (_base.getChildCount() == 0) return;
+        
         MaleSocket maleSocket = getConnectableChild();
         
         FemaleSocket child = _base.getChild(0);
@@ -764,7 +782,11 @@ public abstract class AbstractBaseTestBase {
     // * getNumPropertyChangeListeners()
     @Test
     public void testPropertyChangeListener4() throws SocketAlreadyConnectedException {
-        Assume.assumeTrue("We need at least one child to do this test", _base.getChildCount() > 0);
+        // We need at least one child to do this test.
+        // Some item doesn't have children.
+        // Return if the item under test doesn't.
+        if (_base.getChildCount() == 0) return;
+        
         MaleSocket maleSocket = getConnectableChild();
         
         FemaleSocket child = _base.getChild(0);

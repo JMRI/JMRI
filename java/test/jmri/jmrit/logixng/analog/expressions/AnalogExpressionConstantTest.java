@@ -133,18 +133,6 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         Assert.assertTrue("Expected exception thrown", thrown);
     }
     
-    @Ignore("This test doesn't work on a Swedish computer due to locale")
-    @Test
-    @Override
-    public void testGetPrintTreeWithStandardLocale() {
-    }
-    
-    @Ignore("This test doesn't work on a Swedish computer due to locale")
-    @Test
-    @Override
-    public void testMaleSocketGetPrintTreeWithStandardLocale() {
-    }
-    
     @Test
     public void testSetValueWithListenersRegistered() {
         boolean exceptionThrown = false;
