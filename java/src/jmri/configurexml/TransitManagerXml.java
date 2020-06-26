@@ -145,6 +145,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         List<Element> transitList = sharedTransits.getChildren("transit");
         log.debug("Found {} transits", transitList.size());
         TransitManager tm = InstanceManager.getDefault(jmri.TransitManager.class);
+        tm.setPropertyChangesMuted("beans", true);
 
         for (Element tst : transitList) {
             String sysName = getSystemName(tst);
@@ -218,6 +219,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                 }
             }
         }
+        tm.setPropertyChangesMuted("beans", false);
     }
 
     @Override

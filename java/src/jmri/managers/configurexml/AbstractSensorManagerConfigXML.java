@@ -121,6 +121,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         List<Element> sensorList = sensors.getChildren("sensor");
         log.debug("Found {} sensors", sensorList.size());
         SensorManager tm = InstanceManager.sensorManagerInstance();
+        tm.setPropertyChangesMuted("beans", true);
         long goingActive = 0L;
         long goingInActive = 0L;
         if (sensors.getChild("globalDebounceTimers") != null) {
@@ -216,6 +217,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
             }
         }
+        tm.setPropertyChangesMuted("beans", false);
         return result;
     }
 

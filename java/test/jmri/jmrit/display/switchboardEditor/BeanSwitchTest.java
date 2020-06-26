@@ -1,5 +1,6 @@
 package jmri.jmrit.display.switchboardEditor;
 
+import jmri.jmrit.display.EditorFrameOperator;
 import org.junit.*;
 import java.awt.GraphicsEnvironment;
 
@@ -32,7 +33,7 @@ public class BeanSwitchTest {
     @After
     public void tearDown() {
         if (swe != null) {
-            JUnitUtil.dispose(swe);
+            new EditorFrameOperator(swe.getTargetFrame()).closeFrameWithConfirmations();
             swe = null;
         }
         JUnitUtil.resetWindows(false,false);
