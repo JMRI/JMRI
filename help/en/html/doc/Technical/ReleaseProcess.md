@@ -8,16 +8,25 @@ On the jmri-developers list, it's been proposed to move toward a release process
  
 ## Denoting releases 
 
-A released version is denoted as a vI.J.K (i.e. v21.4.2) tag in our common repository.
- 
-Distributed installers built from a released version will identify themselves with version strings like JMRI.21.4.2+Rbab3d0f33 where the +R indicates 8 digits of the tag SHA.  
- 
-Periodically, a release version is flagging as a default for new/novice users to install by default.  It will be referred to by year and month: YYYY-MM, i.e 2020-07. It's contents will be identical to an already-released version.  Distributed installers will identify themselves using first the date, then the underlying release, i.e. JMRI-2020-07-21.4.2+Rbab3d0f33
+JMRI installers can be built in four different scenarios:
 
-__Question__: What version will these 'release' versions report themselves as? JMRI 2020-07-21.4.2? Or JMRI 21.4.2? Aside from the filename, are these otherwise _identical_ to the already-released version (i.e. identical SHA256)?
+* Developer build on their local machine
+* Jenkins 'nightly' build as part of the Continuous Integration framework
+* Release build distributed as installers on the JMRI website
+* _Recommended_ installer builds distributed on the JMRI website and promoted as the main supported version until the next _recommended_ release
 
-_Before_ a release, the development installers will be named with the branch being built and the data-time of the build (see below for discussion of those), for example JMRI-dev-major+20200622T0419Z+Re0a5fed223
- 
+Developer builds will identify themselves with versions strings like `JMRI.21.4.2-private-jake-20200625T1452Z+Rbab33d0f33` where `private` denotes a developers own private build, `jake` the username of the specific developer, and `+R` indicates the 8 digits of the SHA of HEAD when built.
+
+Jenkins 'nightly' builds will identify themselves with version strings like `JMRI.21.4.2-dev-Jenkins-20200625T1452Z+Rbab33d0f33` where `dev` denotes a development build, `Jenkins` that this was built by the Jenkins CI environment, and `+R` indicates the 8 digits of the SHA of HEAD when built.
+
+A released version is denoted as a `vI.J.K` (i.e. `v21.4.2`) tag in our common repository.
+
+Distributed installers built from a released version will identify themselves with version strings like `JMRI.21.4.2+Rbab3d0f33` where the `+R` indicates 8 digits of the tag SHA.  
+
+Periodically, a release version is flagging as a default for new/novice users to install by default.  It will be referred to by year and month: YYYY-MM, i.e 2020-07. Its contents will be identical to an already-released version.  This will be denoted as a `rYYYY-MM` (i.e. `r2020-07`) tag in our common repository. Distributed installers will identify themselves using first the date, then the underlying release, i.e. `JMRI.2020-07-21.4.2`
+
+_Before_ a release, the development installers will be named with the branch being built and the data-time of the build (see below for discussion of those), for example `JMRI-dev-major+20200622T0419Z+Re0a5fed223`
+
 ## Identifying Change Types
 
 Each PR that's merged for inclusion can require an increment of the first, second or third digit.  For this to work, we need a very reliable way to identify the right one, and make sure it takes effect.
@@ -26,7 +35,7 @@ Each PR that's merged for inclusion can require an increment of the first, secon
    - _Breaking Change_ - requires a major version change because it breaks outside code
    - _Feature_ - changes the visible API
    - _Fix_ - no change to visible API, but triggers a version change absent other non-chore changes
-   - _Chore_ - no change to Java code or published artifacts (e.g. updates build scripts and CI processes), does not trigger version change
+   - _Chore_ - no change to Java code or published artefacts (e.g. updates build scripts and CI processes), does not trigger version change
  - A PR must have exactly one of those applied for it to be merged
  - The author of the PR can propose a label, in which case only one reviewer is required.
  - If the author of the PR does not propose a label, two reviewers must sign off on the right label.
@@ -41,7 +50,7 @@ __Question__: if the first commit to a PR follows [Conventional Commits rules](h
      - Usually this is the last
      - But if 5.3.1 is released after 5.4.0 or even 6.0.0 is released, those will remain HEAD of master
      - This means that new Git users who checkout `master` will be working on a mergeable base for the next release(s)
-  - PRs labeled with _Breaking Change_ will be merged to a 'dev-major' branch, those labeled _Feature_ will be merged to a 'dev-minor' branch and those labeled with _Fix_ will be merged to a 'dev-update' branch.
+  - PRs labelled with _Breaking Change_ will be merged to a 'dev-major' branch, those labelled _Feature_ will be merged to a 'dev-minor' branch and those labelled with _Fix_ will be merged to a 'dev-update' branch.
   - Often, those perhaps not on every PR, the branches will be merged upwards: dev-update into dev-minor, dev-minor into dev-major
   - __Question__ Do _Chore_ PRs just get committed to master?
   
@@ -51,7 +60,7 @@ The periodic upward merges are meant to find conflicts where a major change turn
 
 ## Release Timing
 
-We need a process to decide when releases should be made from the branches. Making a release, which can be done from any of the three branches is basically just making new installers (with a different name injected, as we do now) and changing a few web pages, so with a bit more automatiopn it'll be quick to do.  
+We need a process to decide when releases should be made from the branches. Making a release, which can be done from any of the three branches is basically just making new installers (with a different name injected, as we do now) and changing a few web pages, so with a bit more automation it'll be quick to do.  
 
 How do we decide when to do that if we don't have a monthly cadence?
 
