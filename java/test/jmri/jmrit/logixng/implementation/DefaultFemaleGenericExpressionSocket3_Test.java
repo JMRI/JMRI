@@ -21,6 +21,59 @@ import org.junit.Test;
 public class DefaultFemaleGenericExpressionSocket3_Test {
 
     @Test
+    public void testEvaluateGeneric() throws JmriException {
+        DefaultFemaleGenericExpressionSocket socket;
+        
+        MyAnalogExpression analogExpression = new MyAnalogExpression("IQAE351", null);
+        MaleSocket analogMaleSocket =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpression);
+        
+        MyDigitalExpression digitalExpression = new MyDigitalExpression("IQDE351", null);
+        MaleSocket digitalMaleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
+        
+        MyStringExpression stringExpression = new MyStringExpression("IQSE351", null);
+        MaleSocket stringMaleSocket =
+                InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        Assert.assertEquals("evaluateGeneric() returns correct value", null, socket.evaluateGeneric());
+        
+        socket.connect(analogMaleSocket);
+        analogExpression._value = 0.0;
+        Assert.assertEquals("evaluateGeneric() returns correct value", 0.0, socket.evaluateGeneric());
+        analogExpression._value = 1.0;
+        Assert.assertEquals("evaluateGeneric() returns correct value", 1.0, socket.evaluateGeneric());
+        analogExpression._value = -1.0;
+        Assert.assertEquals("evaluateGeneric() returns correct value", -1.0, socket.evaluateGeneric());
+        socket.disconnect();
+        
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        Assert.assertEquals("evaluateGeneric() returns correct value", null, socket.evaluateGeneric());
+        
+        socket.connect(digitalMaleSocket);
+        digitalExpression._value = false;
+        Assert.assertEquals("evaluateGeneric() returns correct value", false, socket.evaluateGeneric());
+        digitalExpression._value = true;
+        Assert.assertEquals("evaluateGeneric() returns correct value", true, socket.evaluateGeneric());
+        socket.disconnect();
+        
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        Assert.assertEquals("evaluateGeneric() returns correct value", null, socket.evaluateGeneric());
+        
+        socket.connect(stringMaleSocket);
+        stringExpression._value = "";
+        Assert.assertEquals("evaluateGeneric() returns correct value", "", socket.evaluateGeneric());
+        stringExpression._value = "Hello";
+        Assert.assertEquals("evaluateGeneric() returns correct value", "Hello", socket.evaluateGeneric());
+        stringExpression._value = "1.0";
+        Assert.assertEquals("evaluateGeneric() returns correct value", "1.0", socket.evaluateGeneric());
+        socket.disconnect();
+    }
+    
+    @Test
     public void testEvaluateBoolean() throws JmriException {
         DefaultFemaleGenericExpressionSocket socket;
         

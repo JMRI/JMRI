@@ -47,13 +47,13 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     
     @Test
     public void testGetName() {
-        Assert.assertTrue("String matches", "A1".equals(femaleSocket.getName()));
+        Assert.assertTrue("String matches", "A1".equals(_femaleSocket.getName()));
     }
     
     @Test
     public void testGetDescription() {
-        Assert.assertTrue("String matches", "!s".equals(femaleSocket.getShortDescription()));
-        Assert.assertTrue("String matches", "!s A1".equals(femaleSocket.getLongDescription()));
+        Assert.assertTrue("String matches", "!s".equals(_femaleSocket.getShortDescription()));
+        Assert.assertTrue("String matches", "!s A1".equals(_femaleSocket.getLongDescription()));
     }
     
     @Override
@@ -77,10 +77,10 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
+        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test setValue() when not connected
-        ((DefaultFemaleStringActionSocket)femaleSocket).setValue("");
+        ((DefaultFemaleStringActionSocket)_femaleSocket).setValue("");
     }
     
     @Test
@@ -102,7 +102,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.EXRAVAGANZA, classes);
         
         Assert.assertTrue("maps are equal",
-                isConnectionClassesEquals(map, femaleSocket.getConnectableClasses()));
+                isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
     
     // The minimal setup for log4J
@@ -122,7 +122,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         StringActionMemory otherAction = new StringActionMemory("IQSA322", null);
         maleSocket = new DefaultMaleStringActionSocket(_action);
         otherMaleSocket = new DefaultMaleStringActionSocket(otherAction);
-        femaleSocket = new DefaultFemaleStringActionSocket(null, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleStringActionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);

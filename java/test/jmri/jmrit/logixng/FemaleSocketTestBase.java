@@ -31,7 +31,7 @@ public abstract class FemaleSocketTestBase {
     protected AtomicBoolean errorFlag;
     protected MaleSocket maleSocket;
     protected MaleSocket otherMaleSocket;
-    protected FemaleSocket femaleSocket;
+    protected FemaleSocket _femaleSocket;
     
     
     /**
@@ -106,11 +106,11 @@ public abstract class FemaleSocketTestBase {
                 
                 System.err.format("Set of classes are different for category %s:%n", category.name());
                 
-                classes = femaleSocket.getConnectableClasses().get(category);
+                classes = _femaleSocket.getConnectableClasses().get(category);
                 for (Class<? extends Base> clazz : classes) {
                     System.err.format("Set of classes are different:%n");
                     System.err.format("FemaleSocket: %s, category: %s, class: %s%n",
-                            femaleSocket.getClass().getName(),
+                            _femaleSocket.getClass().getName(),
                             category.name(),
                             clazz.getName());
 /*
@@ -154,27 +154,27 @@ public abstract class FemaleSocketTestBase {
     
     @Test
     public void testSetup() throws SocketAlreadyConnectedException {
-        Assert.assertFalse("not connected", femaleSocket.isConnected());
+        Assert.assertFalse("not connected", _femaleSocket.isConnected());
 
         // Check that we can call setup() even if the socket is not connected.
-        femaleSocket.setup();
+        _femaleSocket.setup();
         
-        femaleSocket.connect(maleSocket);
-        Assert.assertTrue("is connected", femaleSocket.isConnected());
+        _femaleSocket.connect(maleSocket);
+        Assert.assertTrue("is connected", _femaleSocket.isConnected());
         Assert.assertFalse("not setup", hasSocketBeenSetup());
-        femaleSocket.setup();
+        _femaleSocket.setup();
         Assert.assertTrue("is setup", hasSocketBeenSetup());
     }
     
     @Test
     public void testConnectIncompatibleSocket() {
         MaleSocket incompatibleSocket = new IncompatibleMaleSocket();
-        Assert.assertFalse("socket not compatible", femaleSocket.isCompatible(incompatibleSocket));
+        Assert.assertFalse("socket not compatible", _femaleSocket.isCompatible(incompatibleSocket));
         
         // Test connect incompatible male socket
         errorFlag.set(false);
         try {
-            femaleSocket.connect(incompatibleSocket);
+            _femaleSocket.connect(incompatibleSocket);
         } catch (IllegalArgumentException ex) {
             errorFlag.set(true);
         } catch (SocketAlreadyConnectedException ex) {
@@ -187,7 +187,7 @@ public abstract class FemaleSocketTestBase {
         // Test connect null
         errorFlag.set(false);
         try {
-            femaleSocket.connect(null);
+            _femaleSocket.connect(null);
         } catch (NullPointerException ex) {
             errorFlag.set(true);
         } catch (SocketAlreadyConnectedException ex) {
@@ -205,7 +205,7 @@ public abstract class FemaleSocketTestBase {
         flag.set(false);
         errorFlag.set(false);
         try {
-            femaleSocket.connect(maleSocket);
+            _femaleSocket.connect(maleSocket);
         } catch (SocketAlreadyConnectedException ex) {
             errorFlag.set(true);
         }
@@ -217,7 +217,7 @@ public abstract class FemaleSocketTestBase {
         flag.set(false);
         errorFlag.set(false);
         try {
-            femaleSocket.connect(otherMaleSocket);
+            _femaleSocket.connect(otherMaleSocket);
         } catch (SocketAlreadyConnectedException ex) {
             errorFlag.set(true);
         }
@@ -230,38 +230,38 @@ public abstract class FemaleSocketTestBase {
     public void testDisconnect() throws SocketAlreadyConnectedException {
         
         // Ensure the socket is connected before this test.
-        if (!femaleSocket.isConnected()) {
-            femaleSocket.connect(maleSocket);
+        if (!_femaleSocket.isConnected()) {
+            _femaleSocket.connect(maleSocket);
         }
         
         // Test disconnect male socket
         flag.set(false);
-        femaleSocket.disconnect();
+        _femaleSocket.disconnect();
         
         Assert.assertTrue("Socket is disconnected", flag.get());
         
         // Test connect male socket
         flag.set(false);
         errorFlag.set(false);
-        femaleSocket.disconnect();
+        _femaleSocket.disconnect();
         
         Assert.assertFalse("Socket is not disconnected again", flag.get());
     }
     
     @Test
     public void testSetParentForAllChildren() throws SocketAlreadyConnectedException {
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
-        femaleSocket.setParentForAllChildren();
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
+        _femaleSocket.setParentForAllChildren();
         Assert.assertNull("malesocket.getParent() is null", maleSocket.getParent());
-        femaleSocket.connect(maleSocket);
-        femaleSocket.setParentForAllChildren();
-        Assert.assertEquals("malesocket.getParent() is femaleSocket", femaleSocket, maleSocket.getParent());
+        _femaleSocket.connect(maleSocket);
+        _femaleSocket.setParentForAllChildren();
+        Assert.assertEquals("malesocket.getParent() is femaleSocket", _femaleSocket, maleSocket.getParent());
     }
     
     private boolean setName_verifyException(String newName, String expectedExceptionMessage) {
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         try {
-            femaleSocket.setName(newName);
+            _femaleSocket.setName(newName);
         } catch (IllegalArgumentException ex) {
             hasThrown.set(true);
             Assert.assertTrue("Error message is correct", ex.getMessage().equals(expectedExceptionMessage));
@@ -272,17 +272,17 @@ public abstract class FemaleSocketTestBase {
     @Test
     public void testSetName() {
         // Both letters and digits is OK
-        femaleSocket.setName("X12");
-        Assert.assertTrue("name matches", "X12".equals(femaleSocket.getName()));
+        _femaleSocket.setName("X12");
+        Assert.assertTrue("name matches", "X12".equals(_femaleSocket.getName()));
         
         // Only letters is OK
-        femaleSocket.setName("Xyz");
-        Assert.assertTrue("name matches", "Xyz".equals(femaleSocket.getName()));
+        _femaleSocket.setName("Xyz");
+        Assert.assertTrue("name matches", "Xyz".equals(_femaleSocket.getName()));
         
         // Both letters and digits in random order is OK as long as the first
         // character is a letter
-        femaleSocket.setName("X1b2c3Y");
-        Assert.assertTrue("name matches", "X1b2c3Y".equals(femaleSocket.getName()));
+        _femaleSocket.setName("X1b2c3Y");
+        Assert.assertTrue("name matches", "X1b2c3Y".equals(_femaleSocket.getName()));
         
         // The name must start with a letter, not a digit
         Assert.assertTrue("exception is thrown", setName_verifyException("123", "the name is not valid: 123"));
@@ -308,20 +308,20 @@ public abstract class FemaleSocketTestBase {
     
     @Test
     public void testLock() throws SocketAlreadyConnectedException {
-        femaleSocket.connect(maleSocket);
-        Assert.assertTrue("socket is connected", femaleSocket.isConnected());
+        _femaleSocket.connect(maleSocket);
+        Assert.assertTrue("socket is connected", _femaleSocket.isConnected());
         
-        femaleSocket.setLock(Base.Lock.NONE);
-        Assert.assertEquals("lock matches", Base.Lock.NONE, femaleSocket.getLock());
-        femaleSocket.setLock(Base.Lock.USER_LOCK);
-        Assert.assertEquals("lock matches", Base.Lock.USER_LOCK, femaleSocket.getLock());
-        femaleSocket.setLock(Base.Lock.HARD_LOCK);
-        Assert.assertEquals("lock matches", Base.Lock.HARD_LOCK, femaleSocket.getLock());
+        _femaleSocket.setLock(Base.Lock.NONE);
+        Assert.assertEquals("lock matches", Base.Lock.NONE, _femaleSocket.getLock());
+        _femaleSocket.setLock(Base.Lock.USER_LOCK);
+        Assert.assertEquals("lock matches", Base.Lock.USER_LOCK, _femaleSocket.getLock());
+        _femaleSocket.setLock(Base.Lock.HARD_LOCK);
+        Assert.assertEquals("lock matches", Base.Lock.HARD_LOCK, _femaleSocket.getLock());
         
-        femaleSocket.disconnect();
+        _femaleSocket.disconnect();
         boolean hasThrown = false;
         try {
-            femaleSocket.setLock(Base.Lock.NONE);
+            _femaleSocket.setLock(Base.Lock.NONE);
         } catch (UnsupportedOperationException e) {
             hasThrown = true;
         }
@@ -330,7 +330,7 @@ public abstract class FemaleSocketTestBase {
         
         hasThrown = false;
         try {
-            femaleSocket.getLock();
+            _femaleSocket.getLock();
         } catch (UnsupportedOperationException e) {
             hasThrown = true;
         }
@@ -340,24 +340,24 @@ public abstract class FemaleSocketTestBase {
     
     @Test
     public void testDisposeWithoutChild() {
-        femaleSocket.dispose();
-        Assert.assertFalse("socket not connected", femaleSocket.isConnected());
+        _femaleSocket.dispose();
+        Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
     }
     
     @Test
     public void testDisposeWithChild() throws SocketAlreadyConnectedException {
-        Assert.assertFalse("socket not connected", femaleSocket.isConnected());
-        femaleSocket.connect(maleSocket);
-        Assert.assertTrue("socket is connected", femaleSocket.isConnected());
-        femaleSocket.dispose();
-        Assert.assertFalse("socket not connected", femaleSocket.isConnected());
+        Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
+        _femaleSocket.connect(maleSocket);
+        Assert.assertTrue("socket is connected", _femaleSocket.isConnected());
+        _femaleSocket.dispose();
+        Assert.assertFalse("socket not connected", _femaleSocket.isConnected());
     }
     
     @Test
     public void testMethodsThatAreNotSupported() {
         errorFlag.set(false);
         try {
-            femaleSocket.printTree((PrintWriter)null, "");
+            _femaleSocket.printTree((PrintWriter)null, "");
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -365,7 +365,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.printTree((Locale)null, (PrintWriter)null, "");
+            _femaleSocket.printTree((Locale)null, (PrintWriter)null, "");
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -373,7 +373,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.getConditionalNG();
+            _femaleSocket.getConditionalNG();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -381,7 +381,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.getLogixNG();
+            _femaleSocket.getLogixNG();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -389,7 +389,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.getRoot();
+            _femaleSocket.getRoot();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -397,7 +397,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.getCategory();
+            _femaleSocket.getCategory();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -413,7 +413,7 @@ public abstract class FemaleSocketTestBase {
 */        
         errorFlag.set(false);
         try {
-            femaleSocket.isExternal();
+            _femaleSocket.isExternal();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -421,7 +421,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.getChild(0);
+            _femaleSocket.getChild(0);
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -429,7 +429,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.getChildCount();
+            _femaleSocket.getChildCount();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -437,7 +437,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.getUserName();
+            _femaleSocket.getUserName();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -445,7 +445,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.setUserName("aaa");
+            _femaleSocket.setUserName("aaa");
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -453,7 +453,7 @@ public abstract class FemaleSocketTestBase {
         
         errorFlag.set(false);
         try {
-            femaleSocket.getSystemName();
+            _femaleSocket.getSystemName();
         } catch (UnsupportedOperationException ex) {
             errorFlag.set(true);
         }
@@ -465,7 +465,7 @@ public abstract class FemaleSocketTestBase {
     public void testCategory() {
         // Test that the classes method getCategory() returns the same value as
         // the factory.
-        Map<Category, List<Class<? extends Base>>> map = femaleSocket.getConnectableClasses();
+        Map<Category, List<Class<? extends Base>>> map = _femaleSocket.getConnectableClasses();
         
         for (Map.Entry<Category, List<Class<? extends Base>>> entry : map.entrySet()) {
             
@@ -481,7 +481,7 @@ public abstract class FemaleSocketTestBase {
     
     @Test
     public void testSWISystemName() {   // SWI = SwingConfiguratorInterface
-        Map<Category, List<Class<? extends Base>>> map = femaleSocket.getConnectableClasses();
+        Map<Category, List<Class<? extends Base>>> map = _femaleSocket.getConnectableClasses();
         
         for (Map.Entry<Category, List<Class<? extends Base>>> entry : map.entrySet()) {
             

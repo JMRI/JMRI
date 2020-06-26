@@ -37,13 +37,13 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
     
     @Test
     public void testGetName() {
-        Assert.assertTrue("String matches", "E1".equals(femaleSocket.getName()));
+        Assert.assertTrue("String matches", "E1".equals(_femaleSocket.getName()));
     }
     
     @Test
     public void testGetDescription() {
-        Assert.assertTrue("String matches", "?".equals(femaleSocket.getShortDescription()));
-        Assert.assertTrue("String matches", "? E1".equals(femaleSocket.getLongDescription()));
+        Assert.assertTrue("String matches", "?".equals(_femaleSocket.getShortDescription()));
+        Assert.assertTrue("String matches", "? E1".equals(_femaleSocket.getLongDescription()));
     }
     
     @Override
@@ -67,31 +67,31 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
+        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test evaluate() when not connected
-        Assert.assertFalse("result is false", ((DefaultFemaleDigitalExpressionSocket)femaleSocket).evaluate());
+        Assert.assertFalse("result is false", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());
         // Test evaluate() when connected
-        femaleSocket.connect(maleSocket);
+        _femaleSocket.connect(maleSocket);
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         _expression.setTurnout(t);
         _expression.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
         t.setState(Turnout.CLOSED);
-        Assert.assertFalse("turnout is not thrown", ((DefaultFemaleDigitalExpressionSocket)femaleSocket).evaluate());
+        Assert.assertFalse("turnout is not thrown", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());
         t.setState(Turnout.THROWN);
-        Assert.assertTrue("turnout is thrown", ((DefaultFemaleDigitalExpressionSocket)femaleSocket).evaluate());
+        Assert.assertTrue("turnout is thrown", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());
     }
     
     @Test
     public void testReset() throws SocketAlreadyConnectedException {
         // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
+        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test reset() when not connected
-        ((DefaultFemaleDigitalExpressionSocket)femaleSocket).reset();
+        ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).reset();
         // Test reset() when connected
-        femaleSocket.connect(maleSocket);
-        ((DefaultFemaleDigitalExpressionSocket)femaleSocket).reset();
+        _femaleSocket.connect(maleSocket);
+        ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).reset();
     }
     
     @Test
@@ -123,7 +123,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         map.put(Category.EXRAVAGANZA, classes);
         
         Assert.assertTrue("maps are equal",
-                isConnectionClassesEquals(map, femaleSocket.getConnectableClasses()));
+                isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
     
     // The minimal setup for log4J
@@ -140,7 +140,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         ExpressionTurnout otherExpression = new ExpressionTurnout("IQDE322", null);
         maleSocket = new DefaultMaleDigitalExpressionSocket(_expression);
         otherMaleSocket = new DefaultMaleDigitalExpressionSocket(otherExpression);
-        femaleSocket = new DefaultFemaleDigitalExpressionSocket(null, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleDigitalExpressionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);

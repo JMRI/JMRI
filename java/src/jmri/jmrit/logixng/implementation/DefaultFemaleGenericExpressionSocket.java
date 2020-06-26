@@ -10,29 +10,14 @@ import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleAnalogExpressionSocket;
-import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleStringExpressionSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.MaleAnalogExpressionSocket;
-import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.MaleStringExpressionSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.StringExpressionManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket;
 import jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.string.implementation.DefaultFemaleStringExpressionSocket;
 import jmri.util.TypeConversionUtil;
 
 /**
- *
+ * Default implementation of the FemaleGenericExpressionSocket
  */
 public class DefaultFemaleGenericExpressionSocket
         extends AbstractFemaleSocket
@@ -416,7 +401,8 @@ public class DefaultFemaleGenericExpressionSocket
     /** {@inheritDoc} */
     @Override
     public void disconnect() {
-        if ((_currentActiveSocket != null) && _currentActiveSocket.isConnected()) {
+        if ((_currentActiveSocket != null)
+                && _currentActiveSocket.isConnected()) {
             
             _currentActiveSocket.disconnect();
         }

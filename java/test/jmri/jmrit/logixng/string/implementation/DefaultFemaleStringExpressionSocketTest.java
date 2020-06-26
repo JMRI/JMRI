@@ -39,13 +39,13 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
     
     @Test
     public void testGetName() {
-        Assert.assertTrue("String matches", "E1".equals(femaleSocket.getName()));
+        Assert.assertTrue("String matches", "E1".equals(_femaleSocket.getName()));
     }
     
     @Test
     public void testGetDescription() {
-        Assert.assertTrue("String matches", "?s".equals(femaleSocket.getShortDescription()));
-        Assert.assertTrue("String matches", "?s E1".equals(femaleSocket.getLongDescription()));
+        Assert.assertTrue("String matches", "?s".equals(_femaleSocket.getShortDescription()));
+        Assert.assertTrue("String matches", "?s E1".equals(_femaleSocket.getLongDescription()));
     }
     
     @Override
@@ -69,28 +69,28 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
+        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test evaluate() when not connected
-        Assert.assertEquals("strings are equals", "", ((DefaultFemaleStringExpressionSocket)femaleSocket).evaluate());
+        Assert.assertEquals("strings are equals", "", ((DefaultFemaleStringExpressionSocket)_femaleSocket).evaluate());
         // Test evaluate() when connected
-        femaleSocket.connect(maleSocket);
+        _femaleSocket.connect(maleSocket);
         _memory.setValue("");
-        Assert.assertEquals("strings are equals", "", ((DefaultFemaleStringExpressionSocket)femaleSocket).evaluate());
+        Assert.assertEquals("strings are equals", "", ((DefaultFemaleStringExpressionSocket)_femaleSocket).evaluate());
         _memory.setValue("Test");
-        Assert.assertEquals("strings are equals", "Test", ((DefaultFemaleStringExpressionSocket)femaleSocket).evaluate());
+        Assert.assertEquals("strings are equals", "Test", ((DefaultFemaleStringExpressionSocket)_femaleSocket).evaluate());
     }
     
     @Test
     public void testReset() throws SocketAlreadyConnectedException {
         // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
+        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test reset() when not connected
-        ((DefaultFemaleStringExpressionSocket)femaleSocket).reset();
+        ((DefaultFemaleStringExpressionSocket)_femaleSocket).reset();
         // Test reset() when connected
-        femaleSocket.connect(maleSocket);
-        ((DefaultFemaleStringExpressionSocket)femaleSocket).reset();
+        _femaleSocket.connect(maleSocket);
+        ((DefaultFemaleStringExpressionSocket)_femaleSocket).reset();
     }
     
     @Test
@@ -112,7 +112,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         map.put(Category.EXRAVAGANZA, classes);
         
         Assert.assertTrue("maps are equal",
-                isConnectionClassesEquals(map, femaleSocket.getConnectableClasses()));
+                isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
     
     // The minimal setup for log4J
@@ -132,7 +132,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         StringExpressionMemory otherExpression = new StringExpressionMemory("IQSE322", null);
         maleSocket = new DefaultMaleStringExpressionSocket(_expression);
         otherMaleSocket = new DefaultMaleStringExpressionSocket(otherExpression);
-        femaleSocket = new DefaultFemaleStringExpressionSocket(null, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleStringExpressionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);

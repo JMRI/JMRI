@@ -44,13 +44,13 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     
     @Test
     public void testGetName() {
-        Assert.assertTrue("String matches", "E1".equals(femaleSocket.getName()));
+        Assert.assertTrue("String matches", "E1".equals(_femaleSocket.getName()));
     }
     
     @Test
     public void testGetDescription() {
-        Assert.assertTrue("String matches", "?~".equals(femaleSocket.getShortDescription()));
-        Assert.assertTrue("String matches", "?~ E1".equals(femaleSocket.getLongDescription()));
+        Assert.assertTrue("String matches", "?~".equals(_femaleSocket.getShortDescription()));
+        Assert.assertTrue("String matches", "?~ E1".equals(_femaleSocket.getLongDescription()));
     }
     
     @Override
@@ -74,28 +74,28 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
+        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test evaluate() when not connected
-        Assert.assertTrue("values are equals", 0.0 == ((DefaultFemaleAnalogExpressionSocket)femaleSocket).evaluate());
+        Assert.assertTrue("values are equals", 0.0 == ((DefaultFemaleAnalogExpressionSocket)_femaleSocket).evaluate());
         // Test evaluate() when connected
-        femaleSocket.connect(maleSocket);
+        _femaleSocket.connect(maleSocket);
         _memory.setValue(0.0);
-        Assert.assertTrue("values are equals", 0.0 == ((DefaultFemaleAnalogExpressionSocket)femaleSocket).evaluate());
+        Assert.assertTrue("values are equals", 0.0 == ((DefaultFemaleAnalogExpressionSocket)_femaleSocket).evaluate());
         _memory.setValue(1.2);
-        Assert.assertTrue("values are equals", 1.2 == ((DefaultFemaleAnalogExpressionSocket)femaleSocket).evaluate());
+        Assert.assertTrue("values are equals", 1.2 == ((DefaultFemaleAnalogExpressionSocket)_femaleSocket).evaluate());
     }
     
     @Test
     public void testReset() throws SocketAlreadyConnectedException {
         // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
+        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test reset() when not connected
-        ((DefaultFemaleAnalogExpressionSocket)femaleSocket).reset();
+        ((DefaultFemaleAnalogExpressionSocket)_femaleSocket).reset();
         // Test reset() when connected
-        femaleSocket.connect(maleSocket);
-        ((DefaultFemaleAnalogExpressionSocket)femaleSocket).reset();
+        _femaleSocket.connect(maleSocket);
+        ((DefaultFemaleAnalogExpressionSocket)_femaleSocket).reset();
     }
     
     @Test
@@ -117,7 +117,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         map.put(Category.EXRAVAGANZA, classes);
         
         Assert.assertTrue("maps are equal",
-                isConnectionClassesEquals(map, femaleSocket.getConnectableClasses()));
+                isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
     
     // The minimal setup for log4J
@@ -137,7 +137,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         AnalogExpressionBean otherExpression = new AnalogExpressionMemory("IQAE322", null);
         maleSocket = new DefaultMaleAnalogExpressionSocket(_expression);
         otherMaleSocket = new DefaultMaleAnalogExpressionSocket(otherExpression);
-        femaleSocket = new DefaultFemaleAnalogExpressionSocket(null, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleAnalogExpressionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);

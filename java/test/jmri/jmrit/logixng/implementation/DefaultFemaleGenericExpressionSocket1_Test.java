@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
@@ -42,11 +43,11 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     @Override
     public void testSetParentForAllChildren() throws SocketAlreadyConnectedException {
         // This female socket has child female sockets, which requires special treatment
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
-        femaleSocket.setParentForAllChildren();
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
+        _femaleSocket.setParentForAllChildren();
         Assert.assertNull("malesocket.getParent() is null", maleSocket.getParent());
-        femaleSocket.connect(maleSocket);
-        femaleSocket.setParentForAllChildren();
+        _femaleSocket.connect(maleSocket);
+        _femaleSocket.setParentForAllChildren();
         Assert.assertEquals("malesocket.getParent() is femaleSocket",
                 femaleGenericSocket,
                 maleSocket.getParent());
@@ -70,13 +71,13 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     
     @Test
     public void testGetName() {
-        Assert.assertTrue("String matches", "E1".equals(femaleSocket.getName()));
+        Assert.assertTrue("String matches", "E1".equals(_femaleSocket.getName()));
     }
     
     @Test
     public void testGetDescription() {
-        Assert.assertTrue("String matches", "?".equals(femaleSocket.getShortDescription()));
-        Assert.assertTrue("String matches", "? E1".equals(femaleSocket.getLongDescription()));
+        Assert.assertTrue("String matches", "?".equals(_femaleSocket.getShortDescription()));
+        Assert.assertTrue("String matches", "? E1".equals(_femaleSocket.getLongDescription()));
     }
     
     @Override
@@ -100,21 +101,60 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     // DefaultFemaleGenericExpressionSocket is a virtual female socket that
     // is not used directly, but has inner private classes that implements the
     // female sockets. See the classes AnalogSocket, DigitalSocket and StringSocket.
-    @Ignore("DefaultFemaleGenericExpressionSocket does not tell the listeners")
     @Test
     @Override
     public void testConnect() {
-        // Do nothing
+        try {
+            _femaleSocket.connect(maleSocket);
+            
+            // Try to connect twice. This should fail.
+            boolean hasThrown = false;
+            try {
+                _femaleSocket.connect(maleSocket);
+            } catch (SocketAlreadyConnectedException e2) {
+                hasThrown = true;
+                Assert.assertEquals("Socket is already connected", e2.getMessage());
+            }
+            Assert.assertTrue("Exception thrown", hasThrown);
+        } catch (SocketAlreadyConnectedException e) {
+            throw new RuntimeException(e);
+        }
     }
     
     // DefaultFemaleGenericExpressionSocket is a virtual female socket that
     // is not used directly, but has inner private classes that implements the
     // female sockets. See the classes AnalogSocket, DigitalSocket and StringSocket.
-    @Ignore("DefaultFemaleGenericExpressionSocket does not tell the listeners")
     @Test
     @Override
     public void testDisconnect() throws SocketAlreadyConnectedException {
-        // Do nothing
+        try {
+            Field _currentActiveSocketField = _femaleSocket.getClass()
+                    .getDeclaredField("_currentActiveSocket");
+            
+            _currentActiveSocketField.setAccessible(true);
+            
+            Assert.assertNull("_currentActiveSocket is null",
+                    (FemaleSocket) _currentActiveSocketField.get(_femaleSocket));
+            
+            // Test disconnect() without connected socket
+            _femaleSocket.disconnect();
+            
+            Assert.assertNull("_currentActiveSocket is null",
+                    (FemaleSocket) _currentActiveSocketField.get(_femaleSocket));
+            
+            // Test disconnect() without connected socket
+            _femaleSocket.connect(maleSocket);
+            
+            log.warn("_currentActiveSocket: {}", _currentActiveSocketField.get(_femaleSocket).getClass().getName());
+            Assert.assertEquals("_currentActiveSocket is has correct class",
+                    "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                    _currentActiveSocketField.get(_femaleSocket).getClass().getName());
+            
+            _femaleSocket.disconnect();
+        } catch (SocketAlreadyConnectedException | IllegalAccessException
+                | NoSuchFieldException | SecurityException e) {
+            throw new RuntimeException(e);
+        }
     }
     
     @Test
@@ -347,7 +387,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
                 flag.set(true);
             }
         }, "E1");
-        femaleSocket = femaleGenericSocket;
+        _femaleSocket = femaleGenericSocket;
     }
 
     @After
@@ -372,4 +412,6 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         }
     }
     
+    private final static org.slf4j.Logger log =
+            org.slf4j.LoggerFactory.getLogger(DefaultFemaleGenericExpressionSocket1_Test.class);
 }

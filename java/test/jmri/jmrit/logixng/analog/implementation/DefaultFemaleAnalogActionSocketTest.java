@@ -48,13 +48,13 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
     
     @Test
     public void testGetName() {
-        Assert.assertTrue("String matches", "A1".equals(femaleSocket.getName()));
+        Assert.assertTrue("String matches", "A1".equals(_femaleSocket.getName()));
     }
     
     @Test
     public void testGetDescription() {
-        Assert.assertEquals("String matches", "!~", femaleSocket.getShortDescription());
-        Assert.assertEquals("String matches", "!~ A1", femaleSocket.getLongDescription());
+        Assert.assertEquals("String matches", "!~", _femaleSocket.getShortDescription());
+        Assert.assertEquals("String matches", "!~ A1", _femaleSocket.getLongDescription());
     }
     
     @Override
@@ -78,10 +78,10 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());
+        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
+        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
         // Test setValue() when not connected
-        ((DefaultFemaleAnalogActionSocket)femaleSocket).setValue(0.0);
+        ((DefaultFemaleAnalogActionSocket)_femaleSocket).setValue(0.0);
     }
     
     @Test
@@ -103,7 +103,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.EXRAVAGANZA, classes);
         
         Assert.assertTrue("maps are equal",
-                isConnectionClassesEquals(map, femaleSocket.getConnectableClasses()));
+                isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
 /*    
     @Test
@@ -141,7 +141,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         AnalogActionBean otherAction = new AnalogActionMemory("IQAA322", null);
         maleSocket = new DefaultMaleAnalogActionSocket(_action);
         otherMaleSocket = new DefaultMaleAnalogActionSocket(otherAction);
-        femaleSocket = new DefaultFemaleAnalogActionSocket(null, new FemaleSocketListener() {
+        _femaleSocket = new DefaultFemaleAnalogActionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {
                 flag.set(true);
