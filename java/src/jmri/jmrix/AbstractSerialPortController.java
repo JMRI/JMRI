@@ -464,6 +464,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @Override
     public void dispose() {
+        allowConnectionRecovery = false;
         super.dispose();
     }
 
@@ -498,25 +499,21 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     }
 
     /**
-     * Attempts to reconnect to a failed Server
+     * Attempts to reconnect to a failed port.
      */
     public void reconnect() {
         // If the connection is already open, then we shouldn't try a re-connect.
-        if (opened && !allowConnectionRecovery) {
+        if (opened || !allowConnectionRecovery) {
             return;
         }
+        closeConnection();
         ReconnectWait thread = new ReconnectWait();
+        thread.setName("Connection Recovery " + getCurrentPortName() );
         thread.start();
         try {
             thread.join();
         } catch (InterruptedException e) {
             log.error("Unable to join to the reconnection thread {}", e.getMessage());
-        }
-        if (!opened) {
-            log.error("Failed to re-establish connectivity");
-        } else {
-            log.info("Reconnected to {}", getCurrentPortName());
-            resetupConnection();
         }
     }
 
@@ -538,12 +535,14 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         public void run() {
             boolean reply = true;
             int count = 0;
-            int secondCount = 0;
-            while (reply) {
-                safeSleep(reconnectinterval, "Waiting");
+            int interval = reconnectinterval;
+            int totalsleep = 0;
+            while (reply && allowConnectionRecovery) {
+                safeSleep(interval*1000L, "Waiting");
                 count++;
+                totalsleep += interval;
                 try {
-                    log.error("Retrying Connection attempt {}-{}", secondCount, count);
+                    log.info("Retrying Connection attempt {} for {}", count,mPort);
                     Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
                     while (portIDs.hasMoreElements()) {
                         CommPortIdentifier id = portIDs.nextElement();
@@ -551,31 +550,32 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                         if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
                         {
                             if (id.getName().equals(mPort)) {
-                                log.info("{} port has reappeared as being valid, trying to reconnect", mPort);
+                                log.info(Bundle.getMessage("ReconnectPortReAppear", mPort));
                                 openPort(mPort, "jmri");
                             }
                         }
                     }
                 } catch (RuntimeException e) {
-                    log.warn("failed to reconnect to port {}", (mPort == null ? "null" : mPort));
+                    log.warn(Bundle.getMessage("ReconnectFail",(mPort == null ? "null" : mPort)));
                 }
                 reply = !opened;
-                if (count >= retryAttempts) {
-                    log.error("Unable to reconnect after {} attempts, increasing duration of retries", count);
-                    // retrying but with twice the retry interval.
-                    reconnectinterval = reconnectinterval * 2;
-                    count = 0;
-                    secondCount++;
-                }
-                if (secondCount >= 10) {
-                    log.error("Giving up on reconnecting after 100 attempts to reconnect");
-                    reply = false;
+                if (!opened) {
+                    if (count % 10==0 ) {
+                        //retrying but with twice the retry interval.
+                        interval = Math.min(interval * 2, reconnectMaxInterval);
+                        log.error(Bundle.getMessage("ReconnectFailRetry", totalsleep, count,interval));
+                        log.info(Bundle.getMessage("ReconnectSerialTip"));
+                    }
+                    if ((reconnectMaxAttempts > -1) && (count >= reconnectMaxAttempts)) {
+                        log.error(Bundle.getMessage("ReconnectFailAbort",totalsleep,count));
+                        reply = false;
+                    }
                 }
             }
             if (!opened) {
-                log.error("Failed to re-establish connectivity");
+                log.error(Bundle.getMessage("ReconnectFailAbort"));
             } else {
-                log.error("Reconnected to {}", getCurrentPortName());
+                log.info(Bundle.getMessage("ReconnectedTo",getCurrentPortName()));
                 resetupConnection();
             }
         }

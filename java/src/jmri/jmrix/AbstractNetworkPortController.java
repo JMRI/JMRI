@@ -275,10 +275,10 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     @Override
     public void dispose() {
+        allowConnectionRecovery = false;
         super.dispose();
     }
 
-    //private boolean allowConnectionRecovery = false;
     /**
      * Close the client side socket connection, reset the open flag and attempt
      * a reconnection. Called when a connection is initially lost.
@@ -303,7 +303,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     public void reconnect() {
 
         // If the connection is already open, then we shouldn't try a re-connect.
-        if (opened && !allowConnectionRecovery) {
+        if (opened || !allowConnectionRecovery) {
             return;
         }
         ReconnectWait thread = new ReconnectWait();
@@ -314,12 +314,11 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         } catch (InterruptedException e) {
             log.error("Unable to join to the reconnection thread");
         }
-
         if (!opened) {
-            log.error("Failed to re-establish connectivity");
+            
         } else {
             resetupConnection();
-            log.info("Reconnected to {}", getHostName());
+            log.info(Bundle.getMessage("ReconnectedTo", getHostName()));
         }
     }
 
@@ -348,11 +347,12 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         public void run() {
             boolean reply = true;
             int count = 0;
-            int secondCount = 0;
-            while (reply) {
-                safeSleep(reconnectinterval, "Waiting");
+            int interval = reconnectinterval;
+            int totalsleep = 0;
+            while (reply && allowConnectionRecovery) {
+                safeSleep(interval*1000L, "Waiting");
                 count++;
-
+                totalsleep += interval;
                 try {
                     // if the device allows autoConfiguration,
                     // we need to run the autoConfigure() call
@@ -365,17 +365,17 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                     log.trace("restart failed", ex); // main warning to log.error done within connect();
                     // if returned on exception stops thread and connection attempts
                 }
-                
                 reply = !opened;
-                if (count >= retryAttempts) {
-                    log.error("Unable to reconnect after {} Attempts, increasing duration of retries", count);
-                    //retrying but with twice the retry interval.
-                    reconnectinterval = reconnectinterval * 2;
-                    count = 0;
-                    secondCount++;
+                if (opened){
+                    return;
                 }
-                if (secondCount >= 10) {
-                    log.error("Giving up on reconnecting after 100 attempts");
+                if (count % 10==0) {
+                    //retrying but with twice the retry interval.
+                    interval = Math.min(interval * 2, reconnectMaxInterval);
+                    log.error(Bundle.getMessage("ReconnectFailRetry", totalsleep, count,interval));
+                }
+                if ((reconnectMaxAttempts > -1) && (count >= reconnectMaxAttempts)) {
+                    log.error(Bundle.getMessage("ReconnectFailAbort",totalsleep,count));
                     reply = false;
                 }
             }
