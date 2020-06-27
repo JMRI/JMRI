@@ -23,6 +23,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
     @Test
     public void testEvaluateGeneric() throws JmriException {
         DefaultFemaleGenericExpressionSocket socket;
+        FemaleGenericExpressionSocket internalGenericSocket;
         
         MyAnalogExpression analogExpression = new MyAnalogExpression("IQAE351", null);
         MaleSocket analogMaleSocket =
@@ -37,39 +38,56 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
         
         socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        internalGenericSocket = socket.getGenericSocket();
+        
         Assert.assertEquals("evaluateGeneric() returns correct value", null, socket.evaluateGeneric());
+        Assert.assertEquals("evaluateGeneric() returns correct value", null, internalGenericSocket.evaluateGeneric());
         
         socket.connect(analogMaleSocket);
         analogExpression._value = 0.0;
-        Assert.assertEquals("evaluateGeneric() returns correct value", 0.0, socket.evaluateGeneric());
+        Assert.assertTrue("evaluateGeneric() returns correct value", 0.0 == (Double)socket.evaluateGeneric());
+        Assert.assertTrue("evaluateGeneric() returns correct value", 0.0 == (Double)internalGenericSocket.evaluateGeneric());
         analogExpression._value = 1.0;
-        Assert.assertEquals("evaluateGeneric() returns correct value", 1.0, socket.evaluateGeneric());
+        Assert.assertTrue("evaluateGeneric() returns correct value", 1.0 == (Double)socket.evaluateGeneric());
+        Assert.assertTrue("evaluateGeneric() returns correct value", 1.0 == (Double)internalGenericSocket.evaluateGeneric());
         analogExpression._value = -1.0;
-        Assert.assertEquals("evaluateGeneric() returns correct value", -1.0, socket.evaluateGeneric());
+        Assert.assertTrue("evaluateGeneric() returns correct value", -1.0 == (Double)socket.evaluateGeneric());
+        Assert.assertTrue("evaluateGeneric() returns correct value", -1.0 == (Double)internalGenericSocket.evaluateGeneric());
         socket.disconnect();
         
         
         socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        internalGenericSocket = socket.getGenericSocket();
+        
         Assert.assertEquals("evaluateGeneric() returns correct value", null, socket.evaluateGeneric());
+        Assert.assertEquals("evaluateGeneric() returns correct value", null, internalGenericSocket.evaluateGeneric());
         
         socket.connect(digitalMaleSocket);
         digitalExpression._value = false;
-        Assert.assertEquals("evaluateGeneric() returns correct value", false, socket.evaluateGeneric());
+        Assert.assertFalse("evaluateGeneric() returns correct value", (Boolean)socket.evaluateGeneric());
+        Assert.assertFalse("evaluateGeneric() returns correct value", (Boolean)internalGenericSocket.evaluateGeneric());
         digitalExpression._value = true;
-        Assert.assertEquals("evaluateGeneric() returns correct value", true, socket.evaluateGeneric());
+        Assert.assertTrue("evaluateGeneric() returns correct value", (Boolean)socket.evaluateGeneric());
+        Assert.assertTrue("evaluateGeneric() returns correct value", (Boolean)internalGenericSocket.evaluateGeneric());
         socket.disconnect();
         
         
         socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        internalGenericSocket = socket.getGenericSocket();
+        
         Assert.assertEquals("evaluateGeneric() returns correct value", null, socket.evaluateGeneric());
+        Assert.assertEquals("evaluateGeneric() returns correct value", null, internalGenericSocket.evaluateGeneric());
         
         socket.connect(stringMaleSocket);
         stringExpression._value = "";
         Assert.assertEquals("evaluateGeneric() returns correct value", "", socket.evaluateGeneric());
+        Assert.assertEquals("evaluateGeneric() returns correct value", "", internalGenericSocket.evaluateGeneric());
         stringExpression._value = "Hello";
         Assert.assertEquals("evaluateGeneric() returns correct value", "Hello", socket.evaluateGeneric());
+        Assert.assertEquals("evaluateGeneric() returns correct value", "Hello", internalGenericSocket.evaluateGeneric());
         stringExpression._value = "1.0";
         Assert.assertEquals("evaluateGeneric() returns correct value", "1.0", socket.evaluateGeneric());
+        Assert.assertEquals("evaluateGeneric() returns correct value", "1.0", internalGenericSocket.evaluateGeneric());
         socket.disconnect();
     }
     
