@@ -42,7 +42,16 @@ Each PR that's merged for inclusion can require an increment of the first, secon
  
 Since we'll now be requiring a review, the reviewer can also encourage reasonable additions to the release note. A more-automated process for creating release notes with useful content would help this succeed.
 
-We recommend that people use [Conventional Commits rules](https://www.conventionalcommits.org/en/v1.0.0/) in their commit comments to help identify how a PR should be labelled.  GitHub makes the comment for the first commit in a PR particularly visible.  We can't count on that instead of a label, though, because the impact of a PR might have changed since its first PR, and/or because the proper label for the PR might not be what the developer thought when writing that first comment. 
+There's some judgement involved in this labelling process.  An algorithmic change might change behavior enough to add a new feature (_Feature_) or cause issues for downstream code (_Breaking Change_).  On the other hand, changing a class API by marking methods as deprecated for future removal is not a breaking change _yet__, and can be marked as _Fix_.
+
+We recommend that people use [Conventional Commits rules](https://www.conventionalcommits.org/en/v1.0.0/) in their commit comments to help identify how a PR should be labelled.  GitHub makes the comment for the first commit in a PR particularly visible.  To do this:
+
+ - Put ``[fix]` at the start of your commit message if the commit should be labelled _Fix_ and included in the next I.J.++K release
+ - Put `[chore]` at the start of your commit message if the commit should be labelled _Chore_ and included in the next I.J.++K release
+ - Put `[feat]` at the start of your commit message if the commit has sufficient changes that it should be should be labelled _Feature_ and included in the next I.++J.0 release
+ - Put `[feat]` at the start of your commit message and `BREAKING CHANGE` somewhere in the commit message if the commit should be labelled `Breaking Change` and included in the next I.J.++K release
+
+We can't count on the commit messages instead of a label completely, because the impact of a PR might have changed since its first commit, and/or because the proper label for the PR might not be what the developer thought when writing the commit comment(s). 
 
 ## Use of Git to Accumulate Changes
  
@@ -112,8 +121,6 @@ The hardest thing for "major change" releases will be developing a consensus aro
  
 JMRI has, for a long time, followed a Linux-like release numbering system where odd-numbered minor releases were for development and tests, whilst even numbered releases were for production. That distinction is no longer present here.
 
-There is no longer an explicit [deprecation cycle](https://www.jmri.org/help/en/html/doc/Technical/RP.shtml#deprecating). One can certain mark parts of the API as deprecated in a update or minor change; that's polite.  But when the change gets into the major branch, the deprecations should have been removed:  That's part of why the changes are considered "breaking changes".
-
 This entire system is well suited to "point" releases to fix things.  For example, say the most recent releases have been 5.6.3, 5.7.0 and 6.0.0.  Then
  - Jim finds a bug and fixes it starting with master (same as 5.6.3)
  - Because it started on master, that can be merged anywhere
@@ -122,5 +129,5 @@ This entire system is well suited to "point" releases to fix things.  For exampl
 
 It's even possible to make e.g. 5.6.3.1 with _just_ one specific change, and not the other updates that have accumulated on 5.6.3 since it was created.
  
- 
+There is no longer an explicit [deprecation cycle](https://www.jmri.org/help/en/html/doc/Technical/RP.shtml#deprecating). One can certain mark parts of the API as deprecated in a update or minor change; that's polite.  But when the change gets into the major branch, the deprecations should have been removed:  That's part of why the changes are considered "breaking changes". Because we're separately releasing versions that have and don't have breaking changes, users can decide when they want to move forward; effectively managing their own deprecation cycles.
 
