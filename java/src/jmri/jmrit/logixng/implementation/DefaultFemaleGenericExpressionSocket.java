@@ -828,13 +828,13 @@ public class DefaultFemaleGenericExpressionSocket
         
         /** {@inheritDoc} */
         @Override
-        public boolean evaluateBoolean() throws Exception {
+        public boolean evaluateBoolean() throws JmriException {
             return DefaultFemaleGenericExpressionSocket.this.evaluateBoolean();
         }
         
         /** {@inheritDoc} */
         @Override
-        public double evaluateDouble() throws Exception {
+        public double evaluateDouble() throws JmriException {
             return DefaultFemaleGenericExpressionSocket.this.evaluateDouble();
         }
         

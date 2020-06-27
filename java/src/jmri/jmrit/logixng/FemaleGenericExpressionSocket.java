@@ -65,7 +65,7 @@ public interface FemaleGenericExpressionSocket
      * @return the result of the evaluation
      * @throws jmri.JmriException when an exception occurs
      */
-    public boolean evaluateBoolean() throws Exception;
+    public boolean evaluateBoolean() throws JmriException;
     
     /**
      * Evaluate this expression.
@@ -78,7 +78,7 @@ public interface FemaleGenericExpressionSocket
      * 
      * @throws jmri.JmriException when an exception occurs
      */
-    public double evaluateDouble() throws Exception;
+    public double evaluateDouble() throws JmriException;
     
     /**
      * Evaluate this expression.
