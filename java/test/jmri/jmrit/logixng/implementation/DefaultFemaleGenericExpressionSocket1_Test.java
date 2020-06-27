@@ -7,9 +7,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.FemaleGenericExpressionSocket.SocketType;
+import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.string.expressions.StringExpressionConstant;
 import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 import jmri.util.JUnitUtil;
 
@@ -272,6 +274,60 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         socket.connect(digitalMaleSocket);
         FemaleStringExpressionSocket stringSocket = socket.getStringSocket();
         testLockUnlock(socket, stringSocket);
+    }
+    
+    @Test
+    public void testIsCompatibleSocket() {
+        AnalogExpressionConstant analogExpression = new AnalogExpressionConstant("IQAE351", null);
+        MaleSocket analogMaleSocket =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpression);
+        
+        // Test female generic socket
+        ExpressionMemory digitalExpression = new ExpressionMemory("IQDE351", null);
+        MaleSocket digitalMaleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
+        
+        StringExpressionConstant stringExpression = new StringExpressionConstant("IQSE351", null);
+        MaleSocket stringMaleSocket =
+                InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
+        
+        DefaultFemaleGenericExpressionSocket femaleSocket;
+        
+        femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        FemaleAnalogExpressionSocket analogSocket = femaleSocket.getAnalogSocket();
+        Assert.assertTrue("Socket is compatible",
+                analogSocket.isCompatible(analogMaleSocket));
+        Assert.assertTrue("Socket is compatible",
+                analogSocket.isCompatible(digitalMaleSocket));
+        Assert.assertTrue("Socket is compatible",
+                analogSocket.isCompatible(stringMaleSocket));
+        
+        femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        FemaleDigitalExpressionSocket digitalSocket = femaleSocket.getDigitalSocket();
+        Assert.assertTrue("Socket is compatible",
+                digitalSocket.isCompatible(analogMaleSocket));
+        Assert.assertTrue("Socket is compatible",
+                digitalSocket.isCompatible(digitalMaleSocket));
+        Assert.assertTrue("Socket is compatible",
+                digitalSocket.isCompatible(stringMaleSocket));
+        
+        femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        FemaleGenericExpressionSocket genericSocket = femaleSocket.getGenericSocket();
+        Assert.assertTrue("Socket is compatible",
+                genericSocket.isCompatible(analogMaleSocket));
+        Assert.assertTrue("Socket is compatible",
+                genericSocket.isCompatible(digitalMaleSocket));
+        Assert.assertTrue("Socket is compatible",
+                genericSocket.isCompatible(stringMaleSocket));
+        
+        femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        FemaleStringExpressionSocket stringSocket = femaleSocket.getStringSocket();
+        Assert.assertTrue("Socket is compatible",
+                stringSocket.isCompatible(analogMaleSocket));
+        Assert.assertTrue("Socket is compatible",
+                stringSocket.isCompatible(digitalMaleSocket));
+        Assert.assertTrue("Socket is compatible",
+                stringSocket.isCompatible(stringMaleSocket));
     }
     
     @Test
