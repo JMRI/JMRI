@@ -46,9 +46,9 @@ There's some judgement involved in this labelling process.  An algorithmic chang
 
 We recommend that people use [Conventional Commits rules](https://www.conventionalcommits.org/en/v1.0.0/) in their commit comments to help identify how a PR should be labelled.  GitHub makes the comment for the first commit in a PR particularly visible.  To do this:
 
- - Put `[fix]` at the start of your commit message if the commit should be labelled _Fix_ and included in the next I.J.++K release
- - Put `[chore]` at the start of your commit message if the commit should be labelled _Chore_ and included in the next I.J.++K release
- - Put `[feat]` at the start of your commit message if the commit has sufficient changes that it should be should be labelled _Feature_ and included in the next I.++J.0 release
+ - Put `[fix]` at the start of your commit message if the commit should be labelled `Fix` and included in the next I.J.++K release
+ - Put `[chore]` at the start of your commit message if the commit should be labelled `Chore` and included in the next I.J.++K release
+ - Put `[feat]` at the start of your commit message if the commit has sufficient changes that it should be should be labelled `Feature` and included in the next I.++J.0 release
  - Put `[feat]` at the start of your commit message and `BREAKING CHANGE` somewhere in the commit message if the commit should be labelled `Breaking Change` and included in the next +I.0.0 release
 
 We can't count on the commit messages instead of a label completely, because the impact of a PR might have changed since its first commit, and/or because the proper label for the PR might not be what the developer thought when writing the commit comment(s). 
@@ -59,10 +59,10 @@ We can't count on the commit messages instead of a label completely, because the
      - Usually this aill be the most recent
      - Specifically, if 5.3.1 is released after 5.4.0 or even 6.0.0 is released, those will remain HEAD of master
      - This means that new Git users who checkout `master` will be working on a mergeable base for the next release(s)
-  - PRs labelled with _Breaking Change_ will be merged to a 'dev-major' branch, those labelled _Feature_ will be merged to a 'dev-minor' branch and those labelled with _Fix_ will be merged to a 'dev-update' branch.
-  - Often, those perhaps not on every PR, the branches will be merged upwards: dev-update into dev-minor, dev-minor into dev-major
+  - PRs labelled with `Breaking Change` will be merged to a `dev-major` branch, those labelled `Feature` will be merged to a `dev-minor` branch and those labelled with `Fix` will be merged to a `dev-update` branch.
+  - Often, those perhaps not on every PR, the branches will be merged upwards: `dev-update` into `dev-minor`, `dev-minor` into `dev-major`
 
-_Chore_ PRs should be put into affect in the infrastucture as soon as possible, but we don't want them to burden developers with minimal git capability, i.e. working directly from `master`. Hence they should be merged to the `dev-update`, and from there merged upward to the other branches as needed.  They'll then get back to `master` when a branch is next released. (Keeping master exactly fixed helps us check for and prevent inadvertant merges of other changes via PRs)
+`Chore` PRs should be put into affect in the infrastucture as soon as possible, but we don't want them to burden developers with minimal git capability, i.e. working directly from `master`. Hence they should be merged to the `dev-update`, and from there merged upward to the other branches as needed.  They'll then get back to `master` when a branch is next released. (Keeping master exactly fixed helps us check for and prevent inadvertant merges of other changes via PRs)
   
 The goal of this is to make it possible to work on i.e. updates from a stable base of either the last numbered release (`master`, which people get by default) or the current contents of the relevant branch.  Because it makes all three branches available, it allows accumulating and collaborating on all three kinds of changes.
 
