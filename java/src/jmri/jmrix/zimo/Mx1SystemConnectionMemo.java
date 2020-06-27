@@ -83,11 +83,11 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if (getDisabled()) {
             return false;
         }
-        if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return getProgrammerManager().isGlobalProgrammerAvailable();
+        if (type.equals(jmri.GlobalProgrammerManager.class)) {            
+            return true;
         }
-        if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return getProgrammerManager().isAddressedModePossible();
+        if (type.equals(jmri.AddressedProgrammerManager.class)) {            
+            return false;
         }
 
         if (type.equals(jmri.PowerManager.class)) {
