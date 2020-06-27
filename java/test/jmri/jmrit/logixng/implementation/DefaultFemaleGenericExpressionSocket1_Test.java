@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.util.Map;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
@@ -126,6 +128,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     @Test
     @Override
     public void testDisconnect() throws SocketAlreadyConnectedException {
+        // Test female generic socket
         ExpressionMemory digitalExpression = new ExpressionMemory("IQDE351", null);
         MaleSocket digitalMaleSocket =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
@@ -147,8 +150,83 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         Assert.assertEquals("_currentActiveSocket is has correct class",
                 "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 femaleSocket.getCurrentActiveSocket().getClass().getName());
-
+        
         femaleSocket.disconnect();
+        
+        
+        // Test female digital socket
+        femaleSocket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        
+        // When the SocketType is not GENERIC, _currentActiveSocket is assigned to a socket
+        Assert.assertNotNull("_currentActiveSocket is not null",
+                femaleSocket.getCurrentActiveSocket());
+        
+        // Test disconnect() without connected socket
+        femaleSocket.disconnect();
+        
+        // When the SocketType is not GENERIC, _currentActiveSocket is assigned to a socket
+        Assert.assertNotNull("_currentActiveSocket is not null",
+                femaleSocket.getCurrentActiveSocket());
+        
+        // Test disconnect() without connected socket
+        femaleSocket.connect(digitalMaleSocket);
+        
+        Assert.assertEquals("_currentActiveSocket is has correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                femaleSocket.getCurrentActiveSocket().getClass().getName());
+        
+        femaleSocket.disconnect();
+    }
+    
+    private void checkConnectableClasses(FemaleSocket femaleSocket) {
+        Map<Category, List<Class<? extends Base>>> classes = femaleSocket.getConnectableClasses();
+        Assert.assertNotNull("classes is not null", classes);
+        Assert.assertFalse("classes is not empty", classes.isEmpty());
+    }
+    
+    @Test
+    public void testReset() throws SocketAlreadyConnectedException {
+        MyExpressionTurnout digitalExpression = new MyExpressionTurnout("IQDE351");
+        MaleSocket digitalMaleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
+        
+        DefaultFemaleGenericExpressionSocket socket;
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        socket.connect(digitalMaleSocket);
+        digitalExpression._hasBeenReset = false;
+        FemaleAnalogExpressionSocket analogSocket = socket.getAnalogSocket();
+        analogSocket.reset();
+        Assert.assertTrue("Expression has been reset", digitalExpression._hasBeenReset);
+        checkConnectableClasses(analogSocket);
+        socket.disconnect();
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        socket.connect(digitalMaleSocket);
+        digitalExpression._hasBeenReset = false;
+        FemaleDigitalExpressionSocket digitalSocket = socket.getDigitalSocket();
+        digitalSocket.reset();
+        Assert.assertTrue("Expression has been reset", digitalExpression._hasBeenReset);
+        checkConnectableClasses(digitalSocket);
+        socket.disconnect();
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        socket.connect(digitalMaleSocket);
+        digitalExpression._hasBeenReset = false;
+        FemaleGenericExpressionSocket genericSocket = socket.getGenericSocket();
+        genericSocket.reset();
+        Assert.assertTrue("Expression has been reset", digitalExpression._hasBeenReset);
+        checkConnectableClasses(genericSocket);
+        socket.disconnect();
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        socket.connect(digitalMaleSocket);
+        digitalExpression._hasBeenReset = false;
+        FemaleStringExpressionSocket stringSocket = socket.getStringSocket();
+        stringSocket.reset();
+        Assert.assertTrue("Expression has been reset", digitalExpression._hasBeenReset);
+        checkConnectableClasses(stringSocket);
+        socket.disconnect();
     }
     
     @Test
@@ -394,6 +472,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     private class MyExpressionTurnout extends ExpressionTurnout {
         
         private boolean _hasBeenSetup = false;
+        private boolean _hasBeenReset = false;
         
         public MyExpressionTurnout(String systemName) {
             super(systemName, null);
@@ -404,8 +483,14 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         public void setup() {
             _hasBeenSetup = true;
         }
+        
+        @Override
+        public void reset() {
+            _hasBeenReset = true;
+        }
+        
     }
     
-    private final static org.slf4j.Logger log =
-            org.slf4j.LoggerFactory.getLogger(DefaultFemaleGenericExpressionSocket1_Test.class);
+//    private final static org.slf4j.Logger log =
+//            org.slf4j.LoggerFactory.getLogger(DefaultFemaleGenericExpressionSocket1_Test.class);
 }
