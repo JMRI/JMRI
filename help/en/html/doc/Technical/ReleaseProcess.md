@@ -59,8 +59,9 @@ We can't count on the commit messages instead of a label completely, because the
      - Usually this aill be the most recent
      - Specifically, if 5.3.1 is released after 5.4.0 or even 6.0.0 is released, those will remain HEAD of master
      - This means that new Git users who checkout `master` will be working on a mergeable base for the next release(s)
+
   - PRs labelled with `Breaking Change` will be merged to a `dev-major` branch, those labelled `Feature` will be merged to a `dev-minor` branch and those labelled with `Fix` will be merged to a `dev-update` branch.
-  - Often, those perhaps not on every PR, the branches will be merged upwards: `dev-update` into `dev-minor`, `dev-minor` into `dev-major`
+  - Often, though perhaps not on every PR, the branches will be merged upwards: `dev-update` into `dev-minor`, `dev-minor` into `dev-major`
 
 `Chore` PRs should be put into affect in the infrastucture as soon as possible, but we don't want them to burden developers with minimal git capability, i.e. working directly from `master`. Hence they should be merged to the `dev-update`, and from there merged upward to the other branches as needed.  They'll then get back to `master` when a branch is next released. (Keeping master exactly fixed helps us check for and prevent inadvertant merges of other changes via PRs)
   
@@ -84,9 +85,9 @@ How do we decide when to do that if we don't have a monthly cadence?
  
 ## Web Contents
 
-The default web content (from [https://jmri.org](https://jmri.org)) will be from the HEAD of the dev-update branch.  This allows minor content fixes to get on the web immediately.
+The default web content (from [https://jmri.org](https://jmri.org)) will be from the HEAD of the `dev-update` branch.  This allows minor content fixes to get on the web immediately.
 
-Simultaneously, the HEAD of the dev-minor and dev-major branches will populate web content starting at [https://jmri.org/minor](https://jmri.org/minor) and [https://jmri.org/major](https://jmri.org/major)  This will allow people to see Javadoc, point people to recently updated pages, etc.
+Simultaneously, the HEAD of the `dev-minor` and `dev-major` branches will populate web content starting at [https://jmri.org/minor](https://jmri.org/minor) and [https://jmri.org/major](https://jmri.org/major)  This will allow people to see Javadoc, point people to recently updated pages, etc.
 
  ## Merging and Release Process Examples
  
@@ -94,25 +95,25 @@ Simultaneously, the HEAD of the dev-minor and dev-major branches will populate w
  
  ### Update
  
-Somebody as a small bug to fix.  He edits in the fix on a branch from master.  This gets merged into all three branches. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) If it's significant enough, or enough has accumulated, this will get released as part of 5.6.4, in which case it'll be tagged there as v5.6.4 and master will be reset to that tag.
+Somebody as a small bug to fix.  He edits in the fix on a branch from `master`.  This gets merged into all three branches. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) If it's significant enough, or enough has accumulated, this will get released as part of 5.6.4, in which case it'll be tagged there as v5.6.4 and `master` will be reset to that tag.
  
   ### Minor Change
   
-Somebody has a minor change (new feature that appears in API). He edits it in on a branch from master. This gets merged via PR into the dev-minor branch and dev-major branch. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) When that, and perhaps other, minor changes are ready to be made available to the user community, a 5.8.0 release will be made, tagged as v5.8.0.
+Somebody has a minor change (new feature that appears in API). He edits it in on a branch from `master`. This gets merged via PR into the `dev-minor` branch and `dev-major` branch. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) When that, and perhaps other, minor changes are ready to be made available to the user community, a 5.8.0 release will be made, tagged as v5.8.0.
   
-At this point, master remains at 5.6.3. At some later point, when 5.8.0 or perhaps 5.8.1 is viewed as stable enough that it can become the default, both the master and dev-update branches will be reset to (say) 5.8.1 so that becomes the base for further development.
+At this point, `master` remains at 5.6.3. At some later point, when 5.8.0 or perhaps 5.8.1 is viewed as stable enough that it can become the default, both the `master` and `dev-update` branches will be reset to (say) 5.8.1 so that becomes the base for further development.
   
   #### Fix to Minor Change
   
-Say that something was broken by the minor change above.  A developer can edit in that fix on a branch from v5.8.0, make a PR against the dev-minor branch, get it merged, and then a v5.8.1 can be released.  That can be made the base for development or not as needed.
+Say that something was broken by the minor change above.  A developer can edit in that fix on a branch from v5.8.0, make a PR against the `dev-minor` branch, get it merged, and then a v5.8.1 can be released.  That can be made the base for development or not as needed.
   
   #### Merging updates to a Minor Change
   
-Alternately, after v5.8.0 is out, a developer might want to fix an issue in 5.6.3 that identically affects (because that code was unchanged) the 5.8.0 release.  He edits on a branch off master, does a PR against dev-update, that gets merged and then that branch is merged upward (as usual) into the dev-minor branch.  This allows a v.5.8.1 to be created as needed. That can be made the base for development or not as needed.
+Alternately, after v5.8.0 is out, a developer might want to fix an issue in 5.6.3 that identically affects (because that code was unchanged) the 5.8.0 release.  He edits on a branch off `master`, does a PR against `dev-update`, that gets merged and then that branch is merged upward (as usual) into the `dev-minor` branch.  This allows a v.5.8.1 to be created as needed. That can be made the base for development or not as needed.
    
    ### Major Changes
    
-Major changes go basically as above.  They're created off master if possible, or off the dev-major branch if (more likely) they're cumulative on other major changes. Then the various operations go through as above.
+Major changes go basically as above.  They're created off `master` if possible, or off the `dev-major` branch if (more likely) they're cumulative on other major changes. Then the various operations go through as above.
 
 The hardest thing for "major change" releases will be developing a consensus around when they should become the default.  That's a community feature vs cost and quality control issue, not a Git technology one.
 
@@ -122,12 +123,42 @@ The hardest thing for "major change" releases will be developing a consensus aro
 JMRI has, for a long time, followed a Linux-like release numbering system where odd-numbered minor releases were for development and tests, whilst even numbered releases were for production. That distinction is no longer present here.
 
 This entire system is well suited to "point" releases to fix things.  For example, say the most recent releases have been 5.6.3, 5.7.0 and 6.0.0.  Then
- - Jim finds a bug and fixes it starting with master (same as 5.6.3)
- - Because it started on master, that can be merged anywhere
+ - Jim finds a bug and fixes it starting with `master` (same as 5.6.3)
+ - Because it started on `master`, that can be merged anywhere
  - It's a _bug_, so it can be released as 5.6.4 so that people using that as a long-term thing get the fix with minor disruption.
  - But it will also be included in a 5.7.1 and 6.0.1 when those get released, so we can decide when to release them and make them available.
 
 It's even possible to make e.g. 5.6.3.1 with _just_ one specific change, and not the other updates that have accumulated on 5.6.3 since it was created.
- 
+
 There is no longer an explicit [deprecation cycle](https://www.jmri.org/help/en/html/doc/Technical/RP.shtml#deprecating). One can certain mark parts of the API as deprecated in a update or minor change; that's polite.  But when the change gets into the major branch, the deprecations should have been removed:  That's part of why the changes are considered "breaking changes". Because we're separately releasing versions that have and don't have breaking changes, users can decide when they want to move forward; effectively managing their own deprecation cycles.
 
+## Migration
+
+(This is a temporary section to hold a migration plan.  If/Once we decide to execute, this should be removed from here and made into a JMRI/JMRI Issue to track the work)
+
+Once we have agreement
+ - [ ] update documentation, which adds this to the main web server
+ 
+The assumption is that we will start with the new process directly after JMRI 4.20.0 is released. That number makes it serve as both the last production release of the old numbering scheme, while also fitting within the new schema.  This would then be followed by 4.21.1 (the .1 isn't quite right, but we've already seen comments for that name) as the first of the new process.
+
+ - [ ] Create the new labels
+    - [ ] Check if any of the old labels need to be updated/ superceded
+    - [ ] Update the [documentation](https://www.jmri.org/help/en/html/doc/Technical/gitdeveloper.shtml)
+    
+ - [ ] Set Github protections so `master` cannot accidentally be updated by PRs
+ 
+ - [ ] Create the new branches: (we are temporarily leaving `master` as-is just this one time)
+    - [ ] `dev-major`, `dev-minor` from v4.20
+    - [ ] `dev-update` from the current `master` as a HEAD of current development (`master` will be reset to 4.20.1 once it's released)
+    
+ - [ ] Figure out how numberings will work in Version.java et al and commit changes as needed to number the three branches as 5.0.0, 4.22.0 and 4.21.1 respectively
+ - [ ] Figure out and document how release notes will work across these branches, put that mechanism in place
+ - [ ] Update the Jenkins webserver tasks to load the three branches
+ - [ ] Update Jenkins to build installers from the head of each branch
+ - [ ] Update scripts/HOWTO-Distribution.md
+ - [ ] Create a GitHub action CI to check the ability to merge `dev-update` -> `dev-minor`, `dev-update` -> `dev-major` and/or `dev-minor` -> `dev-major` as appropriate
+
+ - [ ] (Once it's decided it's ready, based on whatever criteria is chosen) Create and tag release 4.21.1 as the first under this system
+    - [ ] Update `master` to the released 4.21.1
+    - [ ] Update `dev-update` to be working on 4.22.2
+ 
