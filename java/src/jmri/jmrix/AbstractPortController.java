@@ -61,6 +61,7 @@ abstract public class AbstractPortController implements PortAdapter {
     @Override
     @OverridingMethodsMustInvokeSuper
     public void dispose() {
+        allowConnectionRecovery = false;
         this.getSystemConnectionMemo().dispose();
     }
 
@@ -341,9 +342,57 @@ abstract public class AbstractPortController implements PortAdapter {
     @Override
     abstract public void recover();
 
-    protected int reconnectinterval = 1000;
-    protected int retryAttempts = 10;
+    /**
+     * Initial interval between reconnection attempts.
+     * Default 1 second.
+     */
+    protected int reconnectinterval = 1;
+    
+    /**
+     * Maximum reconnection attempts that the port should make.
+     * Default 100 attempts.
+     * A value of -1 indicates unlimited attempts.
+     */
+    protected int reconnectMaxAttempts = 100;
 
+    /**
+     * Maximum interval between reconnection attempts in seconds.
+     * Default 120 seconds.
+     */
+    protected int reconnectMaxInterval = 120;
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setReconnectMaxInterval(int maxInterval) {
+        reconnectMaxInterval = maxInterval;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setReconnectMaxAttempts(int maxAttempts) {
+        reconnectMaxAttempts = maxAttempts;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getReconnectMaxInterval() {
+        return reconnectMaxInterval;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getReconnectMaxAttempts() {
+        return reconnectMaxAttempts;
+    }
+    
     protected static void safeSleep(long milliseconds, String s) {
         try {
             Thread.sleep(milliseconds);
