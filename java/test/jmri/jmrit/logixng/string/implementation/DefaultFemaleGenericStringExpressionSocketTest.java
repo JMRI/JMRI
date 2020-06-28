@@ -4,12 +4,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 /**
  * Test DefaultFemaleGenericExpressionSocket.getStringSocket()
@@ -21,6 +23,9 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
     private String _memorySystemName;
     private Memory _memory;
     private MyStringExpressionMemory _expression;
+    private DefaultFemaleGenericExpressionSocket femaleGenericSocket;
+    private final AtomicBoolean _listenersAreRegistered = new AtomicBoolean(false);
+    private final AtomicBoolean _listenersAreUnregistered = new AtomicBoolean(false);
     
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -92,6 +97,36 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
         ((DefaultFemaleStringExpressionSocket)_femaleSocket).reset();
     }
     
+    @Test
+    public void testParent() {
+        Base base = Mockito.mock(Base.class);
+        _femaleSocket.setParent(base);
+        Assert.assertNotNull("_femaleSocket.getParent() is not null", base);
+        Assert.assertEquals("femaleGenericSocket has the same parent as _femaleSocket",
+                base, femaleGenericSocket.getParent());
+        
+        _femaleSocket.setParent(null);
+        Assert.assertNull("_femaleSocket.getParent() is null", _femaleSocket.getParent());
+        Assert.assertNull("femaleGenericSocket is null", femaleGenericSocket.getParent());
+        
+        femaleGenericSocket.setParent(base);
+        Assert.assertEquals("femaleGenericSocket.getParent() is base",
+                base, _femaleSocket.getParent());
+        Assert.assertEquals("_femaleSocket.getParent() is base",
+                base, femaleGenericSocket.getParent());
+    }
+    
+    @Test
+    public void testListeners() {
+        _listenersAreRegistered.set(false);
+        ((AbstractFemaleSocket)femaleGenericSocket).registerListeners();
+        Assert.assertTrue("listeners are registered", _listenersAreRegistered.get());
+        
+        _listenersAreUnregistered.set(false);
+        ((AbstractFemaleSocket)femaleGenericSocket).unregisterListeners();
+        Assert.assertTrue("listeners are unregistered", _listenersAreUnregistered.get());
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -109,7 +144,7 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
         StringExpressionMemory otherExpression = new StringExpressionMemory("IQSE322", null);
         maleSocket = new DefaultMaleStringExpressionSocket(_expression);
         otherMaleSocket = new DefaultMaleStringExpressionSocket(otherExpression);
-        _femaleSocket = new DefaultFemaleGenericExpressionSocket(
+        femaleGenericSocket = new DefaultFemaleGenericExpressionSocket(
                 FemaleGenericExpressionSocket.SocketType.GENERIC,
                 null,
                 new FemaleSocketListener() {
@@ -122,7 +157,22 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
                     public void disconnected(FemaleSocket socket) {
                         flag.set(true);
                     }
-                }, "E1").getStringSocket();
+                }, "E1") {
+                    @Override
+                    public void registerListeners() {
+                        _listenersAreRegistered.set(true);
+                    }
+
+                    /**
+                     * Register listeners if this object needs that.
+                     */
+                    @Override
+                    public void unregisterListeners() {
+                        _listenersAreUnregistered.set(true);
+                    }
+                };
+        
+        _femaleSocket  = femaleGenericSocket.getStringSocket();
     }
 
     @After
