@@ -500,8 +500,6 @@ git push github
 ====================================================================================
 ## Associated Documentation
 
-- Update the release note page: change date, comment out "draft release", make sure links work and proper sections are commented/not commented out
-
 - Update the web site front page and downloads page:
 ```
      ${EDITOR}  index.shtml download/Sidebar.shtml download/index.shtml releaselist 

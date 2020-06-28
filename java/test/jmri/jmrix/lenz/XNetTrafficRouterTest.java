@@ -46,7 +46,7 @@ public class XNetTrafficRouterTest {
 
         // check receipt
         Assert.assertEquals("one message sent", 1, upstream.outbound.size());
-        Assert.assertTrue(upstream.outbound.elementAt(0) == m);
+        Assert.assertSame(upstream.outbound.elementAt(0), m);
     }
 
     static int count = 0;
@@ -132,7 +132,7 @@ public class XNetTrafficRouterTest {
 
         // disconnect
         router.disconnectPort(upstream);
-        Assert.assertTrue("not connected", !router.status());
+        Assert.assertFalse(router.status());
     }
 
     @Before

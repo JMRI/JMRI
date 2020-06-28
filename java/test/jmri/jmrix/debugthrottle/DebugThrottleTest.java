@@ -213,7 +213,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.SystemConnectionMemo("T", "Test") {
+        jmri.SystemConnectionMemo memo = new jmri.jmrix.DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;

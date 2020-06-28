@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -39,7 +40,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         XNetReply m;
 
         // Verify this was created in UNKNOWN state
-        Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
+        Assert.assertEquals(t.getKnownState(), Sensor.UNKNOWN);
 
         // notify the Sensor that somebody else changed it...
         m = new XNetReply();
@@ -50,9 +51,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         // are on in the message.
         m.setElement(3, 0x05);     // The XOR of everything above
         ((XNetSensor) t).message(m);
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return t.getState() == t.getRawState();
-        }, "raw state = state");
+        jmri.util.JUnitUtil.waitFor(() -> t.getState() == t.getRawState(), "raw state = state");
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
 
         m = new XNetReply();
@@ -72,9 +71,9 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Test
     public void testXNetSensorSetState() throws jmri.JmriException {
         t.setKnownState(jmri.Sensor.ACTIVE);
-        Assert.assertTrue(t.getKnownState() == jmri.Sensor.ACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.ACTIVE);
         t.setKnownState(jmri.Sensor.INACTIVE);
-        Assert.assertTrue(t.getKnownState() == jmri.Sensor.INACTIVE);
+        Assert.assertEquals(t.getKnownState(), Sensor.INACTIVE);
     }
 
     // XNetSensor test for outgoing status request

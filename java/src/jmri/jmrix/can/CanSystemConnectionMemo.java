@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class CanSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
     // This user name will be overwritten by the adapter and saved to the connection config.
     public static String DEFAULT_USERNAME = "CAN";
 

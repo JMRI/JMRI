@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
 import jmri.beans.VetoableChangeSupport;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
@@ -47,7 +47,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * VetoableChangeListeners.
      */
     private final List<String> vetoablePropertyNames = new ArrayList<>();
-    
+    protected final Map<String, Boolean> silencedProperties = new HashMap<>();
+    protected final Set<String> silenceableProperties = new HashSet<>();
+
     /**
      * {@inheritDoc}
      */
@@ -507,13 +509,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * {@inheritDoc}
      */
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
-        PropertyChangeEvent event = e;
+    public void propertyChange(PropertyChangeEvent event) {
         if (event.getPropertyName().equals("beans")) {
             recomputeNamedBeanSet();
         }
         event.setPropagationId(this);
-        firePropertyChange(event);
+        if (!silencedProperties.getOrDefault(event.getPropertyName(), false)) {
+            firePropertyChange(event);
+        }
     }
     
     /**
@@ -611,6 +614,23 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
             recomputeNamedBeanSet();
         }
         return Collections.unmodifiableSortedSet(namedBeanSet);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setPropertyChangesSilenced(String propertyName, boolean silenced) {
+        // since AbstractProxyManager has no explicit constructors, acccept
+        // "beans" as well as anything needed to be accepted by subclasses
+        if (!"beans".equals(propertyName) && !silenceableProperties.contains(propertyName)) {
+            throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
+        }
+        silencedProperties.put(propertyName, silenced);
+        if (propertyName.equals("beans") && !silenced) {
+            fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);
+        }
     }
 
     /** {@inheritDoc} */

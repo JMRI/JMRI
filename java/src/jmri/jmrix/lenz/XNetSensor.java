@@ -23,7 +23,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     private String systemName;
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     public XNetSensor(String systemName, String userName, XNetTrafficController controller, String prefix) {
         super(systemName, userName);
@@ -118,10 +118,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
             if (log.isDebugEnabled()) {
                         log.debug("Message for sensor {} (Address {} position {})", systemName, baseaddress, address - (baseaddress * 8));
             }
-            if (statusRequested && l.isUnsolicited()) {
-                l.resetUnsolicited();
-                statusRequested = false;
-            }
             if (opt ^ _inverted) {
                 setOwnState(Sensor.ACTIVE);
             } else {
@@ -136,6 +132,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      */
     @Override
     public void message(XNetMessage l) {
+        // not currently listening for outgoing messages.
     }
 
     /**
@@ -145,13 +142,8 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message: {}", msg.toString());
+            log.debug("Notified of timeout on message: {}", msg);
         }
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
     /**

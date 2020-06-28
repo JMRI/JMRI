@@ -1,7 +1,8 @@
 package jmri.jmrit.mailreport;
 
-import apps.PerformFileModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.PerformFileModel;
+import jmri.util.startup.StartupActionsManager;
+
 import java.awt.FlowLayout;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.BoxLayout;
@@ -22,11 +24,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.MultipartMessage;
 import jmri.util.javaworld.GridLayout2;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

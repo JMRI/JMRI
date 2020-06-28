@@ -8,7 +8,7 @@ import jmri.LightManager;
 import jmri.NamedBean;
 import jmri.TurnoutManager;
 import jmri.SensorManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
-public class GrapevineSystemConnectionMemo extends SystemConnectionMemo {
+public class GrapevineSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public GrapevineSystemConnectionMemo() {
         this("G", Bundle.getMessage("MenuSystem"));

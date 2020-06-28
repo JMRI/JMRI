@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ShutDownManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.srcp.swing.SRCPComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.util.NamedBeanComparator;
@@ -21,7 +21,7 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2015-2016
  */
-public class SRCPSystemConnectionMemo extends SystemConnectionMemo {
+public class SRCPSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public SRCPSystemConnectionMemo(String prefix, String name, SRCPTrafficController et) {
         super(prefix, name);

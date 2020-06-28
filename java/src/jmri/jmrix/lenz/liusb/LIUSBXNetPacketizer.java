@@ -1,6 +1,3 @@
-/**
- * LIUSBXNetPacketizer.java
- */
 package jmri.jmrix.lenz.liusb;
 
 import jmri.jmrix.lenz.XNetPacketizer;

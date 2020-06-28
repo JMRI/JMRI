@@ -328,11 +328,6 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         return true;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("load called. Invalid method.");
-    }
-
     private static void loadTrain(Element elem, Warrant warrant) {
         SpeedUtil speedUtil = warrant.getSpeedUtil();
         if (elem.getAttribute("trainId") != null) {

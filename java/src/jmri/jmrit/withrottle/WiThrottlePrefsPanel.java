@@ -1,7 +1,8 @@
 package jmri.jmrit.withrottle;
 
-import apps.PerformActionModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.PerformActionModel;
+import jmri.util.startup.StartupActionsManager;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -10,6 +11,7 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.util.Arrays;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -20,12 +22,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfPreferences;
 import jmri.util.zeroconf.ZeroConfServiceManager;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**

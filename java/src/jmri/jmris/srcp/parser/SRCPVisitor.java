@@ -24,8 +24,8 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
         // get the system memo coresponding to the bus.
         // and ask it what is supported
         try {
-            jmri.jmrix.SystemConnectionMemo memo
-                    = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
+            jmri.SystemConnectionMemo memo
+                    = InstanceManager.getList(jmri.SystemConnectionMemo.class).get(bus - 1);
             if (memo != null) {
                 log.debug("devicegroup {}", devicegroup);
                 if (devicegroup.equals("FB")) {
@@ -208,8 +208,8 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                     // get the system memo coresponding to the bus.
                     // and ask it what is supported
                     try {
-                        jmri.jmrix.SystemConnectionMemo memo
-                                = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
+                        jmri.SystemConnectionMemo memo
+                                = InstanceManager.getList(jmri.SystemConnectionMemo.class).get(bus - 1);
                         if (memo != null) {
                             outputString = outputString + " DESCRIPTION";
                             if (memo.provides(jmri.SensorManager.class)) {
@@ -263,8 +263,8 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
                 // get the system memo coresponding to the bus.
                 // and ask it what is supported
                 // with 2 arguments, we send a description of a specific device.
-                jmri.jmrix.SystemConnectionMemo memo
-                        = InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class).get(bus - 1);
+                jmri.SystemConnectionMemo memo
+                        = InstanceManager.getList(jmri.SystemConnectionMemo.class).get(bus - 1);
                 if (memo != null) {
                     String devicegroup = (String) ((SimpleNode) descriptionnode.jjtGetChild(0)).jjtGetValue();
                     String address = (String) ((SimpleNode) descriptionnode.jjtGetChild(1)).jjtGetValue();

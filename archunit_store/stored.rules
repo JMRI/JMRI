@@ -1,8 +1,8 @@
 #
-#Mon Apr 20 12:53:19 PDT 2020
-classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrit..',\ 'apps..']=eae7f996-9941-499b-b508-b8216135e873
-no\ classes\ that\ reside\ in\ a\ package\ 'jmri.util..'\ should\ depend\ on\ classes\ that\ reside\ outside\ of\ packages\ ['jmri',\ 'jmri.util..',\ 'java..',\ 'javax..',\ 'org..']=a5080958-a4dc-46b3-b3cc-8935d06d1537
-classes\ that\ reside\ in\ a\ package\ 'jmri.jmrix..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrix..',\ 'apps..']=3716a9ce-679c-422d-b280-2d3937244826
-no\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmris'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=dd8c5be2-5382-4008-8a36-5b102b87e906
-no\ classes\ that\ reside\ in\ a\ package\ 'jmri'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=1f9941ab-c8f6-433b-9753-81350ba5727f
-classes\ that\ reside\ in\ a\ package\ 'apps..'\ should\ only\ be\ accessed\ by\ any\ package\ ['apps..']=f52ef409-8df6-498f-85f4-a9351944533e
+#Mon Jun 15 14:47:33 PDT 2020
+classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrit..',\ 'apps..']=788ffcd8-d213-479d-a8a6-d7854e18adef
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri.util..'\ should\ depend\ on\ classes\ that\ reside\ outside\ of\ packages\ ['jmri',\ 'jmri.util..',\ 'java..',\ 'javax..',\ 'org..']=1399b807-0aa3-487f-8c8a-1ff1268293fd
+classes\ that\ reside\ in\ a\ package\ 'jmri.jmrix..'\ should\ only\ be\ accessed\ by\ any\ package\ ['jmri.jmrix..',\ 'apps..']=c240fd69-85bb-485e-af60-5c59a4b51978
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmris'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=0593c15b-2922-4e2d-8f6d-cc41a895be82
+no\ classes\ that\ reside\ in\ a\ package\ 'jmri'\ should\ depend\ on\ classes\ that\ reside\ in\ a\ package\ 'jmri.jmrit..'=84324b13-47c7-4ccb-9494-e59787afc534
+classes\ that\ reside\ in\ a\ package\ 'apps..'\ should\ only\ be\ accessed\ by\ any\ package\ ['apps..']=f32654a4-1dcc-4e71-aab2-75039c24bbf4

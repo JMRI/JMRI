@@ -65,6 +65,8 @@
 
         <li style="list-style: none">
           <ul>
+            <li><a href="#AssertJ">AssertJ tools</a></li>
+
             <li><a href="#HandlingLogOutput">Handling Log4J Output
             From Tests</a></li>
 
@@ -97,6 +99,7 @@
 
         <li style="list-style: none">
           <ul>
+            <li><a href="#AssertJSwing">Using AssertJ with Swing</a></li>
             <li><a href="#jemmy">Using Jemmy</a></li>
           </ul>
         </li>
@@ -466,12 +469,36 @@
       <h2><a name="keyMetaphors" id="keyMetaphors">Key Test
       Metaphors</a></h2>
 
-      <h3><a name="HandlingLogOutput" id=
-      "HandlingLogOutput">Handling Log4J Output From
-      Tests</a></h3>JMRI uses <a href=
-      "http://logging.apache.org/log4j/docs/index.html">Log4j</a>
-      to <a href="Logging.shtml">handle logging of various
-      conditions</a>, including error messages and debugging
+      <h3><a name="AssertJ" id=
+      "AssertJ">AssertJ Tools</a></h3>
+      The 
+      <a href="https://assertj.github.io/doc/">fluent assertions</a> in the 
+      <a href="https://www.javadoc.io/doc/org.assertj/assertj-core/latest/org/assertj/core/api/Assertions.html">AssertJ core Assertions</a>
+      
+      classes can tooling for many useful idioms that 
+      go well beyond the simple
+      <a href="https://junit.org/junit4/javadoc/latest/org/junit/Assert.html">JUnit Assert class</a>
+      tools:
+      <ul>
+      <li>Checking of file contents
+      <li>Checking that the correct exception is thrown:
+      <pre style="font-family: monospace;">
+      Throwable thrown = catchThrowable(() -> { testObject.throwAnException() });
+	  assertThat(thrown).isInstanceOf(NullPointerException.class)
+	                  .hasNoCause()
+      }
+      </pre>
+      </ul>
+      
+      See below for info on using AssertJ with Swing.
+
+
+      <h3><a name="HandlingLogOutput" id="HandlingLogOutput">Handling Log4J Output FromTests</a></h3>
+      JMRI uses 
+      <a href="http://logging.apache.org/log4j/docs/index.html">Log4j</a>
+      to 
+      <a href="Logging.shtml">handle logging of various conditions</a>, 
+      including error messages and debugging
       information. Tests are intended to run without error or
       warning output, so that it's immediately apparent from an
       empty standard log that they ran cleanly.
@@ -1006,7 +1033,14 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       lets you check the logic code separately, but invoking those
       methods and checking the state them update.</p>
 
-      <p>For more complicated GUI testing, the Jemmy tool is preferred.
+      <p>For more complicated GUI testing, the AssertJ and Jemmy tools are preferred.
+
+
+      <h3><a name="AssertJSwing" id="AssertJSwing">Using AssertJ with Swing</a></h3>
+      The 
+      <a href="https://joel-costigliola.github.io/assertj/swing/api/index.html">AssertJ-Swing</a>
+      classes can tooling for many useful idioms that 
+      can be helpful when testing Swing code.
 
       <h3><a id="jemmy" name="jemmy">Using Jemmy</a></h3>
       

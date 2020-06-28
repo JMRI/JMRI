@@ -35,8 +35,8 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Sensor t = l.newSensor("XS22", "test");
 
         // test get
-        Assert.assertTrue(t == l.getByUserName("test"));
-        Assert.assertTrue(t == l.getBySystemName("XS22"));
+        Assert.assertSame(t, l.getByUserName("test"));
+        Assert.assertSame(t, l.getBySystemName("XS22"));
     }
 
     @Test
@@ -47,8 +47,8 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNotNull("exists", s);
 
         // try to get nonexistant turnouts
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        Assert.assertNull(l.getByUserName("foo"));
+        Assert.assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         xnis.sendTestMessage(m1);
 
         // see if sensor exists
-        Assert.assertTrue(null != l.getBySystemName("XS22"));
+        Assert.assertNotNull(l.getBySystemName("XS22"));
     }
 
     @Test
@@ -90,8 +90,8 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             log.debug("by user name: {}", t.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != t.getBySystemName("XS21"));
-        Assert.assertTrue(null != t.getByUserName("my name"));
+        Assert.assertNotNull(t.getBySystemName("XS21"));
+        Assert.assertNotNull(t.getByUserName("my name"));
 
     }
 
