@@ -293,6 +293,5 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertFalse(train2.isBuilt());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
 }
