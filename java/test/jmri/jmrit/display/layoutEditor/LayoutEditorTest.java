@@ -4,15 +4,18 @@ import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.io.File;
+
 import jmri.*;
 import jmri.jmrit.display.*;
 import jmri.util.*;
 import jmri.util.junit.rules.*;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
-import org.junit.Test;
-import org.junit.rules.Timeout;
-import org.netbeans.jemmy.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.EventTool;
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -22,17 +25,14 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  * @author George Warner Copyright (C) 2019
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@Timeout(10)
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     private EditorFrameOperator jfo;
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule
     public RetryRule retryRule = new RetryRule(3); // allow 3 retries
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -46,7 +46,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (e != null) {
@@ -75,7 +75,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
 
     @Test
-    @Ignore("Test fails to find and close dialog on Jenkins")
+    @Disabled("Test fails to find and close dialog on Jenkins")
     public void testSavePanel() {
 
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -126,7 +126,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     @Test
     @Override
-    @Ignore("failing to set size on appveyor")
+    @Disabled("failing to set size on appveyor")
     public void testSetSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setSize(100, 100);
@@ -139,7 +139,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Failing to set second zoom")
+    @Disabled("Failing to set second zoom")
     public void testGetSetZoom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((m) -> {
@@ -880,7 +880,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("unreliable on CI servers")
+    @Disabled("unreliable on CI servers")
     public void testSetHighlightSelectedBlockFalse() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setHighlightSelectedBlock(false);
@@ -931,7 +931,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Disabled("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionLeft() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -952,7 +952,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Disabled("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionBottom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -973,7 +973,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Disabled("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionRight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
@@ -994,7 +994,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Disabled("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionFloat() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
