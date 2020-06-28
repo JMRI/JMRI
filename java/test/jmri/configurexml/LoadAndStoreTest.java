@@ -28,7 +28,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         return getFiles(new File("java/test/jmri/configurexml"), false, true);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
     public void loadAndStoreTest(File file) throws Exception {
         super.loadLoadStoreFileCheck(file);

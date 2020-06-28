@@ -33,7 +33,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         return getFiles(new File("java/test/jmri/jmrix/openlcb/configurexml"), false, true);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
     public void loadAndStoreTest(File file, boolean pass) throws Exception {
         super.loadLoadStoreFileCheck(file);

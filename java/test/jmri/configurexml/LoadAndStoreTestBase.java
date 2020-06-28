@@ -56,10 +56,12 @@ public class LoadAndStoreTestBase {
      * Get all XML files in a directory and validate the ability to load and
      * store them.
      *
-     * @param saveType  the type (i.e. level) of ConfigureXml information being saved
-     * @param isGUI     true for files containing GUI elements, i.e. panels.  These
-     *                  can only be loaded once (others can be loaded twice, and that's
-     *                  tested when this is false), and can't be loaded when running headless.
+     * @param saveType the type (i.e. level) of ConfigureXml information being
+     *                 saved
+     * @param isGUI    true for files containing GUI elements, i.e. panels.
+     *                 These can only be loaded once (others can be loaded
+     *                 twice, and that's tested when this is false), and can't
+     *                 be loaded when running headless.
      */
     public LoadAndStoreTestBase(SaveType saveType, boolean isGUI) {
         this.saveType = saveType;
@@ -193,7 +195,7 @@ public class LoadAndStoreTestBase {
                     }
                 }
             }
-            
+
             // Time will vary when written out
             if (!match) {
                 String memory_value = "<memory value";
@@ -204,7 +206,7 @@ public class LoadAndStoreTestBase {
                     }
                 }
             }
-            
+
             // Dates can vary when written out
             String date_string = "<date>";
             if (!match && line1.contains(date_string) && line2.contains(date_string)) {
@@ -223,7 +225,7 @@ public class LoadAndStoreTestBase {
                     line2 = splits2[0] + splits2[1];
                 }
             }
-            
+
             if (!match && !line1.equals(line2)) {
                 log.error("match failed in LoadAndStoreTest:");
                 log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
@@ -288,7 +290,6 @@ public class LoadAndStoreTestBase {
         return outFile;
     }
 
-    @Test
     public void loadLoadStoreFileCheck(File file) throws Exception {
         if (guiOnly) {
             Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -312,19 +313,20 @@ public class LoadAndStoreTestBase {
         log.debug("   Chose comparison file {}", compFile.getCanonicalPath());
 
         postLoadProcessing();
-        
+
         File outFile = storeFile(file, this.saveType);
         checkFile(compFile, outFile);
-        
+
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
-    
+
     /**
-     * If anything, i.e. typically a delay,
-     * is needed after loading the file,
-     * it can be added by override here.
+     * If anything, i.e. typically a delay, is needed after loading the file, it
+     * can be added by override here.
      */
-    protected void postLoadProcessing(){}
+    protected void postLoadProcessing() {
+        // by default do nothing
+    }
 
     @BeforeEach
     public void setUp() {

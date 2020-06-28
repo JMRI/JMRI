@@ -32,14 +32,14 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         return getFiles(new File("java/test/jmri/jmrit/display/layoutEditor"), false, true);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
     public void loadAndStoreTest(File file, boolean pass) throws Exception {
         this.loadLoadStoreFileCheck(file);
     }
 
     public LoadAndStoreTest() {
-        super(SaveType.Config, true);
+        super(SaveType.User, true);
     }
 
     static boolean done;

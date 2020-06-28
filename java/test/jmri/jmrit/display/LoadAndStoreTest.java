@@ -27,13 +27,13 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         return getFiles(new File("java/test/jmri/jmrit/display/"), false, true);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index}: {0} (pass={1})")
     @MethodSource("data")
     public void loadAndStoreTest(File file, boolean pass) throws Exception {
         super.loadLoadStoreFileCheck(file);
     }
 
     public LoadAndStoreTest() {
-        super(SaveType.Config, true); // isGUEonly, as these contain panels, no not headless
+        super(SaveType.User, true); // isGUEonly, as these contain panels, no not headless
     }
 }
