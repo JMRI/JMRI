@@ -2,10 +2,10 @@ package jmri.jmrit.ctc;
 
 import java.awt.GraphicsEnvironment;
 import java.util.Locale;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
-import org.junit.rules.ExpectedException;
 
 /**
  * Tests for the CtcRunStartup Class.

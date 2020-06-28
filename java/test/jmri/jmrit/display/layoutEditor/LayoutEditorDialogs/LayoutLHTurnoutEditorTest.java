@@ -7,7 +7,6 @@ import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 

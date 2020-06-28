@@ -16,7 +16,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.rules.TestName;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

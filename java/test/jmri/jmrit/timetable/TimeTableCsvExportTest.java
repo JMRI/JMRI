@@ -5,14 +5,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import jmri.profile.NullProfile;
-import jmri.profile.Profile;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
-import org.junit.rules.TemporaryFolder;
 
 /**
  * Tests for the TimeTableCsvExport Class

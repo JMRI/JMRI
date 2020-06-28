@@ -9,15 +9,12 @@ import javax.swing.JMenuItem;
 
 import jmri.jmrit.ctc.setup.CreateTestObjects;
 import jmri.profile.NullProfile;
-import jmri.profile.Profile;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
-import org.junit.rules.ExpectedException;
-import org.junit.rules.TemporaryFolder;
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 

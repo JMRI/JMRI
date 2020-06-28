@@ -16,13 +16,11 @@ import java.util.HashSet;
 import java.util.Locale;
 
 import jmri.profile.NullProfile;
-import jmri.profile.Profile;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
-import org.junit.rules.TemporaryFolder;
 
 /**
  *
