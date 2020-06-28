@@ -75,6 +75,10 @@ public class JsonThrottleManager implements InstanceManagerAutoDefault {
     public boolean requestThrottle(DccLocoAddress address, ThrottleListener listener) {
         return InstanceManager.getDefault(ThrottleManager.class).requestThrottle(address, listener, false);
     }
+    
+    public boolean requestThrottle(jmri.BasicRosterEntry rosterEntry, ThrottleListener listener) {
+        return InstanceManager.getDefault(ThrottleManager.class).requestThrottle(rosterEntry, listener, false);
+    }
 
     /**
      * Make the JsonThrottle listen to the given address.
