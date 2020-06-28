@@ -16,10 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.JmriJFrame;
 
@@ -255,26 +253,6 @@ public class OperationsPanel extends JPanel {
         if (table.getRowSorter() != null) {
             table.getRowSorter().setSortKeys(null);
         }
-    }
-
-    protected synchronized void createShutDownTask() {
-        InstanceManager.getDefault(OperationsManager.class)
-                .setShutDownTask(new SwingShutDownTask("Operations Train Window Check", // NOI18N
-                        Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
-                    @Override
-                    public boolean checkPromptNeeded() {
-                        if (Setup.isAutoSaveEnabled()) {
-                            storeValues();
-                            return true;
-                        }
-                        return !OperationsXml.areFilesDirty();
-                    }
-
-                    @Override
-                    public void didPrompt() {
-                        storeValues();
-                    }
-                });
     }
 
     protected void storeValues() {
