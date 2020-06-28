@@ -209,11 +209,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         routes.setAttribute("class", this.getClass().getName());
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     /**
      * Create a RouteManager object of the correct class, then register and fill
      * it.

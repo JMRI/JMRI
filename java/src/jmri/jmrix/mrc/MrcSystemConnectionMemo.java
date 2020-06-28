@@ -18,7 +18,7 @@ import jmri.util.NamedBeanComparator;
  * @author Kevin Dickerson Copyright (C) 2014
  *
  */
-public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class MrcSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public MrcSystemConnectionMemo() {
         super("M", "MRC"); // NOI18N

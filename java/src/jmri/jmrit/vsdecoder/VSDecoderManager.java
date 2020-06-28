@@ -642,38 +642,61 @@ public class VSDecoderManager implements PropertyChangeListener {
                 // Need to decide which reporter it is, so we can use different methods
                 // to extract the address and the location.
                 if ((Integer) event.getNewValue() == Block.OCCUPIED) {
-                    // Get this Block's Reporter's current/last report value.  need to fix this - it could be
-                    /// an idtag type reporter.
+                    // Is there a Block's Reporter?
                     if (blk.getReporter() == null) {
                         log.debug("Block {} has no reporter!  Skipping state-type report", blk.getSystemName());
                         return;
                     }
+                    // Get this Block's Reporter's current/last report value
                     if (blk.isReportingCurrent()) {
                         Object currentReport = blk.getReporter().getCurrentReport();
                         if ( currentReport != null) {
-                           if(currentReport instanceof jmri.Reportable) {
-                              repVal = ((jmri.Reportable)currentReport).toReportString();
-                           } else {
-                              repVal = currentReport.toString();
-                           }
+                            if(currentReport instanceof jmri.Reportable) {
+                                repVal = ((jmri.Reportable)currentReport).toReportString();
+                            } else {
+                                repVal = currentReport.toString();
+                            }
                         }
                     } else {
                         Object lastReport = blk.getReporter().getLastReport();
                         if ( lastReport != null) {
-                           if(lastReport instanceof jmri.Reportable) {
-                              repVal = ((jmri.Reportable)lastReport).toReportString();
-                           } else {
-                              repVal = lastReport.toString();
-                           }
+                            if(lastReport instanceof jmri.Reportable) {
+                                repVal = ((jmri.Reportable)lastReport).toReportString();
+                            } else {
+                                repVal = lastReport.toString();
+                            }
                         }
                     }
                 } else {
                     log.debug("Ignoring report. not an OCCUPIED event.");
                     return;
                 }
-            } else if (eventName.equals("value")) {
+            } else if (eventName.equals("value")) { // NOI18N
+                if (event.getNewValue() == null ) {
+                    return; // block value was cleared, nothing to do
+                }
                 if (event.getNewValue() instanceof String) {
                     repVal = event.getNewValue().toString();
+                    // Is the new event value a valid VSDecoder address? If OK, set the sound position
+                    if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
+                        int locoAddress = Integer.parseInt(repVal);
+                        if (decoderInBlock.containsKey(locoAddress)) {
+                            if (blk.getPhysicalLocation() == null) {
+                                log.warn("Block {} has no physical location!", blk.getSystemName());
+                            } else {
+                                log.debug("Block value: {}, physical location: {}", event.getNewValue(), blk.getPhysicalLocation());
+                                decoderInBlock.get(locoAddress).setPosition(blk.getPhysicalLocation());
+                            }
+                        } else {
+                            log.warn("Block value \"{}\" is not a valid VSDecoder address", event.getNewValue());
+                        }
+                        return;
+                    }
+                } else if (event.getNewValue() instanceof jmri.jmrix.loconet.TranspondingTag) {
+                    repVal = ((jmri.Reportable) event.getNewValue()).toReportString();
+                    log.info("Block Value TranspondingTag {} found", repVal);
+                } else {
+                    log.warn("Block Value \"{}\" found - unsupported object!", event.getNewValue());
                 }
                 // Else it will still be null from the declaration/assignment above.
             } else {
@@ -682,7 +705,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             }  // Type of eventName.
             // Set the decoder's position.
             if (repVal == null) {
-                log.warn("Report from Block {} is null!", blk.getUserName());
+                log.warn("Report from Block {} is null!", blk.getSystemName());
             }
             if (blk.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER) {
                 setDecoderPositionByAddr(blk.getLocoAddress(repVal), blk.getPhysicalLocation());

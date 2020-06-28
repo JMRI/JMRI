@@ -18,7 +18,7 @@ import jmri.util.NamedBeanComparator;
  * @author Kevin Dickerson Copyright (C) 2012
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class QsiSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public QsiSystemConnectionMemo(QsiTrafficController st) {
         super("Q", "Quantum Programmer");

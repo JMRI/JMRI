@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
+public class AcelaSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public AcelaSystemConnectionMemo() {
         this("A", AcelaConnectionTypeList.CTI); // default to A

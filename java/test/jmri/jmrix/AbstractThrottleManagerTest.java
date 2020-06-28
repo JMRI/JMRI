@@ -20,7 +20,7 @@ public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleM
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tm = t = new AbstractThrottleManager(new SystemConnectionMemo("T", "Test") {
+        tm = t = new AbstractThrottleManager(new DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;

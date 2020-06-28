@@ -1768,7 +1768,7 @@
 
     <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
-                 maxmemory="512m"
+                 maxmemory="1536m"
                  overview="${source}/jmri/overview.html"
                  destdir="${doctarget}"
                  additionalparam="-breakiterator"
@@ -1869,7 +1869,7 @@
     <target name="javadoc-uml" depends="check-java-version-requirement, init, jjdoc, compile-generated-source, plantuml" 
                     description="create Javadocs with UML, requires Java 11">
         <javadoc packagenames="jmri.*, apps.*"
-                 maxmemory="512m"
+                 maxmemory="1536m"
                  overview="${source}/jmri/overview.html"
                  destdir="${doctarget}"
                  additionalparam="-breakiterator"
@@ -1906,11 +1906,12 @@
             <tag name="navassoc" enabled="false"/>
 
             <doclet name="nl.talsmasoftware.umldoclet.UMLDoclet"
-                    path="${libdir}/umldoclet-2.0.9.jar">
+                    path="${libdir}/umldoclet.jar">
                 <param name="-package"/>
                 <param name="--show-members=package"/>
                 <param name="-linksource"/>
                 <param name="-use"/>
+                <param name="--uml-timeout=1800"/> <!-- timeout passed to plantuml -->
             </doclet>
             
             <group title="Core" packages="jmri"/>
@@ -1959,14 +1960,25 @@
         
         </javadoc>
         
-        <apply executable="dot" dest="${doctarget}" parallel="false">
-            <arg value="-Tpng"/>
-            <arg value="-o"/>
-            <targetfile/>
-            <srcfile/>
-            <fileset dir="${doctarget}" includes="*.dot"/>
-            <mapper type="glob" from="*.dot" to="*.png"/>
-        </apply>
+        <!-- sparsify and reprocess some too-busy diagrams -->
+        <exec executable="./scripts/tighten-puml"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="${doctarget}/package-dependencies.puml"/>
+        </exec>
+        <exec executable="./scripts/tighten-puml"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="${doctarget}/jmri/package-dependencies.puml"/>
+        </exec>
+        
+        <plantuml output="${doctarget}" >
+        <fileset dir="${source}">
+                <include name="${doctarget}/package-dependencies.puml"/>
+                <include name="${doctarget}/jmri/package-dependencies.puml"/>
+        </fileset>
+        </plantuml>
+        
     </target>
 
     <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />

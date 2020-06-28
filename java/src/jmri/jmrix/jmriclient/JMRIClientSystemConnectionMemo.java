@@ -20,7 +20,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Paul Bender Copyright (C) 2010
  */
-public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class JMRIClientSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public JMRIClientSystemConnectionMemo(JMRIClientTrafficController jt) {
         super("J", "JMRI Client");

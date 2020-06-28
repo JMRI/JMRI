@@ -32,6 +32,8 @@ import org.slf4j.LoggerFactory;
 
 import apps.gui3.tabbedpreferences.EditConnectionPreferencesDialog;
 import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
+import java.util.HashSet;
+import java.util.Set;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -57,7 +59,16 @@ public class JmriConfigurationManager implements ConfigureManager {
     private final static Logger log = LoggerFactory.getLogger(JmriConfigurationManager.class);
     private final ConfigXmlManager legacy = new ConfigXmlManager();
     private final HashMap<PreferencesManager, InitializationException> initializationExceptions = new HashMap<>();
+    /*
+     * This list is in order of initialization and is used to display errors in
+     * the order they appear.
+     */
     private final List<PreferencesManager> initialized = new ArrayList<>();
+    /*
+     * This set is used to prevent a stack overflow by preventing
+     * initializeProvider from recursively being called with the same provider.
+     */
+    private final Set<PreferencesManager> initializing = new HashSet<>();
 
     @SuppressWarnings("unchecked") // For types in InstanceManager.store()
     public JmriConfigurationManager() {
@@ -200,9 +211,15 @@ public class JmriConfigurationManager implements ConfigureManager {
                     || (new File(url.toURI())).getName().equals(Profile.CONFIG)) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 List<PreferencesManager> providers = new ArrayList<>(InstanceManager.getList(PreferencesManager.class));
-                providers.stream().forEach((provider) -> {
-                    this.initializeProvider(provider, profile);
-                });
+                providers.stream()
+                        // sorting is a best-effort attempt to ensure that the
+                        // more providers a provider relies on the later it will
+                        // be initialized; this should tend to cause providers
+                        // that list explicit requirements get run before providers
+                        // attempting to force themselves to run last by requiring
+                        // all providers
+                        .sorted((p1, p2) -> Integer.compare(p1.getRequires().size(), p2.getRequires().size()))
+                        .forEachOrdered(provider -> initializeProvider(provider, profile));
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
                         
@@ -392,26 +409,26 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
     private void initializeProvider(PreferencesManager provider, Profile profile) {
-        if (!provider.isInitialized(profile) && !provider.isInitializedWithExceptions(profile)) {
+        if (!initializing.contains(provider) && !provider.isInitialized(profile) && !provider.isInitializedWithExceptions(profile)) {
+            initializing.add(provider);
             log.debug("Initializing provider {}", provider.getClass());
-            for (Class<? extends PreferencesManager> c : provider.getRequires()) {
-                InstanceManager.getList(c).stream().forEach((p) -> {
-                    this.initializeProvider(p, profile);
-                });
-            }
+            provider.getRequires()
+                    .forEach(c -> InstanceManager.getList(c)
+                            .forEach(p -> initializeProvider(p, profile)));
             try {
                 provider.initialize(profile);
             } catch (InitializationException ex) {
                 // log all initialization exceptions, but only retain for GUI display the
                 // first initialization exception for a provider
-                InitializationException put = this.initializationExceptions.putIfAbsent(provider, ex);
-                log.error("Exception initializing {}: {}", provider.getClass().getName(), ex.getMessage());
-                if (put != null) {
+                if (this.initializationExceptions.putIfAbsent(provider, ex) == null) {
+                    log.error("Exception initializing {}: {}", provider.getClass().getName(), ex.getMessage());
+                } else {
                     log.error("Additional exception initializing {}: {}", provider.getClass().getName(), ex.getMessage());
                 }
             }
             this.initialized.add(provider);
             log.debug("Initialized provider {}", provider.getClass());
+            initializing.remove(provider);
         }
     }
 

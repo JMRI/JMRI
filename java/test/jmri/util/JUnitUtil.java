@@ -12,10 +12,12 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
+import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.operators.AbstractButtonOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
@@ -948,9 +950,11 @@ public class JUnitUtil {
      * End any running BlockBossLogic (Simple Signal Logic) objects
      */
     public static void clearBlockBossLogic() {
-        jmri.jmrit.blockboss.BlockBossLogic.stopAllAndClear();
+        if(InstanceManager.containsDefault(BlockBossLogicProvider.class)) {
+            InstanceManager.getDefault(BlockBossLogicProvider.class).dispose();
+        }
     }
-    
+
     /**
      * Leaves ShutDownManager, if any, in place,
      * but removes its contents.  Instead of using this,
@@ -1065,8 +1069,8 @@ public class JUnitUtil {
 
     public static void initStartupActionsManager() {
         InstanceManager.store(
-                new apps.StartupActionsManager(),
-                apps.StartupActionsManager.class);
+                new jmri.util.startup.StartupActionsManager(),
+                jmri.util.startup.StartupActionsManager.class);
     }
 
     public static void initConnectionConfigManager() {
@@ -1465,7 +1469,19 @@ public class JUnitUtil {
     public static void closeAllPanels() {
         InstanceManager.getOptionalDefault(EditorManager.class)
                 .ifPresent(m -> m.getAll()
-                        .forEach(e -> new EditorFrameOperator(e).closeFrameWithConfirmations()));
+                        .forEach(e -> {
+                            if(e.isVisible()){
+                               e.requestFocus();
+                               try {
+                                   EditorFrameOperator editorFrameOperator = new EditorFrameOperator(e.getTargetFrame());
+                                   editorFrameOperator.closeFrameWithConfirmations();
+                               } catch (TimeoutExpiredException timeoutException ) {
+                                   log.error("Failed to close panel {} with exception {}",e.getTitle(),
+                                           timeoutException.getMessage(),
+                                           Log4JUtil.shortenStacktrace(timeoutException));
+                               }
+                            }
+                        }));
     }
 
     /* GraphicsEnvironment utility methods */

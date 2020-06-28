@@ -9,6 +9,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 import jmri.jmrit.ctc.CTCFiles;
 
 public class CreateTestObjects {
@@ -164,7 +165,7 @@ public class CreateTestObjects {
         bb.setLimitSpeed2(limitspeed2);
         bb.setSensor1(sensor1);
         bb.setSensor2(sensor2);
-        bb.retain();
+        InstanceManager.getDefault(BlockBossLogicProvider.class).register(bb);
         bb.start();
     }
 
