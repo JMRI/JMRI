@@ -678,14 +678,14 @@ public class VSDecoderManager implements PropertyChangeListener {
                 if (event.getNewValue() instanceof String) {
                     repVal = event.getNewValue().toString();
                     // Is the new event value a valid VSDecoder address? If OK, set the sound position
-                    if (! repVal.trim().isEmpty()) {
-                        int address = Integer.parseInt(repVal);
-                        if (decoderInBlock.containsKey(address)) {
+                    if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
+                        int locoAddress = Integer.parseInt(repVal);
+                        if (decoderInBlock.containsKey(locoAddress)) {
                             if (blk.getPhysicalLocation() == null) {
                                 log.warn("Block {} has no physical location!", blk.getSystemName());
                             } else {
                                 log.debug("Block value: {}, physical location: {}", event.getNewValue(), blk.getPhysicalLocation());
-                                decoderInBlock.get(address).setPosition(blk.getPhysicalLocation());
+                                decoderInBlock.get(locoAddress).setPosition(blk.getPhysicalLocation());
                             }
                         } else {
                             log.warn("Block value \"{}\" is not a valid VSDecoder address", event.getNewValue());
