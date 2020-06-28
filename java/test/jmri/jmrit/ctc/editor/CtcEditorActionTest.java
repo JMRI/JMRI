@@ -325,7 +325,7 @@ public class CtcEditorActionTest {
     @Test
     public void testMakePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new CtcEditorAction().makePanel();
+        Assert.assertThrows(IllegalArgumentException.class, () -> new CtcEditorAction().makePanel());
     }
 
     @BeforeEach
