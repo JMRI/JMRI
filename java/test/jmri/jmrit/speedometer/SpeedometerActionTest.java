@@ -37,7 +37,7 @@ public class SpeedometerActionTest {
     public void testMakePanel(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedometerAction action = new SpeedometerAction("Test SpeedometerAction");
-        action.makePanel(); // this should throw an IllegalArgumentException.
+        Assert.assertThrows(IllegalArgumentException.class, () -> action.makePanel());
     }
 
     @Test

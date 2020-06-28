@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
-import org.junit.rules.ExpectedException;
 
 /**
  * Tests for the TimeTableAction Class
@@ -34,7 +33,7 @@ public class TimeTableActionTest {
     @Test
     public void testMakePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new TimeTableAction().makePanel();
+        Assert.assertThrows(IllegalArgumentException.class, () -> new TimeTableAction().makePanel());
     }
 
     @BeforeEach

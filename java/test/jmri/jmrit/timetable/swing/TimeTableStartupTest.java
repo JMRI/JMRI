@@ -5,7 +5,6 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
-import org.junit.rules.ExpectedException;
 
 /**
  * Tests for the TimeTableStartup Class
@@ -28,7 +27,7 @@ public class TimeTableStartupTest {
     @Test
     public void testGetTitleException() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Open Timetable Exception", new TimeTableStartup().getTitle(TimeTableFrame.class, Locale.US));  // NOI18N
+        Assert.assertThrows(IllegalArgumentException.class, () -> new TimeTableStartup().getTitle(TimeTableFrame.class, Locale.US));
     }
 
     @Test
