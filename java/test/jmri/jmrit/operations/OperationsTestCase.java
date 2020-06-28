@@ -48,6 +48,7 @@ public class OperationsTestCase {
 
     private final boolean waitOnEventQueueNotEmpty = false;
     private final boolean checkEventQueueEmpty = false;
+    private final boolean checkShutDownTask = false;
 
     @After
     public void tearDown() {
@@ -84,17 +85,21 @@ public class OperationsTestCase {
                 // ignore.
             }
         }
-        
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
             List<ShutDownTask> list = sm.tasks();
-            for (ShutDownTask task : list) {
-                Assert.fail("Shutdown task found: " + task.getName());
+            while (list.size() > 0) {
+                ShutDownTask task = list.get(0);
+                sm.deregister(task);
+                if (checkShutDownTask) {
+                    Assert.fail("Shutdown task found: " + task.getName());
+                }
             }
         }
 
-        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 
