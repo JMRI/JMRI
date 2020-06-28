@@ -137,7 +137,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -145,7 +146,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is ZH12",
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());
@@ -159,7 +161,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -167,7 +170,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is ZH12",
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());
@@ -188,7 +192,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -196,7 +201,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is ZH12",
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());
@@ -207,7 +213,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -215,7 +222,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is ZH12",
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());
@@ -241,7 +249,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -249,7 +258,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("expression female socket name is ZH12",
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
-                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+//                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());

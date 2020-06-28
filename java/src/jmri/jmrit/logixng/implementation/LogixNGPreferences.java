@@ -21,7 +21,7 @@ public final class LogixNGPreferences extends PreferencesBean {
     public static final String ALLOW_DEBUG_MODE = "allowDebugMode";
     
     private boolean _startLogixNGOnLoad = false;
-    private boolean _useGenericFemaleSockets = true;
+    private boolean _useGenericFemaleSockets = false;
     private boolean _allowDebugMode = false;
     
     private final PluginManager _pluginManager;

@@ -553,7 +553,19 @@ public class DefaultFemaleGenericExpressionSocket
         public void unregisterListeners() {
             DefaultFemaleGenericExpressionSocket.this.unregisterListeners();
         }
-        
+
+        /** {@inheritDoc} */
+        @Override
+        public String getShortDescription(Locale locale) {
+            return DefaultFemaleGenericExpressionSocket.this.getShortDescription(locale);
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public String getLongDescription(Locale locale) {
+            return DefaultFemaleGenericExpressionSocket.this.getLongDescription(locale);
+        }
+
     }
     
     
@@ -671,7 +683,19 @@ public class DefaultFemaleGenericExpressionSocket
         public void unregisterListeners() {
             DefaultFemaleGenericExpressionSocket.this.unregisterListeners();
         }
-        
+
+        /** {@inheritDoc} */
+        @Override
+        public String getShortDescription(Locale locale) {
+            return DefaultFemaleGenericExpressionSocket.this.getShortDescription(locale);
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public String getLongDescription(Locale locale) {
+            return DefaultFemaleGenericExpressionSocket.this.getLongDescription(locale);
+        }
+
     }
     
     
@@ -789,7 +813,19 @@ public class DefaultFemaleGenericExpressionSocket
         public void unregisterListeners() {
             DefaultFemaleGenericExpressionSocket.this.unregisterListeners();
         }
-        
+
+        /** {@inheritDoc} */
+        @Override
+        public String getShortDescription(Locale locale) {
+            return DefaultFemaleGenericExpressionSocket.this.getShortDescription(locale);
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public String getLongDescription(Locale locale) {
+            return DefaultFemaleGenericExpressionSocket.this.getLongDescription(locale);
+        }
+
     }
     
     
@@ -946,7 +982,7 @@ public class DefaultFemaleGenericExpressionSocket
         public void unregisterListeners() {
             DefaultFemaleGenericExpressionSocket.this.unregisterListeners();
         }
-        
+
         /** {@inheritDoc} */
         @Override
         public String getShortDescription(Locale locale) {
