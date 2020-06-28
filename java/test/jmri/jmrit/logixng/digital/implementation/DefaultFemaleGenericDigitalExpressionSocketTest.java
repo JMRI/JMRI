@@ -120,11 +120,11 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
     @Test
     public void testListeners() {
         _listenersAreRegistered.set(false);
-        ((AbstractFemaleSocket)femaleGenericSocket).registerListeners();
+        ((AbstractFemaleSocket)_femaleSocket).registerListeners();
         Assert.assertTrue("listeners are registered", _listenersAreRegistered.get());
         
         _listenersAreUnregistered.set(false);
-        ((AbstractFemaleSocket)femaleGenericSocket).unregisterListeners();
+        ((AbstractFemaleSocket)_femaleSocket).unregisterListeners();
         Assert.assertTrue("listeners are unregistered", _listenersAreUnregistered.get());
     }
     
