@@ -4,10 +4,9 @@ import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
@@ -467,7 +466,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
      }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -479,7 +478,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         programmer = lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo.dispose();

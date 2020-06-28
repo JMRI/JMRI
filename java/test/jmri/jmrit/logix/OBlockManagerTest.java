@@ -3,10 +3,9 @@ package jmri.jmrit.logix;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the OBlockManager class.
@@ -68,12 +67,12 @@ public class OBlockManagerTest {
         Assert.assertEquals("OBlock", bSouth, _OBlockMgr.getOBlock("OB4"));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();        l = new OBlockManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

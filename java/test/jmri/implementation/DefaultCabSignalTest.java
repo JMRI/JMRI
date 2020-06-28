@@ -5,7 +5,9 @@ import jmri.BlockManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Unit tests for the DefaultCabSignal 
@@ -49,7 +51,7 @@ public class DefaultCabSignalTest {
         acs.dispose(); // verify no exceptions
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -60,7 +62,7 @@ public class DefaultCabSignalTest {
         cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;

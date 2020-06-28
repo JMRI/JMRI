@@ -1,14 +1,21 @@
 package jmri.jmrit.ctc.editor;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
+
 import jmri.jmrit.ctc.setup.CreateTestObjects;
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 import org.netbeans.jemmy.EventTool;
@@ -22,12 +29,6 @@ import org.netbeans.jemmy.operators.*;
 public class CtcEditorActionTest {
 
     JFrameOperator _jfo = null;
-
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
-
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
 
     static final int DELAY = 0;
 
@@ -327,22 +328,21 @@ public class CtcEditorActionTest {
     @Test
     public void testMakePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        thrown.expect(IllegalArgumentException.class);
         new CtcEditorAction().makePanel();
     }
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetFileUtilSupport();
-        JUnitUtil.resetProfileManager(new NullProfile(folder.newFolder(Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
 
         CreateTestObjects.createTestObjects();
         CreateTestObjects.createTestFiles();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
 

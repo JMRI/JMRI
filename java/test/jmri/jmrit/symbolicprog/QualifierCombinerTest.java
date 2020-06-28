@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JLabel;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -130,7 +130,7 @@ public class QualifierCombinerTest {
         return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
@@ -189,7 +189,7 @@ public class QualifierCombinerTest {
         v3 = model.findVar("three");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

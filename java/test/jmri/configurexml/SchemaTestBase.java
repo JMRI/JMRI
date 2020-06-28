@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+
 import jmri.jmrit.XmlFile;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.JDOMException;
 import org.junit.After;
 import org.junit.Assert;

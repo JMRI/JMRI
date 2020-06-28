@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.QueueTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ import jmri.util.JUnitUtil;
  */
 public class OperationsTestCase {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         reset();
@@ -49,7 +48,7 @@ public class OperationsTestCase {
     private final boolean waitOnEventQueueNotEmpty = false;
     private final boolean checkEventQueueEmpty = false;
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (waitOnEventQueueNotEmpty) {
             Thread AWT_EventQueue = JUnitUtil.getThreadStartsWithName("AWT-EventQueue");

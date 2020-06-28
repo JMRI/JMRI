@@ -1,10 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.io.*;
+
 import jmri.util.*;
+
 import org.junit.runners.Parameterized;
 import org.junit.*;
-import jmri.util.JUnitUtil;
 
 /**
  * Test that configuration files can be read and then stored again consistently.

@@ -2,7 +2,9 @@ package jmri.jmrit.ctc;
 
 import java.awt.GraphicsEnvironment;
 import java.util.Locale;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.junit.rules.ExpectedException;
 
 /**
@@ -11,9 +13,6 @@ import org.junit.rules.ExpectedException;
  * @author Dave Sand Copyright (C) 2019
  */
 public class CtcRunStartupTest {
-
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void testGetTitle() {
@@ -27,12 +26,12 @@ public class CtcRunStartupTest {
         Assert.assertNotNull(new CtcRunStartup().getActionClasses());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

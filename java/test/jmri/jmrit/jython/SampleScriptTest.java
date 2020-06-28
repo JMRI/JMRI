@@ -81,7 +81,7 @@ public class SampleScriptTest {
         JUnitUtil.initDebugThrottleManager();
     }
         
-    @After 
+    @After
     public void tearDown() throws Exception {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();

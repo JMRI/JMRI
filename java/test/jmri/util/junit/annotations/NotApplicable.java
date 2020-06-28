@@ -1,7 +1,6 @@
 package jmri.util.junit.annotations;
 
 import java.lang.annotation.*;
-import org.junit.Ignore;
 
 /**
  * Annotation denoting that an overriden test is not applicable to a particular

@@ -1,13 +1,10 @@
 package jmri.jmrix.lenz;
 
-import java.util.ArrayList;
-import java.util.List;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,7 +99,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         assertThat(l.getClosedText()).isEqualTo(Bundle.getMessage("TurnoutStateClosed"));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         lnis.terminateThreads();
         lnis = null;
@@ -111,7 +108,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface, register

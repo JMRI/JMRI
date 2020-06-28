@@ -5,10 +5,9 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -215,7 +214,7 @@ public class CbusEventResponderTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -224,7 +223,7 @@ public class CbusEventResponderTest {
         memo.setTrafficController(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         tc.terminateThreads();

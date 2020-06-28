@@ -4,10 +4,9 @@ import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Bundle class
@@ -22,7 +21,7 @@ public class EcosSystemConnectionMemoTest extends SystemConnectionMemoTestBase<E
         Assert.assertTrue("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,7 +35,7 @@ public class EcosSystemConnectionMemoTest extends SystemConnectionMemoTestBase<E
         InstanceManager.store(scm, EcosSystemConnectionMemo.class);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         InstanceManager.getDefault(ShutDownManager.class).deregister(scm.getLocoAddressManager().ecosLocoShutDownTask);

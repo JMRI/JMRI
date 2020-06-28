@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.eventtable;
 
+import java.io.File;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -10,11 +12,10 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusPreferences;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.rules.TemporaryFolder;
 
 // import org.slf4j.Logger;
@@ -386,23 +387,20 @@ public class CbusEventTableDataModelTest {
     
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
-    
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-    
-    @Before
-    public void setUp() throws java.io.IOException {
+
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         
         jmri.InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         tcis.terminateThreads();

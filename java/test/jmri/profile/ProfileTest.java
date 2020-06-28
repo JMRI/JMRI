@@ -6,11 +6,9 @@ import java.io.IOException;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.rules.TemporaryFolder;
 
 /**
@@ -18,15 +16,12 @@ import org.junit.rules.TemporaryFolder;
  */
 public class ProfileTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -37,8 +32,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testProfileWithExtension() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test" + Profile.EXTENSION);
+    public void testProfileWithExtension(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test" + Profile.EXTENSION);
         Profile instance = new Profile("test", "test", profileFolder);
         Assert.assertEquals("Name has no extension", "test", instance.getName());
         Assert.assertEquals("Path name has extension", "test" + Profile.EXTENSION, instance.getPath().getName());
@@ -50,8 +45,8 @@ public class ProfileTest {
      * @throws IOException on any unanticipated errors setting up test
      */
     @Test
-    public void testSave() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+    public void testSave(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
         instance.setName("saved");
         instance.save();
@@ -64,8 +59,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testGetName() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+    public void testGetName(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
         Assert.assertEquals("test", instance.getName());
     }
@@ -76,8 +71,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testSetName() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+    public void testSetName(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
         instance.setName("changed");
         Assert.assertEquals("changed", instance.getName());
@@ -89,8 +84,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testGetId() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+    public void testGetId(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
         String id = (new ProfileProperties(instance.getPath())).get(Profile.ID, true);
         Assert.assertEquals(id, instance.getId());
@@ -102,8 +97,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testGetPath() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+    public void testGetPath(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test");
         File profileExtFolder = new File(profileFolder.getParentFile(), "test" + Profile.EXTENSION);
         Profile instance = new Profile("test", "test", profileFolder);
         Assert.assertNotEquals(profileFolder, instance.getPath());
@@ -116,8 +111,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testToString() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+    public void testToString(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
         Assert.assertEquals(instance.getName(), instance.toString());
     }
@@ -128,8 +123,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testHashCode() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test" + Profile.EXTENSION);
+    public void testHashCode(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test" + Profile.EXTENSION);
         Profile instance = new Profile("test", "test", profileFolder);
         String id = (new ProfileProperties(profileFolder)).get(Profile.ID, true);
         Assert.assertEquals(71 * 7 + id.hashCode(), instance.hashCode());
@@ -143,8 +138,8 @@ public class ProfileTest {
     @Test
     // tests that equals() does not allow a String to equal a Profile
     @SuppressWarnings("unlikely-arg-type")
-    public void testEquals() throws IOException {
-        File rootFolder = folder.newFolder(Profile.PROFILE);
+    public void testEquals(@TempDir File folder) throws IOException {
+        File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test");
         File profileFolder2 = new File(rootFolder, "test2");
         File profileFolder3 = new File(rootFolder, "test3");
@@ -167,8 +162,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testIsComplete() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+    public void testIsComplete(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test");
         Profile instance = new Profile("test", "test", profileFolder);
         Assert.assertTrue(instance.isComplete());
     }
@@ -179,8 +174,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testGetUniqueId() throws IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test" + Profile.EXTENSION);
+    public void testGetUniqueId(@TempDir File folder) throws IOException {
+        File profileFolder = new File(folder, "test" + Profile.EXTENSION);
         Profile instance = new Profile("test", "test", profileFolder);
         String id = (new ProfileProperties(profileFolder)).get(Profile.ID, true);
         id = id.substring(id.lastIndexOf(".") + 1);
@@ -193,10 +188,11 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testContainsProfile() throws IOException {
-        File rootFolder = folder.newFolder(Profile.PROFILE);
+    public void testContainsProfile(@TempDir File folder) throws IOException {
+        File rootFolder = new File(folder, Profile.PROFILE);
         File profileFolder = new File(rootFolder, "test");
-        File rootFolder2 = folder.newFolder(Profile.PATH);
+        profileFolder.mkdirs();
+        File rootFolder2 = new File(folder, Profile.PATH);
         (new File(rootFolder2, "test2")).mkdirs();
         new Profile("test", "test", profileFolder);
         Assert.assertTrue(Profile.containsProfile(rootFolder));
@@ -209,12 +205,13 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testInProfile() throws IOException {
-        File rootFolder = folder.newFolder(Profile.PROFILE);
+    public void testInProfile(@TempDir File folder) throws IOException {
+        File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test" + Profile.EXTENSION);
         File innerFolder = new File(profileFolder, "test");
         innerFolder.mkdirs();
-        File rootFolder2 = folder.newFolder(Profile.PATH);
+        File rootFolder2 = new File(folder, Profile.PATH);
+        rootFolder2.mkdirs();
         new Profile("test", "test", profileFolder);
         Assert.assertTrue(Profile.inProfile(innerFolder));
         Assert.assertFalse(Profile.inProfile(rootFolder2));
@@ -226,8 +223,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testIsProfile() throws IOException {
-        File rootFolder = folder.newFolder(Profile.PROFILE);
+    public void testIsProfile(@TempDir File folder) throws IOException {
+        File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test" + Profile.EXTENSION);
         new Profile("test", "test", profileFolder);
         File innerFolder = new File(profileFolder, "test");
@@ -243,8 +240,8 @@ public class ProfileTest {
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
-    public void testCompareTo() throws IOException {
-        File rootFolder = folder.newFolder(Profile.PROFILE);
+    public void testCompareTo(@TempDir File folder) throws IOException {
+        File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test");
         File profileFolder2 = new File(rootFolder, "test2");
         File profileFolder3 = new File(rootFolder, "test3");

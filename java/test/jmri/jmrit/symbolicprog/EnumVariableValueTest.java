@@ -2,13 +2,12 @@ package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
 import java.util.HashMap;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -215,13 +214,13 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
                        
     }
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
     }
     
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

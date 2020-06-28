@@ -2,12 +2,12 @@ package jmri.jmrix.can.cbus.node;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import jmri.InstanceManager;
 import jmri.PowerManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusPowerManager;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,9 @@
 package jmri.jmrit.logix.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,18 +12,18 @@ import org.junit.*;
 public class WarrantManagerXmlTest {
 
     @Test
-    @Ignore("causes missing data for other tests?")
+    @Disabled("causes missing data for other tests?")
     public void testCTor() {
         WarrantManagerXml t = new WarrantManagerXml();
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();

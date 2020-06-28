@@ -1,10 +1,9 @@
 package jmri.jmrix.anyma.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * UsbLightManagerXmlTest.java
@@ -21,12 +20,12 @@ public class UsbLightManagerXmlTest {
         Assert.assertNotNull("UsbLightManagerXml constructor", new UsbLightManagerXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

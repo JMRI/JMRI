@@ -6,7 +6,7 @@ import jmri.implementation.DefaultLogix;
 import jmri.implementation.DefaultRoute;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.assertj.core.api.Condition;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

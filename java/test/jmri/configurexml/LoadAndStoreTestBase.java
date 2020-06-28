@@ -6,12 +6,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Collection;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

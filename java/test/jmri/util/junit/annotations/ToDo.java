@@ -1,7 +1,6 @@
 package jmri.util.junit.annotations;
 
 import java.lang.annotation.*;
-import org.junit.Ignore;
 
 /**
  * Annotation for test denoting work that needs to be done to a specific test.  

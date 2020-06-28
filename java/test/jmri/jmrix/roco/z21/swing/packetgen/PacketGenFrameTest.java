@@ -1,15 +1,15 @@
 package jmri.jmrix.roco.z21.swing.packetgen;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for PacketGenFrame class.
@@ -29,7 +29,7 @@ public class PacketGenFrameTest {
       Assert.assertNotNull("PacketGenFrame constructor",new PacketGenFrame());
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -40,7 +40,7 @@ public class PacketGenFrameTest {
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         memo=null;
         tc.terminateThreads();

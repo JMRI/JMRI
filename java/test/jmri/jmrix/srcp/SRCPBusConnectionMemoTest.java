@@ -2,10 +2,9 @@ package jmri.jmrix.srcp;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SRCPBusConnectionMemoTest.java
@@ -20,7 +19,7 @@ public class SRCPBusConnectionMemoTest extends SystemConnectionMemoTestBase<SRCP
     private SRCPTrafficController tc;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new SRCPTrafficController() {
@@ -47,7 +46,7 @@ public class SRCPBusConnectionMemoTest extends SystemConnectionMemoTestBase<SRCP
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminateThreads();
         memo.dispose();

@@ -3,10 +3,8 @@ package jmri.jmrix.cmri.serial;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
@@ -98,7 +96,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
         Assert.assertEquals("CS3B4", it.next().getSystemName());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -110,7 +108,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
         t = new SerialSensor("CS4");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (tcis != null) tcis.terminateThreads();

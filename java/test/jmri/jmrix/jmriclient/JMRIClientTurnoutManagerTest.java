@@ -1,10 +1,9 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -29,7 +28,7 @@ public class JMRIClientTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JMRIClientTrafficController tc = new JMRIClientTrafficController(){
@@ -40,7 +39,7 @@ public class JMRIClientTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
         l= new JMRIClientTurnoutManager(new JMRIClientSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

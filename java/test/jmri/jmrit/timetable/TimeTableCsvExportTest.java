@@ -3,11 +3,15 @@ package jmri.jmrit.timetable;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.rules.TemporaryFolder;
 
 /**
@@ -16,9 +20,6 @@ import org.junit.rules.TemporaryFolder;
  * @author Dave Sand Copyright (C) 2019
  */
 public class TimeTableCsvExportTest {
-
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
 
     /**
      * Test exporting to CSV.
@@ -73,15 +74,15 @@ public class TimeTableCsvExportTest {
         return count;
     }
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager(new NullProfile(folder.newFolder(Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         // use reflection to reset the static file location.
         Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
