@@ -27,19 +27,4 @@ public interface SilenceablePropertyChangeProvider extends PropertyChangeProvide
      *                                  that should not be silenced
      */
     public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean silenced);
-
-    /**
-     * Deprecated form of {@link #setPropertyChangesSilenced(String, boolean)}.
-     *
-     * @param propertyName the name of the property to mute
-     * @param silenced     true if events are to be suppressed; false otherwise
-     * @throws IllegalArgumentException if propertyName represents a property
-     *                                  that should not be silenced
-     * @deprecated since 4.21.1; use
-     * {@link #setPropertyChangesSilenced(String, boolean)} instead
-     */
-    @Deprecated
-    public default void setPropertyChangesMuted(@Nonnull String propertyName, boolean silenced) {
-        setPropertyChangesSilenced(propertyName, silenced);
-    }
 }
