@@ -7,7 +7,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
+import jmri.InstanceManager;
+import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JmriJFrame;
 
 /**
@@ -156,19 +159,39 @@ public class OperationsFrame extends JmriJFrame {
         this.getContentPane().clearTableSort(table);
     }
 
+    /**
+     * Code at frame level to clear modified flag
+     */
     protected synchronized void createShutDownTask() {
-        this.getContentPane().createShutDownTask();
+        InstanceManager.getDefault(OperationsManager.class)
+        .setShutDownTask(new SwingShutDownTask("Operations Train Window Check", // NOI18N
+                Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
+            @Override
+            public boolean checkPromptNeeded() {
+                setModifiedFlag(false); // allow only one popup requesting save operation files
+                if (Setup.isAutoSaveEnabled()) {
+                    storeValues();
+                    return true;
+                }
+                return !OperationsXml.areFilesDirty();
+            }
+
+            @Override
+            public void didPrompt() {
+                storeValues();
+            }
+        });
+    }
+    
+    @Override
+    protected void storeValues() {
+        this.getContentPane().storeValues();
     }
 
     @Override
     public void dispose() {
         this.getContentPane().dispose();
         super.dispose();
-    }
-
-    @Override
-    protected void storeValues() {
-        this.getContentPane().storeValues();
     }
 
     /*

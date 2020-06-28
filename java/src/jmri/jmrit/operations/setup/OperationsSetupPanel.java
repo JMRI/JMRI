@@ -372,7 +372,6 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
 
         // now provide the railroad name
         railroadNameTextField.setText(Setup.getRailroadName());
-        createShutDownTask();
     }
 
     // Save, Delete, Add buttons
