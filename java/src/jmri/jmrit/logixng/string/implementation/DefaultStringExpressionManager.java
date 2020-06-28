@@ -78,13 +78,13 @@ public class DefaultStringExpressionManager extends AbstractManager<MaleStringEx
             throws IllegalArgumentException {
         
         if (expression instanceof MaleStringExpressionSocket) {
-            throw new IllegalArgumentException("registerAction() cannot register a MaleStringExpressionSocket. Use the method register() instead.");
+            throw new IllegalArgumentException("registerExpression() cannot register a MaleStringExpressionSocket. Use the method register() instead.");
         }
         
         // Check if system name is valid
         if (this.validSystemNameFormat(expression.getSystemName()) != NameValidity.VALID) {
             log.warn("SystemName " + expression.getSystemName() + " is not in the correct format");
-            throw new IllegalArgumentException("System name is invalid");
+            throw new IllegalArgumentException(String.format("System name is invalid: %s", expression.getSystemName()));
         }
         
         // Keep track of the last created auto system name
@@ -99,11 +99,6 @@ public class DefaultStringExpressionManager extends AbstractManager<MaleStringEx
     @Override
     public int getXMLOrder() {
         return LOGIXNG_STRING_EXPRESSIONS;
-    }
-
-    @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameStringExpression");
     }
 
     @Override
@@ -136,58 +131,12 @@ public class DefaultStringExpressionManager extends AbstractManager<MaleStringEx
             return new DefaultFemaleStringExpressionSocket(parent, listener, socketName);
         }
     }
-/*
-    @Override
-    public FemaleStringExpressionSocket createFemaleStringExpressionSocket(
-            Base parent,
-            FemaleSocketListener listener,
-            String socketName,
-            MaleStringExpressionSocket maleSocket) {
-        
-        FemaleStringExpressionSocket socket =
-                new DefaultFemaleStringExpressionSocket(parent, listener, socketName, maleSocket);
-        
-        return socket;
-    }
-*/    
+    
     @Override
     public Map<Category, List<Class<? extends Base>>> getExpressionClasses() {
         return expressionClassList;
     }
     
-/*
-    @Override
-    public void addExpression(Expression expression) throws IllegalArgumentException {
-        // Check if system name is valid
-        if (this.validSystemNameFormat(expression.getSystemName()) != NameValidity.VALID) {
-            log.warn("SystemName " + expression.getSystemName() + " is not in the correct format");
-            throw new IllegalArgumentException("System name is invalid");
-        }
-        // save in the maps
-        registerExpression(expression);
-    }
-
-    @Override
-    public Expression getExpression(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Expression getByUserName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Expression getBySystemName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void deleteExpression(Expression x) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-*/    
-
     /** {@inheritDoc} */
     @Override
     public String getBeanTypeHandled(boolean plural) {

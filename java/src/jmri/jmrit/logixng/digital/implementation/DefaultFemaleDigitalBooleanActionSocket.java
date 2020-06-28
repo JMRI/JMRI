@@ -22,13 +22,13 @@ public final class DefaultFemaleDigitalBooleanActionSocket
     
     @Override
     public boolean isCompatible(MaleSocket socket) {
-        return socket instanceof MaleDigitalBooleanAction;
+        return socket instanceof MaleDigitalBooleanActionSocket;
     }
     
     @Override
     public void execute(boolean hasChangedToTrue) throws JmriException {
         if (isConnected()) {
-            ((MaleDigitalBooleanAction)getConnectedSocket())
+            ((MaleDigitalBooleanActionSocket)getConnectedSocket())
                     .execute(hasChangedToTrue);
         }
     }

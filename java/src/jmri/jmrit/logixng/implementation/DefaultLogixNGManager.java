@@ -41,11 +41,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameLogixNG");
-    }
-
-    @Override
     public char typeLetter() {
         return 'Q';
     }
@@ -132,16 +127,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLogixNGs" : "BeanNameLogixNG");
     }
-
-//    @Override
-//    public MaleDigitalActionSocket createMaleActionSocket(DigitalAction action) {
-//        return new DefaultMaleActionSocket(action);
-//    }
-
-//    @Override
-//    public MaleDigitalExpressionSocket createMaleExpressionSocket(DigitalExpression expression) {
-//        return new DefaultMaleExpressionSocket(expression);
-//    }
 
     /** {@inheritDoc} */
     @Override

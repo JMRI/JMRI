@@ -5,7 +5,7 @@ import jmri.JmriException;
 /**
  * A LogixNG male DigitalBooleanActionBean socket.
  */
-public interface MaleDigitalBooleanAction
+public interface MaleDigitalBooleanActionSocket
         extends MaleSocket, DigitalBooleanActionBean {
 
     /**

@@ -11,7 +11,7 @@ import jmri.Manager;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public interface DigitalBooleanActionManager extends Manager<MaleDigitalBooleanAction> {
+public interface DigitalBooleanActionManager extends Manager<MaleDigitalBooleanActionSocket> {
 
     /**
      * Remember a NamedBean Object created outside the manager.
@@ -21,7 +21,7 @@ public interface DigitalBooleanActionManager extends Manager<MaleDigitalBooleanA
      * @return the male socket for this action
      * @throws IllegalArgumentException if the action has an invalid system name
      */
-    public MaleDigitalBooleanAction registerAction(@Nonnull DigitalBooleanActionBean action)
+    public MaleDigitalBooleanActionSocket registerAction(@Nonnull DigitalBooleanActionBean action)
             throws IllegalArgumentException;
     
     /**

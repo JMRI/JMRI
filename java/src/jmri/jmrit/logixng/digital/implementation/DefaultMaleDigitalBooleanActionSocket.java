@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket implements MaleDigitalBooleanAction {
+public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket implements MaleDigitalBooleanActionSocket {
 
     private final DigitalBooleanActionBean _action;
     private DebugConfig _debugConfig = null;

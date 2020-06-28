@@ -76,13 +76,13 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
             throws IllegalArgumentException {
         
         if (expression instanceof MaleAnalogExpressionSocket) {
-            throw new IllegalArgumentException("registerAction() cannot register a MaleAnalogExpressionSocket. Use the method register() instead.");
+            throw new IllegalArgumentException("registerExpression() cannot register a MaleAnalogExpressionSocket. Use the method register() instead.");
         }
         
         // Check if system name is valid
         if (this.validSystemNameFormat(expression.getSystemName()) != NameValidity.VALID) {
             log.warn("SystemName " + expression.getSystemName() + " is not in the correct format");
-            throw new IllegalArgumentException("System name is invalid");
+            throw new IllegalArgumentException(String.format("System name is invalid: %s", expression.getSystemName()));
         }
         
         // Keep track of the last created auto system name
@@ -134,55 +134,11 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
             return new DefaultFemaleAnalogExpressionSocket(parent, listener, socketName);
         }
     }
-/*
-    @Override
-    public FemaleAnalogExpressionSocket createFemaleSocket(
-            Base parent, FemaleSocketListener listener, String socketName,
-            MaleAnalogExpressionSocket maleSocket) {
-        
-        FemaleAnalogExpressionSocket socket =
-                new DefaultFemaleAnalogExpressionSocket(parent, listener, socketName, maleSocket);
-        
-        return socket;
-    }
-*/    
+    
     @Override
     public Map<Category, List<Class<? extends Base>>> getExpressionClasses() {
         return expressionClassList;
     }
-
-/*
-    @Override
-    public void addExpression(Expression expression) throws IllegalArgumentException {
-        // Check if system name is valid
-        if (this.validSystemNameFormat(expression.getSystemName()) != NameValidity.VALID) {
-            log.warn("SystemName " + expression.getSystemName() + " is not in the correct format");
-            throw new IllegalArgumentException("System name is invalid");
-        }
-        // save in the maps
-        registerExpression(expression);
-    }
-
-    @Override
-    public Expression getExpression(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Expression getByUserName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Expression getBySystemName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void deleteExpression(Expression x) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-*/    
 
     /** {@inheritDoc} */
     @Override

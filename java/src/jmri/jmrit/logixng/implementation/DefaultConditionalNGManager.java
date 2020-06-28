@@ -47,11 +47,6 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameConditionalNG");
-    }
-
-    @Override
     public char typeLetter() {
         return 'Q';
     }
@@ -193,16 +188,6 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameConditionalNGs" : "BeanNameConditionalNG");
     }
-
-//    @Override
-//    public MaleDigitalActionSocket createMaleActionSocket(DigitalAction action) {
-//        return new DefaultMaleActionSocket(action);
-//    }
-
-//    @Override
-//    public MaleDigitalExpressionSocket createMaleExpressionSocket(DigitalExpression expression) {
-//        return new DefaultMaleExpressionSocket(expression);
-//    }
 
     /** {@inheritDoc} */
     @Override

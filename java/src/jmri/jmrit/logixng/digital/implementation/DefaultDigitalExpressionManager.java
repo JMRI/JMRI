@@ -86,7 +86,7 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
             throws IllegalArgumentException {
         
         if (expression instanceof MaleDigitalExpressionSocket) {
-            throw new IllegalArgumentException("registerAction() cannot register a MaleDigitalExpressionSocket. Use the method register() instead.");
+            throw new IllegalArgumentException("registerExpression() cannot register a MaleDigitalExpressionSocket. Use the method register() instead.");
         }
         
         // Check if system name is valid
@@ -107,11 +107,6 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
     @Override
     public int getXMLOrder() {
         return LOGIXNG_DIGITAL_EXPRESSIONS;
-    }
-
-    @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameExpression");
     }
 
     @Override
@@ -150,38 +145,6 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
     public Map<Category, List<Class<? extends Base>>> getExpressionClasses() {
         return expressionClassList;
     }
-/*
-    @Override
-    public void addExpression(DigitalExpressionBean expression) throws IllegalArgumentException {
-        // Check if system name is valid
-        if (this.validSystemNameFormat(expression.getSystemName()) != NameValidity.VALID) {
-            log.warn("SystemName " + expression.getSystemName() + " is not in the correct format");
-            throw new IllegalArgumentException("System name is invalid");
-        }
-        // save in the maps
-        registerExpression(expression);
-    }
-
-    @Override
-    public DigitalExpressionBean getExpression(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public DigitalExpressionBean getByUserName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public DigitalExpressionBean getBySystemName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void deleteExpression(DigitalExpressionBean x) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-*/    
 
     /** {@inheritDoc} */
     @Override

@@ -46,14 +46,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
      * {@inheritDoc}
      */
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameNamedTableTable");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public char typeLetter() {
         return 'Q';
     }

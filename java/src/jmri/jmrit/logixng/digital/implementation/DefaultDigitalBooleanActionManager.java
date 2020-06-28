@@ -23,7 +23,7 @@ import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
 import jmri.jmrit.logixng.DigitalBooleanActionFactory;
-import jmri.jmrit.logixng.MaleDigitalBooleanAction;
+import jmri.jmrit.logixng.MaleDigitalBooleanActionSocket;
 
 /**
  * Class providing the basic logic of the DigitalBooleanActionManager interface.
@@ -31,7 +31,7 @@ import jmri.jmrit.logixng.MaleDigitalBooleanAction;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigitalBooleanAction>
+public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigitalBooleanActionSocket>
         implements DigitalBooleanActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
@@ -62,24 +62,24 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
         }
     }
 
-    protected MaleDigitalBooleanAction createMaleActionSocket(DigitalBooleanActionBean action) {
-        MaleDigitalBooleanAction socket = new DefaultMaleDigitalBooleanActionSocket(action);
+    protected MaleDigitalBooleanActionSocket createMaleActionSocket(DigitalBooleanActionBean action) {
+        MaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(action);
         action.setParent(socket);
         return socket;
     }
     
     /**
      * Remember a NamedBean Object created outside the manager.
-     * This method creates a MaleDigitalBooleanAction for the action.
+     * This method creates a MaleDigitalBooleanActionSocket for the action.
      *
      * @param action the bean
      */
     @Override
-    public MaleDigitalBooleanAction registerAction(@Nonnull DigitalBooleanActionBean action)
+    public MaleDigitalBooleanActionSocket registerAction(@Nonnull DigitalBooleanActionBean action)
             throws IllegalArgumentException {
         
-        if (action instanceof MaleDigitalBooleanAction) {
-            throw new IllegalArgumentException("registerAction() cannot register a MaleDigitalActionWithChangeSocket. Use the method register() instead.");
+        if (action instanceof MaleDigitalBooleanActionSocket) {
+            throw new IllegalArgumentException("registerAction() cannot register a MaleDigitalBooleanActionSocket. Use the method register() instead.");
         }
         
         // Check if system name is valid
@@ -92,7 +92,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
         updateAutoNumber(action.getSystemName());
         
         // save in the maps
-        MaleDigitalBooleanAction maleSocket = createMaleActionSocket(action);
+        MaleDigitalBooleanActionSocket maleSocket = createMaleActionSocket(action);
         register(maleSocket);
         return maleSocket;
     }
@@ -100,11 +100,6 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
     @Override
     public int getXMLOrder() {
         return LOGIXNG_DIGITAL_BOOLEAN_ACTIONS;
-    }
-
-    @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameAction");
     }
 
     @Override
@@ -134,38 +129,6 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
     public Map<Category, List<Class<? extends Base>>> getActionClasses() {
         return actionClassList;
     }
-/*
-    @Override
-    public void addAction(DigitalBooleanActionBean action) throws IllegalArgumentException {
-        // Check if system name is valid
-        if (this.validSystemNameFormat(action.getSystemName()) != NameValidity.VALID) {
-            log.warn("SystemName " + action.getSystemName() + " is not in the correct format");
-            throw new IllegalArgumentException("System name is invalid");
-        }
-        // save in the maps
-        registerAction(action);
-    }
-/*
-    @Override
-    public DigitalBooleanActionBean getAction(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public DigitalBooleanActionBean getByUserName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public DigitalBooleanActionBean getBySystemName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void deleteAction(DigitalBooleanActionBean x) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-*/    
 
     /** {@inheritDoc} */
     @Override
@@ -189,8 +152,8 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
     }
 
     @Override
-    public Class<MaleDigitalBooleanAction> getNamedBeanClass() {
-        return MaleDigitalBooleanAction.class;
+    public Class<MaleDigitalBooleanActionSocket> getNamedBeanClass() {
+        return MaleDigitalBooleanActionSocket.class;
     }
     
     private final static Logger log = LoggerFactory.getLogger(DefaultDigitalBooleanActionManager.class);

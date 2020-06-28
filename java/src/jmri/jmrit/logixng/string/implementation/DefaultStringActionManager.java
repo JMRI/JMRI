@@ -77,7 +77,7 @@ public class DefaultStringActionManager extends AbstractManager<MaleStringAction
         // Check if system name is valid
         if (this.validSystemNameFormat(action.getSystemName()) != NameValidity.VALID) {
             log.warn("SystemName " + action.getSystemName() + " is not in the correct format");
-            throw new IllegalArgumentException("System name is invalid");
+            throw new IllegalArgumentException(String.format("System name is invalid: %s", action.getSystemName()));
         }
         
         // Keep track of the last created auto system name
@@ -91,11 +91,6 @@ public class DefaultStringActionManager extends AbstractManager<MaleStringAction
     @Override
     public int getXMLOrder() {
         return LOGIXNG_STRING_ACTIONS;
-    }
-
-    @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameStringAction");
     }
 
     @Override
@@ -125,38 +120,6 @@ public class DefaultStringActionManager extends AbstractManager<MaleStringAction
     public Map<Category, List<Class<? extends Base>>> getActionClasses() {
         return actionClassList;
     }
-/*
-    @Override
-    public void addAction(Action action) throws IllegalArgumentException {
-        // Check if system name is valid
-        if (this.validSystemNameFormat(action.getSystemName()) != NameValidity.VALID) {
-            log.warn("SystemName " + action.getSystemName() + " is not in the correct format");
-            throw new IllegalArgumentException("System name is invalid");
-        }
-        // save in the maps
-        registerAction(action);
-    }
-/*
-    @Override
-    public Action getAction(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Action getByUserName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Action getBySystemName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void deleteAction(Action x) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-*/    
 
     /** {@inheritDoc} */
     @Override
