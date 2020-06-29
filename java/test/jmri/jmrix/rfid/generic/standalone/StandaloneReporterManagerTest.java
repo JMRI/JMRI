@@ -2,8 +2,8 @@ package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Note: Standalone only allows _one_ NamedBean, named e.g. RR1, which means
@@ -20,7 +20,7 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
 
     StandaloneTrafficController tc = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -40,7 +40,7 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminateThreads();
         tc = null;

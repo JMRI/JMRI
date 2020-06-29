@@ -3,7 +3,9 @@ package jmri.jmrit.consisttool;
 import jmri.InstanceManager;
 import jmri.ConsistManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of ConsistToolPrefsPanel 
@@ -18,7 +20,7 @@ public class ConsistToolPrefsPanelTest {
         Assert.assertNotNull("exists", panel );
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -31,7 +33,7 @@ public class ConsistToolPrefsPanelTest {
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
     
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

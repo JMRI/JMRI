@@ -15,7 +15,9 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.apache.log4j.Level;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -316,7 +318,7 @@ public class MemoryIconTest extends PositionableTestBase {
 
     // Setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
@@ -329,7 +331,7 @@ public class MemoryIconTest extends PositionableTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         to = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();

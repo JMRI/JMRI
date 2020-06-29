@@ -2,10 +2,9 @@ package jmri.jmrix.dccpp;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.dccpp.DCCppSystemConnectionMemo class.
@@ -43,7 +42,7 @@ public class DCCppSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -54,7 +53,7 @@ public class DCCppSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getDCCppTrafficController().terminateThreads();
         scm.dispose();

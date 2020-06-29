@@ -2,8 +2,8 @@ package jmri.jmrix.internal;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -11,14 +11,14 @@ import org.junit.Before;
  */
 public class InternalSystemConnectionMemoTest extends SystemConnectionMemoTestBase<InternalSystemConnectionMemo> {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         scm = new InternalSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

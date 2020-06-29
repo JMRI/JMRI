@@ -1,10 +1,12 @@
 package jmri.jmrit.operations.setup;
 
+import java.io.File;
+
 import jmri.jmrit.operations.OperationsTestCase;
+
 import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -12,12 +14,9 @@ import org.junit.rules.TemporaryFolder;
  */
 public class BackupSetTest extends OperationsTestCase {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     @Test
-    public void testCTor() {
-        BackupSet t = new BackupSet(folder.getRoot());
+    public void testCTor(@TempDir File folder) {
+        BackupSet t = new BackupSet(folder);
         Assert.assertNotNull("exists",t);
     }
 

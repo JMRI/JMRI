@@ -5,10 +5,13 @@ import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
+import java.util.Comparator;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -208,7 +211,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup3() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -219,7 +222,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new DebugThrottle(new jmri.DccLocoAddress(100,true),memo);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

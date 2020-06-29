@@ -4,10 +4,8 @@ import java.util.ResourceBundle;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -32,12 +30,12 @@ public class AutomatTableDataModelTest {
                 ResourceBundle.getBundle("jmri.jmrit.automat.monitor.AutomatTableBundle").getString("ButtonKill"));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

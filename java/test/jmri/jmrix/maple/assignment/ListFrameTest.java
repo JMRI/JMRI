@@ -1,9 +1,11 @@
 package jmri.jmrix.maple.assignment;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of ListFrame
@@ -14,7 +16,7 @@ public class ListFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private MapleSystemConnectionMemo _memo = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -24,7 +26,7 @@ public class ListFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         _memo = null;

@@ -2,6 +2,10 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.Comparator;
+import java.util.ResourceBundle;
+
+import org.junit.jupiter.api.*;
 
 import jmri.SystemConnectionMemo;
 import org.junit.After;
@@ -23,13 +27,13 @@ public abstract class AbstractPortControllerTestBase {
     // from here down is testing infrastructure
     protected AbstractPortController apc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
         apc = new AbstractPortControllerScaffold(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
        apc = null;
     }

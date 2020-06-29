@@ -2,7 +2,9 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -391,7 +393,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -402,7 +404,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new Pr2Throttle(memo,new jmri.DccLocoAddress(5,false));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo.dispose();

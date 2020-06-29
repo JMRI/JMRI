@@ -3,7 +3,8 @@ package jmri.jmrix.rfid.merg.concentrator;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * ConcentratorReporterManagerTest.java
@@ -42,7 +43,7 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
 
     ConcentratorTrafficController tc = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -66,7 +67,7 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminateThreads();
         tc = null;

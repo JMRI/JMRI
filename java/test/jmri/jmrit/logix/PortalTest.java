@@ -7,10 +7,9 @@ import jmri.implementation.VirtualSignalHead;
 import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Portal class.
@@ -167,7 +166,7 @@ public class PortalTest {
 
     // from here down is testing infrastructure
     // setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();        
         _blkMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -175,7 +174,7 @@ public class PortalTest {
         _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

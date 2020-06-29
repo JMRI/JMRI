@@ -10,6 +10,9 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.mockito.Mockito;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 /**
  * Tests for the jmri.jmrix.roco.z21.z21SystemConnectionMemo class
  *
@@ -52,7 +55,7 @@ public class Z21SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Z2
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new Z21SystemConnectionMemo();
@@ -79,7 +82,7 @@ public class Z21SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Z2
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

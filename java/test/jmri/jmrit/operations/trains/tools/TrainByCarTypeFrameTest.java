@@ -3,10 +3,9 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -72,7 +71,7 @@ public class TrainByCarTypeFrameTest extends OperationsTestCase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
     }

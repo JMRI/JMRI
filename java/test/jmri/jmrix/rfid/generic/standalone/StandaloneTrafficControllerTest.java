@@ -2,8 +2,8 @@ package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * StandaloneTrafficControllerTest.java
@@ -15,14 +15,14 @@ import org.junit.Before;
 public class StandaloneTrafficControllerTest extends jmri.jmrix.rfid.RfidTrafficControllerTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new StandaloneTrafficController(new RfidSystemConnectionMemo());
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

@@ -1,10 +1,13 @@
 package jmri.jmrix.can.cbus.swing.modeswitcher;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.cbus.CbusDccProgrammer;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.swing.ModeSwitcherAction class.
@@ -24,7 +27,7 @@ public class SprogCbusModeSwitcherActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
@@ -33,7 +36,7 @@ public class SprogCbusModeSwitcherActionTest {
         memo.setTrafficController(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminateThreads();
         tc = null;

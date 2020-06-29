@@ -5,16 +5,17 @@ import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromSample;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+
 import jmri.jmrix.openlcb.SampleFactory;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.openlcb.cdi.swing.CdiPanel;
 
 /**
@@ -104,12 +105,12 @@ public class CdiPanelDemo {
         return f;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();

@@ -2,8 +2,8 @@ package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -13,7 +13,7 @@ public class StandaloneReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     private StandaloneTrafficController tc = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -23,7 +23,7 @@ public class StandaloneReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new StandaloneReply(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         tc.terminateThreads();

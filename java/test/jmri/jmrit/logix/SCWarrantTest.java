@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -12,7 +13,9 @@ import jmri.SignalHeadManager;
 import jmri.Turnout;
 import jmri.implementation.VirtualSignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -112,7 +115,7 @@ public class SCWarrantTest extends WarrantTest {
 
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -209,7 +212,7 @@ public class SCWarrantTest extends WarrantTest {
         warrant = new SCWarrant("IW1", "SCWarrant test", 5);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions

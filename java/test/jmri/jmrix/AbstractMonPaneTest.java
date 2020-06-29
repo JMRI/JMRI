@@ -1,8 +1,8 @@
 package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,7 +10,7 @@ import org.junit.Before;
  */
 public class AbstractMonPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -28,7 +28,7 @@ public class AbstractMonPaneTest extends jmri.util.swing.JmriPanelTest {
         helpTarget = "package.jmri.jmrix.AbstractMonFrame";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

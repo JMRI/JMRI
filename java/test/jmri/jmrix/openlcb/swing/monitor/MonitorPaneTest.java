@@ -4,10 +4,9 @@ import jmri.jmrix.AbstractMonPaneTestBase;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
+
 import org.assertj.swing.edt.GuiActionRunner;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -28,7 +27,7 @@ public class MonitorPaneTest extends AbstractMonPaneTestBase {
         assertThat(thrown).isNull();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -41,7 +40,7 @@ public class MonitorPaneTest extends AbstractMonPaneTestBase {
         title = Bundle.getMessage("MonitorTitle");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         pane.dispose();
         pane = null;
