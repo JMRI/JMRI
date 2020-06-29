@@ -1,4 +1,4 @@
-package apps.jmrit.decoderdefn;
+package apps.jmrit;
 
 import jmri.util.JUnitUtil;
 
@@ -9,11 +9,11 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class DecoderIndexBuilderTest {
+public class DebugMenuTest {
 
     @Test
     public void testCTor() {
-        DecoderIndexBuilder t = new DecoderIndexBuilder();
+        DebugMenu t = new DebugMenu("Test",new javax.swing.JPanel());
         Assert.assertNotNull("exists",t);
     }
 
@@ -27,6 +27,6 @@ public class DecoderIndexBuilderTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DecoderIndexBuilderTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(DebugMenuTest.class);
 
 }

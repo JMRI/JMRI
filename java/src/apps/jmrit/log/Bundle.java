@@ -1,9 +1,7 @@
-package jmri.jmrit.log;
+package apps.jmrit.log;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.util.Locale;
-
 import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -22,10 +20,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
- * @deprecated since 4.22.1 without replacement as all other classes in package are deprecated
  */
-@Deprecated
-public class Bundle extends jmri.jmrit.Bundle {
+public class Bundle extends apps.jmrit.Bundle {
 
     @CheckForNull
     private static final String name = null;  // No local bundle

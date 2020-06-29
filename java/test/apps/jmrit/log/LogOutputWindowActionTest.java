@@ -1,6 +1,4 @@
-package jmri.jmrit.log;
-
-import apps.jmrit.log.LogOutputWindowAction;
+package apps.jmrit.log;
 
 import java.util.*;
 
@@ -8,10 +6,8 @@ import jmri.util.JTextPaneAppender;
 import jmri.util.JUnitUtil;
 
 import org.apache.log4j.*;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -25,12 +21,12 @@ public class LogOutputWindowActionTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     @SuppressWarnings("unchecked") // cast required by logging APIs
     public void tearDown() {
         // remove any JTextPaneAppender objects that 

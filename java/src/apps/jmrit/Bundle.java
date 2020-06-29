@@ -22,7 +22,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends apps.Bundle {
+// NOTE: Does not extend apps.Bundle, but extends jmri.jmrit.Bundle, since
+// apps.jmrit is the extension of jmri.jmrit for classes that cannot be under
+// jmri.jmrit due to other architectural rules violations
+public class Bundle extends jmri.jmrit.Bundle {
 
     @CheckForNull
     private static final String name = null; // no local bundle
