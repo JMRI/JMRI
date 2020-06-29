@@ -7,11 +7,9 @@ import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
@@ -56,13 +54,13 @@ public class AboutDialogTest {
         JUnitUtil.dispose(frame);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initConnectionConfigManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false, false); // don't display the list of windows,
         // it will display only show the ones

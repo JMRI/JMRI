@@ -1,7 +1,7 @@
 package apps.plaf.macosx;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Jdk9Application class
