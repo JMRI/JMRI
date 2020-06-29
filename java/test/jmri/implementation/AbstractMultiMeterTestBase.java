@@ -1,12 +1,12 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.MultiMeter;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Abstract Base Class for MultiMeter tests in specific jmrix packages. This is 
@@ -18,10 +18,10 @@ import org.junit.Test;
  */
 public abstract class AbstractMultiMeterTestBase {
 
-    @Before
+    @BeforeEach
     abstract public void setUp(); // load mm with actual object; create scaffolds as needed
 
-    @After
+    @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown(){
         mm.dispose();

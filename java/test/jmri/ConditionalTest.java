@@ -1,6 +1,7 @@
 package jmri;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the Conditional interface
@@ -531,7 +532,7 @@ public class ConditionalTest {
     
     // from here down is testing infrastructure
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -541,7 +542,7 @@ public class ConditionalTest {
         jmri.util.JUnitUtil.initIdTagManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

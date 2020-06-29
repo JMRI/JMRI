@@ -2,10 +2,9 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.lawicell.Message class
@@ -74,7 +73,7 @@ public class MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -90,7 +89,7 @@ public class MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = g = new Message(msg);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = g = null;
         JUnitUtil.tearDown();

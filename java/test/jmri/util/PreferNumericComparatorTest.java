@@ -2,7 +2,8 @@ package jmri.util;
 
 import java.util.Comparator;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.StringUtil class.

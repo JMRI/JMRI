@@ -8,7 +8,9 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Section;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -113,7 +115,7 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -125,7 +127,7 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

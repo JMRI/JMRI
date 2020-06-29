@@ -3,7 +3,9 @@ package jmri.jmrix.openlcb.swing.protocoloptions;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.swing.protocoloptions package
@@ -21,7 +23,7 @@ public class ProtocolOptionsActionTest {
         Assert.assertNotNull("exists",p);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -33,7 +35,7 @@ public class ProtocolOptionsActionTest {
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         memo = null;

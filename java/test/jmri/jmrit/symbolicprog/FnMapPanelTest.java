@@ -1,13 +1,14 @@
 package jmri.jmrit.symbolicprog;
 
 import java.util.List;
+
 import javax.swing.JLabel;
+
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Base for tests of classes inheriting from FnMapPanel abstract class
@@ -47,13 +48,13 @@ public class FnMapPanelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDebugProgrammerManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

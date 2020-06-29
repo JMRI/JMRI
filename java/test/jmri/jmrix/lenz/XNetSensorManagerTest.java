@@ -3,10 +3,9 @@ package jmri.jmrix.lenz;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,7 +113,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class);
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -123,7 +122,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         l = new XNetSensorManager(xnis.getSystemConnectionMemo());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

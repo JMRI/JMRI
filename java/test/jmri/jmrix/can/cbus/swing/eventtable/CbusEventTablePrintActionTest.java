@@ -1,6 +1,9 @@
 package jmri.jmrix.can.cbus.swing.eventtable;
 
+import java.nio.file.Path;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JUnitUtil;
@@ -8,6 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -66,9 +70,17 @@ public class CbusEventTablePrintActionTest {
         
     }
     
+    @TempDir 
+    protected Path tempDir;
+    
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        try {
+            JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+        } catch ( java.io.IOException e) {
+            fail("Exception creating temp. user folder");
+        }
     }
 
     @AfterEach

@@ -1,11 +1,11 @@
 package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for JsonException class.
@@ -15,12 +15,12 @@ import org.junit.Test;
  */
 public class JsonExceptionTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

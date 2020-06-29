@@ -1,13 +1,9 @@
 package jmri.util.web;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
-import org.openqa.selenium.logging.LogEntries;
-import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
@@ -17,12 +13,11 @@ import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-import java.awt.GraphicsEnvironment;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import java.util.logging.LoggingPermission;
 
 /**
  * Provide browsers for use in web tests. Adapted from: http://toolsqa.com/selenium-webdriver/factory-design-principle-in-frameworks/

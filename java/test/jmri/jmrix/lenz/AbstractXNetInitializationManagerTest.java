@@ -1,10 +1,13 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.mockito.Mockito;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,6 +22,7 @@ public class AbstractXNetInitializationManagerTest {
     private XNetSystemConnectionMemo memo;
 
     @Test
+    @Timeout(value=5)
     public void testCTor() {
         AbstractXNetInitializationManager t = new AbstractXNetInitializationManager(memo){
             @Override
@@ -27,7 +31,7 @@ public class AbstractXNetInitializationManagerTest {
 
             @Override
             protected int getInitTimeout() {
-                return 5;
+                return 500;
             }
         };
         assertThat(t).withFailMessage("exists").isNotNull();

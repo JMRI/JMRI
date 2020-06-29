@@ -1,10 +1,9 @@
 package jmri.jmrix.loconet.locoio;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -23,7 +22,7 @@ public class LocoIODataTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -32,7 +31,7 @@ public class LocoIODataTest {
         // memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo(lnis,slotmanager);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -3,10 +3,9 @@ package jmri.jmrix.lenz;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XNetPowerManagerTest.java
@@ -275,7 +274,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         Assert.assertTrue(p.implementsIdle());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -284,7 +283,7 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         p = pm = new XNetPowerManager(tc.getSystemConnectionMemo());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         p = pm = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

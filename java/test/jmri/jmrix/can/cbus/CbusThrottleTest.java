@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
+
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
@@ -11,10 +12,9 @@ import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -890,7 +890,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -925,7 +925,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new CbusThrottle(memo,new DccLocoAddress(100,true),100);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (instance!=null){

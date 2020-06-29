@@ -1,7 +1,9 @@
 package jmri.jmrix.nce;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the NceMessage class.
@@ -16,7 +18,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     private NceMessage msg = null;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new NceTrafficController();
@@ -29,7 +31,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = msg = null;
         tc.commandOptionSet = false; // kill warning message

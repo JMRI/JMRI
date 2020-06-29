@@ -1,10 +1,9 @@
 package jmri.jmrix.roco.z21.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Z21ReporterManagerXml.java
@@ -20,12 +19,12 @@ public class Z21ReporterManagerXmlTest {
       Assert.assertNotNull("Z21ReporterManagerXml constructor",new Z21ReporterManagerXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

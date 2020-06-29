@@ -2,8 +2,8 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -13,7 +13,7 @@ public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProg
 
     private TrafficControllerScaffold tcis;
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -22,7 +22,7 @@ public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProg
         programmer = t;
     }
     
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

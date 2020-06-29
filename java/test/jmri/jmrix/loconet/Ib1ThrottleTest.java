@@ -2,7 +2,9 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -411,7 +413,7 @@ public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(expResult, result);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -423,7 +425,7 @@ public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new Ib1Throttle(memo,new LocoNetSlot(5));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         ((Ib1ThrottleManager)jmri.InstanceManager.getDefault(jmri.ThrottleManager.class)).dispose();

@@ -1,10 +1,9 @@
 package jmri.jmrix.ecos.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * EcosSensorManagerXmlTest.java
@@ -20,12 +19,12 @@ public class EcosSensorManagerXmlTest {
       Assert.assertNotNull("EcosSensorManagerXml constructor",new EcosSensorManagerXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

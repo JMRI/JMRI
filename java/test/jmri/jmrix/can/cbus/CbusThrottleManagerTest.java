@@ -15,7 +15,9 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1061,7 +1063,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     private boolean failedThrottleRequest = false;
     private TrafficControllerScaffold tc;
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -1074,7 +1076,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         InstanceManager.setThrottleManager( tm );
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         CbusThrottleManager dtm = (CbusThrottleManager)tm;
         dtm.dispose();

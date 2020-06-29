@@ -3,10 +3,8 @@ package apps.startup;
 import jmri.util.JUnitUtil;
 import jmri.util.startup.StartupModel;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * PerformActionModelXmlTest.java
@@ -38,12 +36,12 @@ public class AbstractActionModelFactoryTest {
         });
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
