@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractBase;
+import jmri.jmrit.logixng.implementation.LogixNGPreferences;
 import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -51,6 +52,22 @@ public class StringExpressionManagerTest {
             Assert.assertEquals("Error message is correct", "registerExpression() cannot register a MaleStringExpressionSocket. Use the method register() instead.", e.getMessage());
         }
         Assert.assertTrue("Exception thrown", hasThrown);
+    }
+    
+    @Test
+    public void testCreateFemaleSocket() {
+        FemaleSocket socket;
+        MyExpression myExpression = new MyExpression("IQSA1");
+        FemaleSocketListener listener = new MyFemaleSocketListener();
+        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
+        
+        preferences.setUseGenericFemaleSockets(false);
+        socket = m.createFemaleSocket(myExpression, listener, "E1");
+        Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringExpressionSocket", socket.getClass().getName());
+        
+        preferences.setUseGenericFemaleSockets(true);
+        socket = m.createFemaleSocket(myExpression, listener, "E2");
+        Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$StringSocket", socket.getClass().getName());
     }
     
     @Test
@@ -186,5 +203,18 @@ public class StringExpressionManagerTest {
         }
         
     }
+    
+    
+    private static class MyFemaleSocketListener implements FemaleSocketListener {
+        @Override
+        public void connected(FemaleSocket socket) {
+            // Do nothing
+        }
+
+        @Override
+        public void disconnected(FemaleSocket socket) {
+            // Do nothing
+        }
+    };
     
 }

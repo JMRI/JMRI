@@ -5,8 +5,9 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
+import jmri.jmrit.logixng.implementation.AbstractBase;
+import jmri.jmrit.logixng.implementation.LogixNGPreferences;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -51,6 +52,22 @@ public class AnalogExpressionManagerTest {
             Assert.assertEquals("Error message is correct", "registerExpression() cannot register a MaleAnalogExpressionSocket. Use the method register() instead.", e.getMessage());
         }
         Assert.assertTrue("Exception thrown", hasThrown);
+    }
+    
+    @Test
+    public void testCreateFemaleSocket() {
+        FemaleSocket socket;
+        AnalogExpressionManagerTest.MyExpression myExpression = new AnalogExpressionManagerTest.MyExpression("IQSA1");
+        FemaleSocketListener listener = new AnalogExpressionManagerTest.MyFemaleSocketListener();
+        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
+        
+        preferences.setUseGenericFemaleSockets(false);
+        socket = m.createFemaleSocket(myExpression, listener, "E1");
+        Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket", socket.getClass().getName());
+        
+        preferences.setUseGenericFemaleSockets(true);
+        socket = m.createFemaleSocket(myExpression, listener, "E2");
+        Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket", socket.getClass().getName());
     }
     
     @Test
@@ -186,5 +203,18 @@ public class AnalogExpressionManagerTest {
         }
         
     }
+    
+    
+    private static class MyFemaleSocketListener implements FemaleSocketListener {
+        @Override
+        public void connected(FemaleSocket socket) {
+            // Do nothing
+        }
+
+        @Override
+        public void disconnected(FemaleSocket socket) {
+            // Do nothing
+        }
+    };
     
 }

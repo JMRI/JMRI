@@ -89,38 +89,13 @@ public final class LogixNGPreferences extends PreferencesBean {
         if (getAllowDebugMode() != prefs.getAllowDebugMode()) {
             return true;
         }
-/*        
-        if (isUseAjax() != prefs.isUseAjax()) {
-            return true;
-        }
-        if (this.allowRemoteConfig() != prefs.allowRemoteConfig()) {
-            return true;
-        }
-        if (this.isReadonlyPower() != prefs.isReadonlyPower()) {
-            return true;
-        }
-        if (!(Arrays.equals(getDisallowedFrames(), prefs.getDisallowedFrames()))) {
-            return true;
-        }
-        if (getPort() != prefs.getPort()) {
-            return true;
-        }
-        return !getRailroadName().equals(prefs.getRailroadName());
-*/
-        return false;
+        return (getUseGenericFemaleSockets() != prefs.getUseGenericFemaleSockets());
     }
 
     public void apply(LogixNGPreferences prefs) {
         setStartLogixNGOnStartup(prefs.getStartLogixNGOnStartup());
+        setUseGenericFemaleSockets(prefs.getUseGenericFemaleSockets());
         setAllowDebugMode(prefs.getAllowDebugMode());
-/*        
-        setUseAjax(prefs.isUseAjax());
-        this.setAllowRemoteConfig(prefs.allowRemoteConfig());
-        this.setReadonlyPower(prefs.isReadonlyPower());
-        setDisallowedFrames(prefs.getDisallowedFrames());
-        setPort(prefs.getPort());
-        setRailroadName(prefs.getRailroadName());
-*/        
     }
 
     public void save() {
