@@ -1,10 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.io.File;
-import java.io.IOException;
-import jmri.jmrit.logixng.NamedTable;
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,6 +61,69 @@ public class LogixNGPreferencesTest {
         
         prefs.setAllowDebugMode(false);
         Assert.assertFalse(prefs.getAllowDebugMode());
+    }
+    
+    @Test
+    public void testApply() {
+        LogixNGPreferences prefsA = new LogixNGPreferences();
+        LogixNGPreferences prefsB = new LogixNGPreferences();
+        
+        prefsB.setStartLogixNGOnStartup(false);
+        prefsB.setStartLogixNGOnStartup(true);
+        Assert.assertFalse(prefsA.getStartLogixNGOnStartup());
+        Assert.assertTrue(prefsB.getStartLogixNGOnStartup());
+        prefsA.apply(prefsB);
+        Assert.assertTrue(prefsA.getStartLogixNGOnStartup());
+        
+        prefsB.setUseGenericFemaleSockets(false);
+        prefsB.setUseGenericFemaleSockets(true);
+        Assert.assertFalse(prefsA.getUseGenericFemaleSockets());
+        Assert.assertTrue(prefsB.getUseGenericFemaleSockets());
+        prefsA.apply(prefsB);
+        Assert.assertTrue(prefsA.getUseGenericFemaleSockets());
+        
+        prefsB.setAllowDebugMode(false);
+        prefsB.setAllowDebugMode(true);
+        Assert.assertFalse(prefsA.getAllowDebugMode());
+        Assert.assertTrue(prefsB.getAllowDebugMode());
+        prefsA.apply(prefsB);
+        Assert.assertTrue(prefsA.getAllowDebugMode());
+    }
+    
+    @Test
+    public void testSave() {
+        LogixNGPreferences prefsA = new LogixNGPreferences();
+        LogixNGPreferences prefsB;
+        
+        prefsA.setStartLogixNGOnStartup(false);
+        prefsA.save();
+        prefsB = new LogixNGPreferences();
+        Assert.assertFalse(prefsB.getStartLogixNGOnStartup());
+        
+        prefsA.setStartLogixNGOnStartup(true);
+        prefsA.save();
+        prefsB = new LogixNGPreferences();
+        Assert.assertTrue(prefsB.getStartLogixNGOnStartup());
+        
+        prefsA.setUseGenericFemaleSockets(false);
+        prefsA.save();
+        prefsB = new LogixNGPreferences();
+        Assert.assertFalse(prefsB.getUseGenericFemaleSockets());
+        
+        prefsA.setUseGenericFemaleSockets(true);
+        prefsA.save();
+        prefsB = new LogixNGPreferences();
+        Assert.assertTrue(prefsB.getUseGenericFemaleSockets());
+        
+        prefsA.setAllowDebugMode(false);
+        prefsA.save();
+        prefsB = new LogixNGPreferences();
+        Assert.assertFalse(prefsB.getAllowDebugMode());
+        
+        prefsA.setAllowDebugMode(true);
+        prefsA.save();
+        prefsB = new LogixNGPreferences();
+        Assert.assertTrue(prefsB.getAllowDebugMode());
     }
     
     // The minimal setup for log4J
