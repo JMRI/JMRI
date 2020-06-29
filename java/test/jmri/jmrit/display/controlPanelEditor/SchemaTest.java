@@ -1,10 +1,13 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.io.File;
+import java.util.stream.Stream;
+
 import jmri.configurexml.SchemaTestBase;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Checks of JMRI XML Schema
@@ -12,19 +15,15 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
  */
-@RunWith(Parameterized.class)
 public class SchemaTest extends SchemaTestBase {
 
-    @Parameters(name = "{0} (pass={1})")
-    public static Iterable<Object[]> data() {
+    public static Stream<Arguments> data() {
         return setTestFilesBelowThisPath("java/test/jmri/jmrit/display/controlPanelEditor");
     }
 
-    public SchemaTest(File file, boolean pass) {
-        super(file, pass);
-    }
-
-    public void foo() {
-
+    @ParameterizedTest
+    @MethodSource("data")
+    public void schemaTest(File file, boolean pass) {
+        super.validate(file, pass);
     }
 }

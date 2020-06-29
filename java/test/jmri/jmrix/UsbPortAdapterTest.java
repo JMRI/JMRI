@@ -2,10 +2,8 @@ package jmri.jmrix;
 
 import java.util.Comparator;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.NamedBean;
 
@@ -16,7 +14,7 @@ public class UsbPortAdapterTest {
 
     @Test
     public void testCTor() {
-        UsbPortAdapter t = new UsbPortAdapter(new SystemConnectionMemo("I", "test") {
+        UsbPortAdapter t = new UsbPortAdapter(new DefaultSystemConnectionMemo("I", "test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -30,12 +28,12 @@ public class UsbPortAdapterTest {
         Assert.assertNotNull("exists", t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

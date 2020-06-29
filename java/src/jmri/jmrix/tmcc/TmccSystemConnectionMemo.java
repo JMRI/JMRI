@@ -7,7 +7,7 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -19,7 +19,7 @@ import jmri.util.NamedBeanComparator;
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class TmccSystemConnectionMemo extends SystemConnectionMemo {
+public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public TmccSystemConnectionMemo() {
         this("T", "Lionel TMCC");

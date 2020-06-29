@@ -10,8 +10,8 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *

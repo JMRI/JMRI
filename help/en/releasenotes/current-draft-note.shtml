@@ -159,7 +159,8 @@
 
         <h4>BLI</h4>
             <ul>
-                <li></li>
+                <li>
+                </li>
             </ul>
 
         <h4>BNM Hobbies</h4>
@@ -269,7 +270,8 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>
+                </li>
             </ul>
 
         <h4>TAMS</h4>
@@ -432,7 +434,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>
+                </li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -516,12 +519,21 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>VSD now supports the "Location Following" (sound follows loco) with occupancy
+                sensors and JMRI Blocks. See the 
+				<a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#VSDLocations">
+                documentation</a> for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
+                interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
+                require changes to scripts.  If you have a script that references
+                jmri.jmrix.SystemConnectionMemo, please change it to either
+                jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
+                (it's easier to have you just try the two than to explain which 
+                one will work in which case)</li>
         </ul>
 

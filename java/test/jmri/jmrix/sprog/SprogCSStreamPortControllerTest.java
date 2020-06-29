@@ -4,11 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.sprog.SprogCSStreamPortController class.
@@ -22,7 +22,7 @@ public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
        Assert.assertNotNull("exists", apc);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -39,7 +39,7 @@ public class SprogCSStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

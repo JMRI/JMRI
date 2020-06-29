@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author   Paul Bender Copyright (C) 2015
  */
-public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public RaspberryPiSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name); // NOI18N

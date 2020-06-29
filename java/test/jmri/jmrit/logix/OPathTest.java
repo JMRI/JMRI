@@ -1,15 +1,15 @@
 package jmri.jmrit.logix;
 
 import java.util.ArrayList;
+
 import jmri.BeanSetting;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the OPath class.
@@ -126,7 +126,7 @@ public class OPathTest {
     }
     
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         _blkMgr = new OBlockManager();
@@ -134,7 +134,7 @@ public class OPathTest {
         _turnoutMgr = jmri.InstanceManager.turnoutManagerInstance();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

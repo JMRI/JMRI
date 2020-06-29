@@ -1,6 +1,6 @@
 package jmri.jmrix.maple;
 
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Abstract base for classes representing a communications port.

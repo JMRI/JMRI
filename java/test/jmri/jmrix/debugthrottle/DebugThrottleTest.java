@@ -6,10 +6,8 @@ import jmri.util.JUnitUtil;
 
 import java.util.Comparator;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -209,11 +207,11 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup3() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.SystemConnectionMemo("T", "Test") {
+        jmri.SystemConnectionMemo memo = new jmri.jmrix.DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -228,7 +226,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new DebugThrottle(new jmri.DccLocoAddress(100,true),memo);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

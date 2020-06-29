@@ -1,6 +1,7 @@
 package jmri.util;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for ThreadingUtil class
@@ -195,12 +196,12 @@ public class ThreadingUtilTest {
         Assert.assertFalse(ThreadingUtil.isThreadWaiting(Thread.currentThread()));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

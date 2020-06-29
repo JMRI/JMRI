@@ -16,7 +16,7 @@ import jmri.NamedBean;
 import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.beans.VetoableChangeSupport;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Abstract partial implementation for all Manager-type classes.
@@ -49,6 +49,8 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     protected final TreeSet<E> _beans;
     protected final Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected final Hashtable<String, E> _tuser = new Hashtable<>();  // stores known E (NamedBean, i.e. Turnout) instances by user name
+    protected final Map<String, Boolean> silencedProperties = new HashMap<>();
+    protected final Set<String> silenceableProperties = new HashSet<>();
 
     // caches
     private ArrayList<String> cachedSystemNameList = null;
@@ -62,6 +64,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     public AbstractManager(SystemConnectionMemo memo) {
         this.memo = memo;
         this._beans = new TreeSet<>(memo.getNamedBeanComparator(getNamedBeanClass()));
+        silenceableProperties.add("beans");
         registerSelf();
     }
 
@@ -240,7 +243,9 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         // notifications
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
-        fireIndexedPropertyChange("beans", position, null, s);
+        if (!silencedProperties.getOrDefault("beans", false)) {
+            fireIndexedPropertyChange("beans", position, null, s);
+        }
         firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this);
@@ -248,14 +253,11 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
 
     // not efficient, but does job for now
     private int getPosition(E s) {
-        int position = 0;
-        for (E bean : _beans) {
-            if (s == bean) {
-                return position;
-            }
-            position++;
+        if (_beans.contains(s)) {
+            return _beans.headSet(s, false).size();
+        } else {
+            return -1;
         }
-        return -1;
     }
 
     /**
@@ -316,7 +318,9 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         
         // notifications
         fireDataListenersRemoved(position, position, s);
-        fireIndexedPropertyChange("beans", position, s, null);
+        if (!silencedProperties.getOrDefault("beans", false)) {
+            fireIndexedPropertyChange("beans", position, s, null);
+        }
         firePropertyChange("length", null, _beans.size());
     }
 
@@ -513,6 +517,21 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @Nonnull
     public final String getSystemPrefix() {
         return memo.getSystemPrefix();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean silenced) {
+        if (!silenceableProperties.contains(propertyName)) {
+            throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
+        }
+        silencedProperties.put(propertyName, silenced);
+        if (propertyName.equals("beans") && !silenced) {
+            fireIndexedPropertyChange("beans", _beans.size(), null, null);
+        }
     }
 
     /** {@inheritDoc} */

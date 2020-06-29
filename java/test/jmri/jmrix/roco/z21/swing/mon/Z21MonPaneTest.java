@@ -4,10 +4,9 @@ import jmri.util.JUnitUtil;
 import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Z21MonPaneTest.java
@@ -27,7 +26,7 @@ public class Z21MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull(f);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -44,7 +43,7 @@ public class Z21MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         title = Bundle.getMessage("Z21TrafficTitle");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo=null;

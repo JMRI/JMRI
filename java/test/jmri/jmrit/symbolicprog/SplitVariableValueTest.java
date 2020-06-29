@@ -12,10 +12,9 @@ import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1080,13 +1079,13 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

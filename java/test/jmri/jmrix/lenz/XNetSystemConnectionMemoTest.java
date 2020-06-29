@@ -2,10 +2,9 @@ package jmri.jmrix.lenz;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 /**
@@ -63,7 +62,7 @@ public class XNetSystemConnectionMemoTest extends SystemConnectionMemoTestBase<X
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -82,7 +81,7 @@ public class XNetSystemConnectionMemoTest extends SystemConnectionMemoTestBase<X
         scm.setConsistManager(Mockito.mock(XNetConsistManager.class));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         scm.dispose();

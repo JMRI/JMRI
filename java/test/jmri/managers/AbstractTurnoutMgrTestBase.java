@@ -1,12 +1,12 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.Turnout;
 import jmri.TurnoutManager;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * Base for TurnoutManager tests in specific jmrix.* packages
@@ -25,7 +25,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     /**
      * Overload to load l with actual object; create scaffolds as needed
      */
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
     static protected boolean listenerResult = false;
@@ -51,14 +51,10 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         }
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testProvideFailure() {
-        try {
-            l.provideTurnout("");
-        } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
-          throw ex;
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -138,7 +134,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
          Assert.assertEquals("closed text", Bundle.getMessage("TurnoutStateClosed"), l.getClosedText());
     }
 
-    @Ignore("Turnout managers doesn't support auto system names")
+    @Disabled("Turnout managers doesn't support auto system names")
     @Test
     @Override
     public void testAutoSystemNames() {

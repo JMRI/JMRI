@@ -10,11 +10,9 @@ import jmri.util.JUnitUtil;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -130,7 +128,7 @@ public class PortalManagerTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -146,7 +144,7 @@ public class PortalManagerTest {
         _portalMgr = InstanceManager.getDefault(PortalManager.class);        
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         _portalMgr = null;
         JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions

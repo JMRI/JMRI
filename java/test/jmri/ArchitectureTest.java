@@ -1,7 +1,6 @@
 package jmri;
 
-import org.junit.*;
-import org.junit.runner.*;
+import org.junit.jupiter.api.*;
 
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
@@ -28,8 +27,6 @@ import com.tngtech.archunit.library.freeze.FreezingArchRule;
  * @author Bob Jacobsen 2019
  */
  
-@RunWith(ArchUnitRunner.class)  // Remove this for JUnit 5
- 
 // Pick up all classes from the target/classes directory, which is just the main (not test) code
 @AnalyzeClasses(packages = {"target/classes"}) // "jmri","apps"
 
@@ -37,11 +34,11 @@ public class ArchitectureTest {
 
     // want these statics first in class, to initialize
     // logging before various static items are constructed
-    @BeforeClass  // tests are static
+    @BeforeAll  // tests are static
     static public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
-    @AfterClass
+    @AfterAll
     static public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

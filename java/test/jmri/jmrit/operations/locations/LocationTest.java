@@ -1,6 +1,10 @@
 package jmri.jmrit.operations.locations;
 
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.schedules.Schedule;
@@ -9,9 +13,6 @@ import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -430,8 +431,8 @@ public class LocationTest extends OperationsTestCase {
         Location l = locMan.newLocation("TestPriority Location");
         Track t1 = l.addTrack("Yard 1", Track.YARD);
         Track t2 = l.addTrack("Yard 2", Track.YARD);
-        Track t3 = l.addTrack("Siding 1", Track.SPUR);
-        Track t4 = l.addTrack("Siding 2", Track.SPUR);
+        Track t3 = l.addTrack("Spur 1", Track.SPUR);
+        Track t4 = l.addTrack("Spur 2", Track.SPUR);
         Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
         Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
         Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);
@@ -465,7 +466,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("2nd track", t7, tracks.get(1));
         Assert.assertEquals("3rd track", t6, tracks.get(2));
 
-        // get siding tracks ids
+        // get spur tracks ids
         tracks = l.getTrackByMovesList(Track.SPUR);
 
         Assert.assertEquals("number of tracks", 2, tracks.size());
@@ -520,7 +521,7 @@ public class LocationTest extends OperationsTestCase {
         LocationManager locMan = new LocationManager();
         Location l = locMan.newLocation("TestPlannedPickUps Location");
         Track t1 = l.addTrack("Yard 1", Track.YARD);
-        Track t3 = l.addTrack("Siding 1", Track.SPUR);
+        Track t3 = l.addTrack("Spur 1", Track.SPUR);
         Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
 
         // also test staging
@@ -677,7 +678,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");

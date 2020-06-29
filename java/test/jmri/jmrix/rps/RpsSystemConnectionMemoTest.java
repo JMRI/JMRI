@@ -4,10 +4,9 @@ import jmri.Manager;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -37,14 +36,14 @@ public class RpsSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Rp
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new RpsSystemConnectionMemo();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

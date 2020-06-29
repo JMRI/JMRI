@@ -6,7 +6,7 @@ import java.beans.VetoableChangeListener;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import javax.annotation.*;
@@ -124,6 +124,11 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
         return null;
+    }
+
+    @Override
+    public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean muted) {
+        // do nothing
     }
 
     @Override

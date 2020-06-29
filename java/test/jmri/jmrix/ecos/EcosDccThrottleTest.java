@@ -1,14 +1,12 @@
 package jmri.jmrix.ecos;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -17,6 +15,8 @@ import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleTest;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
+
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -68,7 +68,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
      * Test of setSpeedSetting method, of class AbstractThrottle.
      */
     @Test
-    @Ignore("needs response to see change?")
+    @Disabled("needs response to see change?")
     @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")
     @Override
     public void testSetSpeedSetting() {
@@ -78,11 +78,11 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     }
     
     @Test
-    @Ignore("_haveControl boolean not true?")
+    @Disabled("_haveControl boolean not true?")
     @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")
     @Override
-    public void testLogsSpeedToBasicRosterEntry () throws java.io.IOException {
-        super.testLogsSpeedToBasicRosterEntry();
+    public void testLogsSpeedToBasicRosterEntry (@TempDir File folder) throws java.io.IOException {
+        super.testLogsSpeedToBasicRosterEntry(folder);
     }
 
     /**
@@ -564,7 +564,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
 
     private static EcosTrafficController tc = null;
 
-    @BeforeClass
+    @BeforeAll
     public static void earlySetup() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -576,7 +576,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         tc.setAdapterMemo(memo);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         if (!GraphicsEnvironment.isHeadless()) {
@@ -651,7 +651,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance = new EcosDccThrottle(new DccLocoAddress(100, true), memo, true);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (memo != null) {
@@ -660,7 +660,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
     }
 
-    @AfterClass
+    @AfterAll
     public static void finalTearDown() {
         JUnitUtil.tearDown();
     }

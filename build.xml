@@ -199,7 +199,6 @@
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
-        <pathelement location="${libdir}/junit-4.12.jar"/>
         <pathelement location="${libdir}/junit-jupiter-5.6.0.jar"/>
         <pathelement location="${libdir}/junit-platform-console-standalone-1.6.0.jar"/>
         <pathelement location="${libdir}/junit-platform-commons-1.6.0.jar"/>
@@ -214,8 +213,10 @@
         <pathelement location="${libdir}/opentest4j-1.2.0.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
         <pathelement location="${libdir}/hamcrest-core-1.3.jar"/>
-        <pathelement location="${libdir}/archunit-junit4-0.11.0.jar"/>
-        <pathelement location="${libdir}/archunit-0.11.0.jar"/>
+        <pathelement location="${libdir}/archunit-0.14.1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-api-0.14.1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-engine-0.14.1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-engine-api-0.14.1.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
@@ -236,7 +237,8 @@
     <path id="test.class.path">
         <pathelement location="${jartarget}"/>
         <path refid="compile.class.path"/>
-        <pathelement location="${libdir}/mockito-core-3.3.0.jar"/>
+        <pathelement location="${libdir}/mockito-core-3.3.3.jar"/>
+        <pathelement location="${libdir}/mockito-junit-jupiter-3.3.3.jar"/>
         <pathelement location="${libdir}/byte-buddy-1.10.5.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
@@ -660,7 +662,6 @@
                 javac.deprecation="off"
         />
     </target>
-
 
     <target name="compile"
             description="compile source, omitting tests - identical to debug target"
@@ -1768,7 +1769,7 @@
 
     <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
-                 maxmemory="512m"
+                 maxmemory="1536m"
                  overview="${source}/jmri/overview.html"
                  destdir="${doctarget}"
                  additionalparam="-breakiterator"
@@ -1869,7 +1870,7 @@
     <target name="javadoc-uml" depends="check-java-version-requirement, init, jjdoc, compile-generated-source, plantuml" 
                     description="create Javadocs with UML, requires Java 11">
         <javadoc packagenames="jmri.*, apps.*"
-                 maxmemory="512m"
+                 maxmemory="1536m"
                  overview="${source}/jmri/overview.html"
                  destdir="${doctarget}"
                  additionalparam="-breakiterator"
@@ -1906,11 +1907,12 @@
             <tag name="navassoc" enabled="false"/>
 
             <doclet name="nl.talsmasoftware.umldoclet.UMLDoclet"
-                    path="${libdir}/umldoclet-2.0.9.jar">
+                    path="${libdir}/umldoclet.jar">
                 <param name="-package"/>
                 <param name="--show-members=package"/>
                 <param name="-linksource"/>
                 <param name="-use"/>
+                <param name="--uml-timeout=1800"/> <!-- timeout passed to plantuml -->
             </doclet>
             
             <group title="Core" packages="jmri"/>
@@ -1959,14 +1961,25 @@
         
         </javadoc>
         
-        <apply executable="dot" dest="${doctarget}" parallel="false">
-            <arg value="-Tpng"/>
-            <arg value="-o"/>
-            <targetfile/>
-            <srcfile/>
-            <fileset dir="${doctarget}" includes="*.dot"/>
-            <mapper type="glob" from="*.dot" to="*.png"/>
-        </apply>
+        <!-- sparsify and reprocess some too-busy diagrams -->
+        <exec executable="./scripts/tighten-puml"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="${doctarget}/package-dependencies.puml"/>
+        </exec>
+        <exec executable="./scripts/tighten-puml"
+              osFamily="unix"
+              failonerror="true">
+            <arg value="${doctarget}/jmri/package-dependencies.puml"/>
+        </exec>
+        
+        <plantuml output="${doctarget}" >
+        <fileset dir="${source}">
+                <include name="${doctarget}/package-dependencies.puml"/>
+                <include name="${doctarget}/jmri/package-dependencies.puml"/>
+        </fileset>
+        </plantuml>
+        
     </target>
 
     <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />

@@ -2,6 +2,10 @@ package jmri.jmrit.operations.locations;
 
 import java.io.File;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.schedules.Schedule;
@@ -9,9 +13,6 @@ import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Locations/Xml class Last manually cross-checked on
@@ -43,7 +44,7 @@ public class XmlTest extends OperationsTestCase {
         Location l3 = manager.newLocation("Test Location 3");
 
         Track t1 = l1.addTrack("A Yard", Track.YARD);
-        Track t2 = l1.addTrack("A Siding", Track.SPUR);
+        Track t2 = l1.addTrack("A Spur", Track.SPUR);
         Track t3 = l2.addTrack("An Interchange", Track.INTERCHANGE);
         Track t4 = l3.addTrack("A Stage", Track.STAGING);
 
@@ -261,7 +262,7 @@ public class XmlTest extends OperationsTestCase {
                 List<Track> list = loc.getTrackByNameList(null);
                 Assert.assertEquals("Location 2 has n tracks", 2, list.size());
                 Track t = list.get(0);
-                Assert.assertEquals("Location 2 first track name", "A Siding", t.getName());
+                Assert.assertEquals("Location 2 first track name", "A Spur", t.getName());
                 Assert.assertEquals("Location 2 track 1 road option", Track.ALL_ROADS, t.getRoadOption());
                 Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 1 Road"));
                 Assert.assertEquals("Location 2 track 1 road", true, t.acceptsRoadName("Track 3 Road"));
@@ -339,7 +340,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("Item 1 road", "Schedule 1 Item 1 Road", si1.getRoadName());
         Assert.assertEquals("Item 1 count", 321, si1.getCount());
         Assert.assertEquals("Item 1 destination", "Test Location 2", si1.getDestinationName());
-        Assert.assertEquals("Item 1 track", "A Siding", si1.getDestinationTrackName());
+        Assert.assertEquals("Item 1 track", "A Spur", si1.getDestinationTrackName());
 
         ScheduleItem si2 = s1items.get(1);
         Assert.assertEquals("Item 2 type", "boxcar", si2.getTypeName());
@@ -376,7 +377,7 @@ public class XmlTest extends OperationsTestCase {
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");

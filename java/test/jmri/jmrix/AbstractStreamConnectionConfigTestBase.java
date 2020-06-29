@@ -1,7 +1,8 @@
 package jmri.jmrix;
 
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Base tests for StreamConnectionConfig objects.
@@ -11,7 +12,7 @@ import org.junit.*;
 abstract public class AbstractStreamConnectionConfigTestBase extends jmri.jmrix.AbstractConnectionConfigTestBase {
 
     @Test
-    @Ignore("Stream connections don't (currently) load details")
+    @Disabled("Stream connections don't (currently) load details")
     @ToDo("modify Stream port Connections so they load details, then remove this test so parent class test can run or re-implement the test here")
     @Override
     public void testLoadDetails(){

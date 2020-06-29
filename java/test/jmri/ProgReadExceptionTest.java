@@ -1,10 +1,9 @@
 package jmri;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for ProgReadException class.
@@ -24,14 +23,14 @@ public class ProgReadExceptionTest {
       Assert.assertNotNull("ProgReadException string constructor",new ProgReadException("test exception"));
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         JUnitUtil.tearDown();
    }

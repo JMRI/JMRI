@@ -1,10 +1,9 @@
 package jmri.jmrix.sprog.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SprogTurnoutManagerXmlTest.java
@@ -20,12 +19,12 @@ public class SprogTurnoutManagerXmlTest {
       Assert.assertNotNull("SprogTurnoutManagerXml constructor",new SprogTurnoutManagerXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

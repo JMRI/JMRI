@@ -7,10 +7,8 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the OPath class
@@ -157,7 +155,7 @@ public class LogixActionTest {
         Assert.assertTrue("warrant LeftToRightOnPath allocated", w.isAllocated());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -169,7 +167,7 @@ public class LogixActionTest {
         JUnitUtil.initWarrantManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions

@@ -2,10 +2,9 @@ package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -20,12 +19,12 @@ public class LayoutBlockNeighbourTableModelTest {
         Assert.assertNotNull("exists", t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

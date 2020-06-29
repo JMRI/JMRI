@@ -2,10 +2,10 @@ package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialListener;
 
@@ -24,7 +24,7 @@ public class SpecificSystemConnectionMemoTest extends SystemConnectionMemoTestBa
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -47,7 +47,7 @@ public class SpecificSystemConnectionMemoTest extends SystemConnectionMemoTestBa
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

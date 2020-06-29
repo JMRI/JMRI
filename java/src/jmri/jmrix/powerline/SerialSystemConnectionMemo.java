@@ -17,7 +17,7 @@ import jmri.util.NamedBeanComparator;
  * multiple connections by
  * @author Ken Cameron Copyright (C) 2011
  */
-public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class SerialSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public SerialSystemConnectionMemo() {
         super("P", "Powerline");

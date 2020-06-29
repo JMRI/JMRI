@@ -12,7 +12,7 @@ import jmri.PowerManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  */
-public class XNetSystemConnectionMemo extends SystemConnectionMemo {
+public class XNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public XNetSystemConnectionMemo(XNetTrafficController xt) {
         super("X", Bundle.getMessage("MenuXpressNet"));

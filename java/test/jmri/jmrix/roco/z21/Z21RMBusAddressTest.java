@@ -3,10 +3,9 @@ package jmri.jmrix.roco.z21;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.JUnitAppender;
+
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Locale;
 
@@ -66,12 +65,12 @@ public class Z21RMBusAddressTest {
         JUnitAppender.assertWarnMessage("Z21 RM Bus hardware address out of range in system name ZS999");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();

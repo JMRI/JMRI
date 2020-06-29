@@ -1,15 +1,15 @@
 package jmri.jmrix.mrc.swing.monitor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -53,7 +53,7 @@ public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -69,7 +69,7 @@ public class MrcMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         panel = pane = null;
         JUnitUtil.tearDown();

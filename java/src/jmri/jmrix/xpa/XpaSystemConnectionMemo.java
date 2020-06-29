@@ -7,7 +7,7 @@ import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -16,7 +16,7 @@ import jmri.util.NamedBeanComparator;
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  * @author Paul Bender Copyright (C) 2016
  */
-public class XpaSystemConnectionMemo extends SystemConnectionMemo {
+public class XpaSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public XpaSystemConnectionMemo() {
         this("P", "XPA"); // Prefix from XpaTurnoutManager, UserName from XpaThrottleManager
@@ -43,7 +43,7 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
         return new NamedBeanComparator<>();
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    final jmri.jmrix.swing.ComponentFactory cf;
 
 
     /* manage the associated traffic controller */
@@ -126,11 +126,8 @@ public class XpaSystemConnectionMemo extends SystemConnectionMemo {
             return true;
         } else if (type.equals(jmri.PowerManager.class)) {
             return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else {
-            return false;
-        }
+        } else
+            return type.equals(TurnoutManager.class);
     }
 
     @Override

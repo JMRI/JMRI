@@ -1,10 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of BlockValueFile
@@ -20,12 +19,12 @@ public class BlockValueFileTest {
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

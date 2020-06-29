@@ -1,6 +1,7 @@
 package jmri.util;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,12 +118,12 @@ public class LoggingUtilTest {
         Assert.assertEquals(2, LoggingUtil.shortenStacktrace(ex).getStackTrace().length);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

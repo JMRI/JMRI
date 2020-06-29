@@ -6,7 +6,7 @@ import javax.annotation.CheckForNull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
