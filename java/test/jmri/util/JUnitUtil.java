@@ -14,6 +14,7 @@ import javax.swing.AbstractButton;
 
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -34,8 +35,7 @@ import jmri.util.zeroconf.ZeroConfServiceManager;
 
 import org.apache.log4j.Level;
 import org.junit.Assert;
-import org.netbeans.jemmy.FrameWaiter;
-import org.netbeans.jemmy.TestOut;
+import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.*;
 
 import apps.SystemConsole;
@@ -496,10 +496,8 @@ public class JUnitUtil {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            return;
         } catch (Exception ex) {
             log.error("Exception in waitFor condition.", ex);
-            return;
         }
     }
 
@@ -1164,18 +1162,18 @@ public class JUnitUtil {
             // reset UI provider
             Field providers = JmriUserInterfaceConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
-            ((HashMap<?, ?>) providers.get(null)).clear();
+            ((Map<?, ?>) providers.get(null)).clear();
             // reset XML storage provider
             providers = JmriConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
-            ((HashMap<?, ?>) providers.get(null)).clear();
+            ((Map<?, ?>) providers.get(null)).clear();
             // reset java.util.prefs.Preferences storage provider
             Field shared = JmriPreferencesProvider.class.getDeclaredField("SHARED_PROVIDERS");
             Field privat = JmriPreferencesProvider.class.getDeclaredField("PRIVATE_PROVIDERS");
             shared.setAccessible(true);
-            ((HashMap<?, ?>) shared.get(null)).clear();
+            ((Map<?, ?>) shared.get(null)).clear();
             privat.setAccessible(true);
-            ((HashMap<?, ?>) privat.get(null)).clear();
+            ((Map<?, ?>) privat.get(null)).clear();
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
             log.error("Unable to reset preferences providers", ex);
         }
@@ -1458,7 +1456,7 @@ public class JUnitUtil {
                                } catch (TimeoutExpiredException timeoutException ) {
                                    log.error("Failed to close panel {} with exception {}",e.getTitle(),
                                            timeoutException.getMessage(),
-                                           Log4JUtil.shortenStacktrace(timeoutException));
+                                           LoggingUtil.shortenStacktrace(timeoutException));
                                }
                             }
                         }));
