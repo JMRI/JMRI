@@ -110,7 +110,7 @@ public class CodeButtonHandler {
  * SignalDirectionIndicators calls us here when time locking is done:
  */
     public void cancelLockedRoute() {
-        _mLockedRoutesManager.cancelLockedRoute(_mLockedRoute);
+        _mLockedRoutesManager.cancelLockedRoute(_mLockedRoute);     // checks passed parameter for null for us
         _mLockedRoute = null;       // Not valid anymore.
     }
 
@@ -133,6 +133,7 @@ public class CodeButtonHandler {
     private void codeButtonStateChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.ACTIVE) {
             if (_mSignalDirectionIndicators.isRunningTime()) return;    // If we are running time, IGNORE all requests from the user:
+            
             possiblyAllowLockChange();                              // MUST unlock first, otherwise if dispatcher wanted to unlock and change switch state, it wouldn't!
             possiblyAllowTurnoutChange();                           // Change turnout
 //  IF the call on was accepted, then we DON'T attempt to change the signals to a more favorable
@@ -177,7 +178,7 @@ appropriately for the back to train route for this feature to activate."
         if (isPrimaryOSSectionOccupied()) return false;
         if (_mSignalDirectionIndicators.isRunningTime()) return false;
         if (_mSignalDirectionIndicators.getSignalsInTheFieldDirection() != CTCConstants.SIGNALSNORMAL) return false;
-        if (!areTurnoutsAvailableInRoutes()) return false;
+        if (!areOSSensorsAvailableInRoutes()) return false;
         return true;
     }
 
@@ -205,7 +206,7 @@ appropriately for the back to train route for this feature to activate."
 // 6/28/16: If the switch direction indicators are presently "OUTOFCORRESPONDENCE", IGNORE request, as we are presently working on a change:
         if (!switchDirectionIndicatorsInCorrespondence()) return false;
         if (!turnoutPresentlyLocked()) return false;
-        if (!areTurnoutsAvailableInRoutes()) return false;
+        if (!areOSSensorsAvailableInRoutes()) return false;
         return true;
     }
 
@@ -303,7 +304,7 @@ appropriately for the back to train route for this feature to activate."
         if (routeClearedAcross()) return false;
         if (!_mSignalDirectionIndicators.signalsNormal()) return false;
         if (!switchDirectionIndicatorsInCorrespondence()) return false;
-        if (!areTurnoutsAvailableInRoutes()) return false;
+        if (!areOSSensorsAvailableInRoutes()) return false;
         return true;
     }
 
@@ -328,7 +329,7 @@ appropriately for the back to train route for this feature to activate."
         return _mOSSectionOccupiedExternalSensor.getKnownState() != Sensor.INACTIVE;
     }
 
-    private boolean areTurnoutsAvailableInRoutes() {
+    private boolean areOSSensorsAvailableInRoutes() {
         HashSet<Sensor> sensors = new HashSet<>();
         sensors.add(_mOSSectionOccupiedExternalSensor.getBean());
         if (_mOSSectionOccupiedExternalSensor2.valid()) sensors.add(_mOSSectionOccupiedExternalSensor2.getBean());
