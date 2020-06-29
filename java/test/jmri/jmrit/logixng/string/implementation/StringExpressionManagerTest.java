@@ -215,6 +215,6 @@ public class StringExpressionManagerTest {
         public void disconnected(FemaleSocket socket) {
             // Do nothing
         }
-    };
+    }
     
 }

@@ -215,6 +215,6 @@ public class DigitalExpressionManagerTest {
         public void disconnected(FemaleSocket socket) {
             // Do nothing
         }
-    };
+    }
     
 }

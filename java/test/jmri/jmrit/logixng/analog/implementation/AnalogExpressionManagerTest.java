@@ -215,6 +215,6 @@ public class AnalogExpressionManagerTest {
         public void disconnected(FemaleSocket socket) {
             // Do nothing
         }
-    };
+    }
     
 }
