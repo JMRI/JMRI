@@ -13,7 +13,9 @@ import org.junit.Test;
  * Test for the StandaloneSystemConnectionMemo class
  *
  * @author Paul Bender Copyright (C) 2016
+ * @deprecated since 4.21.1 test of deprecated {@link StandaloneSystemConnectionMemo}.
  */
+@Deprecated
 public class StandaloneSystemConnectionMemoTest extends SystemConnectionMemoTestBase<StandaloneSystemConnectionMemo> {
 
     @Override

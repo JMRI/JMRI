@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -31,7 +32,7 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        ConcentratorSystemConnectionMemo memo = new ConcentratorSystemConnectionMemo();
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
         tc = new ConcentratorTrafficController(memo, "A-H") {
             @Override
             public void sendInitString() {

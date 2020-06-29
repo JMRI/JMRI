@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
@@ -45,7 +46,7 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        ConcentratorSystemConnectionMemo memo = new ConcentratorSystemConnectionMemo();
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
         tc = new ConcentratorTrafficController(memo, "A-H") {
             @Override
             public void sendInitString() {
@@ -67,8 +68,8 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
 
     @After
     public void tearDown() {
+        tc.terminateThreads();
         tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }
