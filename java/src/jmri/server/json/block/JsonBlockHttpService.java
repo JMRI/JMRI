@@ -70,7 +70,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
             ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) bv, name, REPORTER, request);
             data.set(VALUE, reporterValue);
         } else if (bv instanceof jmri.BasicRosterEntry) {
-            ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(request.locale, ((BasicRosterEntry) bv).getId(), 0);
+            ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(request.locale, ((BasicRosterEntry) bv).getId(), request.id);
             data.set(VALUE, rosterValue);
         } else {
             // send string for types not explicitly handled

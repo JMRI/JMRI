@@ -54,7 +54,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
                     ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) val, name, REPORTER, request);
                     data.set(VALUE, reporterValue);
                 } else if (val instanceof jmri.BasicRosterEntry) {
-                    ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(request.locale, ((BasicRosterEntry) val).getId(), 0);
+                    ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(request.locale, ((BasicRosterEntry) val).getId(), request.id);
                     data.set(VALUE, rosterValue);
                 } else {
                     // send string for types not explicitly handled
