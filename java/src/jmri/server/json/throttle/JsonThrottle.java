@@ -141,13 +141,12 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             throttle = new JsonThrottle(address, server);
             if (entry!=null) {
                 if (!manager.requestThrottle(entry, throttle)) {
-                    log.error("Unable to get rostered throttle for \"{}\".", address);
+                    log.error("Unable to get rostered throttle for \"{}\".", entry.getId());
                     throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle
-                            .getMessage(server.getConnection().getLocale(), "ErrorThrottleUnableToGetThrottle", address),
+                            .getMessage(server.getConnection().getLocale(), "ErrorThrottleUnableToGetThrottle", entry.getId()),
                             id);
                 }
-            }
-            else {
+            } else {
                 if (!manager.requestThrottle(address, throttle)) {
                     log.error("Unable to get throttle for \"{}\".", address);
                     throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle
