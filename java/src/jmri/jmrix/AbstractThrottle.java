@@ -260,6 +260,16 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         firePropertyChange("ReleaseEnabled", _releaseEnabled, _releaseEnabled = newVal); // NOI18N
     }
 
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        for (PropertyChangeListener pcl : getPropertyChangeListeners()) {
+            if ( pcl == l ){ // duplicate changelistener
+                return;
+            }
+        }
+        super.addPropertyChangeListener(l);
+    }
+    
     /**
      * {@inheritDoc}
      */
