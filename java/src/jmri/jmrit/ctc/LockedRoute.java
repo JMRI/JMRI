@@ -154,6 +154,9 @@ public class LockedRoute {
         }
     }
 
+    public enum AnyInCommonReturn { NONE,       // NOTHING matches at all.
+                                    YES,        // Absolute overlap.
+                                    FLEETING }  // One overlaps, we were asked to checkDirection, and the direction matches
     /**
      * Checks the sensors passed in as object type "LockedRoute" against the sensors in this object.
      * Support Fleeting requests.
@@ -163,10 +166,6 @@ public class LockedRoute {
      * @param rightTraffic If right traffic was requested pass true, else false for left traffic.
      * @return AnyInCommonReturn enum value.  NONE = Nothing matches at all, YES = Absolute overlap, FLEETING = Overlap, but direction matches.
      */
-    public enum AnyInCommonReturn { NONE,       // NOTHING matches at all.
-                                    YES,        // Absolute overlap.
-                                    FLEETING }  // One overlaps, we were asked to checkDirection, and the direction matches
-    
     public AnyInCommonReturn anyInCommon(LockedRoute lockedRoute, boolean checkDirection, boolean rightTraffic) {
         //_mCountedSensors.
         boolean anyInCommon = !Collections.disjoint(getSensors(), lockedRoute.getSensors());
