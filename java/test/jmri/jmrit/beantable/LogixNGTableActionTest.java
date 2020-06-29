@@ -94,7 +94,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
         //Enter IQ1 in the text field labeled "System Name:"
-        JLabelOperator jlo = new JLabelOperator(jf, Bundle.getMessage("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnSystemName") + ":");
+        JLabelOperator jlo = new JLabelOperator(jf, "LogixNG" + " " + Bundle.getMessage("ColumnSystemName") + ":");
 //        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
         ((JTextField)jlo.getLabelFor()).setText("IQ1");
         //and press create

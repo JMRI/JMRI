@@ -41,6 +41,7 @@ import jmri.Manager;
 import jmri.UserPreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.LogixNG;
@@ -71,6 +72,8 @@ import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
  * @author Daniel Bergqvist copyright (c) 2019
  */
 public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
+
+    private static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.logixng.LogixNGBundle");
 
     /**
      * Create a LogixNG_Manager instance.
@@ -542,8 +545,8 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
     JTextField _systemName = new JTextField(20);
     JTextField _addUserName = new JTextField(20);
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
-    JLabel _sysNameLabel = new JLabel(Bundle.getMessage("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnSystemName") + ":");  // NOI18N
-    JLabel _userNameLabel = new JLabel(Bundle.getMessage("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnUserName") + ":");   // NOI18N
+    JLabel _sysNameLabel = new JLabel(rbx.getString("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnSystemName") + ":");  // NOI18N
+    JLabel _userNameLabel = new JLabel(rbx.getString("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnUserName") + ":");   // NOI18N
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";      // NOI18N
     JButton create;
 
