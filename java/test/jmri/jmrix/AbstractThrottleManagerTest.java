@@ -4,8 +4,6 @@ import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.DccLocoAddress;
 
-import org.junit.After;
-import org.junit.Before;
 import org.mockito.Mockito;
 import org.junit.jupiter.api.*;
 

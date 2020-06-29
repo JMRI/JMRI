@@ -7,7 +7,6 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.streamport.LnStreamPortController;
 import jmri.util.JUnitUtil;
-import org.junit.*;
 import org.mockito.Mockito;
 
 import org.junit.Assert;
