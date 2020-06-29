@@ -2,7 +2,8 @@ package jmri.util;
 
 import jmri.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.JUnitUtil itself.  
@@ -45,13 +46,13 @@ public class JUnitUtilTest {
         Assert.assertEquals(Turnout.THROWN, t.getCommandedState());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();     
     }

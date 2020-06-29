@@ -8,9 +8,7 @@ import jmri.server.json.JsonRequest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -63,14 +61,14 @@ public class JsonThrottleHttpServiceTest extends JsonHttpServiceTestBase<JsonThr
         }
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonThrottleHttpService(mapper);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

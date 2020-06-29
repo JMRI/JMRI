@@ -1,9 +1,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XBeeSensorTest.java
@@ -69,7 +67,7 @@ public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertNotNull("exists", s);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -91,7 +89,7 @@ public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
         };
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         t.dispose();

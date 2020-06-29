@@ -1,7 +1,8 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JMRIClientMessageTest.java
@@ -13,13 +14,13 @@ import org.junit.*;
 public class JMRIClientMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = new JMRIClientMessage(3);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

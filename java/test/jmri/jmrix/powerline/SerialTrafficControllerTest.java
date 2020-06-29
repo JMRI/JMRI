@@ -4,8 +4,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SerialTrafficController.
@@ -14,7 +14,7 @@ import org.junit.Before;
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
     
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
@@ -40,7 +40,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
 
         tc = null;

@@ -1,7 +1,10 @@
 package apps;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+import org.junit.Assert;
+import org.junit.Assume;
 
 /**
  *
@@ -17,12 +20,12 @@ public class FileLocationPaneTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

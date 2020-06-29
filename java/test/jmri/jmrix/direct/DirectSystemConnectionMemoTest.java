@@ -2,8 +2,8 @@ package jmri.jmrix.direct;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the DirectSystemConnectionMemo class
@@ -15,14 +15,14 @@ public class DirectSystemConnectionMemoTest extends SystemConnectionMemoTestBase
     // Ctor etc are tested in MemoTestBase
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        scm = new DirectSystemConnectionMemo();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

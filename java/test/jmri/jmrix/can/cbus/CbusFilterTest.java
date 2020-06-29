@@ -1,18 +1,18 @@
 package jmri.jmrix.can.cbus;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.util.Vector;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.io.TempDir;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -786,19 +786,16 @@ public class CbusFilterTest {
         t.setMinMax(CbusFilterType.CFNODEMAX, 44);
         Assert.assertTrue("node max 44",t.getNdMax()==44);
     }
-    
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
 
-    @Before
-    public void setUp() throws java.io.IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         _increments = new Vector<>(22);
         _nodes = new Vector<>();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         _increments = null;

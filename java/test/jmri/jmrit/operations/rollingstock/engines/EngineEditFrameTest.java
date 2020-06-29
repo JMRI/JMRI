@@ -6,9 +6,7 @@ import java.text.MessageFormat;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.Timeout;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -31,16 +29,11 @@ import jmri.util.swing.JemmyUtil;
  * @author Dan Boudreau Copyright (C) 2010
  *
  */
+@Timeout(10)
 public class EngineEditFrameTest extends OperationsTestCase {
-    
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
-    @Rule
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries      
 
-//    List<String> tempEngines;
-    
     @Test
     public void testClearRoadNumber() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

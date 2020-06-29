@@ -2,7 +2,9 @@ package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
 import jmri.Turnout;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -240,7 +242,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // prepare an interface
@@ -253,7 +255,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         lnis.terminateThreads();
         lnis = null;

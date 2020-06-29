@@ -1,8 +1,8 @@
 package jmri.jmrix.rfid;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * RfidReplyTest.java
@@ -15,7 +15,7 @@ public class RfidReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     RfidTrafficController tc = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -32,7 +32,7 @@ public class RfidReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         m = null;

@@ -2,9 +2,8 @@ package jmri.jmrix.maple;
 
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
@@ -49,14 +48,14 @@ public class SerialNodeTest {
         Assert.assertEquals("null message", null, m);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new SerialTrafficControlScaffold();
         b = new SerialNode(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         b = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

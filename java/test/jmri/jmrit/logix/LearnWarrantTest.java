@@ -3,6 +3,7 @@ package jmri.jmrit.logix;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
+
 import jmri.ConfigureManager;
 import jmri.DccThrottle;
 import jmri.InstanceManager;

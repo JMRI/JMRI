@@ -5,7 +5,9 @@ import javax.swing.JFrame;
 
 import jmri.Reporter;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -64,12 +66,12 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
 
     @Test
     @Override
-    @Ignore("No Edit button on Reporter table")
+    @Disabled("No Edit button on Reporter table")
     public void testEditButton() {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -78,7 +80,7 @@ public class ReporterTableActionTest extends AbstractTableActionBase<Reporter> {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

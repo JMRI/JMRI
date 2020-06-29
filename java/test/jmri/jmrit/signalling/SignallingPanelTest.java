@@ -6,7 +6,8 @@ import java.util.Hashtable;
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -68,7 +69,7 @@ public class SignallingPanelTest {
         JUnitUtil.dispose(jf);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -76,7 +77,7 @@ public class SignallingPanelTest {
         jmri.util.JUnitUtil.initDefaultSignalMastManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

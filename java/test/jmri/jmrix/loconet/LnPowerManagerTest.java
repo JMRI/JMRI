@@ -4,10 +4,9 @@ import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Jmri package LnPowerManager.
@@ -174,7 +173,7 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     // setup a default interface
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -185,7 +184,7 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
         p = pwr = new LnPowerManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         pwr.dispose();
         memo.dispose();

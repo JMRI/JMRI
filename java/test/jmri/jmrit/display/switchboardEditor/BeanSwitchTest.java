@@ -1,7 +1,9 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import jmri.jmrit.display.EditorFrameOperator;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import java.awt.GraphicsEnvironment;
 
 import jmri.util.JUnitUtil;
@@ -21,7 +23,7 @@ public class BeanSwitchTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -30,7 +32,7 @@ public class BeanSwitchTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (swe != null) {
             new EditorFrameOperator(swe.getTargetFrame()).closeFrameWithConfirmations();

@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -12,10 +13,9 @@ import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Warrant creation
@@ -240,7 +240,7 @@ public class WarrantTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
@@ -320,7 +320,7 @@ public class WarrantTest {
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         warrant.stopWarrant(true);
         _OBlockMgr = null;

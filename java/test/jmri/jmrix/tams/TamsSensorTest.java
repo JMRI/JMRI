@@ -1,8 +1,8 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -23,14 +23,14 @@ public class TamsSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void checkStatusRequestMsgSent() {}
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         t = new TamsSensor("TS1");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         JUnitUtil.tearDown();

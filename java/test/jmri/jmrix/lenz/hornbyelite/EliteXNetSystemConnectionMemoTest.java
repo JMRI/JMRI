@@ -3,10 +3,9 @@ package jmri.jmrix.lenz.hornbyelite;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.jmrix.lenz.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 /**
@@ -55,7 +54,7 @@ public class EliteXNetSystemConnectionMemoTest extends SystemConnectionMemoTestB
         Assert.assertFalse(scm.provides(jmri.ConsistManager.class));
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -73,7 +72,7 @@ public class EliteXNetSystemConnectionMemoTest extends SystemConnectionMemoTestB
         scm.setProgrammerManager(Mockito.mock(XNetProgrammerManager.class));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         scm.dispose();

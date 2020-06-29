@@ -3,10 +3,9 @@ package jmri.jmrix.roco.z21.swing.packetgen;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for PacketGenAction class.
@@ -29,7 +28,7 @@ public class PacketGenActionTest {
       Assert.assertNotNull("PacketGenAction constructor",new PacketGenAction(memo));
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -39,7 +38,7 @@ public class PacketGenActionTest {
         memo.setTrafficController(tc);
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         memo=null;
         tc.terminateThreads();

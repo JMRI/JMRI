@@ -1,7 +1,9 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -159,14 +161,14 @@ public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
        Assert.assertEquals(Dcc4PcMessage.SERIAL,m.getElement(0));
     } 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = new Dcc4PcMessage(5);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();
