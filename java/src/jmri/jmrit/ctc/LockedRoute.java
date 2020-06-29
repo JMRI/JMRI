@@ -48,7 +48,7 @@ public class LockedRoute {
  * Both of these increment / decrement operations are atomic, i.e. protected
  * by locks.
  */    
-    private class CountedSensor {
+    private static class CountedSensor {
         private final Sensor        _mSensor;
         private int                 _mCount;
         private final ReentrantLock _mLock = new ReentrantLock();
