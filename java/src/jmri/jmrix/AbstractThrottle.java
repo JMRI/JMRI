@@ -259,12 +259,18 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         firePropertyChange("ReleaseEnabled", _releaseEnabled, _releaseEnabled = newVal); // NOI18N
     }
 
+    /**
+     * Temporary behaviour only allowing unique PCLs.
+     * To support Throttle PCL's ( eg. WiThrottle Server ) that rely on the 
+     * previous behaviour of only allowing 1 unique PCL instance.
+     * To be removed when WiThrottle Server has been updated.
+     * {@inheritDoc}
+     */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
-        for (PropertyChangeListener pcl : getPropertyChangeListeners()) {
-            if ( pcl == l ){ // duplicate changelistener
-                return;
-            }
+        if ( Arrays.asList(getPropertyChangeListeners()).contains(l) ){
+            log.warn("Preventing {} adding duplicate PCL",l);
+            return;
         }
         super.addPropertyChangeListener(l);
     }
