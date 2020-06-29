@@ -2,9 +2,12 @@ package jmri.jmrix.qsi;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
+
+import jmri.ConfiguringSystemConnectionMemo;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
@@ -18,12 +21,11 @@ import jmri.util.NamedBeanComparator;
  * @author Kevin Dickerson Copyright (C) 2012
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class QsiSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
+public class QsiSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public QsiSystemConnectionMemo(QsiTrafficController st) {
         super("Q", "Quantum Programmer");
         this.st = st;
-        register();
         InstanceManager.store(this, QsiSystemConnectionMemo.class); // also register as specific type
         InstanceManager.store(cf = new jmri.jmrix.qsi.swing.QsiComponentFactory(this),
         jmri.jmrix.swing.ComponentFactory.class);
@@ -63,38 +65,10 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
 
     /**
      * Configure the programming manager and "command station" objects
+     * @deprecated since 4.21.1
      */
+    @Deprecated
     public void configureCommandStation() {
-
-    }
-
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-        if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return getProgrammerManager().isGlobalProgrammerAvailable();
-        }
-        if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return getProgrammerManager().isAddressedModePossible();
-        }
-        return false; // nothing, by default
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        return null; // nothing, by default
     }
 
     /**
@@ -102,21 +76,19 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
      * manager config in one place.
      */
     public void configureManagers() {
+        store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+        store(getProgrammerManager(), GlobalProgrammerManager.class);
         InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        register();
     }
 
-    private DefaultProgrammerManager programmerManager;
-
     public DefaultProgrammerManager getProgrammerManager() {
-        if (programmerManager == null) {
-            programmerManager = new jmri.managers.DefaultProgrammerManager(new jmri.jmrix.qsi.QsiProgrammer(this), this);
-        }
-        return programmerManager;
+        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,(Class c) -> new DefaultProgrammerManager(new QsiProgrammer(this),this));
     }
 
     public void setProgrammerManager(DefaultProgrammerManager p) {
-        programmerManager = p;
+        store(p,DefaultProgrammerManager.class);
     }
 
     @Override

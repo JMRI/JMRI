@@ -97,8 +97,7 @@ public class TamsSystemConnectionMemo extends DefaultSystemConnectionMemo implem
      * @return programmer manager.
      */
     public TamsProgrammerManager getProgrammerManager() {
-        return (TamsProgrammerManager) classObjectMap.computeIfAbsent(TamsProgrammerManager.class, (Class c) -> {
-            return new TamsProgrammerManager(new TamsProgrammer(getTrafficController()),this);});
+        return (TamsProgrammerManager) classObjectMap.computeIfAbsent(TamsProgrammerManager.class, (Class c) -> new TamsProgrammerManager(new TamsProgrammer(getTrafficController()),this));
     }
 
     public void setProgrammerManager(TamsProgrammerManager p) {
