@@ -82,6 +82,7 @@ public class LockedRoutesManager {
      * @param sensors set of sensors.
      * @param osSectionDescription section description.
      * @param ruleDescription rule description.
+     * @param rightTraffic true if right traffic, else false if left traffic
      * @return locked route if success, null if failed.
      */
     public LockedRoute checkRouteAndAllocateIfAvailable(HashSet<Sensor> sensors, String osSectionDescription, String ruleDescription, boolean rightTraffic) {
