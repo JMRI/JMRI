@@ -114,10 +114,11 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     }
     
     /**
-     * Resets NV's, Events and Parameters
+     * Resets NV's, Events and Parameters to null.
+     * Resets all node timers.
      *
      */
-    protected void resetNodeAll() {
+    public void resetNodeAll() {
         getNodeNvManager().reset();
         getNodeEventManager().resetNodeEvents();
         getNodeParamManager().clearParameters();

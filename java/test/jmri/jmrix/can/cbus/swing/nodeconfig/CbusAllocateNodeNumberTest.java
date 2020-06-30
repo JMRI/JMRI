@@ -1,21 +1,22 @@
-package jmri.jmrix.can.cbus.node;
+package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.node.CbusNodeConstants;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -30,6 +31,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 public class CbusAllocateNodeNumberTest {
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCTor() {
         
         assertThat(tcis.numListeners()).isEqualTo(1);
@@ -45,9 +47,9 @@ public class CbusAllocateNodeNumberTest {
     }
     
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testDisplayDialogue() {
         
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusAllocateNodeNumber(memo,nodeModel);
         assertThat(t).isNotNull();
         
@@ -162,9 +164,9 @@ public class CbusAllocateNodeNumberTest {
     }
     
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCanMessage() {
         
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusAllocateNodeNumber(memo,nodeModel);
         
         CanMessage r = new CanMessage(tcis.getCanid());
@@ -188,12 +190,12 @@ public class CbusAllocateNodeNumberTest {
     }
     
     @Test
-    public void testAllocateTimeout() {
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testAllocateTimeout() throws Exception {
         
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusAllocateNodeNumber(memo,nodeModel);
         
-        t.setTimeout(5); // default is reduced to speed up test
+        t.setTimeout(10); // default is reduced to speed up test
 
         // create a thread that waits to close the dialog box opened later
         Thread dialog_thread = new Thread(() -> {
@@ -215,12 +217,9 @@ public class CbusAllocateNodeNumberTest {
         Thread popup_thread = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdoo = new JDialogOperator(Bundle.getMessage("WarningTitle"));
-            
             JemmyUtil.pressButton(jdoo, "OK");
-            
         });
-        
-        popup_thread.setName("CbusAllocateNodeNumber Allocate Timeout Dialog Close Thread");
+        popup_thread.setName("CbusAllocateNodeNumber Allocate Timeout Popup Close Thread");
         popup_thread.start();
         
         

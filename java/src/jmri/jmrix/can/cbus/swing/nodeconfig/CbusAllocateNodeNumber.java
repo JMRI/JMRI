@@ -1,9 +1,12 @@
-package jmri.jmrix.can.cbus.node;
+package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+
+import java.util.TimerTask;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,6 +15,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.text.DefaultFormatter;
+
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -19,7 +23,12 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusSend;
-import java.util.TimerTask;
+
+import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.node.CbusNodeConstants;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.jmrix.can.cbus.node.CbusNodeTimerManager;
+import jmri.util.ThreadingUtil;
 import jmri.util.TimerUtil;
 
 import org.slf4j.Logger;
@@ -228,7 +237,9 @@ public class CbusAllocateNodeNumber implements CanListener {
         switch (CbusMessage.getOpcode(m)) {
             case CbusConstants.CBUS_RQNN:
                 // node requesting a number, nn is existing number
-                startnodeallocation( ( m.getElement(1) * 256 ) + m.getElement(2), null );
+                ThreadingUtil.runOnGUI( ()->{
+                    startnodeallocation( ( m.getElement(1) * 256 ) + m.getElement(2), null );
+                });
                 break;
             case CbusConstants.CBUS_PARAMS:
                 processNodeParams(m);
@@ -270,11 +281,16 @@ public class CbusAllocateNodeNumber implements CanListener {
         nodepropbuilder.append( CbusNodeConstants.getModuleType( _paramsArr[0] , _paramsArr[2] ));
             
         if (WAITINGRESPONSE_RQNN_PARAMS) {
-            rqNNtext.setText(nodepropbuilder.toString());
+            ThreadingUtil.runOnGUI( ()->{
+                rqNNtext.setText(nodepropbuilder.toString());
+            });
+            
             WAITINGRESPONSE_RQNN_PARAMS=false;
         }
         else if (!NODE_NUM_DIALOGUE_OPEN) {
-            startnodeallocation( -1, nodepropbuilder.toString() );
+            ThreadingUtil.runOnGUI( ()->{
+                startnodeallocation( -1, nodepropbuilder.toString() );
+            });
         }
             
         if ( CbusNodeConstants.getModuleType( _paramsArr[0] , _paramsArr[2] ).isEmpty() ) {
@@ -301,8 +317,9 @@ public class CbusAllocateNodeNumber implements CanListener {
             nodepropbuilder.append (CbusNodeConstants.getManu( _paramsArr[0] ));  
             nodepropbuilder.append (" ");
             nodepropbuilder.append (_tempNodeName);
-            
-            rqNNtext.setText(nodepropbuilder.toString());
+            ThreadingUtil.runOnGUI( ()->{
+                rqNNtext.setText(nodepropbuilder.toString());
+            });
         }
     }
     
