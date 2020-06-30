@@ -180,7 +180,7 @@ RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 
       <h3>Track Power</h3>
 
-      <p>Returns information about the curent state of track power.
+      <p>Returns information about the current state of track power.
       This can be one of the following:</p>
 
       <table class="data">
@@ -1059,7 +1059,7 @@ RC-&lt;;&gt;S74&lt;:&gt;L341
 RCP&lt;;&gt;consistAddress&lt;:&gt;leadLoco&lt;;&gt;nextLoco&lt;;&gt;...* ...&lt;;&gt;nextLoco&lt;;&gt;trailLoco
 </pre>
 
-    <p>Notice that this has no direction infromation--it just has a
+    <p>Notice that this has no direction information--it just has a
     list of locomotive DCC addresses. For example:</p>
 
     <pre class="code">
