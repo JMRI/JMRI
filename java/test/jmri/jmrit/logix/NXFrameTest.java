@@ -8,17 +8,20 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
-import org.junit.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Tests for the NXFrame class, and it's interactions with Warrants.
@@ -27,30 +30,24 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * todo - test error conditions
  */
+@Timeout(30)
 public class NXFrameTest {
-
-    @Rule
-    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(20);  // timeout (seconds) for all test methods in this test class.
-    
-    @Rule
-    public RetryRule retryRule = new RetryRule(2);  // allow 3 tries
 
     OBlockManager _OBlockMgr;
     SensorManager _sensorMgr;
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetDefault() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NXFrame nxFrame = new NXFrame();
         assertThat(nxFrame).withFailMessage("NXFrame").isNotNull();
         JUnitUtil.dispose(nxFrame);
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testRoutePanel() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         NXFrame nxFrame = new NXFrame();
         assertThat(nxFrame).withFailMessage("NXFrame").isNotNull();
 
@@ -73,10 +70,9 @@ public class NXFrameTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testNXWarrantSetup() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -136,13 +132,14 @@ public class NXFrameTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
-    @Test(timeout=30000)  // timeout, this test only, is 30 seconds
+    @Test
+    @Timeout(60)
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testNXWarrant() throws Exception {
         // The first part of this test duplicates testNXWarrantSetup().  It
         // then goes on to test a Warrant through the WarrantTableFrame.
         // it is the WarrantTableframe portion of this test that hangs.
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
@@ -257,10 +254,9 @@ public class NXFrameTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testWarrantLoopRun() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -301,10 +297,9 @@ public class NXFrameTest {
     }    
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testWarrantRampHalt() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -414,11 +409,8 @@ public class NXFrameTest {
     protected static void setAndConfirmSensorAction(Sensor sensor, int state, OBlock block)  {
         if (state == Sensor.ACTIVE) {
             jmri.util.ThreadingUtil.runOnLayout(() -> {
-                try {
-                    sensor.setState(Sensor.ACTIVE);
-                } catch (jmri.JmriException e) {
-                    Assert.fail("Set "+ sensor.getDisplayName()+" ACTIVE Exception: " + e);
-                }
+                Throwable thrown = catchThrowable( () -> sensor.setState(Sensor.ACTIVE));
+                assertThat(thrown).withFailMessage("Set "+ sensor.getDisplayName()+" ACTIVE Exception: " + thrown).isNull();
             });
             OBlock b = block;
             jmri.util.JUnitUtil.waitFor(() -> {
@@ -426,11 +418,8 @@ public class NXFrameTest {
             }, b.getDisplayName() + " occupied");
         } else if (state == Sensor.INACTIVE) {
             jmri.util.ThreadingUtil.runOnLayout(() -> {
-                try {
-                    sensor.setState(Sensor.INACTIVE);
-                } catch (jmri.JmriException e) {
-                    Assert.fail("Set "+sensor.getDisplayName()+" INACTIVE Exception: " + e);
-                }
+                Throwable thrown = catchThrowable( () -> sensor.setState(Sensor.INACTIVE));
+                assertThat(thrown).withFailMessage("Set "+ sensor.getDisplayName()+" INACTIVE Exception: " + thrown).isNull();
             });
             OBlock b = block;
             jmri.util.JUnitUtil.waitFor(() -> {
@@ -439,7 +428,7 @@ public class NXFrameTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -460,7 +449,7 @@ public class NXFrameTest {
         JUnitUtil.initWarrantManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         InstanceManager.getDefault(WarrantManager.class).dispose();
