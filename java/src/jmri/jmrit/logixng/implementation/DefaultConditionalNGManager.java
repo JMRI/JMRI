@@ -9,7 +9,6 @@ import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketFactory;
 import jmri.jmrit.logixng.MaleDigitalActionSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
@@ -30,8 +29,6 @@ import org.slf4j.LoggerFactory;
 public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         implements ConditionalNG_Manager {
 
-    List<FemaleSocketFactory> _femaleSocketFactories = new ArrayList<>();
-    
     
     public DefaultConditionalNGManager(InternalSystemConnectionMemo memo) {
         super(memo);
@@ -230,16 +227,6 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
                     InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
         return (_instance);
-    }
-
-    @Override
-    public void registerFemaleSocketFactory(FemaleSocketFactory factory) {
-        _femaleSocketFactories.add(factory);
-    }
-
-    @Override
-    public List<FemaleSocketFactory> getFemaleSocketFactories() {
-        return new ArrayList<>(_femaleSocketFactories);
     }
 
     @Override

@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
-import jmri.jmrit.logixng.FemaleSocketFactory;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -24,8 +23,6 @@ import org.slf4j.LoggerFactory;
 public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         implements LogixNG_Manager {
 
-    List<FemaleSocketFactory> _femaleSocketFactories = new ArrayList<>();
-    
     
     public DefaultLogixNGManager(InternalSystemConnectionMemo memo) {
         super(memo);
@@ -177,17 +174,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
         return (_instance);
-    }
-
-    @Override
-    public void registerFemaleSocketFactory(FemaleSocketFactory factory) {
-        _femaleSocketFactories.add(factory);
-    }
-
-    @Override
-    public List<FemaleSocketFactory> getFemaleSocketFactories() {
-        return Collections.unmodifiableList(_femaleSocketFactories);
-//        return new ArrayList<>(_femaleSocketFactories);
     }
 
     @Override

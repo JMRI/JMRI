@@ -106,16 +106,4 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      */
     public void setLoadDisabled(boolean s);
     
-    /**
-     * Register a FemaleSocketFactory.
-     * @param factory the factory
-     */
-    public void registerFemaleSocketFactory(FemaleSocketFactory factory);
-    
-    /**
-     * Register a FemaleSocketFactory.
-     * @return list of factories
-     */
-    public List<FemaleSocketFactory> getFemaleSocketFactories();
-    
 }

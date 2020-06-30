@@ -97,18 +97,6 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     public void setLoadDisabled(boolean s);
     
     /**
-     * Register a FemaleSocketFactory.
-     * @param factory the factory
-     */
-    public void registerFemaleSocketFactory(FemaleSocketFactory factory);
-    
-    /**
-     * Register a FemaleSocketFactory.
-     * @return list of factories
-     */
-    public List<FemaleSocketFactory> getFemaleSocketFactories();
-    
-    /**
      * Test if parameter is a properly formatted system name.
      * <P>
      * This method should only be used by the managers of the LogixNG system.

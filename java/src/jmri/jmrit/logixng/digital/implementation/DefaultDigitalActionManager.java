@@ -40,9 +40,6 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
     public DefaultDigitalActionManager(InternalSystemConnectionMemo memo) {
         super(memo);
         
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .registerFemaleSocketFactory(new DefaultFemaleDigitalActionSocketFactory());
-        
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }

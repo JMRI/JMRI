@@ -44,9 +44,6 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
     public DefaultDigitalExpressionManager(InternalSystemConnectionMemo memo) {
         super(memo);
         
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .registerFemaleSocketFactory(new DefaultFemaleDigitalExpressionSocketFactory());
-        
         for (Category category : Category.values()) {
             expressionClassList.put(category, new ArrayList<>());
         }

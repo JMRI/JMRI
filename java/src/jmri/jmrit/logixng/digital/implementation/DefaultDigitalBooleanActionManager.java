@@ -40,9 +40,6 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
     public DefaultDigitalBooleanActionManager(InternalSystemConnectionMemo memo) {
         super(memo);
         
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .registerFemaleSocketFactory(new DefaultFemaleDigitalBooleanActionSocketFactory());
-        
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }
