@@ -236,9 +236,12 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.initLogixNGManager();
         
         expressionConstant = new StringExpressionConstant("IQSE321", "StringIO_Constant");
         expressionConstant.setValue("Something");

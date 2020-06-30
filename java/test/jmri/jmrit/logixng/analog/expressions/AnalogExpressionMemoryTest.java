@@ -352,9 +352,12 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.initLogixNGManager();
         
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Assert.assertNotNull("memory is not null", _memory);

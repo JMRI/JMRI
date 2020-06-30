@@ -39,10 +39,12 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         AnalogExpressionBean expressionA = new AnalogExpressionMemory("IQAE321", null);
         Assert.assertNotNull("exists", expressionA);

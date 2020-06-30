@@ -34,6 +34,16 @@ import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultLogixNGManager;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNGManager;
+import jmri.jmrit.logixng.analog.implementation.DefaultAnalogActionManager;
+import jmri.jmrit.logixng.analog.implementation.DefaultAnalogExpressionManager;
+import jmri.jmrit.logixng.digital.implementation.DefaultDigitalActionManager;
+import jmri.jmrit.logixng.digital.implementation.DefaultDigitalBooleanActionManager;
+import jmri.jmrit.logixng.digital.implementation.DefaultDigitalExpressionManager;
+import jmri.jmrit.logixng.string.implementation.DefaultStringActionManager;
+import jmri.jmrit.logixng.string.implementation.DefaultStringExpressionManager;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
@@ -883,6 +893,53 @@ public class JUnitUtil {
 
     public static void initInternalTurnoutManagerThrowException() {
         InstanceManager.setDefault(TurnoutManager.class, new TurnoutManagerThrowExceptionScaffold());
+    }
+
+    public static void initLogixNGManager() {
+        LogixNG_Manager m1 = new DefaultLogixNGManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m1, jmri.Manager.LOGIXNGS);
+        }
+        
+        ConditionalNG_Manager m2 = new DefaultConditionalNGManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m2, jmri.Manager.LOGIXNG_CONDITIONALNGS);
+        }
+        
+        AnalogActionManager m3 = new DefaultAnalogActionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m3, jmri.Manager.LOGIXNG_ANALOG_ACTIONS);
+        }
+        
+        AnalogExpressionManager m4 = new DefaultAnalogExpressionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m4, jmri.Manager.LOGIXNG_ANALOG_EXPRESSIONS);
+        }
+        
+        DigitalActionManager m5 = new DefaultDigitalActionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m5, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS);
+        }
+        
+        DigitalBooleanActionManager m9 = new DefaultDigitalBooleanActionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m9, jmri.Manager.LOGIXNG_DIGITAL_BOOLEAN_ACTIONS);
+        }
+        
+        DigitalExpressionManager m6 = new DefaultDigitalExpressionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m6, jmri.Manager.LOGIXNG_DIGITAL_EXPRESSIONS);
+        }
+        
+        StringActionManager m7 = new DefaultStringActionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m7, jmri.Manager.LOGIXNG_STRING_ACTIONS);
+        }
+        
+        StringExpressionManager m8 = new DefaultStringExpressionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
+            InstanceManager.getDefault(ConfigureManager.class).registerConfig(m8, jmri.Manager.LOGIXNG_STRING_EXPRESSIONS);
+        }
     }
 
     public static void initInternalSensorManagerThrowException() {

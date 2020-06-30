@@ -37,8 +37,11 @@ public class AnalogActionsTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
     }
 
     @After

@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.digital.expressions;
 
-import java.beans.PropertyChangeEvent;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +8,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.Turnout;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.util.JUnitUtil;
@@ -379,8 +375,11 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.COMMON;
         _isExternal = false;

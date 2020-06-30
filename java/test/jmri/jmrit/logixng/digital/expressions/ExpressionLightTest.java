@@ -395,7 +395,10 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalLightManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.ITEM;
         _isExternal = true;

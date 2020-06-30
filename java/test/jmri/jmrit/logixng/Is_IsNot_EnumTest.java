@@ -1,16 +1,11 @@
-package jmri.jmrit.logixng.enums;
+package jmri.jmrit.logixng;
 
-// import java.awt.GraphicsEnvironment;
-import jmri.jmrit.logixng.Is_IsNot_Enum;
-import jmri.jmrit.logixng.swing.*;
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrit.logixng.DigitalActionBean;
 
 /**
  * Test SwingToolsTest
@@ -35,10 +30,10 @@ public class Is_IsNot_EnumTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initLogixNGManager();
     }
 
     @After

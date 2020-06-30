@@ -378,10 +378,12 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.OTHER;
         _isExternal = false;

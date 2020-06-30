@@ -199,8 +199,11 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         // Set a secority manager since we don't want this test to shut down
         // the computer!

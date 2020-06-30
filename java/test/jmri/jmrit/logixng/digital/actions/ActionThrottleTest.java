@@ -690,11 +690,13 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.ITEM;
         _isExternal = true;

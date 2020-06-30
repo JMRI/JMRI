@@ -252,9 +252,12 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+//        JUnitUtil.initLogixNGManager();
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .createLogixNG("A new logix for test");  // NOI18N

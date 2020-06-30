@@ -222,9 +222,12 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.initLogixNGManager();
         
         expressionConstant = new AnalogExpressionConstant("IQAE321", "AnalogIO_Constant");
         expressionConstant.setValue(10.2);

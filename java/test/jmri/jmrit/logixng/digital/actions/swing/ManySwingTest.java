@@ -40,8 +40,12 @@ public class ManySwingTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        JUnitUtil.initLogixNGManager();
     }
 
     @After

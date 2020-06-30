@@ -351,9 +351,12 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.initLogixNGManager();
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

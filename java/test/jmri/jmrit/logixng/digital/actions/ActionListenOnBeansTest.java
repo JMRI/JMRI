@@ -107,8 +107,11 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.ITEM;
         _isExternal = true;

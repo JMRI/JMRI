@@ -49,7 +49,10 @@ public class ExpressionLightSwingTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalLightManager();
+        JUnitUtil.initLogixNGManager();
     }
 
     @After

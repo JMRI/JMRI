@@ -311,8 +311,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.ITEM;
         _isExternal = true;

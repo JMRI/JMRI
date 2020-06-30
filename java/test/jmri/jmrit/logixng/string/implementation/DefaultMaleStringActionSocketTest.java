@@ -40,8 +40,11 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         StringActionBean actionA = new StringActionMemory("IQSA321", null);
         Assert.assertNotNull("exists", actionA);

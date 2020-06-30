@@ -115,10 +115,12 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.COMMON;
         _isExternal = false;

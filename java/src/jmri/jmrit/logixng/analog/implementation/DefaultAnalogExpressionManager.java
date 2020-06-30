@@ -126,6 +126,7 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
             Base parent, FemaleSocketListener listener, String socketName) {
         
         LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
+//        preferences.setUseGenericFemaleSockets(false);
         if (preferences.getUseGenericFemaleSockets()) {
             return new DefaultFemaleGenericExpressionSocket(
                     FemaleGenericExpressionSocket.SocketType.ANALOG, parent, listener, socketName)

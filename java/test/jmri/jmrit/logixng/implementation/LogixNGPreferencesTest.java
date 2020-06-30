@@ -1,11 +1,10 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.io.IOException;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test LogixNGPreferences
@@ -14,6 +13,9 @@ import org.junit.Test;
  */
 public class LogixNGPreferencesTest {
 
+    @Rule
+    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
+
     @Test
     public void testCompareValuesDifferent() {
         LogixNGPreferences prefsA = new LogixNGPreferences();
@@ -21,19 +23,19 @@ public class LogixNGPreferencesTest {
         Assert.assertFalse("prefs are equal", prefsA.compareValuesDifferent(prefsB));
         Assert.assertFalse("prefs are equal", prefsB.compareValuesDifferent(prefsA));
         
-        prefsB.setAllowDebugMode(false);
+        prefsA.setAllowDebugMode(false);
         prefsB.setAllowDebugMode(true);
         Assert.assertTrue("prefs are not equal", prefsA.compareValuesDifferent(prefsB));
         Assert.assertTrue("prefs are not equal", prefsB.compareValuesDifferent(prefsA));
         prefsB.setAllowDebugMode(false);
         
-        prefsB.setStartLogixNGOnStartup(false);
+        prefsA.setStartLogixNGOnStartup(false);
         prefsB.setStartLogixNGOnStartup(true);
         Assert.assertTrue("prefs are not equal", prefsA.compareValuesDifferent(prefsB));
         Assert.assertTrue("prefs are not equal", prefsB.compareValuesDifferent(prefsA));
         prefsB.setStartLogixNGOnStartup(false);
         
-        prefsB.setUseGenericFemaleSockets(false);
+        prefsA.setUseGenericFemaleSockets(false);
         prefsB.setUseGenericFemaleSockets(true);
         Assert.assertTrue("prefs are not equal", prefsA.compareValuesDifferent(prefsB));
         Assert.assertTrue("prefs are not equal", prefsB.compareValuesDifferent(prefsA));
@@ -68,26 +70,47 @@ public class LogixNGPreferencesTest {
         LogixNGPreferences prefsA = new LogixNGPreferences();
         LogixNGPreferences prefsB = new LogixNGPreferences();
         
-        prefsB.setStartLogixNGOnStartup(false);
+        prefsA.setStartLogixNGOnStartup(false);
         prefsB.setStartLogixNGOnStartup(true);
         Assert.assertFalse(prefsA.getStartLogixNGOnStartup());
         Assert.assertTrue(prefsB.getStartLogixNGOnStartup());
         prefsA.apply(prefsB);
         Assert.assertTrue(prefsA.getStartLogixNGOnStartup());
         
-        prefsB.setUseGenericFemaleSockets(false);
+        prefsA.setStartLogixNGOnStartup(true);
+        prefsB.setStartLogixNGOnStartup(false);
+        Assert.assertTrue(prefsA.getStartLogixNGOnStartup());
+        Assert.assertFalse(prefsB.getStartLogixNGOnStartup());
+        prefsA.apply(prefsB);
+        Assert.assertFalse(prefsA.getStartLogixNGOnStartup());
+        
+        prefsA.setUseGenericFemaleSockets(false);
         prefsB.setUseGenericFemaleSockets(true);
         Assert.assertFalse(prefsA.getUseGenericFemaleSockets());
         Assert.assertTrue(prefsB.getUseGenericFemaleSockets());
         prefsA.apply(prefsB);
         Assert.assertTrue(prefsA.getUseGenericFemaleSockets());
         
-        prefsB.setAllowDebugMode(false);
+        prefsA.setUseGenericFemaleSockets(true);
+        prefsB.setUseGenericFemaleSockets(false);
+        Assert.assertTrue(prefsA.getUseGenericFemaleSockets());
+        Assert.assertFalse(prefsB.getUseGenericFemaleSockets());
+        prefsA.apply(prefsB);
+        Assert.assertFalse(prefsA.getUseGenericFemaleSockets());
+        
+        prefsA.setAllowDebugMode(false);
         prefsB.setAllowDebugMode(true);
         Assert.assertFalse(prefsA.getAllowDebugMode());
         Assert.assertTrue(prefsB.getAllowDebugMode());
         prefsA.apply(prefsB);
         Assert.assertTrue(prefsA.getAllowDebugMode());
+        
+        prefsA.setAllowDebugMode(true);
+        prefsB.setAllowDebugMode(false);
+        Assert.assertTrue(prefsA.getAllowDebugMode());
+        Assert.assertFalse(prefsB.getAllowDebugMode());
+        prefsA.apply(prefsB);
+        Assert.assertFalse(prefsA.getAllowDebugMode());
     }
     
     @Test
@@ -128,11 +151,14 @@ public class LogixNGPreferencesTest {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
     }
 
     @After

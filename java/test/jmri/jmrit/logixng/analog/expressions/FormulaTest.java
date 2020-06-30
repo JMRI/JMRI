@@ -709,8 +709,11 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.COMMON;
         _isExternal = false;

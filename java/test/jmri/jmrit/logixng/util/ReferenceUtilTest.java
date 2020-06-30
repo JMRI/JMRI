@@ -309,8 +309,12 @@ public class ReferenceUtilTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
+        
         _memoryManager = InstanceManager.getDefault(MemoryManager.class);
         _tableManager = InstanceManager.getDefault(NamedTableManager.class);
         setupTables();

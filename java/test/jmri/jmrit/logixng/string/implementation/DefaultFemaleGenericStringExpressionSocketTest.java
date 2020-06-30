@@ -132,8 +132,11 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();

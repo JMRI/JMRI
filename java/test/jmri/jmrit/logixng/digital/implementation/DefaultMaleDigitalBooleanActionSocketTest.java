@@ -40,8 +40,11 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         DigitalBooleanActionBean actionA = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
         Assert.assertNotNull("exists", actionA);

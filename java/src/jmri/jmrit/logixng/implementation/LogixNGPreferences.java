@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.prefs.Preferences;
+
 import jmri.JmriException;
 import jmri.beans.PreferencesBean;
 import jmri.jmrit.logixng.PluginManager;
@@ -36,9 +37,9 @@ public final class LogixNGPreferences extends PreferencesBean {
     }
 
     private void readPreferences(Preferences sharedPreferences) {
-        this._startLogixNGOnLoad = sharedPreferences.getBoolean(START_LOGIXNG_ON_LOAD, this._startLogixNGOnLoad);
-        this._useGenericFemaleSockets = sharedPreferences.getBoolean(USE_GENERIC_FEMALE_SOCKETS, this._useGenericFemaleSockets);
-        this._allowDebugMode = sharedPreferences.getBoolean(ALLOW_DEBUG_MODE, this._allowDebugMode);
+        _startLogixNGOnLoad = sharedPreferences.getBoolean(START_LOGIXNG_ON_LOAD, _startLogixNGOnLoad);
+        _useGenericFemaleSockets = sharedPreferences.getBoolean(USE_GENERIC_FEMALE_SOCKETS, _useGenericFemaleSockets);
+        _allowDebugMode = sharedPreferences.getBoolean(ALLOW_DEBUG_MODE, _allowDebugMode);
         
         if (1==0) {
             try {
@@ -157,4 +158,5 @@ public final class LogixNGPreferences extends PreferencesBean {
         return _allowDebugMode;
     }
 
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);
 }

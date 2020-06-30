@@ -187,11 +187,14 @@ public class DuplicateKeyMapTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixNGManager();
         
         t = new DuplicateKeyMap<>();
-        Assert.assertTrue("size is correct", 0 == t.size());
+        Assert.assertEquals("size is correct", 0, t.size());
         Assert.assertTrue("map is empty", t.isEmpty());
         t.put("Red", "Turnout");
         t.put("Red", "Sensor");

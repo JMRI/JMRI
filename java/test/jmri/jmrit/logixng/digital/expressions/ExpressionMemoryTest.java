@@ -379,7 +379,10 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     public void setUp() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.ITEM;
         _isExternal = true;

@@ -353,6 +353,8 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
@@ -369,6 +371,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
 //        JUnitUtil.initIdTagManager();
 //        JUnitUtil.initLogixManager();
 //        JUnitUtil.initConditionalManager();
+        JUnitUtil.initLogixNGManager();
         
         _category = Category.ITEM;
         _isExternal = true;

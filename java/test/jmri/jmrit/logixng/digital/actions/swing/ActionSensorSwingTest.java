@@ -40,8 +40,11 @@ public class ActionSensorSwingTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initLogixNGManager();
     }
 
     @After

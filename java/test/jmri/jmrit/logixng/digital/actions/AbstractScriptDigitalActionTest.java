@@ -143,6 +143,9 @@ public class AbstractScriptDigitalActionTest {
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initLogixNGManager();
         
 //        JUnitUtil.initInternalSensorManager();
 //        JUnitUtil.initInternalTurnoutManager();

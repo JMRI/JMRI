@@ -99,6 +99,7 @@ public class LogixNG_StartupTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
@@ -109,6 +110,8 @@ public class LogixNG_StartupTest {
         JUnitUtil.initSignalMastLogicManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initWarrantManager();
+        
+        JUnitUtil.initLogixNGManager();
    }
 
     @After
