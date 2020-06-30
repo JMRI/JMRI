@@ -132,6 +132,20 @@ public class LoadAndStoreTestBase {
             lineNumber1++;
             lineNumber2++;
 
+            // Do we have a multi line comment? Comments in the xml file is used by LogixNG.
+            // This only happens in the first file since store() will not store comments
+            if  (next1.startsWith("<!--")) {
+                while ((next1 = fileStream1.readLine()) != null && !next1.endsWith("-->")) {
+                    lineNumber1++;
+                }
+                
+                // If here, we either have a line that ends with --> or we have reached endf of file
+                if (fileStream1.readLine() == null) break;
+                
+                // If here, we have a line that ends with --> or we have reached endf of file
+                continue;
+            }
+            
             // where the (empty) entryexitpairs line ends up seems to be non-deterministic
             // so if we see it in either file we just skip it
             String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
