@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.configurexml;
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyVetoException;
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -598,8 +597,8 @@ public class StoreAndLoadTest {
     
     
     private void addHeader(File inFile, File outFile) throws FileNotFoundException, IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(inFile, StandardCharsets.UTF_8));
-                PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(outFile, StandardCharsets.UTF_8)))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(inFile), StandardCharsets.UTF_8));
+                PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), StandardCharsets.UTF_8)))) {
             
             String line = reader.readLine();
             writer.println(line);
