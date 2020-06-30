@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -23,7 +25,7 @@ public class RouteFinderTest {
         BlockOrder via = new BlockOrder(new OBlock("OB3", "Test3"));
         BlockOrder avoid = new BlockOrder(new OBlock("OB4", "Test4"));
         RouteFinder t = new RouteFinder(nxFrame, orig, dest, via, avoid, 3);
-        Assert.assertNotNull("exists", t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(nxFrame);
     }
 

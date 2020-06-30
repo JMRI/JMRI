@@ -18,6 +18,8 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Tests for the NXFrame class, and it's interactions with Warrants.
  *
@@ -40,7 +42,7 @@ public class NXFrameTest {
     public void testGetDefault() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NXFrame nxFrame = new NXFrame();
-        Assert.assertNotNull("NXFrame", nxFrame);
+        assertThat(nxFrame).withFailMessage("NXFrame").isNotNull();
         JUnitUtil.dispose(nxFrame);
     }
 
@@ -50,7 +52,7 @@ public class NXFrameTest {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         NXFrame nxFrame = new NXFrame();
-        Assert.assertNotNull("NXFrame", nxFrame);
+        assertThat(nxFrame).withFailMessage("NXFrame").isNotNull();
 
         JFrameOperator jfo = new JFrameOperator(nxFrame);
 
@@ -190,10 +192,10 @@ public class NXFrameTest {
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("tableFrame", tableFrame);
+        assertThat(tableFrame).withFailMessage("tableFrame").isNotNull();
 
         WarrantTableModel model = tableFrame.getModel();
-        Assert.assertNotNull("tableFrame model", model);
+        assertThat(model).withFailMessage("tableFrame model").isNotNull();
         
         JUnitUtil.waitFor(() -> {
             return model.getRowCount() > 1;
@@ -201,18 +203,18 @@ public class NXFrameTest {
         
         Warrant warrant = tableFrame.getModel().getWarrantAt(model.getRowCount()-1);
 
-        Assert.assertNotNull("warrant", warrant);
-        Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
+        assertThat(warrant).withFailMessage("warrant").isNotNull();
+        assertThat(warrant.getBlockOrders()).withFailMessage("warrant.getBlockOrders(").isNotNull();
         warrant.getBlockOrders();
-        Assert.assertEquals("Num Blocks in Route", 7, warrant.getBlockOrders().size());
-        Assert.assertTrue("Num Comands", warrant.getThrottleCommands().size()>5);
+        assertThat(warrant.getBlockOrders().size()).withFailMessage("Num Blocks in Route").isEqualTo(7);
+        assertThat(warrant.getThrottleCommands().size()>5).withFailMessage("Num Comands").isTrue();
 
         String name = block.getDisplayName();
         jmri.util.JUnitUtil.waitFor(
             ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
             "Waiting message");
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
-        Assert.assertNotNull("Senor IS0 not found", sensor0);
+        assertThat(sensor0).withFailMessage("Senor IS0 not found").isNotNull();
 
         NXFrameTest.setAndConfirmSensorAction(sensor0, Sensor.ACTIVE, block);
 
@@ -225,8 +227,7 @@ public class NXFrameTest {
             return Bundle.getMessage("Halted", name, "1").equals(warrant.getRunningMessage());
         }, "Warrant processed sensor change");
 
-        Assert.assertEquals("Halted/Resume message", warrant.getRunningMessage(),
-                Bundle.getMessage("Halted", block.getDisplayName(), "1"));
+        assertThat(Bundle.getMessage("Halted", block.getDisplayName(), "1")).withFailMessage("Halted/Resume message").isEqualTo(warrant.getRunningMessage());
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);
@@ -241,7 +242,7 @@ public class NXFrameTest {
         String[] route = {"OB0", "OB1", "OB2", "OB3", "OB7", "OB5", "OB10"};
         block = _OBlockMgr.getOBlock("OB10");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route, _OBlockMgr).getDisplayName());
+        assertThat(runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("Train in last block").isEqualTo(block.getSensor().getDisplayName());
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.ABORT);
@@ -269,15 +270,15 @@ public class NXFrameTest {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
         Sensor sensor3 = _sensorMgr.getBySystemName("IS3");
-        Assert.assertNotNull("Senor IS3 not found", sensor3);
+        assertThat(sensor3).withFailMessage("Senor IS3 not found").isNotNull();
 
         NXFrameTest.setAndConfirmSensorAction(sensor3, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB3"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("tableFrame", tableFrame);
+        assertThat(tableFrame).withFailMessage("tableFrame").isNotNull();
 
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
-        Assert.assertNotNull("warrant", warrant);
+        assertThat(warrant).withFailMessage("warrant").isNotNull();
        
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -289,7 +290,7 @@ public class NXFrameTest {
         String[] route = {"OB3", "OB4", "OB5", "OB10", "OB0", "OB1", "OB2", "OB3"};
         OBlock block = _OBlockMgr.getOBlock("OB3");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route, _OBlockMgr).getDisplayName());
+        assertThat(runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("Train in last block").isEqualTo(block.getSensor().getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -313,15 +314,15 @@ public class NXFrameTest {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
-        Assert.assertNotNull("Senor IS1 not found", sensor1);
+        assertThat(sensor1).withFailMessage("Senor IS1 not found").isNotNull();
 
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("tableFrame", tableFrame);
+        assertThat(tableFrame).withFailMessage("tableFrame").isNotNull();
 
         Warrant warrant = tableFrame.getModel().getWarrantAt(1);
-        Assert.assertNotNull("warrant", warrant);
+        assertThat(warrant).withFailMessage("warrant").isNotNull();
        
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
 
@@ -338,7 +339,7 @@ public class NXFrameTest {
         String[] route1 = {"OB1", "OB6", "OB3"};
         OBlock block = _OBlockMgr.getOBlock("OB3");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in block OB3", block.getSensor().getDisplayName(), runtimes(route1,_OBlockMgr).getDisplayName());
+        assertThat(runtimes(route1,_OBlockMgr).getDisplayName()).withFailMessage("Train in block OB3").isEqualTo(block.getSensor().getDisplayName());
 
         warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
         new QueueTool().waitEmpty(10);
@@ -360,7 +361,7 @@ public class NXFrameTest {
         String[] route2 = {"OB3", "OB7", "OB5"};
         block = _OBlockMgr.getOBlock("OB5");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route2, _OBlockMgr).getDisplayName());
+        assertThat(runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Train in last block").isEqualTo(block.getSensor().getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);

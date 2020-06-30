@@ -6,6 +6,8 @@ import org.junit.Assume;
 
 import java.awt.GraphicsEnvironment;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -16,7 +18,7 @@ public class WarrantShutdownTaskTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WarrantShutdownTask t = new WarrantShutdownTask("test warrant shtudown task");
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach
