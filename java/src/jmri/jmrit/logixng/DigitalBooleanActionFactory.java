@@ -4,14 +4,14 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Factory class for DigitalActionWithChange classes.
+ * Factory class for DigitalBooleanAction classes.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
 public interface DigitalBooleanActionFactory {
 
     /**
-     * Get a set of classes that implements the DigitalActionWithChange interface.
+     * Get a set of classes that implements the DigitalBooleanAction interface.
      * 
      * @return a set of entries with category and class
      */

@@ -84,13 +84,13 @@ public abstract class AbstractDigitalBooleanAction extends AbstractBase
 
     @Override
     public void setState(int s) throws JmriException {
-        log.warn("Unexpected call to setState in AbstractDigitalActionWithChange.");  // NOI18N
+        log.warn("Unexpected call to setState in AbstractDigitalBooleanAction.");  // NOI18N
         _state = s;
     }
 
     @Override
     public int getState() {
-        log.warn("Unexpected call to getState in AbstractDigitalActionWithChange.");  // NOI18N
+        log.warn("Unexpected call to getState in AbstractDigitalBooleanAction.");  // NOI18N
         return _state;
     }
     

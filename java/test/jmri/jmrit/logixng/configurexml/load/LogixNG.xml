@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>19</minor>
-    <test>3</test>
+    <minor>21</minor>
+    <test>1</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -65,7 +65,7 @@
     <memory>
       <systemName>IM4</systemName>
     </memory>
-    <memory value="11:40 fm">
+    <memory value="12:04 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -75,7 +75,7 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Jan 12 11:40:58 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Jun 30 12:04:27 CEST 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="yes">
       <systemName>IQ:AUTO:0001</systemName>
@@ -631,7 +631,7 @@
         </socket>
       </actions>
     </many>
-    <shutdown-computer class="jmri.jmrit.logixng.digital.actions.configurexml.ShutdownComputerXml" seconds="0">
+    <shutdown-computer class="jmri.jmrit.logixng.digital.actions.configurexml.ShutdownComputerXml" seconds="10">
       <systemName>IQDA:AUTO:00014</systemName>
       <userName>My shutdown computer</userName>
     </shutdown-computer>
@@ -641,7 +641,7 @@
     <do-string-action class="jmri.jmrit.logixng.digital.actions.configurexml.DoStringActionXml">
       <systemName>IQDA:AUTO:00016</systemName>
     </do-string-action>
-    <shutdown-computer class="jmri.jmrit.logixng.digital.actions.configurexml.ShutdownComputerXml" seconds="0">
+    <shutdown-computer class="jmri.jmrit.logixng.digital.actions.configurexml.ShutdownComputerXml" seconds="10">
       <systemName>IQDA:AUTO:00017</systemName>
     </shutdown-computer>
     <action-light class="jmri.jmrit.logixng.digital.actions.configurexml.ActionLightXml">
@@ -734,6 +734,7 @@
       </locoDirectionSocket>
     </throttle>
   </logixngDigitalActions>
+  <logixngDigitalBooleanActions class="jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalBooleanActionManagerXml" />
   <logixngAnalogExpressions class="jmri.jmrit.logixng.analog.implementation.configurexml.DefaultAnalogExpressionManagerXml">
     <analog-expression-constant class="jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionConstantXml">
       <systemName>IQAE:AUTO:00001</systemName>
@@ -785,9 +786,9 @@
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sun Jan 12 11:40:58 CET 2020</date>
+      <date>Tue Jun 30 12:04:27 CEST 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.3ish+daniel+20200112T1039Z on Sun Jan 12 11:40:58 CET 2020-->
+  <!--Written by JMRI version 4.21.1ish+daniel+2020-06-30T10:01:14Z+RUNKNOWN on Tue Jun 30 12:04:27 CEST 2020-->
 </layout-config>

@@ -96,7 +96,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
         }
         
         if ((_debugConfig != null)
-                && ((DigitalActionWithChangeDebugConfig)_debugConfig)._dontExecute) {
+                && ((DigitalBooleanActionDebugConfig)_debugConfig)._dontExecute) {
             return;
         }
         
@@ -328,7 +328,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
     /** {@inheritDoc} */
     @Override
     public DebugConfig createDebugConfig() {
-        return new DigitalActionWithChangeDebugConfig();
+        return new DigitalBooleanActionDebugConfig();
     }
 
     /** {@inheritDoc} */
@@ -356,7 +356,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
     
 
 
-    public static class DigitalActionWithChangeDebugConfig implements MaleSocket.DebugConfig {
+    public static class DigitalBooleanActionDebugConfig implements MaleSocket.DebugConfig {
         
         // If true, the socket is not executing the action.
         // It's useful if you want to test the LogixNG without affecting the

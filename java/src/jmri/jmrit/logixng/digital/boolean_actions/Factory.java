@@ -17,9 +17,9 @@ public class Factory implements DigitalBooleanActionFactory {
 
     @Override
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
-        Set<Map.Entry<Category, Class<? extends Base>>> digitalActionWithChangeClasses = new HashSet<>();
-        digitalActionWithChangeClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, OnChange.class));
-        return digitalActionWithChangeClasses;
+        Set<Map.Entry<Category, Class<? extends Base>>> digitalBooleanActionClasses = new HashSet<>();
+        digitalBooleanActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, OnChange.class));
+        return digitalBooleanActionClasses;
     }
 
 }

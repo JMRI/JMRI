@@ -346,6 +346,7 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.initLogixNGManager();
         JUnitUtil.clearBlockBossLogic();
         System.setProperty("jmri.test.no-dialogs", "true");
     }

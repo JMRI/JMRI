@@ -48,7 +48,7 @@ public class DefaultDigitalBooleanActionManagerXml extends jmri.managers.configu
      */
     @Override
     public Element store(Object o) {
-        Element actions = new Element("logixngDigitalActionsWithChange");
+        Element actions = new Element("logixngDigitalBooleanActions");
         setStoreElementClass(actions);
         DigitalBooleanActionManager tm = (DigitalBooleanActionManager) o;
         if (tm != null) {
@@ -153,15 +153,15 @@ public class DefaultDigitalBooleanActionManagerXml extends jmri.managers.configu
      * absolute type.
      */
     protected void replaceActionManager() {
-        if (InstanceManager.getDefault(jmri.jmrit.logixng.DigitalActionManager.class).getClass().getName()
+        if (InstanceManager.getDefault(jmri.jmrit.logixng.DigitalBooleanActionManager.class).getClass().getName()
                 .equals(DefaultDigitalBooleanActionManager.class.getName())) {
             return;
         }
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.DigitalActionManager.class) != null) {
+        if (InstanceManager.getNullableDefault(jmri.jmrit.logixng.DigitalBooleanActionManager.class) != null) {
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
-                cmOD.deregister(InstanceManager.getDefault(jmri.jmrit.logixng.DigitalActionManager.class));
+                cmOD.deregister(InstanceManager.getDefault(jmri.jmrit.logixng.DigitalBooleanActionManager.class));
             }
 
         }
@@ -180,7 +180,7 @@ public class DefaultDigitalBooleanActionManagerXml extends jmri.managers.configu
 
     @Override
     public int loadOrder() {
-        return InstanceManager.getDefault(jmri.jmrit.logixng.DigitalActionManager.class).getXMLOrder();
+        return InstanceManager.getDefault(jmri.jmrit.logixng.DigitalBooleanActionManager.class).getXMLOrder();
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultDigitalBooleanActionManagerXml.class);

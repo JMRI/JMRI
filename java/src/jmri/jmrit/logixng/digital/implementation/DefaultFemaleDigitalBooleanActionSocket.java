@@ -35,12 +35,12 @@ public final class DefaultFemaleDigitalBooleanActionSocket
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "DefaultFemaleDigitalActionWithChangeSocket_Short");
+        return Bundle.getMessage(locale, "DefaultFemaleDigitalBooleanActionSocket_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "DefaultFemaleDigitalActionWithChangeSocket_Long", getName());
+        return Bundle.getMessage(locale, "DefaultFemaleDigitalBooleanActionSocket_Long", getName());
     }
 
     @Override

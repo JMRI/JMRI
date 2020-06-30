@@ -2,12 +2,13 @@ package jmri.jmrit.logixng.digital.implementation;
 
 import java.util.Arrays;
 import java.util.Set;
+
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -48,6 +49,10 @@ public class LogixNG_DigitalInstanceInitializer extends AbstractInstanceInitiali
             return new DefaultDigitalActionManager(memo);
         }
 
+        if (type == DigitalBooleanActionManager.class) {
+            return new DefaultDigitalBooleanActionManager(memo);
+        }
+
         if (type == DigitalExpressionManager.class) {
             return new DefaultDigitalExpressionManager(memo);
         }
@@ -60,6 +65,7 @@ public class LogixNG_DigitalInstanceInitializer extends AbstractInstanceInitiali
         Set<Class<?>> set = super.getInitalizes();
         set.addAll(Arrays.asList(
                 DigitalActionManager.class,
+                DigitalBooleanActionManager.class,
                 DigitalExpressionManager.class
         ));
         return set;
