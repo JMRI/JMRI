@@ -461,123 +461,47 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * {@inheritDoc}
+     * Each serial port adapter should handle this and it should be abstract.
      */
     @Override
-    public void dispose() {
-        allowConnectionRecovery = false;
-        super.dispose();
-    }
+    protected void closeConnection(){}
 
     /**
-     * This is called when a connection is initially lost. It closes the client
-     * side socket connection, resets the open flag and attempts a reconnection.
+     * Re-setup the connection.
+     * Called when the physical connection has reconnected and can be linked to
+     * this connection.
+     * Each port adapter should handle this and it should be abstract.
      */
     @Override
-    public void recover() {
-        if (!allowConnectionRecovery) {
-            return;
-        }
-        opened = false;
+    protected void resetupConnection(){}
+    
+    /**
+     * {@inheritDoc}
+     * Attempts a re-connection to the serial port from the main reconnect
+     * thread.
+     */
+    @Override
+    protected void reconnectFromLoop(int retryNum){
         try {
-            closeConnection();
+            log.info("Retrying Connection attempt {} for {}", retryNum,mPort);
+            Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
+            while (portIDs.hasMoreElements()) {
+                CommPortIdentifier id = portIDs.nextElement();
+                // filter out line printers
+                if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
+                {
+                    if (id.getName().equals(mPort)) {
+                        log.info(Bundle.getMessage("ReconnectPortReAppear", mPort));
+                        openPort(mPort, "jmri");
+                    }
+                }
+            }
+            if (retryNum % 10==0) {
+                log.info(Bundle.getMessage("ReconnectSerialTip"));
+            }
         } catch (RuntimeException e) {
-            log.warn("closeConnection failed");
-        }
-        reconnect();
-    }
-
-    /*Each serial port adapter should handle this and it should be abstract.
-     However this is in place until all the other code has been refactored */
-    protected void closeConnection() {
-        log.warn("abstract closeConnection() called; should be overriden");
-    }
-
-    /*Each port adapter should handle this and it should be abstract.
-     However this is in place until all the other code has been refactored */
-    protected void resetupConnection() {
-        log.warn("abstract resetupConnection() called; should be overriden");
-    }
-
-    /**
-     * Attempts to reconnect to a failed port.
-     */
-    public void reconnect() {
-        // If the connection is already open, then we shouldn't try a re-connect.
-        if (opened || !allowConnectionRecovery) {
-            return;
-        }
-        closeConnection();
-        ReconnectWait thread = new ReconnectWait();
-        thread.setName("Connection Recovery " + getCurrentPortName() );
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            log.error("Unable to join to the reconnection thread {}", e.getMessage());
-        }
-    }
-
-    class ReconnectWait extends Thread {
-
-        public final static int THREADPASS = 0;
-        public final static int THREADFAIL = 1;
-        int _status;
-
-        public int status() {
-            return _status;
-        }
-
-        public ReconnectWait() {
-            _status = THREADFAIL;
-        }
-
-        @Override
-        public void run() {
-            boolean reply = true;
-            int count = 0;
-            int interval = reconnectinterval;
-            int totalsleep = 0;
-            while (reply && allowConnectionRecovery) {
-                safeSleep(interval*1000L, "Waiting");
-                count++;
-                totalsleep += interval;
-                try {
-                    log.info("Retrying Connection attempt {} for {}", count,mPort);
-                    Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
-                    while (portIDs.hasMoreElements()) {
-                        CommPortIdentifier id = portIDs.nextElement();
-                        // filter out line printers
-                        if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
-                        {
-                            if (id.getName().equals(mPort)) {
-                                log.info(Bundle.getMessage("ReconnectPortReAppear", mPort));
-                                openPort(mPort, "jmri");
-                            }
-                        }
-                    }
-                } catch (RuntimeException e) {
-                    log.warn(Bundle.getMessage("ReconnectFail",(mPort == null ? "null" : mPort)));
-                }
-                reply = !opened;
-                if (!opened) {
-                    if (count % 10==0 ) {
-                        //retrying but with twice the retry interval.
-                        interval = Math.min(interval * 2, reconnectMaxInterval);
-                        log.error(Bundle.getMessage("ReconnectFailRetry", totalsleep, count,interval));
-                        log.info(Bundle.getMessage("ReconnectSerialTip"));
-                    }
-                    if ((reconnectMaxAttempts > -1) && (count >= reconnectMaxAttempts)) {
-                        log.error(Bundle.getMessage("ReconnectFailAbort",totalsleep,count));
-                        reply = false;
-                    }
-                }
-            }
-            if (!opened) {
-                log.error(Bundle.getMessage("ReconnectFailAbort"));
-            } else {
-                log.info(Bundle.getMessage("ReconnectedTo",getCurrentPortName()));
-                resetupConnection();
-            }
+            log.warn(Bundle.getMessage("ReconnectFail",(mPort == null ? "null" : mPort)));
+            
         }
     }
 

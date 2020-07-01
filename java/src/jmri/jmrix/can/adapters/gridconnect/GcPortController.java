@@ -38,13 +38,6 @@ public abstract class GcPortController extends jmri.jmrix.AbstractSerialPortCont
     public abstract DataOutputStream getOutputStream();
 
     /**
-     * Check that this object is ready to operate.
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract boolean status();
-
-    /**
      * Get the CAN System Connection.
      * {@inheritDoc}
      */

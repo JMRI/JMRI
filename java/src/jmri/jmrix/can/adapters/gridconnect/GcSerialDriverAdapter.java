@@ -401,14 +401,6 @@ public class GcSerialDriverAdapter extends GcPortController {
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public boolean status() {
-        return opened;
-    }
-
-    /**
-     * {@inheritDoc}
      *
      * @return array of localized valid baud rates
      */

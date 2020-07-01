@@ -339,9 +339,94 @@ abstract public class AbstractPortController implements PortAdapter {
 
     protected boolean allowConnectionRecovery = false;
 
+    /**
+     * {@inheritDoc}
+     * After checking the allowConnectionRecovery flag, closes the 
+     * connection, resets the open flag and attempts a reconnection.
+     */
     @Override
-    abstract public void recover();
-
+    public void recover() {
+        if (!allowConnectionRecovery) {
+            return;
+        }
+        opened = false;
+        try {
+            closeConnection();
+        } 
+        catch (RuntimeException e) {
+            log.warn("closeConnection failed");
+        }
+        reconnect();
+    }
+    
+    /**
+     * Abstract class for controllers to close the connection.
+     * Called prior to any re-connection attempts.
+     */
+    protected void closeConnection(){}
+    
+    /**
+     * Attempts to reconnect to a failed port.
+     * Starts a reconnect thread
+     */
+    protected void reconnect() {
+        // If the connection is already open, then we shouldn't try a re-connect.
+        if (opened || !allowConnectionRecovery) {
+            return;
+        }
+        Thread thread = jmri.util.ThreadingUtil.newThread(new ReconnectWait(),
+            "Connection Recovery " + getCurrentPortName());
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            log.error("Unable to join to the reconnection thread");
+        }
+    }
+    
+    /**
+     * Abstract class for controllers to re-setup a connection.
+     * Called on connection reconnect success.
+     */
+    protected void resetupConnection(){}
+    
+    /**
+     * Abstract class for controllers to attempt a single re-connection attempt.
+     * Called on connection reconnect success.
+     */
+    protected void reconnectFromLoop(int retryNum){}
+    
+    private class ReconnectWait extends Thread {
+        @Override
+        public void run() {
+            boolean reply = true;
+            int count = 0;
+            int interval = reconnectinterval;
+            int totalsleep = 0;
+            while (reply && allowConnectionRecovery) {
+                safeSleep(interval*1000L, "Waiting");
+                count++;
+                totalsleep += interval;
+                reconnectFromLoop(count);
+                reply = !opened;
+                if (opened){
+                    log.info(Bundle.getMessage("ReconnectedTo",getCurrentPortName()));
+                    resetupConnection();
+                    return;
+                }
+                if (count % 10==0) {
+                    //retrying but with twice the retry interval.
+                    interval = Math.min(interval * 2, reconnectMaxInterval);
+                    log.error(Bundle.getMessage("ReconnectFailRetry", totalsleep, count,interval));
+                }
+                if ((reconnectMaxAttempts > -1) && (count >= reconnectMaxAttempts)) {
+                    log.error(Bundle.getMessage("ReconnectFailAbort",totalsleep,count));
+                    reply = false;
+                }
+            }
+        }
+    }
+    
     /**
      * Initial interval between reconnection attempts.
      * Default 1 second.

@@ -210,8 +210,14 @@ public interface PortAdapter {
      */
     public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
 
+    /**
+     * This is called when a connection is to be disposed.
+     */
     public void dispose();
 
+    /**
+     * This is called when a connection is initially lost.
+     */
     public void recover();
 
     /**
