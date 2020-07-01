@@ -38,7 +38,7 @@
         being used and monitored are those related to programming a
         loco. In the case of PanelPro the messages/commands that
         are being used are those pertinent to block occupancy,
-        turnouts, etc</li>
+        turnouts, etc.</li>
 
         <li>Each system has its own "command bus" or "computer
         interface" - i.e. its own set of commands (think 'command
