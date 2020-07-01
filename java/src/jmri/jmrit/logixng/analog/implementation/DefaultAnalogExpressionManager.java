@@ -48,15 +48,6 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
                 expressionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
-        
-//        System.out.format("Read plugin expressions%n");
-//        for (LogixNGPluginFactory expressionFactory : ServiceLoader.load(LogixNGPluginFactory.class)) {
-//            System.out.format("Read plugin factory: %s%n", expressionFactory.getClass().getName());
-//            expressionFactory.getClasses().forEach((entry) -> {
-//                System.out.format("Add expression plugin: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
-//                expressionClassList.get(entry.getKey()).add(entry.getValue());
-//            });
-//        }
     }
 
     protected MaleAnalogExpressionSocket createMaleAnalogExpressionSocket(AnalogExpressionBean expression) {

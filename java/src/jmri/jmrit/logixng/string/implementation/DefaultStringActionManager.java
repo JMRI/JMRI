@@ -45,13 +45,6 @@ public class DefaultStringActionManager extends AbstractManager<MaleStringAction
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
-        
-//        for (LogixNGPluginFactory actionFactory : ServiceLoader.load(LogixNGPluginFactory.class)) {
-//            actionFactory.getClasses().forEach((entry) -> {
-//                System.out.format("Add action plugin: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
-//                actionClassList.get(entry.getKey()).add(entry.getValue());
-//            });
-//        }
     }
 
     protected MaleStringActionSocket createMaleActionSocket(StringActionBean action) {

@@ -6,7 +6,6 @@ import java.util.prefs.Preferences;
 
 import jmri.JmriException;
 import jmri.beans.PreferencesBean;
-import jmri.jmrit.logixng.PluginManager;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -25,14 +24,11 @@ public final class LogixNGPreferences extends PreferencesBean {
     private boolean _useGenericFemaleSockets = false;
     private boolean _allowDebugMode = false;
     
-    private final PluginManager _pluginManager;
-    
     public LogixNGPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
 //        System.out.format("LogixNG preferences%n");
         Preferences sharedPreferences = ProfileUtils.getPreferences(
                 super.getProfile(), this.getClass(), true);
-        _pluginManager = new PluginManager();
         this.readPreferences(sharedPreferences);
     }
 
@@ -40,17 +36,6 @@ public final class LogixNGPreferences extends PreferencesBean {
         _startLogixNGOnLoad = sharedPreferences.getBoolean(START_LOGIXNG_ON_LOAD, _startLogixNGOnLoad);
         _useGenericFemaleSockets = sharedPreferences.getBoolean(USE_GENERIC_FEMALE_SOCKETS, _useGenericFemaleSockets);
         _allowDebugMode = sharedPreferences.getBoolean(ALLOW_DEBUG_MODE, _allowDebugMode);
-        
-        if (1==0) {
-            try {
-                String jarFileName = "F:\\Projekt\\Java\\GitHub\\JMRI_LogixNGPlugins\\dist\\JMRI_LogixNGPlugins.jar";
-                _pluginManager.addJarFile(jarFileName);
-            } catch (IOException | ClassNotFoundException |
-                    InstantiationException | IllegalAccessException e) {
-                // This needs to be handled in a better way.
-                e.printStackTrace();
-            }
-        }
         
 /*        
         this.allowRemoteConfig = sharedPreferences.getBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig);

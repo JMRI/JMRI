@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng;
 
-import java.util.List;
-
 import jmri.Manager;
 
 // import org.slf4j.Logger;

@@ -64,91 +64,12 @@ public class TimeDiagram extends JmriJFrame {
 //        addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
         initMinimumSize(new Dimension(panelWidth700, panelHeight500));
-        
-        if (1==0) {
-            try {
-                testLoadExpression();
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void initMinimumSize(Dimension dimension) {
         setMinimumSize(dimension);
         pack();
         setVisible(true);
-    }
-    
-    @SuppressFBWarnings(value="DMI_HARDCODED_ABSOLUTE_FILENAME", justification="Only temporary for testing. Must be removed later.")
-    public void testLoadExpression()
-            throws MalformedURLException, ClassNotFoundException,
-            InstantiationException, IllegalAccessException, IOException,
-            NoSuchMethodException, IllegalArgumentException,
-            InvocationTargetException {
-        
-        String jarFileName = "F:\\Projekt\\Java\\GitHub\\JMRI_LogixNGPlugins\\dist\\JMRI_LogixNGPlugins.jar";
-        
-        List<String> classList = new ArrayList<>();
-        try (JarInputStream jarFile = new JarInputStream(new FileInputStream(jarFileName))) {
-            JarEntry jarEntry;
-
-            while (true) {
-                jarEntry = jarFile.getNextJarEntry();
-                if (jarEntry == null) {
-                    break;
-                }
-                if ((jarEntry.getName().endsWith(".class"))) {
-                    String className = jarEntry.getName().replaceAll("/", "\\.");
-                    String myClass = className.substring(0, className.lastIndexOf('.'));
-                    classList.add(myClass);
-//                    System.out.format("AAAAAA: %s - %s%n", className, myClass);
-                }
-            }
-        }
-        
-        
-//        File file = new File("F:\\Projekt\\Java\\GitHub\\JMRI_LogixNGPlugins\\dist\\");
-        File file = new File(jarFileName);
-        
-        // Convert the file to the URL format
-        URL url = file.toURI().toURL();
-        URL[] urls = new URL[]{url};
-        
-        // ------ Load this folder into Class loader - Remove comment?
-        
-        // Load this jar file into Class loader
-        URLClassLoader cl = new URLClassLoader(urls);
-        
-        for (String c : classList) {
-            // Load the class se.bergqvist.jmri_logixng_plugin.ExpressionXor
-            Class<?> cls = cl.loadClass(c);
-/*            
-            if (cls.newInstance() instanceof DigitalExpressionBean) {
-                System.out.format("AAA: Class %s is an Expression%n", cls.getName());
-            } else if (cls.isInstance(DigitalExpressionBean.class)) {
-                System.out.format("Class %s is an Expression%n", cls.getName());
-            } else if (cls.isInstance(DigitalActionBean.class)) {
-                System.out.format("Class %s is an Action%n", cls.getName());
-            } else {
-                System.out.format("Class %s is an unknown class%n", cls.getName());
-            }
-*/
-            cls.getConstructor().newInstance();
-        }
-        
-        // Load the class se.bergqvist.jmri_logixng_plugin.ExpressionXor
-        Class<?> cls = cl.loadClass("se.bergqvist.jmri_logixng_plugin.ExpressionXor");
-        
-        // Print the location from where this class was loaded
-//        ProtectionDomain pDomain = cls.getProtectionDomain();
-//        CodeSource cSource = pDomain.getCodeSource();
-//        URL urlfrom = cSource.getLocation();
-//        System.out.format("Class from: %s%n", urlfrom.getFile());
-        
-        cls.getConstructor().newInstance();
-        
-        cl.close();
     }
     
     

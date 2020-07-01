@@ -38,9 +38,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.PluginManager;
-import jmri.jmrit.logixng.PluginManager.ClassDefinition;
-import jmri.jmrit.logixng.PluginManager.ClassType;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 
@@ -68,8 +65,6 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(new JTitledSeparator(Bundle.getMessage("TitleStartupSettingsPanel")));
         add(getStartupPanel());
-        add(new JTitledSeparator(Bundle.getMessage("TitlePluginClassesPanel")));
-        add(getPluginClassesPanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleTimeDiagramColorsPanel")));
         add(getTimeDiagramColorsPanel());
 //        add(new JTitledSeparator(Bundle.getMessage("TitleNetworkPanel")));
@@ -118,124 +113,6 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         return panel;
     }
 
-    private static class ClassTableModel extends AbstractTableModel {
-        
-        List<ClassDefinition> classList = new ArrayList<>();
-
-        @Override
-        public int getRowCount() {
-            return classList.size();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return 3;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            switch (columnIndex) {
-                case 0: return classList.get(rowIndex).getEnabled();
-                case 1: return classList.get(rowIndex).getType().name();
-                case 2: return classList.get(rowIndex).getName();
-                default: return null;
-            }
-        }
-        
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            switch (columnIndex) {
-                case 0: return Boolean.class;
-                case 1: return String.class;
-                case 2: return String.class;
-                default: return null;
-            }
-        }
-        
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            ClassType type = classList.get(rowIndex).getType();
-            return (columnIndex == 0)
-                    && ((type == ClassType.EXPRESSION) || (type == ClassType.ACTION));
-        }
-        
-        @Override
-        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-            classList.get(rowIndex).setEnabled((Boolean) aValue);
-        }
-    }
-    
-//    private void printClassPath() {
-//        ClassLoader cl = ClassLoader.getSystemClassLoader();
-//        URL[] urls = ((URLClassLoader)cl).getURLs();
-//        for(URL url: urls){
-//            System.out.println(url.getFile());
-//        }
-//    }
-    
-    private JPanel getPluginClassesPanel() {
-        // For testing only
-//        printClassPath();
-        
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        
-        JTabbedPane tabbedPane = new JTabbedPane();
-        
-        ClassTableModel jarTableModel1 = new ClassTableModel();
-        jarTableModel1.classList.add(new ClassDefinition(false, ClassType.EXPRESSION, "Test"));
-        jarTableModel1.classList.add(new ClassDefinition(false, ClassType.ACTION_NOT_PLUGIN, "TestAA"));
-        jarTableModel1.classList.add(new ClassDefinition(true, ClassType.ACTION, "Test bla vla"));
-        jarTableModel1.classList.add(new ClassDefinition(false, ClassType.EXPRESSION, "Test"));
-        jarTableModel1.classList.add(new ClassDefinition(true, ClassType.OTHER, "Test test test"));
-        jarTableModel1.classList.add(new ClassDefinition(false, ClassType.EXPRESSION_NOT_PLUGIN, "Test"));
-        jarTableModel1.classList.add(new ClassDefinition(false, ClassType.EXPRESSION, "Test"));
-        JTable jarTable1 = new JTable(jarTableModel1);
-        tabbedPane.addTab("JAR file 1", jarTable1);
-        
-        ClassTableModel jarTableModel2 = new ClassTableModel();
-        JTable jarTable2 = new JTable(jarTableModel2);
-        tabbedPane.addTab("JAR file 2", jarTable2);
-        
-        panel.add(tabbedPane);
-        
-        JPanel addRemoveButtonsPanel = new JPanel();
-        addRemoveButtonsPanel.setLayout(
-                new BoxLayout(addRemoveButtonsPanel, BoxLayout.X_AXIS));
-        JButton addJarFile = new JButton(Bundle.getMessage("LabelButtonAddJarFile"));
-        JButton removeJarFile = new JButton(Bundle.getMessage("LabelButtonRemoveJarFile"));
-        addRemoveButtonsPanel.add(addJarFile);
-        addRemoveButtonsPanel.add(removeJarFile);
-        panel.add(addRemoveButtonsPanel);
-        
-        return panel;
-/*        
-        //Lay out the label and scroll pane from top to bottom.
-        JPanel listPane = new JPanel();
-        listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
-        JLabel label = new JLabel(labelText);
-        ...
-        listPane.add(label);
-        listPane.add(Box.createRigidArea(new Dimension(0, 5)));
-        listPane.add(listScroller);
-        listPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        
-        //Lay out the buttons from left to right.
-        JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-        buttonPane.add(Box.createHorizontalGlue());
-        buttonPane.add(cancelButton);
-        buttonPane.add(Box.createRigidArea(new Dimension(10, 0)));
-        buttonPane.add(setButton);
-        
-        //Put everything together, using the content pane's BorderLayout.
-        Container contentPane = getContentPane();
-        contentPane.add(listPane, BorderLayout.CENTER);
-        contentPane.add(buttonPane, BorderLayout.PAGE_END);
-*/
-    }
-    
     private JPanel getTimeDiagramColorsPanel() {
         return new JPanel();
     }

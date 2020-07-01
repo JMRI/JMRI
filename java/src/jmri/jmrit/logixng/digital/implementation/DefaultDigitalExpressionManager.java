@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.LogixNGPluginFactory;
 import jmri.jmrit.logixng.DigitalExpressionFactory;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
@@ -52,15 +51,6 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
         for (DigitalExpressionFactory expressionFactory : ServiceLoader.load(DigitalExpressionFactory.class)) {
             expressionFactory.getExpressionClasses().forEach((entry) -> {
 //                System.out.format("Add expression: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
-                expressionClassList.get(entry.getKey()).add(entry.getValue());
-            });
-        }
-        
-//        System.out.format("Read plugin expressions%n");
-        for (LogixNGPluginFactory expressionFactory : ServiceLoader.load(LogixNGPluginFactory.class)) {
-//            System.out.format("Read plugin factory: %s%n", expressionFactory.getClass().getName());
-            expressionFactory.getExpressionClasses().forEach((entry) -> {
-//                System.out.format("Add expression plugin: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 expressionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }

@@ -33,7 +33,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     public DefaultConditionalNGManager(InternalSystemConnectionMemo memo) {
         super(memo);
         
-        // The LogixNGPreferences class may load plugins so we must ensure
+        // LogixNGPreferences class may load plugins so we must ensure
         // it's loaded here.
         InstanceManager.getDefault(LogixNGPreferences.class);
     }

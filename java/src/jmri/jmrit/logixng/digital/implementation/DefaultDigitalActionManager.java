@@ -16,7 +16,6 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.LogixNGPluginFactory;
 import jmri.jmrit.logixng.DigitalActionFactory;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleDigitalActionSocket;
@@ -47,13 +46,6 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
         for (DigitalActionFactory actionFactory : ServiceLoader.load(DigitalActionFactory.class)) {
             actionFactory.getClasses().forEach((entry) -> {
 //                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
-                actionClassList.get(entry.getKey()).add(entry.getValue());
-            });
-        }
-        
-        for (LogixNGPluginFactory actionFactory : ServiceLoader.load(LogixNGPluginFactory.class)) {
-            actionFactory.getActionClasses().forEach((entry) -> {
-//                System.out.format("Add action plugin: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
