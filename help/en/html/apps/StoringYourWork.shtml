@@ -51,8 +51,8 @@
  
       <div class="para">      
  
-     <p>JMRI will sometimes (but not always) notify you when you might want to "save" or "store," so it is a good habit to get into to 
-     take note of the following JMRI actions:</p>  
+     <p>JMRI will sometimes (but not always) notify you when you might want to "save" or "store."  These are the places 
+     user action may be required:</p>
             
     <ul>
      <li><a href="../../package/apps/TabbedPreferences.shtml">Preferences (all apps)</a>
