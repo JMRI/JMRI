@@ -9,6 +9,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -22,7 +24,7 @@ public class FunctionPanelTest {
         LearnThrottleFrame ltf = new LearnThrottleFrame(wf);
         RosterEntry re = new RosterEntry("file here");
         FunctionPanel t = new FunctionPanel(re, ltf);
-        Assert.assertNotNull("exists", t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(ltf);
         JUnitUtil.dispose(wf);
     }

@@ -5,6 +5,8 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -14,7 +16,7 @@ public class WarrantTableActionTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists", wta);
+        assertThat(wta).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

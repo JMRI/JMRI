@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -18,7 +20,7 @@ public class WarrantTableFrameTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WarrantTableFrame t = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("exists", t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(t);
     }
 

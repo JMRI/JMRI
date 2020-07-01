@@ -17,6 +17,8 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Tests for the Warrant creation
  *
@@ -42,25 +44,25 @@ public class WarrantTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists", warrant);
+        assertThat(warrant).withFailMessage("exists").isNotNull();
     }
 
     @Test
     public void testSetAndGetTrainName() {
         warrant.setTrainName("TestTrain");
-        Assert.assertEquals("Train Name", "TestTrain", warrant.getTrainName());
+        assertThat(warrant.getTrainName()).withFailMessage("Train Name").isEqualTo("TestTrain");
     }
 
     @Test
     public void testGetSpeedUtil() {
         SpeedUtil su = warrant.getSpeedUtil();
-        Assert.assertNotNull("SpeedUtil null", su);
+        assertThat(su).withFailMessage("SpeedUtil null").isNotNull();
     }
 
     @Test
     public void testAddPropertyChangeListener() {
         PropertyChangeListener listener = new WarrantListener(warrant);
-        Assert.assertNotNull("PropertyChangeListener", listener);
+        assertThat(listener).withFailMessage("PropertyChangeListener").isNotNull();
         warrant.addPropertyChangeListener(listener);
     }
 
@@ -75,8 +77,8 @@ public class WarrantTest {
         }
         bWest.allocate(warrant);
         bEast.allocate(warrant);
-        Assert.assertEquals("Block Detection 3", OBlock.UNOCCUPIED | OBlock.ALLOCATED, bWest.getState());
-        Assert.assertEquals("Block Detection 4", OBlock.OCCUPIED | OBlock.ALLOCATED, bEast.getState());
+        assertThat(bWest.getState()).withFailMessage("Block Detection 3").isEqualTo(OBlock.UNOCCUPIED | OBlock.ALLOCATED);
+        assertThat(bEast.getState()).withFailMessage("Block Detection 4").isEqualTo(OBlock.OCCUPIED | OBlock.ALLOCATED);
         try {
             sEast.setState(Sensor.INACTIVE);
             sSouth.setState(Sensor.INACTIVE);
@@ -85,8 +87,8 @@ public class WarrantTest {
         }
         bWest.deAllocate(warrant);
         bEast.deAllocate(warrant);
-        Assert.assertEquals("Block Detection 5", OBlock.UNOCCUPIED, bWest.getState());
-        Assert.assertEquals("Block Detection 6", OBlock.UNOCCUPIED, bEast.getState());
+        assertThat(bWest.getState()).withFailMessage("Block Detection 5").isEqualTo(OBlock.UNOCCUPIED);
+        assertThat(bEast.getState()).withFailMessage("Block Detection 6").isEqualTo(OBlock.UNOCCUPIED);
     }
 
     @Test
@@ -106,8 +108,8 @@ public class WarrantTest {
 
         warrant.setViaOrder(viaOrder);
         warrant.setBlockOrders(orders);
-        Assert.assertEquals("BlockOrder", warrant.getLastOrder().toString(), lastOrder.toString());
-        Assert.assertEquals("BlockOrder", warrant.getViaOrder().toString(), viaOrder.toString());
+        assertThat(lastOrder.toString()).withFailMessage("BlockOrder").isEqualTo(warrant.getLastOrder().toString());
+        assertThat(viaOrder.toString()).withFailMessage("BlockOrder").isEqualTo(warrant.getViaOrder().toString());
 
         String msg = warrant.allocateRoute(false, orders);
         Assert.assertNull("allocateRoute - " + msg, msg);
@@ -139,7 +141,7 @@ public class WarrantTest {
         msg = warrant.checkRoute();
         Assert.assertNull("checkRoute - " + msg, msg);
 
-        Assert.assertEquals("BlockOrder", warrant.getLastOrder().toString(), lastOrder.toString());
+        assertThat(lastOrder.toString()).withFailMessage("BlockOrder").isEqualTo(warrant.getLastOrder().toString());
     }
 
     @Test
@@ -153,7 +155,7 @@ public class WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
         List<ThrottleSetting> list = warrant.getThrottleCommands();
-        Assert.assertEquals("ThrottleCommands", 7, list.size());
+        assertThat(list.size()).withFailMessage("ThrottleCommands").isEqualTo(7);
     }
 
     @Test
@@ -235,7 +237,7 @@ public class WarrantTest {
 //            String property = e.getPropertyName();
 //            System.out.println("propertyChange \""+property+
 //                    "\" old= "+e.getOldValue()+" new= "+e.getNewValue());
-            Assert.assertEquals("propertyChange", warrant, e.getSource());
+            assertThat(e.getSource()).withFailMessage("propertyChange").isEqualTo(warrant);
 //            System.out.println(warrant.getRunningMessage());
         }
     }

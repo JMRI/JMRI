@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -16,17 +18,17 @@ public class SpeedUtilTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedUtil t = new SpeedUtil();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @Test
     public void testMakeRamp() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpeedUtil su = new SpeedUtil();
-        Assert.assertNotNull("exists", su);
+        assertThat(su).withFailMessage("exists").isNotNull();
         RampData ramp = su.getRampForSpeedChange(.1f, .8f);
-        Assert.assertNotNull("exists",ramp);
-        Assert.assertTrue("upRamp",ramp.isUpRamp());
+        assertThat(ramp).withFailMessage("exists").isNotNull();
+        assertThat(ramp.isUpRamp()).withFailMessage("upRamp").isTrue();
     }
 
     @BeforeEach
