@@ -5,6 +5,8 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -15,7 +17,7 @@ public class WarrantManagerXmlTest {
     @Disabled("causes missing data for other tests?")
     public void testCTor() {
         WarrantManagerXml t = new WarrantManagerXml();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

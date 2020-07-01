@@ -17,6 +17,8 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -37,8 +39,8 @@ public class SCWarrantTest extends WarrantTest {
         BlockOrder lastOrder = new BlockOrder(_OBlockMgr.getOBlock("South"), "SouthToWest", "SouthWest", null);
         orders.add(lastOrder);
 
-        Assert.assertTrue("Route Free", ((SCWarrant) warrant).isRouteFree());
-        Assert.assertTrue("Route Allocated", ((SCWarrant) warrant).isRouteAllocated());
+        assertThat(((SCWarrant) warrant).isRouteFree()).withFailMessage("Route Free").isTrue();
+        assertThat(((SCWarrant) warrant).isRouteAllocated()).withFailMessage("Route Allocated").isTrue();
     }
 
     @Test
@@ -79,7 +81,7 @@ public class SCWarrantTest extends WarrantTest {
         String msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - " + msg, msg);
 
-        Assert.assertTrue("in start block", ((SCWarrant) warrant).inStartBlock());
+        assertThat(((SCWarrant) warrant).inStartBlock()).withFailMessage("in start block").isTrue();
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = warrant.getRunningMessage();

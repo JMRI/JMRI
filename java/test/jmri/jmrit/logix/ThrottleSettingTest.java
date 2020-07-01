@@ -5,6 +5,8 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -14,13 +16,13 @@ public class ThrottleSettingTest {
     @Test
     public void testCTor() {
         ThrottleSetting t = new ThrottleSetting();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
     
     @Test
     public void testCtor2() {
         ThrottleSetting ts = new ThrottleSetting(1000, "NoOp", "Enter Block", "OB1");
-        Assert.assertNotNull("exists",ts);        
+        assertThat(ts).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

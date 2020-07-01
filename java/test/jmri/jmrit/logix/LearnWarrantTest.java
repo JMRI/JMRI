@@ -23,6 +23,8 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.WindowOperator;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 /**
  * Tests for the Warrant creation
@@ -79,7 +81,7 @@ public class LearnWarrantTest {
             return (frame.getOrders() != null);
         }, "Found orders");
         List<BlockOrder> orders = frame.getOrders();
-        Assert.assertEquals("5 BlockOrders", 5, orders.size());
+        assertThat(orders.size()).withFailMessage("5 BlockOrders").isEqualTo(5);
 
         frame._speedUtil.setDccAddress("99");
         frame.setTrainInfo(null);
@@ -87,7 +89,7 @@ public class LearnWarrantTest {
             return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
         jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
-        Assert.assertEquals("address=99", 99, address.getNumber());
+        assertThat(address.getNumber()).withFailMessage("address=99").isEqualTo(99);
 
         pressButton(jfo, Bundle.getMessage("Start"));
         // dismiss warning "starting block not occupied
@@ -106,7 +108,7 @@ public class LearnWarrantTest {
         JUnitUtil.waitFor(() -> {
             return (frame._learnThrottle != null);
         }, "Found throttle");
-        Assert.assertNotNull("Throttle not found", frame._learnThrottle.getThrottle());
+        assertThat(frame._learnThrottle.getThrottle()).withFailMessage("Throttle not found").isNotNull();
 
         Sensor lastSensor = recordtimes(route, frame._learnThrottle.getThrottle());
 
@@ -119,7 +121,7 @@ public class LearnWarrantTest {
         // warrant has been recorded using engine 99
 
         List<ThrottleSetting> list = frame.getThrottleCommands();
-        Assert.assertEquals("12 ThrottleCommands", 12, list.size());
+        assertThat(list.size()).withFailMessage("12 ThrottleCommands").isEqualTo(12);
 
         // now playback using engine 111
         NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE, 
@@ -131,7 +133,7 @@ public class LearnWarrantTest {
             return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
         address = frame._speedUtil.getDccAddress();
-        Assert.assertEquals("address=111", 111, address.getNumber());
+        assertThat(address.getNumber()).withFailMessage("address=111").isEqualTo(111);
 
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block0);
         JUnitUtil.waitFor(() -> {
@@ -141,7 +143,7 @@ public class LearnWarrantTest {
         pressButton(jfo, Bundle.getMessage("ARun"));    // start play back
 
         sensor = NXFrameTest.runtimes(route, _OBlockMgr);
-        Assert.assertNotNull("Sensor not null", sensor);
+        assertThat(sensor).withFailMessage("Sensor not null").isNotNull();
 
         final OBlock block4 = _OBlockMgr.getOBlock(route[4]);
         sensor = block4.getSensor();
@@ -158,7 +160,7 @@ public class LearnWarrantTest {
         Assert.assertEquals("12 ThrottleCommands", 12, commands.size());*/
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("Warrant Table save", tableFrame);
+        assertThat(tableFrame).withFailMessage("Warrant Table save").isNotNull();
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         jfo.requestClose();

@@ -5,6 +5,8 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -14,7 +16,7 @@ public class WarrantPreferencesPanelTest {
     @Test
     public void testCTor() {
         WarrantPreferencesPanel t = new WarrantPreferencesPanel();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.netbeans.jemmy.operators.JDialogOperator;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -31,7 +33,7 @@ public class MergePromptTest {
 
         MergePrompt m = new MergePrompt("Merge Prompt CTor Test",new HashMap<String,Boolean>(),
                         new HashMap<String, Map<Integer,Boolean>>());
-        Assert.assertNotNull("exists",m);
+        assertThat(m).withFailMessage("exists").isNotNull();
         m.dispose();
     }
 
