@@ -1,13 +1,13 @@
 package jmri.jmrix.cmri.serial.assignment;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of ListAction
@@ -30,11 +30,11 @@ public class ListActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

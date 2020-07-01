@@ -6,8 +6,9 @@ import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 >>>>>>> master
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 
 /**
@@ -17,7 +18,7 @@ import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 public class UhlenbrockSystemConnectionMemoTest extends SystemConnectionMemoTestBase<UhlenbrockSystemConnectionMemo> {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new UhlenbrockSystemConnectionMemo();
@@ -28,7 +29,7 @@ public class UhlenbrockSystemConnectionMemoTest extends SystemConnectionMemoTest
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.dispose();
         JUnitUtil.tearDown();

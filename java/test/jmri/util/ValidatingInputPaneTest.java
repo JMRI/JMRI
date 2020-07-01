@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *

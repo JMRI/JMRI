@@ -1,13 +1,13 @@
     package jmri.jmrix.jmriclient.swing.mon;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of JMRIClientMonAction
@@ -25,14 +25,14 @@ public class JMRIClientMonActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new JMRIClientSystemConnectionMemo();
         jmri.InstanceManager.setDefault(JMRIClientSystemConnectionMemo.class,memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

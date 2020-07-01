@@ -3,7 +3,9 @@ package jmri.jmrix.nce;
 import jmri.GlobalProgrammerManager;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the NceSystemConnectionMemo class
@@ -42,7 +44,7 @@ public class NceSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Nc
 
     // The minimal setup is for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -59,7 +61,7 @@ public class NceSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Nc
         scm.configureManagers();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         scm.getNceTrafficController().terminateThreads();

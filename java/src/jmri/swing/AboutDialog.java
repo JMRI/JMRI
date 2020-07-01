@@ -26,7 +26,9 @@ import org.slf4j.LoggerFactory;
  * About dialog.
  *
  * @author Randall Wood Copyright (C) 2012
+ * @deprecated since 4.21.1; use {@link apps.swing.AboutDialog} instead
  */
+@Deprecated
 public final class AboutDialog extends JDialog {
 
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.

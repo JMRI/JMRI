@@ -1,8 +1,8 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * ConcentratorTrafficControllerTest.java
@@ -14,7 +14,7 @@ import org.junit.Before;
 public class ConcentratorTrafficControllerTest extends jmri.jmrix.rfid.RfidTrafficControllerTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new ConcentratorTrafficController(new ConcentratorSystemConnectionMemo(),"A-H"){
@@ -25,7 +25,7 @@ public class ConcentratorTrafficControllerTest extends jmri.jmrix.rfid.RfidTraff
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

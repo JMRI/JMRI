@@ -3,10 +3,9 @@ package jmri.jmrix.dcc4pc;
 import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the Dcc4PcSystemConnectionMemo class
@@ -24,7 +23,7 @@ public class Dcc4PcSystemConnectionMemoTest extends SystemConnectionMemoTestBase
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -45,7 +44,7 @@ public class Dcc4PcSystemConnectionMemoTest extends SystemConnectionMemoTestBase
         InstanceManager.setDefault(Dcc4PcSystemConnectionMemo.class, scm);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         scm.getDcc4PcTrafficController().terminateThreads();

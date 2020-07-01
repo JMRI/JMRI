@@ -2,10 +2,9 @@ package jmri.jmrix.lenz;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
@@ -99,7 +98,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
@@ -107,7 +106,7 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         xnis = null;

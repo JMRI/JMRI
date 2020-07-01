@@ -1,8 +1,8 @@
 package jmri.jmrix.ecos;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,14 +10,14 @@ import org.junit.Before;
  */
 public class EcosReporterTest extends jmri.implementation.AbstractRailComReporterTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         r = new EcosReporter("UR1","Test");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

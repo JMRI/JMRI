@@ -7,10 +7,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -426,7 +425,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -435,7 +434,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         l = new CbusSensorManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         memo.dispose();

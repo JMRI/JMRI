@@ -4,10 +4,9 @@ import jmri.Turnout;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -131,7 +130,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -142,7 +141,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         lnis.terminateThreads();

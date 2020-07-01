@@ -3,8 +3,8 @@ package jmri.jmrix.loconet.usb_dcs52;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -13,7 +13,7 @@ import org.junit.Before;
 public class UsbDcs52SystemConnectionMemoTest extends SystemConnectionMemoTestBase<UsbDcs52SystemConnectionMemo> {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
        JUnitUtil.setUp();
        scm = new UsbDcs52SystemConnectionMemo();
@@ -24,7 +24,7 @@ public class UsbDcs52SystemConnectionMemoTest extends SystemConnectionMemoTestBa
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.dispose();
         JUnitUtil.tearDown();

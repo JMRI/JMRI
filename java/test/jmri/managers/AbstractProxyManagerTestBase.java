@@ -2,7 +2,7 @@ package jmri.managers;
 
 import jmri.*;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Base for the various Abstract*MgrTestBase base classes for NamedBean Manager test classes

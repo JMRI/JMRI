@@ -1,13 +1,13 @@
 package jmri.jmrix.ieee802154.swing.mon;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of IEEE802154MonAction
@@ -25,14 +25,14 @@ public class IEEE802154MonActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new IEEE802154SystemConnectionMemo();
         jmri.InstanceManager.setDefault(IEEE802154SystemConnectionMemo.class,memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.tearDown();

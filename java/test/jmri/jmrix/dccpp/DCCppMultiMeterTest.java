@@ -1,7 +1,9 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -21,7 +23,7 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -32,7 +34,7 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false, false);
         super.tearDown();

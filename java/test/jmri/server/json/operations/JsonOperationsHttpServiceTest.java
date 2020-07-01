@@ -6,8 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
@@ -1287,7 +1286,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                         .hasFieldOrPropertyWithValue(JsonException.CODE, 409);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();

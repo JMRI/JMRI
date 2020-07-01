@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
+
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
@@ -19,11 +20,8 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * Tests for the new Operations Setup Backup classes used for copying and
@@ -88,7 +86,7 @@ public class OperationsBackupTest {
      * Test-by test initialization.
      * @throws IOException if thrown by {@link #createTestFiles()}
      */
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
         jmri.util.JUnitUtil.setUp();
 
@@ -167,7 +165,7 @@ public class OperationsBackupTest {
         createTestFiles();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
         deleteTestFiles();
@@ -321,7 +319,7 @@ public class OperationsBackupTest {
     }
 
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testTestBackupSetFileNames() {
         String[] names = testBackupSetFileNames;
 
@@ -466,7 +464,7 @@ public class OperationsBackupTest {
     // Having "<<" in a file name fails under Windows, but maybe not under
     // Linux???
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testBackupToInvalidDirectory() {
         // Does a backup to a specific directory that has an invalid name.
         // The backup set directory is given as a File object.

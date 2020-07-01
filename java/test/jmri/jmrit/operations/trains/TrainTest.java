@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.trains;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -4607,7 +4605,7 @@ public class TrainTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
 
@@ -4636,7 +4634,7 @@ public class TrainTest extends OperationsTestCase {
 
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
     }

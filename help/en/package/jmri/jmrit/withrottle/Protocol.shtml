@@ -96,7 +96,7 @@ RL2<span class="delimiter1">]\[</span>RGS 41<span class=
       described in sections below for each command and
       response.</p>
 
-      <h2>Initial Connection</h2>
+      <h2>Initial Connection (Server to Client)</h2>
 
       <p>When you first open a socket to JMRI, you may get a
       response that will look something like the following:</p>
@@ -180,7 +180,7 @@ RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 
       <h3>Track Power</h3>
 
-      <p>Returns information about the curent state of track power.
+      <p>Returns information about the current state of track power.
       This can be one of the following:</p>
 
       <table class="data">
@@ -417,11 +417,11 @@ PW12080
       change message will be sent with the function information:</p>
 
       <pre class="code">
-MTAL341&lt;;&gt;F10
+M0AL341&lt;;&gt;F10
 </pre>
 
-      <p>All property change messages begin with MTA (where 'T' could
-      be a different throttle letter) and then the DCC address of the
+      <p>All property change messages begin with M0A (where '0' could
+      be a different throttle character) and then the DCC address of the
       locomotive. The part after the &lt;;&gt; separator uses the
       format described below, under the 'F' Function.</p>
 
@@ -434,7 +434,60 @@ MTAL341&lt;;&gt;F10
         <li>Speed step mode (sn)</li>
       </ul>
 
-      <h2>Commands</h2>
+    <h2>Other Server to Client Messages</h2>
+
+    <h3>Fast Clock Message</h3>
+
+    <p>The 'PFT' command is used to synchronize the fast clock time.  It is
+    sent from the server when time or rate change, indicating the "now" time
+    and the current time ratio (or 0 when clock stopped). Examples include:</p>
+
+    <pre class="code">
+PFT65871&lt;;&gt;4
+PFT1550686525&lt;;&gt;4.0
+PFT1550681224&lt;;&gt;0.0
+</pre>
+
+    <p>The first number is an integer number of seconds since 12:00
+    midnight, January 1st, 1970. This start date is the Unix time epoch,
+    and makes it easy to convert this value using the standard time
+    libraries. Only the hours and minutes are useful. JMRI sends a value
+    based on the system time when the fast clock was started, so will
+    return a value near the calendar date. The Digitrax LnWi returns
+    values within the range 0-86400 (all the values for January 1,
+    1970).<br/>
+    The second number is the current fast time ratio.  It
+    may be an integer value (4) or a floating point value (4.0).  If this
+    value is 0 (or 0.0), the clock is stopped.<br/>
+    Updates are sent on each change in time or rate, and when clock stopped 
+    or started.</p>
+
+    <h3>Alert and Info Message</h3>
+
+    <p>The server can send a message string that the client can display. These cannot have 
+      newlines in message. Two types:<br />
+      Alert message: 'HM' + message text. Normally used to return errors.<br /> 
+      Info message: 'Hm' + message text. Same as HM, but informational only.
+      </p>
+    <p>Example returned after client requests invalid address (say <code>M0+L23&lt;;&gt;L23</code>) the
+    response is:</p>
+
+    <pre class="code">
+HMJMRI: address 'L23' not allowed as Long
+</pre>
+
+    <h3>Server Type Message</h3>
+
+    <p>The server can send a "type" to identify itself to clients, useful to enable specific behaviors. Two types:<br />
+      'HT' + type. Known types: 'Digitrax', 'MRC', 'JMRI'<br /> 
+      'Ht' + description. Longer informational text string, cannot contain newlines</p>
+
+    <pre class="code">
+HTDigitrax
+HtDigitrax LnWi 1.0 Unit=7,Wifi Chnl=1,Command Station=DCS240
+</pre>
+
+      <h2>Commands (Client to Server)</h2>
 
       <p>Once you've established a connection as outlined above,
       you can start sending commands to JMRI. The first letter of
@@ -477,8 +530,7 @@ MTAL341&lt;;&gt;F10
       is different for each connected device.
       This needs to be unique for each device connected to the server, it is
       used to prevent duplicate connections from the same client.
-      Engine Driver sends device name (see 'N'), so it may or may not be
-      unique. WiThrottle app uses a generated unique identifier.</p>
+      Engine Driver and WiThrottle app use a generated unique identifier.</p>
 
       <h3>'N' Device Name</h3>
 
@@ -1007,7 +1059,7 @@ RC-&lt;;&gt;S74&lt;:&gt;L341
 RCP&lt;;&gt;consistAddress&lt;:&gt;leadLoco&lt;;&gt;nextLoco&lt;;&gt;...* ...&lt;;&gt;nextLoco&lt;;&gt;trailLoco
 </pre>
 
-    <p>Notice that this has no direction infromation--it just has a
+    <p>Notice that this has no direction information--it just has a
     list of locomotive DCC addresses. For example:</p>
 
     <pre class="code">
@@ -1027,59 +1079,14 @@ RCP&lt;;&gt;S74&lt;:&gt;L346&lt;;&gt;L3374
 RCR&lt;;&gt;S74
     </pre>
 
-    <h3>Fast Clock Commands</h3>
-
-    <p>The 'PFT' command is used to synchronize the fast clock time.  It is
-    sent from the server when time or rate change, indicating the "now" time
-    and the current time ratio (or 0 when clock stopped). Examples include:</p>
-
-    <pre class="code">
-PFT65871&lt;;&gt;4
-PFT1550686525&lt;;&gt;4.0
-PFT1550681224&lt;;&gt;0.0
-</pre>
-
-    <p>The first number is an integer number of seconds since 12:00
-    midnight, January 1st, 1970. This start date is the Unix time epoch,
-    and makes it easy to convert this value using the standard time
-    libraries. Only the hours and minutes are useful. JMRI sends a value
-    based on the system time when the fast clock was started, so will
-    return a value near the calendar date. The Digitrax LnWi returns
-    values within the range 0-86400 (all the values for January 1,
-    1970).</p>
-
-    <p>The second number is the current fast time ratio.  It
-    may be an integer value (4) or a floating point value (4.0).  If this
-    value is 0 (or 0.0), the clock is stopped.</p>
-
-    <p>Updates are sent on each change in time or rate, and when clock stopped 
-    or started.</p>
-
-
-    <h3>Unknown commands</h3>
+    <h2>Unknown commands</h2>
 
     <p>Any command that is not recognized by a client should be ignored,
     with processing continuing after the next newlines.</p>
 
-    <h3>Observations</h3>
+    <h2>Observations</h2>
 
-    <p>The Digitrax LnWi sends multiple instances of the H command as part
-    of the initial information sent after the first command the client sends:</p>
-
-    <pre class="code">
-HTDigitrax
-HtDigitrax LnWi 1.0 Unit=7,Wifi Chnl= 1,Command Station= DCS100
-</pre>
-
-    <p>and after a selection attempt when using a long address for what
-    would be a short address values (say <code>MT+L23&lt;;&gt;L23</code>) the
-    response is:</p>
-
-    <pre class="code">
-HM error - long address &lt; 127 S23
-</pre>
-
-    <p>The LnWI also sends a <code>PFC</code> command.  Its purpose is
+    <p>The LnWI sends a <code>PFC</code> command.  Its purpose is
     unknown at this time.</p>
 
     <p>This is the package/jmri/jmrit/withrottle/Protocol help

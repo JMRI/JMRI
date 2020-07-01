@@ -14,6 +14,7 @@ import static org.junit.Assert.fail;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -27,9 +28,8 @@ import jmri.server.json.JsonRequest;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -37,7 +37,7 @@ import org.junit.Test;
  */
 public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<IdTag, JsonIdTagHttpService> {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -49,7 +49,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
     }
 
     @SuppressWarnings("deprecation")
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         JUnitUtil.clearShutDownManager();

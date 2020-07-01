@@ -1,10 +1,11 @@
 package jmri.jmrit.logix;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -15,16 +16,16 @@ public class WarrantPreferencesPanelTest {
     @Test
     public void testCTor() {
         WarrantPreferencesPanel t = new WarrantPreferencesPanel();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();

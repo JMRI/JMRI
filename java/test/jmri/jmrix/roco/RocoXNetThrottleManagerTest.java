@@ -1,12 +1,11 @@
 package jmri.jmrix.roco;
 
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottleManagerTest;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 
@@ -18,7 +17,7 @@ import org.mockito.Mockito;
 public class RocoXNetThrottleManagerTest extends XNetThrottleManagerTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         XNetTrafficController tc = Mockito.mock(XNetTrafficController.class);
@@ -30,7 +29,7 @@ public class RocoXNetThrottleManagerTest extends XNetThrottleManagerTest {
         tm = new RocoXNetThrottleManager(memo);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tm = null;
