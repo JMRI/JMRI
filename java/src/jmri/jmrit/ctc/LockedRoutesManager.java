@@ -36,8 +36,7 @@ import org.slf4j.LoggerFactory;
  * hasn't advanced at least one block past the O.S. section.  But the code
  * makes no assumptions regarding this.
  *
- * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- *
+ * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
 public class LockedRoutesManager {
     private final static Logger log = LoggerFactory.getLogger(LockedRoutesManager.class);
@@ -127,25 +126,40 @@ public class LockedRoutesManager {
         return newLockedRoute;
     }
 
-//  The child or running time done calls us when it determines it's empty,
-//  so we can delete it from our master list.
-//  It's already deallocated all of its resources, but for safety call "removeAllListeners" anyways:
+    /**
+     * This routine frees all resources allocated by the passed lockedRoute (listeners primarily)
+     * and then removes it from our "_mArrayListOfLockedRoutes".  Now the route does NOT exist anywhere.
+     * 
+     * @param lockedRoute The route to cancel.
+     * <p>
+     * NOTE:
+     * The child (LockedRoute object) or running time done calls us when it determines it's empty,
+     * so we can delete it from our master list.
+     * It's already de-allocated all of its resources, but for safety call "removeAllListeners" anyways.
+     */
     public void cancelLockedRoute(LockedRoute lockedRoute) {
         if (lockedRoute != null)  lockedRoute.removeAllListeners();  // Safety
         _mArrayListOfLockedRoutes.remove(lockedRoute);      // Even null, no throw!
     }
 
-//  Primarily called when the CTC system is restarted from within JMRI, nothing else should call this:
+    /**
+     * Primarily called when the CTC system is restarted from within JMRI,
+     * nothing else external to this module should call this.
+     */
     public void removeAllListeners() {
         _mArrayListOfLockedRoutes.forEach((existingLockedRoute) -> {
             existingLockedRoute.removeAllListeners();
         });
     }
 
-    void dump() {
+    /**
+     * Simple routine to dump all locked routes information.  Called from
+     * CTCMain when the debug sensor goes active.
+     */
+    void dumpAllRoutes() {
         log.info("Locked Routes:");
         for (LockedRoute lockedRoute : _mArrayListOfLockedRoutes) {
-            log.info(lockedRoute.dumpIt());
+            log.info(lockedRoute.dumpRoute());
         }
         log.info("--------------");
     }

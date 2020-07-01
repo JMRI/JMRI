@@ -8,7 +8,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import jmri.Sensor;
 
 /**
- *
  * Each of these objects describe a route consisting of all of the
  * occupancy sensors(s) that specify a route.  This is the "topology"
  * information needed to determine if a route is available or not.
@@ -34,7 +33,7 @@ import jmri.Sensor;
  * So whenever a merge or de-occupy event occurs, we lock down the object
  * "CountedSensor" only as long as needed to get to a "safe" state.
  * 
- * @author Gregory J. Bedlek Copyright (C) 2018, 2019
+ * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  * 
 */
 
@@ -175,13 +174,21 @@ public class LockedRoute {
         return anyInCommon ? AnyInCommonReturn.YES : AnyInCommonReturn.NONE;
     }
     
+    /**
+     * Simple routine to remove all listeners that were registered to each of our counted sensors.
+     */
     public void removeAllListeners() {
         _mCountedSensors.forEach((countedSensor) -> {
             countedSensor.getSensor().removePropertyChangeListener(_mSensorPropertyChangeListener);
         });
     }
     
-    public String dumpIt() {
+    /**
+     * Simple routine to return in a string all information on this route.
+     * 
+     * @return Dump of routes information in returned string.  No specific format.  See code in routine.
+     */
+    public String dumpRoute() {
         String returnString = "";
         for (CountedSensor countedSensor : _mCountedSensors) {
             if (returnString.isEmpty()) returnString = countedSensor.dumpIt();
