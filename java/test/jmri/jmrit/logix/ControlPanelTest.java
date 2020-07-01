@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -20,7 +22,7 @@ public class ControlPanelTest {
         WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
         LearnThrottleFrame f = new LearnThrottleFrame(wf);
         ControlPanel t = new ControlPanel(f);
-        Assert.assertNotNull("exists", t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(wf);
     }

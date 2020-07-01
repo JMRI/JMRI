@@ -6,6 +6,8 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -19,7 +21,7 @@ public class EngineerTest {
         jmri.SystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
         jmri.DccThrottle throttle = new jmri.jmrix.debugthrottle.DebugThrottle(addr,memo);
         Engineer t = new Engineer(warrant, throttle);
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         t.stopRun(true, true);
         JUnitAppender.assertErrorMessageStartsWith("Throttle Manager unavailable or cannot provide throttle. 5(S)");
         warrant.stopWarrant(true);

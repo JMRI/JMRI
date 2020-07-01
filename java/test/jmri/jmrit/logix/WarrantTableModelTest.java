@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -19,7 +21,7 @@ public class WarrantTableModelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WarrantTableFrame f = WarrantTableFrame.getDefault();
         WarrantTableModel t = new WarrantTableModel(f);
-        Assert.assertNotNull("exists", t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(f);
     }
 

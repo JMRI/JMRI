@@ -10,6 +10,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -21,7 +23,7 @@ public class SpeedProfilePanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RosterSpeedProfile rsp = new RosterSpeedProfile(new RosterEntry());
         SpeedProfilePanel t = new SpeedProfilePanel(rsp, true, null);
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach
