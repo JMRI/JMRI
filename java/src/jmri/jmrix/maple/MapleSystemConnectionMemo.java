@@ -3,11 +3,8 @@ package jmri.jmrix.maple;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.LightManager;
-import jmri.NamedBean;
-import jmri.TurnoutManager;
-import jmri.SensorManager;
+
+import jmri.*;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
@@ -20,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
-public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo {
+public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public MapleSystemConnectionMemo() {
         this("K", SerialConnectionTypeList.MAPLE);
@@ -29,8 +26,7 @@ public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo {
     public MapleSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
 
-        register(); // registers general type
-        InstanceManager.store(this, MapleSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, MapleSystemConnectionMemo.class);
 
         // create and register the ComponentFactory
         InstanceManager.store(new jmri.jmrix.maple.swing.MapleComponentFactory(this),
@@ -84,6 +80,8 @@ public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo {
         InstanceManager.setLightManager(getLightManager());
         setSensorManager(new SerialSensorManager(this));
         InstanceManager.setSensorManager(getSensorManager());
+
+        register();
     }
 
     /**
@@ -93,15 +91,13 @@ public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo {
      * @return sensor manager.
      */
     public SensorManager getSensorManager() {
-        return sensorManager;
+        return get(SensorManager.class);
     }
 
     public void setSensorManager(SerialSensorManager s) {
-        sensorManager = s;
+        store(s,SensorManager.class);
         getTrafficController().setSensorManager(s);
     }
-
-    private SensorManager sensorManager = null;
 
     /**
      * Provide access to the TurnoutManager for this particular connection.
@@ -110,15 +106,13 @@ public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo {
      * @return turnout manager.
      */
     public TurnoutManager getTurnoutManager() {
-        return turnoutManager;
+        return get(TurnoutManager.class);
 
     }
 
     public void setTurnoutManager(SerialTurnoutManager t) {
-        turnoutManager = t;
+        store(t,TurnoutManager.class);
     }
-
-    private TurnoutManager turnoutManager = null;
 
     /**
      * Provide access to the LightManager for this particular connection.
@@ -127,45 +121,11 @@ public class MapleSystemConnectionMemo extends DefaultSystemConnectionMemo {
      * @return light manager.
      */
     public LightManager getLightManager() {
-        return lightManager;
+        return get(LightManager.class);
     }
 
     public void setLightManager(SerialLightManager l) {
-        lightManager = l;
-    }
-
-    private LightManager lightManager = null;
-
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        } else if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else if (type.equals(jmri.LightManager.class)) {
-            return true;
-        }
-        return super.provides(type);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        if (T.equals(jmri.LightManager.class)) {
-            return (T) getLightManager();
-        }
-        return super.get(T);
+        store(l,LightManager.class);
     }
 
     // no dispose() for Maple

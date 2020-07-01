@@ -4,14 +4,10 @@ import jmri.SpeedStepMode;
 import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import java.util.Comparator;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mockito;
 import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -21,7 +17,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",instance);
+        assertThat(instance).withFailMessage("exists").isNotNull();
     }
 
     /**
@@ -32,7 +28,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedIncrement() {
         float expResult = 1.0F/126.0F;
         float result = instance.getSpeedIncrement();
-        Assert.assertEquals(expResult, result, 0.0);
+        assertThat(result).isEqualTo(expResult);
     }
 
     /**
@@ -43,7 +39,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetIsForward() {
         boolean expResult = true;
         boolean result = instance.getIsForward();
-        Assert.assertEquals(expResult, result);
+        assertThat(result).isEqualTo(expResult);
     }
 
     /**
@@ -54,7 +50,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedStepMode() {
         SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
         SpeedStepMode result = instance.getSpeedStepMode();
-        Assert.assertEquals(expResult, result);
+        assertThat(result).isEqualTo(expResult);
     }
 
     /**

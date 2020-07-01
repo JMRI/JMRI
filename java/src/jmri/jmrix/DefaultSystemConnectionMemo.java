@@ -164,6 +164,9 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      */
     @OverridingMethodsMustInvokeSuper
     public boolean provides(Class<?> c) {
+        if(disabled){
+            return false;
+        }
         if (c.equals(jmri.ConsistManager.class)) {
             return classObjectMap.get(c) != null || provides(CommandStation.class) || provides(AddressedProgrammerManager.class);
         } else {
@@ -185,6 +188,9 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     @OverridingMethodsMustInvokeSuper
     @SuppressWarnings("unchecked") // dynamic checking done on cast of getConsistManager
     public <T> T get(Class<?> type) {
+        if(disabled){
+            return null;
+        }
         if (type.equals(ConsistManager.class)) {
             return (T) getConsistManager();
         } else {
