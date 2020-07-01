@@ -59,9 +59,9 @@ public class FormulaTest extends AbstractStringExpressionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Formula: E1%n" +
-                "   ? E1%n" +
+                "   ?* E1%n" +
                 "      Get constant value \"Something\"%n" +
-                "   ? E2%n" +
+                "   ?* E2%n" +
                 "      Socket not connected%n");
     }
     
@@ -74,9 +74,9 @@ public class FormulaTest extends AbstractStringExpressionTestBase {
                 "         Read string E and set string A%n" +
                 "            ?s E%n" +
                 "               Formula: E1%n" +
-                "                  ? E1%n" +
+                "                  ?* E1%n" +
                 "                     Get constant value \"Something\"%n" +
-                "                  ? E2%n" +
+                "                  ?* E2%n" +
                 "                     Socket not connected%n" +
                 "            !s A%n" +
                 "               Set memory IM2%n");

@@ -141,10 +141,10 @@ public class DefaultConditionalNG extends AbstractBase
                                             getSystemName(), e, e);
                                     break;
                                     
-                                case SHOW_DIALOG_BOX:
-                                    InstanceManager.getDefault(ErrorNotifierManager.class)
-                                            .notifyError(this, Bundle.getMessage("ExceptionExecute", getSystemName(), e), e);
-                                    break;
+//                                case SHOW_DIALOG_BOX:
+//                                    InstanceManager.getDefault(ErrorHandlerManager.class)
+//                                            .notifyError(this, Bundle.getMessage("ExceptionExecute", getSystemName(), e), e);
+//                                    break;
                                     
                                 case LOG_ERROR:
                                     // fall through

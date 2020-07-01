@@ -55,10 +55,6 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
                     InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
-        if (type == ErrorNotifierManager.class) {
-            return new DefaultErrorNotifierManager();
-        }
-
         if (type == LogixNGPreferences.class) {
             return new LogixNGPreferences();
         }
@@ -73,7 +69,6 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
                 ConditionalNG_Manager.class,
                 LogixNG_Manager.class,
                 NamedTableManager.class,
-                ErrorNotifierManager.class,
                 LogixNGPreferences.class
         ));
         return set;

@@ -44,7 +44,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "Logix%n" +
                 "   ? E%n" +
                 "      Sensor '' is Active%n" +
-                "   ! A%n" +
+                "   !b A%n" +
                 "      On change%n" +
                 "         ! A%n" +
                 "            Socket not connected%n");
@@ -59,7 +59,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 "         Logix%n" +
                 "            ? E%n" +
                 "               Sensor '' is Active%n" +
-                "            ! A%n" +
+                "            !b A%n" +
                 "               On change%n" +
                 "                  ! A%n" +
                 "                     Socket not connected%n");

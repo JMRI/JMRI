@@ -79,31 +79,31 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     
     @Test
     public void testGetDescription() {
-        Assert.assertEquals("String matches", "?", _femaleSocket.getShortDescription());
-        Assert.assertEquals("String matches", "? E", _femaleSocket.getLongDescription());
+        Assert.assertEquals("String matches", "?*", _femaleSocket.getShortDescription());
+        Assert.assertEquals("String matches", "?* E", _femaleSocket.getLongDescription());
         
         
         DefaultFemaleGenericExpressionSocket socket;
         
         socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
         FemaleAnalogExpressionSocket analogSocket = socket.getAnalogSocket();
-        Assert.assertEquals("String matches", "?", analogSocket.getShortDescription());
-        Assert.assertEquals("String matches", "? E", analogSocket.getLongDescription());
+        Assert.assertEquals("String matches", "?*", analogSocket.getShortDescription());
+        Assert.assertEquals("String matches", "?* E", analogSocket.getLongDescription());
         
         socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
         FemaleDigitalExpressionSocket digitalSocket = socket.getDigitalSocket();
-        Assert.assertEquals("String matches", "?", digitalSocket.getShortDescription());
-        Assert.assertEquals("String matches", "? E", digitalSocket.getLongDescription());
+        Assert.assertEquals("String matches", "?*", digitalSocket.getShortDescription());
+        Assert.assertEquals("String matches", "?* E", digitalSocket.getLongDescription());
         
         socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
         FemaleGenericExpressionSocket genericSocket = socket.getGenericSocket();
-        Assert.assertEquals("String matches", "?", genericSocket.getShortDescription());
-        Assert.assertEquals("String matches", "? E", genericSocket.getLongDescription());
+        Assert.assertEquals("String matches", "?*", genericSocket.getShortDescription());
+        Assert.assertEquals("String matches", "?* E", genericSocket.getLongDescription());
         
         socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
         FemaleStringExpressionSocket stringSocket = socket.getStringSocket();
-        Assert.assertEquals("String matches", "?", stringSocket.getShortDescription());
-        Assert.assertEquals("String matches", "? E", stringSocket.getLongDescription());
+        Assert.assertEquals("String matches", "?*", stringSocket.getShortDescription());
+        Assert.assertEquals("String matches", "?* E", stringSocket.getLongDescription());
     }
     
     @Override

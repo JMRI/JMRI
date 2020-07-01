@@ -7,8 +7,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
-import jmri.jmrit.logixng.digital.expressions.Formula.ExpressionEntry;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -19,8 +17,6 @@ import org.junit.Test;
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.jmrit.logixng.util.parser.ParserException;
-
-import org.junit.*;
 
 /**
  * Test And
@@ -63,9 +59,9 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Formula: E1%n" +
-                "   ? E1%n" +
+                "   ?* E1%n" +
                 "      Always true%n" +
-                "   ? E2%n" +
+                "   ?* E2%n" +
                 "      Socket not connected%n");
     }
     
@@ -78,9 +74,9 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase {
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
                 "               Formula: E1%n" +
-                "                  ? E1%n" +
+                "                  ?* E1%n" +
                 "                     Always true%n" +
-                "                  ? E2%n" +
+                "                  ?* E2%n" +
                 "                     Socket not connected%n" +
                 "            ! A1%n" +
                 "               Set the atomic boolean to true%n" +

@@ -64,7 +64,7 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
                 "         Logix%n" +
                 "            ? E%n" +
                 "               Sensor '' is Active%n" +
-                "            ! A%n" +
+                "            !b A%n" +
                 "               On change to true%n" +
                 "                  ! A%n" +
                 "                     Set turnout '' to Thrown%n");

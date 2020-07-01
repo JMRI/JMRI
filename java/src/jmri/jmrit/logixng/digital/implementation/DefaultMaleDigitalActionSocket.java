@@ -70,17 +70,6 @@ public class DefaultMaleDigitalActionSocket
         _action.setLock(lock);
     }
     
-    @Override
-    public ErrorHandlingType getErrorHandlingType() {
-        return _errorHandlingType;
-    }
-
-    @Override
-    public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
-    {
-        _errorHandlingType = errorHandlingType;
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -107,27 +96,10 @@ public class DefaultMaleDigitalActionSocket
         
         try {
             _action.execute();
-        } catch (JmriException | RuntimeException e) {
-            switch (_errorHandlingType) {
-                case SHOW_DIALOG_BOX:
-                    InstanceManager.getDefault(ErrorNotifierManager.class)
-                            .notifyError(this, Bundle.getMessage("ExceptionExecuteAction", e), e);
-                    break;
-                    
-                case LOG_ERROR:
-                    log.error("action {} thrown an exception: {}", _action.toString(), e, e);
-                    break;
-                    
-                case LOG_ERROR_ONCE:
-                    Log4JUtil.warnOnce(log, "action {} thrown an exception: {}", _action.toString(), e, e);
-                    break;
-                    
-                case THROW:
-                    throw e;
-                    
-                default:
-                    throw e;
-            }
+        } catch (JmriException e) {
+            handleError(this, Bundle.getMessage("ExceptionExecuteAction", e), e, log);
+        } catch (RuntimeException e) {
+            handleError(this, Bundle.getMessage("ExceptionExecuteAction", e), e, log);
         }
     }
 

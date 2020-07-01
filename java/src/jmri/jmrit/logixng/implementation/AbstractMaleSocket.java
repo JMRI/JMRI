@@ -2,17 +2,23 @@ package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
 import java.util.Locale;
+
+import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.util.Log4JUtil;
+
+import org.slf4j.Logger;
 
 /**
  * The abstract class that is the base class for all LogixNG classes that
  * implements the Base interface.
  */
-public abstract class AbstractMaleSocket implements Base, InternalBase {
+public abstract class AbstractMaleSocket implements MaleSocket, Base, InternalBase {
 
     private Base _parent;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
     
     @Override
     public final Base getParent() {
@@ -126,6 +132,63 @@ public abstract class AbstractMaleSocket implements Base, InternalBase {
             getChild(i).dispose();
         }
         disposeMe();
+    }
+    
+    @Override
+    public ErrorHandlingType getErrorHandlingType() {
+        return _errorHandlingType;
+    }
+    
+    @Override
+    public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
+    {
+        _errorHandlingType = errorHandlingType;
+    }
+    
+    public void handleError(Base item, String message, JmriException e, Logger log) throws JmriException {
+        switch (_errorHandlingType) {
+//            case SHOW_DIALOG_BOX:
+//                InstanceManager.getDefault(ErrorHandlerManager.class)
+//                        .notifyError(this, Bundle.getMessage("ExceptionSetValue", e), e);
+//                break;
+                
+            case LOG_ERROR:
+                log.error("item {} thrown an exception: {}", item.toString(), e);
+                break;
+                
+            case LOG_ERROR_ONCE:
+                Log4JUtil.warnOnce(log, "item {} thrown an exception: {}", item.toString(), e);
+                break;
+                
+            case THROW:
+                throw e;
+                
+            default:
+                throw e;
+        }
+    }
+    
+    public void handleError(Base item, String message, RuntimeException e, Logger log) throws JmriException {
+        switch (_errorHandlingType) {
+//            case SHOW_DIALOG_BOX:
+//                InstanceManager.getDefault(ErrorHandlerManager.class)
+//                        .notifyError(this, Bundle.getMessage("ExceptionSetValue", e), e);
+//                break;
+                
+            case LOG_ERROR:
+                log.error("item {} thrown an exception: {}", item.toString(), e);
+                break;
+                
+            case LOG_ERROR_ONCE:
+                Log4JUtil.warnOnce(log, "item {} thrown an exception: {}", item.toString(), e);
+                break;
+                
+            case THROW:
+                throw e;
+                
+            default:
+                throw e;
+        }
     }
     
 }

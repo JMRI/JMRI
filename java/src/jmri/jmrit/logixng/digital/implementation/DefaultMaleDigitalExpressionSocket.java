@@ -68,17 +68,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         _expression.setLock(lock);
     }
     
-    @Override
-    public ErrorHandlingType getErrorHandlingType() {
-        return _errorHandlingType;
-    }
-
-    @Override
-    public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
-    {
-        _errorHandlingType = errorHandlingType;
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -106,27 +95,12 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         
         try {
             lastEvaluationResult = _expression.evaluate();
-        } catch (JmriException | RuntimeException e) {
-            switch (_errorHandlingType) {
-                case SHOW_DIALOG_BOX:
-                    InstanceManager.getDefault(ErrorNotifierManager.class)
-                            .notifyError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e);
-                    break;
-                    
-                case LOG_ERROR:
-                    log.error("expression {} thrown an exception: {}", _expression.toString(), e);
-                    return false;
-                    
-                case LOG_ERROR_ONCE:
-                    Log4JUtil.warnOnce(log, "expression {} thrown an exception: {}", _expression.toString(), e);
-                    return false;
-                    
-                case THROW:
-                    throw e;
-                    
-                default:
-                    throw e;
-            }
+        } catch (JmriException e) {
+            handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
+            return false;
+        } catch (RuntimeException e) {
+            handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
+            return false;
         }
         
         return lastEvaluationResult;

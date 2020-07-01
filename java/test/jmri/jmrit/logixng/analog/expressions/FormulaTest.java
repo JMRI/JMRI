@@ -58,9 +58,9 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase {
     public String getExpectedPrintedTree() {
         return String.format(
                 "Formula: E1%n" +
-                "   ? E1%n" +
+                "   ?* E1%n" +
                 "      Get constant value 1%n" +
-                "   ? E2%n" +
+                "   ?* E2%n" +
                 "      Socket not connected%n");
     }
     
@@ -73,9 +73,9 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase {
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
                 "               Formula: E1%n" +
-                "                  ? E1%n" +
+                "                  ?* E1%n" +
                 "                     Get constant value 1%n" +
-                "                  ? E2%n" +
+                "                  ?* E2%n" +
                 "                     Socket not connected%n" +
                 "            !~ A%n" +
                 "               Set memory IM2%n");

@@ -13,7 +13,6 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
-import jmri.util.Log4JUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,6 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
 
     private final AnalogActionBean _action;
     private DebugConfig _debugConfig = null;
-    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
     private boolean _enabled = true;
     
     
@@ -63,17 +61,6 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
     @Override
     public void setLock(Lock lock) {
         _action.setLock(lock);
-    }
-    
-    @Override
-    public ErrorHandlingType getErrorHandlingType() {
-        return _errorHandlingType;
-    }
-    
-    @Override
-    public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
-    {
-        _errorHandlingType = errorHandlingType;
     }
     
     /** {@inheritDoc} */
@@ -119,26 +106,9 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
         try {
             internalSetValue(value);
         } catch (JmriException e) {
-            switch (_errorHandlingType) {
-                case SHOW_DIALOG_BOX:
-                    InstanceManager.getDefault(ErrorNotifierManager.class)
-                            .notifyError(this, Bundle.getMessage("ExceptionSetValue", e), e);
-                    break;
-                    
-                case LOG_ERROR:
-                    log.error("action {} thrown an exception: {}", _action.toString(), e);
-                    break;
-                    
-                case LOG_ERROR_ONCE:
-                    Log4JUtil.warnOnce(log, "action {} thrown an exception: {}", _action.toString(), e);
-                    break;
-                    
-                case THROW:
-                    throw e;
-                    
-                default:
-                    throw e;
-            }
+            handleError(this, Bundle.getMessage("ExceptionSetValue", e), e, log);
+        } catch (RuntimeException e) {
+            handleError(this, Bundle.getMessage("ExceptionSetValue", e), e, log);
         }
     }
 

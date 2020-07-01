@@ -46,8 +46,8 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
     
     @Test
     public void testGetDescription() {
-        Assert.assertTrue("String matches", "?".equals(_femaleSocket.getShortDescription()));
-        Assert.assertTrue("String matches", "? E1".equals(_femaleSocket.getLongDescription()));
+        Assert.assertTrue("String matches", "?*".equals(_femaleSocket.getShortDescription()));
+        Assert.assertTrue("String matches", "?* E1".equals(_femaleSocket.getLongDescription()));
     }
     
     @Override

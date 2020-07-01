@@ -199,11 +199,11 @@ public class DefaultConditionalNGTest {
         conditionalNG.execute();
         Assert.assertTrue("Action is executed", action.hasExecuted);
         
-        action.throwOnExecute = true;
-        action.hasExecuted = false;
-        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.SHOW_DIALOG_BOX);
-        conditionalNG.execute();
-        JUnitAppender.assertErrorMessage("An exception has occured during execute: IQC123");
+//        action.throwOnExecute = true;
+//        action.hasExecuted = false;
+//        conditionalNG.setErrorHandlingType(MaleSocket.ErrorHandlingType.SHOW_DIALOG_BOX);
+//        conditionalNG.execute();
+//        JUnitAppender.assertErrorMessage("An exception has occured during execute: IQC123");
         
         action.throwOnExecute = true;
         action.hasExecuted = false;

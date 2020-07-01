@@ -137,7 +137,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
                 "      Socket not connected%n" +
                 "   ! DA%n" +
                 "      Socket not connected%n" +
-                "   ! DBA%n" +
+                "   !b DBA%n" +
                 "      Socket not connected%n" +
                 "   ? DE%n" +
                 "      Socket not connected%n" +
@@ -164,7 +164,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
 "                     Socket not connected%n" +
 "                  ! DA%n" +
 "                     Socket not connected%n" +
-"                  ! DBA%n" +
+"                  !b DBA%n" +
 "                     Socket not connected%n" +
 "                  ? DE%n" +
 "                     Socket not connected%n" +
