@@ -1476,8 +1476,6 @@ Method <jmri.server.json.throttle.JsonThrottle.getThrottle(java.lang.String, com
 Method <jmri.server.json.util.JsonUtilHttpService.getPanel(jmri.jmrit.display.Editor, java.lang.String, int)> calls method <jmri.jmrit.display.Editor.getTargetPanel()> in (JsonUtilHttpService.java:404)
 Method <jmri.server.json.util.JsonUtilHttpService.getPanels(java.lang.String, int)> calls method <jmri.jmrit.display.EditorManager.getAll()> in (JsonUtilHttpService.java:438)
 Method <jmri.util.CvUtil.addCvDescription(java.lang.String, java.lang.String, java.lang.String)> calls method <jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame.getShowCvNumbers()> in (CvUtil.java:152)
-Method <jmri.util.HelpUtil.makeHelpMenu(java.lang.String, boolean)> calls constructor <jmri.jmrit.XmlFileLocationAction.<init>()> in (HelpUtil.java:82)
-Method <jmri.util.HelpUtil.makeHelpMenu(java.lang.String, boolean)> calls constructor <jmri.jmrit.mailreport.ReportAction.<init>()> in (HelpUtil.java:96)
 Method <jmri.util.datatransfer.RosterEntrySelection.getRosterEntries(java.awt.datatransfer.Transferable)> calls method <jmri.jmrit.roster.Roster.entryFromTitle(java.lang.String)> in (RosterEntrySelection.java:115)
 Method <jmri.util.datatransfer.RosterEntrySelection.getRosterEntries(java.awt.datatransfer.Transferable)> calls method <jmri.jmrit.roster.Roster.getDefault()> in (RosterEntrySelection.java:115)
 Method <jmri.util.datatransfer.RosterEntrySelection.lambda$createRosterEntrySelection$0(java.util.ArrayList, jmri.jmrit.roster.RosterEntry)> calls method <jmri.jmrit.roster.RosterEntry.getId()> in (RosterEntrySelection.java:67)
