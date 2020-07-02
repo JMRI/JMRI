@@ -9,12 +9,11 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
-
+	
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -512,7 +511,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         
     }
 
-    @Ignore("CbusLight doesn't extend AbstractVariableLight. Rewrite test? / Daniel Bergqvist (danielb987) June 17, 2020")
+    @Disabled("CbusLight doesn't extend AbstractVariableLight. Rewrite test? / Daniel Bergqvist (danielb987) June 17, 2020")
     @Test
     public void testIntensity() {
         
