@@ -15,17 +15,15 @@ JMRI installers can be built in four different scenarios:
 * Release build distributed as installers on the JMRI website
 * _Recommended_ installer builds distributed on the JMRI website and promoted as the main supported version until the next _recommended_ release
 
-Developer builds will identify themselves with versions strings like `JMRI.21.4.2-private-jake-20200625T1452Z+Rbab33d0f33` where `private` denotes a developers own private build, `jake` the username of the specific developer, and `+R` indicates the 8 digits of the SHA of HEAD when built.
+Developer builds will identify themselves with versions strings like `JMRI-dev-major+private+jake+20200625T1452Z+Rbab33d0f33` where `dev-major` denotes the branch, `private` denotes a developers own private build, `jake` the local username of the specific developer, and `+R` indicates the 8 digits of the SHA of HEAD when built.
 
-Jenkins 'nightly' builds will identify themselves with version strings like `JMRI.21.4.2-dev-Jenkins-20200625T1452Z+Rbab33d0f33` where `dev` denotes a development build, `Jenkins` that this was built by the Jenkins CI environment, and `+R` indicates the 8 digits of the SHA of HEAD when built.
+Jenkins 'nightly' builds will identify themselves with version strings like `JMRI-dev-minor+CI+Jenkins+20200625T1452Z+Rbab33d0f33` where `dev-major` denotes the branch, `Jenkins` that this was built by the Jenkins CI environment, and `+R` indicates the 8 digits of the SHA of HEAD when built.
 
 A released version is denoted as a `vI.J.K` (i.e. `v21.4.2`) tag in our common repository.
 
 Distributed installers built from a released version will identify themselves with version strings like `JMRI.21.4.2+Rbab3d0f33` where the `+R` indicates 8 digits of the tag SHA.  
 
 Periodically, a release version is flagging as a default for new/novice users to install by default.  It will be referred to by year and month: YYYY-MM, i.e 2020-07. Its contents will be identical to an already-released version.  This will be denoted as a `rYYYY-MM` (i.e. `r2020-07`) tag in our common repository. Distributed installers will identify themselves using first the date, then the underlying release, i.e. `JMRI.2020-07-21.4.2`
-
-_Before_ a release, the development installers will be named with the branch being built and the data-time of the build (see below for discussion of those), for example `JMRI-dev-major+20200622T0419Z+Re0a5fed223`
 
 ## Identifying Change Types
 
@@ -38,13 +36,13 @@ Each PR that's merged for inclusion can require an increment of the first, secon
    - `Chore` - no change to Java code or published artifacts (e.g. updates build scripts and CI processes), does not trigger version change
  - A PR must have exactly one of those applied for it to be merged
  - The author of the PR can propose a label, in which case only one reviewer is required.
- - If the author of the PR does not propose a label, two reviewers must sign off on the right label.
+ - If the author of the PR does not propose a label, two reviewers must sign off on the right label. (We may relax this eventually, but its included now to get people thinking about what category various changes might be in)
  
 Since we'll now be requiring a review, the reviewer can also encourage reasonable additions to the release note. A more-automated process for creating release notes with useful content would help this succeed.
 
 There's some judgement involved in this labelling process.  An algorithmic change might change behavior enough to add a new feature (`Feature`) or cause issues for downstream code (`Breaking Change`).  On the other hand, changing a class API by marking methods as deprecated for future removal is not a breaking change _yet_, and can be marked as `Fix`.
 
-We recommend that people use [Conventional Commits rules](https://www.conventionalcommits.org/en/v1.0.0/) in their commit comments to help identify how a PR should be labelled.  GitHub makes the comment for the first commit in a PR particularly visible.  To do this:
+We recommend, but do not require, that people use [Conventional Commits rules](https://www.conventionalcommits.org/en/v1.0.0/) in their commit comments to help identify how a PR should be labelled.  GitHub makes the comment for the first commit in a PR particularly visible.  To do this:
 
  - Put `[fix]` at the start of your commit message if the commit should be labelled `Fix` and included in the next I.J.++K release
  - Put `[chore]` at the start of your commit message if the commit should be labelled `Chore` and included in the next I.J.++K release
@@ -95,7 +93,7 @@ The periodic upward merges are meant to find conflicts where a major change turn
 | :-----:   |   :----------: |   :----------: |  :----------: |
 | Numbered: |  pre-4.23.3    |   pre-4.25.0   |   pre-6.0.0   |
 |   Pub     |                |     4.25.0     |               | 
-|           |                !       <--      |               |
+|           |      |-<       |       <--<     |               |
 |           |  pre-4.25.1    |   pre-4.26.0   |               |
 |   Feat    |                |        G       |      G        |
 |  Fix  G   |       H        |        H       |      H        |
@@ -132,17 +130,13 @@ Before this, `master` was at 4.22.2 to serve as a clean base for all three branc
   
   #### Fix to Minor Change
   
-Say that something was broken by the minor change above.  A developer can edit in that fix on a branch from `dev-minor`, make a PR against the `dev-minor` branch, get it merged, and then a v5.8.1 can be released.  That can be made the base for development or not as needed.
-  
-  #### Merging updates to a Minor Change
-  
-Alternately, after v5.8.0 is out, a developer might want to fix an issue in 5.6.3 that identically affects (because that code was unchanged) the 5.8.0 release.  He edits on a branch off `master`, does a PR against `dev-update`, that gets merged and then that branch is merged upward (as usual) into the `dev-minor` branch.  This allows a v.5.8.1 to be created as needed. That can be made the base for development or not as needed.
-   
+Say that something was broken by the minor change above.  Because `dev-update` contains 4.25.0, the developer can edit in that fix on a branch from `dev-update` (or master, if easier), make a PR against the `dev-update` branch, get it merged, and then a v4.25.1 can be released.  That can be made the base for development or not as needed.
+     
    ### Major Changes
    
 Major changes go basically as above.  They're created off `master` if possible, or off the `dev-major` branch if (more likely) they're cumulative on other major changes. Then the various operations go through as above.
 
-The hardest thing for "major change" releases will be developing a consensus around when they should become the default.  That's a community feature vs cost and quality control issue, not a Git technology one.
+The hardest thing for "major change" releases will be developing a consensus around when they should be published.  That's a community feature vs cost and quality control issue, not a Git technology one.
 
 ## Release Timing
 
