@@ -8,10 +8,13 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test AbstractFemaleSocket
@@ -117,8 +120,72 @@ public class AbstractFemaleSocketTest {
         Assert.assertTrue("Socket is active", socket.isActive());
     }
     
+    @Test
+    public void testUnsupportedMethods() {
+        MyBase base = new MyBase();
+        MyFemaleSocket socket = new MyFemaleSocket(base, null, "A1");
+        
+        PropertyChangeListener l = (PropertyChangeEvent evt) -> {};
+        
+        Throwable thrown = catchThrowable( () -> socket.addPropertyChangeListener(l, "name", "ref"));
+        assertThat(thrown)
+                .withFailMessage("Method throws an exception")
+                .isNotNull()
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("Not supported");
+        
+        thrown = catchThrowable( () -> socket.addPropertyChangeListener("propName", l, "name", "ref"));
+        assertThat(thrown)
+                .withFailMessage("Method throws an exception")
+                .isNotNull()
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("Not supported");
+        
+        thrown = catchThrowable( () -> socket.updateListenerRef(l, "name"));
+        assertThat(thrown)
+                .withFailMessage("Method throws an exception")
+                .isNotNull()
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("Not supported");
+        
+        thrown = catchThrowable( () -> socket.vetoableChange(null));
+        assertThat(thrown)
+                .withFailMessage("Method throws an exception")
+                .isNotNull()
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("Not supported");
+        
+        thrown = catchThrowable( () -> socket.getListenerRef(l));
+        assertThat(thrown)
+                .withFailMessage("Method throws an exception")
+                .isNotNull()
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("Not supported");
+        
+        thrown = catchThrowable( () -> socket.getListenerRefs());
+        assertThat(thrown)
+                .withFailMessage("Method throws an exception")
+                .isNotNull()
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("Not supported");
+        
+        thrown = catchThrowable( () -> socket.getNumPropertyChangeListeners());
+        assertThat(thrown)
+                .withFailMessage("Method throws an exception")
+                .isNotNull()
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("Not supported");
+        
+        thrown = catchThrowable( () -> socket.getPropertyChangeListenersByReference("ref"));
+        assertThat(thrown)
+                .withFailMessage("Method throws an exception")
+                .isNotNull()
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("Not supported");
+    }
+    
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -129,7 +196,7 @@ public class AbstractFemaleSocketTest {
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

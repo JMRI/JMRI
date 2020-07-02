@@ -12,16 +12,13 @@ import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.analog.expressions.AbstractAnalogExpression;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.analog.implementation.DefaultMaleAnalogExpressionSocket.AnalogExpressionDebugConfig;
-import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalBooleanActionSocket;
-import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalBooleanActionSocketTest;
-import jmri.util.JUnitAppender;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
