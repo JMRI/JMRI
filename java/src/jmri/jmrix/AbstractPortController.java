@@ -391,8 +391,9 @@ abstract public class AbstractPortController implements PortAdapter {
     protected void resetupConnection(){}
     
     /**
-     * Abstract class for controllers to attempt a single re-connection attempt.
-     * Called on connection reconnect success.
+     * Abstract class for ports to attempt a single re-connection attempt.
+     * Called from within main reconnect thread.
+     * @param retryNum Reconnection attempt number.
      */
     protected void reconnectFromLoop(int retryNum){}
     
