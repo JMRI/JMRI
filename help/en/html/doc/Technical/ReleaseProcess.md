@@ -75,14 +75,63 @@ We need a process to decide when releases should be made from the branches. Maki
 
 How do we decide when to do that if we don't have a monthly cadence?
 
- - How often (on what basis) should we be creating "Update Only" branch releases, hence updating that digit?  Is this effectively our nightly build process for development releases now?
+ - How often (on what basis) should we be creating "Update Only" branch releases, hence updating that digit?  Is this effectively our nightly build process for development releases now, i.e. somebody who needs a bug fix is encouraged to "pick up the most recent update build"? Or do we publish these whenever there's a significant fix?
  
- - How often (on what basis) should we be creating "Minor Change" branch releases, hence updating that digit?  Is this done i.e. every two weeks if there have been PRs? Every month? When requested?  This should be a pretty quick cadence to get them out where people can test them; our users are our best testers.
+ - How often (on what basis) should we be creating "Minor Change" branch releases, hence updating that digit?  Is this done i.e. every two weeks if there have been PRs? Every month? When requested?  This should be a pretty quick cadence to get them out where people can test them; our users are our best testers. 
  
  - How often (on what basis) should we be creating "Major Change" branch releases, hence updating that digit? Since we distribute applications to users, who are primarily _application_ users, most major changes may not even be visible.  We need to get them out to people before too much change accumulates, but too many might discourage people.  Maybe every three months? Six months?
 
- - What process is needed to identify when a release is good enough as one that should be made the default? Both the large scale, so we can talk in advance about the "October 2020" (2020-10) release, and at the event, as we try to get something usable to converge. For the last few years, we've needed several test releases to converge on a quality level; June 2020 was no different in that respect. How do we get that done in this model?
+ - What process is needed to identify when a release is good enough as one that should be made the default? Both the large scale, so we can talk in advance about the "October 2020" (2020-10) release, and at the event, as we try to get something usable to converge. For the last few years, we've needed several test releases to converge on a quality level; June 2020 was no different in that respect. How do we get that done in this model?  Are these made from a long-time accumulation of minor releases?
  
+One possible sequence of development and release:
+ - Publish from `dev-update` whenever enough has accumulated; no specific cadence
+ - Publish from `dev-minor` roughly 4-6 weeks to get feedback
+ 
+ But how do we get feedback on `dev-update`?
+
+|           |   `dev-update` |   `dev-minor`  |  `dev-update` |
+| -------   |   ------------ |   ------------ |  ------------ |
+| Numbered: |  pre-4.23.2    |   pre-4.24.0   |   pre-5.0.0   |
+|   Fix     |       A        |        A       |      A        |
+|   Fix     |       B        |        B       |      B        |
+|   Feat    |                |        C       |      C        |
+| Br Change |                |                |      D        |
+|   Pub     |    4.23.2      |                |               |
+|           |  pre-4.23.3    |                |               |
+|   Feat    |                |        E       |      E        |
+|   Feat    |                |        F       |      F        |
+
+Assume it's time to publish 4.24.0 from `dev-minor`. At this point, there are two choices:
+
+ - since 4.24.0 is thought to be worth publishing, it should form the basis for `dev-update` from now:  Any "fix" PRs there will be eventually be the basis for a 4.24.1, 4.24.2, etc. Meanwhile, "feature" PRs go on the `dev-minor` branch on the way to 4.25.0, which is the next published from here.  
+
+|           |   `dev-update` |   `dev-minor`  |  `dev-update` |
+| -------   |   ------------ |   ------------ |  ------------ |
+| Numbered: |  pre-4.23.2    |   pre-4.24.0   |   pre-5.0.0   |
+|   Pub     |                |     4.24.0     |               | 
+|           |               <--               |               |
+|           |  pre-4.24.1    |   pre-4.25.0   |               |
+|   Feat    |                |        G       |      G        |
+|  Fix  G   |       H        |        H       |      H        |
+|           |                |                |               | 
+
+ 
+ - Or, we could say we're not that certain about `dev-minor`, and put both fixes and features there which we can release as 4.24.1 when needed. (Leaving `dev-update` as the place to make futher fixes to the 4.23.* series as needed).  
+
+|           |   `dev-update` |   `dev-minor`  |  `dev-update` |
+| -------   |   ------------ |   ------------ |  ------------ |
+| Numbered: |  pre-4.23.2    |   pre-4.24.0   |   pre-5.0.0   |
+|   Pub     |                |     4.24.0     |               | 
+|           |                |   pre-4.24.1   |               |
+|   Feat    |                |        G       |      G        |
+|  Fix G    |                |        H       |      H        |
+|           |                |                |               | 
+ 
+ The second has the problem that the 4.24.1 could include include features not present in 4.24.0, which is not consistent with the Semantic Versioning pattern.  On the other hand, it's easier to issue fixes to the 4.23.* series after 4.24.0 is out.
+ 
+ The key question remains:  How do we use these numberw to simultaneously get fixes to users _and_ encourage them to test new features?
+
+
 ## Web Contents
 
 The default web content (from [https://jmri.org](https://jmri.org)) will be from the HEAD of the `dev-update` branch.  This allows minor content fixes to get on the web immediately.
@@ -160,4 +209,18 @@ The assumption is that we will start with the new process directly after JMRI 4.
 
  - [ ] (Once it's decided it's ready, based on whatever criteria is chosen) Create and tag release 4.21.1 as the first under this system
     - [ ] Update `master` and `dev-update` to the released 4.21.1
+ 
+What we're trying to avoid is moving the `master` branch pointer backwards in time. This is likely to cause consistency problems for naive Git users. If we need a 4.20.1 (i.e. bug fixes on production), the PR will have to be manually created on the right `dev-update`, instead of automatically getting it from the right `master`.  Ater 4.22.1 is created, this system will get into its long-term configuration.
+
+The endpoint of the migration is then:
+ - The `dev-update` will have `v4.20` as its head.
+ - `dev-minor` will be marked as pre-4.22.0 and will be at the then-current `master`
+ - `dev-major` will be marked as pre-5.0.0 and will be at the then-current `master` 
+ 
+When eventually there's a decision to create/publish 4.22.0:
+ - `master` will be 4.22.0
+ - `dev-update` will be `master` (4.22.0) marked as pre-4.22.1
+ - `dev-minor` will be `master` (4.22.0) marked as pre-4.23.0
+ - `dev-major` will have changes-to-date merged in, but doesn't change label at this point
+ 
  
