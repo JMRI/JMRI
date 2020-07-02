@@ -3,10 +3,9 @@ package jmri.jmrix.lenz.hornbyelite;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 /**
@@ -378,7 +377,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -390,7 +389,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         memo.getXNetTrafficController().terminateThreads();
         memo.dispose();

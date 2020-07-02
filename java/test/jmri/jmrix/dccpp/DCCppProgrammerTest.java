@@ -11,7 +11,9 @@ package jmri.jmrix.dccpp;
 import jmri.JmriException;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -35,12 +37,10 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 ((DCCppProgrammer) programmer).getBestMode());
     }
 
-    @Test(expected = java.lang.IllegalArgumentException.class)
+    @Test
     @Override
     public void testSetGetMode() {
-        programmer.setMode(ProgrammingMode.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                programmer.getMode());
+        Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(ProgrammingMode.REGISTERMODE));
     }
 
     @Override
@@ -81,7 +81,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("test body is commented out")
+    @Disabled("test body is commented out")
     public void testWriteRegisterSequence() throws JmriException {
         /*
         // infrastructure objects
@@ -175,7 +175,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("test is commented out")
+    @Disabled("test is commented out")
     public void testReadRegisterSequence() throws JmriException {
         /*
         // infrastructure objects
@@ -375,7 +375,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -392,7 +392,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t = null;
         l = null;

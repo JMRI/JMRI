@@ -1,7 +1,8 @@
 package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for CodeLine class in the jmri.jmrit.ussctc package
@@ -15,7 +16,7 @@ public class CodeLineTest {
         new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
     }
         
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -25,7 +26,7 @@ public class CodeLineTest {
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

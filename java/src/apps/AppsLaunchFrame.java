@@ -14,7 +14,6 @@ import javax.swing.JSeparator;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
-import jmri.InstanceManager;
 import jmri.jmrit.DebugMenu;
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
@@ -24,8 +23,7 @@ import jmri.jmrit.operations.OperationsMenu;
 import jmri.jmrit.roster.swing.RosterMenu;
 import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.ActiveSystemsMenu;
-import jmri.plaf.macosx.Application;
-import jmri.plaf.macosx.PreferencesHandler;
+import apps.plaf.macosx.Application;
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
@@ -156,11 +154,8 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         prefsAction = new apps.gui3.tabbedpreferences.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));
         // Put prefs in Apple's prefered area on Mac OS X
         if (SystemType.isMacOSX()) {
-            Application.getApplication().setPreferencesHandler(new PreferencesHandler() {
-                @Override
-                public void handlePreferences(EventObject eo) {
-                    prefsAction.actionPerformed(null);
-                }
+            Application.getApplication().setPreferencesHandler((EventObject eo) -> {
+                prefsAction.actionPerformed(null);
             });
         }
         // Include prefs in Edit menu if not on Mac OS X or not using Aqua Look and Feel

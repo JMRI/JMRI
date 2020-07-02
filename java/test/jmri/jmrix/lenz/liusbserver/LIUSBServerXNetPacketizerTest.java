@@ -2,8 +2,7 @@ package jmri.jmrix.lenz.liusbserver;
 
 import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * <p>
@@ -45,7 +44,7 @@ public class LIUSBServerXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketize
         Assert.assertEquals("remaining ", 0, p.tostream.available());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

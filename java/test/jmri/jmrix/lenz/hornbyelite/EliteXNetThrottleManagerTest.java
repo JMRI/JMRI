@@ -2,8 +2,8 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * EliteXNetThrottleManagerTest.java
@@ -17,14 +17,14 @@ public class EliteXNetThrottleManagerTest extends jmri.jmrix.lenz.XNetThrottleMa
     private XNetInterfaceScaffold tc;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         tm = new EliteXNetThrottleManager(new EliteXNetSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc.terminateThreads();

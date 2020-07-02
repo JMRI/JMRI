@@ -4,11 +4,8 @@ import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
@@ -30,7 +27,6 @@ import jmri.util.junit.rules.RetryRule;
  */
 public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
-    @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries of tests
 
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
@@ -395,7 +391,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     OlcbTestInterface ti;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -407,7 +403,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         ((OlcbSensor) t).finishLoad();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         t.dispose();

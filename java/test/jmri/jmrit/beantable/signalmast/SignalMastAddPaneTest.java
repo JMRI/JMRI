@@ -1,11 +1,11 @@
 package jmri.jmrit.beantable.signalmast;
 
 import jmri.util.JUnitUtil;
+
 import java.util.*;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests the overall operation of {@link SignalMastAddPane} services.
@@ -67,13 +67,13 @@ public class SignalMastAddPaneTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

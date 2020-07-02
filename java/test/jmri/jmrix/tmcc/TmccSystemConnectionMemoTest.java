@@ -2,10 +2,9 @@ package jmri.jmrix.tmcc;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the TMCCSystemConnectionMemo class.
@@ -21,14 +20,14 @@ public class TmccSystemConnectionMemoTest extends SystemConnectionMemoTestBase<T
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new TmccSystemConnectionMemo();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

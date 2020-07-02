@@ -1,7 +1,9 @@
 package jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.ConnectionConfig;
 
 /**
@@ -13,7 +15,7 @@ import jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.ConnectionConf
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -21,7 +23,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

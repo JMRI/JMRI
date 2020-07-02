@@ -3,8 +3,8 @@ package jmri.jmrit.operations.routes.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 
 import jmri.InstanceManager;

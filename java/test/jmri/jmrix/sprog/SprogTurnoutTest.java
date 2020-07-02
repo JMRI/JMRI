@@ -1,9 +1,9 @@
 package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogTurnout.
@@ -31,7 +31,7 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         Assert.assertEquals("content", "O 81 FB 7A", stcs.outbound.elementAt(stcs.outbound.size() - 1).toString());  // CLOSED message
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -48,7 +48,7 @@ public class SprogTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         stcs.dispose();
         JUnitUtil.tearDown();

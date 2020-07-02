@@ -7,10 +7,8 @@ import jmri.SystemConnectionMemo;
 
 import java.util.Comparator;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -169,7 +167,7 @@ public class DefaultSystemConnectionMemoTest {
         Assert.assertTrue("null consist manager", t.provides(jmri.ConsistManager.class));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDebugCommandStation();
@@ -187,7 +185,7 @@ public class DefaultSystemConnectionMemoTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

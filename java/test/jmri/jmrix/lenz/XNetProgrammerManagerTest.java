@@ -1,7 +1,9 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 /**
@@ -37,7 +39,7 @@ public class XNetProgrammerManagerTest {
         Assert.assertNotNull(t.getAddressedProgrammer(false,42));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         XNetTrafficController trafficController = Mockito.mock(XNetTrafficController.class);
@@ -48,7 +50,7 @@ public class XNetProgrammerManagerTest {
         prog = new XNetProgrammer(trafficController);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         prog = null;

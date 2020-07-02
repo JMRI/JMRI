@@ -6,10 +6,9 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -56,12 +55,13 @@ public class LsDecSignalHeadTest extends AbstractSignalHeadTestBase {
         return new LsDecSignalHead("testSys","testUser",green,1,red,2,yellow,3,flashgreen,4,flashred,5,flashyellow,6,off,7);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

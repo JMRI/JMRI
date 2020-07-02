@@ -2,7 +2,9 @@ package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * DCCppReplyTest.java
@@ -186,14 +188,14 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Power Status: ON", l.toMonitorString());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new DCCppReply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = msg = null;
         JUnitUtil.tearDown();

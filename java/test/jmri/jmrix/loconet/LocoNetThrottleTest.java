@@ -2,7 +2,9 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -875,7 +877,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     private SlotManager slotmanager;
     private LocoNetSystemConnectionMemo memo = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -904,7 +906,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new LocoNetThrottle(memo, new LocoNetSlot(0));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         ((LnThrottleManager)memo.getThrottleManager()).dispose();

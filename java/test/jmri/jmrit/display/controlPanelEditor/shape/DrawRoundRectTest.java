@@ -5,11 +5,10 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -43,7 +42,7 @@ public class DrawRoundRectTest {
         JUnitUtil.dispose(frame);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -51,7 +50,7 @@ public class DrawRoundRectTest {
         editor = new EditorScaffold();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         editor = null;
         jmri.util.JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.

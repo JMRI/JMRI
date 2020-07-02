@@ -1,8 +1,8 @@
 package jmri.jmrix.rfid;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * RfidTrafficControllerTest.java
@@ -14,7 +14,7 @@ import org.junit.Before;
 public class RfidTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new RfidTrafficController(){
@@ -25,7 +25,7 @@ public class RfidTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

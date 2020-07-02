@@ -3,10 +3,9 @@ package jmri.jmrix.can.cbus.swing.eventrequestmonitor;
 // import jmri.jmrix.can.CanSystemConnectionMemo;
 // import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CbusEventRequestMonitorEvent
@@ -65,12 +64,12 @@ public class CbusEventRequestMonitorEventTest {
         Assert.assertTrue( t.matchesFeedback(6666,777));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -2,10 +2,9 @@ package jmri.jmrix.jmriclient;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JMRIClientSystemConnectionMemoTest.java
@@ -57,14 +56,14 @@ public class JMRIClientSystemConnectionMemoTest extends SystemConnectionMemoTest
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new JMRIClientSystemConnectionMemo(new JMRIClientTrafficControlScaffold());
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getJMRIClientTrafficController().terminateThreads();
         scm.dispose();

@@ -7,14 +7,14 @@ import static org.assertj.core.api.Assumptions.assumeThat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.SystemConnectionMemo;
 import jmri.util.startup.StartupActionFactory;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Abstract base class for SystemConnectionMemo objects.
@@ -113,10 +113,10 @@ abstract public class SystemConnectionMemoTestBase<M extends DefaultSystemConnec
         Assert.assertEquals("t2", scm.getSystemPrefix());
     }
 
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

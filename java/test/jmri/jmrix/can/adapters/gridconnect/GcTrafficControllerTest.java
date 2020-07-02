@@ -1,8 +1,8 @@
 package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for GcTrafficController.
@@ -11,7 +11,7 @@ import org.junit.Before;
 public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTest {
    
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
@@ -19,7 +19,7 @@ public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTes
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

@@ -4114,8 +4114,14 @@ $(document).ready(function() {
             	if (value !== null) {
             		if (value.type == "idTag") {
             			value = value.data.userName; //for idTags, use the value in userName instead
-            		} else if (value.type == "reporter"){
+            		} else if (value.type == "reporter") {
             			value = value.data.value;    //for reporters, use the value in data instead
+            		} else if (value.type == "rosterEntry") {
+            			if (value.data.icon !== null) {
+            				value = "<html><img src='" + value.data.icon + "'></html>"; //for rosterEntries, create an image tag instead
+            			} else {
+            				value = value.data.name; 						//if roster icon not set, just show the name
+            			}
             		}
             	}
                 updateWidgets(name, value, data);
@@ -4129,6 +4135,12 @@ $(document).ready(function() {
             			value = value.data.userName; //for idTags, use the value in userName instead
             		} else if (value.type == "reporter"){
             			value = value.data.value;    //for reporters, use the value in data instead
+            		} else if (value.type == "rosterEntry") {
+            			if (value.data.icon !== null) {
+            				value = "<html><img src='" + value.data.icon + "'></html>";    //for rosterEntries, create an image tag instead
+            			} else {
+            				value = value.data.name;                        //if roster icon not set, just show the name
+            			}
             		}
             	}
                 updateWidgets(name, value, data);

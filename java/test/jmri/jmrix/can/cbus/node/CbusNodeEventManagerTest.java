@@ -1,16 +1,16 @@
 package jmri.jmrix.can.cbus.node;
 
 import java.util.ArrayList;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -160,7 +160,7 @@ public class CbusNodeEventManagerTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -177,7 +177,7 @@ public class CbusNodeEventManagerTest {
         nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         nodeToEdit.dispose();
