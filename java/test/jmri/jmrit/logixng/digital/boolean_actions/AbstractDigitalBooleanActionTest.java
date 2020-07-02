@@ -38,7 +38,7 @@ public class AbstractDigitalBooleanActionTest {
         Assert.assertTrue("Exception is thrown", hasThrown);
         
         
-        OnChange action2 = new OnChange("IQDB1", null, OnChange.ChangeType.CHANGE);
+        OnChange action2 = new OnChange("IQDB1", null, OnChange.Trigger.CHANGE);
         Assert.assertEquals("New socket name is correct", "A1", action2.getNewSocketName());
     }
 

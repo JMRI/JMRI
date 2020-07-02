@@ -38,7 +38,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     
     @Test
     public void testCtor() {
-        DigitalBooleanActionBean action = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        DigitalBooleanActionBean action = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
         Assert.assertNotNull("exists", new DefaultMaleDigitalBooleanActionSocket(action));
     }
     
@@ -156,7 +156,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        DigitalBooleanActionBean actionA = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        DigitalBooleanActionBean actionA = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
         Assert.assertNotNull("exists", actionA);
         DigitalBooleanActionBean actionB = new MyDigitalBooleanAction("IQDB322");
         Assert.assertNotNull("exists", actionA);

@@ -36,7 +36,7 @@ public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedB
         
         storeCommon(p, element);
 
-        element.setAttribute("whichChange", p.getWhichChange().name());
+        element.setAttribute("whichChange", p.getTrigger().name());
         
         Element e2 = new Element("socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
@@ -59,7 +59,7 @@ public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedB
     public boolean load(Element shared, Element perNode) {
         
         Attribute whichChangeAttribute = shared.getAttribute("whichChange");
-        OnChange.ChangeType whichChange = OnChange.ChangeType.valueOf(whichChangeAttribute.getValue());
+        OnChange.Trigger whichChange = OnChange.Trigger.valueOf(whichChangeAttribute.getValue());
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);

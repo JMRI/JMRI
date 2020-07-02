@@ -194,7 +194,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
     private class MyDigitalBooleanAction extends OnChange {
         
         MyDigitalBooleanAction() {
-            super("IQDB9999", null, OnChange.ChangeType.CHANGE);
+            super("IQDB9999", null, OnChange.Trigger.CHANGE);
         }
         
     }

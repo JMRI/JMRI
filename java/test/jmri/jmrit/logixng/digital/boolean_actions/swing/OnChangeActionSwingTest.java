@@ -32,7 +32,7 @@ public class OnChangeActionSwingTest {
         Assert.assertTrue("panel is not null",
             null != new OnChangeSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new OnChangeSwing().getConfigPanel(new OnChange("IQDB1", null, OnChange.ChangeType.CHANGE), new JPanel()));
+            null != new OnChangeSwing().getConfigPanel(new OnChange("IQDB1", null, OnChange.Trigger.CHANGE), new JPanel()));
     }
     
     // The minimal setup for log4J

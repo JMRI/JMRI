@@ -146,7 +146,7 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         private boolean _hasBeenSetup = false;
         
         public MyOnChangeAction(String systemName) {
-            super(systemName, null, OnChange.ChangeType.CHANGE);
+            super(systemName, null, OnChange.Trigger.CHANGE);
         }
         
         /** {@inheritDoc} */

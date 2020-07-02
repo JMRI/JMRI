@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.DigitalBooleanActionManager;
  */
 public class OnChangeSwing extends AbstractBooleanActionSwing {
 
-    OnChange.ChangeType type = OnChange.ChangeType.CHANGE;
+    OnChange.Trigger type = OnChange.Trigger.CHANGE;
     
     
     @Override

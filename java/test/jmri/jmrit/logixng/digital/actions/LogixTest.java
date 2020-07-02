@@ -192,7 +192,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         DigitalBooleanActionManager m1 = InstanceManager.getDefault(DigitalBooleanActionManager.class);
         
         MaleSocket childSocket0 = m0.registerExpression(new ExpressionMemory("IQDE52", null));
-        MaleSocket childSocket1 = m1.registerAction(new OnChange("IQDB554", null, OnChange.ChangeType.CHANGE));
+        MaleSocket childSocket1 = m1.registerAction(new OnChange("IQDB554", null, OnChange.Trigger.CHANGE));
         
         Logix expression = new Logix("IQDA321", null);
         Assert.assertNotNull("exists", expression);
@@ -318,7 +318,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         actionLogix.getChild(0).connect(maleSocket2);
         
-        OnChange actionOnChange = new OnChange("IQDB4", null, OnChange.ChangeType.CHANGE);
+        OnChange actionOnChange = new OnChange("IQDB4", null, OnChange.Trigger.CHANGE);
         maleSocket2 =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(actionOnChange);
         actionLogix.getChild(1).connect(maleSocket2);

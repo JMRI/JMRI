@@ -23,10 +23,9 @@ public class OnChange extends AbstractDigitalBooleanAction
         implements FemaleSocketListener {
 
     /**
-     * The type of Action. If the type is changed, the action is aborted if it
-     * is currently running.
+     * The trigger of Action.
      */
-    public enum ChangeType {
+    public enum Trigger {
         CHANGE_TO_TRUE,
         CHANGE_TO_FALSE,
         CHANGE,
@@ -34,13 +33,13 @@ public class OnChange extends AbstractDigitalBooleanAction
 
     private String _actionSocketSystemName;
     private final FemaleDigitalActionSocket _actionSocket;
-    ChangeType _whichChange = ChangeType.CHANGE;
+    Trigger _trigger = Trigger.CHANGE;
     
-    public OnChange(String sys, String user, ChangeType whichChange) {
+    public OnChange(String sys, String user, Trigger whichChange) {
         super(sys, user);
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
-        _whichChange = whichChange;
+        _trigger = whichChange;
     }
     
     /** {@inheritDoc} */
@@ -59,7 +58,7 @@ public class OnChange extends AbstractDigitalBooleanAction
     @Override
     public void execute(boolean hasChangedToTrue) throws JmriException {
         if (_actionSocket.isConnected()) {
-            switch (_whichChange) {
+            switch (_trigger) {
                 case CHANGE_TO_TRUE:
                     // Call execute() if change to true
                     if (hasChangedToTrue) {
@@ -77,25 +76,25 @@ public class OnChange extends AbstractDigitalBooleanAction
                     _actionSocket.execute();
                     break;
                 default:
-                    throw new UnsupportedOperationException("_whichChange has unknown value: "+_whichChange);
+                    throw new UnsupportedOperationException("_whichChange has unknown value: "+_trigger);
             }
         }
     }
 
     /**
      * Get the type.
-     * @return the type
+     * @return the trigger
      */
-    public ChangeType getWhichChange() {
-        return _whichChange;
+    public Trigger getTrigger() {
+        return _trigger;
     }
     
     /**
      * Set the type.
-     * @param whichChange the type
+     * @param trigger the trigger
      */
-    public void setType(ChangeType whichChange) {
-        _whichChange = whichChange;
+    public void setTrigger(Trigger trigger) {
+        _trigger = trigger;
     }
     
     @Override
@@ -142,7 +141,7 @@ public class OnChange extends AbstractDigitalBooleanAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        switch (_whichChange) {
+        switch (_trigger) {
             case CHANGE_TO_TRUE:
                 return Bundle.getMessage(locale, "OnChange_Long_ChangeToTrue");
                 
@@ -153,7 +152,7 @@ public class OnChange extends AbstractDigitalBooleanAction
                 return Bundle.getMessage(locale, "OnChange_Long_Change");
                 
             default:
-                throw new UnsupportedOperationException("_whichChange has unknown value: "+_whichChange);
+                throw new UnsupportedOperationException("_whichChange has unknown value: "+_trigger);
         }
     }
 

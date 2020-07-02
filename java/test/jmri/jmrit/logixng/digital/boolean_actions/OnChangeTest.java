@@ -6,7 +6,7 @@ import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.digital.actions.*;
 import jmri.jmrit.logixng.digital.actions.Logix;
-import jmri.jmrit.logixng.digital.boolean_actions.OnChange.ChangeType;
+import jmri.jmrit.logixng.digital.boolean_actions.OnChange.Trigger;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -24,6 +24,7 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     LogixNG logixNG;
     ConditionalNG conditionalNG;
     OnChange _actionOnChange;
+    ActionTurnout _actionTurnout;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -45,7 +46,7 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new OnChange(systemName, null, ChangeType.CHANGE);
+        return new OnChange(systemName, null, Trigger.CHANGE);
     }
     
     @Override
@@ -78,13 +79,13 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     
     @Test
     public void testCtor() {
-        DigitalBooleanActionBean t = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        DigitalBooleanActionBean t = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testCtorAndSetup1() {
-        OnChange action = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        OnChange action = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
         Assert.assertNotNull("exists", action);
         Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
         action.getChild(0).setName("ZH12");
@@ -116,7 +117,7 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     
     @Test
     public void testCtorAndSetup2() {
-        OnChange action = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        OnChange action = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
         Assert.assertNotNull("exists", action);
         Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
         action.getChild(0).setName("ZH12");
@@ -150,7 +151,7 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
         
         MaleSocket childSocket0 = m1.registerAction(new ActionMemory("IQDA554", null));
         
-        OnChange action = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        OnChange action = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
         Assert.assertNotNull("exists", action);
         Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
         action.getChild(0).setName("ZH12");
@@ -210,22 +211,87 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     
     @Test
     public void testGetShortDescription() {
-        DigitalBooleanActionBean a1 = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE_TO_TRUE);
+        DigitalBooleanActionBean a1 = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE_TO_TRUE);
         Assert.assertEquals("strings are equal", "On change", a1.getShortDescription());
-        DigitalBooleanActionBean a2 = new OnChange("IQDB322", null, OnChange.ChangeType.CHANGE_TO_FALSE);
+        DigitalBooleanActionBean a2 = new OnChange("IQDB322", null, OnChange.Trigger.CHANGE_TO_FALSE);
         Assert.assertEquals("strings are equal", "On change", a2.getShortDescription());
-        DigitalBooleanActionBean a3 = new OnChange("IQDB323", null, OnChange.ChangeType.CHANGE);
+        DigitalBooleanActionBean a3 = new OnChange("IQDB323", null, OnChange.Trigger.CHANGE);
         Assert.assertEquals("strings are equal", "On change", a3.getShortDescription());
     }
     
     @Test
     public void testGetLongDescription() {
-        DigitalBooleanActionBean a1 = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE_TO_TRUE);
+        DigitalBooleanActionBean a1 = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE_TO_TRUE);
         Assert.assertEquals("strings are equal", "On change to true", a1.getLongDescription());
-        DigitalBooleanActionBean a2 = new OnChange("IQDB322", null, OnChange.ChangeType.CHANGE_TO_FALSE);
+        DigitalBooleanActionBean a2 = new OnChange("IQDB322", null, OnChange.Trigger.CHANGE_TO_FALSE);
         Assert.assertEquals("strings are equal", "On change to false", a2.getLongDescription());
-        DigitalBooleanActionBean a3 = new OnChange("IQDB323", null, OnChange.ChangeType.CHANGE);
+        DigitalBooleanActionBean a3 = new OnChange("IQDB323", null, OnChange.Trigger.CHANGE);
         Assert.assertEquals("strings are equal", "On change", a3.getLongDescription());
+    }
+    
+    @Test
+    public void testTrigger() {
+        _actionOnChange.setTrigger(Trigger.CHANGE);
+        Assert.assertEquals(Trigger.CHANGE, _actionOnChange.getTrigger());
+        
+        _actionOnChange.setTrigger(Trigger.CHANGE_TO_FALSE);
+        Assert.assertEquals(Trigger.CHANGE_TO_FALSE, _actionOnChange.getTrigger());
+        
+        _actionOnChange.setTrigger(Trigger.CHANGE_TO_TRUE);
+        Assert.assertEquals(Trigger.CHANGE_TO_TRUE, _actionOnChange.getTrigger());
+    }
+    
+    @Test
+    public void testExecute() throws JmriException {
+        
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
+        _actionTurnout.setTurnout(turnout);
+        _actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
+        
+        // Ensure last execute is false
+        _actionOnChange.execute(false);
+        
+        // Test Trigger.CHANGE
+        _actionOnChange.setTrigger(Trigger.CHANGE);
+        turnout.setState(Turnout.CLOSED);
+        _actionOnChange.execute(true);
+        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        turnout.setState(Turnout.CLOSED);
+        _actionOnChange.execute(false);
+        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        turnout.setState(Turnout.CLOSED);
+        _actionOnChange.execute(true);
+        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        
+        // Ensure last execute is false
+        _actionOnChange.execute(false);
+        
+        // Test Trigger.CHANGE_TO_FALSE
+        _actionOnChange.setTrigger(Trigger.CHANGE_TO_FALSE);
+        turnout.setState(Turnout.CLOSED);
+        _actionOnChange.execute(true);
+        Assert.assertEquals(Turnout.CLOSED, turnout.getState());
+        turnout.setState(Turnout.CLOSED);
+        _actionOnChange.execute(false);
+        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        turnout.setState(Turnout.CLOSED);
+        _actionOnChange.execute(true);
+        Assert.assertEquals(Turnout.CLOSED, turnout.getState());
+        
+        // Ensure last execute is false
+        _actionOnChange.execute(false);
+        
+        // Test Trigger.CHANGE_TO_TRUE
+        _actionOnChange.setTrigger(Trigger.CHANGE_TO_TRUE);
+        turnout.setState(Turnout.CLOSED);
+        _actionOnChange.execute(true);
+        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        turnout.setState(Turnout.CLOSED);
+        _actionOnChange.execute(false);
+        Assert.assertEquals(Turnout.CLOSED, turnout.getState());
+        turnout.setState(Turnout.CLOSED);
+        _actionOnChange.execute(true);
+        Assert.assertEquals(Turnout.THROWN, turnout.getState());
     }
     
     // The minimal setup for log4J
@@ -258,14 +324,14 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         action.getChild(0).connect(maleSocket2);
         
-        _actionOnChange = new OnChange("IQDB322", null, OnChange.ChangeType.CHANGE_TO_TRUE);
+        _actionOnChange = new OnChange("IQDB322", null, OnChange.Trigger.CHANGE_TO_TRUE);
         MaleSocket maleSocketActionOnChange =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(_actionOnChange);
         action.getChild(1).connect(maleSocketActionOnChange);
         
-        ActionTurnout actionTurnout = new ActionTurnout("IQDA322", null);
+        _actionTurnout = new ActionTurnout("IQDA322", null);
         maleSocket2 =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(_actionTurnout);
         _actionOnChange.getChild(0).connect(maleSocket2);
         
         _base = _actionOnChange;

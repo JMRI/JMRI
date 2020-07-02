@@ -39,7 +39,7 @@ public class DigitalBooleanActionManagerTest {
         
         
         // We need a male socket to test with, so we register the action and then unregister the socket
-        DigitalBooleanActionBean action = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        DigitalBooleanActionBean action = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
         MaleDigitalBooleanActionSocket maleSocket = m.registerAction(action);
         m.deregister(maleSocket);
         
