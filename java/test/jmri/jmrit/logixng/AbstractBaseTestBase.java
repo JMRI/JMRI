@@ -843,8 +843,8 @@ public abstract class AbstractBaseTestBase {
         PropertyChangeListener listener1 = (PropertyChangeEvent evt) -> {};
         PropertyChangeListener listener2 = (PropertyChangeEvent evt) -> {};
         
-        _baseMaleSocket.addPropertyChangeListener(listener1, null, "A name");
-        _baseMaleSocket.addPropertyChangeListener(listener2, null, "Another name");
+        _baseMaleSocket.addPropertyChangeListener(listener1, "BeanA", "A name");
+        _baseMaleSocket.addPropertyChangeListener(listener2, "BeanB", "Another name");
         Assert.assertEquals("A name", _baseMaleSocket.getListenerRef(listener1));
         List<String> listenerRefs = _baseMaleSocket.getListenerRefs();
         
@@ -858,6 +858,12 @@ public abstract class AbstractBaseTestBase {
         
         _baseMaleSocket.updateListenerRef(listener1, "New name");
         Assert.assertEquals("New name", _baseMaleSocket.getListenerRef(listener1));
+        
+        Assert.assertEquals(listener1,
+                _baseMaleSocket.getPropertyChangeListenersByReference("BeanA")[0]);
+        
+        Assert.assertEquals(listener2,
+                _baseMaleSocket.getPropertyChangeListenersByReference("BeanB")[0]);
     }
     
     
