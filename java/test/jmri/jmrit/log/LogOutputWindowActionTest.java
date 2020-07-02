@@ -1,7 +1,5 @@
 package jmri.jmrit.log;
 
-import apps.jmrit.log.LogOutputWindowAction;
-
 import java.util.*;
 
 import jmri.util.JTextPaneAppender;

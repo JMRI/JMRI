@@ -14,6 +14,7 @@ public class LogFrame extends jmri.util.JmriJFrame {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void initComponents() {
 
         setTitle(Bundle.getMessage("LogInputTitle"));

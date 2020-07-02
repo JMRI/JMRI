@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@SuppressWarnings("deprecation")
 public class LogPanel extends JPanel {
 
     // member declarations

@@ -28,10 +28,6 @@ public class XmlFileValidateAction extends jmri.jmrit.XmlFileValidateAction {
         super(s, who);
     }
 
-    private XmlFileValidateAction(String s, WindowInterface wi) {
-        super(s, wi);
-    }
-
     // package protected for testing
     XmlFileValidateAction() {
         super();

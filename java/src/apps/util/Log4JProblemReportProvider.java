@@ -21,9 +21,9 @@ public class Log4JProblemReportProvider implements LogProblemReportProvider {
     public File[] getFiles() {
         ArrayList<File> list = new ArrayList<>();
         // search for an appender that stores a file
-        for (Enumeration<Appender> en = Logger.getRootLogger().getAllAppenders(); en.hasMoreElements();) {
+        for (Enumeration<?> en = Logger.getRootLogger().getAllAppenders(); en.hasMoreElements();) {
             // does this have a file?
-            Appender a = en.nextElement();
+            Object a = en.nextElement();
             // see if it's one of the ones we know
             log.debug("check appender {}", a);
             if (a instanceof FileAppender) {
