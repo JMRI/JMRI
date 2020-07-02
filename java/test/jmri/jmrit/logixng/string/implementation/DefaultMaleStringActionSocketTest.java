@@ -1,22 +1,26 @@
 package jmri.jmrit.logixng.string.implementation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
 import java.util.Locale;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalBooleanActionSocket;
+import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalBooleanActionSocketTest;
 import jmri.jmrit.logixng.string.actions.AbstractStringAction;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.util.JUnitUtil;
 
 import jmri.jmrit.logixng.string.implementation.DefaultMaleStringActionSocket.StringActionDebugConfig;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
@@ -100,6 +104,29 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         Assert.assertEquals("Something else", expression._value);
     }
     
+    @Test
+    public void testVetoableChange() {
+        MyStringAction action = new MyStringAction("IQSA321");
+        DefaultMaleStringActionSocket socket = new DefaultMaleStringActionSocket(action);
+        Assert.assertNotNull("exists", socket);
+        
+        PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
+        
+        action._vetoChange = true;
+        Throwable thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does throw")
+                .isNotNull()
+                .isInstanceOf(PropertyVetoException.class)
+                .hasMessage("Veto change");
+        
+        action._vetoChange = false;
+        thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does not throw")
+                .isNull();
+    }
+    
     // The minimal setup for log4J
     @BeforeEach
     @Override
@@ -143,6 +170,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         JmriException je = null;
         RuntimeException re = null;
         String _value = "";
+        boolean _vetoChange = false;
         
         MyStringAction(String sysName) {
             super(sysName, null);
@@ -203,6 +231,11 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
             if (je != null) throw je;
             if (re != null) throw re;
             _value = value;
+        }
+        
+        @Override
+        public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+            if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
         }
         
     }

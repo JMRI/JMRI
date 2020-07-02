@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.digital.implementation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -100,6 +102,29 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         Assert.assertTrue(action._value);
     }
     
+    @Test
+    public void testVetoableChange() {
+        MyDigitalBooleanAction action = new MyDigitalBooleanAction("IQDB321");
+        DefaultMaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(action);
+        Assert.assertNotNull("exists", socket);
+        
+        PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
+        
+        action._vetoChange = true;
+        Throwable thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does throw")
+                .isNotNull()
+                .isInstanceOf(PropertyVetoException.class)
+                .hasMessage("Veto change");
+        
+        action._vetoChange = false;
+        thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does not throw")
+                .isNull();
+    }
+    
     // The minimal setup for log4J
     @BeforeEach
     @Override
@@ -144,6 +169,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         JmriException je = null;
         RuntimeException re = null;
         boolean _value = false;
+        boolean _vetoChange = false;
         
         MyDigitalBooleanAction(String sysName) {
             super(sysName, null);
@@ -204,6 +230,11 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
             if (je != null) throw je;
             if (re != null) throw re;
            _value = hasChangedToTrue;
+        }
+        
+        @Override
+        public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+            if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
         }
         
     }

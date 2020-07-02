@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.digital.implementation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -12,12 +14,12 @@ import jmri.jmrit.logixng.digital.expressions.And;
 import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
 import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalExpressionSocket.DigitalExpressionDebugConfig;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
@@ -95,6 +97,29 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertFalse(socket.evaluate());
     }
     
+    @Test
+    public void testVetoableChange() {
+        MyDigitalExpression action = new MyDigitalExpression("IQDE321");
+        DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(action);
+        Assert.assertNotNull("exists", socket);
+        
+        PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
+        
+        action._vetoChange = true;
+        Throwable thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does throw")
+                .isNotNull()
+                .isInstanceOf(PropertyVetoException.class)
+                .hasMessage("Veto change");
+        
+        action._vetoChange = false;
+        thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does not throw")
+                .isNull();
+    }
+    
     // The minimal setup for log4J
     @BeforeEach
     @Override
@@ -139,6 +164,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         JmriException je = null;
         RuntimeException re = null;
         boolean result = false;
+        boolean _vetoChange = false;
         
         MyDigitalExpression(String sysName) {
             super(sysName, null);
@@ -204,6 +230,11 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         @Override
         public void reset() {
             throw new UnsupportedOperationException("Not supported.");
+        }
+        
+        @Override
+        public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+            if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
         }
         
     }

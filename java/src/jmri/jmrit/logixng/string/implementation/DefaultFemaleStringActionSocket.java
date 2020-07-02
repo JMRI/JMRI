@@ -1,8 +1,7 @@
 package jmri.jmrit.logixng.string.implementation;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.beans.*;
+import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;

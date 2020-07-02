@@ -5,12 +5,16 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+
 import javax.annotation.CheckForNull;
+
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.implementation.AbstractBase;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -831,6 +835,39 @@ public abstract class AbstractBaseTestBase {
         flagDisconnected.set(false);
         _base.getChild(0).disconnect();
         Assert.assertTrue("flag is set", flagDisconnected.get());
+    }
+    
+    @Test
+    public void testPropertyChangeListeners5() {
+        
+        
+        AtomicBoolean ab = new AtomicBoolean(false);
+        
+        PropertyChangeListener listener1 = (PropertyChangeEvent evt) -> {
+            ab.set(true);
+        };
+        PropertyChangeListener listener2 = (PropertyChangeEvent evt) -> {
+            ab.set(true);
+        };
+        
+        ab.set(false);
+        
+        
+        
+        
+        _base.addPropertyChangeListener(listener1, null, "A name");
+        _base.addPropertyChangeListener(listener2, null, "Another name");
+        Assert.assertEquals("A name", _base.getListenerRef(listener1));
+        List<String> listenerRefs = _base.getListenerRefs();
+        // The order of the listener refs may differ between runs
+        Collections.sort(listenerRefs);
+        String listString = listenerRefs.stream().map(Object::toString)
+                        .collect(Collectors.joining(", "));
+        
+        Assert.assertEquals("A name, Another name", listString);
+        
+        _base.updateListenerRef(listener1, "New name");
+        Assert.assertEquals("New name", _base.getListenerRef(listener1));
     }
     
     

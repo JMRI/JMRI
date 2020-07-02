@@ -1,9 +1,11 @@
 package jmri.jmrit.logixng;
 
+import java.beans.*;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Locale;
 
-import javax.annotation.CheckForNull;
+import javax.annotation.*;
 
 import jmri.NamedBean;
 import jmri.beans.PropertyChangeProvider;
@@ -323,22 +325,6 @@ public interface Base extends PropertyChangeProvider {
         return true;
     }
     
-    /*.*
-     * Register listeners if this object needs that.
-     * <P>
-     * Important: This method may be called more than once. Methods overriding
-     * this method must ensure that listeners are not registered more than once.
-     *./
-    public void registerListeners();
-    
-    /*.*
-     * Unregister listeners if this object needs that.
-     * <P>
-     * Important: This method may be called more than once. Methods overriding
-     * this method must ensure that listeners are not unregistered more than once.
-     *./
-    public void unregisterListeners();
-*/    
     /**
      * Print the tree to a stream.
      * 
@@ -365,6 +351,85 @@ public interface Base extends PropertyChangeProvider {
      * @param currentIndent the current indentation
      */
     public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent);
+    
+    /**
+     * Request a call-back when a bound property changes. Bound properties are
+     * the known state, commanded state, user and system names.
+     *
+     * @param listener    The listener. This may change in the future to be a
+     *                        subclass of NamedProprtyChangeListener that
+     *                        carries the name and listenerRef values internally
+     * @param name        The name (either system or user) that the listener
+     *                        uses for this namedBean, this parameter is used to
+     *                        help determine when which listeners should be
+     *                        moved when the username is moved from one bean to
+     *                        another
+     * @param listenerRef A textual reference for the listener, that can be
+     *                        presented to the user when a delete is called
+     */
+    public void addPropertyChangeListener(@Nonnull PropertyChangeListener listener, String name, String listenerRef);
+
+    /**
+     * Request a call-back when a bound property changes. Bound properties are
+     * the known state, commanded state, user and system names.
+     *
+     * @param propertyName The name of the property to listen to
+     * @param listener     The listener. This may change in the future to be a
+     *                         subclass of NamedProprtyChangeListener that
+     *                         carries the name and listenerRef values
+     *                         internally
+     * @param name         The name (either system or user) that the listener
+     *                         uses for this namedBean, this parameter is used
+     *                         to help determine when which listeners should be
+     *                         moved when the username is moved from one bean to
+     *                         another
+     * @param listenerRef  A textual reference for the listener, that can be
+     *                         presented to the user when a delete is called
+     */
+    public void addPropertyChangeListener(@Nonnull String propertyName, @Nonnull PropertyChangeListener listener,
+            String name, String listenerRef);
+    
+    public void updateListenerRef(@Nonnull PropertyChangeListener l, String newName);
+    
+    public void vetoableChange(@Nonnull PropertyChangeEvent evt) throws PropertyVetoException;
+    
+    /**
+     * Get the textual reference for the specific listener
+     *
+     * @param l the listener of interest
+     * @return the textual reference
+     */
+    @CheckReturnValue
+    public String getListenerRef(@Nonnull PropertyChangeListener l);
+    
+    /**
+     * Returns a list of all the listeners references
+     *
+     * @return a list of textual references
+     */
+    @CheckReturnValue
+    public ArrayList<String> getListenerRefs();
+    
+    /**
+     * Number of current listeners. May return -1 if the information is not
+     * available for some reason.
+     *
+     * @return the number of listeners.
+     */
+    @CheckReturnValue
+    public int getNumPropertyChangeListeners();
+    
+    /**
+     * Get a list of all the property change listeners that are registered using
+     * a specific name
+     *
+     * @param name The name (either system or user) that the listener has
+     *                 registered as referencing this namedBean
+     * @return empty list if none
+     */
+    @CheckReturnValue
+    @Nonnull
+    public PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name);
     
     
     

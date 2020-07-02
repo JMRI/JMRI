@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.analog.implementation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -10,13 +12,15 @@ import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.analog.expressions.AbstractAnalogExpression;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.analog.implementation.DefaultMaleAnalogExpressionSocket.AnalogExpressionDebugConfig;
+import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalBooleanActionSocket;
+import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalBooleanActionSocketTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
@@ -96,6 +100,29 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertTrue(93.23 == socket.evaluate());
     }
     
+    @Test
+    public void testVetoableChange() {
+        MyAnalogExpression action = new MyAnalogExpression("IQAE321");
+        DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(action);
+        Assert.assertNotNull("exists", socket);
+        
+        PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
+        
+        action._vetoChange = true;
+        Throwable thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does throw")
+                .isNotNull()
+                .isInstanceOf(PropertyVetoException.class)
+                .hasMessage("Veto change");
+        
+        action._vetoChange = false;
+        thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does not throw")
+                .isNull();
+    }
+    
     // The minimal setup for log4J
     @BeforeEach
     @Override
@@ -140,6 +167,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         JmriException je = null;
         RuntimeException re = null;
         double result = 0.0;
+        boolean _vetoChange = false;
         
         MyAnalogExpression(String sysName) {
             super(sysName, null);
@@ -205,6 +233,11 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         @Override
         public void reset() {
             throw new UnsupportedOperationException("Not supported.");
+        }
+        
+        @Override
+        public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+            if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
         }
         
     }

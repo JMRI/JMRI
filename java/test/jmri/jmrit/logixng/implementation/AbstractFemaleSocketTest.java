@@ -1,6 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.beans.PropertyChangeListener;
+import java.beans.*;
 import java.io.*;
 import java.util.*;
 
@@ -322,6 +322,46 @@ public class AbstractFemaleSocketTest {
 
         @Override
         public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void addPropertyChangeListener(PropertyChangeListener listener, String name, String listenerRef) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener, String name, String listenerRef) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void updateListenerRef(PropertyChangeListener l, String newName) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public String getListenerRef(PropertyChangeListener l) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public ArrayList<String> getListenerRefs() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public int getNumPropertyChangeListeners() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
             throw new UnsupportedOperationException("Not supported");
         }
     

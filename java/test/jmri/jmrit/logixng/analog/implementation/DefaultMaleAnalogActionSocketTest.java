@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.analog.implementation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
 import java.util.Locale;
 
 import jmri.InstanceManager;
@@ -10,12 +12,12 @@ import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.analog.actions.AbstractAnalogAction;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
@@ -97,6 +99,29 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         Assert.assertTrue(9.23 == action._value);
     }
     
+    @Test
+    public void testVetoableChange() {
+        DefaultMaleAnalogActionSocketTest.MyAnalogAction action = new DefaultMaleAnalogActionSocketTest.MyAnalogAction("IQAA321");
+        DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(action);
+        Assert.assertNotNull("exists", socket);
+        
+        PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
+        
+        action._vetoChange = true;
+        Throwable thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does throw")
+                .isNotNull()
+                .isInstanceOf(PropertyVetoException.class)
+                .hasMessage("Veto change");
+        
+        action._vetoChange = false;
+        thrown = catchThrowable( () -> socket.vetoableChange(evt));
+        assertThat(thrown)
+                .withFailMessage("vetoableChange() does not throw")
+                .isNull();
+    }
+    
     // The minimal setup for log4J
     @BeforeEach
     @Override
@@ -141,6 +166,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         JmriException je = null;
         RuntimeException re = null;
         double _value = 0.0;
+        boolean _vetoChange = false;
         
         MyAnalogAction(String sysName) {
             super(sysName, null);
@@ -201,6 +227,11 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
             if (je != null) throw je;
             if (re != null) throw re;
             _value = value;
+        }
+        
+        @Override
+        public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+            if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
         }
         
     }
