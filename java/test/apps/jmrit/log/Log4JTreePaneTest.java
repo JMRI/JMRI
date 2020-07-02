@@ -28,7 +28,7 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
 
         new jmri.util.swing.JmriNamedPaneAction("Log4J Tree",
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
-                "jmri.jmrit.log.Log4JTreePane").actionPerformed(null);
+                "apps.jmrit.log.Log4JTreePane").actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("MenuItemLogTreeAction"), true, true);
         Assert.assertNotNull(f);
         JUnitUtil.dispose(f);
@@ -43,7 +43,7 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
 
         panel = new Log4JTreePane();
         title=Bundle.getMessage("MenuItemLogTreeAction");
-        helpTarget="package.jmri.jmrit.log.Log4JTreePane";
+        helpTarget="package.apps.jmrit.log.Log4JTreePane";
     }
 
     @AfterEach
