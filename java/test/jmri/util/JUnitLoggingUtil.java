@@ -12,16 +12,9 @@ public class JUnitLoggingUtil extends LoggingUtil {
     /**
      * Restart the "once" part of {@link #warnOnce} so that the nextInvocation
      * will log, even if it already has.
-     * <p>
-     * Should only be used by test code. We denote this by marking it
-     * deprecated, but we don't intend to remove it.
      */
     public static void restartWarnOnce() {
-        // be a bit more efficient
-        if (warnOnceHasWarned) {
-            warnedOnce = new HashMap<>();
-            warnOnceHasWarned = false;
-        }
+        warnedOnce = new HashMap<>();
     }
 
     /**

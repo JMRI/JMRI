@@ -14,14 +14,14 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2017
  * @author Bob Jacobsen 2018
  */
-public class XmlFileValidateActionTest {
+public class XmlFileValidateRunnerTest {
 
     private boolean pass;
     private boolean fail;
 
     @Test
     public void testFileOK() {
-        XmlFileValidateAction t = new XmlFileValidateAction() {
+        XmlFileValidateRunner t = new XmlFileValidateRunner() {
             @Override
             protected void showOkResults(Component who, String text) {
                 pass = true;
@@ -45,7 +45,7 @@ public class XmlFileValidateActionTest {
     // should find a "Duplicate key value [LT1] declared" error on or about line 14 of java/test/jmri/configurexml/invalid/TurnoutDuplicateSystemName.xml
     @Test
     public void testFileFails() {
-        XmlFileValidateAction t = new XmlFileValidateAction() {
+        XmlFileValidateRunner t = new XmlFileValidateRunner() {
             @Override
             protected void showOkResults(Component who, String text) {
                 pass = true;
@@ -79,6 +79,6 @@ public class XmlFileValidateActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XmlFileValidateActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(XmlFileValidateRunnerTest.class);
 
 }

@@ -11,10 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Make sure an XML file is readable, and validates OK against its schema and DTD.
+ * Make sure an XML file is readable, and validates OK against its schema and
+ * DTD.
  * <p>
- * Can also be run from the command line with e.g. ./runtest.csh
- * jmri/jmrit/XmlFileValidateAction foo.xml in which case if there's a filename
+ * Intended to be run from the command line with e.g. ./runtest.csh
+ * jmri/jmrit/XmlFileValidateRunner foo.xml in which case if there's a filename
  * argument, it checks that directly, otherwise it pops a file selection dialog.
  * (The dialog form has to be manually canceled when done)
  *
@@ -22,14 +23,14 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileCheckAction
  */
-public class XmlFileValidateAction extends jmri.jmrit.XmlFileValidateAction {
+public class XmlFileValidateRunner extends jmri.jmrit.XmlFileValidateAction {
 
-    private XmlFileValidateAction(String s, Component who) {
+    private XmlFileValidateRunner(String s, Component who) {
         super(s, who);
     }
 
     // package protected for testing
-    XmlFileValidateAction() {
+    XmlFileValidateRunner() {
         super();
     }
 
@@ -37,10 +38,10 @@ public class XmlFileValidateAction extends jmri.jmrit.XmlFileValidateAction {
     static public void main(String[] args) {
         // if a 1st argument provided, act
         if (args.length == 0) {
-            new XmlFileValidateAction("", (Component) null).actionPerformed(null);
+            new XmlFileValidateRunner("", (Component) null).actionPerformed(null);
         } else {
             apps.util.Log4JUtil.initLogging("default.lcf");
-            new XmlFileValidateAction("", (Component) null) {
+            new XmlFileValidateRunner("", (Component) null) {
                 @Override
                 protected void showFailResults(Component who, String fileName, String text) {
                     log.error("{}: {}", Bundle.getMessage("ValidationErrorInFile", fileName), text);
@@ -55,6 +56,6 @@ public class XmlFileValidateAction extends jmri.jmrit.XmlFileValidateAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class);
+    private final static Logger log = LoggerFactory.getLogger(XmlFileValidateRunner.class);
 
 }

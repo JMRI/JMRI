@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 public class LoggingUtil {
 
     protected static Map<Logger, Set<String>> warnedOnce = new HashMap<>();
-    protected static boolean warnOnceHasWarned = false;
     protected static boolean logDeprecations = true;
 
     /**
@@ -37,7 +36,6 @@ public class LoggingUtil {
         if (loggerSet.contains(msg)) {
             return false;
         }
-        warnOnceHasWarned = true;
         loggerSet.add(msg);
         logger.warn(msg, args);
         return true;
