@@ -23,6 +23,7 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;
+    OnChange _actionOnChange;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -79,6 +80,122 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     public void testCtor() {
         DigitalBooleanActionBean t = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
         Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testCtorAndSetup1() {
+        OnChange action = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        Assert.assertNotNull("exists", action);
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        action.getChild(0).setName("ZH12");
+        action.setActionSocketSystemName("IQDA554");
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        // Setup action. This connects the child actions to this action
+        action.setup();
+        
+        jmri.util.JUnitAppender.assertMessage("cannot load digital action IQDA554");
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+    }
+    
+    @Test
+    public void testCtorAndSetup2() {
+        OnChange action = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        Assert.assertNotNull("exists", action);
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        action.getChild(0).setName("ZH12");
+        action.setActionSocketSystemName(null);
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        // Setup action. This connects the child actions to this action
+        action.setup();
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+    }
+    
+    @Test
+    public void testCtorAndSetup3() {
+        DigitalActionManager m1 = InstanceManager.getDefault(DigitalActionManager.class);
+        
+        MaleSocket childSocket0 = m1.registerAction(new ActionMemory("IQDA554", null));
+        
+        OnChange action = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
+        Assert.assertNotNull("exists", action);
+        Assert.assertEquals("action has 1 female socket", 1, action.getChildCount());
+        action.getChild(0).setName("ZH12");
+        action.setActionSocketSystemName("IQDA554");
+        
+        Assert.assertEquals("action female socket name is ZH12",
+                "ZH12", action.getChild(0).getName());
+        Assert.assertEquals("action female socket is of correct class",
+                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                action.getChild(0).getClass().getName());
+        Assert.assertFalse("action female socket is not connected",
+                action.getChild(0).isConnected());
+        
+        // Setup action. This connects the child actions to this action
+        action.setup();
+        
+        Assert.assertTrue("action female socket is connected",
+                action.getChild(0).isConnected());
+        Assert.assertEquals("child is correct bean",
+                childSocket0,
+                action.getChild(0).getConnectedSocket());
+        
+        Assert.assertEquals("action has 1 female sockets", 1, action.getChildCount());
+        
+        // Try run setup() again. That should not cause any problems.
+        action.setup();
+        
+        Assert.assertEquals("action has 1 female sockets", 1, action.getChildCount());
+    }
+    
+    @Test
+    public void testGetChild() {
+        Assert.assertTrue("getChildCount() returns 1", 1 == _actionOnChange.getChildCount());
+        
+        Assert.assertNotNull("getChild(0) returns a non null value",
+                _actionOnChange.getChild(0));
+        
+        boolean hasThrown = false;
+        try {
+            _actionOnChange.getChild(1);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index has invalid value: 1", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     @Test
@@ -141,17 +258,17 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         action.getChild(0).connect(maleSocket2);
         
-        OnChange actionOnChange = new OnChange("IQDB322", null, OnChange.ChangeType.CHANGE_TO_TRUE);
+        _actionOnChange = new OnChange("IQDB322", null, OnChange.ChangeType.CHANGE_TO_TRUE);
         MaleSocket maleSocketActionOnChange =
-                InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(actionOnChange);
+                InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(_actionOnChange);
         action.getChild(1).connect(maleSocketActionOnChange);
         
         ActionTurnout actionTurnout = new ActionTurnout("IQDA322", null);
         maleSocket2 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
-        actionOnChange.getChild(0).connect(maleSocket2);
+        _actionOnChange.getChild(0).connect(maleSocket2);
         
-        _base = actionOnChange;
+        _base = _actionOnChange;
         _baseMaleSocket = maleSocketActionOnChange;
         
         logixNG.setParentForAllChildren();

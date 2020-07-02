@@ -16,18 +16,18 @@ import org.junit.Test;
  */
 public class ActionTimerTest extends AbstractDigitalActionTestBase {
 
-    LogixNG logixNG;
-    ConditionalNG conditionalNG;
-    ActionTimer actionTimer;
+    LogixNG _logixNG;
+    ConditionalNG _conditionalNG;
+    ActionTimer _actionTimer;
     
     @Override
     public ConditionalNG getConditionalNG() {
-        return conditionalNG;
+        return _conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return logixNG;
+        return _logixNG;
     }
     
     @Override
@@ -176,14 +176,14 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 1", 1 == actionTimer.getChildCount());
+        Assert.assertTrue("getChildCount() returns 1", 1 == _actionTimer.getChildCount());
         
         Assert.assertNotNull("getChild(0) returns a non null value",
-                actionTimer.getChild(0));
+                _actionTimer.getChild(0));
         
         boolean hasThrown = false;
         try {
-            actionTimer.getChild(1);
+            _actionTimer.getChild(1);
         } catch (IllegalArgumentException ex) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "index has invalid value: 1", ex.getMessage());
@@ -245,22 +245,22 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         _category = Category.OTHER;
         _isExternal = false;
         
-        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+        _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        _conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
-        conditionalNG.setEnabled(true);
-        conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.addConditionalNG(conditionalNG);
-        actionTimer = new ActionTimer("IQDA321", null);
+        _conditionalNG.setEnabled(true);
+        _conditionalNG.setRunOnGUIDelayed(false);
+        _logixNG.addConditionalNG(_conditionalNG);
+        _actionTimer = new ActionTimer("IQDA321", null);
         MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTimer);
-        conditionalNG.getChild(0).connect(maleSocket);
-        _base = actionTimer;
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(_actionTimer);
+        _conditionalNG.getChild(0).connect(maleSocket);
+        _base = _actionTimer;
         _baseMaleSocket = maleSocket;
         
-        logixNG.setParentForAllChildren();
-        logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
+        _logixNG.setParentForAllChildren();
+        _logixNG.setEnabled(true);
+        _logixNG.activateLogixNG();
     }
 
     @After
