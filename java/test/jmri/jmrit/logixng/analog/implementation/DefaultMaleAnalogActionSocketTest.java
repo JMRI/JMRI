@@ -13,15 +13,15 @@ import jmri.jmrit.logixng.analog.actions.AbstractAnalogAction;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
- * Test ExpressionTimer
+ * Test DefaultMaleAnalogSocket
  * 
  * @author Daniel Bergqvist 2018
  */
@@ -97,6 +97,37 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         action._value = 23.111;
         socket.setValue(9.23);
         Assert.assertTrue(9.23 == action._value);
+    }
+    
+    @Test
+    public void testEvaluateErrors() {
+        MyAnalogAction action = new MyAnalogAction("IQAA321");
+        DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(action);
+        Assert.assertNotNull("exists", socket);
+        
+        socket.setEnabled(true);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        
+        Throwable thrown = catchThrowable( () -> socket.setValue(Double.NaN));
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("The value is NaN");
+        
+        thrown = catchThrowable( () -> socket.setValue(Double.NEGATIVE_INFINITY));
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("The value is negative infinity");
+        
+        thrown = catchThrowable( () -> socket.setValue(Double.POSITIVE_INFINITY));
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("The value is positive infinity");
     }
     
     @Test
