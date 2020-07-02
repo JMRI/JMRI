@@ -1,14 +1,15 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+
 import jmri.util.FileUtil;
+
 import javax.swing.JLabel;
 
 /**
@@ -44,12 +45,12 @@ public class LokProgImporterTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

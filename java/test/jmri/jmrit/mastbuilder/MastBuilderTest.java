@@ -1,12 +1,12 @@
 package jmri.jmrit.mastbuilder;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmrit.mastbuilder package and jmrit.mastbuilder.MastBuilder
@@ -25,13 +25,13 @@ public class MastBuilderTest {
         JUnitUtil.dispose(p);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

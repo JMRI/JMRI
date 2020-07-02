@@ -1,10 +1,9 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -18,7 +17,7 @@ public class SpeedProfilePanelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -26,7 +25,7 @@ public class SpeedProfilePanelTest {
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

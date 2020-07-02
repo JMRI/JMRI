@@ -1,9 +1,7 @@
 package jmri.util;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.*;
 
@@ -98,12 +96,12 @@ public class NamedBeanComparatorTest {
         Assert.assertTrue(hit);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

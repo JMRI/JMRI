@@ -1,12 +1,13 @@
 package jmri.jmrix.openlcb.swing.send;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import jmri.jmrix.can.TestTrafficController;
 
 /**
@@ -25,7 +26,7 @@ public class OpenLcbCanSendActionTest {
         Assert.assertNotNull("Action object non-null", h);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -35,7 +36,7 @@ public class OpenLcbCanSendActionTest {
         memo.setTrafficController(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         memo = null;

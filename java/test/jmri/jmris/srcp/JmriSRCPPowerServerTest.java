@@ -1,9 +1,9 @@
 package jmri.jmris.srcp;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

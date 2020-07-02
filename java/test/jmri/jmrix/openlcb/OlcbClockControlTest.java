@@ -1,9 +1,7 @@
 package jmri.jmrix.openlcb;
 
 import org.jdom2.Element;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -25,8 +23,11 @@ import jmri.util.JUnitUtil;
 import static jmri.Timebase.ClockInitialRunState.DO_NOTHING;
 import static jmri.Timebase.ClockInitialRunState.DO_START;
 import static jmri.Timebase.ClockInitialRunState.DO_STOP;
+
 import static org.junit.Assert.*;
+
 import static jmri.jmrix.openlcb.OlcbConfigurationManager.*;
+
 import static org.mockito.Mockito.mock;
 
 /**
@@ -58,12 +59,12 @@ public class OlcbClockControlTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (iface != null) iface.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
@@ -526,7 +527,8 @@ public class OlcbClockControlTest {
         });
     }
 
-    @Test(timeout=1000)
+    @Test
+    @Timeout(1000)
     public void thisTestDidNotKillJemmy() {
         new org.netbeans.jemmy.QueueTool().waitEmpty();  // using 100 as argument has a high fail rate 2018-12-15
     }

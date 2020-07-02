@@ -4,9 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Comparator;
 import java.util.ResourceBundle;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 import jmri.NamedBean;
 
@@ -23,12 +22,12 @@ public abstract class AbstractPortControllerTestBase {
     // from here down is testing infrastructure
     protected AbstractPortController apc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         apc = new AbstractPortControllerScaffold();
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
        apc = null;
     }

@@ -3,10 +3,8 @@ package jmri.jmrit.operations.router;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -4394,7 +4392,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     }
 
     // Ensure minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -4417,7 +4415,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
     }

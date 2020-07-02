@@ -1,8 +1,8 @@
 package jmri.jmrix.xpa;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * XpaThrottleManagerTest.java
@@ -14,7 +14,7 @@ import org.junit.Before;
 public class XpaThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         XpaSystemConnectionMemo memo = new XpaSystemConnectionMemo();
@@ -22,7 +22,7 @@ public class XpaThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         tm = new XpaThrottleManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

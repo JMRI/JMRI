@@ -1,10 +1,9 @@
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractTurnoutTestBase;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the jmri.jmrix.maple.SerialTurnout class.
@@ -49,7 +48,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // prepare an interface
@@ -61,7 +60,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     }
 
     // OK to used this for class clean up?
-    @After
+    @AfterEach
     public void tearDown() {
         tcis = null;
         _memo.dispose();

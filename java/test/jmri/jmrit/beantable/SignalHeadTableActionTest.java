@@ -10,7 +10,9 @@ import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.implementation.SE8cSignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -155,7 +157,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHea
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -167,7 +169,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase<SignalHea
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         a = null;
         JUnitUtil.tearDown();

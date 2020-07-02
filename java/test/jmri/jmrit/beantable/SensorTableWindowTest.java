@@ -1,9 +1,11 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -11,11 +13,9 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
@@ -123,7 +123,7 @@ public class SensorTableWindowTest {
         new QueueTool().waitEmpty();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -132,7 +132,7 @@ public class SensorTableWindowTest {
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

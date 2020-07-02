@@ -6,13 +6,15 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import jmri.JmriException;
 import jmri.util.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.Operator;
 
 /**
  * Test simple functioning of TrackSegment.
  * <p>
- * Note this uses <code>@BeforeClass</code> and <code>@AfterClass</code> to do
+ * Note this uses <code>@BeforeAll</code> and <code>@AfterAll</code> to do
  * static setup.
  *
  * @author Paul Bender Copyright (C) 2016
@@ -702,7 +704,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
 
@@ -720,7 +722,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             if (layoutEditor != null) {
@@ -739,7 +741,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUpEach() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -757,7 +759,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @After
+    @AfterEach
     public void tearDownEach() throws Exception {
         // release refereces to track segment
         trackSegment = null;

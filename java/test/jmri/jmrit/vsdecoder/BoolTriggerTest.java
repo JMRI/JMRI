@@ -1,8 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
+
 import org.jdom2.Element;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BoolTrigger class

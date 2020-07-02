@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 
 import jmri.jmrit.blockboss.BlockBossLogicProvider;
+
 import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
@@ -25,7 +26,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import apps.SystemConsole;
+
 import java.util.concurrent.Callable;
+
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
@@ -1229,7 +1232,7 @@ public class JUnitUtil {
      * @Rule
      * public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
      *
-     * @Before
+     * @BeforeEach
      * public void setUp() {
      *     resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
      * }

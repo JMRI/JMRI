@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import java.awt.GraphicsEnvironment;
 
 /**
@@ -16,12 +18,12 @@ public class LayoutTrackDrawingOptionsTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

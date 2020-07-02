@@ -3,17 +3,17 @@ package jmri.jmrit.beantable;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.NamedBean;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
@@ -188,13 +188,13 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
     /**
      * Derived classes should use this method to set a.
      */
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
     /**
      * Derived classes should use this method to clean up after tests.
      */
-    @After
+    @AfterEach
     abstract public void tearDown();
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractTableActionBase.class);

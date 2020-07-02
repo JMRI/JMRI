@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus.node;
 
+import java.io.File;
 import java.util.ArrayList;
+
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -389,16 +389,13 @@ public class CbusNodeBackupManagerTest {
         
     }
     
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    @Before
-    public void setUp() throws java.io.IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

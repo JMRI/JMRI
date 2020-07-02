@@ -1,15 +1,16 @@
 package jmri.util.swing.multipane;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+
 import jmri.util.JUnitUtil;
 import jmri.util.swing.ButtonTestAction;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Invokes complete set of tests in the jmri.util tree
@@ -60,14 +61,14 @@ public class MultiPaneWindowTest {
         JUnitUtil.dispose(f);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

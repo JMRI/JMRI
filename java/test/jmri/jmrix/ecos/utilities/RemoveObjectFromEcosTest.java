@@ -1,10 +1,9 @@
 package jmri.jmrix.ecos.utilities;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * RemoveObjectFromEcosTest.java
@@ -20,12 +19,12 @@ public class RemoveObjectFromEcosTest {
       Assert.assertNotNull("RemoveObjectFromEcos constructor",new RemoveObjectFromEcos());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -3,10 +3,9 @@ package jmri.jmrix.lenz.xntcp;
 import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import jmri.jmrix.lenz.XNetListenerScaffold;
 import jmri.jmrix.lenz.XNetMessage;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * <p>
@@ -147,7 +146,7 @@ public class XnTcpXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -163,7 +162,7 @@ public class XnTcpXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc.terminateThreads();

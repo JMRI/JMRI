@@ -526,7 +526,10 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>VSD now supports the "Location Following" (sound follows loco) with occupancy
+                sensors and JMRI Blocks. See the 
+				<a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#VSDLocations">
+                documentation</a> for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>

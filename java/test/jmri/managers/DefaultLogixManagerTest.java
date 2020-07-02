@@ -2,10 +2,9 @@ package jmri.managers;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.Logix;
 import jmri.LogixManager;
@@ -70,7 +69,7 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
         Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));      
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -81,7 +80,7 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
         l = new DefaultLogixManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();

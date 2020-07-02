@@ -3,10 +3,9 @@ package jmri.jmrix.can.cbus.node;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -106,7 +105,7 @@ public class CbusNodeFromFcuTableDataModelTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -114,7 +113,7 @@ public class CbusNodeFromFcuTableDataModelTest {
         memo.setTrafficController(tcis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         tcis.terminateThreads();
