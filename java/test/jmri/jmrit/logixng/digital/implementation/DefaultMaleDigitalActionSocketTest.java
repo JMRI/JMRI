@@ -121,6 +121,20 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
                 .isNull();
     }
     
+    @Test
+    public void testCompareSystemNameSuffix() {
+        MyDigitalAction action1 = new MyDigitalAction("IQDA1");
+        MyDigitalAction action2 = new MyDigitalAction("IQDA01");
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                -1, action1.compareSystemNameSuffix("01", "1", action2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, action1.compareSystemNameSuffix("1", "1", action2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, action1.compareSystemNameSuffix("01", "01", action2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                +1, action1.compareSystemNameSuffix("1", "01", action2));
+    }
+    
     // The minimal setup for log4J
     @BeforeEach
     @Override

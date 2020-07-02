@@ -9,8 +9,11 @@ import jmri.InstanceManager;
 import jmri.util.*;
 import jmri.util.junit.rules.*;
 
-import org.junit.*;
-import org.junit.rules.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.jupiter.api.*;
+import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
@@ -279,7 +282,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         return t;
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -296,7 +299,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         a = new LogixNGTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;

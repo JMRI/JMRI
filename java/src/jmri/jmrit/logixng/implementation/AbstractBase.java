@@ -2,6 +2,11 @@ package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
 import java.util.Locale;
+
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
+import jmri.NamedBean;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -148,6 +153,17 @@ public abstract class AbstractBase
         for (int i=0; i < getChildCount(); i++) {
             getChild(i).printTree(locale, writer, indent, currentIndent+indent);
         }
+    }
+    
+    /**
+     * {@inheritDoc} 
+     * 
+     * Do a string comparison.
+     */
+    @CheckReturnValue
+    @Override
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+        return suffix1.compareTo(suffix2);
     }
     
     /**

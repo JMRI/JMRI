@@ -7,6 +7,7 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.analog.implementation.DefaultMaleAnalogActionSocketTest;
 import jmri.util.JUnitUtil;
 
 import jmri.jmrit.logixng.digital.boolean_actions.AbstractDigitalBooleanAction;
@@ -123,6 +124,20 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         assertThat(thrown)
                 .withFailMessage("vetoableChange() does not throw")
                 .isNull();
+    }
+    
+    @Test
+    public void testCompareSystemNameSuffix() {
+        MyDigitalBooleanAction action1 = new MyDigitalBooleanAction("IQDB1");
+        MyDigitalBooleanAction action2 = new MyDigitalBooleanAction("IQDB01");
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                -1, action1.compareSystemNameSuffix("01", "1", action2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, action1.compareSystemNameSuffix("1", "1", action2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, action1.compareSystemNameSuffix("01", "01", action2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                +1, action1.compareSystemNameSuffix("1", "01", action2));
     }
     
     // The minimal setup for log4J

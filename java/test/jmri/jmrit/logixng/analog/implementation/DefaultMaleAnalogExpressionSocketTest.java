@@ -123,6 +123,20 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
                 .isNull();
     }
     
+    @Test
+    public void testCompareSystemNameSuffix() {
+        MyAnalogExpression expression1 = new MyAnalogExpression("IQAE1");
+        MyAnalogExpression expression2 = new MyAnalogExpression("IQAE01");
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                -1, expression1.compareSystemNameSuffix("01", "1", expression2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, expression1.compareSystemNameSuffix("1", "1", expression2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, expression1.compareSystemNameSuffix("01", "01", expression2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                +1, expression1.compareSystemNameSuffix("1", "01", expression2));
+    }
+    
     // The minimal setup for log4J
     @BeforeEach
     @Override
