@@ -131,7 +131,7 @@ It's even possible to make e.g. 5.6.3.1 with _just_ one specific change, and not
 Once we have agreement
  - [ ] update documentation, which adds this to the main web server
  
-The assumption is that we will start with the new process directly after JMRI 4.20.0 is released. That number makes it serve as both the last production release of the old numbering scheme, while also fitting within the new schema.  This would then be followed by 4.21.1 (the .1 isn't quite right, but we've already seen comments for that name) as the first of the new process.
+The assumption is that we will start with the new process directly after JMRI 4.20.0 is released. That number makes it serve as both the last production release of the old numbering scheme, while also fitting within the new schema.  This would then be followed by 4.21.1 (the .1 isn't quite right, but we've already seen comments for that name) as the first minor feature release of the new process.
 
  - [ ] Create the new labels
     - [ ] Check if any of the old labels need to be updated/ superceded
@@ -140,8 +140,8 @@ The assumption is that we will start with the new process directly after JMRI 4.
  - [ ] Set Github protections so `master` cannot be updated by PRs
  
  - [ ] Create the new branches: (we are temporarily leaving `master` as-is just this one time)
-    - [ ] `dev-major`, `dev-minor` from v4.20
-    - [ ] `dev-update` from the current `master` as a HEAD of current development (`master` will be reset to 4.20.1 once it's released)
+    - [ ] `dev-major`, `dev-minor` from the current `master` as a HEAD of current development, freezing `master` at that point
+    - [ ] `dev-update` from v4.20 (in case a v4.20.1 is needed quickly)
     
  - [ ] Figure out how numberings will work in Version.java et al and commit changes as needed to number the three branches as 5.0.0, 4.22.0 and 4.21.1 respectively
  - [ ] Figure out and document how release notes will work across these branches, put that mechanism in place
@@ -152,7 +152,6 @@ The assumption is that we will start with the new process directly after JMRI 4.
  - [ ] Create a GitHub action CI to check the ability to merge `dev-update` -> `dev-minor`, `dev-update` -> `dev-major` and/or `dev-minor` -> `dev-major` as appropriate
 
  - [ ] (Once it's decided it's ready, based on whatever criteria is chosen) Create and tag release 4.21.1 as the first under this system
-    - [ ] Update `master` to the released 4.21.1
-    - [ ] Update `dev-update` to be working on 4.22.2
+    - [ ] Update `master` and `dev-update` to the released 4.21.1
  
 
