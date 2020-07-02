@@ -42,7 +42,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         Assert.assertNotNull("exists", new DefaultMaleDigitalBooleanActionSocket(action));
     }
     
-    @org.junit.jupiter.api.Test
+    @Test
     public void testEvaluate() throws JmriException {
         MyDigitalBooleanAction action = new MyDigitalBooleanAction("IQDB321");
         DefaultMaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(action);

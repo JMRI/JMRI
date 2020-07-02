@@ -42,7 +42,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("object exists", new DefaultMaleAnalogExpressionSocket(expression));
     }
     
-    @org.junit.jupiter.api.Test
+    @Test
     public void testEvaluate() throws JmriException {
         MyAnalogExpression expression = new MyAnalogExpression("IQAE321");
         DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(expression);

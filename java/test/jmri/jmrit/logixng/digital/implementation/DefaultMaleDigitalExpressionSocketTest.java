@@ -41,7 +41,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", new DefaultMaleDigitalExpressionSocket(expression));
     }
     
-    @org.junit.jupiter.api.Test
+    @Test
     public void testEvaluate() throws JmriException {
         MyDigitalExpression expression = new MyDigitalExpression("IQDE321");
         DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(expression);

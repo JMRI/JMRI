@@ -39,7 +39,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("object exists", new DefaultMaleAnalogActionSocket(action));
     }
     
-    @org.junit.jupiter.api.Test
+    @Test
     public void testSetValue() throws JmriException {
         MyAnalogAction action = new MyAnalogAction("IQAA321");
         DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(action);

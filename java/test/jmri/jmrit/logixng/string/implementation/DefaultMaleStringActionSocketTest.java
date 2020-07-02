@@ -43,7 +43,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", new DefaultMaleStringActionSocket(action));
     }
     
-    @org.junit.jupiter.api.Test
+    @Test
     public void testEvaluate() throws JmriException {
         MyStringAction expression = new MyStringAction("IQSA321");
         DefaultMaleStringActionSocket socket = new DefaultMaleStringActionSocket(expression);
