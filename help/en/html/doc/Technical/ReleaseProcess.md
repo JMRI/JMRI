@@ -69,6 +69,81 @@ The goal of this is to make it possible to work on i.e. updates from a stable ba
 
 The periodic upward merges are meant to find conflicts where a major change turns out to be incompatible with ongoing bug fixes and minor changes.  The longer between major-change releases, the more likely those conflicts are.  This just forces them to the surface earlier for resolution.
 
+ ## Merging and Release Process Examples
+ 
+ In all of these, assume that the most recent release numbers are 4.23.1, 4.24.0 and 5.0.0; various people are test/using all three.
+ 
+ There are two approaches to handling overlapped features and fixes, which we discuss here as alternatives. In the following diagrams, time runs downwards.  We start by showing a few changes applied to the branches, and a 4.23.3 fix is published.
+ 
+|           |   `dev-update` |   `dev-minor`  |  `dev-update` |
+| :-----:   |   :----------: |   :----------: |  :----------: |
+| Numbered: |  pre-4.23.2    |   pre-4.25.0   |   pre-6.0.0   |
+|   Fix     |       A        |        A       |      A        |
+|   Fix     |       B        |        B       |      B        |
+|   Feat    |                |        C       |      C        |
+| Br Change |                |                |      D        |
+|   Pub     |    4.23.2      |                |               |
+|           |  pre-4.23.3    |                |               |
+|   Feat    |                |        E       |      E        |
+|   Feat    |                |        F       |      F        |
+
+ Assume it's time to publish 4.25.0 from `dev-minor`. At this point, there are two choices:
+
+ - since 4.25.0 is thought to be worth publishing, it should form the basis for `dev-update` from now:  Any "fix" PRs there will be eventually be the basis for a 4.25.1, 4.25.2, etc. Meanwhile, "feature" PRs go on the `dev-minor` branch on the way to 4.26.0, which is the next published from here.  
+
+|           |   `dev-update` |   `dev-minor`  |  `dev-update` |
+| :-----:   |   :----------: |   :----------: |  :----------: |
+| Numbered: |  pre-4.23.3    |   pre-4.25.0   |   pre-6.0.0   |
+|   Pub     |                |     4.25.0     |               | 
+|           |                !       <--      |               |
+|           |  pre-4.25.1    |   pre-4.26.0   |               |
+|   Feat    |                |        G       |      G        |
+|  Fix  G   |       H        |        H       |      H        |
+|           |                |                |               | 
+
+ 
+ - Or, we could say we're not that certain about `dev-minor`, and put both fixes and features there which we can release as 4.25.1 when needed. (Leaving `dev-update` as the place to make further fixes to the 4.23.* series as needed).  
+
+|           |   `dev-update` |   `dev-minor`  |  `dev-update` |
+| :-----:   |   :----------: |   :----------: |  :----------: |
+| Numbered: |  pre-4.23.3    |   pre-4.25.0   |   pre-6.0.0   |
+|   Pub     |                |     4.25.0     |               | 
+|           |                |   pre-4.25.1   |               |
+|   Feat    |                |        G       |      G        |
+|  Fix G    |                |        H       |      H        |
+|           |                |                |               | 
+ 
+ The second has the problem that the 4.25.1 could include include features not present in 4.25.0 (i.e. G), which is not consistent with the Semantic Versioning pattern.  On the other hand, it's easier to issue fixes to keep making changes to the 4.23.* series after 4.25.0 is out. That can be important, but we can do almost as good a version of that by only updating `master` later.  So in the following, we proposed the 1st form.
+ 
+ 
+ ### Update
+ 
+Somebody as a small bug to fix.  He edits in the fix on a branch from `master`.  This gets merged into all three branches. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) If it's significant enough, or enough has accumulated, this will get released as part of 4.24.2, in which case it'll be tagged there as v4.24.2 and `master` will be reset to that tag.
+ 
+  ### Minor Change
+  
+Somebody has a minor change (new feature that appears in API). He edits it in on a branch from `master`. This gets merged via PR into the `dev-minor` branch and `dev-major` branch. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) When that, and perhaps other, minor changes are ready to be made available to the user community, a 4.25.0 release will be made, tagged as v4.25.0. 
+
+The `dev-update` branch is updated to this point and marked to build 4.25.1 next. 
+
+The `dev-minor` branch is marked to build 4.26.0 next.
+  
+Before this, `master` was at 4.22.2 to serve as a clean base for all three branches. It can stay there for a little while 4.25.0 isn't going to get a lot of use (i.e. if there's likely to be multiple fixes to 4.22.2 for a 4.22.3, etc)  But shortly it should be updated to 4.25.0 to be closer to the development head of the branches.
+  
+  #### Fix to Minor Change
+  
+Say that something was broken by the minor change above.  A developer can edit in that fix on a branch from `dev-minor`, make a PR against the `dev-minor` branch, get it merged, and then a v5.8.1 can be released.  That can be made the base for development or not as needed.
+  
+  #### Merging updates to a Minor Change
+  
+Alternately, after v5.8.0 is out, a developer might want to fix an issue in 5.6.3 that identically affects (because that code was unchanged) the 5.8.0 release.  He edits on a branch off `master`, does a PR against `dev-update`, that gets merged and then that branch is merged upward (as usual) into the `dev-minor` branch.  This allows a v.5.8.1 to be created as needed. That can be made the base for development or not as needed.
+   
+   ### Major Changes
+   
+Major changes go basically as above.  They're created off `master` if possible, or off the `dev-major` branch if (more likely) they're cumulative on other major changes. Then the various operations go through as above.
+
+The hardest thing for "major change" releases will be developing a consensus around when they should become the default.  That's a community feature vs cost and quality control issue, not a Git technology one.
+
 ## Release Timing
 
 We need a process to decide when releases should be made from the branches. Making a release, which can be done from any of the three branches is basically just making new installers (with a different name injected, as we do now) and changing a few web pages, so with a bit more automation it'll be quick to do.  
@@ -85,86 +160,18 @@ How do we decide when to do that if we don't have a monthly cadence?
  
 One possible sequence of development and release:
  - Publish from `dev-update` whenever enough has accumulated; no specific cadence
- - Publish from `dev-minor` roughly 4-6 weeks to get feedback
- 
- But how do we get feedback on `dev-update`?
+ - Publish from `dev-minor` roughly 4-6 weeks and strongly encourage use to get feedback
+ - Publish from `dev-major` on targeted dates with major changes.
 
-|           |   `dev-update` |   `dev-minor`  |  `dev-update` |
-| -------   |   ------------ |   ------------ |  ------------ |
-| Numbered: |  pre-4.23.2    |   pre-4.24.0   |   pre-5.0.0   |
-|   Fix     |       A        |        A       |      A        |
-|   Fix     |       B        |        B       |      B        |
-|   Feat    |                |        C       |      C        |
-| Br Change |                |                |      D        |
-|   Pub     |    4.23.2      |                |               |
-|           |  pre-4.23.3    |                |               |
-|   Feat    |                |        E       |      E        |
-|   Feat    |                |        F       |      F        |
+To it another way:  Publish the `dev-minor` branch to users often and consistently, using the `dev-update` to get fixes out more often.  This is basically "test releases with fixes". Eventually, effort focuses on one set of fixes until that particular head of `dev-update` is good enough to call a production release.
 
-Assume it's time to publish 4.24.0 from `dev-minor`. At this point, there are two choices:
-
- - since 4.24.0 is thought to be worth publishing, it should form the basis for `dev-update` from now:  Any "fix" PRs there will be eventually be the basis for a 4.24.1, 4.24.2, etc. Meanwhile, "feature" PRs go on the `dev-minor` branch on the way to 4.25.0, which is the next published from here.  
-
-|           |   `dev-update` |   `dev-minor`  |  `dev-update` |
-| -------   |   ------------ |   ------------ |  ------------ |
-| Numbered: |  pre-4.23.2    |   pre-4.24.0   |   pre-5.0.0   |
-|   Pub     |                |     4.24.0     |               | 
-|           |               <--               |               |
-|           |  pre-4.24.1    |   pre-4.25.0   |               |
-|   Feat    |                |        G       |      G        |
-|  Fix  G   |       H        |        H       |      H        |
-|           |                |                |               | 
-
- 
- - Or, we could say we're not that certain about `dev-minor`, and put both fixes and features there which we can release as 4.24.1 when needed. (Leaving `dev-update` as the place to make futher fixes to the 4.23.* series as needed).  
-
-|           |   `dev-update` |   `dev-minor`  |  `dev-update` |
-| -------   |   ------------ |   ------------ |  ------------ |
-| Numbered: |  pre-4.23.2    |   pre-4.24.0   |   pre-5.0.0   |
-|   Pub     |                |     4.24.0     |               | 
-|           |                |   pre-4.24.1   |               |
-|   Feat    |                |        G       |      G        |
-|  Fix G    |                |        H       |      H        |
-|           |                |                |               | 
- 
- The second has the problem that the 4.24.1 could include include features not present in 4.24.0, which is not consistent with the Semantic Versioning pattern.  On the other hand, it's easier to issue fixes to the 4.23.* series after 4.24.0 is out.
- 
- The key question remains:  How do we use these numberw to simultaneously get fixes to users _and_ encourage them to test new features?
-
+One could also imagine a "periodic production release from `dev-major` with fixes" model, but the key question remains:  How do we use these numbers to simultaneously get fixes to users _and_ encourage them to test new features?
 
 ## Web Contents
 
 The default web content (from [https://jmri.org](https://jmri.org)) will be from the HEAD of the `dev-update` branch.  This allows minor content fixes to get on the web immediately.
 
 Simultaneously, the HEAD of the `dev-minor` and `dev-major` branches will populate web content starting at [https://jmri.org/minor](https://jmri.org/minor) and [https://jmri.org/major](https://jmri.org/major)  This will allow people to see Javadoc, point people to recently updated pages, etc.
-
- ## Merging and Release Process Examples
- 
- In all of these, assume that the most recent release numbers are 5.6.3, 5.7.0 and 6.0.0; various people are test/using all three.
- 
- ### Update
- 
-Somebody as a small bug to fix.  He edits in the fix on a branch from `master`.  This gets merged into all three branches. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) If it's significant enough, or enough has accumulated, this will get released as part of 5.6.4, in which case it'll be tagged there as v5.6.4 and `master` will be reset to that tag.
- 
-  ### Minor Change
-  
-Somebody has a minor change (new feature that appears in API). He edits it in on a branch from `master`. This gets merged via PR into the `dev-minor` branch and `dev-major` branch. (The upward merging will probably be a separate step; perhaps only a check for that possibility will be made when merging the PR) When that, and perhaps other, minor changes are ready to be made available to the user community, a 5.8.0 release will be made, tagged as v5.8.0.
-  
-At this point, `master` remains at 5.6.3. At some later point, when 5.8.0 or perhaps 5.8.1 is viewed as stable enough that it can become the default, both the `master` and `dev-update` branches will be reset to (say) 5.8.1 so that becomes the base for further development.
-  
-  #### Fix to Minor Change
-  
-Say that something was broken by the minor change above.  A developer can edit in that fix on a branch from v5.8.0, make a PR against the `dev-minor` branch, get it merged, and then a v5.8.1 can be released.  That can be made the base for development or not as needed.
-  
-  #### Merging updates to a Minor Change
-  
-Alternately, after v5.8.0 is out, a developer might want to fix an issue in 5.6.3 that identically affects (because that code was unchanged) the 5.8.0 release.  He edits on a branch off `master`, does a PR against `dev-update`, that gets merged and then that branch is merged upward (as usual) into the `dev-minor` branch.  This allows a v.5.8.1 to be created as needed. That can be made the base for development or not as needed.
-   
-   ### Major Changes
-   
-Major changes go basically as above.  They're created off `master` if possible, or off the `dev-major` branch if (more likely) they're cumulative on other major changes. Then the various operations go through as above.
-
-The hardest thing for "major change" releases will be developing a consensus around when they should become the default.  That's a community feature vs cost and quality control issue, not a Git technology one.
 
   
  ## Other Things to Note
