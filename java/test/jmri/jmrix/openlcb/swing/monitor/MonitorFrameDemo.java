@@ -8,7 +8,9 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorFrame class
@@ -67,7 +69,7 @@ public class MonitorFrameDemo {
     }
 
     @Test
-    @Ignore("Duplicates Test in MonitorFrameTest")
+    @Disabled("Duplicates Test in MonitorFrameTest")
     public void XtestFormatMsg() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -100,7 +102,7 @@ public class MonitorFrameDemo {
     }
 
     @Test
-    @Ignore("Duplicates Test in MonitorFrameTest")
+    @Disabled("Duplicates Test in MonitorFrameTest")
     public void XtestFormatReply() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -135,7 +137,7 @@ public class MonitorFrameDemo {
         frame.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -147,7 +149,7 @@ public class MonitorFrameDemo {
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class, memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         memo = null;

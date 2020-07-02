@@ -1,6 +1,6 @@
 package jmri.jmrix.lenz;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -8,14 +8,14 @@ import org.junit.*;
  */
 public class XNetStreamConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfigTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         cc = new XNetStreamConnectionConfig(new XNetStreamPortController());
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         cc = null;

@@ -9,7 +9,9 @@ import jmri.util.*;
 import java.util.*;
 import javax.swing.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 
 import org.openlcb.*;
@@ -221,13 +223,13 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     //
     // This only initialized JUnit and Log4J once per class so that it
     // can only initialize the OpenLCB structure once per class
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         messages = new java.util.ArrayList<>();
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -254,13 +256,13 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         messages = null;
     }
 
-    @AfterClass
+    @AfterAll
     public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();

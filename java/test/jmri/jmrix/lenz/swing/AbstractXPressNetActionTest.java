@@ -4,9 +4,8 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +29,7 @@ public class AbstractXPressNetActionTest {
         assertThat(t).isNotNull();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUpLoggingAndCommonProperties();
         XNetTrafficController tc = Mockito.mock(XNetTrafficController.class);
@@ -40,7 +39,7 @@ public class AbstractXPressNetActionTest {
         Mockito.when(memo.getXNetTrafficController()).thenReturn(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.tearDown();

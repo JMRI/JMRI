@@ -1,7 +1,8 @@
 package jmri.jmrix.ecos.networkdriver.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -12,7 +13,7 @@ import org.junit.*;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXmlTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -23,7 +24,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
         //cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

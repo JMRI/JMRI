@@ -3,8 +3,8 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 import jmri.jmrit.operations.OperationsTestCase;

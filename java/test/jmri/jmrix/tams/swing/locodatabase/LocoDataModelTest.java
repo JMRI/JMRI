@@ -1,9 +1,8 @@
 package jmri.jmrix.tams.swing.locodatabase;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.jmrix.tams.TamsInterfaceScaffold;
 import jmri.jmrix.tams.TamsTrafficController;
@@ -22,14 +21,14 @@ public class LocoDataModelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();
         memo = new TamsSystemConnectionMemo(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

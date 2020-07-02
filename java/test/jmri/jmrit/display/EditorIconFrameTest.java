@@ -3,9 +3,11 @@ package jmri.jmrit.display;
 import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 import java.util.Collection;
+
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;

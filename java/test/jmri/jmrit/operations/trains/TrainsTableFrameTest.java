@@ -5,8 +5,7 @@ import java.text.MessageFormat;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -18,18 +17,16 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
+import jmri.util.junit.rules.RetryRule;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@Timeout(10)
 public class TrainsTableFrameTest extends OperationsTestCase {
 
-    @Rule
-    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(10);
-
-    @Rule
-    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(3); // first, plus three retries
+    public RetryRule retryRule = new RetryRule(3); // first, plus three retries
 
     @Test
     public void testCTor() {

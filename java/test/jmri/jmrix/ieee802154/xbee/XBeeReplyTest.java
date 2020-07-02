@@ -1,10 +1,9 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -78,14 +77,14 @@ public class XBeeReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("xbee response after set",xbresponse,msg.getXBeeResponse());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = new XBeeReply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

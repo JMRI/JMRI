@@ -1,17 +1,18 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JPopupMenu;
+
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -106,7 +107,7 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
     private TrafficControllerScaffold tcis;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -119,7 +120,7 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() { 
         memo.dispose();
         memo=null;

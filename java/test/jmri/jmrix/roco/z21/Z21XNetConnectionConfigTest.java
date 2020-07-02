@@ -1,8 +1,8 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,14 +10,14 @@ import org.junit.Before;
  */
 public class Z21XNetConnectionConfigTest extends jmri.jmrix.AbstractStreamConnectionConfigTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         cc = new Z21XNetConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         cc = null;

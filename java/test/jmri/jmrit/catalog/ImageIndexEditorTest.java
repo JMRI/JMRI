@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.swing.SwingShutDownTask;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -48,14 +50,14 @@ public class ImageIndexEditorTest {
         tasks.forEach(sdm::deregister);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

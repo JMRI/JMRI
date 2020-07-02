@@ -3,16 +3,16 @@ package jmri.jmrit.symbolicprog;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -351,13 +351,13 @@ public class CompositeVariableValueTest extends AbstractVariableValueTestBase {
 
     private final static Logger log = LoggerFactory.getLogger(CompositeVariableValueTest.class);
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

@@ -47,7 +47,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * VetoableChangeListeners.
      */
     private final List<String> vetoablePropertyNames = new ArrayList<>();
-    protected final Map<String, Boolean> mutedProperties = new HashMap<>();
+    protected final Map<String, Boolean> silencedProperties = new HashMap<>();
+    protected final Set<String> silenceableProperties = new HashSet<>();
 
     /**
      * {@inheritDoc}
@@ -380,7 +381,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
             recomputeNamedBeanSet();
         }
         event.setPropagationId(this);
-        if (!mutedProperties.getOrDefault(event.getPropertyName(), false)) {
+        if (!silencedProperties.getOrDefault(event.getPropertyName(), false)) {
             firePropertyChange(event);
         }
     }
@@ -487,9 +488,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setPropertyChangesMuted(String propertyName, boolean muted) {
-        mutedProperties.put(propertyName, muted);
-        if (propertyName.equals("beans") && !muted) {
+    public void setPropertyChangesSilenced(String propertyName, boolean silenced) {
+        // since AbstractProxyManager has no explicit constructors, acccept
+        // "beans" as well as anything needed to be accepted by subclasses
+        if (!"beans".equals(propertyName) && !silenceableProperties.contains(propertyName)) {
+            throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
+        }
+        silencedProperties.put(propertyName, silenced);
+        if (propertyName.equals("beans") && !silenced) {
             fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);
         }
     }

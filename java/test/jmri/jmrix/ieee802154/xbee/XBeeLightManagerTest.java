@@ -6,10 +6,8 @@ import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.Light;
 
@@ -106,7 +104,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -129,7 +127,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         tc.registerNode(node);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminate();
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
