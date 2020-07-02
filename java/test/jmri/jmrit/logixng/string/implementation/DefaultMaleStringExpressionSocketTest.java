@@ -1,20 +1,22 @@
 package jmri.jmrit.logixng.string.implementation;
 
 import java.util.Locale;
+
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.MaleSocketTestBase;
-import jmri.jmrit.logixng.StringExpressionManager;
-import jmri.jmrit.logixng.StringExpressionBean;
+import jmri.JmriException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.string.expressions.AbstractStringExpression;
 import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
+import jmri.jmrit.logixng.string.implementation.DefaultMaleStringExpressionSocket.StringExpressionDebugConfig;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test ExpressionTimer
@@ -35,8 +37,69 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", new DefaultMaleStringExpressionSocket(expression));
     }
     
+    @Test
+    public void testEvaluate() throws JmriException {
+        MyStringExpression expression = new MyStringExpression("IQSE321");
+        DefaultMaleStringExpressionSocket socket = new DefaultMaleStringExpressionSocket(expression);
+        Assert.assertNotNull("exists", socket);
+        
+        socket.setEnabled(true);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        
+        expression.je = null;
+        expression.re = null;
+        expression.result = "Something";
+        Assert.assertEquals("Something", socket.evaluate());
+        expression.result = "Something else";
+        Assert.assertEquals("Something else", socket.evaluate());
+        expression.result = "";
+        Assert.assertEquals("", socket.evaluate());
+        expression.result = null;
+        Assert.assertNull(socket.evaluate());
+        
+        expression.je = new JmriException("Test JmriException");
+        expression.re = null;
+        Throwable thrown = catchThrowable( () -> socket.evaluate());
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(JmriException.class)
+                .hasMessage("Test JmriException");
+        
+        expression.je = null;
+        expression.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.evaluate());
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Test RuntimeException");
+        
+        // If the socket is not enabled, it shouldn't do anything
+        socket.setEnabled(false);
+        expression.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.evaluate());
+        assertThat(thrown)
+                .withFailMessage("Evaluate does nothing")
+                .isNull();
+        
+        // Test debug config
+        socket.setEnabled(true);
+        StringExpressionDebugConfig config = new StringExpressionDebugConfig();
+        socket.setDebugConfig(config);
+        expression.je = null;
+        expression.re = null;
+        config._forceResult = true;
+        config._result = "Hello";
+        expression.result = "Something";
+        Assert.assertEquals("Hello", socket.evaluate());
+        config._forceResult = false;
+        Assert.assertEquals("Something", socket.evaluate());
+    }
+    
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -59,10 +122,11 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
         maleSocketB =
                 InstanceManager.getDefault(StringExpressionManager.class)
                         .registerExpression(actionB);
-        Assert.assertNotNull("exists", maleSocketA);
+        Assert.assertNotNull("exists", maleSocketB);
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -74,18 +138,22 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
      */
     private class MyStringExpression extends AbstractStringExpression {
         
+        JmriException je = null;
+        RuntimeException re = null;
+        String result = "";
+        
         MyStringExpression(String sysName) {
             super(sysName, null);
         }
 
         @Override
         protected void registerListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
         protected void unregisterListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
@@ -110,7 +178,7 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
 
         @Override
         public int getChildCount() {
-            throw new UnsupportedOperationException("Not supported.");
+            return 0;
         }
 
         @Override
@@ -129,8 +197,10 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public String evaluate() {
-            throw new UnsupportedOperationException("Not supported.");
+        public String evaluate() throws JmriException {
+            if (je != null) throw je;
+            if (re != null) throw re;
+            return result;
         }
         
         @Override

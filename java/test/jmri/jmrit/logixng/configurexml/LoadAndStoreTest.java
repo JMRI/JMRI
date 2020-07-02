@@ -2,9 +2,13 @@ package jmri.jmrit.logixng.configurexml;
 
 
 import jmri.configurexml.*;
+
 import java.io.File;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test that configuration files can be read and then stored again consistently.
@@ -20,17 +24,21 @@ import org.junit.runners.Parameterized;
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
-@RunWith(Parameterized.class)
 public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
-    @Parameterized.Parameters(name = "{0} (pass={1})")
-    public static Iterable<Object[]> data() {
+    public static Stream<Arguments> data() {
         return getFiles(new File("java/test/jmri/jmrit/logixng/configurexml"), false, true);
     }
 
-    public LoadAndStoreTest(File file, boolean pass) {
-        // LogixNG cannot be loaded twice
-        super(file, pass, SaveType.Config, true);
-//        super(file, pass, SaveType.Config, false);
+    @ParameterizedTest(name = "{index}: {0} (pass={1})")
+    @MethodSource("data")
+    public void loadAndStoreTest(File file, boolean pass) throws Exception {
+        super.loadLoadStoreFileCheck(file);
     }
+
+    public LoadAndStoreTest() {
+        // LogixNG cannot be loaded twice
+        super(SaveType.Config, true);
+    }
+
 }

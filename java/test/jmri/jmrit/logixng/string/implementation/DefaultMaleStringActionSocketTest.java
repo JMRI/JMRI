@@ -1,20 +1,23 @@
 package jmri.jmrit.logixng.string.implementation;
 
 import java.util.Locale;
+
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.MaleSocketTestBase;
-import jmri.jmrit.logixng.StringActionBean;
-import jmri.jmrit.logixng.StringActionManager;
+import jmri.JmriException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.string.actions.AbstractStringAction;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import jmri.jmrit.logixng.string.implementation.DefaultMaleStringActionSocket.StringActionDebugConfig;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test ExpressionTimer
@@ -35,8 +38,71 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", new DefaultMaleStringActionSocket(action));
     }
     
+    @org.junit.jupiter.api.Test
+    public void testEvaluate() throws JmriException {
+        MyStringAction expression = new MyStringAction("IQSA321");
+        DefaultMaleStringActionSocket socket = new DefaultMaleStringActionSocket(expression);
+        Assert.assertNotNull("exists", socket);
+        
+        socket.setEnabled(true);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        
+        expression.je = null;
+        expression.re = null;
+        socket.setValue("Something");
+        Assert.assertEquals("Something", expression._value);
+        socket.setValue("Something else");
+        Assert.assertEquals("Something else", expression._value);
+        socket.setValue("");
+        Assert.assertEquals("", expression._value);
+        socket.setValue(null);
+        Assert.assertNull(expression._value);
+        
+        expression.je = new JmriException("Test JmriException");
+        expression.re = null;
+        Throwable thrown = catchThrowable( () -> socket.setValue("Something"));
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(JmriException.class)
+                .hasMessage("Test JmriException");
+        
+        expression.je = null;
+        expression.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.setValue("Something"));
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Test RuntimeException");
+        
+        // If the socket is not enabled, it shouldn't do anything
+        socket.setEnabled(false);
+        expression.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.setValue("Something"));
+        assertThat(thrown)
+                .withFailMessage("Evaluate does nothing")
+                .isNull();
+        
+        // Test debug config
+        socket.setEnabled(true);
+        StringActionDebugConfig config = new StringActionDebugConfig();
+        socket.setDebugConfig(config);
+        expression.je = null;
+        expression.re = null;
+        config._dontExecute = true;
+        expression._value = "Hello";
+        socket.setValue("Something");
+        Assert.assertEquals("Hello", expression._value);
+        config._dontExecute = false;
+        expression._value = "Hello";
+        socket.setValue("Something else");
+        Assert.assertEquals("Something else", expression._value);
+    }
+    
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -48,7 +114,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         
         StringActionBean actionA = new StringActionMemory("IQSA321", null);
         Assert.assertNotNull("exists", actionA);
-        StringActionBean actionB = new MyAnalogAction("IQSA322");
+        StringActionBean actionB = new MyStringAction("IQSA322");
         Assert.assertNotNull("exists", actionA);
         
         maleSocketA =
@@ -59,33 +125,37 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         maleSocketB =
                 InstanceManager.getDefault(StringActionManager.class)
                         .registerAction(actionB);
-        Assert.assertNotNull("exists", maleSocketA);
+        Assert.assertNotNull("exists", maleSocketB);
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
     
     
     /**
-     * This action is different from MyAnalogAction and is used to test the
- male socket.
+     * This action is different from MyAnalogAction and is used to test the male socket.
      */
-    private class MyAnalogAction extends AbstractStringAction {
+    private class MyStringAction extends AbstractStringAction {
         
-        MyAnalogAction(String sysName) {
+        JmriException je = null;
+        RuntimeException re = null;
+        String _value = "";
+        
+        MyStringAction(String sysName) {
             super(sysName, null);
         }
 
         @Override
         protected void registerListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
         protected void unregisterListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
@@ -110,7 +180,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
 
         @Override
         public int getChildCount() {
-            throw new UnsupportedOperationException("Not supported.");
+            return 0;
         }
 
         @Override
@@ -129,8 +199,10 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public void setValue(String value) {
-            throw new UnsupportedOperationException("Not supported.");
+        public void setValue(String value) throws JmriException {
+            if (je != null) throw je;
+            if (re != null) throw re;
+            _value = value;
         }
         
     }

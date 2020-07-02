@@ -1,21 +1,24 @@
 package jmri.jmrit.logixng.digital.implementation;
 
 import java.util.Locale;
+
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
+import jmri.JmriException;
+import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.MaleSocketTestBase;
-import jmri.jmrit.logixng.DigitalExpressionManager;
+
 import jmri.jmrit.logixng.digital.expressions.AbstractDigitalExpression;
 import jmri.jmrit.logixng.digital.expressions.And;
 import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalExpressionSocket.DigitalExpressionDebugConfig;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test ExpressionTimer
@@ -36,8 +39,65 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", new DefaultMaleDigitalExpressionSocket(expression));
     }
     
+    @org.junit.jupiter.api.Test
+    public void testEvaluate() throws JmriException {
+        MyDigitalExpression expression = new MyDigitalExpression("IQDE321");
+        DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(expression);
+        Assert.assertNotNull("exists", socket);
+        
+        socket.setEnabled(true);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        
+        expression.je = null;
+        expression.re = null;
+        expression.result = true;
+        Assert.assertTrue(socket.evaluate());
+        expression.result = false;
+        Assert.assertFalse(socket.evaluate());
+        
+        expression.je = new JmriException("Test JmriException");
+        expression.re = null;
+        Throwable thrown = catchThrowable( () -> socket.evaluate());
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(JmriException.class)
+                .hasMessage("Test JmriException");
+        
+        expression.je = null;
+        expression.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.evaluate());
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Test RuntimeException");
+        
+        // If the socket is not enabled, it shouldn't do anything
+        socket.setEnabled(false);
+        expression.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.evaluate());
+        assertThat(thrown)
+                .withFailMessage("Evaluate does nothing")
+                .isNull();
+        
+        // Test debug config
+        socket.setEnabled(true);
+        DigitalExpressionDebugConfig config = new DigitalExpressionDebugConfig();
+        socket.setDebugConfig(config);
+        expression.je = null;
+        expression.re = null;
+        config._forceResult = true;
+        config._result = true;
+        expression.result = false;
+        Assert.assertTrue(socket.evaluate());
+        config._forceResult = false;
+        Assert.assertFalse(socket.evaluate());
+    }
+    
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -60,20 +120,25 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         maleSocketB =
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .registerExpression(expressionB);
-        Assert.assertNotNull("exists", maleSocketA);
+        Assert.assertNotNull("exists", maleSocketB);
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
     
     
     /**
-     * This action is different from MyStringAction and is used to test the
+     * This action is different from action And and is used to test the
      * male socket.
      */
     private class MyDigitalExpression extends AbstractDigitalExpression {
+        
+        JmriException je = null;
+        RuntimeException re = null;
+        boolean result = false;
         
         MyDigitalExpression(String sysName) {
             super(sysName, null);
@@ -81,12 +146,12 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
 
         @Override
         protected void registerListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
         protected void unregisterListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
@@ -111,7 +176,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
 
         @Override
         public int getChildCount() {
-            throw new UnsupportedOperationException("Not supported.");
+            return 0;
         }
 
         @Override
@@ -130,8 +195,10 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public boolean evaluate() {
-            throw new UnsupportedOperationException("Not supported.");
+        public boolean evaluate() throws JmriException {
+            if (je != null) throw je;
+            if (re != null) throw re;
+            return result;
         }
         
         @Override

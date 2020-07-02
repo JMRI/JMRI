@@ -1,20 +1,22 @@
 package jmri.jmrit.logixng.analog.implementation;
 
 import java.util.Locale;
+
 import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import jmri.jmrit.logixng.AnalogActionBean;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.MaleSocketTestBase;
+
 import jmri.jmrit.logixng.analog.actions.AbstractAnalogAction;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test ExpressionTimer
@@ -35,8 +37,69 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("object exists", new DefaultMaleAnalogActionSocket(action));
     }
     
+    @org.junit.jupiter.api.Test
+    public void testSetValue() throws JmriException {
+        MyAnalogAction action = new MyAnalogAction("IQAA321");
+        DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(action);
+        Assert.assertNotNull("exists", socket);
+        
+        socket.setEnabled(true);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        
+        action.je = null;
+        action.re = null;
+        socket.setValue(9.121);
+        Assert.assertTrue(9.121 == action._value);
+        socket.setValue(572.1);
+        Assert.assertTrue(572.1 == action._value);
+        socket.setValue(0.0);
+        Assert.assertTrue(0.0 == action._value);
+        
+        action.je = new JmriException("Test JmriException");
+        action.re = null;
+        Throwable thrown = catchThrowable( () -> socket.setValue(9.121));
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(JmriException.class)
+                .hasMessage("Test JmriException");
+        
+        action.je = null;
+        action.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.setValue(32.11));
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Test RuntimeException");
+        
+        // If the socket is not enabled, it shouldn't do anything
+        socket.setEnabled(false);
+        action.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.setValue(9.23));
+        assertThat(thrown)
+                .withFailMessage("Evaluate does nothing")
+                .isNull();
+        
+        // Test debug config
+        socket.setEnabled(true);
+        DefaultMaleAnalogActionSocket.AnalogActionDebugConfig config = new DefaultMaleAnalogActionSocket.AnalogActionDebugConfig();
+        socket.setDebugConfig(config);
+        action.je = null;
+        action.re = null;
+        config._dontExecute = true;
+        action._value = 19.23;
+        socket.setValue(32.11);
+        Assert.assertTrue(19.23 == action._value);
+        config._dontExecute = false;
+        action._value = 23.111;
+        socket.setValue(9.23);
+        Assert.assertTrue(9.23 == action._value);
+    }
+    
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -59,10 +122,11 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         maleSocketB =
                 InstanceManager.getDefault(AnalogActionManager.class)
                         .registerAction(actionB);
-        Assert.assertNotNull("exists", maleSocketA);
+        Assert.assertNotNull("exists", maleSocketB);
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -74,18 +138,22 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
      */
     private class MyAnalogAction extends AbstractAnalogAction {
         
+        JmriException je = null;
+        RuntimeException re = null;
+        double _value = 0.0;
+        
         MyAnalogAction(String sysName) {
             super(sysName, null);
         }
 
         @Override
         protected void registerListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
         protected void unregisterListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
@@ -110,7 +178,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
 
         @Override
         public int getChildCount() {
-            throw new UnsupportedOperationException("Not supported.");
+            return 0;
         }
 
         @Override
@@ -129,8 +197,10 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public void setValue(double value) {
-            throw new UnsupportedOperationException("Not supported.");
+        public void setValue(double value) throws JmriException {
+            if (je != null) throw je;
+            if (re != null) throw re;
+            _value = value;
         }
         
     }

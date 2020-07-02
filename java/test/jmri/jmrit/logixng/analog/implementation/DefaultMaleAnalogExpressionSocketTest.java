@@ -1,20 +1,23 @@
 package jmri.jmrit.logixng.analog.implementation;
 
 import java.util.Locale;
+
 import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import jmri.jmrit.logixng.AnalogExpressionBean;
-import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.MaleSocketTestBase;
+
 import jmri.jmrit.logixng.analog.expressions.AbstractAnalogExpression;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
+import jmri.jmrit.logixng.analog.implementation.DefaultMaleAnalogExpressionSocket.AnalogExpressionDebugConfig;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * Test ExpressionTimer
@@ -35,8 +38,67 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("object exists", new DefaultMaleAnalogExpressionSocket(expression));
     }
     
+    @org.junit.jupiter.api.Test
+    public void testEvaluate() throws JmriException {
+        MyAnalogExpression expression = new MyAnalogExpression("IQAE321");
+        DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(expression);
+        Assert.assertNotNull("exists", socket);
+        
+        socket.setEnabled(true);
+        socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
+        
+        expression.je = null;
+        expression.re = null;
+        expression.result = 94.27;
+        Assert.assertTrue(94.27 == socket.evaluate());
+        expression.result = 12.92;
+        Assert.assertTrue(12.92 == socket.evaluate());
+        expression.result = 0.0;
+        Assert.assertTrue(0.0 == socket.evaluate());
+        
+        expression.je = new JmriException("Test JmriException");
+        expression.re = null;
+        Throwable thrown = catchThrowable( () -> socket.evaluate());
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(JmriException.class)
+                .hasMessage("Test JmriException");
+        
+        expression.je = null;
+        expression.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.evaluate());
+        assertThat(thrown)
+                .withFailMessage("Evaluate throws an exception")
+                .isNotNull()
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Test RuntimeException");
+        
+        // If the socket is not enabled, it shouldn't do anything
+        socket.setEnabled(false);
+        expression.re = new RuntimeException("Test RuntimeException");
+        thrown = catchThrowable( () -> socket.evaluate());
+        assertThat(thrown)
+                .withFailMessage("Evaluate does nothing")
+                .isNull();
+        
+        // Test debug config
+        socket.setEnabled(true);
+        AnalogExpressionDebugConfig config = new AnalogExpressionDebugConfig();
+        socket.setDebugConfig(config);
+        expression.je = null;
+        expression.re = null;
+        config._forceResult = true;
+        config._result = 12.34;
+        expression.result = 93.23;
+        Assert.assertTrue(12.34 == socket.evaluate());
+        config._forceResult = false;
+        Assert.assertTrue(93.23 == socket.evaluate());
+    }
+    
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -59,10 +121,11 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         maleSocketB =
                 InstanceManager.getDefault(AnalogExpressionManager.class)
                         .registerExpression(expressionB);
-        Assert.assertNotNull("exists", maleSocketA);
+        Assert.assertNotNull("exists", maleSocketB);
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -74,18 +137,22 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
      */
     private class MyAnalogExpression extends AbstractAnalogExpression {
         
+        JmriException je = null;
+        RuntimeException re = null;
+        double result = 0.0;
+        
         MyAnalogExpression(String sysName) {
             super(sysName, null);
         }
 
         @Override
         protected void registerListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
         protected void unregisterListenersForThisClass() {
-            throw new UnsupportedOperationException("Not supported.");
+            // Do nothing
         }
 
         @Override
@@ -110,7 +177,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
 
         @Override
         public int getChildCount() {
-            throw new UnsupportedOperationException("Not supported.");
+            return 0;
         }
 
         @Override
@@ -129,8 +196,10 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public double evaluate() {
-            throw new UnsupportedOperationException("Not supported.");
+        public double evaluate() throws JmriException {
+            if (je != null) throw je;
+            if (re != null) throw re;
+            return result;
         }
         
         @Override

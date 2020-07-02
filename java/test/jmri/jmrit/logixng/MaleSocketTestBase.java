@@ -1,13 +1,13 @@
 package jmri.jmrit.logixng;
 
-import jmri.JmriException;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.jmrit.logixng.Debugable.DebugConfig;
 import jmri.util.JUnitAppender;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Base class for test classes that tests MaleSockets
@@ -78,6 +78,12 @@ public abstract class MaleSocketTestBase {
     
     @Test
     public void testGetSystemName() throws JmriException {
+        Assert.assertNotNull(maleSocketA);
+        Assert.assertNotNull(maleSocketA.getSystemName());
+        Assert.assertNotNull(maleSocketA.getObject());
+        Assert.assertNotNull(maleSocketA.getObject().getSystemName());
+        
+        
         Assert.assertEquals("getSystemName() is correct",
                 maleSocketA.getObject().getSystemName(), maleSocketA.getSystemName());
         Assert.assertEquals("getSystemName() is correct",
@@ -192,5 +198,11 @@ public abstract class MaleSocketTestBase {
         maleSocketA.setDebugConfig(null);
         Assert.assertNull("debugConfig is null", maleSocketA.getDebugConfig());
     }
+    
+    @BeforeEach
+    abstract public void setUp();
+    
+    @AfterEach
+    abstract public void tearDown();
     
 }
