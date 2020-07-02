@@ -3,10 +3,9 @@ package jmri.jmrix.maple;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialAddress utility class.
@@ -192,7 +191,7 @@ public class SerialAddressTest {
 
     // from here down is testing infrastructure
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager objects
@@ -230,7 +229,7 @@ public class SerialAddressTest {
 
     private MapleSystemConnectionMemo memo = null;
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

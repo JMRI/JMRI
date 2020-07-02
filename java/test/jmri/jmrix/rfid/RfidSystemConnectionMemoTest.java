@@ -1,14 +1,14 @@
 package jmri.jmrix.rfid;
 
 import javax.annotation.Nonnull;
+
 import jmri.Reporter;
 import jmri.Sensor;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.rfid.RfidSystemConnectionMemo class.
@@ -24,7 +24,7 @@ public class RfidSystemConnectionMemoTest extends SystemConnectionMemoTestBase<R
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new RfidSystemConnectionMemo();
@@ -76,7 +76,7 @@ public class RfidSystemConnectionMemoTest extends SystemConnectionMemoTestBase<R
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

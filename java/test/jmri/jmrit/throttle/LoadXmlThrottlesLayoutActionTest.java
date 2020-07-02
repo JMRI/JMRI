@@ -1,9 +1,7 @@
 package jmri.jmrit.throttle;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LoadXmlThrottlesLayoutAction
@@ -18,12 +16,12 @@ public class LoadXmlThrottlesLayoutActionTest {
         Assert.assertNotNull("exists", panel);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
     
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

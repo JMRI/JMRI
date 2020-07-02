@@ -1,10 +1,11 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.Light;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Abstract Base Class for Light tests in specific jmrix packages. This is not
@@ -17,7 +18,7 @@ public abstract class AbstractLightTestBase {
 
     // implementing classes must provide these abstract members:
     //
-    @Before
+    @BeforeEach
     abstract public void setUp();       // load t with actual object; create scaffolds as needed
 
     abstract public int numListeners(); // return number of listeners registered with the TrafficController
@@ -82,12 +83,7 @@ public abstract class AbstractLightTestBase {
         t.addPropertyChangeListener(new Listen());
         Assert.assertEquals("controller listener added", 1, t.getNumPropertyChangeListeners());
         t.dispose();
-        try {
-            Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
-        }
-        catch ( RuntimeException e){
-            Assert.assertTrue("Either <1 listeners or exception expected", true);
-        }
+        Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
     }
 
     @Test

@@ -3,10 +3,9 @@ package jmri.jmrix.can.cbus.simulator;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -54,7 +53,7 @@ public class CbusDummyCSSessionTest {
     private CanSystemConnectionMemo memo;
     
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -63,7 +62,7 @@ public class CbusDummyCSSessionTest {
         memo.setTrafficController(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         tc.terminateThreads();

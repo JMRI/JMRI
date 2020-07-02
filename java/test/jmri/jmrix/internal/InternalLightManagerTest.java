@@ -3,10 +3,8 @@ package jmri.jmrix.internal;
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +58,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         Assert.assertTrue(lm.newLight("IL21", "my name") instanceof VariableLight);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -69,7 +67,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         jmri.InstanceManager.setLightManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

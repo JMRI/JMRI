@@ -2,7 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for BuildFailedException class.

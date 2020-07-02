@@ -4,10 +4,8 @@ import java.util.Iterator;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.openlcb.EventID;
 import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
@@ -378,7 +376,7 @@ public class OlcbTurnoutTest {
 
     private OlcbTestInterface t;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         l = new PropertyChangeListenerScaffold();
@@ -388,7 +386,7 @@ public class OlcbTurnoutTest {
         t.waitForStartup();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
         t.dispose();

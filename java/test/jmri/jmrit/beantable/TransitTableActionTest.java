@@ -11,7 +11,9 @@ import jmri.SectionManager;
 import jmri.Transit;
 import jmri.TransitSection;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -103,7 +105,7 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -122,7 +124,7 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

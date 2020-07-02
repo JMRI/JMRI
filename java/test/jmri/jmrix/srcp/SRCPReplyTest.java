@@ -1,13 +1,13 @@
 package jmri.jmrix.srcp;
 
 import java.io.StringReader;
+
 import jmri.jmrix.srcp.parser.ParseException;
 import jmri.jmrix.srcp.parser.SRCPClientParser;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SRCPReplyTest.java
@@ -83,14 +83,14 @@ public class SRCPReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         jmri.util.JUnitAppender.assertErrorMessage("Unable to get number from reply: \"12345678910 100 OK REASON GOES HERE\"");
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new SRCPReply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = msg = null;
         JUnitUtil.tearDown();

@@ -3,8 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -679,7 +678,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");

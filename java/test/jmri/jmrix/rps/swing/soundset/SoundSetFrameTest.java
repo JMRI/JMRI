@@ -1,8 +1,11 @@
 package jmri.jmrix.rps.swing.soundset;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
@@ -14,7 +17,7 @@ public class SoundSetFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private RpsSystemConnectionMemo memo = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -25,7 +28,7 @@ public class SoundSetFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo = null;

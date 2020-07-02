@@ -10,7 +10,9 @@ package jmri.jmrix.lenz;
 import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import jmri.ProgrammingMode;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -581,7 +583,7 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -597,7 +599,7 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.terminateThreads();
         t = null;

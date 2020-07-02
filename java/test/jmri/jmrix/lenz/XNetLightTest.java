@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetLight} class.
@@ -34,7 +34,7 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -44,7 +44,7 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTestBase {
         t = new XNetLight(xnis, xlm, "XL21");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

@@ -7,8 +7,7 @@ import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.util.*;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for MqttTurnout class.
@@ -22,7 +21,7 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
     String saveTopic;
     byte[] savePayload;
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

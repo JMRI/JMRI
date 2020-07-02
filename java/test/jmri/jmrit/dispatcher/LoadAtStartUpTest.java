@@ -2,11 +2,9 @@ package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -199,7 +197,7 @@ public class LoadAtStartUpTest {
         JUnitUtil.dispose(d);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -208,7 +206,7 @@ public class LoadAtStartUpTest {
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);

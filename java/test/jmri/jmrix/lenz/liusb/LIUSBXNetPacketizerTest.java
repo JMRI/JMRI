@@ -2,8 +2,7 @@ package jmri.jmrix.lenz.liusb;
 
 import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * <p>
@@ -40,7 +39,7 @@ public class LIUSBXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
 
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

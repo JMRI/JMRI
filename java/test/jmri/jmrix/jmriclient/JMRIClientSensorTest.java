@@ -1,8 +1,8 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JMRIClientSensorTest.java
@@ -27,7 +27,7 @@ public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTest
     public void checkStatusRequestMsgSent() {}
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JMRIClientTrafficController tc = new JMRIClientTrafficController() {
@@ -40,7 +40,7 @@ public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTest
         t = new JMRIClientSensor(3, new JMRIClientSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         t.dispose();

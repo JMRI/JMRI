@@ -2,10 +2,9 @@ package jmri.jmrix.marklin;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * MarklinSystemConnectionMemoTest.java
@@ -29,7 +28,7 @@ public class MarklinSystemConnectionMemoTest extends SystemConnectionMemoTestBas
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         MarklinTrafficController tc = new MarklinTrafficController() {
@@ -46,7 +45,7 @@ public class MarklinSystemConnectionMemoTest extends SystemConnectionMemoTestBas
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

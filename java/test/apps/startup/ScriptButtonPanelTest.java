@@ -1,14 +1,15 @@
 package apps.startup;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFileChooser;
+
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -26,13 +27,13 @@ public class ScriptButtonPanelTest {
         JUnitUtil.dispose(jf);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

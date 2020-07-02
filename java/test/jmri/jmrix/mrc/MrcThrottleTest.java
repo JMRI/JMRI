@@ -2,10 +2,9 @@ package jmri.jmrix.mrc;
 
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -381,7 +380,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -393,7 +392,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new MrcThrottle(memo,new jmri.DccLocoAddress(42,false));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

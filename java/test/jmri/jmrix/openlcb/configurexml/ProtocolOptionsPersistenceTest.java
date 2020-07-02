@@ -1,12 +1,10 @@
 package jmri.jmrix.openlcb.configurexml;
 
 import org.hamcrest.core.IsCollectionContaining;
-import org.junit.After;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +34,7 @@ public class ProtocolOptionsPersistenceTest {
     private String profileId;
     private PortAdapter adapter;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         this.workspace = FileSystems.getDefault().getPath("/tmp/testprofile");
@@ -45,7 +43,7 @@ public class ProtocolOptionsPersistenceTest {
         JUnitUtil.initConfigureManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
 

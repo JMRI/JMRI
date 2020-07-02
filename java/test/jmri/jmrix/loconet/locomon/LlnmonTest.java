@@ -8,14 +8,12 @@ import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.*;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
@@ -6550,7 +6548,7 @@ public class LlnmonTest {
 "\tOpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", f.displayMessage(l));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initReporterManager();
@@ -6568,7 +6566,7 @@ public class LlnmonTest {
         jmri.InstanceManager.setReporterManager(lnrm);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         lnsm.dispose();
         JUnitUtil.tearDown();

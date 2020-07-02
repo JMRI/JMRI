@@ -3,10 +3,9 @@ package jmri.jmrix.cmri;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.cmri.CMRISystemConnectionMemo class.
@@ -64,7 +63,7 @@ public class CMRISystemConnectionMemoTest extends SystemConnectionMemoTestBase<C
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -72,7 +71,7 @@ public class CMRISystemConnectionMemoTest extends SystemConnectionMemoTestBase<C
         scm = new CMRISystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         scm = null;

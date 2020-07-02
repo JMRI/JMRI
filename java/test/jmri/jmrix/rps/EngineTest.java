@@ -1,8 +1,6 @@
 package jmri.jmrix.rps;
 
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
@@ -25,12 +23,12 @@ public class EngineTest {
         Assert.assertEquals("number", 3, e.getMaxReceiverNumber());
     }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         jmri.util.JUnitUtil.setUp();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         jmri.util.JUnitUtil.tearDown();
    }

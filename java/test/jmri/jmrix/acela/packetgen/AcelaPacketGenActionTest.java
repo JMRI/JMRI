@@ -1,14 +1,14 @@
 package jmri.jmrix.acela.packetgen;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.InstanceManager;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of AcelaPacketGenAction
@@ -33,11 +33,11 @@ public class AcelaPacketGenActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

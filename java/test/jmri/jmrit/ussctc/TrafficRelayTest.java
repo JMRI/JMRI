@@ -1,7 +1,9 @@
 package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for TrafficRelay class in the jmri.jmrit.ussctc package
@@ -40,7 +42,7 @@ public class TrafficRelayTest {
         Assert.assertTrue(lock.isLockClear());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -48,7 +50,7 @@ public class TrafficRelayTest {
         JUnitUtil.initMemoryManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

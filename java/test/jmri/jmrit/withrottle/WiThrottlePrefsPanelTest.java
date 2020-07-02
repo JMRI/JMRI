@@ -1,10 +1,9 @@
 package jmri.jmrit.withrottle;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of WiThrottlePrefsPanel
@@ -19,7 +18,7 @@ public class WiThrottlePrefsPanelTest {
         Assert.assertNotNull("exists", panel );
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -30,7 +29,7 @@ public class WiThrottlePrefsPanelTest {
         JUnitUtil.initStartupActionsManager();
     }
     
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

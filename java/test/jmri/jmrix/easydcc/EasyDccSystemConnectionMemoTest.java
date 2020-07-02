@@ -2,8 +2,8 @@ package jmri.jmrix.easydcc;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the EasyDccSystemConnectionMemo class
@@ -13,14 +13,14 @@ import org.junit.Before;
 public class EasyDccSystemConnectionMemoTest extends SystemConnectionMemoTestBase<EasyDccSystemConnectionMemo> {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new EasyDccSystemConnectionMemo();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

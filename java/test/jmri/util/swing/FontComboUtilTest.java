@@ -2,12 +2,12 @@ package jmri.util.swing;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.util.swing.FontComboUtil class.
@@ -84,12 +84,12 @@ public class FontComboUtilTest {
         Assert.assertTrue("List contains 'SansSerif'", fonts.contains("SansSerif"));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

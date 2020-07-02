@@ -2,7 +2,11 @@ package jmri;
 
 import jmri.implementation.AbstractLight;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Light class

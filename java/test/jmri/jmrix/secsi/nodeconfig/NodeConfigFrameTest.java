@@ -2,7 +2,9 @@ package jmri.jmrix.secsi.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import jmri.jmrix.secsi.SerialTrafficControlScaffold;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
@@ -22,7 +24,7 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         Assert.assertEquals("title","Configure Nodes",frame.getTitle());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -35,7 +37,7 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo = null;

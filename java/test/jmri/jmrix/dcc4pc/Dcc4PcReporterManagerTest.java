@@ -1,8 +1,8 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Dcc4PcReporterManagerTest.java
@@ -21,7 +21,7 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -33,7 +33,7 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
         l = new Dcc4PcReporterManager(tc,new Dcc4PcSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

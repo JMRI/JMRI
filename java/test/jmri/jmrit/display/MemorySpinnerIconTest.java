@@ -6,7 +6,9 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -82,7 +84,7 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
@@ -94,7 +96,7 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         tos1 = null;
         tos2 = null;

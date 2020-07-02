@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.hornbyelite.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import jmri.jmrix.lenz.hornbyelite.ConnectionConfig;
 
 /**
@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.hornbyelite.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXmlTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();

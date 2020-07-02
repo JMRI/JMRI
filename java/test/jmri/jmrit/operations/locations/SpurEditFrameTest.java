@@ -5,9 +5,8 @@ import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -303,7 +302,7 @@ public class SpurEditFrameTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
 

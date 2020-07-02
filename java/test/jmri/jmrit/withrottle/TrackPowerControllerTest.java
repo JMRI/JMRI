@@ -1,6 +1,7 @@
 package jmri.jmrit.withrottle;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of TrackPowerController
@@ -15,13 +16,13 @@ public class TrackPowerControllerTest {
         Assert.assertNotNull("exists", panel );
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 

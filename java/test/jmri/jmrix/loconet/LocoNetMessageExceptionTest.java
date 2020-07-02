@@ -1,10 +1,9 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for LocoNetMessageException class.
@@ -24,14 +23,14 @@ public class LocoNetMessageExceptionTest {
       Assert.assertNotNull("LocoNetMessageException string constructor",new LocoNetMessageException("test exception"));
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         JUnitUtil.tearDown();
    }
