@@ -71,7 +71,7 @@ The periodic upward merges are meant to find conflicts where a major change turn
  
  In all of these, assume that the most recent release numbers are 4.23.1, 4.24.0 and 5.0.0; various people are test/using all three.
  
- There are two approaches to handling overlapped features and fixes, which we discuss here as alternatives. In the following diagrams, time runs downwards.  We start by showing a few changes applied to the branches, and a 4.23.3 fix is published.
+ There are two approaches to handling overlapped features and fixes, which we discuss here as alternatives. In the following diagrams, time runs downwards.  We start by showing a few changes applied to the branches, and a 4.23.2 fix is published.
  
 |           |   `dev-update` |   `dev-minor`  |  `dev-update` |
 | :-----:   |   :----------: |   :----------: |  :----------: |
@@ -87,20 +87,20 @@ The periodic upward merges are meant to find conflicts where a major change turn
 
  Assume it's time to publish 4.25.0 from `dev-minor`. At this point, there are two choices:
 
- - since 4.25.0 is thought to be worth publishing, it should form the basis for `dev-update` from now:  Any "fix" PRs there will be eventually be the basis for a 4.25.1, 4.25.2, etc. Meanwhile, "feature" PRs go on the `dev-minor` branch on the way to 4.26.0, which is the next published from here.  
+ - since 4.25.0 is thought to be worth publishing, it should form the basis for `dev-update` from now:  Any "fix" PRs (i.e. "fix F" via H) there will be eventually be the basis for a 4.25.1, 4.25.2, etc. Meanwhile, "feature" PRs go on the `dev-minor` branch on the way to 4.26.0, which is the next published from here.  
 
 |           |   `dev-update` |   `dev-minor`  |  `dev-update` |
 | :-----:   |   :----------: |   :----------: |  :----------: |
 | Numbered: |  pre-4.23.3    |   pre-4.25.0   |   pre-6.0.0   |
 |   Pub     |                |     4.25.0     |               | 
-|           |      |-<       |       <--<     |               |
+|           |      \|-<       |       <--<     |               |
 |           |  pre-4.25.1    |   pre-4.26.0   |               |
 |   Feat    |                |        G       |      G        |
-|  Fix  G   |       H        |        H       |      H        |
+|  Fix  F   |       H        |        H       |      H        |
 |           |                |                |               | 
 
  
- - Or, we could say we're not that certain about `dev-minor`, and put both fixes and features there which we can release as 4.25.1 when needed. (Leaving `dev-update` as the place to make further fixes to the 4.23.* series as needed).  
+ - Or, we could say we're not that certain about `dev-minor`, and put both fixes (i.e. "fix F" via H) and features there which we can release as 4.25.1 when needed. (Leaving `dev-update` as the place to make further fixes to the 4.23.* series as needed).  
 
 |           |   `dev-update` |   `dev-minor`  |  `dev-update` |
 | :-----:   |   :----------: |   :----------: |  :----------: |
@@ -108,7 +108,7 @@ The periodic upward merges are meant to find conflicts where a major change turn
 |   Pub     |                |     4.25.0     |               | 
 |           |                |   pre-4.25.1   |               |
 |   Feat    |                |        G       |      G        |
-|  Fix G    |                |        H       |      H        |
+|  Fix F    |                |        H       |      H        |
 |           |                |                |               | 
  
  The second has the problem that the 4.25.1 could include include features not present in 4.25.0 (i.e. G), which is not consistent with the Semantic Versioning pattern.  On the other hand, it's easier to issue fixes to keep making changes to the 4.23.* series after 4.25.0 is out. That can be important, but we can do almost as good a version of that by only updating `master` later.  So in the following, we proposed the 1st form.
@@ -154,7 +154,7 @@ How do we decide when to do that if we don't have a monthly cadence?
  
 One possible sequence of development and release:
  - Publish from `dev-update` whenever enough has accumulated; no specific cadence
- - Publish from `dev-minor` roughly 4-6 weeks and strongly encourage use to get feedback
+ - Publish from `dev-minor` roughly 4-6 weeks and strongly encourage use to get feedback; significant problems can be fixed via `dev-update`
  - Publish from `dev-major` on targeted dates with major changes.
 
 To it another way:  Publish the `dev-minor` branch to users often and consistently, using the `dev-update` to get fixes out more often.  This is basically "test releases with fixes". Eventually, effort focuses on one set of fixes until that particular head of `dev-update` is good enough to call a production release.
@@ -172,15 +172,15 @@ Simultaneously, the HEAD of the `dev-minor` and `dev-major` branches will popula
  
 JMRI has, for a long time, followed a Linux-like release numbering system where odd-numbered minor releases were for development and tests, whilst even numbered releases were for production. That distinction is no longer present here.
 
-This entire system is well suited to "point" releases to fix things.  For example, say the most recent releases have been 5.6.3, 5.7.0 and 6.0.0.  Then
- - Jim finds a bug and fixes it starting with `master` (same as 5.6.3)
+This entire system is well suited to "point" releases to fix things.  For example, say the most recent releases have been 4.23.1, 4.24.0 and 5.0.0.  Then
+ - Jim finds a bug and fixes it starting with `master` (same as 4.23.1)
  - Because it started on `master`, that can be merged anywhere
- - It's a _bug_, so it can be released as 5.6.4 so that people using that as a long-term thing get the fix with minor disruption.
- - But it will also be included in a 5.7.1 and 6.0.1 when those get released, so we can decide when to release them and make them available.
+ - It's a _bug_, so it can be released as 4.23.2 so that people using that as a long-term thing get the fix with minor disruption.
+ - But it will also be included in a 4.25.0 and 6.0.0 when those get released, so we can decide when to release them and make them available.
 
-It's even possible to make e.g. 5.6.3.1 with _just_ one specific change, and not the other updates that have accumulated on 5.6.3 since it was created.
+It's even possible to make e.g. 4.23.1.1 with _just_ one specific change, and not the other updates that have accumulated toward 4.23.2 since it was created.
 
-There is no longer an explicit [deprecation cycle](https://www.jmri.org/help/en/html/doc/Technical/RP.shtml#deprecating). One can certain mark parts of the API as deprecated in a update or minor change; that's polite.  But when the change gets into the major branch, the deprecations should have been removed:  That's part of why the changes are considered "breaking changes". Because we're separately releasing versions that have and don't have breaking changes, users can decide when they want to move forward; effectively managing their own deprecation cycles.
+There is no longer an explicit [deprecation cycle](https://www.jmri.org/help/en/html/doc/Technical/RP.shtml#deprecating). One should certain mark parts of the API as deprecated in a update or minor change; that's polite.  But when the change gets into the major branch, the deprecations should have been removed:  That's part of why the changes are considered "breaking changes". Because we're separately releasing versions that have and don't have breaking changes, users can decide when they want to move forward; effectively managing their own deprecation cycles.
 
 ## Migration
 
