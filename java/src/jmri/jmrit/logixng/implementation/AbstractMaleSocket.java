@@ -15,7 +15,7 @@ import org.slf4j.Logger;
  * The abstract class that is the base class for all LogixNG classes that
  * implements the Base interface.
  */
-public abstract class AbstractMaleSocket implements MaleSocket, Base, InternalBase {
+public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
 
     private Base _parent;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;

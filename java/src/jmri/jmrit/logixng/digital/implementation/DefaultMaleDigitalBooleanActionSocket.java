@@ -13,7 +13,6 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
-import jmri.util.Log4JUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,6 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
 
     private final DigitalBooleanActionBean _action;
     private DebugConfig _debugConfig = null;
-    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
     private boolean _enabled = true;
     
     

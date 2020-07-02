@@ -15,7 +15,6 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
-import jmri.util.Log4JUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
     private final DigitalExpressionBean _expression;
     private boolean lastEvaluationResult = false;
     private DebugConfig _debugConfig = null;
-    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
     private boolean _enabled = true;
 
 
