@@ -840,34 +840,24 @@ public abstract class AbstractBaseTestBase {
     @Test
     public void testPropertyChangeListeners5() {
         
+        PropertyChangeListener listener1 = (PropertyChangeEvent evt) -> {};
+        PropertyChangeListener listener2 = (PropertyChangeEvent evt) -> {};
         
-        AtomicBoolean ab = new AtomicBoolean(false);
+        _baseMaleSocket.addPropertyChangeListener(listener1, null, "A name");
+        _baseMaleSocket.addPropertyChangeListener(listener2, null, "Another name");
+        Assert.assertEquals("A name", _baseMaleSocket.getListenerRef(listener1));
+        List<String> listenerRefs = _baseMaleSocket.getListenerRefs();
         
-        PropertyChangeListener listener1 = (PropertyChangeEvent evt) -> {
-            ab.set(true);
-        };
-        PropertyChangeListener listener2 = (PropertyChangeEvent evt) -> {
-            ab.set(true);
-        };
-        
-        ab.set(false);
-        
-        
-        
-        
-        _base.addPropertyChangeListener(listener1, null, "A name");
-        _base.addPropertyChangeListener(listener2, null, "Another name");
-        Assert.assertEquals("A name", _base.getListenerRef(listener1));
-        List<String> listenerRefs = _base.getListenerRefs();
-        // The order of the listener refs may differ between runs
+        // The order of the listener refs may differ between runs so sort the list
         Collections.sort(listenerRefs);
+        
         String listString = listenerRefs.stream().map(Object::toString)
                         .collect(Collectors.joining(", "));
         
         Assert.assertEquals("A name, Another name", listString);
         
-        _base.updateListenerRef(listener1, "New name");
-        Assert.assertEquals("New name", _base.getListenerRef(listener1));
+        _baseMaleSocket.updateListenerRef(listener1, "New name");
+        Assert.assertEquals("New name", _baseMaleSocket.getListenerRef(listener1));
     }
     
     

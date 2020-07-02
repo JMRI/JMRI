@@ -128,15 +128,19 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCompareSystemNameSuffix() {
         MyStringExpression expression1 = new MyStringExpression("IQSE1");
+        DefaultMaleStringExpressionSocket socket1 = new DefaultMaleStringExpressionSocket(expression1);
+        
         MyStringExpression expression2 = new MyStringExpression("IQSE01");
+        DefaultMaleStringExpressionSocket socket2 = new DefaultMaleStringExpressionSocket(expression2);
+        
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                -1, expression1.compareSystemNameSuffix("01", "1", expression2));
+                -1, socket1.compareSystemNameSuffix("01", "1", socket2));
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                0, expression1.compareSystemNameSuffix("1", "1", expression2));
+                0, socket1.compareSystemNameSuffix("1", "1", socket2));
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                0, expression1.compareSystemNameSuffix("01", "01", expression2));
+                0, socket1.compareSystemNameSuffix("01", "01", socket2));
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
-                +1, expression1.compareSystemNameSuffix("1", "01", expression2));
+                +1, socket1.compareSystemNameSuffix("1", "01", socket2));
     }
     
     // The minimal setup for log4J
