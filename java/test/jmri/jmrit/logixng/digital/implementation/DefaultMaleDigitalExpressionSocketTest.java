@@ -126,7 +126,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         DefaultMaleDigitalExpressionSocket socket1 = new DefaultMaleDigitalExpressionSocket(expression1);
         
         MyDigitalExpression expression2 = new MyDigitalExpression("IQDE01");
-        DefaultMaleDigitalExpressionSocket socket2 = new DefaultMaleDigitalExpressionSocket(expression1);
+        DefaultMaleDigitalExpressionSocket socket2 = new DefaultMaleDigitalExpressionSocket(expression2);
         
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 -1, socket1.compareSystemNameSuffix("01", "1", socket2));
