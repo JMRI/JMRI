@@ -1,7 +1,7 @@
 package jmri;
 
 import java.util.ResourceBundle;
-
+  
 /**
  * Defines a simple place to get the JMRI version string.
  * <p>
