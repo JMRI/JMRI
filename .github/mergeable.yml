@@ -21,19 +21,19 @@ mergeable:
         or:  # passes if no lib files or is a release note
           - and:
             - must_exclude:
-              regex: '^help/'
+                regex: '^help/'
             - must_exclude:
-              regex: '^java/src/'
+                regex: '^java/src/'
             - must_exclude:
-              regex: '^jython/'
+                regex: '^jython/'
             - must_exclude:
-              regex: '^resources/'
+                regex: '^resources/'
             - must_exclude:
-              regex: '^web/'
+                regex: '^web/'
             - must_exclude:
-              regex: '^xml/'
+                regex: '^xml/'
           - must_include:
-            regex: 'help/en/releasenotes/current-draft-note.shtml'
+              regex: 'help/en/releasenotes/current-draft-note.shtml'
     fail:
       - do: comment
         payload:
