@@ -18,7 +18,7 @@ mergeable:
     name: 'Check for release note if help, java/src, jython, resources, xml, or web
     validate:
       - do: changeset
-        or:  # passes if no library-like files are changed (only infrastructure changed), _or_ if there's a release note
+        or:  # passes if no lib files or is a release note
           - and:
             - must_exclude:
               regex: '^help/'
