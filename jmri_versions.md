@@ -22,6 +22,11 @@ STABLE | Intended for features that will not be changed in a backwards- incompat
 
 If the `@API` annotation is present on a type, it is considered to be applicable for all public members of that type as well. A member is allowed to declare a different status value of lower stability.
 
+## JMRI Versions
+
+* The MAJOR version changes when something annotated with `@API(MAJOR)` changes. For example: jmri.5.4.3.jar -> jmri.6.0.0.jar
+* The MINOR version changes when someting annotated with `@API(MAINTAINED)` changes or something marked with `@API(DEPRECATED)` is removed. For example: jmri.5.4.3.jar -> jmri.5.5.0.jar
+* The PATCH version increases for every release, except when MAJOR or MINOR version changes. For example: jmri.5.4.3.jar -> jmri.5.4.4.jar
 
 # What is an API?
 
