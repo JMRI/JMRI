@@ -35,7 +35,7 @@ public class DebugMenu extends JMenu {
         add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction(Bundle.getMessage("MenuItemCheckProgrammerNames"), panel));
         add(new JSeparator());
         add(new jmri.jmrit.LogixLoadAction(Bundle.getMessage("MenuItemLogixDisabled"), panel));
-        add(new jmri.jmrit.log.LogAction(Bundle.getMessage("MenuItemLogAction")));
+        add(new apps.jmrit.log.LogAction(Bundle.getMessage("MenuItemLogAction")));
         add(new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"),
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
                 "jmri.jmrit.log.Log4JTreePane"));
