@@ -11,7 +11,7 @@ import org.apiguardian.api.API;
  *
  * @author Randall Wood Copyright 2020
  */
-//@API(status=API.Status.EXPERIMENTAL)
+@API(status=API.Status.EXPERIMENTAL)
 public interface LogProblemReportProvider {
 
     /**
