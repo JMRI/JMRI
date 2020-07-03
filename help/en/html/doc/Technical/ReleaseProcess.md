@@ -15,9 +15,9 @@ JMRI installers can be built in four different scenarios:
 * Release build distributed as installers on the JMRI website
 * _Recommended_ installer builds distributed on the JMRI website and promoted as the main supported version until the next _recommended_ release
 
-Developer builds will identify themselves with versions strings like `JMRI.21.4.2-private-jake-20200625T1452Z+Rbab33d0f33` where `private` denotes a developers own private build, `jake` the username of the specific developer, and `+R` indicates the 8 digits of the SHA of HEAD when built.
+Developer builds will identify themselves with versions strings like `JMRI.21.4.2-private-jake-20200625T1452Z+Rbab33d0f33` where `private` denotes a developers own private build, `jake` the username of the specific developer, and `+R` is followed by the first eight digits of the SHA of HEAD as built.
 
-Jenkins 'nightly' builds will identify themselves with version strings like `JMRI.21.4.2-dev-Jenkins-20200625T1452Z+Rbab33d0f33` where `dev` denotes a development build, `Jenkins` that this was built by the Jenkins CI environment, and `+R` indicates the 8 digits of the SHA of HEAD when built.
+Jenkins 'nightly' builds will identify themselves with version strings like `JMRI.21.4.2-dev-Jenkins-20200625T1452Z+Rbab33d0f33` where `dev` denotes a development build, `Jenkins` that this was built by the Jenkins CI environment, and `+R` is followed by the first eight digits of the SHA of HEAD as built.
 
 A released version is denoted as a `vI.J.K` (i.e. `v21.4.2`) tag in our common repository.
 
