@@ -50,7 +50,7 @@ public class ArchitectureTest {
     public static final ArchRule checkStandardStreams = noClasses().that()
                                 // classes with permitted access
                                 .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
-                                .doNotHaveFullyQualifiedName("apps.util.decoderdefn.DecoderIndexBuilder").and()
+                                .doNotHaveFullyQualifiedName("apps.jmrit.decoderdefn.DecoderIndexBuilder").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
@@ -192,6 +192,7 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule noLog4JinJmri = noClasses()
             .that().resideInAPackage("jmri..")
+            .and().areNotAnnotatedWith(Deprecated.class)
             .should().dependOnClassesThat().resideInAPackage("org.apache.log4j");
 
     /**
