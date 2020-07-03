@@ -10,9 +10,14 @@ import org.junit.jupiter.api.*;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
-public class BundleTest  {
+public class BundleTest {
 
-    @Test public void testGoodKeyMessage() {
+    @Test
+    public void testGoodKeyMessage() {
+        Assert.assertEquals("Message:", Bundle.getMessage("LogMessageLabel"));
+        Assert.assertEquals("Add", Bundle.getMessage("ButtonAddText"));
+        Assert.assertEquals("Add message to the log file", Bundle.getMessage("LogSendToolTip"));
+        Assert.assertEquals("Add Log Entry", Bundle.getMessage("LogInputTitle"));
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
@@ -21,7 +26,8 @@ public class BundleTest  {
         Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
-    @Test public void testGoodKeyMessageArg() {
+    @Test
+    public void testGoodKeyMessageArg() {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
         Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
@@ -31,14 +37,15 @@ public class BundleTest  {
         Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
-    @Test public void testLocaleMessage() {
+    @Test
+    public void testLocaleMessage() {
         Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
     }
 
-    @Test public void testLocaleMessageArg() {
+    @Test
+    public void testLocaleMessageArg() {
         Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
         Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
     }
-
 
 }

@@ -1,7 +1,9 @@
-package jmri.jmrit.log;
+package apps.jmrit.log;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,9 +11,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a LogFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @deprecated since 4.22.1; use {@link apps.jmrit.log.LogAction} instead
  */
-@Deprecated
 public class LogAction extends AbstractAction {
 
     public LogAction(String s) {

@@ -1,4 +1,4 @@
-package jmri.jmrit.log;
+package apps.jmrit.log;
 
 import javax.swing.BoxLayout;
 
@@ -6,9 +6,7 @@ import javax.swing.BoxLayout;
  * Frame for adding to the log file.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @deprecated since 4.21.1; use {@link apps.jmrit.log.LogFrame} instead
  */
-@Deprecated
 public class LogFrame extends jmri.util.JmriJFrame {
 
     public LogFrame() {
@@ -16,7 +14,6 @@ public class LogFrame extends jmri.util.JmriJFrame {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void initComponents() {
 
         setTitle(Bundle.getMessage("LogInputTitle"));
