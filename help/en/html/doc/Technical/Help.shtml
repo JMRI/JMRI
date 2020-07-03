@@ -207,10 +207,17 @@
         of inline HTML or Java look right. To give a code-like
         appearance to a block, wrap it in <code>&lt;pre
         style="font-family: monospace;"&gt;</code></li>
+        
+        <li>When describing a sequence of user actions or pulldowns, use the double right arrow to indicate
+        sequence, HTML 4 tag ampersand-rArr-semicolon, label the whole sequence as "strong" and put the terminal command in quotes:
+        <br>
+        <strong>File&rArr;"Store Panels"</strong>
+        <br>
+        </li>
 
         <li>You cannot count on any particular location for your files on the local machine, so all links
         to other help pages need to be relative. Links to XML contents also need to be relative even though
-        they are not displayed by JavaHelp.
+        they are not displayed by JavaHelp.</li>
 
     <!--    
         <li>DEBATABLE: Use fully qualitifed URLs for references to JavaDocs 
