@@ -28,13 +28,10 @@ If the `@API` annotation is present on a type, it is considered to be applicable
 * The MINOR version changes when someting annotated with `@API(MAINTAINED)` changes or something marked with `@API(DEPRECATED)` is removed. For example: jmri.5.4.3.jar -> jmri.5.5.0.jar
 * The PATCH version increases for every release, except when MAJOR or MINOR version changes. For example: jmri.5.4.3.jar -> jmri.5.4.4.jar
 
+Non official releases (test releases) is marked with SNAPSHOT, for example jmri.4.3.5.SNAPSHOT.jar.
+
+Developer releases are marked with the developers GitHub user name (if that's possible) or some other identifier. For example jmri.4.3.5.danielb987.jar.
+
 # What is an API?
 
 An API (Application Programming Interface) is a set of interfaces, classes, methods and fields that is declared to be used by software that is using the API.
-
-
-
-I suggest we use the annotations from [API Guardian](https://github.com/apiguardian-team/apiguardian)
-to indicate what's usable by design by implementers and scripters and declare everything else to be
-"implementation details" subject to change at will. By using these annotations we can allow what must
-be public to compile, but add a declarative layer over that to indicate that some public classes/methods/fields should not be relied upon.
