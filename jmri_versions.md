@@ -1,3 +1,9 @@
+# What is an API?
+
+An API (Application Programming Interface) is a set of interfaces, classes, methods and fields that can be used by software that is using the JMRI library. An example of such software is [CATS (Computer Automated Traffic System)](http://cats4ctc.wikidot.com/).
+
+The API is an offer to other developers, saying that if you want to use jmri.jar in your project, you can use these interfaces/classes/methods/fields under these conditions, for example that a particular method is available, but may change in the next minor version, while another method is granted to stay the same at least until next major version.
+
 # JMRI Versions
 
 The JMRI library uses a semantic versioning system meaning that the jmri.jar file has
@@ -32,8 +38,10 @@ Non official releases (test releases) is marked with SNAPSHOT, for example jmri.
 
 Developer releases are marked with the developers GitHub user name (if that's possible) or some other identifier. For example jmri.4.3.5.danielb987.jar.
 
-# What is an API?
+# Recommended practices for developers of the JMRI project
 
-An API (Application Programming Interface) is a set of interfaces, classes, methods and fields that can be used by software that is using the JMRI library. An example of such software is [CATS (Computer Automated Traffic System)](http://cats4ctc.wikidot.com/).
+Unannotated interfaces/classes/fields are considered EXPERIMENTAL.
 
-The API is an offer to other developers, saying that if you want to use jmri.jar in your project, you can use these interfaces/classes/methods/fields under these conditions, for example that a particular method is available, but may change in the next minor version, while another method is granted to stay the same at least until next major version.
+Unannotated methods follows the same annotation as its interface/class. So if the interface/class is annotated with MAINTAINED, every unannotated method in that interface/class is MAINTAINED. Unannotated methods in unannotaded interfaces/classes are considered EXPERIMENTAL.
+
+Unannotated fields are considered INTERNAL.
