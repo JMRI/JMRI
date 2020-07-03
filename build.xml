@@ -184,6 +184,7 @@
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE113.jar"/>
         <pathelement location="${libdir}/org-openide-util-RELEASE113.jar"/>
+        <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
