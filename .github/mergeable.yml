@@ -4,11 +4,6 @@ mergeable:
     name: 'check for release note' # optional (but needed to create multiple checks) 
     validate:
       # list of validators. Specify one or more.
-      - do: dependent
-        changed:
-            file: help/en/releasenotes/current-draft-note.shtml
-    fail: # fail means file not modified
-      - do: comment
-        payload:
-          body: >
-            Thanks for the PR!  Could you please consider adding to the draft release note in the help/en/releasenotes/current-draft-note.shtml file?
+      - do: changeset
+        must_include:
+            regex: 'help/en/releasenotes/current-draft-note.shtml'
