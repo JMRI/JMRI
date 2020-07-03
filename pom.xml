@@ -857,6 +857,7 @@
                                         </limit>
                                     </limits>
                                 </rule>
+                                <!-- fails if package only contains interfaces
                                 <rule>
                                     <element>PACKAGE</element>
                                     <limits>
@@ -867,6 +868,7 @@
                                         </limit>
                                     </limits>
                                 </rule>
+                                -->
                                 <rule>
                                     <element>SOURCEFILE</element>
                                     <limits>

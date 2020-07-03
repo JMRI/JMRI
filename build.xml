@@ -1482,9 +1482,11 @@
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
+              <!-- fails if package only contains interfaces
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              -->
               <rule element="SOURCEFILE">
                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.00001"/>
               </rule>
