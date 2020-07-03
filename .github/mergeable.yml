@@ -10,5 +10,6 @@ mergeable:
     fail:
       - do: comment
         payload:
-          body: Thanks for the PR! Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
+          body: > 
+            Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
         
