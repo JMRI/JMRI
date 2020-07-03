@@ -15,28 +15,27 @@ mergeable:
           title: 'Mergeable Run have been Completed!'
           summary: "All the validators have returned 'pass'! \n Here are some stats of the run: \n {{validationCount}} validations were ran"
   - when: pull_request.opened
-    name: 'Check for release note if help, java/src, jython, resources, xml, or web
+    name: 'Check for release note if help, java/src, jython, resources, xml, or web'
     validate:
       - do: changeset
         or:  # passes if no lib files or is a release note
           - and: 
-            - must_exclude: 
-                regex: '^help/'
-            - must_exclude: 
-                regex: '^java/src/'
-            - must_exclude: 
-                regex: '^jython/'
-            - must_exclude: 
-                regex: '^resources/'
-            - must_exclude: 
-                regex: '^web/'
-            - must_exclude: 
-                regex: '^xml/'
-          - must_include: 
-              regex: 'help/en/releasenotes/current-draft-note.shtml'
+            - must_exclude:
+                regex: "help/"
+            - must_exclude:
+                regex: "^java/src/"
+            - must_exclude:
+                regex: "^jython/"
+            - must_exclude:
+                regex: "^resources/"
+            - must_exclude:
+                regex: "^web/"
+            - must_exclude:
+                regex: "^xml/"
+          - must_include:
+              regex: "help/en/releasenotes/current-draft-note.shtml"
     fail:
       - do: comment
         payload:
           body: > 
             Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
-       
