@@ -12,11 +12,11 @@ mergeable:
           body: > 
             Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
   - when: pull_request.opened
-    name: 'Ensure assigned'
+    name: 'Ensure author assigned'
     validate:
       - do: assignee
         min:
-          count: 1 # Should be assigned to somebody
+          count: 1 # Should be assigned to somebody; if not, assign author
     fail:
       - do: assign
         assignees: [ '@author' ] 
