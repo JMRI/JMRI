@@ -19,20 +19,20 @@ mergeable:
     validate:
       - do: changeset
         or:  # passes if no lib files or is a release note
-          - and:
-            - must_exclude:
+          - and: 
+            - must_exclude: 
                 regex: '^help/'
-            - must_exclude:
+            - must_exclude: 
                 regex: '^java/src/'
-            - must_exclude:
+            - must_exclude: 
                 regex: '^jython/'
-            - must_exclude:
+            - must_exclude: 
                 regex: '^resources/'
-            - must_exclude:
+            - must_exclude: 
                 regex: '^web/'
-            - must_exclude:
+            - must_exclude: 
                 regex: '^xml/'
-          - must_include:
+          - must_include: 
               regex: 'help/en/releasenotes/current-draft-note.shtml'
     fail:
       - do: comment
