@@ -21,7 +21,7 @@ mergeable:
         or:  # passes if no lib files or is a release note
           - and: 
             - must_exclude:
-                regex: "help/"
+                regex: "^help/"
             - must_exclude:
                 regex: "^java/src/"
             - must_exclude:
