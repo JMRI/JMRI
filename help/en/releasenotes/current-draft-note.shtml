@@ -537,5 +537,8 @@
                 one will work in which case)</li>
             <li>Added PR automation to check for a comment in the release note when a PR
                 is opened, and to ensure that somebody has been assigned to the PR.</li>
+            <li>The jmri.JmriPlugin class is deprecated without a replacement. If you depend on
+	        on this class, please <a href="https://github.com/JMRI/JMRI/issues/new">raise an issue on GitHub</a>
+		so we can discuss how to meet your requirements through other means.</li>
         </ul>
 
