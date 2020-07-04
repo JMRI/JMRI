@@ -586,7 +586,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         /* The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them */
-        String autoPrefix = getSystemNamePrefix() + ":AUTO:";
+        String autoPrefix = getSubSystemNamePrefix() + ":AUTO:";
         if (systemName.startsWith(autoPrefix)) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(autoPrefix.length()));
