@@ -36,6 +36,8 @@ If the `@API` annotation is present on a type, it is considered to be applicable
 * The MINOR version changes when someting annotated with `@API(MAINTAINED)` changes or something marked with `@API(DEPRECATED)` is removed. For example: jmri-5.4.3.jar -> jmri-5.5.0.jar
 * The PATCH version increases for every release, except when MAJOR or MINOR version changes. For example: jmri-5.4.3.jar -> jmri-5.4.4.jar
 
+Changes that are still backwards compatible does not trigger a new MAJOR or MINOR version. For example, adding a new default method on an interface does not result in a new MAJOR or MINOR version. But adding a new method without a default implementation on an interface marked with `@API(MAJOR)` or `@API(MAINTAINED)` will trigger a new MAJOR or MINOR version, since all classes that inherits that interface will need to implement it, unless their parents implement it.
+
 Non official releases (test releases) is marked with SNAPSHOT, for example jmri-4.3.5-SNAPSHOT.jar.
 
 Developer releases are marked with the developers GitHub user name (if that's possible) or some other identifier. For example jmri-4.3.5-SNAPSHOT+danielb987.jar.
