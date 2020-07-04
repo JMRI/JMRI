@@ -897,7 +897,7 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     
 
     @Test
-    public void changeSpeedSteps(){
+    public void testChangeSpeedSteps(){
         
         int outFrames = tc.outbound.size();
         
