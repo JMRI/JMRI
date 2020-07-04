@@ -1,15 +1,15 @@
-Starting with version 4.22.0, we are using semantic versioning as documented below.
+As of 1 August 2020, we are using semantic versioning as documented below.
 
 # What is an API?
 
 The API (Application Programming Interface) is a contract with a set of interfaces, classes, methods and fields that can be used by software that is using the JMRI library. An example of such software is [CATS (Computer Automated Traffic System)](http://cats4ctc.wikidot.com/).
 
-The API is an offer to other developers, saying that if you want to use jmri.jar in your project, you can use these interfaces/classes/methods/fields under these conditions, for example that a particular method is available, but may change in the next minor version, while another method is granted to stay the same at least until next major version.
+The API is a contract to other developers, saying that if you want to use jmri.jar in your project, you can use these interfaces/classes/methods/fields under these conditions, for example that a particular method is available, but may change in the next minor version, while another method is granted to stay the same at least until next major version.
 
 # JMRI Versions
 
-The JMRI library uses a semantic versioning system meaning that the jmri.jar file has
-a version number, like jmri.1.2.3.jar, there the first number is the MAJOR version,
+The JMRI library uses [semantic versioning](https://semver.org/) meaning that the jmri.jar file has
+a version number, like jmri-1.2.3.jar, there the first number is the MAJOR version,
 the second number is the MINOR version and the third number is the PATCH version.
 
 For more information on MAJOR, MINOR and PATCH, see https://semver.org/
@@ -32,18 +32,16 @@ If the `@API` annotation is present on a type, it is considered to be applicable
 
 ## JMRI Versions
 
-* The MAJOR version changes when something annotated with `@API(MAJOR)` changes. For example: jmri.5.4.3.jar -> jmri.6.0.0.jar
-* The MINOR version changes when someting annotated with `@API(MAINTAINED)` changes or something marked with `@API(DEPRECATED)` is removed. For example: jmri.5.4.3.jar -> jmri.5.5.0.jar
-* The PATCH version increases for every release, except when MAJOR or MINOR version changes. For example: jmri.5.4.3.jar -> jmri.5.4.4.jar
+* The MAJOR version changes when something annotated with `@API(MAJOR)` changes. For example: jmri-5.4.3.jar -> jmri-6.0.0.jar
+* The MINOR version changes when someting annotated with `@API(MAINTAINED)` changes or something marked with `@API(DEPRECATED)` is removed. For example: jmri-5.4.3.jar -> jmri-5.5.0.jar
+* The PATCH version increases for every release, except when MAJOR or MINOR version changes. For example: jmri-5.4.3.jar -> jmri-5.4.4.jar
 
-Non official releases (test releases) is marked with SNAPSHOT, for example jmri.4.3.5.SNAPSHOT.jar.
+Non official releases (test releases) is marked with SNAPSHOT, for example jmri-4.3.5-SNAPSHOT.jar.
 
-Developer releases are marked with the developers GitHub user name (if that's possible) or some other identifier. For example jmri.4.3.5.danielb987.jar.
+Developer releases are marked with the developers GitHub user name (if that's possible) or some other identifier. For example jmri-4.3.5-SNAPSHOT+danielb987.jar.
 
 # Recommended practices for developers of the JMRI project
 
-Unannotated interfaces/classes/fields are considered EXPERIMENTAL.
+Unannotated interfaces/classes are considered EXPERIMENTAL.
 
-Unannotated methods follows the same annotation as its interface/class. So if the interface/class is annotated with MAINTAINED, every unannotated method in that interface/class is MAINTAINED. Unannotated methods in unannotaded interfaces/classes are considered EXPERIMENTAL.
-
-Unannotated fields are considered INTERNAL.
+Unannotated methods/fields follows the same annotation as its interface/class. So if the interface/class is annotated with MAINTAINED, every unannotated method in that interface/class is MAINTAINED. Unannotated methods/fields in unannotaded interfaces/classes are considered EXPERIMENTAL.
