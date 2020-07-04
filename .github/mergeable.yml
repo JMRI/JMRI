@@ -1,5 +1,5 @@
 version: 2
-mergeable:
+mergeable: # see https://github.com/mergeability/mergeable
   - when: pull_request.opened
     name: 'Ensure author assigned'
     validate:
