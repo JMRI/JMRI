@@ -200,30 +200,29 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     public void dispose() {
         SystemConnectionMemoManager.getDefault().deregister(this);
-        deregisterManager(PowerManager.class);
-        deregisterManager(TurnoutManager.class);
-        deregisterManager(LightManager.class);
-        deregisterManager(SensorManager.class);
-        deregisterManager(ReporterManager.class);
-        deregisterManager(ThrottleManager.class);
-        deregisterManager(ConsistManager.class);
-        deregisterManager(GlobalProgrammerManager.class);
-        deregisterManager(AddressedProgrammerManager.class);
-        ClockControl clockManager = get(ClockControl.class);
-        if (clockManager != null) {
-            InstanceManager.deregister(clockManager, ClockControl.class);
-        }
+        deregisterCommonObject(PowerManager.class);
+        deregisterCommonObject(TurnoutManager.class);
+        deregisterCommonObject(LightManager.class);
+        deregisterCommonObject(SensorManager.class);
+        deregisterCommonObject(ReporterManager.class);
+        deregisterCommonObject(ThrottleManager.class);
+        deregisterCommonObject(ConsistManager.class);
+        deregisterCommonObject(GlobalProgrammerManager.class);
+        deregisterCommonObject(AddressedProgrammerManager.class);
+        deregisterCommonObject(ClockControl.class);
     }
 
-    private void deregisterManager(Class c) {
-        Manager<?> manager = get(c);
+    private <T> void deregisterCommonObject(Class<T> c) {
+        T manager = get(c);
         if (manager != null) {
             InstanceManager.deregister(manager, c);
             deregister(manager, c);
-            try {
-                manager.dispose();
-            } catch(Exception e) {
-                log.warn("Exception while disposing manager of type {} in memo of type {}.",c.getName(),this.getClass().getName(),e);
+            if(manager instanceof Disposable) {
+                try {
+                    ((Disposable)manager).dispose();
+                } catch (Exception e) {
+                    log.warn("Exception while disposing manager of type {} in memo of type {}.", c.getName(), this.getClass().getName(), e);
+                }
             }
         }
     }
