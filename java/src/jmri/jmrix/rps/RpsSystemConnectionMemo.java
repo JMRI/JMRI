@@ -52,7 +52,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     /**
-     * Provide access to the SensorManager for this particular connection.
+     * @return The RpsSensorManager associated with this connection.
      */
     public RpsSensorManager getSensorManager() {
         if (getDisabled()) {
@@ -62,7 +62,7 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     /**
-     * Provide access to the Reporter Manager for this particular connection.
+     * @return The RpsReporterManager associated with this connection
      */
     public RpsReporterManager getReporterManager() {
         if (getDisabled()) {
