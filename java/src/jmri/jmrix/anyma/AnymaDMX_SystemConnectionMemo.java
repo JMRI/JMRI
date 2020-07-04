@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.Manager.NameValidity;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
@@ -341,10 +342,6 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
     public void dispose() {
         log.debug("* dispose()");
         InstanceManager.deregister(this, AnymaDMX_SystemConnectionMemo.class);
-        LightManager lightManager = get(LightManager.class);
-        if (lightManager != null) {
-            InstanceManager.deregister(lightManager, LightManager.class);
-        }
         super.dispose();
     }
 

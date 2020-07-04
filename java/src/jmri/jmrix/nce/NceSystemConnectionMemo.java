@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
@@ -188,30 +189,6 @@ public class NceSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         InstanceManager.deregister(this, NceSystemConnectionMemo.class);
         if (componentFactory != null) {
             InstanceManager.deregister(componentFactory, jmri.jmrix.swing.ComponentFactory.class);
-        }
-        PowerManager powerManager = get(PowerManager.class);
-        if (powerManager != null) {
-            InstanceManager.deregister(powerManager, PowerManager.class);
-        }
-        TurnoutManager turnoutManager = get(TurnoutManager.class);
-        if (turnoutManager != null) {
-            InstanceManager.deregister(turnoutManager, TurnoutManager.class);
-        }
-        LightManager lightManager = get(LightManager.class);
-        if (lightManager != null) {
-            InstanceManager.deregister(lightManager, LightManager.class);
-        }
-        SensorManager sensorManager = get(SensorManager.class);
-        if (sensorManager != null) {
-            InstanceManager.deregister(sensorManager, SensorManager.class);
-        }
-        ThrottleManager throttleManager = get(ThrottleManager.class);
-        if (throttleManager != null) {
-            InstanceManager.deregister(throttleManager, ThrottleManager.class);
-        }
-        ClockControl clockManager = get(ClockControl.class);
-        if (clockManager != null) {
-            InstanceManager.deregister(clockManager, ClockControl.class);
         }
         super.dispose();
     }

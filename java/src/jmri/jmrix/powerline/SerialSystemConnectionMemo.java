@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -105,18 +106,6 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnecti
     public void dispose() {
         serialTrafficController = null;
         InstanceManager.deregister(this, SerialSystemConnectionMemo.class);
-        TurnoutManager turnoutManager = get(TurnoutManager.class);
-        if (turnoutManager != null) {
-            InstanceManager.deregister(turnoutManager, TurnoutManager.class);
-        }
-        LightManager lightManager = get(LightManager.class);
-        if (lightManager != null) {
-            InstanceManager.deregister(lightManager, LightManager.class);
-        }
-        SensorManager sensorManager = get(SensorManager.class);
-        if (sensorManager != null) {
-            InstanceManager.deregister(sensorManager, SensorManager.class);
-        }
         super.dispose();
     }
 

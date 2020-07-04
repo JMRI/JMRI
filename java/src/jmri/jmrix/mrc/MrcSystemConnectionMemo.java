@@ -128,22 +128,6 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if (componentFactory != null) {
             InstanceManager.deregister(componentFactory, jmri.jmrix.swing.ComponentFactory.class);
         }
-        PowerManager powerManager = get(PowerManager.class);
-        if (powerManager != null) {
-            InstanceManager.deregister(powerManager, PowerManager.class);
-        }
-        TurnoutManager turnoutManager = get(TurnoutManager.class);
-        if (turnoutManager != null) {
-            InstanceManager.deregister(turnoutManager, TurnoutManager.class);
-        }
-        ThrottleManager throttleManager = get(ThrottleManager.class);
-        if (throttleManager != null) {
-            InstanceManager.deregister(throttleManager, ThrottleManager.class);
-        }
-        ClockControl clockManager = get(ClockControl.class);
-        if (clockManager != null) {
-            InstanceManager.deregister(clockManager, ClockControl.class);
-        }
 
         super.dispose();
     }

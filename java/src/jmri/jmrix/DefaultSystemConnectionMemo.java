@@ -200,6 +200,32 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     public void dispose() {
         SystemConnectionMemoManager.getDefault().deregister(this);
+        deregisterManager(PowerManager.class);
+        deregisterManager(TurnoutManager.class);
+        deregisterManager(LightManager.class);
+        deregisterManager(SensorManager.class);
+        deregisterManager(ReporterManager.class);
+        deregisterManager(ThrottleManager.class);
+        deregisterManager(ConsistManager.class);
+        deregisterManager(GlobalProgrammerManager.class);
+        deregisterManager(AddressedProgrammerManager.class);
+        ClockControl clockManager = get(ClockControl.class);
+        if (clockManager != null) {
+            InstanceManager.deregister(clockManager, ClockControl.class);
+        }
+    }
+
+    private void deregisterManager(Class c) {
+        Manager<?> manager = get(c);
+        if (manager != null) {
+            InstanceManager.deregister(manager, c);
+            deregister(manager, c);
+            try {
+                manager.dispose();
+            } catch(Exception e) {
+                log.warn("Exception while disposing manager of type {} in memo of type {}.",c.getName(),this.getClass().getName(),e);
+            }
+        }
     }
 
     /**

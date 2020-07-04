@@ -97,14 +97,6 @@ public class RfidSystemConnectionMemo extends DefaultSystemConnectionMemo {
     public void dispose() {
         rt = null;
         InstanceManager.deregister(this, RfidSystemConnectionMemo.class);
-        ReporterManager reporterManager = get(ReporterManager.class);
-        if (reporterManager != null) {
-            InstanceManager.deregister(reporterManager, ReporterManager.class);
-        }
-        SensorManager sensorManager = get(SensorManager.class);
-        if (sensorManager != null) {
-            InstanceManager.deregister(sensorManager, SensorManager.class);
-        }
         protocol = null;
         super.dispose();
     }

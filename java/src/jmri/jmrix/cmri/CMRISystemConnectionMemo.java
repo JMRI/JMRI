@@ -9,6 +9,7 @@ import javax.annotation.CheckReturnValue;
 import jmri.*;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.AbstractNode;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.cmri.serial.*;
 import jmri.jmrix.cmri.swing.CMRIComponentFactory;
@@ -763,21 +764,6 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
         InstanceManager.deregister(this, CMRISystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
-        }
-
-        TurnoutManager turnoutManager = get(TurnoutManager.class);
-        if (turnoutManager != null) {
-            InstanceManager.deregister(turnoutManager, TurnoutManager.class);
-        }
-
-        LightManager lightManager = get(LightManager.class);
-        if (lightManager != null) {
-            InstanceManager.deregister(lightManager, LightManager.class);
-        }
-
-        SensorManager sensorManager = get(SensorManager.class);
-        if (sensorManager != null) {
-            InstanceManager.deregister(sensorManager, SensorManager.class);
         }
         super.dispose();
     }

@@ -3,7 +3,7 @@ package jmri.jmrix.qsi;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-import jmri.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;

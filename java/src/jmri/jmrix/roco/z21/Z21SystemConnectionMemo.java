@@ -4,9 +4,8 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetProgrammerManager;
-import jmri.jmrix.loconet.streamport.LnStreamPortController;
-import jmri.jmrix.rps.RpsReporterManager;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;

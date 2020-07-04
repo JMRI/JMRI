@@ -3,7 +3,7 @@ package jmri.jmrix.mqtt;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-import jmri.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.TurnoutManager;

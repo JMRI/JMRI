@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
-import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
@@ -122,23 +122,6 @@ public class TamsSystemConnectionMemo extends DefaultSystemConnectionMemo implem
 
     @Override
     public void dispose() {
-        /*if (sensorManager != null) {
-            sensorManager.dispose();
-            sensorManager = null;
-        }
-        if (turnoutManager != null) {
-            turnoutManager.dispose();
-            turnoutManager = null;
-        }
-
-        if (powerManager != null) {
-            InstanceManager.deregister(powerManager, jmri.jmrix.tams.TamsPowerManager.class);
-        }
-
-        if (throttleManager != null) {
-            InstanceManager.deregister(throttleManager, jmri.jmrix.tams.TamsThrottleManager.class);
-        }*/
-
         et = null;
         InstanceManager.deregister(this, TamsSystemConnectionMemo.class);
         if (cf != null) {

@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 
 import jmri.CommandStation;
-import jmri.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrix.DefaultSystemConnectionMemo;

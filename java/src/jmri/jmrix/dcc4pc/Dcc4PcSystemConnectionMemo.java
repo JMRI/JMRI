@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;

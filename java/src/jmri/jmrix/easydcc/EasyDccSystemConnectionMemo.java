@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
@@ -168,26 +169,6 @@ public class EasyDccSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         InstanceManager.deregister(this, EasyDccSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
-        }
-
-        PowerManager powerManager = get(PowerManager.class);
-        if (powerManager != null) {
-            InstanceManager.deregister(powerManager, PowerManager.class);
-        }
-
-        TurnoutManager turnoutManager = get(TurnoutManager.class);
-        if (turnoutManager != null) {
-            InstanceManager.deregister(turnoutManager, TurnoutManager.class);
-        }
-
-        ThrottleManager throttleManager = get(ThrottleManager.class);
-        if (throttleManager != null) {
-            InstanceManager.deregister(((EasyDccThrottleManager) throttleManager), ThrottleManager.class);
-        }
-
-        ConsistManager consistManager = get(ConsistManager.class);
-        if (consistManager != null) {
-            InstanceManager.deregister(consistManager, ConsistManager.class);
         }
         super.dispose();
     }

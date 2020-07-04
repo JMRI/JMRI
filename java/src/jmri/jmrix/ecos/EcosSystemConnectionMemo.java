@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 import org.python.antlr.op.Pow;
 
@@ -136,48 +137,19 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
 
     @Override
     public void dispose() {
-        SensorManager sensorManager = get(SensorManager.class);
-        if (sensorManager != null) {
-            sensorManager.dispose();
-        }
-
-        TurnoutManager turnoutManager = get(TurnoutManager.class);
-        if (turnoutManager != null) {
-            turnoutManager.dispose();
-        }
-
-        ReporterManager reporterManager = get(ReporterManager.class);
-        if (reporterManager != null) {
-            reporterManager.dispose();
-        }
-
         EcosLocoAddressManager locoManager = get(EcosLocoAddressManager.class);
         if (locoManager != null) {
             locoManager.terminateThreads();
         }
-
-        EcosProgrammerManager programmerManager = get(EcosProgrammer.class);
+        EcosProgrammerManager programmerManager = get(EcosProgrammerManager.class);
         if (programmerManager != null) {
-            InstanceManager.deregister(programmerManager, AddressedProgrammerManager.class);
-            InstanceManager.deregister(programmerManager, GlobalProgrammerManager.class);
+            deregister(programmerManager, DefaultProgrammerManager.class);
         }
-
-        PowerManager powerManager = get(PowerManager.class);
-        if (powerManager != null) {
-            InstanceManager.deregister(powerManager, PowerManager.class);
-        }
-
-        ThrottleManager throttleManager = get(ThrottleManager.class);
-        if (throttleManager != null) {
-            InstanceManager.deregister(throttleManager, ThrottleManager.class);
-        }
-
         et = null;
         InstanceManager.deregister(this, EcosSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
-
         EcosPreferences prefManager = get(EcosPreferences.class);
         InstanceManager.getDefault(ShutDownManager.class).deregister(prefManager.ecosPreferencesShutDownTask);
         super.dispose();

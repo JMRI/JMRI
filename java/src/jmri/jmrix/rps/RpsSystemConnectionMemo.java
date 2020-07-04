@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import jmri.Manager.NameValidity;

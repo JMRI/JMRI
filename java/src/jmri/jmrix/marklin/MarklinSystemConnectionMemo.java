@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -104,26 +105,6 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
 
     @Override
     public void dispose() {
-        SensorManager sensorManager = get(SensorManager.class);
-        if (sensorManager != null) {
-            sensorManager.dispose();
-        }
-
-        TurnoutManager turnoutManager = get(TurnoutManager.class);
-        if (turnoutManager != null) {
-            turnoutManager.dispose();
-        }
-
-        PowerManager powerManager = get(PowerManager.class);
-        if (powerManager != null) {
-            InstanceManager.deregister(powerManager, PowerManager.class);
-        }
-
-        ThrottleManager throttleManager = get(ThrottleManager.class);
-        if (throttleManager != null) {
-            InstanceManager.deregister(throttleManager, ThrottleManager.class);
-        }
-
         et = null;
         InstanceManager.deregister(this, MarklinSystemConnectionMemo.class);
         if (cf != null) {

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
@@ -12,7 +13,6 @@ import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
-import org.python.antlr.op.Pow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -328,35 +328,6 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             InstanceManager.deregister(cf, ComponentFactory.class);
             cf = null;
         }
-        PowerManager powerManager = get(PowerManager.class);
-        if (powerManager != null) {
-            try {
-                powerManager.dispose();
-            } catch (JmriException je){
-                log.warn("Exception disposing of power manager ",je);
-            }
-            InstanceManager.deregister(powerManager, PowerManager.class);
-        }
-        TurnoutManager turnoutManager = get(TurnoutManager.class);
-        if (turnoutManager != null) {
-            turnoutManager.dispose();
-            InstanceManager.deregister(turnoutManager, TurnoutManager.class);
-        }
-        LightManager lightManager = get(LightManager.class);
-        if (lightManager != null) {
-            lightManager.dispose();
-            InstanceManager.deregister(lightManager, LightManager.class);
-        }
-        SensorManager sensorManager = get(SensorManager.class);
-        if (sensorManager != null) {
-            sensorManager.dispose();
-            InstanceManager.deregister(sensorManager, SensorManager.class);
-        }
-        ReporterManager reporterManager = get(ReporterManager.class);
-        if (reporterManager != null) {
-            reporterManager.dispose();
-            InstanceManager.deregister(reporterManager, ReporterManager.class);
-        }
         ThrottleManager throttleManager = get(ThrottleManager.class);
         if (throttleManager != null) {
             if (throttleManager instanceof LnThrottleManager) {
@@ -364,12 +335,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             } else if (throttleManager instanceof DebugThrottleManager) {
                 InstanceManager.deregister(((DebugThrottleManager) throttleManager), DebugThrottleManager.class);
             }
+            deregister(throttleManager,ThrottleManager.class);
         }
 
-        ClockControl clockControl = get(ClockControl.class);
-        if (clockControl != null) {
-            InstanceManager.deregister(clockControl, ClockControl.class);
-        }
         if (tm != null){
             tm.dispose();
             tm = null;
