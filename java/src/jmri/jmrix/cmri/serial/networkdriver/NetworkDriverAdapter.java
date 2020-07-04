@@ -33,6 +33,6 @@ public class NetworkDriverAdapter extends SerialNetworkPortAdapter {
         getSystemConnectionMemo().configureManagers();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NetworkDriverAdapter.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }
