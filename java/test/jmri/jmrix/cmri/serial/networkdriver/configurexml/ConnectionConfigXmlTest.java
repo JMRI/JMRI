@@ -46,7 +46,5 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     @Override
     public void getInstanceTest() {
         super.getInstanceTest();
-        JUnitAppender.assertErrorMessage("getInputStream called before load(), stream not available");
-        JUnitAppender.assertErrorMessage("Failed to start up communications. Error was java.lang.NullPointerException");
     }
 }
