@@ -23,7 +23,7 @@ import jmri.util.startup.StartupActionFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public abstract class DefaultSystemConnectionMemo extends Bean implements SystemConnectionMemo {
+public abstract class DefaultSystemConnectionMemo extends Bean implements SystemConnectionMemo,Disposable {
 
     private boolean disabled = false;
     private Boolean disabledAsLoaded = null; // Boolean can be true, false, or null
@@ -200,29 +200,25 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     public void dispose() {
         SystemConnectionMemoManager.getDefault().deregister(this);
-        deregisterCommonObject(PowerManager.class);
-        deregisterCommonObject(TurnoutManager.class);
-        deregisterCommonObject(LightManager.class);
-        deregisterCommonObject(SensorManager.class);
-        deregisterCommonObject(ReporterManager.class);
-        deregisterCommonObject(ThrottleManager.class);
-        deregisterCommonObject(ConsistManager.class);
-        deregisterCommonObject(GlobalProgrammerManager.class);
-        deregisterCommonObject(AddressedProgrammerManager.class);
-        deregisterCommonObject(ClockControl.class);
+        Set<Class> keySet = new HashSet<>(classObjectMap.keySet());
+        keySet.forEach(this::removeRegisteredObject);
     }
 
-    private <T> void deregisterCommonObject(Class<T> c) {
-        T manager = get(c);
-        if (manager != null) {
-            InstanceManager.deregister(manager, c);
-            deregister(manager, c);
-            if(manager instanceof Disposable) {
-                try {
-                    ((Disposable)manager).dispose();
-                } catch (Exception e) {
-                    log.warn("Exception while disposing manager of type {} in memo of type {}.", c.getName(), this.getClass().getName(), e);
-                }
+    private <T> void removeRegisteredObject(Class<T> c) {
+        T object = get(c);
+        if (object != null) {
+            InstanceManager.deregister(object, c);
+            deregister(object, c);
+            disposeIfPossible(c, object);
+        }
+    }
+
+    private <T> void disposeIfPossible(Class<T> c, T object) {
+        if(object instanceof Disposable) {
+            try {
+                ((Disposable)object).dispose();
+            } catch (Exception e) {
+                log.warn("Exception while disposing object of type {} in memo of type {}.", c.getName(), this.getClass().getName(), e);
             }
         }
     }
