@@ -8,8 +8,6 @@ import org.junit.jupiter.api.*;
 import jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig;
 
 /**
- * ConnectionConfigXmlTest.java
- *
  * Test for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
@@ -40,11 +38,5 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
         cc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
-    }
-
-    @Test
-    @Override
-    public void getInstanceTest() {
-        super.getInstanceTest();
     }
 }
