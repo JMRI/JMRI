@@ -27,6 +27,7 @@ import jmri.jmrix.rfid.RfidTrafficController;
  * @since 2.11.4
  * @deprecated since 4.21.1 use {@link RfidSystemConnectionMemo} directly.
  */
+@Deprecated
 public class StandaloneSystemConnectionMemo extends RfidSystemConnectionMemo {
 
     public StandaloneSystemConnectionMemo() {

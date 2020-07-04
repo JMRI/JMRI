@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.pr2;
 
-import com.pi4j.component.power.Power;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.PowerManager;
@@ -60,6 +59,7 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         return (LnPr2ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> new LnPr2ThrottleManager(this));
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, PR2SystemConnectionMemo.class);
 

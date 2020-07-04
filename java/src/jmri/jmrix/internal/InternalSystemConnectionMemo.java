@@ -3,7 +3,6 @@ package jmri.jmrix.internal;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-import com.tngtech.archunit.Internal;
 import jmri.*;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.managers.DefaultPowerManager;
@@ -119,7 +118,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
             store(turnoutManager,TurnoutManager.class);
             // special due to ProxyManager support
             InstanceManager.setTurnoutManager(turnoutManager);
-        };
+        }
         return turnoutManager;
     }
 
@@ -279,13 +278,11 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         SensorManager sensorManager = (SensorManager) classObjectMap.get(SensorManager.class);
         if (sensorManager != null) {
             sensorManager.dispose();
-            sensorManager = null;
         }
 
         TurnoutManager turnoutManager = (TurnoutManager) classObjectMap.get(TurnoutManager.class);
         if (turnoutManager != null) {
             turnoutManager.dispose();
-            turnoutManager = null;
         }
         super.dispose();
     }

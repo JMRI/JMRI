@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 
-import cucumber.api.java8.Th;
 import jmri.*;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
@@ -52,7 +51,7 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         log.debug("Created TMCCSystemConnectionMemo");
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    jmri.jmrix.swing.ComponentFactory cf;
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
@@ -108,7 +107,7 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (SerialThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> { return new SerialThrottleManager(this); });
+        return (SerialThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> new SerialThrottleManager(this));
     }
 
     public void setThrottleManager(ThrottleManager t) {
@@ -119,7 +118,7 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (SerialTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> { return new SerialTurnoutManager(this); });
+        return (SerialTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> new SerialTurnoutManager(this));
     }
 
 

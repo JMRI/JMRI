@@ -5,9 +5,7 @@ import java.util.ResourceBundle;
 
 import jmri.*;
 import jmri.jmrix.DefaultSystemConnectionMemo;
-import jmri.jmrix.loconet.clockmon.ClockMonPane;
 import jmri.util.NamedBeanComparator;
-import org.python.antlr.op.Pow;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -31,7 +29,7 @@ public class NceSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
                 jmri.jmrix.swing.ComponentFactory.class);
     }
 
-    jmri.jmrix.swing.ComponentFactory componentFactory = null;
+    jmri.jmrix.swing.ComponentFactory componentFactory;
 
     public void setNceUsbSystem(int result) {
         getNceTrafficController().setUsbSystem(result);
@@ -71,8 +69,6 @@ public class NceSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
             tc.setAdapterMemo(this);
         }
     }
-
-    private NceProgrammerManager programmerManager;
 
     public NceProgrammerManager getProgrammerManager() {
         //Do not want to return a programmer if the system is disabled

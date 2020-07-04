@@ -7,9 +7,7 @@ import java.util.ResourceBundle;
 import jmri.*;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.managers.DefaultRailComManager;
 import jmri.util.NamedBeanComparator;
-import org.picocontainer.behaviors.Stored;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -68,8 +66,6 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
         register();
     }
 
-    private DefaultRailComManager railCommManager;
-
     /**
      * @return the Default RailCom Manager.
      * @deprecated since 4.21.1.  retrieve from InstanceManager instead.
@@ -115,15 +111,15 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
                 if (connList.isEmpty()) {
                     return null;
                 }
-                for (int i = 0; i < connList.size(); i++) {
-                    if (connList.get(i).getUserName().equals(progManager)) {
-                        defaultProgrammer = connList.get(i).get(GlobalProgrammerManager.class);
+                for (SystemConnectionMemo systemConnectionMemo : connList) {
+                    if (systemConnectionMemo.getUserName().equals(progManager)) {
+                        defaultProgrammer = systemConnectionMemo.get(GlobalProgrammerManager.class);
                         break;
                     }
                 }
             }
-            if (defaultProgrammer != null && defaultProgrammer instanceof AddressedProgrammerManager) {
-                programManager = new Dcc4PcProgrammerManager((AddressedProgrammerManager & GlobalProgrammerManager) defaultProgrammer);
+            if (defaultProgrammer instanceof AddressedProgrammerManager) {
+                programManager = new Dcc4PcProgrammerManager(defaultProgrammer);
             }
             return programManager;
         });
