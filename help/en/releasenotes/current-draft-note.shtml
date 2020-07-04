@@ -55,6 +55,7 @@
                     Instructions</a> detailing how to change the Board ID (Board 
                     Address) of certain Digitrax LocoNet-based devices using 
                     JMRI have been added to the Digitrax hardware page.</li>
+                <li>Fixed a problem in the PM4Announce script</li>
             </ul>
 
         <h4>Maple</h4>
