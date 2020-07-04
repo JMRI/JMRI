@@ -97,8 +97,7 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
 
     /**
      * @return a programmer manager
-     * @deprecated since 4.21.1 use {@link InstanceManager#getDefault(Class<AddressedProgrammerManager>)} or
-     * {@link InstanceManager#getDefault(Class<GlobalProgrammerManager>)} instead
+     * @deprecated since 4.21.1 use {@link InstanceManager#getDefault(Class)} instead
      */
     @Deprecated
     public Dcc4PcProgrammerManager getProgrammerManager() {
