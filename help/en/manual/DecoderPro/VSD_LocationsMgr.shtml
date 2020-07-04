@@ -48,7 +48,7 @@
       coordinates.
 
       <h5>Reporters</h5><img src="images/VSD_Locations01.png" alt=
-      "Manage Reporter Locations" width="536" height="358">
+      "Manage Reporter Locations" width="550" height="356">
 
       <p>The Reporters tab shows a list of all currently defined
       Reporters. This is intended for use with Digitrax
@@ -57,7 +57,7 @@
 
 
       <h5>Blocks</h5><img src="images/VSD_Locations02.png" alt=
-      "Manage Block Locations" width="536" height="358">
+      "Manage Block Locations" width="550" height="232">
 
       <p>The Blocks tab shows a list of all currently defined
       Blocks. This is intended for use with Digitrax
@@ -68,20 +68,22 @@
 
       <h5>Operations Locations</h5><img src=
       "images/VSD_Locations03.png" alt=
-      "Manage Operations Locations" width="536" height="358">
+      "Manage Operations Locations" width="550" height="232">
 
       <p>The Operations Locations tab shows a list of all Locations
       defined within the JMRI Operations system.</p>
 
       <h5>Listeners</h5><img src="images/VSD_Locations04.png" alt=
-      "Manage Listener Locations" width="536" height="358">
+      "Manage Listener Location" width="550" height="232">
 
       <p>The Listeners tab shows the location of the Listener in
       the VSD sound system. The Listener position has two
       additional measurements: the Bearing (angle clockwise from
       the Y axis) and Azimuth (angle up or down from the X/Y plane)
       which together describe which way the Listener is
-      facing.</p><a name="VSDLocations" id="VSDLocations"></a>
+      facing.</p>
+
+      <a name="VSDLocations" id="VSDLocations"></a>
 
       <h4>Location Following</h4>
 
@@ -216,7 +218,7 @@
       <p>A convenient way to do the setup is creating a Panel with
       the JMRI Layout Editor. A Layout Editor guidance can be found
       <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">
-	  here</a>.</p>
+      here</a>.</p>
 
       <p>Your Panel should have all the Blocks and attached Sensors you need.
       Test and store the Panel.<br>
