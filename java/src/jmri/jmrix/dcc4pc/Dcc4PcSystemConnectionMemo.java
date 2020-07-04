@@ -101,7 +101,6 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
             return null;
         }
         return (Dcc4PcProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class, (Class c) -> {
-            Dcc4PcProgrammerManager programManager = null;
             DefaultProgrammerManager defaultProgrammer=get(GlobalProgrammerManager.class);
             if (defaultProgrammer == null) {
                 if (progManager == null) {
@@ -118,10 +117,7 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
                     }
                 }
             }
-            if (defaultProgrammer instanceof AddressedProgrammerManager) {
-                programManager = new Dcc4PcProgrammerManager(defaultProgrammer);
-            }
-            return programManager;
+            return new Dcc4PcProgrammerManager(defaultProgrammer);
         });
     }
 
