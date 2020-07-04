@@ -287,11 +287,6 @@ public class VSDecoderManager implements PropertyChangeListener {
             path = profiletable.get(profile_name);
             log.debug("Profile {} is in table.  Path: {}", profile_name, path);
 
-            if (!(locorow < max_decoder - 1)) {
-                log.warn("VSDecoder not created. Maximal number is {}", max_decoder);
-                return null;
-            }
-
             config.setVSDPath(path);
             config.setId(getNextVSDecoderID());
             VSDecoder vsd = new VSDecoder(config);
@@ -684,8 +679,9 @@ public class VSDecoderManager implements PropertyChangeListener {
                             if (blk.getPhysicalLocation() == null) {
                                 log.warn("Block {} has no physical location!", blk.getSystemName());
                             } else {
-                                log.debug("Block value: {}, physical location: {}", event.getNewValue(), blk.getPhysicalLocation());
+                                decoderInBlock.get(locoAddress).savedSound.setTunnel(blk.getPhysicalLocation().isTunnel()); // tunnel status
                                 decoderInBlock.get(locoAddress).setPosition(blk.getPhysicalLocation());
+                                log.debug("Block value: {}, physical location: {}", event.getNewValue(), blk.getPhysicalLocation());
                             }
                         } else {
                             log.warn("Block value \"{}\" is not a valid VSDecoder address", event.getNewValue());
@@ -731,6 +727,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 if (event.getNewValue() instanceof jmri.jmrix.loconet.TranspondingTag) {
                     String repVal = ((jmri.Reportable) event.getNewValue()).toReportString();
                     if (arp.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER) {
+                        decoderInBlock.get(arp.getLocoAddress(repVal).getNumber()).savedSound.setTunnel(arp.getPhysicalLocation(repVal).isTunnel());
                         setDecoderPositionByAddr(arp.getLocoAddress(repVal), arp.getPhysicalLocation(repVal));
                     }
                 } else {
@@ -738,6 +735,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     // Dcc4Pc, Ecos, 
                     // Assume Reporter "arp" is the most recent seen location
                     IdTag newValue = (IdTag) event.getNewValue();
+                    decoderInBlock.get(arp.getLocoAddress(newValue.getTagID()).getNumber()).savedSound.setTunnel(arp.getPhysicalLocation(null).isTunnel());
                     setDecoderPositionByAddr(arp.getLocoAddress(newValue.getTagID()), arp.getPhysicalLocation(null));
                 }
             } else {
@@ -813,9 +811,9 @@ public class VSDecoderManager implements PropertyChangeListener {
                                         if (old_rp == -1 && d.startPos != null) { // Special case start position: first choice; if found, overwrite it.
                                             posToSet = d.startPos;
                                         }
+                                        d.savedSound.setTunnel(blockPositionlists.get(d.setup_index).get(new_rp_index).isTunnel()); // tunnel status
                                         log.debug("position to set: {}", posToSet);  
                                         setDecoderPositionByAddr(xa, posToSet); // Sound set position
-                                        is_tunnel = blockPositionlists.get(d.setup_index).get(new_rp_index).isTunnel();
                                         stopSoundPositionTimer(d);
                                         startSoundPositionTimer(d); // timer restart
                                     } else {
@@ -977,7 +975,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 int dadr_block = locoInBlock[dadr_index][block]; // get block number for current decoder/loco
                 if (reporterlists.get(d.setup_index).contains(dadr_block)) {
                     int dadr_block_index = reporterlists.get(d.setup_index).indexOf(dadr_block);
-                    newPosition = new PhysicalLocation(0.0f, 0.0f, 0.0f, is_tunnel);
+                    newPosition = new PhysicalLocation(0.0f, 0.0f, 0.0f, d.savedSound.getTunnel());
                     // calculate current speed in meter/second; support topspeed forward or reverse
                     // JMRI speed is 0-1; currentspeed is speed after speedCurve(); multiply with topspeed (MPH); convert MPH to meter/second; regard layout scale
                     speed_ms = d.currentspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale;
@@ -1013,9 +1011,10 @@ public class VSDecoderManager implements PropertyChangeListener {
                             newPosition.y =  rotate_ypos + (float) Math.sin(anglePos) * (d.lastPos.x - rotate_xpos) + (float) Math.cos(anglePos) * (d.lastPos.y - rotate_ypos);
                             newPosition.z = 0.0f;
                         }
+                        log.debug("position to set: {}", newPosition);
                         d.setPosition(newPosition); // Sound set position
                         log.debug(" distance rest to go in block: {} of {} cm", Math.round(distance_rest_new * 100.0f),
-                            Math.round(blockParameter[d.setup_index][dadr_block_index][length] * 100.0f));
+                        Math.round(blockParameter[d.setup_index][dadr_block_index][length] * 100.0f));
                         locoInBlock[dadr_index][distance_to_go] = Math.round(distance_rest_new * 100.0f); // Save distance rest in cm
                         log.debug(" saved distance rest: {}", locoInBlock[dadr_index][distance_to_go]);
                     } else {
