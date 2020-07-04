@@ -1,6 +1,8 @@
+Starting with version 4.22.0, we are using semantic versioning as documented below.
+
 # What is an API?
 
-An API (Application Programming Interface) is a set of interfaces, classes, methods and fields that can be used by software that is using the JMRI library. An example of such software is [CATS (Computer Automated Traffic System)](http://cats4ctc.wikidot.com/).
+The API (Application Programming Interface) is a contract with a set of interfaces, classes, methods and fields that can be used by software that is using the JMRI library. An example of such software is [CATS (Computer Automated Traffic System)](http://cats4ctc.wikidot.com/).
 
 The API is an offer to other developers, saying that if you want to use jmri.jar in your project, you can use these interfaces/classes/methods/fields under these conditions, for example that a particular method is available, but may change in the next minor version, while another method is granted to stay the same at least until next major version.
 
