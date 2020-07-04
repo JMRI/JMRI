@@ -95,6 +95,11 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
                 (Class c) -> new Dcc4PcSensorManager(getDcc4PcTrafficController(), this));
     }
 
+    /**
+     * @return a programmer manager
+     * @deprecated since 4.21.1 use {@link InstanceManager#getDefault(Class<AddressedProgrammerManager>)} or
+     * {@link InstanceManager#getDefault(Class<GlobalProgrammerManager>)} instead
+     */
     @Deprecated
     public Dcc4PcProgrammerManager getProgrammerManager() {
         if (getDisabled()) {
@@ -117,7 +122,11 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
                     }
                 }
             }
-            return new Dcc4PcProgrammerManager(defaultProgrammer);
+            if(defaultProgrammer != null ) {
+                return new Dcc4PcProgrammerManager(defaultProgrammer);
+            } else {
+                return null;
+            }
         });
     }
 

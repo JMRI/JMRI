@@ -64,6 +64,7 @@ public class NcePowerManager extends AbstractPowerManager<NceSystemConnectionMem
     }
 
     NceTrafficController tc = null;
+    @SuppressWarnings({"unused"}) // prefix isn't used any longer. but it is passed as a constructor parameter.  Should be removed.
     String prefix = "";
 
     // to listen for status changes from NCE system
