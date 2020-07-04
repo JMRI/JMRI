@@ -1050,6 +1050,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return configFilename;
     }
 
+    @SuppressWarnings("deprecation") // JmriPlugin.start(...)
     static protected void createFrame(Apps containedPane, JmriJFrame frame) {
         // create the main frame and menus
         // Create a WindowInterface object based on the passed-in Frame
