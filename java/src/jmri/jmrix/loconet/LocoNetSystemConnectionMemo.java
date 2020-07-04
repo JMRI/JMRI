@@ -115,17 +115,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return lnm;
     }
 
-    protected DefaultProgrammerManager programmerManager;
-
     public DefaultProgrammerManager getProgrammerManager() {
-        if (programmerManager == null) {
-            programmerManager = new LnProgrammerManager(this);
-        }
-        return programmerManager;
+        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,(Class c) -> new LnProgrammerManager(this));
     }
 
     public void setProgrammerManager(DefaultProgrammerManager p) {
-        programmerManager = p;
+        store(p,DefaultProgrammerManager.class);
     }
 
     protected boolean mTurnoutNoRetry = false;
@@ -164,10 +159,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);
+            store(sm, jmri.CommandStation.class);
         }
 
-        // register this SystemConnectionMemo to connect to rest of system
-        register();
     }
 
     /**
@@ -197,10 +191,14 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
-        if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+        DefaultProgrammerManager programmerManager = getProgrammerManager();
+
+        if (programmerManager.isAddressedModePossible()) {
+            store(programmerManager, AddressedProgrammerManager.class);
+            InstanceManager.store(programmerManager, AddressedProgrammerManager.class);
         }
-        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+        if (programmerManager.isGlobalProgrammerAvailable()) {
+            store(getProgrammerManager(), GlobalProgrammerManager.class);
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
@@ -218,6 +216,8 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         getIdTagManager();
 
+        // register this SystemConnectionMemo to connect to rest of system
+        register();
     }
 
     public LnPowerManager getPowerManager() {

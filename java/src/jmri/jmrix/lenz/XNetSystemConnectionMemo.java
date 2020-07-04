@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
-import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
@@ -164,9 +163,16 @@ public class XNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
     }
 
     public void setCommandStation(CommandStation c) {
-        store(c,CommandStation.class);
-        if (c instanceof LenzCommandStation && get(LenzCommandStation.class) == null) {
+
+        if (c instanceof LenzCommandStation ) {
             setLenzCommandStation((LenzCommandStation) c);
+            // don't set as command station object if instruction
+            // not supported (Lenz Compact)
+            if(((LenzCommandStation)c).getCommandStationType()!=0x02) {
+                store(c, CommandStation.class);
+            }
+        } else {
+            store(c,CommandStation.class);
         }
     }
 

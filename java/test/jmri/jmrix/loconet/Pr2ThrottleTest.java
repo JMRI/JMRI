@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import jmri.CommandStation;
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
 
@@ -400,6 +401,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        memo.store(slotmanager, CommandStation.class);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new LnPr2ThrottleManager(memo));
         instance = new Pr2Throttle(memo,new jmri.DccLocoAddress(5,false));
     }

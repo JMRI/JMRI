@@ -2,8 +2,13 @@ package jmri.jmrix.internal;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
-import jmri.InstanceManager;
-import jmri.NamedBean;
+
+import com.tngtech.archunit.Internal;
+import jmri.*;
+import jmri.jmrix.debugthrottle.DebugThrottleManager;
+import jmri.managers.DefaultPowerManager;
+import jmri.managers.DefaultProgrammerManager;
+import jmri.progdebugger.DebugProgrammerManager;
 import jmri.util.NamedBeanPreferNumericComparator;
 
 /**
@@ -70,20 +75,12 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         configured = true;
     }
 
-    private InternalSensorManager sensorManager;
-    private InternalLightManager lightManager;
-    private InternalReporterManager reporterManager;
-    private InternalTurnoutManager turnoutManager;
-
-    private jmri.managers.DefaultPowerManager powerManager;
-    private InternalConsistManager consistManager;
-    private jmri.jmrix.debugthrottle.DebugThrottleManager throttleManager;
-    private jmri.progdebugger.DebugProgrammerManager programManager;
-
     public InternalSensorManager getSensorManager() {
-        if (sensorManager == null) {
+        InternalSensorManager sensorManager = (InternalSensorManager) classObjectMap.get(SensorManager.class);
+        if(sensorManager == null ) {
             log.debug("Create InternalSensorManager \"{}\" by request", getSystemPrefix());
             sensorManager = new InternalSensorManager(this);
+            store(sensorManager,SensorManager.class);
             // special due to ProxyManager support
             InstanceManager.setSensorManager(sensorManager);
         }
@@ -91,9 +88,11 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
     }
 
     public InternalLightManager getLightManager() {
-        if (lightManager == null) {
+        InternalLightManager lightManager = (InternalLightManager) classObjectMap.get(LightManager.class);
+        if(lightManager == null) {
             log.debug("Create InternalLightManager by request");
             lightManager = new InternalLightManager(this);
+            store(lightManager,LightManager.class);
             // special due to ProxyManager support
             InstanceManager.setLightManager(lightManager);
         }
@@ -101,9 +100,11 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
     }
 
     public InternalReporterManager getReporterManager() {
-        if (reporterManager == null) {
+        InternalReporterManager reporterManager = (InternalReporterManager) classObjectMap.get(ReporterManager.class);
+        if(reporterManager == null ) {
             log.debug("Create InternalReporterManager by request");
             reporterManager = new InternalReporterManager(this);
+            store(reporterManager,ReporterManager.class);
             // special due to ProxyManager support
             InstanceManager.setReporterManager(reporterManager);
         }
@@ -111,22 +112,24 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
     }
 
     public InternalTurnoutManager getTurnoutManager() {
-        if (turnoutManager == null) {
+        InternalTurnoutManager turnoutManager = (InternalTurnoutManager) classObjectMap.get(TurnoutManager.class);
+        if(turnoutManager == null ) {
             log.debug("Create InternalTurnoutManager \"{}\" by request", getSystemPrefix());
             turnoutManager = new InternalTurnoutManager(this);
+            store(turnoutManager,TurnoutManager.class);
             // special due to ProxyManager support
             InstanceManager.setTurnoutManager(turnoutManager);
-        }
+        };
         return turnoutManager;
     }
 
-    public jmri.managers.DefaultPowerManager getPowerManager() {
-        if (powerManager == null) {
+    public DefaultPowerManager getPowerManager() {
+        return (DefaultPowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> {
             log.debug("Create DefaultPowerManager by request");
-            powerManager = new jmri.managers.DefaultPowerManager(this);
-            jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
-        }
-        return powerManager;
+            PowerManager powerManager = new jmri.managers.DefaultPowerManager(this);
+            jmri.InstanceManager.store(powerManager, PowerManager.class);
+            return powerManager;
+        });
     }
 
     @Override
@@ -134,40 +137,37 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         if (defaultInstanceType) {
             return null;
         }
-        if (consistManager == null) {
+        return (InternalConsistManager) classObjectMap.computeIfAbsent((ConsistManager.class), (Class c) -> {
             log.debug("Create InternalConsistManager by request");
-            consistManager = new InternalConsistManager();
-            // special due to ProxyManager support
+            ConsistManager consistManager = new InternalConsistManager();
             InstanceManager.store(consistManager, jmri.ConsistManager.class);
-        }
-        return consistManager;
+            return consistManager;
+        });
     }
 
-    public jmri.jmrix.debugthrottle.DebugThrottleManager getThrottleManager() {
+    public DebugThrottleManager getThrottleManager() {
         if (defaultInstanceType) {
             return null;
         }
-        if (throttleManager == null) {
+        return (DebugThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, ( Class c) -> {
             log.debug("Create DebugThrottleManager by request");
             // Install a debug throttle manager
-            throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
+            ThrottleManager throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
             jmri.InstanceManager.setThrottleManager(throttleManager);
-        }
-        return throttleManager;
+            return throttleManager;
+        });
     }
 
-    public jmri.progdebugger.DebugProgrammerManager getProgrammerManager() {
+    public DebugProgrammerManager getProgrammerManager() {
         if (defaultInstanceType) {
             return null;
         }
-        if (programManager == null) {
-            log.debug("Create DebugProgrammerManager by request");
-            // Install a debug programmer
-            programManager = new jmri.progdebugger.DebugProgrammerManager(this);
-            // Don't auto-enter, as that messes up selection in Single CV programmer
-            //jmri.InstanceManager.setProgrammerManager(programManager);
-        }
-        return programManager;
+        return (DebugProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,
+                (Class c) -> {
+                    // Install a debug programmer
+                    log.debug("Create DebugProgrammerManager by request");
+                    return new DebugProgrammerManager(this);
+                });
     }
 
     @Override
@@ -276,10 +276,13 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
 
     @Override
     public void dispose() {
+        SensorManager sensorManager = (SensorManager) classObjectMap.get(SensorManager.class);
         if (sensorManager != null) {
             sensorManager.dispose();
             sensorManager = null;
         }
+
+        TurnoutManager turnoutManager = (TurnoutManager) classObjectMap.get(TurnoutManager.class);
         if (turnoutManager != null) {
             turnoutManager.dispose();
             turnoutManager = null;

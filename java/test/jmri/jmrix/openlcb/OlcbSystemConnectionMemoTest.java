@@ -21,7 +21,6 @@ public class OlcbSystemConnectionMemoTest extends SystemConnectionMemoTestBase<O
     @Override
     @Test
     public void testProvidesConsistManager() {
-        scm.configureManagers();
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
@@ -32,6 +31,7 @@ public class OlcbSystemConnectionMemoTest extends SystemConnectionMemoTestBase<O
         scm = new OlcbSystemConnectionMemo();
         TestTrafficController tc = new TestTrafficController();
         scm.setTrafficController(tc);
+        scm.configureManagers();
     }
 
     @Override

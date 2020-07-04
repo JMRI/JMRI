@@ -3,10 +3,8 @@ package jmri.jmrix.anyma;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.NamedBean;
+
+import jmri.*;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
@@ -19,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
-public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo {
+public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     private boolean configured = false;
 
@@ -307,8 +305,6 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo {
         configured = true;
     }
 
-    private UsbLightManager lightManager;
-
     /**
      * get the LightManager
      *
@@ -318,10 +314,7 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo {
         log.debug("* getLightManager()");
         UsbLightManager result = null;
         if (!getDisabled()) {
-            if (lightManager == null) {
-                lightManager = new UsbLightManager(this);
-            }
-            result = lightManager;
+            classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new UsbLightManager(this));
         }
         return result;
     }
@@ -349,8 +342,9 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo {
     public void dispose() {
         log.debug("* dispose()");
         InstanceManager.deregister(this, AnymaDMX_SystemConnectionMemo.class);
+        LightManager lightManager = get(LightManager.class);
         if (lightManager != null) {
-            InstanceManager.deregister(lightManager, UsbLightManager.class);
+            InstanceManager.deregister(lightManager, LightManager.class);
         }
         super.dispose();
     }

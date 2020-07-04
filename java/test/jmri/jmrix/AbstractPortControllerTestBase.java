@@ -2,15 +2,10 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.Comparator;
-import java.util.ResourceBundle;
 
 import org.junit.jupiter.api.*;
 
 import jmri.SystemConnectionMemo;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import org.mockito.Mockito;
 

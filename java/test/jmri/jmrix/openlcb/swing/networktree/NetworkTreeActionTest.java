@@ -33,6 +33,7 @@ public class NetworkTreeActionTest {
         memo  = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
         tc = new TestTrafficController();
         memo.setTrafficController(tc);
+        memo.configureManagers();
 
     }
 

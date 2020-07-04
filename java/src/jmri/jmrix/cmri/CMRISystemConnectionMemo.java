@@ -5,19 +5,12 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
-import jmri.InstanceManager;
-import jmri.Light;
+
+import jmri.*;
 import jmri.Manager.NameValidity;
-import jmri.NamedBean;
-import jmri.Sensor;
-import jmri.Turnout;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.DefaultSystemConnectionMemo;
-import jmri.jmrix.cmri.serial.SerialLightManager;
-import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
-import jmri.jmrix.cmri.serial.SerialTurnoutManager;
+import jmri.jmrix.cmri.serial.*;
 import jmri.jmrix.cmri.swing.CMRIComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.util.NamedBeanComparator;
@@ -27,7 +20,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Randall Wood
  */
-public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo {
+public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public CMRISystemConnectionMemo() {
         this("C", CMRIConnectionTypeList.CMRI); // default to "C" prefix
@@ -36,7 +29,6 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo {
     public CMRISystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
 
-        register(); // registers general type
         InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory for the GUI
@@ -721,38 +713,6 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo {
         return Integer.signum(bit1-bit2);
     }
 
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        } else if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else if (type.equals(jmri.LightManager.class)) {
-            return true;
-        }
-        return false; // nothing, by default
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        if (T.equals(jmri.LightManager.class)) {
-            return (T) getLightManager();
-        }
-        return null; // nothing by default
-    }
-
     /**
      * Configure the common managers for CMRI connections. This puts the common
      * manager config in one place.
@@ -764,42 +724,28 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo {
         InstanceManager.setTurnoutManager(getTurnoutManager());
 
         InstanceManager.setLightManager(getLightManager());
+        register();
     }
-
-    protected SerialTurnoutManager turnoutManager;
 
     public SerialTurnoutManager getTurnoutManager() {
         if (getDisabled()) {
             return null;
         }
-        if (turnoutManager == null) {
-            turnoutManager = new SerialTurnoutManager(this);
-        }
-        return turnoutManager;
+        return (SerialTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class c) -> new SerialTurnoutManager(this));
     }
-
-    protected SerialSensorManager sensorManager;
 
     public SerialSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        if (sensorManager == null) {
-            sensorManager = new SerialSensorManager(this);
-        }
-        return sensorManager;
+        return (SerialSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> new SerialSensorManager(this));
     }
-
-    protected SerialLightManager lightManager;
 
     public SerialLightManager getLightManager() {
         if (getDisabled()) {
             return null;
         }
-        if (lightManager == null) {
-            lightManager = new SerialLightManager(this);
-        }
-        return lightManager;
+        return (SerialLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new SerialLightManager(this));
     }
 
     @Override
@@ -818,14 +764,20 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo {
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
         }
+
+        TurnoutManager turnoutManager = get(TurnoutManager.class);
         if (turnoutManager != null) {
-            InstanceManager.deregister(turnoutManager, SerialTurnoutManager.class);
+            InstanceManager.deregister(turnoutManager, TurnoutManager.class);
         }
+
+        LightManager lightManager = get(LightManager.class);
         if (lightManager != null) {
-            InstanceManager.deregister(lightManager, SerialLightManager.class);
+            InstanceManager.deregister(lightManager, LightManager.class);
         }
+
+        SensorManager sensorManager = get(SensorManager.class);
         if (sensorManager != null) {
-            InstanceManager.deregister(sensorManager, SerialSensorManager.class);
+            InstanceManager.deregister(sensorManager, SensorManager.class);
         }
         super.dispose();
     }
