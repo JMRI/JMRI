@@ -229,7 +229,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
         if (!n.getPollingEnabled()) {
             n.setPollStatus(SerialNode.POLLSTATUS_IDLE);
-            log.trace("pollMessage ends with setPollStatus disabled");
+            log.trace("pollMessage ends with getPollingEnabled disabled");
             return null;
         } else if (getNode(curSerialNodeIndex).getSensorsActive()) {
             if (n.getPollStatus() != SerialNode.POLLSTATUS_POLLING) {
