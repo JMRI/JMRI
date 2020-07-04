@@ -1,4 +1,6 @@
-package jmri;
+package jmri.jmrix;
+
+import jmri.SystemConnectionMemo;
 
 public interface ConfiguringSystemConnectionMemo extends SystemConnectionMemo {
 
