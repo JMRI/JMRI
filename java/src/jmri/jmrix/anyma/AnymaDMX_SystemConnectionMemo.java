@@ -312,11 +312,10 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
      */
     public UsbLightManager getLightManager() {
         log.debug("* getLightManager()");
-        UsbLightManager result = null;
-        if (!getDisabled()) {
-            classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new UsbLightManager(this));
+        if (getDisabled()) {
+            return null;
         }
-        return result;
+        return (UsbLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new UsbLightManager(this));
     }
 
     /**
