@@ -34,6 +34,11 @@ which checks the dates of the control files to make sure they've benen updated w
 
 ### Specific components:
 
+##### apiguardian-api-1.1.0.jar
+- version 1.1.0
+- provides Javadoc markers of API stability
+- from https://github.org/apiguardian-team/apiguardian
+
 ##### jetty-*.jar
 - version 9.4.28.v20200408
 - provides the HTTP and WebSocket servers

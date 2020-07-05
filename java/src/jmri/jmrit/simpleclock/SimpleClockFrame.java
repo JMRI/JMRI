@@ -283,7 +283,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 startRunBox.setSelectedIndex(START_NORUNCHANGE);
                 break;
             default:
-                jmri.util.Log4JUtil.warnOnce(log, "Unexpected initial run state = {}", clock.getClockInitialRunState());
+                jmri.util.LoggingUtil.warnOnce(log, "Unexpected initial run state = {}", clock.getClockInitialRunState());
                 break;
         }
         startRunBox.addActionListener(this::startRunBoxChanged);

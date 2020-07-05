@@ -1156,7 +1156,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                     break;
                 default:
                     // unexpected orientation value
-                    jmri.util.Log4JUtil.warnOnce(log, "Unexpected orientation = {}", _popupUtil.getOrientation());
+                    jmri.util.LoggingUtil.warnOnce(log, "Unexpected orientation = {}", _popupUtil.getOrientation());
                     break;
             }
 
