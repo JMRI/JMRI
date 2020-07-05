@@ -7,7 +7,7 @@ import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.util.Log4JUtil;
+import jmri.util.LoggingUtil;
 
 import org.slf4j.Logger;
 
@@ -157,7 +157,7 @@ public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
                 break;
                 
             case LOG_ERROR_ONCE:
-                Log4JUtil.warnOnce(log, "item {} thrown an exception: {}", item.toString(), e);
+                LoggingUtil.warnOnce(log, "item {} thrown an exception: {}", item.toString(), e);
                 break;
                 
             case THROW:
@@ -180,7 +180,7 @@ public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
                 break;
                 
             case LOG_ERROR_ONCE:
-                Log4JUtil.warnOnce(log, "item {} thrown an exception: {}", item.toString(), e);
+                LoggingUtil.warnOnce(log, "item {} thrown an exception: {}", item.toString(), e);
                 break;
                 
             case THROW:

@@ -5,13 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ServiceLoader;
+
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
-import jmri.util.Log4JUtil;
 import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -23,6 +22,7 @@ import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
 import jmri.jmrit.logixng.DigitalBooleanActionFactory;
 import jmri.jmrit.logixng.MaleDigitalBooleanActionSocket;
+import jmri.util.*;
 
 /**
  * Class providing the basic logic of the DigitalBooleanActionManager interface.
@@ -130,7 +130,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
     @InvokeOnGuiThread  // this method is not thread safe
     static public DefaultDigitalBooleanActionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
-            Log4JUtil.warnOnce(log, "instance() called on wrong thread");
+            LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
         
         if (_instance == null) {
@@ -145,6 +145,6 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
         return MaleDigitalBooleanActionSocket.class;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(DefaultDigitalBooleanActionManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalBooleanActionManager.class);
 
 }

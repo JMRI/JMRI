@@ -5,28 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InvokeOnGuiThread;
-import jmri.jmrit.logixng.Category;
-import jmri.util.Log4JUtil;
 import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalExpressionFactory;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
+import jmri.jmrit.logixng.*;
 import jmri.managers.AbstractManager;
 import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.implementation.LogixNGPreferences;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.*;
 
 /**
  * Class providing the basic logic of the DigitalExpressionManager interface.
@@ -144,7 +136,7 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
     @InvokeOnGuiThread  // this method is not thread safe
     static public DefaultDigitalExpressionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
-            Log4JUtil.warnOnce(log, "instance() called on wrong thread");
+            LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
         
         if (_instance == null) {
@@ -159,6 +151,6 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
         return MaleDigitalExpressionSocket.class;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultDigitalExpressionManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalExpressionManager.class);
 
 }

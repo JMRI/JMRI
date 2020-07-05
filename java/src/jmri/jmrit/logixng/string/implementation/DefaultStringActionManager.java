@@ -11,14 +11,10 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
-import jmri.util.Log4JUtil;
 import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.managers.AbstractManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.*;
 
 /**
  * Class providing the basic logic of the ActionManager interface.
@@ -125,7 +121,7 @@ public class DefaultStringActionManager extends AbstractManager<MaleStringAction
     @InvokeOnGuiThread  // this method is not thread safe
     static public DefaultStringActionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
-            Log4JUtil.warnOnce(log, "instance() called on wrong thread");
+            LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
         
         if (_instance == null) {
@@ -140,6 +136,6 @@ public class DefaultStringActionManager extends AbstractManager<MaleStringAction
         return MaleStringActionSocket.class;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(DefaultStringActionManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultStringActionManager.class);
 
 }

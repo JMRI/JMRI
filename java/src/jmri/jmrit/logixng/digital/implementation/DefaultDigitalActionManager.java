@@ -5,24 +5,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ServiceLoader;
+
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
-import jmri.util.Log4JUtil;
-import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.DigitalActionFactory;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.FemaleDigitalActionSocket;
-import jmri.jmrit.logixng.MaleDigitalActionSocket;
+import jmri.jmrit.logixng.*;
 import jmri.managers.AbstractManager;
-import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.LoggingUtil;
+import jmri.util.ThreadingUtil;
 
 /**
  * Class providing the basic logic of the DigitalActionManager interface.
@@ -130,7 +122,7 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
     @InvokeOnGuiThread  // this method is not thread safe
     static public DefaultDigitalActionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
-            Log4JUtil.warnOnce(log, "instance() called on wrong thread");
+            LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
         
         if (_instance == null) {
@@ -145,6 +137,6 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
         return MaleDigitalActionSocket.class;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(DefaultDigitalActionManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalActionManager.class);
 
 }

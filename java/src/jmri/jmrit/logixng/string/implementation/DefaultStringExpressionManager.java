@@ -13,16 +13,12 @@ import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
-import jmri.util.Log4JUtil;
 import jmri.util.ThreadingUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.managers.AbstractManager;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.implementation.LogixNGPreferences;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.*;
 
 /**
  * Class providing the basic logic of the ExpressionManager interface.
@@ -139,7 +135,7 @@ public class DefaultStringExpressionManager extends AbstractManager<MaleStringEx
     @InvokeOnGuiThread  // this method is not thread safe
     static public DefaultStringExpressionManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
-            Log4JUtil.warnOnce(log, "instance() called on wrong thread");
+            LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
         
         if (_instance == null) {
@@ -154,5 +150,5 @@ public class DefaultStringExpressionManager extends AbstractManager<MaleStringEx
         return MaleStringExpressionSocket.class;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultStringExpressionManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultStringExpressionManager.class);
 }

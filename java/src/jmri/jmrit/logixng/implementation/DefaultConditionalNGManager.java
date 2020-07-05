@@ -1,24 +1,13 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.util.ArrayList;
-import java.util.List;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.MaleDigitalActionSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.actions.Many;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
-import jmri.util.Log4JUtil;
-import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.*;
 
 /**
  * Class providing the basic logic of the ConditionalNG_Manager interface.
@@ -219,7 +208,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     @InvokeOnGuiThread  // this method is not thread safe
     static public DefaultConditionalNGManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
-            Log4JUtil.warnOnce(log, "instance() called on wrong thread");
+            LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
         
         if (_instance == null) {
@@ -234,5 +223,5 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         return ConditionalNG.class;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalNGManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManager.class);
 }

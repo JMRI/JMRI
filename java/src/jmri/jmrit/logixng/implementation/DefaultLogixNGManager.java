@@ -1,18 +1,13 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
-import jmri.util.Log4JUtil;
-import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.*;
+
 
 /**
  * Class providing the basic logic of the LogixNG_Manager interface.
@@ -166,7 +161,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @InvokeOnGuiThread  // this method is not thread safe
     static public DefaultLogixNGManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
-            Log4JUtil.warnOnce(log, "instance() called on wrong thread");
+            LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
         
         if (_instance == null) {
@@ -181,6 +176,6 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         return LogixNG.class;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixNGManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);
 
 }
