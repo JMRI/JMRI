@@ -6,13 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.analog.implementation.DefaultAnalogExpressionManager;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.AnalogExpressionBean;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
@@ -180,5 +181,5 @@ public class DefaultAnalogExpressionManagerXml extends jmri.managers.configurexm
         return InstanceManager.getDefault(AnalogExpressionManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultAnalogExpressionManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAnalogExpressionManagerXml.class);
 }

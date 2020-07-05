@@ -6,17 +6,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.InvokeOnGuiThread;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.analog.implementation.DefaultAnalogActionManager;
-import jmri.util.Log4JUtil;
 import jmri.util.ThreadingUtil;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogActionBean;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
@@ -183,5 +181,5 @@ public class DefaultAnalogActionManagerXml extends jmri.managers.configurexml.Ab
         return InstanceManager.getDefault(jmri.jmrit.logixng.AnalogActionManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultAnalogActionManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAnalogActionManagerXml.class);
 }

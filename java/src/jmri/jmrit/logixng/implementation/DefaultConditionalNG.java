@@ -10,8 +10,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
-import jmri.util.ThreadingUtil;
-import jmri.util.Log4JUtil;
+import jmri.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -137,7 +136,7 @@ public class DefaultConditionalNG extends AbstractBase
                         } catch (JmriException | RuntimeException e) {
                             switch (_errorHandlingType) {
                                 case LOG_ERROR_ONCE:
-                                    Log4JUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
+                                    LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
                                             getSystemName(), e, e);
                                     break;
                                     
