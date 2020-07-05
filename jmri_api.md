@@ -85,9 +85,7 @@ package | jmri.jmrit.** | MAINTAINED
 
   package | jmri.jmrit.ussctc.** | INTERNAL
 
-package | jmri.jmrix.** | MAINTAINED
-
-  package | jmri.jmrix.** | INTERNAL
+package | jmri.jmrix.** | INTERNAL
   class   | jmri.jmrix.ConnectionConfig | MAINTAINED
   class   | jmri.jmrix.ConnectionConfigManager | MAINTAINED
   class   | jmri.jmrix.ConnectionStatus | MAINTAINED
