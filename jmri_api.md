@@ -1,20 +1,17 @@
 Type | Name | Status | Force
 ---- | ---- | ------ | -----
-package | jmri | MAINTAINED
 package | jmri.** | MAINTAINED
 
-package | jmri.beans | MAINTAINED
-package | jmri.configurexml | INTERNAL
-package | jmri.implementation | INTERNAL
-package | jmri.jmris | MAINTAINED
+package | jmri.beans.** | MAINTAINED
+package | jmri.configurexml.** | INTERNAL
+package | jmri.implementation.** | INTERNAL
+package | jmri.jmris.** | MAINTAINED
 
-package | jmri.jmrit | MAINTAINED
+package | jmri.jmrit.** | MAINTAINED
 
-  package | jmri.jmrit.decoderdefn | MAINTAINED
   package | jmri.jmrit.decoderdefn.** | MAINTAINED
   class   | jmri.jmrit.decoderdefn.DecoderIndexFile | INTERNAL
 
-  package | jmri.jmrit.beantable | INTERNAL
   package | jmri.jmrit.beantable.** | INTERNAL
   class   | jmri.jmrit.beantable.AudioTableAction| MAINTAINED
   class   | jmri.jmrit.beantable.BeanTableStartupActionFactory| MAINTAINED
@@ -45,19 +42,16 @@ package | jmri.jmrit | MAINTAINED
   class   | jmri.jmrit.beantable.TurnoutTableAction| MAINTAINED
   class   | jmri.jmrit.beantable.TurnoutTableTabAction| MAINTAINED
 
-  package | jmri.jmrit.conditional | INTERNAL
   package | jmri.jmrit.conditional.** | INTERNAL
 
-  package | jmri.jmrit.display | INTERNAL
   package | jmri.jmrit.display.** | INTERNAL
-  class   | jmri.jmrit.display.NewPanelAction
-  class   | jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction
-  class   | jmri.jmrit.display.layoutEditor.LayoutEditorAction
-  class   | jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction
-  class   | jmri.jmrit.display.panelEditor.PanelEditorAction
-  class   | jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction
+  class   | jmri.jmrit.display.NewPanelAction | MAINTAINED
+  class   | jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction | MAINTAINED
+  class   | jmri.jmrit.display.layoutEditor.LayoutEditorAction | MAINTAINED
+  class   | jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction | MAINTAINED
+  class   | jmri.jmrit.display.panelEditor.PanelEditorAction | MAINTAINED
+  class   | jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction | MAINTAINED
 
-  package | jmri.jmrit.roster | INTERNAL
   package | jmri.jmrit.roster.** | INTERNAL
   class   | jmri.jmrit.roster.Roster | MAINTAINED
   class   | jmri.jmrit.roster.RosterConfigManager | MAINTAINED
@@ -89,23 +83,22 @@ package | jmri.jmrit | MAINTAINED
   class   | jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction | MAINTAINED
   class   | jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction | MAINTAINED
 
-  package | jmri.jmrit.ussctc | INTERNAL
   package | jmri.jmrit.ussctc.** | INTERNAL
 
-package | jmri.jmrix | MAINTAINED
+package | jmri.jmrix.** | MAINTAINED
 
   package | jmri.jmrix.** | INTERNAL
   class   | jmri.jmrix.ConnectionConfig | MAINTAINED
   class   | jmri.jmrix.ConnectionConfigManager | MAINTAINED
   class   | jmri.jmrix.ConnectionStatus | MAINTAINED
 
-package | jmri.managers | INTERNAL
-package | jmri.plaf | INTERNAL
-package | jmri.profile | MAINTAINED
-package | jmri.progdebugger | INTERNAL
-package | jmri.script | INTERNAL
-package | jmri.server | MAINTAINED
-package | jmri.spi | MAINTAINED
-package | jmri.swing | INTERNAL
-package | jmri.util | INTERNAL
-package | jmri.web | MAINTAINED
+package | jmri.managers.** | INTERNAL
+package | jmri.plaf.** | INTERNAL
+package | jmri.profile.** | MAINTAINED
+package | jmri.progdebugger.** | INTERNAL
+package | jmri.script.** | INTERNAL
+package | jmri.server.** | MAINTAINED
+package | jmri.spi.** | MAINTAINED
+package | jmri.swing.** | INTERNAL
+package | jmri.util.** | INTERNAL
+package | jmri.web.** | MAINTAINED
