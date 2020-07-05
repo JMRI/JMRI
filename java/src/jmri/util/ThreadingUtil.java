@@ -303,7 +303,7 @@ public class ThreadingUtil {
     static public void requireGuiThread(org.slf4j.Logger logger) {
         if (!isGUIThread()) {
             // fail, which can be a bit slow to do the right thing
-            Log4JUtil.warnOnce(logger, "Call not on GUI thread", new Exception("traceback"));
+            LoggingUtil.warnOnce(logger, "Call not on GUI thread", new Exception("traceback"));
         } 
     }
     
@@ -317,7 +317,7 @@ public class ThreadingUtil {
     static public void requireLayoutThread(org.slf4j.Logger logger) {
         if (!isLayoutThread()) {
             // fail, which can be a bit slow to do the right thing
-            Log4JUtil.warnOnce(logger, "Call not on Layout thread", new Exception("traceback"));
+            LoggingUtil.warnOnce(logger, "Call not on Layout thread", new Exception("traceback"));
         } 
     }
     
@@ -358,16 +358,16 @@ public class ThreadingUtil {
 
                 java.lang.management.MonitorInfo[] monitors = threadInfo.getLockedMonitors();
                 for (java.lang.management.MonitorInfo mon : monitors) {
-                    log.warn("Thread was holding monitor {} from {}", mon, mon.getLockedStackFrame(), Log4JUtil.shortenStacktrace(new Exception("traceback"))); // yes, warn - for re-enable later
+                    log.warn("Thread was holding monitor {} from {}", mon, mon.getLockedStackFrame(), LoggingUtil.shortenStacktrace(new Exception("traceback"))); // yes, warn - for re-enable later
                 }
 
                 java.lang.management.LockInfo[] locks = threadInfo.getLockedSynchronizers();
                 for (java.lang.management.LockInfo lock : locks) {
                     // certain locks are part of routine Java API operations
                     if (lock.toString().startsWith("java.util.concurrent.ThreadPoolExecutor$Worker") ) {
-                        log.debug("Thread was holding java lock {}", lock, Log4JUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
+                        log.debug("Thread was holding java lock {}", lock, LoggingUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
                     } else {
-                        log.warn("Thread was holding lock {}", lock, Log4JUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
+                        log.warn("Thread was holding lock {}", lock, LoggingUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
                     }
                 }
             } catch (RuntimeException ex) {

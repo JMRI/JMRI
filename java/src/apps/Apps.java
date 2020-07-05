@@ -1,96 +1,51 @@
 package apps;
 
-import apps.gui3.tabbedpreferences.TabbedPreferences;
-import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import java.awt.AWTEvent;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
-import java.awt.event.AWTEventListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.Locale;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
+
+import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.JmriPlugin;
-import jmri.ShutDownManager;
+import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
-import jmri.jmrit.DebugMenu;
+
+import apps.jmrit.DebugMenu;
+
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
 import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.jython.Jynstrument;
-import jmri.jmrit.jython.JynstrumentFactory;
-import jmri.jmrit.jython.RunJythonScript;
+import jmri.jmrit.jython.*;
 import jmri.jmrit.operations.OperationsMenu;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.roster.swing.RosterMenu;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.withrottle.WiThrottleCreationAction;
-import jmri.jmrix.ActiveSystemsMenu;
-import jmri.jmrix.ConnectionConfig;
-import jmri.jmrix.ConnectionConfigManager;
-import jmri.jmrix.ConnectionStatus;
-import jmri.jmrix.JmrixConfigPane;
+import jmri.jmrix.*;
 import apps.plaf.macosx.Application;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
-import jmri.profile.ProfileManagerDialog;
+import jmri.profile.*;
 import jmri.script.JmriScriptEngineManager;
-import jmri.util.FileUtil;
-import jmri.util.HelpUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.Log4JUtil;
-import jmri.util.SystemType;
-import jmri.util.ThreadingUtil;
-import jmri.util.WindowMenu;
+import jmri.util.*;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
 import jmri.util.usb.RailDriverMenuItem;
 import jmri.web.server.WebServerAction;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
+import apps.util.Log4JUtil;
 
 /**
  * Base class for JMRI applications.
@@ -1179,6 +1134,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     protected void attachHelp() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Apps.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Apps.class);
 
 }
