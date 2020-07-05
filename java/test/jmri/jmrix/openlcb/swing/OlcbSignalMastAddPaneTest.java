@@ -252,7 +252,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
                 return connection;
             }
         });
-        
+
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 

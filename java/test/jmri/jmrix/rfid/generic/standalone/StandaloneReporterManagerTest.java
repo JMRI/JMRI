@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -23,7 +24,7 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        StandaloneSystemConnectionMemo memo = new StandaloneSystemConnectionMemo();
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
         tc = new StandaloneTrafficController(memo);
         memo.setSystemPrefix("R");
         memo.setRfidTrafficController(tc);
@@ -41,8 +42,8 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
 
     @AfterEach
     public void tearDown() {
+        tc.terminateThreads();
         tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

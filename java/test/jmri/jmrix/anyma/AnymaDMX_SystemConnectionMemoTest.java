@@ -29,13 +29,15 @@ public class AnymaDMX_SystemConnectionMemoTest extends SystemConnectionMemoTestB
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        //AnymaDMX_TrafficController tc = new AnymaDMX_TrafficController();
         scm = new AnymaDMX_SystemConnectionMemo();
+        scm.configureManagers();
     }
 
     @Override
     @AfterEach
     public void tearDown() {
+        scm.dispose();
+        scm = null;
         JUnitUtil.tearDown();
     }
 }

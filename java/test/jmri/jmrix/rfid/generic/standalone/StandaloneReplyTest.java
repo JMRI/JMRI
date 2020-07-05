@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -16,7 +17,7 @@ public class StandaloneReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        StandaloneSystemConnectionMemo memo = new StandaloneSystemConnectionMemo();
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
         memo.setProtocol(new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol());
         tc = new StandaloneTrafficController(memo);
         m = new StandaloneReply(tc);
@@ -25,8 +26,8 @@ public class StandaloneReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @AfterEach
     public void tearDown() {
         m = null;
+        tc.terminateThreads();
         tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

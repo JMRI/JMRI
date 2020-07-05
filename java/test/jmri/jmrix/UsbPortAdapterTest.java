@@ -1,11 +1,15 @@
 package jmri.jmrix;
 
-import java.util.Comparator;
+import jmri.SystemConnectionMemo;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 
-import jmri.NamedBean;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Paul Bender Copyright (C) 2017
@@ -14,18 +18,11 @@ public class UsbPortAdapterTest {
 
     @Test
     public void testCTor() {
-        UsbPortAdapter t = new UsbPortAdapter(new DefaultSystemConnectionMemo("I", "test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-
-            @Override
-            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
-                return null;
-            }
-        });
-        Assert.assertNotNull("exists", t);
+        SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
+        Mockito.when(memo.getUserName()).thenReturn("test");
+        Mockito.when(memo.getSystemPrefix()).thenReturn("I");
+        UsbPortAdapter t = new UsbPortAdapter(memo);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @BeforeEach

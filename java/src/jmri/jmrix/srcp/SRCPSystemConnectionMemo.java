@@ -58,13 +58,14 @@ public class SRCPSystemConnectionMemo extends DefaultSystemConnectionMemo {
     private SRCPTrafficController et;
 
     /**
-     * Configure the common managers for SRCP connections. This puts the
-     * common manager config in one place. This method is static so that it can
-     * be referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
+     * Configure the common managers for SRCP connections.  Currently the
+     * SRCP memo configures no managers directly.  Managers are configured
+     * for each bus.
+     * @deprecated since 4.21.1 without replacement.
      */
+    @Deprecated
     public void configureManagers() {
-
+      // no managers to configure for base SRCP connection.
     }
 
     /**
@@ -117,7 +118,9 @@ public class SRCPSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     @Override
     public void dispose() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(et.shutDownTask);
+        if (et != null) {
+            InstanceManager.getDefault(ShutDownManager.class).deregister(et.shutDownTask);
+        }
         et = null;
         InstanceManager.deregister(this, SRCPSystemConnectionMemo.class);
         if (cf != null) {

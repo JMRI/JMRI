@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.generic.standalone;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -17,7 +18,7 @@ public class StandaloneTrafficControllerTest extends jmri.jmrix.rfid.RfidTraffic
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new StandaloneTrafficController(new StandaloneSystemConnectionMemo());
+        tc = new StandaloneTrafficController(new RfidSystemConnectionMemo());
     }
 
     @Override

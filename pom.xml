@@ -857,6 +857,7 @@
                                         </limit>
                                     </limits>
                                 </rule>
+                                <!-- fails if package only contains interfaces
                                 <rule>
                                     <element>PACKAGE</element>
                                     <limits>
@@ -867,6 +868,7 @@
                                         </limit>
                                     </limits>
                                 </rule>
+                                -->
                                 <rule>
                                     <element>SOURCEFILE</element>
                                     <limits>
@@ -1579,6 +1581,11 @@
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>0.4.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apiguardian</groupId>
+            <artifactId>apiguardian-api</artifactId>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
 
