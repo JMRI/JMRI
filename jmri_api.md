@@ -1,17 +1,17 @@
 Type | Name | Status | Force
 ---- | ---- | ------ | -----
 package | jmri.** | MAINTAINED
-
+.
 package | jmri.beans.** | MAINTAINED
 package | jmri.configurexml.** | INTERNAL
 package | jmri.implementation.** | INTERNAL
 package | jmri.jmris.** | MAINTAINED
-
+.
 package | jmri.jmrit.** | MAINTAINED
-
+.
   package | jmri.jmrit.decoderdefn.** | MAINTAINED
   class   | jmri.jmrit.decoderdefn.DecoderIndexFile | INTERNAL
-
+.
   package | jmri.jmrit.beantable.** | INTERNAL
   class   | jmri.jmrit.beantable.AudioTableAction| MAINTAINED
   class   | jmri.jmrit.beantable.BeanTableStartupActionFactory| MAINTAINED
@@ -41,9 +41,9 @@ package | jmri.jmrit.** | MAINTAINED
   class   | jmri.jmrit.beantable.TransitTableAction| MAINTAINED
   class   | jmri.jmrit.beantable.TurnoutTableAction| MAINTAINED
   class   | jmri.jmrit.beantable.TurnoutTableTabAction| MAINTAINED
-
+.
   package | jmri.jmrit.conditional.** | INTERNAL
-
+.
   package | jmri.jmrit.display.** | INTERNAL
   class   | jmri.jmrit.display.NewPanelAction | MAINTAINED
   class   | jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction | MAINTAINED
@@ -51,13 +51,13 @@ package | jmri.jmrit.** | MAINTAINED
   class   | jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction | MAINTAINED
   class   | jmri.jmrit.display.panelEditor.PanelEditorAction | MAINTAINED
   class   | jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction | MAINTAINED
-
+.
   package | jmri.jmrit.roster.** | INTERNAL
   class   | jmri.jmrit.roster.Roster | MAINTAINED
   class   | jmri.jmrit.roster.RosterConfigManager | MAINTAINED
   class   | jmri.jmrit.roster.RosterConfigPane | MAINTAINED
   class   | jmri.jmrit.roster.RosterEntry | MAINTAINED
-
+.
   package | jmri.jmrit.symbolicprog.** | INTERNAL
   class   | jmri.jmrit.symbolicprog.CombinedLocoSelListPane | MAINTAINED
   class   | jmri.jmrit.symbolicprog.CombinedLocoSelPane | MAINTAINED
@@ -82,14 +82,14 @@ package | jmri.jmrit.** | MAINTAINED
   class   | jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction | MAINTAINED
   class   | jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction | MAINTAINED
   class   | jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction | MAINTAINED
-
+.
   package | jmri.jmrit.ussctc.** | INTERNAL
-
+.
 package | jmri.jmrix.** | INTERNAL
   class   | jmri.jmrix.ConnectionConfig | MAINTAINED
   class   | jmri.jmrix.ConnectionConfigManager | MAINTAINED
   class   | jmri.jmrix.ConnectionStatus | MAINTAINED
-
+.
 package | jmri.managers.** | INTERNAL
 package | jmri.plaf.** | INTERNAL
 package | jmri.profile.** | MAINTAINED
