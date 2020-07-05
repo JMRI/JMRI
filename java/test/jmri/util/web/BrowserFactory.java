@@ -76,7 +76,7 @@ public class BrowserFactory {
                 }
                 break;
             default:
-                jmri.util.Log4JUtil.warnOnce(log, "Unexpected browserName = {}", browserName);
+                jmri.util.LoggingUtil.warnOnce(log, "Unexpected browserName = {}", browserName);
                 break;
         }
         return driver;

@@ -83,7 +83,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     public void subscribe(String topic, MqttEventListener mel) {
         if (mqttEventListeners == null || mqttClient == null) {
-            jmri.util.Log4JUtil.warnOnce(log, "Trying to subscribe before connect/configure is done");
+            jmri.util.LoggingUtil.warnOnce(log, "Trying to subscribe before connect/configure is done");
             return;
         }
         try {

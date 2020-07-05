@@ -1,8 +1,5 @@
 package apps;
 
-import apps.gui3.tabbedpreferences.TabbedPreferences;
-import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
@@ -15,13 +12,16 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.Locale;
+
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
-import jmri.jmrit.DebugMenu;
+
+import apps.jmrit.DebugMenu;
+
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
@@ -43,8 +43,9 @@ import jmri.util.swing.WindowInterface;
 import jmri.util.usb.RailDriverMenuItem;
 import jmri.web.server.WebServerAction;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
+import apps.util.Log4JUtil;
 
 /**
  * Base class for JMRI applications.
@@ -1128,6 +1129,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     protected void attachHelp() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Apps.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Apps.class);
 
 }
