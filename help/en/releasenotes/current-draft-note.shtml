@@ -542,5 +542,7 @@
                 jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
                 (it's easier to have you just try the two than to explain which 
                 one will work in which case)</li>
+            <li>Added PR automation to check for a comment in the release note when a PR
+                is opened, and to ensure that somebody has been assigned to the PR.</li>
         </ul>
 
