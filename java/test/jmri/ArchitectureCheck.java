@@ -102,7 +102,7 @@ public class ArchitectureCheck extends ArchitectureTest {
                 .resideInAPackage("jmri.util..")
             .should().dependOnClassesThat()
                     .resideOutsideOfPackages("jmri", "jmri.util..",
-                                             "java..", "javax..", "org..") // swing et al imported
+                                             "java..", "javax..", "org..", "edu.umd..") // swing et al imported
         );
         
     /**

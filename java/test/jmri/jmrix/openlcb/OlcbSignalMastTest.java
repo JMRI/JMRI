@@ -4,10 +4,8 @@ import jmri.util.JUnitUtil;
 
 import org.openlcb.*;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Tests for the OlcbSignalMast implementation
@@ -364,7 +362,7 @@ public class OlcbSignalMastTest {
                 return connection;
             }
         });
-        
+
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 

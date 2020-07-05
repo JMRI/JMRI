@@ -68,6 +68,11 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         registerSelf();
     }
 
+    public AbstractManager() {
+        // create and use a reference to an internal connection
+        this(InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
+    }
+    
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.

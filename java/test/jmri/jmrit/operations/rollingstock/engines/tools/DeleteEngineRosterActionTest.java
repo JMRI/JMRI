@@ -1,17 +1,17 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -20,20 +20,20 @@ import jmri.util.swing.JemmyUtil;
 public class DeleteEngineRosterActionTest extends OperationsTestCase {
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DeleteEngineRosterAction t = new DeleteEngineRosterAction();
-        Assert.assertNotNull("exists", t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testDelete() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DeleteEngineRosterAction deleteRosterAction = new DeleteEngineRosterAction();
-        Assert.assertNotNull("exists", deleteRosterAction);
+        assertThat(deleteRosterAction).withFailMessage("exists").isNotNull();
 
         JUnitOperationsUtil.initOperationsData();
-        Assert.assertEquals("Number of engines", 4, InstanceManager.getDefault(EngineManager.class).getNumEntries());
+        assertThat(InstanceManager.getDefault(EngineManager.class).getNumEntries()).withFailMessage("Number of engines").isEqualTo(4);
 
         Thread delete = new Thread(new Runnable() {
             @Override
@@ -56,7 +56,7 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
             // do nothing
         }
 
-        Assert.assertEquals("Number of engines", 0, InstanceManager.getDefault(EngineManager.class).getNumEntries());
+        assertThat(InstanceManager.getDefault(EngineManager.class).getNumEntries()).withFailMessage("Number of engines").isEqualTo(0);
         
 
     }
