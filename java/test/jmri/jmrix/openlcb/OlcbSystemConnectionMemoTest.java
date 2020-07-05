@@ -1,6 +1,8 @@
 package jmri.jmrix.openlcb;
 
+import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemoTestBase;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -21,7 +23,6 @@ public class OlcbSystemConnectionMemoTest extends SystemConnectionMemoTestBase<O
     @Override
     @Test
     public void testProvidesConsistManager() {
-        scm.configureManagers();
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
@@ -32,6 +33,8 @@ public class OlcbSystemConnectionMemoTest extends SystemConnectionMemoTestBase<O
         scm = new OlcbSystemConnectionMemo();
         TestTrafficController tc = new TestTrafficController();
         scm.setTrafficController(tc);
+        InstanceManager.setDefault(CanSystemConnectionMemo.class,scm);
+        scm.configureManagers();
     }
 
     @Override

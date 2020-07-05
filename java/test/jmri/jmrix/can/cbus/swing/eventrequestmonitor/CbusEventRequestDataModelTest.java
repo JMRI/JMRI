@@ -208,7 +208,7 @@ public class CbusEventRequestDataModelTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        
+        memo.configureManagers();
     }
 
     @AfterEach

@@ -24,6 +24,7 @@ public class EasyDccSystemConnectionMemoTest extends SystemConnectionMemoTestBas
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();
+        JUnitUtil.clearShutDownManager(); // remove shutdown tasks left behind.
         JUnitUtil.tearDown();
     }
 
