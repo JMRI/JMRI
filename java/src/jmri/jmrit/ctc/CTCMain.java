@@ -1,6 +1,5 @@
 /**
  *  @author Gregory J. Bedlek Copyright (C) 2018, 2019
- *  Comment to force another CI build
  */
 
 package jmri.jmrit.ctc;
@@ -56,7 +55,7 @@ public class CTCMain {
     private void handleLogging(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState")) {         // NOI18N
             _mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled = (int)e.getNewValue() == Sensor.ACTIVE;
-            if (_mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) _mLockedRoutesManager.dump();
+            if (_mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) _mLockedRoutesManager.dumpAllRoutes();
         }
     }
 
