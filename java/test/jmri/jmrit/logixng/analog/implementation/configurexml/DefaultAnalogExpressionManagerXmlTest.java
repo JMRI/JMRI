@@ -204,9 +204,6 @@ public class DefaultAnalogExpressionManagerXmlTest {
     
     
     class MyManager extends DefaultAnalogExpressionManager {
-        MyManager() {
-            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        }
     }
     
 }

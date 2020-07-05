@@ -8,7 +8,6 @@ import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.util.ThreadingUtil;
 import jmri.jmrit.logixng.Base;
@@ -16,7 +15,6 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.managers.AbstractManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
@@ -36,9 +34,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
 
     
-    public DefaultDigitalBooleanActionManager(InternalSystemConnectionMemo memo) {
-        super(memo);
-        
+    public DefaultDigitalBooleanActionManager() {
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }
@@ -134,8 +130,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
         }
         
         if (_instance == null) {
-            _instance = new DefaultDigitalBooleanActionManager(
-                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+            _instance = new DefaultDigitalBooleanActionManager();
         }
         return (_instance);
     }

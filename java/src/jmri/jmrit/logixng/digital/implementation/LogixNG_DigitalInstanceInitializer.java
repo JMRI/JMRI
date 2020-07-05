@@ -42,19 +42,16 @@ public class LogixNG_DigitalInstanceInitializer extends AbstractInstanceInitiali
         // the manager also needs to be added to the method getInitalizes()
         // below.
         
-        InternalSystemConnectionMemo memo =
-                InstanceManager.getDefault(InternalSystemConnectionMemo.class);
-        
         if (type == DigitalActionManager.class) {
-            return new DefaultDigitalActionManager(memo);
+            return new DefaultDigitalActionManager();
         }
 
         if (type == DigitalBooleanActionManager.class) {
-            return new DefaultDigitalBooleanActionManager(memo);
+            return new DefaultDigitalBooleanActionManager();
         }
 
         if (type == DigitalExpressionManager.class) {
-            return new DefaultDigitalExpressionManager(memo);
+            return new DefaultDigitalExpressionManager();
         }
 
         return super.getDefault(type);

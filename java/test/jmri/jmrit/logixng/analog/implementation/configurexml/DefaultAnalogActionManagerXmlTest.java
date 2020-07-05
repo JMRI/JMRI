@@ -204,9 +204,6 @@ public class DefaultAnalogActionManagerXmlTest {
     
     
     class MyManager extends DefaultAnalogActionManager {
-        MyManager() {
-            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        }
         
         @Override
         protected void registerSelf() {

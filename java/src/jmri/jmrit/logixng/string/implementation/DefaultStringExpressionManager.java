@@ -17,7 +17,6 @@ import jmri.util.ThreadingUtil;
 import jmri.managers.AbstractManager;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.implementation.LogixNGPreferences;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.*;
 
 /**
@@ -32,9 +31,7 @@ public class DefaultStringExpressionManager extends AbstractManager<MaleStringEx
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
 
     
-    public DefaultStringExpressionManager(InternalSystemConnectionMemo memo) {
-        super(memo);
-        
+    public DefaultStringExpressionManager() {
         for (Category category : Category.values()) {
             expressionClassList.put(category, new ArrayList<>());
         }
@@ -139,8 +136,7 @@ public class DefaultStringExpressionManager extends AbstractManager<MaleStringEx
         }
         
         if (_instance == null) {
-            _instance = new DefaultStringExpressionManager(
-                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+            _instance = new DefaultStringExpressionManager();
         }
         return (_instance);
     }

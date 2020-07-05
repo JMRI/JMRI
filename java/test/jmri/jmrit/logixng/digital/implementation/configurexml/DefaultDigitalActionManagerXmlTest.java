@@ -204,9 +204,6 @@ public class DefaultDigitalActionManagerXmlTest {
     
     
     class MyManager extends DefaultDigitalActionManager {
-        MyManager() {
-            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        }
     }
     
 }

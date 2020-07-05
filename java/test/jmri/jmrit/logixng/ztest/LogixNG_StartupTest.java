@@ -123,10 +123,6 @@ public class LogixNG_StartupTest {
     
     private class MyLogixNG_Manager extends DefaultLogixNGManager {
         
-        MyLogixNG_Manager() {
-            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        }
-        
         @Override
         protected void registerSelf() {
             // We don't want to save config for this class

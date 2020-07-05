@@ -7,7 +7,6 @@ import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -41,15 +40,12 @@ public class LogixNG_AnalogInstanceInitializer extends AbstractInstanceInitializ
         // the manager also needs to be added to the method getInitalizes()
         // below.
 
-        InternalSystemConnectionMemo memo =
-                InstanceManager.getDefault(InternalSystemConnectionMemo.class);
-        
         if (type == AnalogActionManager.class) {
-            return new DefaultAnalogActionManager(memo);
+            return new DefaultAnalogActionManager();
         }
 
         if (type == AnalogExpressionManager.class) {
-            return new DefaultAnalogExpressionManager(memo);
+            return new DefaultAnalogExpressionManager();
         }
 
         return super.getDefault(type);

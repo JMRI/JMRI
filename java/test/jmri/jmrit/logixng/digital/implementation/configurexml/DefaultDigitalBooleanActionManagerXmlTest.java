@@ -218,9 +218,6 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
 */    
     
     class MyManager extends DefaultDigitalBooleanActionManager {
-        MyManager() {
-            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        }
     }
     
 }

@@ -13,7 +13,6 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.AnonymousTable;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -29,10 +28,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     
-    public DefaultNamedTableManager(InternalSystemConnectionMemo memo) {
-        super(memo);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -197,8 +192,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         }
         
         if (_instance == null) {
-            _instance = new DefaultNamedTableManager(
-                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+            _instance = new DefaultNamedTableManager();
         }
         return (_instance);
     }

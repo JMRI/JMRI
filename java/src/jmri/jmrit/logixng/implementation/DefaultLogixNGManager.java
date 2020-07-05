@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -19,9 +18,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         implements LogixNG_Manager {
 
     
-    public DefaultLogixNGManager(InternalSystemConnectionMemo memo) {
-        super(memo);
-        
+    public DefaultLogixNGManager() {
         // The LogixNGPreferences class may load plugins so we must ensure
         // it's loaded here.
         InstanceManager.getDefault(LogixNGPreferences.class);
@@ -165,8 +162,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         }
         
         if (_instance == null) {
-            _instance = new DefaultLogixNGManager(
-                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+            _instance = new DefaultLogixNGManager();
         }
         return (_instance);
     }

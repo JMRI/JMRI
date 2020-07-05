@@ -12,7 +12,6 @@ import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
 import jmri.managers.AbstractManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
 
@@ -28,9 +27,7 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
 
     
-    public DefaultDigitalActionManager(InternalSystemConnectionMemo memo) {
-        super(memo);
-        
+    public DefaultDigitalActionManager() {
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }
@@ -126,8 +123,7 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
         }
         
         if (_instance == null) {
-            _instance = new DefaultDigitalActionManager(
-                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+            _instance = new DefaultDigitalActionManager();
         }
         return (_instance);
     }

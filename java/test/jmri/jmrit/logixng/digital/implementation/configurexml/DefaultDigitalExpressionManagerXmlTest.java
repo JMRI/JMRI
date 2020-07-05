@@ -204,9 +204,6 @@ public class DefaultDigitalExpressionManagerXmlTest {
     
     
     class MyManager extends DefaultDigitalExpressionManager {
-        MyManager() {
-            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        }
     }
     
 }

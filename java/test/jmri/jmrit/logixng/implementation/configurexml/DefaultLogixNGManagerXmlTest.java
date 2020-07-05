@@ -274,9 +274,6 @@ public class DefaultLogixNGManagerXmlTest {
     }
 */    
     class MyManager extends DefaultLogixNGManager {
-        MyManager() {
-            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        }
     }
     
 }

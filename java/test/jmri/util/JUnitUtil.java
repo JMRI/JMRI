@@ -874,55 +874,55 @@ public class JUnitUtil {
     }
 
     public static void initLogixNGManager() {
-        LogixNG_Manager m1 = new DefaultLogixNGManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        LogixNG_Manager m1 = new DefaultLogixNGManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m1, jmri.Manager.LOGIXNGS);
         }
         InstanceManager.setDefault(LogixNG_Manager.class, m1);
         
-        ConditionalNG_Manager m2 = new DefaultConditionalNGManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        ConditionalNG_Manager m2 = new DefaultConditionalNGManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m2, jmri.Manager.LOGIXNG_CONDITIONALNGS);
         }
         InstanceManager.setDefault(ConditionalNG_Manager.class, m2);
         
-        AnalogActionManager m3 = new DefaultAnalogActionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        AnalogActionManager m3 = new DefaultAnalogActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m3, jmri.Manager.LOGIXNG_ANALOG_ACTIONS);
         }
         InstanceManager.setDefault(AnalogActionManager.class, m3);
         
-        AnalogExpressionManager m4 = new DefaultAnalogExpressionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        AnalogExpressionManager m4 = new DefaultAnalogExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m4, jmri.Manager.LOGIXNG_ANALOG_EXPRESSIONS);
         }
         InstanceManager.setDefault(AnalogExpressionManager.class, m4);
         
-        DigitalActionManager m5 = new DefaultDigitalActionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        DigitalActionManager m5 = new DefaultDigitalActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m5, jmri.Manager.LOGIXNG_DIGITAL_ACTIONS);
         }
         InstanceManager.setDefault(DigitalActionManager.class, m5);
         
-        DigitalBooleanActionManager m6 = new DefaultDigitalBooleanActionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        DigitalBooleanActionManager m6 = new DefaultDigitalBooleanActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m6, jmri.Manager.LOGIXNG_DIGITAL_BOOLEAN_ACTIONS);
         }
         InstanceManager.setDefault(DigitalBooleanActionManager.class, m6);
         
-        DigitalExpressionManager m7 = new DefaultDigitalExpressionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        DigitalExpressionManager m7 = new DefaultDigitalExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m7, jmri.Manager.LOGIXNG_DIGITAL_EXPRESSIONS);
         }
         InstanceManager.setDefault(DigitalExpressionManager.class, m7);
         
-        StringActionManager m8 = new DefaultStringActionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        StringActionManager m8 = new DefaultStringActionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m8, jmri.Manager.LOGIXNG_STRING_ACTIONS);
         }
         InstanceManager.setDefault(StringActionManager.class, m8);
         
-        StringExpressionManager m9 = new DefaultStringExpressionManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        StringExpressionManager m9 = new DefaultStringExpressionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m9, jmri.Manager.LOGIXNG_STRING_EXPRESSIONS);
         }

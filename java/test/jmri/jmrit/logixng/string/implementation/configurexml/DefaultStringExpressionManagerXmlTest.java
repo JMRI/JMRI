@@ -204,9 +204,6 @@ public class DefaultStringExpressionManagerXmlTest {
     
     
     class MyManager extends DefaultStringExpressionManager {
-        MyManager() {
-            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        }
     }
     
 }

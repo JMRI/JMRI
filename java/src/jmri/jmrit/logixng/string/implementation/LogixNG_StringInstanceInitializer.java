@@ -41,15 +41,12 @@ public class LogixNG_StringInstanceInitializer extends AbstractInstanceInitializ
         // the manager also needs to be added to the method getInitalizes()
         // below.
         
-        InternalSystemConnectionMemo memo =
-                InstanceManager.getDefault(InternalSystemConnectionMemo.class);
-        
         if (type == StringActionManager.class) {
-            return new DefaultStringActionManager(memo);
+            return new DefaultStringActionManager();
         }
 
         if (type == StringExpressionManager.class) {
-            return new DefaultStringExpressionManager(memo);
+            return new DefaultStringExpressionManager();
         }
 
         return super.getDefault(type);

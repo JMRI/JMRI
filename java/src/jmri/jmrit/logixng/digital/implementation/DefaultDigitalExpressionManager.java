@@ -17,7 +17,6 @@ import jmri.managers.AbstractManager;
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.implementation.LogixNGPreferences;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.*;
 
 /**
@@ -32,9 +31,7 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
 
     
-    public DefaultDigitalExpressionManager(InternalSystemConnectionMemo memo) {
-        super(memo);
-        
+    public DefaultDigitalExpressionManager() {
         for (Category category : Category.values()) {
             expressionClassList.put(category, new ArrayList<>());
         }
@@ -140,8 +137,7 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
         }
         
         if (_instance == null) {
-            _instance = new DefaultDigitalExpressionManager(
-                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+            _instance = new DefaultDigitalExpressionManager();
         }
         return (_instance);
     }

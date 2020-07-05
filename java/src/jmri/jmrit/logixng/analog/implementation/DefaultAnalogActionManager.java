@@ -13,7 +13,6 @@ import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
 import jmri.util.ThreadingUtil;
 import jmri.managers.AbstractManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.*;
 
 /**
@@ -28,9 +27,7 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
 
     
-    public DefaultAnalogActionManager(InternalSystemConnectionMemo memo) {
-        super(memo);
-        
+    public DefaultAnalogActionManager() {
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }
@@ -130,8 +127,7 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
         }
         
         if (_instance == null) {
-            _instance = new DefaultAnalogActionManager(
-                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+            _instance = new DefaultAnalogActionManager();
         }
         return (_instance);
     }

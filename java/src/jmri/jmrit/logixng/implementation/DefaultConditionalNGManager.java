@@ -5,7 +5,6 @@ import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.actions.Many;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -19,9 +18,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         implements ConditionalNG_Manager {
 
     
-    public DefaultConditionalNGManager(InternalSystemConnectionMemo memo) {
-        super(memo);
-        
+    public DefaultConditionalNGManager() {
         // LogixNGPreferences class may load plugins so we must ensure
         // it's loaded here.
         InstanceManager.getDefault(LogixNGPreferences.class);
@@ -212,8 +209,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         }
         
         if (_instance == null) {
-            _instance = new DefaultConditionalNGManager(
-                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+            _instance = new DefaultConditionalNGManager();
         }
         return (_instance);
     }

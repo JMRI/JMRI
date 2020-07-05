@@ -204,9 +204,6 @@ public class DefaultStringActionManagerXmlTest {
     
     
     class MyManager extends DefaultStringActionManager {
-        MyManager() {
-            super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        }
     }
     
 }
