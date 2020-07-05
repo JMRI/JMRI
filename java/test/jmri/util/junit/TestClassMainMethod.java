@@ -91,7 +91,7 @@ public class TestClassMainMethod {
     /**
      * Run tests with a compile-selected RunListener.
      * 
-     * @param testClass the class or package containing tests to run
+     * @param pattern the class or package containing tests to run
      */
     public static void run(String pattern) {
         SummaryGeneratingListener listener = new jmri.util.junit.PrintingTestListener(System.out); // test-by-test output if enabled
