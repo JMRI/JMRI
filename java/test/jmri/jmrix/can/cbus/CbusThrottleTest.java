@@ -886,7 +886,60 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     
     }
     
+    @Test
+    public void testDefaultSpeedSteps(){
+        Assert.assertEquals("default 128 SS", jmri.SpeedStepMode.NMRA_DCC_128, instance.getSpeedStepMode());
+    }
+    
+    private int propChangeCount = 0;
+    private jmri.SpeedStepMode newMode;
+    private jmri.SpeedStepMode oldMode;
+    
 
+    @Test
+    public void testChangeSpeedSteps(){
+        
+        int outFrames = tc.outbound.size();
+        
+        propChangeCount = 0;
+        PropertyChangeListener l = (PropertyChangeEvent evt) -> {
+            propChangeCount++;
+            oldMode = (SpeedStepMode) evt.getOldValue();
+            newMode = (SpeedStepMode) evt.getNewValue();
+        };
+        instance.addPropertyChangeListener(jmri.Throttle.SPEEDSTEPS, l);
+        
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
+        Assert.assertEquals(outFrames, tc.outbound.size());
+        Assert.assertEquals(0, propChangeCount);
+        
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
+        Assert.assertEquals("14 SS", SpeedStepMode.NMRA_DCC_14, instance.getSpeedStepMode());
+        Assert.assertEquals(outFrames+1, tc.outbound.size());
+        Assert.assertEquals("[78] 44 64 01", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        Assert.assertEquals(1, propChangeCount);
+        Assert.assertEquals(SpeedStepMode.NMRA_DCC_128,oldMode);
+        Assert.assertEquals(SpeedStepMode.NMRA_DCC_14,newMode);
+        
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
+        Assert.assertEquals("128 SS", SpeedStepMode.NMRA_DCC_128, instance.getSpeedStepMode());
+        Assert.assertEquals(outFrames+2, tc.outbound.size());
+        Assert.assertEquals("[78] 44 64 00", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        Assert.assertEquals(2, propChangeCount);
+        Assert.assertEquals(SpeedStepMode.NMRA_DCC_14,oldMode);
+        Assert.assertEquals(SpeedStepMode.NMRA_DCC_128,newMode);
+        
+        instance.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        Assert.assertEquals("28 SS", SpeedStepMode.NMRA_DCC_28, instance.getSpeedStepMode());
+        Assert.assertEquals(outFrames+3, tc.outbound.size());
+        Assert.assertEquals("[78] 44 64 03", tc.outbound.elementAt(tc.outbound.size()-1).getToString());
+        Assert.assertEquals(3, propChangeCount);
+        Assert.assertEquals(SpeedStepMode.NMRA_DCC_128,oldMode);
+        Assert.assertEquals(SpeedStepMode.NMRA_DCC_28,newMode);
+        
+        instance.removePropertyChangeListener(l);
+    }
+    
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
 

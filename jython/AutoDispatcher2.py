@@ -144,6 +144,7 @@ from jmri.jmrit import XmlFile
 
 from jmri.jmrit.consisttool import ConsistToolFrame
 
+# is this next import necessary?
 from jmri.implementation import AbstractShutDownTask
 
 # from jmri.jmrit.operations.locations import LocationManager
