@@ -139,11 +139,8 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
     public void dispose() {
         EcosLocoAddressManager locoManager = get(EcosLocoAddressManager.class);
         if (locoManager != null) {
-            locoManager.terminateThreads();
-        }
-        EcosProgrammerManager programmerManager = get(EcosProgrammerManager.class);
-        if (programmerManager != null) {
-            deregister(programmerManager, DefaultProgrammerManager.class);
+            locoManager.dispose();
+            deregister(locoManager,EcosLocoAddressManager.class);
         }
         et = null;
         InstanceManager.deregister(this, EcosSystemConnectionMemo.class);
@@ -151,7 +148,10 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
         EcosPreferences prefManager = get(EcosPreferences.class);
-        InstanceManager.getDefault(ShutDownManager.class).deregister(prefManager.ecosPreferencesShutDownTask);
+        if(prefManager!=null) {
+            InstanceManager.getDefault(ShutDownManager.class).deregister(prefManager.ecosPreferencesShutDownTask);
+            deregister(prefManager,EcosPreferences.class);
+        }
         super.dispose();
     }
 

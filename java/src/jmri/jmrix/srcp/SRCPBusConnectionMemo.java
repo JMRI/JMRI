@@ -170,7 +170,9 @@ public class SRCPBusConnectionMemo extends DefaultSystemConnectionMemo implement
 
     @Override
     public void dispose() {
-        et = null;
+        if(et != null) {
+            et = null;
+        }
         InstanceManager.deregister(this, SRCPBusConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);

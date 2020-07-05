@@ -118,7 +118,9 @@ public class SRCPSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     @Override
     public void dispose() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(et.shutDownTask);
+        if (et != null) {
+            InstanceManager.getDefault(ShutDownManager.class).deregister(et.shutDownTask);
+        }
         et = null;
         InstanceManager.deregister(this, SRCPSystemConnectionMemo.class);
         if (cf != null) {

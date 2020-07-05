@@ -199,9 +199,9 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     }
 
     public void dispose() {
-        SystemConnectionMemoManager.getDefault().deregister(this);
         Set<Class> keySet = new HashSet<>(classObjectMap.keySet());
         keySet.forEach(this::removeRegisteredObject);
+        SystemConnectionMemoManager.getDefault().deregister(this);
     }
 
     private <T> void removeRegisteredObject(Class<T> c) {
