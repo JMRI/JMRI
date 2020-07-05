@@ -2,10 +2,12 @@ package jmri.jmrit.log;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerRepository;
 
@@ -14,7 +16,9 @@ import org.apache.log4j.spi.LoggerRepository;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
+ * @deprecated since 4.22.1; use {@link apps.jmrit.log.Log4JTreePane} instead
  */
+@Deprecated
 public class Log4JTreePane extends jmri.util.swing.JmriPanel {
 
     /**

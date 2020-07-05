@@ -184,6 +184,7 @@
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE113.jar"/>
         <pathelement location="${libdir}/org-openide-util-RELEASE113.jar"/>
+        <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -1481,9 +1482,11 @@
                   <limit counter="LINE" value="COVEREDRATIO" minimum="0.50"/>
                   <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
+              <!-- fails if package only contains interfaces
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
+              -->
               <rule element="SOURCEFILE">
                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.00001"/>
               </rule>
@@ -2025,7 +2028,7 @@
     <target name="remakedecoderindex"
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
-        <java classname="jmri.jmrit.decoderdefn.DecoderIndexBuilder"
+        <java classname="apps.util.decoderdefn.DecoderIndexBuilder"
               dir="${basedir}"
               fork="yes"
               resultproperty="decoderindex.returncode"

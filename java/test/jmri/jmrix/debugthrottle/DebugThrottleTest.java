@@ -1,13 +1,13 @@
 package jmri.jmrix.debugthrottle;
 
-import jmri.NamedBean;
 import jmri.SpeedStepMode;
+import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import java.util.Comparator;
-
-import org.junit.Assert;
+import org.mockito.Mockito;
 import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -17,7 +17,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",instance);
+        assertThat(instance).withFailMessage("exists").isNotNull();
     }
 
     /**
@@ -28,7 +28,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedIncrement() {
         float expResult = 1.0F/126.0F;
         float result = instance.getSpeedIncrement();
-        Assert.assertEquals(expResult, result, 0.0);
+        assertThat(result).isEqualTo(expResult);
     }
 
     /**
@@ -39,7 +39,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetIsForward() {
         boolean expResult = true;
         boolean result = instance.getIsForward();
-        Assert.assertEquals(expResult, result);
+        assertThat(result).isEqualTo(expResult);
     }
 
     /**
@@ -50,7 +50,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeedStepMode() {
         SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
         SpeedStepMode result = instance.getSpeedStepMode();
-        Assert.assertEquals(expResult, result);
+        assertThat(result).isEqualTo(expResult);
     }
 
     /**
@@ -211,17 +211,9 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.SystemConnectionMemo memo = new jmri.jmrix.DefaultSystemConnectionMemo("T", "Test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-
-            @Override
-            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
-                return null;
-            }
-        };
+        SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
+        Mockito.when(memo.getUserName()).thenReturn("Test");
+        Mockito.when(memo.getSystemPrefix()).thenReturn("T");
         JUnitUtil.initDebugThrottleManager();
         instance = new DebugThrottle(new jmri.DccLocoAddress(100,true),memo);
     }

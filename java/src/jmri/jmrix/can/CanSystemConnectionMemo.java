@@ -6,8 +6,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javax.annotation.Nonnull;
+
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager.SubProtocol;
 import jmri.util.NamedBeanComparator;
 
@@ -26,24 +29,21 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class CanSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
+public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
     // This user name will be overwritten by the adapter and saved to the connection config.
     public static String DEFAULT_USERNAME = "CAN";
 
     public CanSystemConnectionMemo() {
         super("M", DEFAULT_USERNAME);
-        super.register(); // registers general type
-        storeCanMemotoInstance();
     }
     
     // Allow for default systemPrefix other than "M"
     public CanSystemConnectionMemo(String prefix) {
         super(prefix, DEFAULT_USERNAME);
-        super.register(); // registers general type
-        storeCanMemotoInstance();
     }
 
     protected final void storeCanMemotoInstance() {
+        register(); // registers general type
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
 
@@ -165,6 +165,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if (manager != null) {
             manager.configureManagers();
         }
+        storeCanMemotoInstance();
     }
 
     /**
