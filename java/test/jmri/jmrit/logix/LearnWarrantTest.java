@@ -13,7 +13,6 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
@@ -74,9 +73,6 @@ public class LearnWarrantTest {
         JFrameOperator jfo = new JFrameOperator(frame);
         pressButton(jfo, Bundle.getMessage("Calculate"));
         
-/*        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("DialogTitle"));
-        pressButton(jdo, Bundle.getMessage("ButtonSelect"));
-*/
         JUnitUtil.waitFor(() -> {
             return (frame.getOrders() != null);
         }, "Found orders");
@@ -216,7 +212,7 @@ public class LearnWarrantTest {
             sensor = sensorNext;
             block = blockNext;
         }
-        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         // leaving script with non-zero speed adds 2 more speed commands (-0.5f & 0.0f)
         throttle.setSpeedSetting(0.0f);
         return sensor;

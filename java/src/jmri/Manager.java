@@ -484,7 +484,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     @CheckForNull
     @Deprecated // 4.19.1
     public default E getBeanBySystemName(@Nonnull String systemName) {
-        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
+        jmri.util.LoggingUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
         return getBySystemName(systemName);
     }
 
@@ -499,7 +499,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     @CheckForNull
     @Deprecated // 4.19.1
     public default E getBeanByUserName(@Nonnull String userName) {
-        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
+        jmri.util.LoggingUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
         return getByUserName(userName);
     }
 

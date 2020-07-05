@@ -55,6 +55,7 @@
                     Instructions</a> detailing how to change the Board ID (Board 
                     Address) of certain Digitrax LocoNet-based devices using 
                     JMRI have been added to the Digitrax hardware page.</li>
+                <li>Fixed a problem in the PM4Announce script</li>
             </ul>
 
         <h4>Maple</h4>
@@ -424,7 +425,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Some internal refactoring that should help with the long term
+            maintenance of JMRI has been done. This may cause some scripts to
+            fail until classes or methods are renamed in those scripts.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -537,5 +540,10 @@
                 one will work in which case)</li>
             <li>Added PR automation to check for a comment in the release note when a PR
                 is opened, and to ensure that somebody has been assigned to the PR.</li>
+            <li>The jmri.JmriPlugin class is deprecated without a replacement. If you depend on
+	              on this class, please <a href="https://github.com/JMRI/JMRI/issues/new">raise an issue on GitHub</a>
+		            so we can discuss how to meet your requirements through other means.</li>
+            <li>"Display Message Log" has been removed from the Debug Menu. Use the
+                "System Console" from the Help Menu to view log messages.</li>
         </ul>
 

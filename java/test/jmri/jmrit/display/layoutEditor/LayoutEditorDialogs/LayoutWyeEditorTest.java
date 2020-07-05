@@ -67,7 +67,7 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
         }
 
         if (layoutEditor != null) {
-            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
+            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor.getTargetFrame());
             efo.closeFrameWithConfirmations();
         }
 

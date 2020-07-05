@@ -17,6 +17,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
 import org.junit.jupiter.api.io.TempDir;
+import org.picocontainer.behaviors.Stored;
 
 /**
  *
@@ -601,8 +602,8 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
             memo = new EcosSystemConnectionMemo(tc) {
                 @Override
                 public EcosLocoAddressManager getLocoAddressManager() {
-                    locoManager = new EcosLocoAddressManager(this);
-                    return locoManager;
+                    store(new EcosLocoAddressManager(this),EcosLocoAddressManager.class);
+                    return get(EcosLocoAddressManager.class);
                 }
 
                 @Override
@@ -654,10 +655,10 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     @AfterEach
     @Override
     public void tearDown() {
-        if (memo != null) {
-            memo.dispose();
-        }
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.getTrafficController().terminateThreads();
+        memo.dispose();
+        memo = null;
+        JUnitUtil.clearShutDownManager(); // shutdown task left running
     }
 
     @AfterAll

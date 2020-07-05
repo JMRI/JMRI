@@ -1,26 +1,27 @@
 package apps;
 
 import apps.gui3.tabbedpreferences.TabbedPreferences;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+
 import javax.swing.SwingUtilities;
-import jmri.Application;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
+
+import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
-import jmri.util.Log4JUtil;
 import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import apps.util.Log4JUtil;
 
 /**
  * Base class for the core of JMRI applications.
