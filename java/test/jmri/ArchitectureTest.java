@@ -48,7 +48,7 @@ public class ArchitectureTest {
      */
     @ArchTest // Initially 50 flags in JMRI 4.17.4 - see archunit_ignore_patterns.txt
     public static final ArchRule checkStandardStreams = noClasses().that()
-                                // classes with permitted access
+                                // classes with permitted access (temporary violations go in archunit_ignore_patterns.txt)
                                 .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
                                 .doNotHaveFullyQualifiedName("apps.jmrit.decoderdefn.DecoderIndexBuilder").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
