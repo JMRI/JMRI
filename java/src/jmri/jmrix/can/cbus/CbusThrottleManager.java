@@ -177,8 +177,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 while (itr.hasNext()) {
                         CbusThrottle throttle = softThrottles.get(itr.next());
                         if (throttle.getHandle() == handle) {
-                            // make sure timer stopped
-                            throttle.throttleDispose();
                             // Remove the Throttle from the managed list
                             itr.remove();
                         }

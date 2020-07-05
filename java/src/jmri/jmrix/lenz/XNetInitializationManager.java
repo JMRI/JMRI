@@ -171,7 +171,9 @@ public class XNetInitializationManager {
         if(!noCommandStation) {
             /* The "raw" Command Station only works on systems that support Ops Mode Programming */
             systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-            InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
+            if(systemMemo.getCommandStation()!= null) {
+                InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
+            }
         }
     }
 

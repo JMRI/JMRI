@@ -2,12 +2,12 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.Comparator;
-import java.util.ResourceBundle;
 
 import org.junit.jupiter.api.*;
 
-import jmri.NamedBean;
+import jmri.SystemConnectionMemo;
+
+import org.mockito.Mockito;
 
 /**
  * @author Bob Jacobsen Copyright (C) 2015
@@ -24,7 +24,8 @@ public abstract class AbstractPortControllerTestBase {
 
     @BeforeEach
     public void setUp() {
-        apc = new AbstractPortControllerScaffold();
+        SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
+        apc = new AbstractPortControllerScaffold(memo);
     }
 
     @AfterEach
@@ -34,19 +35,9 @@ public abstract class AbstractPortControllerTestBase {
 
     public static class AbstractPortControllerScaffold extends AbstractPortController {
 
-        public AbstractPortControllerScaffold() {
-            super(new DefaultSystemConnectionMemo("", "") {
 
-                @Override
-                protected ResourceBundle getActionModelResourceBundle() {
-                    return null;
-                }
-
-                @Override
-                public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
-                    return null;
-                }
-            });
+        public AbstractPortControllerScaffold(SystemConnectionMemo memo) {
+            super(memo);
         }
 
         @Override

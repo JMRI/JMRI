@@ -314,7 +314,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
                     break;
                 }
                 default:
-                    jmri.util.Log4JUtil.warnOnce(log, "Unexpected selectedPointType = {}", selectedPointType);
+                    jmri.util.LoggingUtil.warnOnce(log, "Unexpected selectedPointType = {}", selectedPointType);
                     break;
             }   // switch
             setSlipState(newSlipState);

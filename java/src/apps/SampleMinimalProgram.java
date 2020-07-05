@@ -3,11 +3,13 @@ package apps;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.implementation.JmriConfigurationManager;
-import jmri.util.Log4JUtil;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import apps.util.Log4JUtil;
 
 /**
  * A simple example of a "Faceless" (no gui) application
