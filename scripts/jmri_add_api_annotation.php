@@ -57,9 +57,9 @@ Type | Name | Status | Force
 ---- | ---- | ------ | -----
 package | jmri.** | EXPERIMENTAL | X
 package | jmri | STABLE
-class | jmri.Turnout | EXPERIMENTAL			--> (public)? (protected)? (static)? (enum|interface|class) <<name>>
-method | jmri.Turnout.setState | MAINTAINED		--> (public)? (protected)? (static)? (\w+(\.\w+)*) <<name>> (
-field | jmri.NamedBean.UNKNOWN | INTERNAL		--> (public)? (protected)? (static)? (\w+(\.\w+)*) <<name>> \=
+class | jmri.Turnout | EXPERIMENTAL
+method | jmri.Turnout.setState | MAINTAINED
+field | jmri.NamedBean.UNKNOWN | INTERNAL
 package | jmri.jmrit.** | MAINTAINED
 package | jmri.jmrit.beantable | STABLE
 
