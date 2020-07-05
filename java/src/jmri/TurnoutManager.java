@@ -3,6 +3,9 @@ package jmri;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Locate a Turnout object representing some specific turnout on the layout.
  * <p>
@@ -40,6 +43,7 @@ import javax.annotation.CheckForNull;
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
+@API(status = STABLE)
 public interface TurnoutManager extends ProvidingManager<Turnout> {
 
     /**

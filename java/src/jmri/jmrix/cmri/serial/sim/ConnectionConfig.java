@@ -6,6 +6,9 @@ import javax.swing.JPanel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via a C/MRI
  * Simulator object.
@@ -13,6 +16,7 @@ import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  * @author Chuck Catania Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

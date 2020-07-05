@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for generic Locomotive Address.
  *
@@ -20,6 +23,7 @@ package jmri;
  * @author Bob Jacobsen Copyright (C) 2005
  */
 @javax.annotation.concurrent.Immutable
+@API(status = STABLE)
 public interface LocoAddress {
 
     public int getNumber();

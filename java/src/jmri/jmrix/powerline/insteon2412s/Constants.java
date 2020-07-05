@@ -1,11 +1,15 @@
 package jmri.jmrix.powerline.insteon2412s;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants and functions specific to the Insteon 2412S interface
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2009
  * @author Ken Cameron Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class Constants {
 
     public static final int HEAD_STX = 0x02;

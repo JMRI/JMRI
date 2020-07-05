@@ -6,12 +6,16 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This Action runs creates an InputWindow for sending input to the global
  * jython interpreter
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
+@API(status = MAINTAINED)
 public class InputWindowAction extends AbstractAction {
 
     /**

@@ -8,6 +8,8 @@ import jmri.NamedBean;
 import jmri.jmrix.lenz.XNetProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2011 copied from PowerLine into z21 by
  * @author Paul Bender Copyright (C) 2013,2019
  */
+@API(status = EXPERIMENTAL)
 public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     private Z21XPressNetTunnel _xnettunnel = null;

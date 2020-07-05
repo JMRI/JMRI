@@ -2,11 +2,15 @@ package jmri.jmrix.jmriclient.swing;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "JMRIClient" menu containing the system-specific tools.
  *
  * @author Bob Jacobsen Copyright 2008
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientMenu extends JMenu {
 
     public JMRIClientMenu(String name, jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {

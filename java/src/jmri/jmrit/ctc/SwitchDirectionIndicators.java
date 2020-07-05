@@ -10,6 +10,9 @@ import javax.swing.Timer;
 import jmri.Sensor;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /*
 If you have REAL feedback from the switch that sets it's position:
     You SHOULD set "Feedback" to "True" and rely on this message to set the switch in "correspondence".
@@ -21,6 +24,7 @@ If you have REAL feedback from the switch that sets it's position:
 This object ACTUALLY CONTROLS THE SWITCH, AND sends commands to move the points.
 */
 
+@API(status = MAINTAINED)
 public class SwitchDirectionIndicators {
     private NBHSensor _mNormalIndicatorSensor;
     private NBHSensor _mReversedIndicatorSensor;

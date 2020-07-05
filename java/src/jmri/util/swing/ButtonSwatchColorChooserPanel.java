@@ -11,6 +11,9 @@ import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Abstract Color Chooser extension that presents a swatch sample of the color
  * and a button to set the color. Clicking the button results in a 
@@ -19,6 +22,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
  * @author Paul Bender Copyright (C) 2017
  * @since 4.9.6
  */
+@API(status = EXPERIMENTAL)
 public class ButtonSwatchColorChooserPanel extends AbstractColorChooserPanel {
 
     private JLabel swatch = null;

@@ -1,5 +1,8 @@
 package jmri.jmrix.tams;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define interface for sending and receiving messages to the Tams command
  * station.
@@ -8,6 +11,7 @@ package jmri.jmrix.tams;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public interface TamsInterface {
 
     public void addTamsListener(TamsListener l);

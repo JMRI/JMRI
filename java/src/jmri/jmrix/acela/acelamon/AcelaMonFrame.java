@@ -4,6 +4,9 @@ import jmri.jmrix.acela.AcelaListener;
 import jmri.jmrix.acela.AcelaMessage;
 import jmri.jmrix.acela.AcelaReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying (and logging) Acela command messages
  *
@@ -11,6 +14,7 @@ import jmri.jmrix.acela.AcelaReply;
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaListener {
 
     jmri.jmrix.acela.AcelaSystemConnectionMemo _memo = null;

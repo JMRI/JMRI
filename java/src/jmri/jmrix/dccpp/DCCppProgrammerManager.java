@@ -5,6 +5,9 @@ import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers on DCC++
  *
@@ -14,6 +17,7 @@ import jmri.managers.DefaultProgrammerManager;
   *
  * Based on XNetProgrammerManager by Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public class DCCppProgrammerManager extends DefaultProgrammerManager {
 
     protected DCCppTrafficController tc = null;

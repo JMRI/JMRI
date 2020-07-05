@@ -1,8 +1,12 @@
 package jmri.jmrit.throttle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Listener for a function state change.
  */
+@API(status = MAINTAINED)
 public interface FunctionListener extends java.util.EventListener {
 
     /**

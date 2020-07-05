@@ -5,11 +5,15 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for controlling JInput access to USN
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class TreeFrame extends JmriJFrame {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jinput.treecontrol.TreeBundle");

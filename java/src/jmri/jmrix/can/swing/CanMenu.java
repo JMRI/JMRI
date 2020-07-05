@@ -3,12 +3,16 @@ package jmri.jmrix.can.swing;
 import javax.swing.JMenu;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a menu containing the Jmri CAN- and CBUS-specific tools
  *
  * @author Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008
  */
+@API(status = EXPERIMENTAL)
 public class CanMenu extends JMenu {
 
     public CanMenu(CanSystemConnectionMemo memo) {

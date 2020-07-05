@@ -8,6 +8,9 @@ import javax.swing.JTextField;
 import jmri.jmrix.acela.AcelaMessage;
 import jmri.jmrix.acela.AcelaReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of Acela messages
  *
@@ -15,6 +18,7 @@ import jmri.jmrix.acela.AcelaReply;
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class AcelaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.acela.AcelaListener {
 
     // member declarations

@@ -3,6 +3,9 @@ package jmri.jmrix;
 import javax.annotation.Nonnull;
 import jmri.spi.JmriServiceProviderInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection.
  *
@@ -17,6 +20,7 @@ import jmri.spi.JmriServiceProviderInterface;
  * @see ConnectionConfig
  * @see java.util.ServiceLoader
  */
+@API(status = EXPERIMENTAL)
 public interface ConnectionTypeList extends JmriServiceProviderInterface {
 
     /**

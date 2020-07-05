@@ -3,6 +3,8 @@ package jmri.jmrix.loconet;
 import jmri.implementation.DefaultCabSignal;
 import jmri.LocoAddress;
 import jmri.SignalMast;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2018
  * @author Paul Bender Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class LnCabSignal extends DefaultCabSignal {
 
     private LocoNetSystemConnectionMemo _memo = null;

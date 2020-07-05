@@ -4,12 +4,16 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import jmri.jmrit.Sound;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * The consequent of the antecedent of the conditional proposition. The data for
  * the action to be taken when a Conditional calculates to True.
  *
  * @author Pete Cressman Copyright (C) 2009
  */
+@API(status = STABLE)
 public interface ConditionalAction {
 
     /**

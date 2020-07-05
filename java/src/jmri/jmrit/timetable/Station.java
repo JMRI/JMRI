@@ -1,10 +1,14 @@
 package jmri.jmrit.timetable;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define the content of a Station record.
  *
  * @author Dave Sand Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class Station {
 
     /**

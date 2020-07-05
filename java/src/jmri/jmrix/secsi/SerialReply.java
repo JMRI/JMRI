@@ -1,11 +1,15 @@
 package jmri.jmrix.secsi;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one

@@ -5,6 +5,9 @@ import jmri.LocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.PhysicalLocation;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Data capsule ("Model"?) for passing configuration between the GUI and the
  * VSDecoder itself.
@@ -24,6 +27,7 @@ import jmri.util.PhysicalLocation;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class VSDConfig {
 
     public float DEFAULT_VOLUME = 0.8f;

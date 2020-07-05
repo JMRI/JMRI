@@ -14,6 +14,8 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2018
  *
  */
+@API(status = MAINTAINED)
 public class ExportSchedules extends XmlFile {
 
     /**

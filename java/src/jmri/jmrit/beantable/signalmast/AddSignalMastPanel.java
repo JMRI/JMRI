@@ -14,6 +14,8 @@ import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -24,6 +26,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright (C) 2009, 2010, 2016
  * @author Egbert Broerse Copyright (C) 2016
  */
+@API(status = MAINTAINED)
 public class AddSignalMastPanel extends JPanel {
     
     // head matter

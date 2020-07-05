@@ -1,5 +1,9 @@
 package jmri.jmris.srcp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = EXPERIMENTAL)
 public class JmriSRCPServerPreferences extends jmri.jmris.AbstractServerPreferences {
 
     public static final int DEFAULT_PORT = 2056;

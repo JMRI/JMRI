@@ -2,6 +2,8 @@ package jmri.jmrix.xpa;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.concurrent.GuardedBy;
@@ -12,6 +14,7 @@ import javax.annotation.concurrent.GuardedBy;
  *
  * @author Paul Bender Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class XpaTurnout extends AbstractTurnout {
 
     /**

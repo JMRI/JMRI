@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Specific Exception class used by Audio objects.
  *
@@ -16,6 +19,7 @@ package jmri;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = STABLE)
 public class AudioException extends JmriException {
 
     /**

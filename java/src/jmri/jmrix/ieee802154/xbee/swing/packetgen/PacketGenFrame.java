@@ -4,6 +4,8 @@ import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.packet.GenericXBeePacket;
 import com.digi.xbee.api.packet.XBeeAPIPacket;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001,2002
  */
+@API(status = EXPERIMENTAL)
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");

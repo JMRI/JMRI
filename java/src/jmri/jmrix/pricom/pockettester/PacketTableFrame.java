@@ -7,11 +7,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame providing survey of DCC contents
  *
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListener {
 
     PacketDataModel model = new PacketDataModel();

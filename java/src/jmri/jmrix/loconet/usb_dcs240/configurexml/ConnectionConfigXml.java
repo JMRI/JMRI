@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.usb_dcs240.ConnectionConfig;
 import jmri.jmrix.loconet.usb_dcs240.UsbDcs240Adapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persisting the UsbDcs240Adapter
  * (and connections). Note this is named as the XML version of a
@@ -18,6 +21,7 @@ import jmri.jmrix.loconet.usb_dcs240.UsbDcs240Adapter;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005, 2006, 2008
  * @author B. Milhaupt Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

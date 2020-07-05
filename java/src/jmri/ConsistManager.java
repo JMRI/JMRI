@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.ArrayList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for Consist Manager objects, which provide access to the existing
  * Consists and allows for creation and destruction.
@@ -19,6 +22,7 @@ import java.util.ArrayList;
  *
  * @author Paul Bender Copyright (C) 2003
  */
+@API(status = STABLE)
 public interface ConsistManager {
 
     /**

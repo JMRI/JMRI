@@ -12,9 +12,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class EditableResizableImagePanel extends ResizableImagePanel implements URIDrop.Listener {
 
     private transient MyMouseAdapter myMouseAdapter = null;

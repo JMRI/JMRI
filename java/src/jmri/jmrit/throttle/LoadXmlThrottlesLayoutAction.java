@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Glen Oberhauser 2004
  */
+@API(status = MAINTAINED)
 public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 
     /**

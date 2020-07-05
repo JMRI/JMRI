@@ -18,9 +18,12 @@ import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class PointDetails {
 
     //May want to look at putting a listener on the refLoc to listen to updates to blocks, signals and sensors attached to it

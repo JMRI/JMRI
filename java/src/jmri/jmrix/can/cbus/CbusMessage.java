@@ -7,6 +7,8 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanMutableFrame;
 import jmri.jmrix.can.CanReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class CbusMessage {
 
     /**

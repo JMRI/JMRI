@@ -1,5 +1,7 @@
 package jmri.server.json.roster;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.ADDRESS;
 import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DECODER_FAMILY;
@@ -49,6 +51,7 @@ import jmri.server.json.JsonRequest;
  *
  * @author Randall Wood Copyright 2016, 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonRosterHttpService extends JsonHttpService {
 
     public JsonRosterHttpService(ObjectMapper mapper) {

@@ -3,6 +3,8 @@ package jmri.jmrix.lenz;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2004-2010
  */
+@API(status = EXPERIMENTAL)
 public class XNetConsist extends jmri.implementation.DccConsist implements XNetListener {
 
     // We need to wait for replies before completing consist

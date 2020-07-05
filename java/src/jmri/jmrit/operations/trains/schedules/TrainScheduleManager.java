@@ -18,6 +18,8 @@ import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class TrainScheduleManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public TrainScheduleManager() {

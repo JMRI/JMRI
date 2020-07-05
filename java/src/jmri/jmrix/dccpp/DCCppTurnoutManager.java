@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
 
 import java.util.Locale;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager implements DCCppListener {
 
     protected DCCppTrafficController tc = null;

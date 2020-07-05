@@ -1,5 +1,7 @@
 package jmri.web.servlet.roster;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.ADDRESS;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.DECODER_FAMILY;
@@ -76,6 +78,7 @@ import org.slf4j.LoggerFactory;
             "/prefs/roster.xml", // redirect to /roster?format=xml since ~ 9 Apr 2012
         })
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class RosterServlet extends HttpServlet {
 
     private transient ObjectMapper mapper;

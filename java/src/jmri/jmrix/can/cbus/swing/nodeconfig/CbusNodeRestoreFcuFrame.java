@@ -18,6 +18,8 @@ import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.*;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -32,6 +34,7 @@ import org.xml.sax.SAXException;
  *
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeRestoreFcuFrame extends JmriJFrame {
     
     private CbusNodeFromFcuTableDataModel cbusNodeFcuDataModel;

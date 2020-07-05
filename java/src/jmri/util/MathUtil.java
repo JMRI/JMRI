@@ -1,5 +1,7 @@
 package jmri.util;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
@@ -19,6 +21,7 @@ import javax.annotation.Nonnull;
  *
  * @author geowar Copyright 2017
  */
+@API(status = EXPERIMENTAL)
 public final class MathUtil {
 
     public static final Point2D zeroPoint2D = zeroPoint2D();

@@ -6,11 +6,15 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.AbstractSensor for C/MRI serial systems
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
+@API(status = EXPERIMENTAL)
 public class SerialSensor extends AbstractSensor {
 
     public SerialSensor(String systemName) {

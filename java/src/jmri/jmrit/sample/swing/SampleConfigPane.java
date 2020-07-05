@@ -4,6 +4,9 @@ package jmri.jmrit.sample.swing;
 import javax.swing.*;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Sample config pane; all it does is show a label.
  * <p>
@@ -14,6 +17,7 @@ import javax.swing.*;
  * @author Bob Jacobsen Copyright 2018
  * @since 4.13.4
  */
+@API(status = MAINTAINED)
 public class SampleConfigPane extends jmri.util.swing.JmriPanel {
 
     /**

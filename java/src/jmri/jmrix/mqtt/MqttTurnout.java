@@ -4,11 +4,15 @@ import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of the Turnout interface for MQTT layouts.
  *
  * @author Lionel Jeanson Copyright (c) 2017
  */
+@API(status = EXPERIMENTAL)
 public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
     private final MqttAdapter mqttAdapter;

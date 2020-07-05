@@ -10,6 +10,10 @@ import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.logix.OBlock;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class LocoLabel extends PositionableRoundRect {
 
     private OBlock _block;

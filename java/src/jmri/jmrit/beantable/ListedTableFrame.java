@@ -33,6 +33,8 @@ import javax.swing.table.TableRowSorter;
 import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright 2010
  * @author Bob Jacobsen Copyright 2010
  */
+@API(status = STABLE)
 public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
     ActionJList actionList;

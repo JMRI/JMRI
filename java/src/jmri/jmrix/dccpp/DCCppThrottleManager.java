@@ -5,6 +5,8 @@ import java.util.HashMap;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetThrottleManager by Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public class DCCppThrottleManager extends AbstractThrottleManager implements DCCppListener {
 
     protected HashMap<LocoAddress, DCCppThrottle> throttles = new HashMap<LocoAddress, DCCppThrottle>(5);

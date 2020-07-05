@@ -1,10 +1,14 @@
 package jmri.jmrix.powerline.cm11;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants and functions specific to the CM11 interface.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class Constants {
 
     public static final int POLL_REQ = 0x5A;

@@ -1,5 +1,7 @@
 package jmri.server.web.app;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -48,6 +50,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood (C) 2016
  */
 @ServiceProvider(service = PreferencesManager.class)
+@API(status = EXPERIMENTAL)
 public class WebAppManager extends AbstractPreferencesManager {
 
     private final HashMap<Profile, WatchService> watcher = new HashMap<>();

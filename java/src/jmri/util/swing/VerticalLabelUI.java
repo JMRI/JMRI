@@ -12,6 +12,9 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.plaf.basic.BasicLabelUI;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Allows a JLabel to be displayed vertically, with a defined orientation. Usage
  * (for a vertical label with anti-clockwise orientation):
@@ -35,6 +38,7 @@ import javax.swing.plaf.basic.BasicLabelUI;
 // commented out in AudioBufferFrame and used in scripts, so do not deprecate
 // without checking those sources first even though IDE find usages tools show
 // no use outside unit tests
+@API(status = EXPERIMENTAL)
 public class VerticalLabelUI extends BasicLabelUI {
 
     /**

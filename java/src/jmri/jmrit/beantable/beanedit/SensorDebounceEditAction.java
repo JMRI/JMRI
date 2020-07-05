@@ -10,6 +10,9 @@ import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides an edit panel for a sensor debounce object.
  * <p>
@@ -19,6 +22,7 @@ import jmri.Sensor;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Egbert Broerse Copyright (C) 2017
  */
+@API(status = MAINTAINED)
 public class SensorDebounceEditAction extends BeanEditAction<Sensor> {
 
     @Override

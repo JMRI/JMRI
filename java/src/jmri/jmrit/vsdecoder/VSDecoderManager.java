@@ -28,6 +28,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GraphicsEnvironment;
 import javax.swing.Timer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +53,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018-2020
  */
+@API(status = MAINTAINED)
 public class VSDecoderManager implements PropertyChangeListener {
 
     //private static final ResourceBundle rb = VSDecoderBundle.bundle();

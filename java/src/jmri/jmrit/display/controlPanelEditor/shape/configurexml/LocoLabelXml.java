@@ -5,6 +5,8 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -13,6 +15,7 @@ import org.jdom2.Element;
  * @author Pete Cressman Copyright (c) 2012
  */
 @Deprecated     // Very unlikely to have been used for 2+ years or more. Usefulness doubtful.  
+@API(status = MAINTAINED)
 public class LocoLabelXml extends PositionableRectangleXml {
 
     public LocoLabelXml() {

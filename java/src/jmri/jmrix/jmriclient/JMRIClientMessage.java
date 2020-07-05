@@ -1,5 +1,8 @@
 package jmri.jmrix.jmriclient;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Encodes a message to an JMRIClient server. The JMRIClientReply class handles
@@ -10,6 +13,7 @@ package jmri.jmrix.jmriclient;
  * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
 
     public JMRIClientMessage() {

@@ -1,11 +1,15 @@
 package jmri.jmrix.xpa.serialdriver;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via an
  * XPA+Modem SerialDriverAdapter object.
  *
  * @author Paul Bender Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

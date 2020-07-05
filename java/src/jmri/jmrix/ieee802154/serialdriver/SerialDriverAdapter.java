@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.ieee802154.IEEE802154PortController;
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -25,6 +27,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends IEEE802154PortController {
 
     protected SerialPort activeSerialPort = null;

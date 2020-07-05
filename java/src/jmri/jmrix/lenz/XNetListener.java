@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * XNetListener provides the call-back interface for notification when a new
  * XNet message arrives from the layout.
@@ -13,6 +16,7 @@ package jmri.jmrix.lenz;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public interface XNetListener extends jmri.jmrix.AbstractMRListener {
 
     /**

@@ -5,6 +5,9 @@ import javax.annotation.Nonnull;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of a Transit Manager
  * <p>
@@ -28,6 +31,7 @@ import jmri.managers.AbstractManager;
  *
  * @author Dave Duchamp Copyright (C) 2008, 2011
  */
+@API(status = STABLE)
 public class TransitManager extends AbstractManager<Transit> implements InstanceManagerAutoDefault {
 
     public TransitManager() {

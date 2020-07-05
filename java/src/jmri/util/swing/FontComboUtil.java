@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.13.1
  */
+@API(status = EXPERIMENTAL)
 public class FontComboUtil {
 
     public static final int ALL = 0;

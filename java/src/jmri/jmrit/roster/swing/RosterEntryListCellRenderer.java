@@ -9,11 +9,15 @@ import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Render RosterEntry objects or Strings as cells in a JComboBox.
  *
  * @see jmri.jmrit.roster.swing.RosterEntryComboBox
  */
+@API(status = MAINTAINED)
 public class RosterEntryListCellRenderer extends JLabel implements ListCellRenderer<Object> {
 
     public RosterEntryListCellRenderer() {

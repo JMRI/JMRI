@@ -4,12 +4,16 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Abstract base for classes representing an XNet communications port
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2004,2010,2014
  */
+@API(status = EXPERIMENTAL)
 public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortController implements XNetPortController {
 
     private boolean timeSlot = true;

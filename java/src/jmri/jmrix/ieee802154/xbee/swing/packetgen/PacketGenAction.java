@@ -11,9 +11,12 @@ import jmri.InstanceManager;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.jmrix.ieee802154.xbee.swing.XBeeSystemConnectionAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class PacketGenAction extends XBeeSystemConnectionAction {
 
     public PacketGenAction(String s, XBeeConnectionMemo memo) {

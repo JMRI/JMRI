@@ -28,11 +28,15 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.NamedBeanComboBox;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides an edit panel for a Block object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class BlockEditAction extends BeanEditAction<Block> {
 
     private String noneText = Bundle.getMessage("BlockNone");

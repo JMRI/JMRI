@@ -73,6 +73,8 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
@@ -99,6 +101,7 @@ import org.xml.sax.XMLReader;
  * org.openide.xml.XMLUtil adapted to work in JMRI. This should maintain strict
  * API conformance to the OpenIDE implementation.
  */
+@API(status = EXPERIMENTAL)
 public final class XMLUtil extends Object {
 
     private final static Logger log = LoggerFactory.getLogger(XMLUtil.class);

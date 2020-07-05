@@ -6,11 +6,15 @@ import java.awt.Graphics2D;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements Tooltips for Positionable objects.
  *
  * @author Pete Cressman Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public class ToolTip {
 
     private Color _backgroundColor;

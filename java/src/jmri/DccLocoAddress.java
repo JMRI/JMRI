@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Encapsulate information for a DCC Locomotive Decoder Address.
  *
@@ -13,6 +16,7 @@ package jmri;
  * @author Bob Jacobsen Copyright (C) 2005
  */
 @javax.annotation.concurrent.Immutable
+@API(status = STABLE)
 public class DccLocoAddress implements LocoAddress {
 
     public DccLocoAddress(int number, boolean isLong) {

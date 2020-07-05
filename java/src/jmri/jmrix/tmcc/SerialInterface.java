@@ -1,10 +1,14 @@
 package jmri.jmrix.tmcc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface to send/receive serial TMCC information.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
+@API(status = EXPERIMENTAL)
 public interface SerialInterface {
 
     public void addSerialListener(SerialListener l);

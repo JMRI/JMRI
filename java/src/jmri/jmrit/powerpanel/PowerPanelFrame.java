@@ -2,11 +2,15 @@ package jmri.jmrit.powerpanel;
 
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for controlling layout power via a PowerManager.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = MAINTAINED)
 public class PowerPanelFrame extends JmriJFrame {
 
     // GUI member declarations

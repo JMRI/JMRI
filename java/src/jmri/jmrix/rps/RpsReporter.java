@@ -9,6 +9,8 @@ import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractReporter;
 import jmri.util.PhysicalLocation;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
  */
+@API(status = EXPERIMENTAL)
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
 
     public RpsReporter(String systemName, String prefix) {

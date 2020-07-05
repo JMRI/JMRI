@@ -15,6 +15,8 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009, 2010, 2017
  *
  */
+@API(status = MAINTAINED)
 public class SpeedUtil {
 
     private DccLocoAddress _dccAddress;

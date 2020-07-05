@@ -6,6 +6,8 @@ import com.digi.xbee.api.listeners.IDiscoveryListener;
 import com.digi.xbee.api.models.DiscoveryOptions;
 import java.util.EnumSet;
 import java.util.List;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright(C) 2012,2016
  */
+@API(status = EXPERIMENTAL)
 public class XBeeNodeManager implements IDiscoveryListener {
 
     private XBeeTrafficController xtc;

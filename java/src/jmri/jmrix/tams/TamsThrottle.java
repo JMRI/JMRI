@@ -7,6 +7,8 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
 import jmri.util.StringUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Jan Boen
  *
  */
+@API(status = EXPERIMENTAL)
 public class TamsThrottle extends AbstractThrottle implements TamsListener {
 
     //Create a local TamsMessage Queue which we will use in combination with TamsReplies

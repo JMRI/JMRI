@@ -3,6 +3,9 @@ package jmri;
 import java.util.Set;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface providing initialization of specific objects by default. This is
  * used to move references to specific subtypes out of the jmri package and into
@@ -22,6 +25,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.4
  */
+@API(status = STABLE)
 public interface InstanceInitializer {
 
     /**

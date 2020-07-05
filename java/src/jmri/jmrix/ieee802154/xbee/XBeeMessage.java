@@ -8,11 +8,15 @@ import com.digi.xbee.api.packet.common.RemoteATCommandPacket;
 import com.digi.xbee.api.packet.common.TransmitPacket;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This is a wrapper class for a Digi XBeeAPIPacket.
  *
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
 
     private XBeeAPIPacket xbm = null;

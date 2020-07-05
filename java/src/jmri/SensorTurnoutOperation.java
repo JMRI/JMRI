@@ -3,12 +3,16 @@ package jmri;
 import jmri.implementation.AbstractTurnout;
 import jmri.implementation.SensorTurnoutOperator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * SensorTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with explicit feedback from sensor(s).
  *
  * @author John Harper Copyright 2005
  */
+@API(status = STABLE)
 public class SensorTurnoutOperation extends CommonTurnoutOperation {
 
     // This class can deal with explicit feedback modes

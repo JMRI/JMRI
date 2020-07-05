@@ -7,6 +7,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.cmri.serial.serialmon.SerialFilterFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Chuck Catania, cpNode Extensions 2013, 2014, 2015, 2016
 */
+@API(status = EXPERIMENTAL)
 public class SerialNode extends AbstractNode {
 
     /**

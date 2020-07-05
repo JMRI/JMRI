@@ -24,6 +24,8 @@ import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import purejavacomm.CommPortIdentifier;
 
 /**
@@ -33,6 +35,7 @@ import purejavacomm.CommPortIdentifier;
  * @author Bob Jacobsen Copyright (C) 2007, 2009
  * @author Matt Harris Copyright (C) 2008, 2009
  */
+@API(status = MAINTAINED)
 public class ReportContext {
 
     String report = "";

@@ -3,6 +3,9 @@ package jmri.jmrix.srcp;
 import javax.annotation.Nonnull;
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement SensorMmanager for SRCP systems.
  * <p>
@@ -11,6 +14,7 @@ import jmri.Sensor;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
     public SRCPSensorManager(SRCPBusConnectionMemo memo) {

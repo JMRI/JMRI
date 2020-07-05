@@ -6,6 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrix.JmrixConfigPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an XpressNet layout connection via a XnTcp adapter.
  * <p>
@@ -19,6 +22,7 @@ import jmri.jmrix.JmrixConfigPane;
  *
  * @see XnTcpAdapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     private static final String XN_TCP_INTERFACE = "XnTcpInterface";

@@ -5,6 +5,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Coleman Copyright (C) 2007. 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class AcelaTrafficController extends AbstractMRNodeTrafficController implements AcelaInterface {
 
     /**

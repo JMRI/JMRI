@@ -3,11 +3,15 @@ package jmri.jmrit.timetable.swing;
 import java.awt.event.ActionEvent;
 import jmri.util.swing.JmriAbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a TimeTableFrame
  *
  * @author Dave Sand Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class TimeTableAction extends JmriAbstractAction {
 
     public TimeTableAction(String s) {

@@ -2,6 +2,9 @@ package jmri.jmrix.mrc.swing;
 
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Mrc subsystem.
  *
@@ -9,6 +12,7 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */
+@API(status = EXPERIMENTAL)
 public class MrcComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public MrcComponentFactory(MrcSystemConnectionMemo memo) {

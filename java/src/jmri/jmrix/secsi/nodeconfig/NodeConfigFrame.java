@@ -11,6 +11,8 @@ import javax.swing.border.Border;
 import jmri.jmrix.secsi.SerialNode;
 import jmri.jmrix.secsi.SerialSensorManager;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
  * @author Dave Duchamp Copyright (C) 2004, 2006
  */
+@API(status = EXPERIMENTAL)
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     private SecsiSystemConnectionMemo memo;

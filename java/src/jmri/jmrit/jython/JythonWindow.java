@@ -20,6 +20,9 @@ import jmri.UserPreferencesManager;
 import jmri.script.ScriptOutput;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This Action creates a JmriJFrame displaying the thread output log from the
  * {@link RunJythonScript} class.
@@ -27,6 +30,7 @@ import jmri.util.JmriJFrame;
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Matthew Harris Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class JythonWindow extends AbstractAction {
 
     private JTextArea area;

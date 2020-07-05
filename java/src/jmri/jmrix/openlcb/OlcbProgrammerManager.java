@@ -9,6 +9,9 @@ import jmri.ProgrammingMode;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Get access to available {@link Programmer} objects.
  * <p>
@@ -41,6 +44,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2015
  * @since 4.1.1
  */
+@API(status = EXPERIMENTAL)
 public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManager {
 
     public OlcbProgrammerManager(Programmer pProgrammer) {

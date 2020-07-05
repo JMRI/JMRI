@@ -17,6 +17,8 @@ import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.SignalHeadItemPanel;
 import jmri.jmrit.picker.PickListModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
+@API(status = MAINTAINED)
 public class SignalHeadIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
     private String[] _validKeys;

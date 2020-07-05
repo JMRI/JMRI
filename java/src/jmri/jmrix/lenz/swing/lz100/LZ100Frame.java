@@ -4,6 +4,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying the LZ100 configuration utility
  * <p>
@@ -12,6 +15,7 @@ import javax.swing.JPanel;
  *
  * @author Paul Bender Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
     public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {

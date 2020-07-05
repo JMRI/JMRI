@@ -3,6 +3,8 @@ package jmri.jmrix.ecos;
 import java.util.Hashtable;
 import javax.annotation.Nonnull;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         implements EcosListener {
 

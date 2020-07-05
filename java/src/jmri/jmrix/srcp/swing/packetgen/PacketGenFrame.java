@@ -7,11 +7,15 @@ import jmri.jmrix.srcp.SRCPReply;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 import jmri.jmrix.srcp.SRCPTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of SRCP messages.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.srcp.SRCPListener {
 
     // member declarations

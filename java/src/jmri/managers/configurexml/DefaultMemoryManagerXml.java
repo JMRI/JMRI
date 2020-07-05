@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import jmri.InstanceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -10,6 +12,7 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  */
+@API(status = EXPERIMENTAL)
 public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 
     public DefaultMemoryManagerXml() {

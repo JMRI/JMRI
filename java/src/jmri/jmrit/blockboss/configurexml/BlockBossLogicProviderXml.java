@@ -5,6 +5,8 @@ import jmri.Manager;
 import jmri.SignalHeadManager;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import jmri.jmrit.blockboss.BlockBossLogicProvider;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -34,6 +36,7 @@ import java.util.List;
  * Revisions to add facing point sensors, approach lighting, and limited speed.
  * Dick Bronson (RJB) 2006
  */
+@API(status = MAINTAINED)
 public class BlockBossLogicProviderXml extends jmri.configurexml.AbstractXmlAdapter {
 
     private static final String SYSTEM_NAME = "systemName";

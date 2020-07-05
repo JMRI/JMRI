@@ -1,5 +1,8 @@
 package jmri.implementation;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * A signal head that exists only within the program.
@@ -8,6 +11,7 @@ package jmri.implementation;
  *
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class VirtualSignalHead extends DefaultSignalHead {
 
     public VirtualSignalHead(String sys, String user) {

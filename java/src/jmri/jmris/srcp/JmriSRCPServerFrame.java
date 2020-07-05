@@ -10,11 +10,15 @@ import javax.swing.JToggleButton;
 import jmri.InstanceManager;
 import jmri.jmris.JmriServer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying start/stop buttons for the JMRI SRCP server.
  *
  * @author Paul Bender Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
 
 

@@ -13,6 +13,8 @@ import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.Block;
 import jmri.jmrit.logix.OPath;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman (C) 2010
  */
+@API(status = MAINTAINED)
 public class PathTurnoutTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int TURNOUT_NAME_COL = 0;

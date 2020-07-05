@@ -6,6 +6,8 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.RailCom;
 import jmri.RailComManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener,CollectingReporter {
 
     private Z21SystemConnectionMemo _memo;

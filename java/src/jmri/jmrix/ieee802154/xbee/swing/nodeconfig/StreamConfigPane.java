@@ -15,6 +15,8 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
@@ -36,6 +38,7 @@ import jmri.jmrix.ieee802154.xbee.XBeeNode;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2010
  */
+@API(status = EXPERIMENTAL)
 public class StreamConfigPane extends JmrixConfigPane {
 
     // initialize logging

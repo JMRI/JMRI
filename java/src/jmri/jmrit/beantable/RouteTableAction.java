@@ -6,6 +6,9 @@ import jmri.Route;
 import jmri.jmrit.beantable.routetable.RouteAddFrame;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a Route Table.
  *
@@ -18,6 +21,7 @@ import jmri.util.JmriJFrame;
  * @author Egbert Broerse Copyright (C) 2016
  * @author Paul Bender Colyright (C) 2020
  */
+@API(status = STABLE)
 public class RouteTableAction extends AbstractTableAction<Route> {
 
     /**

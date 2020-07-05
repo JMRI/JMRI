@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2011
  */
+@API(status = MAINTAINED)
 final class CarLoadAttributeAction extends AbstractAction {
 
     public CarLoadAttributeAction(CarLoadEditFrame clef) {

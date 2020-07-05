@@ -3,6 +3,9 @@ package jmri.jmrit.audio;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent an AudioListener, a place to store or control sound information.
  * <p>
@@ -32,6 +35,7 @@ import jmri.Audio;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public interface AudioListener extends Audio {
 
     /**

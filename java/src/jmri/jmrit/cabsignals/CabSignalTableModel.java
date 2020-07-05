@@ -11,6 +11,8 @@ import jmri.LocoAddress;
 import jmri.Path;
 import jmri.SignalMast;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @see CabSignalPane
  * @since 4.13.4
  */
+@API(status = MAINTAINED)
 public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
     private CabSignalManager cabSignalManager;

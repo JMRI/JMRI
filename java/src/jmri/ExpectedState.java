@@ -2,6 +2,9 @@ package jmri;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Record an object and its expected state within a specific scenario. This can
  * be used in collections, for example as a routing through a set of turnouts,
@@ -13,6 +16,7 @@ import javax.annotation.Nonnull;
  * @param <T> the type of object this contains the expected state for
  * @param <S> the type of expected state this contains
  */
+@API(status = STABLE)
 public interface ExpectedState<T extends Object, S extends Object> {
 
     /**

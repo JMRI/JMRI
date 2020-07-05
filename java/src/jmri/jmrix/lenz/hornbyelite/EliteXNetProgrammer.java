@@ -7,6 +7,9 @@ import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Programmer support for Hornby Elite implementationn of XpressNet.
  * <p>
@@ -24,6 +27,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  *
  * @author Paul Bender Copyright (c) 2008
  */
+@API(status = EXPERIMENTAL)
 public class EliteXNetProgrammer extends XNetProgrammer {
 
     // Message timeout lengths.  These have been determined by

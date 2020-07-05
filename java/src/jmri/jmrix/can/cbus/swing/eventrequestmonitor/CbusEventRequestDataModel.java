@@ -17,6 +17,9 @@ import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -26,6 +29,7 @@ import jmri.util.ThreadingUtil;
  * @author Steve Young (c) 2018
  * 
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
 
     private boolean sessionConfirmDeleteRow=true; // display confirm popup

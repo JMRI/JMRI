@@ -27,6 +27,8 @@ import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -70,6 +72,7 @@ import org.jdom2.ProcessingInstruction;
  * @author Dennis Miller Copyright 2004
  * @see jmri.jmrit.roster.RosterEntry
  */
+@API(status = MAINTAINED)
 public class Roster extends XmlFile implements RosterGroupSelector, PropertyChangeProvider, PropertyChangeListener {
 
     /**

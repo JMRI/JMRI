@@ -3,6 +3,8 @@ package jmri.jmrix.loconet;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.annotation.Nonnull;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMessage;
@@ -46,6 +48,7 @@ import jmri.jmrix.loconet.messageinterp.LocoNetMessageInterpret;
  * @see jmri.jmrix.nce.NceMessage
  * @see jmri.jmrix.AbstractMessage
  */
+@API(status = EXPERIMENTAL)
 public class LocoNetMessage extends AbstractMessage implements Serializable {
     // Serializable, serialVersionUID used by jmrix.loconet.locormi, please do not remove
     static final long serialVersionUID = -7904918731667071828L;

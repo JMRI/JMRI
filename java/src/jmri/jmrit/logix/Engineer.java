@@ -10,6 +10,8 @@ import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SpeedStepMode;
 import jmri.util.ThreadingUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
 /*
  * ************************ Thread running the train ****************
  */
+@API(status = MAINTAINED)
 public class Engineer extends Thread implements java.beans.PropertyChangeListener {
 
     private static final String CANNOT_RUN = "CannotRun";

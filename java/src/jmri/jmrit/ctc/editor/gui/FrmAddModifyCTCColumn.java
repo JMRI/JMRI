@@ -6,10 +6,14 @@ import jmri.jmrit.ctc.editor.code.CommonSubs;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+@API(status = MAINTAINED)
 public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "DlgAddModifyCTCColumn";  // NOI18N

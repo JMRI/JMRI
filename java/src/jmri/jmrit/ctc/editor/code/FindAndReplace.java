@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -15,6 +18,7 @@ import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
  * that have possible references that need to be changed.
  * Anything that is a String in "getCodeButtonHandlerDataArrayList" is searched.
  */
+@API(status = MAINTAINED)
 public class FindAndReplace {
     public static class SearchResults {
         public final String _mUserSwitchSignalEtcEntry;   // These 3 variables get displayed to the user in "some" form (JTable for now):

@@ -2,6 +2,10 @@ package jmri.jmrit.operations.automation.actions;
 
 import jmri.jmrit.operations.trains.Train;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class ResetTrainAction extends Action {
 
     private static final int _code = ActionCodes.RESET_TRAIN;

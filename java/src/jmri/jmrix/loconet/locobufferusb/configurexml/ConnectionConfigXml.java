@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.locobufferusb.ConnectionConfig;
 import jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persisting the
  * LocoBufferUSBAdapter (and connections). Note this is named as the XML version
@@ -16,6 +19,7 @@ import jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005, 2006
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

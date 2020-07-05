@@ -3,6 +3,9 @@ package jmri.jmrix.lenz.swing.systeminfo;
 import java.awt.event.ActionEvent;
 import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a SystemInfo object.
  * <p>
@@ -11,6 +14,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
  *
  * @author Paul Bender Copyright (C) 2003
  */
+@API(status = EXPERIMENTAL)
 public class SystemInfoAction extends AbstractXPressNetAction {
 
     public SystemInfoAction(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {

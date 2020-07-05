@@ -5,11 +5,15 @@ import jmri.Sensor;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonNamedBeanSocketService;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JSON socket service provider for managing {@link jmri.Route}s.
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonRouteSocketService extends JsonNamedBeanSocketService<Route, JsonRouteHttpService> {
 
     public JsonRouteSocketService(JsonConnection connection) {

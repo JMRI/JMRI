@@ -16,11 +16,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A very specific dialog for editing the properties of a FunctionButton object.
  *
  * @author Paul Bender Copyright (C) 2005
  */
+@API(status = MAINTAINED)
 public class ControlPanelPropertyEditor extends JDialog {
 
     private ControlPanel control;

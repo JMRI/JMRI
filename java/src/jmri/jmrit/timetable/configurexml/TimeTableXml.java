@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -21,6 +23,7 @@ import jmri.jmrit.timetable.*;
  * Load and store the timetable data file: TimeTableData.xml
  * @author Dave Sand Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class TimeTableXml {
 
     public static boolean doStore() {
@@ -431,6 +434,7 @@ public class TimeTableXml {
     }
 
 
+@API(status = MAINTAINED)
     public static class TimeTableXmlFile extends XmlFile {
         private static String fileLocation = FileUtil.getUserFilesPath() + "timetable/";  // NOI18N
         private static String demoLocation = FileUtil.getProgramPath() + "xml/demoTimetable/";  // NOI18N

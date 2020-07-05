@@ -7,6 +7,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import jmri.util.FileUtil;
  *
  * @author Daniel Boudreau Copyright (C) 2015
  */
+@API(status = MAINTAINED)
 public class PrintSavedTrainManifestAction extends AbstractAction implements java.beans.PropertyChangeListener {
 
     private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class);

@@ -1,10 +1,13 @@
 package jmri.web.servlet.directory;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 
 /**
  * @author Randall Wood Copyright 2016, 2020
  */
+@API(status = EXPERIMENTAL)
 public class DirectoryHandler extends ResourceHandler {
 
     /**

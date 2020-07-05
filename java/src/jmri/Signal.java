@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent a single signal, either in {@link SignalHead} or {@link SignalMast}
  * form.
@@ -46,6 +49,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008, 2017
  */
+@API(status = STABLE)
 public interface Signal extends NamedBean {
 
     /**

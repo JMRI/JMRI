@@ -13,6 +13,9 @@ import javax.annotation.concurrent.ThreadSafe;
 import jmri.NamedBean;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Gathers PropertyChangeEvents that might occur in overlapping threads and at
  * overlapping times, presenting them as requested.
@@ -27,6 +30,7 @@ import jmri.NamedBean;
  * @author Bob Jacobsen Copyright 2017
  */
 @ThreadSafe
+@API(status = EXPERIMENTAL)
 public class PropertyChangeEventQueue {
 
     /**

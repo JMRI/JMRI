@@ -44,6 +44,8 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.ScriptOutput;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +57,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris copyright (C) 2009
  * @author Egbert Broerse i18n 2016
  */
+@API(status = EXPERIMENTAL)
 public class DefaultConditional extends AbstractNamedBean
         implements Conditional {
 

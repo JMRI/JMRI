@@ -15,6 +15,8 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.openlcb.swing.EventIdTextField;
 
@@ -25,6 +27,7 @@ import org.openlcb.swing.EventIdTextField;
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
  */
+@API(status = EXPERIMENTAL)
 public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
     public OlcbSignalMastAddPane() {

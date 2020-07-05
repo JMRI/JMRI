@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.List;
 import jmri.jmrit.XmlFile;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide load/store capabilities for general configuration.
  * <p>
@@ -48,6 +51,7 @@ import jmri.jmrit.XmlFile;
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
+@API(status = STABLE)
 public interface ConfigureManager {
 
     public void registerPref(Object o);

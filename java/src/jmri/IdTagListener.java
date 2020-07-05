@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Connect to an IdTag
  * <hr>
@@ -16,6 +19,7 @@ package jmri;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = STABLE)
 public interface IdTagListener {
 
     public void notify(IdTag r);

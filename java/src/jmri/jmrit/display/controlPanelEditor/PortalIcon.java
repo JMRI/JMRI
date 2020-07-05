@@ -18,12 +18,15 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.logix.Portal;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Pete Cressman Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class PortalIcon extends PositionableIcon implements PropertyChangeListener {
 
     public static final String HIDDEN = "hidden";

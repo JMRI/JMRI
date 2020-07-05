@@ -1,5 +1,8 @@
 package jmri.jmrix.nce;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Carries the reply to an NceMessage.
@@ -9,6 +12,7 @@ package jmri.jmrix.nce;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
     NceTrafficController tc;

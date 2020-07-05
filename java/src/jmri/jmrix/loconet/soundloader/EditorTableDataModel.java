@@ -17,6 +17,8 @@ import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2006
  * @author Dennis Miller Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     static public final int HEADERCOL = 0;

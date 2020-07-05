@@ -3,11 +3,15 @@ package jmri.jmrix.bachrus;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the bachrus-specific tools.
  *
  * @author Andrew Crosland Copyright 2010
  */
+@API(status = EXPERIMENTAL)
 public class SpeedoMenu extends JMenu {
 
     public SpeedoMenu(String name, SpeedoSystemConnectionMemo memo) {

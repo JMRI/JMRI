@@ -21,6 +21,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import jmri.util.MenuScroller;
 import jmri.util.swing.JmriColorChooser;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class PositionablePopupUtil {
 
     protected JComponent _textComponent;    // closest ancestor for JLabel and JTextField

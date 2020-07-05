@@ -2,6 +2,9 @@ package jmri.jmrix.loconet.pr4;
 
 import jmri.jmrix.loconet.pr3.PR3SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a PR4 is active
  * <p>
@@ -13,6 +16,7 @@ import jmri.jmrix.loconet.pr3.PR3SystemConnectionMemo;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author B. Milhaupt Copyright (C) 2017, 2019
  */
+@API(status = EXPERIMENTAL)
 public class PR4SystemConnectionMemo extends PR3SystemConnectionMemo {
 
 //    private final static Logger log = LoggerFactory.getLogger(PR4SystemConnectionMemo.class);

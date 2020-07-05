@@ -8,6 +8,9 @@ import javax.annotation.Nonnull;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JMRI-specific extensions to the Java Beans utility class.
  * <p>
@@ -20,6 +23,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @Deprecated
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Intentional pattern")
+@API(status = EXPERIMENTAL)
 public class Beans extends java.beans.Beans {
 
     /**

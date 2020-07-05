@@ -5,6 +5,8 @@ import java.util.prefs.Preferences;
 import jmri.beans.PreferencesBean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class ZeroConfPreferences extends PreferencesBean {
 
     // Setting and default values

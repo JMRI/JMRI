@@ -7,6 +7,8 @@ import java.io.PipedOutputStream;
 
 import jmri.jmrix.powerline.SerialPortController;
 import jmri.util.ImmediatePipedOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members

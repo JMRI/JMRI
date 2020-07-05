@@ -7,6 +7,8 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  *         2014, 2015
  */
+@API(status = MAINTAINED)
 public class TrainBuilder extends TrainCommon {
 
     // report levels

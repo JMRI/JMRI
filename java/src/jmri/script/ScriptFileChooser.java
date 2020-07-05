@@ -11,10 +11,14 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.util.FileUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class ScriptFileChooser extends JFileChooser {
 
     public ScriptFileChooser() {

@@ -3,6 +3,8 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.operations.rollingstock.RollingStockGroup;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
  */
+@API(status = MAINTAINED)
 public class Consist extends RollingStockGroup<Engine> {
 
     protected int _consistNumber = 0;

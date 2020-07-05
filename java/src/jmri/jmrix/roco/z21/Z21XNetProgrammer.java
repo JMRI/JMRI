@@ -6,6 +6,9 @@ import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Z21 Programmer support for Lenz XpressNet.
  * <p>
@@ -21,6 +24,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  *
  * @author Paul Bender Copyright (c) 2014
  */
+@API(status = EXPERIMENTAL)
 public class Z21XNetProgrammer extends XNetProgrammer {
 
     public Z21XNetProgrammer(XNetTrafficController tc) {

@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,6 +94,7 @@ import org.apache.commons.csv.CSVPrinter;
  * "Stop", 2
  * </pre>
  */
+@API(status = MAINTAINED)
 public class ExportTimetable extends XmlFile {
 
     public ExportTimetable() {

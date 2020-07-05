@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection.
  *
@@ -13,6 +16,7 @@ import javax.swing.JPanel;
  * @author B. Milhaupt    Copyright (C) 2017
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

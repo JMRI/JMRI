@@ -3,6 +3,9 @@ package jmri.jmrix.acela.swing;
 import jmri.jmrix.acela.AcelaMenu;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Acela subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.acela.AcelaSystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2010
  * @since 3.5.1
  */
+@API(status = EXPERIMENTAL)
 public class AcelaComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public AcelaComponentFactory(AcelaSystemConnectionMemo memo) {

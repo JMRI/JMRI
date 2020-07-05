@@ -11,6 +11,8 @@ import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +51,7 @@ import org.slf4j.LoggerFactory;
 // so there is that to consider.  Probably best to do this sooner than later,
 // to minimize that impact.
 //
+@API(status = EXPERIMENTAL)
 public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
     static final String OLD_RECEIVE_PREFIX = "RECEIVE ";

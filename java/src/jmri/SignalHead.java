@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent a single signal head. (Try saying that ten times fast!) A signal
  * may have more than one of these (e.g. a signal mast consisting of several
@@ -50,6 +53,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
+@API(status = STABLE)
 public interface SignalHead extends Signal {
 
     public static final int DARK = 0x00;

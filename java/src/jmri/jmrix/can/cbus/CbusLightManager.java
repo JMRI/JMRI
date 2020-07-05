@@ -6,6 +6,8 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Egbert Broerse Copyright (C) 2019
  * @since 3.11.7
  */
+@API(status = EXPERIMENTAL)
 public class CbusLightManager extends AbstractLightManager {
 
     /**

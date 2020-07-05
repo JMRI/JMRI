@@ -8,6 +8,8 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import jmri.implementation.AbstractTurnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2015 
  */
+@API(status = EXPERIMENTAL)
 public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Serializable {
 
     // in theory gpio can be static (as in PiSensor) because there will only ever

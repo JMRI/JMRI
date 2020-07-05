@@ -3,6 +3,9 @@ package jmri.jmrix.powerline.cp290;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
@@ -11,6 +14,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
     // create a new one

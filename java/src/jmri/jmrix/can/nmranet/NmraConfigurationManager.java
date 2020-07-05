@@ -4,11 +4,15 @@ import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Does configuration for Nmra Net communications implementations.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
     public NmraConfigurationManager(CanSystemConnectionMemo memo) {

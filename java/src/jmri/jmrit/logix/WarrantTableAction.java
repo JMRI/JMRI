@@ -5,6 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 //import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -51,6 +54,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
+@API(status = MAINTAINED)
 public class WarrantTableAction extends AbstractAction {
 
     static int STRUT_SIZE = 10;

@@ -6,6 +6,8 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.swing.simulator.CsPane;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @see CbusDummyCSSession
  * @since 4.15.2
  */
+@API(status = EXPERIMENTAL)
 public class CbusDummyCS extends CbusSimCanListener {
     
     private ArrayList<CbusDummyCSSession> _csSessions;

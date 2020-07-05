@@ -2,6 +2,8 @@ package jmri.jmrix.loconet.loconetovertcp;
 
 import jmri.jmrix.loconet.LnNetworkPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
  * @author Alex Shepherd Copyright (C) 2003, 2006
  */
+@API(status = EXPERIMENTAL)
 public class LnTcpDriverAdapter extends LnNetworkPortController {
 
     public LnTcpDriverAdapter(LocoNetSystemConnectionMemo m) {

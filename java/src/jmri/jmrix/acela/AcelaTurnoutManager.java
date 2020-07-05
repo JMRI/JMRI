@@ -4,6 +4,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Coleman Copyright (C) 2008 Based on CMRI serial example, modified
  * to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
     public AcelaTurnoutManager(AcelaSystemConnectionMemo memo) {

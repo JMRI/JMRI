@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide a hint to the {@link jmri.InstanceManager} that this object needs
  * have additional initialization performed after the InstanceManager initially
@@ -23,6 +26,7 @@ package jmri;
  *
  * @author Randall Wood Copyright 2017
  */
+@API(status = STABLE)
 public interface InstanceManagerAutoInitialize {
 
     /**

@@ -1,10 +1,14 @@
 package jmri.server.json.layoutblock;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Tokens used in the JMRI JSON Layout Block service.
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonLayoutBlock {
 
     /**

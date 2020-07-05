@@ -7,6 +7,9 @@ import jmri.JmriException;
 
 import javax.annotation.CheckForNull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Startup object models all need to implement this interface. This allows the
  * {@link StartupActionsManager} to handle lists of different model
@@ -14,6 +17,7 @@ import javax.annotation.CheckForNull;
  *
  * @author Randall Wood Copyright 2015, 2020
  */
+@API(status = EXPERIMENTAL)
 public interface StartupModel {
 
     /**

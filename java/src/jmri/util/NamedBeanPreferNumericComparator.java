@@ -4,6 +4,9 @@ import java.util.Comparator;
 
 import jmri.NamedBean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Compare two NamedBeans using the {@link PreferNumericComparator} against
  * {@link NamedBean#getSystemName()} for each NamedBean.
@@ -19,6 +22,7 @@ import jmri.NamedBean;
  * @author Randall Wood Copyright 2019
  * @param <B> the type of NamedBean to compare
  */
+@API(status = EXPERIMENTAL)
 public class NamedBeanPreferNumericComparator<B extends NamedBean> extends NamedBeanComparator<B> {
 
     private final PreferNumericComparator comparator = new PreferNumericComparator();

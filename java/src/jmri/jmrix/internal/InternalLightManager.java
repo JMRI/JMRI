@@ -6,11 +6,15 @@ import jmri.NamedBean;
 import jmri.implementation.AbstractVariableLight;
 import jmri.util.PreferNumericComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement a LightManager for "Internal" (virtual) lights.
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class InternalLightManager extends jmri.managers.AbstractLightManager {
 
     public InternalLightManager(InternalSystemConnectionMemo memo) {

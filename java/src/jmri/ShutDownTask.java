@@ -3,6 +3,9 @@ package jmri;
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.Callable;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Execute a specific task before the program terminates.
  * <p>
@@ -15,6 +18,7 @@ import java.util.concurrent.Callable;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = STABLE)
 public interface ShutDownTask extends Callable<Boolean>, Runnable, PropertyChangeListener {
 
     /**

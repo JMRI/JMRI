@@ -8,6 +8,8 @@ import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.eclipse.jetty.server.Request;
 
 /**
@@ -15,6 +17,7 @@ import org.eclipse.jetty.server.Request;
  * based on examples at http://hmkcode.com/java-servlet-jquery-file-upload/ 
  *
  */
+@API(status = EXPERIMENTAL)
 public class MultipartRequestHandler {
 
     private static final MultipartConfigElement MULTI_PART_CONFIG = new MultipartConfigElement(System.getProperty("java.io.tmpdir"));

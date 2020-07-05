@@ -5,12 +5,16 @@ package jmri.jmrit.operations;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Operations" menu
  *
  * @author Bob Jacobsen Copyright 2003
  * @author Daniel Boudreau Copyright 2008
  */
+@API(status = MAINTAINED)
 public class OperationsMenu extends JMenu {
 
     public OperationsMenu(String name) {

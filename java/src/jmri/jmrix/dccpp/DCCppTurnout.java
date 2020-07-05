@@ -1,6 +1,8 @@
 package jmri.jmrix.dccpp;
 
 import jmri.implementation.AbstractTurnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,6 +59,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on lenz.XNetTurnout by Bob Jacobsen and Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     /* State information */

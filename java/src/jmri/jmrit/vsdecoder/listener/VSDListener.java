@@ -4,6 +4,8 @@ import javax.vecmath.Vector3f;
 import jmri.AudioManager;
 import jmri.jmrit.audio.AudioFactory;
 import jmri.jmrit.audio.AudioListener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2012
  * @author Klaus Killinger Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class VSDListener {
 
     // Only one Audio Listener can exist, and it is already present in the Audio Table

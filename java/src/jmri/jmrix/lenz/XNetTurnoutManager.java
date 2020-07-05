@@ -3,6 +3,8 @@ package jmri.jmrix.lenz;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - 1 jmri.jmrix.lenz.XNetProgrammer
  */
+@API(status = EXPERIMENTAL)
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
     // ctor has to register for XNet events

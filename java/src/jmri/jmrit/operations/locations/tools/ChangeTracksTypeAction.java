@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrit.operations.locations.LocationEditFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to change all of tracks at a location to the same type of track. Track
  * types are Spurs, Yards, Interchanges and Staging.
@@ -11,6 +14,7 @@ import jmri.jmrit.operations.locations.LocationEditFrame;
  * @author Daniel Boudreau Copyright (C) 2011
  * 
  */
+@API(status = MAINTAINED)
 public class ChangeTracksTypeAction extends AbstractAction {
 
     private LocationEditFrame _lef;

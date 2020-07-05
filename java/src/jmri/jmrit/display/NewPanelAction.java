@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Start a Panel Editor or a Layout Editor for a new Panel.
  * <p>
@@ -14,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Egbert Broerse Copyright (C) 2017
  */
+@API(status = MAINTAINED)
 public class NewPanelAction extends AbstractAction {
 
     public NewPanelAction(String s) {

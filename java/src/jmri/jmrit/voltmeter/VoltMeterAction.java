@@ -3,6 +3,9 @@ package jmri.jmrit.voltmeter;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a AmpMeterFrame object.
  *
@@ -13,6 +16,7 @@ import javax.swing.AbstractAction;
  * which was a direct steal from the Nixie clock code, ver 1.5. 
  * Thank you Bob Jacobsen and Ken Cameron.
  */
+@API(status = MAINTAINED)
 public class VoltMeterAction extends AbstractAction {
 
     public VoltMeterAction() {

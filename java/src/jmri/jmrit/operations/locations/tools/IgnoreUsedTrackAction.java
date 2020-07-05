@@ -6,6 +6,9 @@ import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.locations.Track;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to allow a user to define how much used track space is to be ignored
  * by the program when placing new rolling stock to a track.
@@ -13,6 +16,7 @@ import jmri.jmrit.operations.locations.Track;
  * @author Daniel Boudreau Copyright (C) 2012
  * 
  */
+@API(status = MAINTAINED)
 public class IgnoreUsedTrackAction extends AbstractAction {
 
     private Track _track;

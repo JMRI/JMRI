@@ -10,9 +10,12 @@ import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
 import jmri.util.prefs.JmriPreferencesProvider;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class JsonServerPreferences extends Bean implements InstanceManagerAutoDefault {
 
     public static final int DEFAULT_PORT = 2056;

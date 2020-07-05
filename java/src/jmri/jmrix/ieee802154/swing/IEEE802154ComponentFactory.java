@@ -2,11 +2,15 @@ package jmri.jmrix.ieee802154.swing;
 
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the IEEE 802.15.4 subsystem.
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class IEEE802154ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public IEEE802154ComponentFactory(IEEE802154SystemConnectionMemo memo) {

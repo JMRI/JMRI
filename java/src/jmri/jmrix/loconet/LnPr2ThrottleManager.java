@@ -3,6 +3,8 @@ package jmri.jmrix.loconet;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottleManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @see AbstractThrottleManager
  * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
+@API(status = EXPERIMENTAL)
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
     /**

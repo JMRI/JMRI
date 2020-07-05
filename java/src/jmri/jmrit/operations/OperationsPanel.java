@@ -12,6 +12,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012
  */
+@API(status = MAINTAINED)
 public class OperationsPanel extends JPanel {
 
     public static final String NEW_LINE = "\n"; // NOI18N

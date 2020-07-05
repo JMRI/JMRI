@@ -2,9 +2,13 @@ package jmri.jmrit.withrottle;
 
 import jmri.InstanceManagerAutoDefault;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class WiThrottleManager implements InstanceManagerAutoDefault {
 
     private TrackPowerController trackPowerController = null;

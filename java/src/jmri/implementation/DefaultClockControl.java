@@ -5,6 +5,9 @@ import javax.annotation.CheckForNull;
 import jmri.ClockControl;
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class providing default logic of the ClockControl interface.
  *
@@ -17,6 +20,7 @@ import jmri.InstanceManager;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class DefaultClockControl implements ClockControl {
 
     public DefaultClockControl() {

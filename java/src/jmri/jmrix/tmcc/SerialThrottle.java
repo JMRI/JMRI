@@ -6,6 +6,9 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An implementation of DccThrottle.
  * <p>
@@ -14,6 +17,7 @@ import jmri.jmrix.AbstractThrottle;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
+@API(status = EXPERIMENTAL)
 public class SerialThrottle extends AbstractThrottle {
 
     /**

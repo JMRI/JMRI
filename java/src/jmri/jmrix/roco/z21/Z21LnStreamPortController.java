@@ -5,11 +5,15 @@ import java.io.DataOutputStream;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnCommandStationType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Override default LocoNet classes to use z21 specific versions.
  *
  * @author Paul Bender Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class Z21LnStreamPortController extends jmri.jmrix.loconet.streamport.LnStreamPortController {
 
     public Z21LnStreamPortController(LocoNetSystemConnectionMemo connectionMemo, DataInputStream in, DataOutputStream out, String pname) {

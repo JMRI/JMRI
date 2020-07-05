@@ -14,12 +14,16 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of the build report options
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  * 
  */
+@API(status = MAINTAINED)
 public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 
 //    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);

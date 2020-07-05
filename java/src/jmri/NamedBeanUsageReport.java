@@ -2,6 +2,9 @@ package jmri;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This is a data structure to pass usage information from getUsageReport() requests
  * back to the calling object.
@@ -9,6 +12,7 @@ import javax.annotation.Nonnull;
  * @author Dave Sand Copyright (C) 2020
  */
 @javax.annotation.concurrent.Immutable
+@API(status = STABLE)
 public class NamedBeanUsageReport {
 
     final public String usageKey;

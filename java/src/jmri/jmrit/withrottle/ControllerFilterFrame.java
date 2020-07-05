@@ -26,12 +26,15 @@ import jmri.RouteManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener {
 
     private static final String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),

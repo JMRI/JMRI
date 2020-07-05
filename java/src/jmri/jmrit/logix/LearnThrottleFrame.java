@@ -31,6 +31,8 @@ import jmri.jmrit.powerpanel.PowerPane;
 import jmri.jmrit.throttle.FunctionButton;
 import jmri.jmrit.throttle.KeyListenerInstaller;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +48,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright 2009
  */
+@API(status = MAINTAINED)
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     public static final String POWER_UNKNOWN = "PowerUnknown";

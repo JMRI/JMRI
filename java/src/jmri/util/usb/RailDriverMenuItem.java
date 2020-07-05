@@ -25,6 +25,8 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.ThrottleWindow;
 import jmri.util.MathUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.hid4java.*;
 import org.hid4java.event.HidServicesEvent;
 import org.slf4j.Logger;
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = EXPERIMENTAL)
 public class RailDriverMenuItem extends JMenuItem
         implements HidServicesListener, PropertyChangeListener {
 

@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.Timebase;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import static jmri.Timebase.ClockInitialRunState.DO_STOP;
  *
  * @author Bob Jacobsen Copyright (c) 2003, 2008, 2017
  */
+@API(status = MAINTAINED)
 public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public SimpleTimebaseXml() {

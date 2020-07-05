@@ -3,6 +3,9 @@ package jmri.util.swing;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -22,6 +25,7 @@ import javax.swing.JPanel;
  * for more details.
  * 
  */
+@API(status = EXPERIMENTAL)
 public class ValidationNotifications {
 
     /**

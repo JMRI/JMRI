@@ -2,6 +2,9 @@ package jmri.jmris.json;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This is an implementation of a JSON server for JMRI. See
  * {@link jmri.server.json} for more details.
@@ -12,6 +15,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @Deprecated
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated for replacement.")
+@API(status = EXPERIMENTAL)
 public class JsonServer extends jmri.server.json.JsonServer {
 
     /**

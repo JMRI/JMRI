@@ -2,6 +2,9 @@ package jmri.jmrix.acela;
 
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of an Acela packet.
  *
@@ -9,6 +12,7 @@ import jmri.util.StringUtil;
  * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
 

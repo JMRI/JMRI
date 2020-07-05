@@ -11,6 +11,9 @@ import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
  * SlotManager object.
@@ -19,6 +22,7 @@ import jmri.beans.PropertyChangeSupport;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author B. Milhaupt, Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class LnOpsModeProgrammer extends PropertyChangeSupport implements AddressedProgrammer, LocoNetListener {
 
     LocoNetSystemConnectionMemo memo;

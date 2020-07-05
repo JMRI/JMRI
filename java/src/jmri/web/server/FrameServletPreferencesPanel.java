@@ -35,6 +35,8 @@ import jmri.swing.DefaultEditableListModel;
 import jmri.swing.DefaultListCellEditor;
 import jmri.swing.EditableList;
 import jmri.swing.PreferencesPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -47,6 +49,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood
  */
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = EXPERIMENTAL)
 public class FrameServletPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
     /**

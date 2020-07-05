@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet.pr2;
 
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPort;
@@ -12,6 +14,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006
  */
+@API(status = EXPERIMENTAL)
 public class PR2Adapter extends LocoBufferAdapter {
 
     public PR2Adapter() {

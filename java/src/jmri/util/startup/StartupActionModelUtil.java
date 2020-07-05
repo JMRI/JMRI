@@ -14,6 +14,8 @@ import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright 2016, 2020
  */
+@API(status = EXPERIMENTAL)
 public class StartupActionModelUtil extends Bean implements Disposable {
 
     private HashMap<Class<?>, ActionAttributes> actions = null;

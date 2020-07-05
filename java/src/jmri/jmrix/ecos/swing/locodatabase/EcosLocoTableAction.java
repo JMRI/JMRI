@@ -40,9 +40,12 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
 import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
 import jmri.util.swing.XTableColumnModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
 
     /**

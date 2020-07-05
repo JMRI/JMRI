@@ -5,6 +5,8 @@ import jmri.InstanceManager;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.swing.PowerlineSystemConnectionAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SerialPacketGenAction extends PowerlineSystemConnectionAction {
 
     public SerialPacketGenAction(String s, SerialTrafficController tc) {

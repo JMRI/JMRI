@@ -1,5 +1,8 @@
 package jmri.jmrix.pricom.pockettester;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Simple GUI for access to PRICOM Pocket Monitor.
@@ -8,6 +11,7 @@ package jmri.jmrix.pricom.pockettester;
  *
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
 
     public MonitorFrame() {

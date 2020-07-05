@@ -5,12 +5,16 @@ import java.util.HashSet;
 import javax.swing.JComponent;
 import jmri.util.swing.JmriAbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Display a JComponent in a specific paned window.
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class PanedInterface implements jmri.util.swing.WindowInterface {
 
     public PanedInterface(MultiPaneWindow frame) {

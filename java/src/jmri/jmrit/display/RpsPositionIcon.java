@@ -11,6 +11,9 @@ import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An icon to display the position of an RPS input.
  *
@@ -18,6 +21,7 @@ import jmri.jmrix.rps.MeasurementListener;
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = MAINTAINED)
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
 
     public RpsPositionIcon(Editor editor) {

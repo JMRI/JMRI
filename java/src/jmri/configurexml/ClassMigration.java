@@ -3,6 +3,9 @@ package jmri.configurexml;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for service provider instances that provide a class migration path
  * that the {@link ConfigXmlManager} must be made aware of.
@@ -14,6 +17,7 @@ import javax.annotation.Nonnull;
  * since it enables the overriding of JMRI behaviors with a plugin instead of the
  * extension of JMRI with a plugin
  */
+@API(status = EXPERIMENTAL)
 public interface ClassMigration {
 
     /**

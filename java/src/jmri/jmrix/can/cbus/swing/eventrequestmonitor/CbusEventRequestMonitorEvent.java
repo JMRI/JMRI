@@ -6,6 +6,9 @@ import java.util.Date;
 import javax.swing.Timer;
 import jmri.jmrix.can.cbus.CbusEvent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -14,6 +17,7 @@ import jmri.jmrix.can.cbus.CbusEvent;
  *
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventRequestMonitorEvent extends CbusEvent {
     
     // last feedback state

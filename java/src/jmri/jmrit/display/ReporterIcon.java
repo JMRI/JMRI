@@ -6,6 +6,8 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.NamedBean.DisplayOptions;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2004
  */
+@API(status = MAINTAINED)
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public ReporterIcon(Editor editor) {

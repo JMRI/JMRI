@@ -5,6 +5,8 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
 import jmri.SystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.throttle.ThrottleImplementation;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class OlcbThrottle extends AbstractThrottle {
         
     /**

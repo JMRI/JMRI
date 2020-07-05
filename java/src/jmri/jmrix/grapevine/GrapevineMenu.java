@@ -2,11 +2,15 @@ package jmri.jmrix.grapevine;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri Grapevine-specific tools.
  *
  * @author Bob Jacobsen Copyright 2003, 2006, 2007
  */
+@API(status = EXPERIMENTAL)
 public class GrapevineMenu extends JMenu {
 
     private GrapevineSystemConnectionMemo memo = null;

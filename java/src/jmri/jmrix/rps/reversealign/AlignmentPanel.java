@@ -22,6 +22,8 @@ import jmri.jmrix.rps.PositionFile;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class AlignmentPanel extends javax.swing.JPanel
         implements ReadingListener, Constants {
 

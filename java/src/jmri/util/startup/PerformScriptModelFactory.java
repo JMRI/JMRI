@@ -4,6 +4,8 @@ import javax.swing.JFileChooser;
 
 import jmri.script.ScriptFileChooser;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -11,6 +13,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood
  */
 @ServiceProvider(service = StartupModelFactory.class)
+@API(status = EXPERIMENTAL)
 public class PerformScriptModelFactory extends AbstractFileModelFactory {
 
     public PerformScriptModelFactory() {

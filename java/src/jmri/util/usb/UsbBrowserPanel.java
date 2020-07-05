@@ -32,6 +32,8 @@ import javax.usb.UsbHub;
 import javax.usb.UsbPort;
 import javax.usb.event.UsbServicesEvent;
 import javax.usb.event.UsbServicesListener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class UsbBrowserPanel extends javax.swing.JPanel {
 
     private UsbTreeNode root;

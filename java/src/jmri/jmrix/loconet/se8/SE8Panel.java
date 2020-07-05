@@ -6,6 +6,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrix.loconet.AbstractBoardProgPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007, 2010
  */
+@API(status = EXPERIMENTAL)
 public class SE8Panel extends AbstractBoardProgPanel {
 
     public SE8Panel() {

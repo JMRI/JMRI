@@ -4,9 +4,12 @@ import jmri.jmrix.ecos.EcosListener;
 import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class RemoveObjectFromEcos implements EcosListener {
 
     public RemoveObjectFromEcos() {

@@ -1,5 +1,8 @@
 package jmri.jmrix.sprog;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an SPROG layout connection via an SprogCSStreamPortController
  * adapter.
@@ -11,6 +14,7 @@ package jmri.jmrix.sprog;
  *
  * @see SprogCSStreamPortController
  */
+@API(status = EXPERIMENTAL)
 public class SprogCSStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
 
     /**

@@ -14,6 +14,8 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author david d zuhn
  *
  */
+@API(status = MAINTAINED)
 public class FullBackupExportAction
         extends JmriAbstractAction {
 

@@ -15,6 +15,9 @@ import javax.swing.JSeparator;
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create the "Panels" menu for use in a menubar.
  *
@@ -22,6 +25,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * @author Dave Duchamp Copyright 2007
  * @author Pete Cressman Copyright 2010
  */
+@API(status = MAINTAINED)
 public class PanelMenu extends JMenu {
 
     private JMenu panelsSubMenu = null;

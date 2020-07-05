@@ -7,6 +7,8 @@ import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOValue;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class XBeeTurnout extends AbstractTurnout {
 
     private String nodeIdentifier;

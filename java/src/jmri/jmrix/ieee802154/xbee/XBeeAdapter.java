@@ -4,6 +4,8 @@ import com.digi.xbee.api.connection.IConnectionInterface;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.util.Arrays;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.*;
@@ -13,6 +15,7 @@ import purejavacomm.*;
  *
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements IConnectionInterface, SerialPortEventListener {
 
     private boolean iConnectionOpened = false;

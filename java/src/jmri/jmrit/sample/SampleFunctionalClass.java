@@ -2,6 +2,9 @@ package jmri.jmrit.sample;
 
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An example of a user-provided simple class
  * that does something or other once created.
@@ -10,6 +13,7 @@ import jmri.*;
  * @since 4.13.4
  */
 
+@API(status = MAINTAINED)
 public class SampleFunctionalClass {
     public SampleFunctionalClass(String mem) { 
         remember = mem;

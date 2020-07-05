@@ -15,12 +15,16 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel to create a new JMRI device (used to add Memory, Block).
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
+@API(status = STABLE)
 public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
     public AddNewBeanPanel(JTextField sys, JTextField userName, JSpinner endRange, JCheckBox addRange, JCheckBox autoSystem,

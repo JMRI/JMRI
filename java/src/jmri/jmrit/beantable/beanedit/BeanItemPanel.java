@@ -5,9 +5,13 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Hold the information for each bean panel in a structured manner.
  */
+@API(status = MAINTAINED)
 public class BeanItemPanel extends JPanel {
 
     public BeanItemPanel() {

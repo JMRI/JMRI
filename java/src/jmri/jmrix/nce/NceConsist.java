@@ -6,6 +6,8 @@ import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.implementation.DccConsist;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class NceConsist extends jmri.implementation.DccConsist implements jmri.jmrix.nce.NceListener {
 
     public static final int CONSIST_MIN = 1;    // NCE doesn't use consist 0

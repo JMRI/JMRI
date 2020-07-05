@@ -2,6 +2,8 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
 import javax.swing.JLabel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007
  *
  */
+@API(status = MAINTAINED)
 public class ShortAddrVariableValue extends DecVariableValue {
 
     public ShortAddrVariableValue(String name, String comment, String cvName,

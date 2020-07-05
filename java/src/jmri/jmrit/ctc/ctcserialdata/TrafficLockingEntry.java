@@ -3,10 +3,14 @@ package jmri.jmrit.ctc.ctcserialdata;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+@API(status = MAINTAINED)
 public class TrafficLockingEntry {
     public String _mUserRuleNumber;
     public String _mRuleEnabled;

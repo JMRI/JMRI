@@ -2,6 +2,9 @@ package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of the Light Object for X10 CM11 interfaces.
  * <p>
@@ -21,6 +24,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author Ken Cameron Copyright (C) 2009 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     /**

@@ -13,6 +13,8 @@ import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.util.ColorUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Egbert Broerse Copyright (c) 2017
  */
+@API(status = MAINTAINED)
 public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
     public SwitchboardEditorXml() {

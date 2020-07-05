@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import jmri.jmrit.ctc.CTCFiles;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+@API(status = MAINTAINED)
 public class CTCSerialData {
 
     public final static String CTCVersion = "V1.03";

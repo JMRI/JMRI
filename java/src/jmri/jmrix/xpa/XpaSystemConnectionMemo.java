@@ -10,12 +10,16 @@ import jmri.TurnoutManager;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide the required SystemConnectionMemo for the XPA+Modem adapters.
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  * @author Paul Bender Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class XpaSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public XpaSystemConnectionMemo() {

@@ -3,11 +3,15 @@ package jmri.jmrix.ieee802154.xbee.swing;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a menu containing the XBee specific tools
  *
  * @author Paul Bender Copyright 2013
  */
+@API(status = EXPERIMENTAL)
 public class XBeeMenu extends JMenu {
 
     public XBeeMenu(String name, jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo memo) {

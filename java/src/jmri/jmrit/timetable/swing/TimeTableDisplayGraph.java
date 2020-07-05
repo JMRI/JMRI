@@ -3,10 +3,14 @@ package jmri.jmrit.timetable.swing;
 import java.awt.*;
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Display a timetable graph.
  * @author Dave Sand Copyright (c) 2019
  */
+@API(status = MAINTAINED)
 public class TimeTableDisplayGraph extends JPanel {
 
     /**

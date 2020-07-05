@@ -3,6 +3,9 @@ package jmri.util.swing;
 import jmri.InstanceManager;
 import jmri.util.gui.GuiLafPreferencesManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Settings for workarounds in Swing API.
  * <p>
@@ -21,6 +24,7 @@ import jmri.util.gui.GuiLafPreferencesManager;
  * @deprecated since 4.19.6; use {@link GuiLafPreferencesManager} instead
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class SwingSettings {
 
     /**

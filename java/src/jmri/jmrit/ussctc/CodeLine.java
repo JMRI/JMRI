@@ -2,6 +2,9 @@ package jmri.jmrit.ussctc;
 
 import java.util.*;
 import jmri.*;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Drive the code line communications on a USS CTC panel.
  * <p>
@@ -11,6 +14,7 @@ import jmri.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
+@API(status = MAINTAINED)
 public class CodeLine {
 
     /**

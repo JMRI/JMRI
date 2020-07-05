@@ -27,6 +27,8 @@ import javax.swing.KeyStroke;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +56,7 @@ import jmri.util.prefs.InitializationException;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JmriConfigurationManager implements ConfigureManager {
 
     private final static Logger log = LoggerFactory.getLogger(JmriConfigurationManager.class);

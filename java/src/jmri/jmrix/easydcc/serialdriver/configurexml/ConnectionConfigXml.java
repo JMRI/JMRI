@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.easydcc.serialdriver.ConnectionConfig;
 import jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the
  * SerialDriverAdapter (and connections).
@@ -17,6 +20,7 @@ import jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter;
  *
  * @author Bob Jacobsen Copyright (c) 2003
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

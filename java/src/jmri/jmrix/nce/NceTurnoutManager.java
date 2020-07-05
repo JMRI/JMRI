@@ -3,6 +3,8 @@ package jmri.jmrix.nce;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager implements NceListener {
 
     public NceTurnoutManager(NceSystemConnectionMemo memo) {

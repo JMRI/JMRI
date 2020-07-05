@@ -1,10 +1,14 @@
 package jmri.jmrix.qsi;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Carries the reply to an QsiMessage.
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class QsiReply extends jmri.jmrix.AbstractMessage {
 
     static final int MAXREPLYLENGTH = 200;

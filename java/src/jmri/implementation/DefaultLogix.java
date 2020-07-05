@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.beantable.LRouteTableAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class DefaultLogix extends AbstractNamedBean
         implements Logix {
 

@@ -7,6 +7,8 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.ThrottleListener;
@@ -22,6 +24,7 @@ import jmri.ThrottleListener;
  * @author Stephen Williams Copyright (C) 2008
  * @author B. Milhaupt, Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     protected LocoNetSlot slot;

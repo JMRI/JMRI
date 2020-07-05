@@ -2,6 +2,9 @@ package jmri.jmrix.rfid.swing;
 
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel interface to handle providing system connection information to a
  * panel.
@@ -10,6 +13,7 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public interface RfidPanelInterface {
 
     /**

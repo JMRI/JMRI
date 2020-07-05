@@ -2,6 +2,9 @@ package jmri.implementation;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * SignalMast implemented via one SignalHead object.
  * <p>
@@ -19,6 +22,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class VirtualSignalMast extends AbstractSignalMast {
 
     public VirtualSignalMast(String systemName, String userName) {

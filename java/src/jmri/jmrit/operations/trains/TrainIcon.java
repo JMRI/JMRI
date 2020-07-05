@@ -11,6 +11,8 @@ import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,7 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
  */
+@API(status = MAINTAINED)
 public class TrainIcon extends LocoIcon {
 
     public TrainIcon(Editor editor) {

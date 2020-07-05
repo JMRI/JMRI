@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class PrintLocationsByCarTypesAction extends AbstractAction {
 
     static final String NEW_LINE = "\n"; // NOI18N

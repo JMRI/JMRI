@@ -3,6 +3,9 @@ package jmri.jmrix.mrc;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * New MRC TurnoutManager
  * <p>
@@ -12,6 +15,7 @@ import jmri.Turnout;
  * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public MrcTurnoutManager(MrcSystemConnectionMemo memo) {

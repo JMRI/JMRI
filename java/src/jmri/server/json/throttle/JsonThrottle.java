@@ -1,5 +1,7 @@
 package jmri.server.json.throttle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.ADDRESS;
 import static jmri.server.json.JSON.F;
 import static jmri.server.json.JSON.FORWARD;
@@ -32,6 +34,7 @@ import jmri.server.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     /**

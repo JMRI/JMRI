@@ -1,5 +1,8 @@
 package jmri.jmrit.vsdecoder;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /*
  * <hr>
  * This file is part of JMRI.
@@ -17,6 +20,7 @@ package jmri.jmrit.vsdecoder;
  * @author   Mark Underwood Copyright (C) 2011
  */
 // Interface for creating anonymous objects for having VSDSounds listen to Triggers...
+@API(status = MAINTAINED)
 public interface TriggerListener {
 
     public void takeAction();

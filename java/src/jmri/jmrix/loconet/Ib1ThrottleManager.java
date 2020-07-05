@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet;
 
 import jmri.DccThrottle;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class Ib1ThrottleManager extends jmri.jmrix.loconet.LnThrottleManager {
 
     /**

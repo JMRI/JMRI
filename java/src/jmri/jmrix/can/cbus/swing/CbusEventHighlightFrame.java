@@ -11,6 +11,9 @@ import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -19,6 +22,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Andrew Crosland Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventHighlightFrame extends JmriJFrame {
 
     protected static final int HIGHLIGHTERS = 4;

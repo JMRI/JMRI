@@ -24,6 +24,8 @@ import com.alexandriasoftware.swing.Validation;
 import java.awt.event.ActionListener;
 import javax.swing.ComboBoxEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +78,7 @@ import jmri.util.NamedBeanUserNameComparator;
  *
  * @param <B> the supported type of NamedBean
  */
+@API(status = EXPERIMENTAL)
 public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     private final transient Manager<B> manager;

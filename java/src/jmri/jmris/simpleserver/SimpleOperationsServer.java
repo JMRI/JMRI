@@ -12,6 +12,8 @@ import jmri.jmris.AbstractOperationsServer;
 import jmri.jmris.JmriConnection;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.trains.Train;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * format, and some minor refactoring)
  * @author Randall Wood Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class SimpleOperationsServer extends AbstractOperationsServer {
 
     /**

@@ -9,6 +9,8 @@ import jmri.LocoAddress;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Howard G. Penny Copyright (C) 2005
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile
  */
+@API(status = MAINTAINED)
 public class DecoderFile extends XmlFile {
 
     public DecoderFile() {

@@ -1,5 +1,8 @@
 package jmri.jmrix.roco.z21;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Defines the standard/common routines used in multiple classes related to 
  * a Roco z21 Command Station.
@@ -31,6 +34,7 @@ package jmri.jmrix.roco.z21;
  * @author Bob Jacobsen Copyright (C) 2001 
  * @author      Paul Bender Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
 
     private int broadcast_flags = 0; // holds the value of the broadcast flags.

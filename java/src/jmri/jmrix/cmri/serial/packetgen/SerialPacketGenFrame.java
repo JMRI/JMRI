@@ -12,11 +12,15 @@ import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.util.StringUtil;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of CMRI serial messages
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2003
  */
+@API(status = EXPERIMENTAL)
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
     // member declarations

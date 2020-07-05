@@ -3,6 +3,9 @@ package jmri.jmrix.oaktree.swing;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.OakTreeMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Oaktree subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.oaktree.OakTreeMenu;
  * @author Paul Bender Copyright (C) 2017
  * @since 4.9.6
  */
+@API(status = EXPERIMENTAL)
 public class OakTreeComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public OakTreeComponentFactory(OakTreeSystemConnectionMemo memo) {

@@ -1,5 +1,8 @@
 package jmri.jmrix.zimo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Mx1Listener provides the call-back interface for notification when a new MX-1
  * message arrives from the layout.
@@ -14,6 +17,7 @@ package jmri.jmrix.zimo;
   *
  * Adapted by Sip Bosch for use with Zimo Mx-1
  */
+@API(status = EXPERIMENTAL)
 public interface Mx1Listener extends java.util.EventListener {
 
     /**

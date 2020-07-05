@@ -3,6 +3,8 @@ package jmri.jmrix.cmri.serial.nodeiolist;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author   Dave Duchamp  Copyright (C) 2006
  * @author   Chuck Catania Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class NodeIOListAction extends AbstractAction {
     CMRISystemConnectionMemo _memo = null;
 

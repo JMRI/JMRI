@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  *
  * @author Daniel Boudreau Copyright (C) 2012
  */
+@API(status = MAINTAINED)
 public class PrintRoutesAction extends PrintRouteAction {
 
     private static final char FORM_FEED = '\f';

@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.border.Border;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for running assignment list.
  *
@@ -21,6 +24,7 @@ import javax.swing.border.Border;
  * @author Bob Jacobsen 2008
  * @since 2.3.7
  */
+@API(status = EXPERIMENTAL)
 public class TieToolFrame extends jmri.util.JmriJFrame {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");

@@ -11,12 +11,15 @@ import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Randall Wood Copyright (C) 2012, 2015, 2020
  */
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = EXPERIMENTAL)
 public class JsonServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     public static final int MAX_HEARTBEAT_INTERVAL = 3600;

@@ -1,11 +1,15 @@
 package jmri.jmrix.tams.serialdriver;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via an TAMS
  * SerialDriverAdapter object.
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     public final static String NAME = "MasterControl"; // NOI18N

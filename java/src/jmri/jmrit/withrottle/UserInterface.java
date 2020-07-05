@@ -33,6 +33,9 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * UserInterface.java Create a window for WiThrottle information and and create
  * a FacelessServer thread to handle jmdns and device requests
@@ -42,6 +45,7 @@ import jmri.util.zeroconf.ZeroConfServiceManager;
  * @author Randall Wood Copyright (C) 2013
  * @author Paul Bender Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class UserInterface extends JmriJFrame implements DeviceListener, RosterGroupSelector {
 
     JMenuBar menuBar;

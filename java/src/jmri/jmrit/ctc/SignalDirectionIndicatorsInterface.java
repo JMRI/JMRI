@@ -3,6 +3,10 @@
  */
 package jmri.jmrit.ctc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public interface SignalDirectionIndicatorsInterface {
     public void setCodeButtonHandler(CodeButtonHandler codeButtonHandler);
     public void removeAllListeners();

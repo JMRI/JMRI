@@ -9,6 +9,9 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Display a JmriPanel in a JFrame of its own.
  *
@@ -19,6 +22,7 @@ import jmri.util.swing.JmriPanel;
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
 
     HashMap<JmriPanel, JmriJFrame> frames = new HashMap<JmriPanel, JmriJFrame>();

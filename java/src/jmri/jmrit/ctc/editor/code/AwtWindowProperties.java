@@ -12,6 +12,9 @@ import java.util.Properties;
 import jmri.jmrit.ctc.CTCFiles;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -21,6 +24,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *  This object "maintains" certain properties of windows so that users when they restart
  *  the program can find the windows at the same place.
  */
+@API(status = MAINTAINED)
 public class AwtWindowProperties {
     private final Properties _mProperties;
     private final String _mFilename;

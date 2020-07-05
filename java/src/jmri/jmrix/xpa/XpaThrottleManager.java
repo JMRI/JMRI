@@ -6,11 +6,15 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * XPA implementation of a ThrottleManager.
  *
  * @author Paul Bender Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class XpaThrottleManager extends AbstractThrottleManager {
 
     private final XpaTrafficController tc;

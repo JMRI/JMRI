@@ -6,6 +6,8 @@ import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import purejavacomm.SerialPortEventListener;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener,
         Runnable {
 

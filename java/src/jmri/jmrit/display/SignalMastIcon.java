@@ -16,6 +16,8 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.picker.PickListModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009, 2014
  */
+@API(status = MAINTAINED)
 public class SignalMastIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
     public SignalMastIcon(Editor editor) {

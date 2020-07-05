@@ -1,5 +1,7 @@
 package jmri.jmrix.zimo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.jmrix.zimo.Mx1Message.ACKREP1;
 
 import jmri.JmriException;
@@ -13,6 +15,7 @@ import jmri.managers.AbstractPowerManager;
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
  */
+@API(status = EXPERIMENTAL)
 public class Mx1PowerManager extends AbstractPowerManager<Mx1SystemConnectionMemo> implements Mx1Listener {
 
     Mx1TrafficController tc = null;

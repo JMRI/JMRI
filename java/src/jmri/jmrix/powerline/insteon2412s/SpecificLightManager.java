@@ -3,6 +3,9 @@ package jmri.jmrix.powerline.insteon2412s;
 import jmri.Light;
 import jmri.jmrix.powerline.SerialTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement LightManager for powerline serial systems with Insteon 2412S
  * adapters
@@ -14,6 +17,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManager {
 
     public SpecificLightManager(SerialTrafficController tc) {

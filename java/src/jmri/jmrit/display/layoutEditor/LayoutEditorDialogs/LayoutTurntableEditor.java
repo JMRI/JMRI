@@ -17,12 +17,16 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
 import jmri.NamedBean.DisplayOptions;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * MVC Editor component for PositionablePoint objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
  */
+@API(status = MAINTAINED)
 public class LayoutTurntableEditor extends LayoutTrackEditor {
 
     /**

@@ -1,10 +1,14 @@
 package jmri.jmrix.can;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Defines the interface for listening to CAN messages
  *
  * @author Andrew Crosland Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public interface CanListener extends jmri.jmrix.AbstractMRListener {
 
     public void message(CanMessage m);

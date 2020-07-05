@@ -29,6 +29,8 @@ import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Egbert Broerse Copyright (C) 2017
  */
+@API(status = MAINTAINED)
 public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
 
     SignalMastLogic sml;

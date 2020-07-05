@@ -5,9 +5,12 @@ import java.beans.PropertyChangeListener;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class WaitTrainAction extends Action implements PropertyChangeListener {
 
     private static final int _code = ActionCodes.WAIT_FOR_TRAIN;

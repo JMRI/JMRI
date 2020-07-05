@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetLightManagerXml by Dave Duchamp
  */
+@API(status = EXPERIMENTAL)
 public class DCCppLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public DCCppLightManagerXml() {

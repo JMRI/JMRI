@@ -10,6 +10,8 @@ import jmri.NamedBean;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
+@API(status = EXPERIMENTAL)
 public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     private boolean configured = false;

@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import jmri.Conditional;
 import jmri.NamedBeanHandle;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009
  * @since 2.5.1
  */
+@API(status = EXPERIMENTAL)
 public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener {
 
     ArrayList<Integer> _states;

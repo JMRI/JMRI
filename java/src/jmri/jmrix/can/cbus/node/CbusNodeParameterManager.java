@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.node;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young Copyright (C) 2019,2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeParameterManager {
     private final CbusBasicNodeWithManagers _node;
     private int[] _parameters;

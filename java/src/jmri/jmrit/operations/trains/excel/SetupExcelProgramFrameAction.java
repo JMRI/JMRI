@@ -5,12 +5,16 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to launch the SetupExcelProgramFrame.
  *
  * @author Daniel Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class SetupExcelProgramFrameAction extends AbstractAction {
 
     public SetupExcelProgramFrameAction() {

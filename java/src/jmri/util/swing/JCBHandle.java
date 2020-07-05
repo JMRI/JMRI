@@ -1,5 +1,8 @@
 package jmri.util.swing;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Wrap an object for easier null handling in a JComboBox. ("JCB" refers to
  * JComboBox)
@@ -9,6 +12,7 @@ package jmri.util.swing;
  *
  * @param <T> the class accepted by the JComboBox
  */
+@API(status = EXPERIMENTAL)
 public class JCBHandle<T> {
 
     T item = null;

@@ -1,5 +1,8 @@
 package jmri.jmrit.decoderdefn;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Update the decoder index and store as a command-line action.
  * <P>
@@ -10,6 +13,7 @@ package jmri.jmrit.decoderdefn;
  * @author Randall Wood Copyright (C) 2013
  * @see jmri.jmrit.XmlFile
  */
+@API(status = MAINTAINED)
 public class DecoderIndexBuilder {
 
     // main entry point to run standalone

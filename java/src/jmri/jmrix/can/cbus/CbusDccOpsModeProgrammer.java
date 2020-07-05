@@ -10,6 +10,9 @@ import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the CBUS command
  * station object.
@@ -19,6 +22,7 @@ import jmri.jmrix.can.CanReply;
  * @see jmri.Programmer
  * @author Andrew Crosland Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements AddressedProgrammer {
 
     int mAddress;

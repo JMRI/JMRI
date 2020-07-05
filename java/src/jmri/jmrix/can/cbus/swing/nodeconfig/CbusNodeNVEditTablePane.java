@@ -15,6 +15,8 @@ import javax.swing.table.TableColumnModel;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @since 4.15.5
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     private final CbusNodeNVTableDataModel nodeNVModel;

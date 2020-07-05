@@ -2,6 +2,9 @@ package jmri.jmrix.ecos.swing;
 
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel interface to handle providing system connection information to a
  * panel.
@@ -9,6 +12,7 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  * @author Kevin Dickerson Copyright 2010
  * @since 2.11.3
  */
+@API(status = EXPERIMENTAL)
 public interface EcosPanelInterface {
 
     /**

@@ -7,11 +7,15 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle an RMI connection for a single remote client.
  *
  * @author Alex Shepherd Copyright (c) 2002
  */
+@API(status = EXPERIMENTAL)
 public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBufferInterface, LocoNetListener {
 
     LinkedList<LocoNetMessage> messageList = null;

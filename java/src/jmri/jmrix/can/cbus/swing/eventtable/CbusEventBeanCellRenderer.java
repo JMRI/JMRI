@@ -14,12 +14,16 @@ import jmri.NamedBean;
 import jmri.jmrix.can.cbus.eventtable.CbusEventBeanData;
 import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
 /**
  * Cell Renderer for 
  */ 
+@API(status = EXPERIMENTAL)
 public class CbusEventBeanCellRenderer implements TableCellRenderer {
 
     private final JTextField _filterText;

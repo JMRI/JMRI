@@ -5,6 +5,9 @@ import java.awt.Rectangle;
 import javax.swing.JPanel;
 import javax.swing.Scrollable;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel extension to handle the Scrollable interface so it can behave well in
  * a vertical JScrollPane
@@ -12,6 +15,7 @@ import javax.swing.Scrollable;
  * @author Bob Jacobsen Copyright 2018
  * @since 4.13.2
  */
+@API(status = EXPERIMENTAL)
 public class ScrollablePanel extends JPanel implements Scrollable {
     private final int increment;
 

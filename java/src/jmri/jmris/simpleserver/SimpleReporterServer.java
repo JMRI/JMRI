@@ -9,6 +9,9 @@ import jmri.Reporter;
 import jmri.jmris.AbstractReporterServer;
 import jmri.jmris.JmriConnection;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Simple Server interface between the JMRI reporter manager and a network
  * connection
@@ -16,6 +19,7 @@ import jmri.jmris.JmriConnection;
  * @author Paul Bender Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class SimpleReporterServer extends AbstractReporterServer {
 
     private static final String REPORTER = "REPORTER ";

@@ -1,5 +1,7 @@
 package jmri.jmrix.jmriclient.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
  * @author Paul Bender Copyright: Copyright (c) 2015 
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
     public JMRIClientReporterManagerXml() {

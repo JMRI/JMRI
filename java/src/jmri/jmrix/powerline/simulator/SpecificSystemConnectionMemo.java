@@ -2,6 +2,9 @@ package jmri.jmrix.powerline.simulator;
 
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -13,6 +16,7 @@ import jmri.InstanceManager;
  * of the multiple connections
  * @author Ken Cameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SpecificSystemConnectionMemo extends jmri.jmrix.powerline.SerialSystemConnectionMemo {
 
     public SpecificSystemConnectionMemo() {

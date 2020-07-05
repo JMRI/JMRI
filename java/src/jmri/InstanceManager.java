@@ -19,6 +19,8 @@ import java.util.ServiceLoader;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,6 +77,7 @@ import jmri.util.ThreadingUtil;
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2016
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = STABLE)
 public final class InstanceManager {
 
     // data members to hold contact with the property listeners

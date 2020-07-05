@@ -23,6 +23,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import jmri.Block;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import jmri.jmrit.display.LocoIcon;
  *
  * @author Pete Cressman Copyright (C) 2013
  */
+@API(status = MAINTAINED)
 public class Tracker {
 
     private static final String TRACKER_NO_CURRENT_BLOCK = "TrackerNoCurrentBlock";

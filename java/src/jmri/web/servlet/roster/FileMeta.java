@@ -3,12 +3,16 @@ package jmri.web.servlet.roster;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.InputStream;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * object type for storing uploaded file data based on examples at
  * http://hmkcode.com/java-servlet-jquery-file-upload/ 
  *
  */
 @JsonIgnoreProperties({"content"}) //this prevents serializer error when mapping to send back
+@API(status = EXPERIMENTAL)
 public class FileMeta {
 
     private String fileName;

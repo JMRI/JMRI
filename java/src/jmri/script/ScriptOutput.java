@@ -7,6 +7,8 @@ import javax.script.ScriptContext;
 import javax.swing.JTextArea;
 import jmri.InstanceManager;
 import jmri.util.PipeListener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class ScriptOutput {
 
     /**

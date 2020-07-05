@@ -3,11 +3,15 @@ package jmri.jmris.srcp;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a JmriSRCPServerControlFrame object
  *
  * @author Paul Bender Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class JmriSRCPServerAction extends AbstractAction {
 
     public JmriSRCPServerAction(String s) {

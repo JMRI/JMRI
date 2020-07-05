@@ -3,6 +3,9 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JLabel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * LIke DecVariableValue, except that the string representation is in
  * hexadecimal
@@ -10,6 +13,7 @@ import javax.swing.JLabel;
  * @author Bob Jacobsen Copyright (C) 2001, 2014
  * @author Dave Heap Copyright (C) 2015
  */
+@API(status = MAINTAINED)
 public class HexVariableValue extends DecVariableValue {
 
     public HexVariableValue(String name, String comment, String cvName,

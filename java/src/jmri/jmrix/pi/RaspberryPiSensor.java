@@ -12,6 +12,8 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author   Paul Bender Copyright (C) 2003-2017
  */
+@API(status = EXPERIMENTAL)
 public class RaspberryPiSensor extends AbstractSensor implements GpioPinListenerDigital {
 
     private static GpioController gpio = null;

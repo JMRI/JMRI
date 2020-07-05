@@ -9,6 +9,8 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Section;
 import jmri.Transit;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,6 +104,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
+@API(status = MAINTAINED)
 public class ActiveTrain {
 
     private static final jmri.NamedBean.DisplayOptions USERSYS = jmri.NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;

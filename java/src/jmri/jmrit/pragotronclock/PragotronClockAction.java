@@ -3,6 +3,9 @@ package jmri.jmrit.pragotronclock;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a PragotronClockFrame object.
  *
@@ -10,6 +13,7 @@ import javax.swing.AbstractAction;
  *
  * Based on Nixie clock by Bob Jacobsen.
  */
+@API(status = MAINTAINED)
 public class PragotronClockAction extends AbstractAction {
 
     public PragotronClockAction() {

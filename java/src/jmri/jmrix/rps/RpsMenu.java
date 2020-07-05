@@ -3,11 +3,15 @@ package jmri.jmrix.rps;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create an "RPS" menu containing the JMRI RPS-specific tools.
  *
  * @author Bob Jacobsen Copyright 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class RpsMenu extends JMenu {
 
     private RpsSystemConnectionMemo _memo = null;

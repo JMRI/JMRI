@@ -16,6 +16,9 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -27,6 +30,7 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class CbusConsoleDecodeOptionsPane extends javax.swing.JPanel implements CanListener {
     
     private final CbusConsolePane _mainPane;

@@ -22,6 +22,10 @@ import javax.swing.JFrame;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class VSDPreferencesAction extends AbstractAction {
 
     /**

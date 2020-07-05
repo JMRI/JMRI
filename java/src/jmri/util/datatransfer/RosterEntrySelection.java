@@ -12,6 +12,9 @@ import java.util.List;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Transfer roster entries either via drag-and-drop or via the clipboard.
  * <p>
@@ -31,6 +34,7 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author Randall Wood Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class RosterEntrySelection implements Transferable, ClipboardOwner {
 
     private final ArrayList<String> Ids;

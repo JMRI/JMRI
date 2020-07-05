@@ -2,6 +2,9 @@ package jmri.jmrix.lenz.liusb;
 
 import jmri.util.SystemType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an XpressNet layout connection via a Lenz LIUSBadapter.
  * <p>
@@ -11,6 +14,7 @@ import jmri.util.SystemType;
  *
  * @see LIUSBAdapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**

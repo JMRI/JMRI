@@ -6,6 +6,9 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 @ParametersAreNonnullByDefault
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
@@ -21,6 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
+@API(status = EXPERIMENTAL)
 public class Bundle extends jmri.jmrix.Bundle {
 
     @CheckForNull

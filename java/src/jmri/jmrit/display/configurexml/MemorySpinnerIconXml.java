@@ -2,6 +2,8 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemorySpinnerIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -9,6 +11,7 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class MemorySpinnerIconXml extends PositionableLabelXml {
 
     public MemorySpinnerIconXml() {

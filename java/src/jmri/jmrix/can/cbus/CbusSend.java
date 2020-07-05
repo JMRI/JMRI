@@ -8,6 +8,9 @@ import jmri.jmrix.can.TrafficController;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -18,6 +21,7 @@ import jmri.util.ThreadingUtil;
  * 
  * @author Steve Young (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusSend {
     
     private TrafficController tc;

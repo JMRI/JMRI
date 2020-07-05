@@ -6,6 +6,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see RaspberryPiAdapter
  */
+@API(status = EXPERIMENTAL)
 public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionConfig {
 
     private boolean disabled = false;

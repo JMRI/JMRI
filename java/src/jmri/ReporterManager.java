@@ -3,6 +3,9 @@ package jmri;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Locate a Reporter object representing some specific device on the layout.
  * <p>
@@ -35,6 +38,7 @@ import javax.annotation.Nonnull;
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */
+@API(status = STABLE)
 public interface ReporterManager extends ProvidingManager<Reporter> {
 
     /**

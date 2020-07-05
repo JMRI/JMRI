@@ -1,5 +1,8 @@
 package jmri.jmrix.rfid;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Connect to an IdTag
  * <hr>
@@ -16,6 +19,7 @@ package jmri.jmrix.rfid;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public interface RfidTagListener extends jmri.IdTagListener {
 
     // Interface moved to IdTagListener.  kept until removed or extended.

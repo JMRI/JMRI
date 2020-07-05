@@ -1,5 +1,8 @@
 package jmri.jmris;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This class provides access to the service handlers for individual object
  * types which can be passed to a parser visitor object.
@@ -7,6 +10,7 @@ package jmri.jmris;
  * @author Paul Bender Copyright (C) 2010
  *
  */
+@API(status = EXPERIMENTAL)
 public class ServiceHandler {
 
     // private service handler objects

@@ -2,6 +2,10 @@ package jmri.jmrit.beantable;
 
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = STABLE)
 public class TurnoutTableTabAction extends AbstractTableTabAction<Turnout> {
 
     public TurnoutTableTabAction(String s) {

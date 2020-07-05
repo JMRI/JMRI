@@ -1,10 +1,14 @@
 package jmri.jmrix.roco.z21;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for Z21 protocol Listeners
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public interface Z21Listener extends jmri.jmrix.AbstractMRListener {
 
     /**

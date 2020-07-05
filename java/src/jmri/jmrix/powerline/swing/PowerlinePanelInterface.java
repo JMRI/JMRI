@@ -2,6 +2,9 @@ package jmri.jmrix.powerline.swing;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel interface to handle providing system connection information to a
  * panel.
@@ -10,6 +13,7 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
  * @since 2.11.1 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public interface PowerlinePanelInterface {
 
     /**

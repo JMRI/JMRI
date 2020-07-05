@@ -3,6 +3,8 @@ package jmri.jmrit.vsdecoder;
 import jmri.util.startup.AbstractStartupActionFactory;
 import jmri.util.startup.StartupActionFactory;
 import java.util.Locale;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -12,6 +14,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright (C) 2016
  */
 @ServiceProvider(service = StartupActionFactory.class)
+@API(status = MAINTAINED)
 public final class VSDecoderCreationStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override

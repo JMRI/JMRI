@@ -6,10 +6,14 @@ import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+@API(status = MAINTAINED)
 public class FrmDefaults extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "DlgDefaults";    // NOI18N

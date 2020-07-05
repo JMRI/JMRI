@@ -10,6 +10,8 @@ import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.ShutDownTask;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         implements Dcc4PcListener {
 

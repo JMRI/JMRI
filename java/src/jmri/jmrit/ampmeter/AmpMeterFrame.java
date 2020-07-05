@@ -9,6 +9,8 @@ import jmri.InstanceManager;
 import jmri.MultiMeter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * last saved window size and re-validates on each scaling (found to be necessary
  * on Raspberry Pis.
  */
+@API(status = MAINTAINED)
 public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations

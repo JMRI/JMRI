@@ -3,6 +3,9 @@ package jmri.util.swing;
 import java.awt.Frame;
 import javax.swing.JFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A simple WindowInterface for a JFrame. This really does nothing but wrap the
  * WindowInterface interface around a JFrame, so that menu items that expect the
@@ -10,6 +13,7 @@ import javax.swing.JFrame;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JFrameInterface implements WindowInterface {
 
     protected JFrame frame = null;

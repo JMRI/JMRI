@@ -1,5 +1,7 @@
 package jmri.server.json.time;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.OFF;
 import static jmri.server.json.JSON.ON;
 import static jmri.server.json.JSON.RATE;
@@ -26,6 +28,7 @@ import jmri.server.json.JsonRequest;
 /**
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonTimeHttpService extends JsonHttpService {
 
     public JsonTimeHttpService(ObjectMapper mapper) {

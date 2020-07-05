@@ -13,11 +13,15 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for a message filter for CMRInet network packets.
  *
  * @author  Chuck Catania   Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class SerialFilterFrame extends jmri.util.JmriJFrame {
 
     ArrayList<SerialNode> monitorNode = new  ArrayList<SerialNode>();

@@ -18,6 +18,8 @@ import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see jmri.jmrit.roster.IdentifyLoco
  */
+@API(status = MAINTAINED)
 public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
 
     public NewLocoSelPane(JLabel s, ProgModeSelector selector) {

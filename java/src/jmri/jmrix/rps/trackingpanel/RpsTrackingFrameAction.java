@@ -4,11 +4,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a RpsTrackingFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
+@API(status = EXPERIMENTAL)
 public class RpsTrackingFrameAction extends AbstractAction {
 
     RpsSystemConnectionMemo memo = null;

@@ -1,6 +1,8 @@
 package jmri.jmrix.roco.z21.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2016
  * @since 4.5.4
  */
+@API(status = EXPERIMENTAL)
 public class Z21SensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public Z21SensorManagerXml() {

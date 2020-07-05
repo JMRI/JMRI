@@ -16,6 +16,9 @@ import jmri.jmrix.can.cbus.CbusEventInterface;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -24,6 +27,7 @@ import jmri.util.ThreadingUtil;
  * @author Steve Young (c) 2018, 2019
  * 
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventTableAction implements PropertyChangeListener {
 
     private final CbusBasicEventTableModel _model;

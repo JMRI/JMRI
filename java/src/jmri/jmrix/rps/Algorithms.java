@@ -3,12 +3,16 @@ package jmri.jmrix.rps;
 import javax.swing.JComboBox;
 import javax.vecmath.Point3d;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * Provide central access to the RPS algorithms.
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class Algorithms implements Constants {
 
     static final int DEFAULTALGORITHMINDEX = 3;

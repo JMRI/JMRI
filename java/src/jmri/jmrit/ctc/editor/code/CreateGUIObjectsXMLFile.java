@@ -1,5 +1,7 @@
 package jmri.jmrit.ctc.editor.code;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateEpilogue;
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateProlog;
 
@@ -19,6 +21,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+@API(status = MAINTAINED)
 public class CreateGUIObjectsXMLFile {
     private static final int START_OFFSET = 12;
     private static final int GIF_HORIZONTAL_SIZE = 65;

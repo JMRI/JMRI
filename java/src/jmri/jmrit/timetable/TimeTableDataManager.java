@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Collections;
 import java.util.TreeMap;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide data base management services.
  * <p>
@@ -25,6 +28,7 @@ import java.util.TreeMap;
  *
  * @author Dave Sand Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class TimeTableDataManager {
 
     /**

@@ -17,6 +17,8 @@ import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
  */
+@API(status = EXPERIMENTAL)
 public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
     protected static int configtool_instance_num;

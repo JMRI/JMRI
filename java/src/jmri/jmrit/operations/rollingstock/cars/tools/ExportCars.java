@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import jmri.jmrit.operations.setup.Setup;
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2016
  *
  */
+@API(status = MAINTAINED)
 public class ExportCars extends XmlFile {
 
     protected static final String LOCATION_TRACK_SEPARATOR = "-";

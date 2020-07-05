@@ -53,6 +53,8 @@ import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriColorChooser;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,6 +94,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (c) 2009
  * @author Pete Cressman Copyright (c) 2009, 2010
  */
+@API(status = MAINTAINED)
 public class PanelEditor extends Editor implements ItemListener {
 
     private static final String SENSOR = "Sensor";

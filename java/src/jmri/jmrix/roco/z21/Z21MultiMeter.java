@@ -1,5 +1,7 @@
 package jmri.jmrix.roco.z21;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood (C) 2015
  * @author Paul Bender (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implements Z21Listener {
 
     private Z21TrafficController tc;

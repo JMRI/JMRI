@@ -6,6 +6,8 @@ import java.util.*;
 import jmri.SignalHead;
 import jmri.SignalSystem;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
     public DefaultSignalAppearanceMap(String systemName, String userName) {

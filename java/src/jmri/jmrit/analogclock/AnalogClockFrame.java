@@ -19,6 +19,9 @@ import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Creates a JFrame containing an analog clockface and hands.
  * <p>
@@ -26,6 +29,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Dennis Miller Copyright (C) 2004
  */
+@API(status = MAINTAINED)
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations

@@ -14,6 +14,8 @@ import jmri.jmrix.marklin.MarklinListener;
 import jmri.jmrix.marklin.MarklinMessage;
 import jmri.jmrix.marklin.MarklinReply;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implements MarklinListener {
 
     // member declarations

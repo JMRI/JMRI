@@ -2,6 +2,8 @@ package jmri.jmrix.nce;
 
 import javax.swing.JOptionPane;
 import jmri.jmrix.ConnectionStatus;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau (C) 2007, 2010, 2012
  *
  */
+@API(status = EXPERIMENTAL)
 public class NceConnectionStatus implements NceListener {
 
     private static final boolean JOptPane_ERROR_MESSAGES_ENABLED = true;

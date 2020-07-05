@@ -7,12 +7,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JComponent;
 import javax.swing.JCheckBox;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Paul Bender Copyright (C) 2019
  */
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = MAINTAINED)
 public class ConsistToolPrefsPanel extends JPanel implements PreferencesPanel {
         
     private JCheckBox writeCVOptionCheckBox;

@@ -14,6 +14,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.LocoSelTreePane;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2015
  */
+@API(status = MAINTAINED)
 public class PaneNewProgAction extends AbstractAction {
 
     Object o1, o2, o3, o4;

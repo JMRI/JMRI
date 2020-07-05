@@ -8,11 +8,15 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class to represent a node imported from FCU file or CbusNodeXml.
  *
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeFromBackup> {
     
     private Date _timeStamp;

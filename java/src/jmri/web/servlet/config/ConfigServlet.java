@@ -8,10 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.web.server.WebServerPreferences;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class ConfigServlet extends HttpServlet {
 
     /**

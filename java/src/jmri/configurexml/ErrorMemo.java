@@ -1,10 +1,14 @@
 package jmri.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Memo class to remember errors encountered during loading
  *
  * @author Bob Jacobsen Copyright (c) 2010
  */
+@API(status = EXPERIMENTAL)
 public class ErrorMemo {
 
     public ErrorMemo(

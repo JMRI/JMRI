@@ -6,6 +6,8 @@ import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  */
+@API(status = MAINTAINED)
 public class SignalHeadIconXml extends PositionableLabelXml {
 
     static final HashMap<String, String> _nameMap = new HashMap<>();

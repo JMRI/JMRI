@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  *
  */
+@API(status = MAINTAINED)
 public class TrainCsvSwitchLists extends TrainCsvCommon {
 
     /**

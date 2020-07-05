@@ -13,6 +13,9 @@ import javax.swing.JScrollPane;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -26,6 +29,7 @@ import jmri.jmrix.can.cbus.simulator.CbusSimulator;
  * @author Steve Young Copyright (C) 2018 2019
  * @since 4.15.2
  */
+@API(status = EXPERIMENTAL)
 public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
 
     private CbusSimulator _sim;

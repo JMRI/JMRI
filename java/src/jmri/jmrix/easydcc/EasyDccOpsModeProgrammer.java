@@ -10,6 +10,9 @@ import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the
  * EasyDccCommandStation object.
@@ -19,6 +22,7 @@ import jmri.ProgrammingMode;
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (C) 2002
  */
+@API(status = EXPERIMENTAL)
 public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements AddressedProgrammer {
 
     int mAddress;

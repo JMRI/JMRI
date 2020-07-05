@@ -12,6 +12,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import org.apache.commons.csv.CSVPrinter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the csv operators for manifests and switch lists
  *
@@ -19,6 +22,7 @@ import org.apache.commons.csv.CSVPrinter;
  * 
  *
  */
+@API(status = MAINTAINED)
 public class TrainCsvCommon extends TrainCommon {
 
     protected final void printDepartureTime(CSVPrinter printer, String time) throws IOException {

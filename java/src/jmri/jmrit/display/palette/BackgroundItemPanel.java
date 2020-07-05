@@ -18,9 +18,13 @@ import jmri.jmrit.display.Editor;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanels for the Panel Backgrounds.
  */
+@API(status = MAINTAINED)
 public class BackgroundItemPanel extends IconItemPanel {
 
     JColorChooser _chooser;

@@ -3,6 +3,8 @@ package jmri.jmrix.rfid.serialdriver.configurexml;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.rfid.serialdriver.ConnectionConfig;
 import jmri.jmrix.rfid.serialdriver.SerialDriverAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

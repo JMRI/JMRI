@@ -2,6 +2,8 @@ package jmri.util.startup.configurexml;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import jmri.jmrix.swing.SystemConnectionAction;
  * @author Bob Jacobsen Copyright (c) 2003
  * @see jmri.util.startup.PerformActionModelFactory
  */
+@API(status = EXPERIMENTAL)
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public PerformActionModelXml() {

@@ -4,11 +4,15 @@ import java.util.Date;
 import jmri.InstanceManager;
 import jmri.implementation.DefaultClockControl;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class providing SRCP Clock Control to the SRCP client.
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class SRCPClockControl extends DefaultClockControl {
 
     SRCPBusConnectionMemo _memo = null;

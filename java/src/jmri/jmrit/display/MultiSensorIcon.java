@@ -15,6 +15,8 @@ import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.MultiSensorItemPanel;
 import jmri.jmrit.picker.PickListModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
+@API(status = MAINTAINED)
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     String _iconFamily;

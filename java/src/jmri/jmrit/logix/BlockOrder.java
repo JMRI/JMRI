@@ -1,5 +1,7 @@
 package jmri.jmrit.logix;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class BlockOrder {
 
     private static final Logger log = LoggerFactory.getLogger(BlockOrder.class);

@@ -2,6 +2,9 @@ package jmri.jmrix.acela;
 
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.AbstractSensor for Acela systems
  *
@@ -9,6 +12,7 @@ import jmri.implementation.AbstractSensor;
  * @author Bob Coleman Copyright (C) 2007, 2008 Based heavily on CMRI serial
  * example.
  */
+@API(status = EXPERIMENTAL)
 public class AcelaSensor extends AbstractSensor {
 
     public AcelaSensor(String systemName) {

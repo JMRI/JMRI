@@ -23,6 +23,8 @@ import javax.swing.text.JTextComponent;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.AlphanumComparator;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
  * @deprecated since 4.17.1; use {@link jmri.swing.NamedBeanComboBox} instead
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
     /**

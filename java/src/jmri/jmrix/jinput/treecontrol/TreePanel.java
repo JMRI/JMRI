@@ -22,6 +22,8 @@ import jmri.jmrix.jinput.TreeModel;
 import jmri.jmrix.jinput.UsbNode;
 import net.java.games.input.Component;
 import net.java.games.input.Controller;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2008
  */
+@API(status = EXPERIMENTAL)
 public class TreePanel extends JPanel {
 
     public TreePanel() {

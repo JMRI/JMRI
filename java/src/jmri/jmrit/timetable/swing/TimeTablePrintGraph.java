@@ -3,10 +3,14 @@ package jmri.jmrit.timetable.swing;
 import java.awt.*;
 import java.awt.print.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Print a timetable graph.
  * @author Dave Sand Copyright (c) 2019
  */
+@API(status = MAINTAINED)
 public class TimeTablePrintGraph  implements Printable {
 
     /**

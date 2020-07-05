@@ -15,6 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a custom color chooser panel.
  * The panel contains two button grids.
@@ -24,6 +27,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
  * @author Dave Sand Copyright (C) 2018
  * @since 4.13.1
  */
+@API(status = EXPERIMENTAL)
 public class JmriColorChooserPanel extends AbstractColorChooserPanel {
 
     private Color[] colors = {Color.black, Color.darkGray, Color.gray,

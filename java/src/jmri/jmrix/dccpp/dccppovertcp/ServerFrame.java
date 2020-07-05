@@ -14,6 +14,8 @@ import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoInitialize;
 import jmri.implementation.AbstractInstanceInitializer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -29,6 +31,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, InstanceManagerAutoInitialize {
 
     private ServerFrame() {

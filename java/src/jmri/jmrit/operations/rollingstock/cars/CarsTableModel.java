@@ -9,6 +9,8 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016
  */
+@API(status = MAINTAINED)
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class); // There is only one manager

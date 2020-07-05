@@ -8,6 +8,8 @@ package jmri.jmrix.openlcb;
 import jmri.Light;
 import jmri.implementation.AbstractLight;
 import jmri.implementation.LightControl;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.VersionedValueListener;
@@ -20,6 +22,7 @@ import javax.annotation.Nonnull;
  *
  * @author jcollell
  */
+@API(status = EXPERIMENTAL)
 public class OlcbLight extends AbstractLight {
     
     private static final int PC_DEFAULT_FLAGS = BitProducerConsumer.DEFAULT_FLAGS &

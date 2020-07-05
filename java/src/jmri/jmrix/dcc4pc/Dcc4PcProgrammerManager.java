@@ -7,6 +7,9 @@ import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * DCC4PC Programmer acts as a proxy for ops mode programming. Extend
  * DefaultProgrammerManager to provide ops mode programmers on XpressNet
@@ -15,6 +18,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @author Kevin Dickerson Copyright (C) 2012
  *
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
 
     private final GlobalProgrammerManager manager;

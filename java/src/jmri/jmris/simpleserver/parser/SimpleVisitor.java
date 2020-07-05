@@ -1,6 +1,8 @@
 package jmri.jmris.simpleserver.parser;
 
 import jmri.InstanceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
  * parser for the SimpleServer protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class SimpleVisitor extends JmriServerParserDefaultVisitor {
 
     private String outputString = null;

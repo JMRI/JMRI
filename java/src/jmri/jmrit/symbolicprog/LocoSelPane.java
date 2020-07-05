@@ -1,5 +1,8 @@
 package jmri.jmrit.symbolicprog;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Base class for GUI to select a locomotive (or create a new one in some cases)
  * <p>
@@ -9,6 +12,7 @@ package jmri.jmrit.symbolicprog;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
+@API(status = MAINTAINED)
 public class LocoSelPane extends jmri.util.swing.JmriPanel {
 
     public LocoSelPane() {

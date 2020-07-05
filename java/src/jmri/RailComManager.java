@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Locate a RailCom Object representing a specific RailCom Enabled device.<br>
  * RailCom is a registered trademark of Lenz GmbH.
@@ -18,5 +21,6 @@ package jmri;
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.4
  */
+@API(status = STABLE)
 public interface RailComManager extends IdTagManager {
 }

@@ -25,6 +25,8 @@ import javax.swing.table.TableModel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2006
  * @author Chuck Catania Copyright (C) 2016, 2017
  */
+@API(status = EXPERIMENTAL)
 public class ListFrame extends jmri.util.JmriJFrame {
 
     // configured node information

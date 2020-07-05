@@ -1,5 +1,8 @@
 package jmri.jmrix.srcp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Encodes a message to an SRCP server. The SRCPReply class handles the response
  * from the command station.
@@ -8,6 +11,7 @@ package jmri.jmrix.srcp;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     public SRCPMessage() {

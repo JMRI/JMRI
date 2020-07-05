@@ -2,11 +2,15 @@ package jmri.jmrix.loconet.sdf;
 
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement the PLAY macro from the Digitrax sound definition language
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class Play extends SdfMacro {
 
     public Play(int byte1, int byte2) {

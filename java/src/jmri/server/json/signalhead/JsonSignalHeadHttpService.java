@@ -1,5 +1,7 @@
 package jmri.server.json.signalhead;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.APPEARANCE;
 import static jmri.server.json.JSON.APPEARANCE_NAME;
 import static jmri.server.json.JSON.DATA;
@@ -27,6 +29,7 @@ import jmri.server.json.JsonRequest;
  *
  * @author Randall Wood Copyright 2016, 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpService<SignalHead> {
 
     public JsonSignalHeadHttpService(ObjectMapper mapper) {

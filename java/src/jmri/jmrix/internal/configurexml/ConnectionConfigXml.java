@@ -4,6 +4,8 @@ import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.internal.ConnectionConfig;
 import jmri.jmrix.internal.InternalAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -15,6 +17,7 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     public ConnectionConfigXml() {

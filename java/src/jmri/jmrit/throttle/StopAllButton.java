@@ -8,6 +8,10 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class StopAllButton extends JButton {
 
     public StopAllButton() {

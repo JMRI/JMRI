@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.setup;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  *
  * @author Daniel Boudreau Copyright (C) 2012
  */
+@API(status = MAINTAINED)
 public class AutoSave {
 
     static Thread autoSave = null;

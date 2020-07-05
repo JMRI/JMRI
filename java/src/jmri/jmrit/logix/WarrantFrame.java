@@ -37,6 +37,8 @@ import jmri.NamedBeanHandle;
 import jmri.SpeedStepMode;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +58,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author  Pete Cressman Copyright (C) 2009, 2010
  */
+@API(status = MAINTAINED)
 public class WarrantFrame extends WarrantRoute {
 
     int _rowHeight;

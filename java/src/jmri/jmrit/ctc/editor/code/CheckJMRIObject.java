@@ -10,6 +10,9 @@ import jmri.SignalMastManager;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.editor.gui.FrmMainForm;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -22,6 +25,7 @@ import jmri.jmrit.ctc.editor.gui.FrmMainForm;
  * to see if it is valid.
  *
  */
+@API(status = MAINTAINED)
 public class CheckJMRIObject {
 
 //  Putting these strings ANYWHERE in a string variable definition (with EXACT case!)

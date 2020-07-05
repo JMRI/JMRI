@@ -10,12 +10,16 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * AbstractAction for the RosterFrane so that multiple windows can be opened
  *
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2012
  */
+@API(status = MAINTAINED)
 public class RosterFrameAction extends JmriAbstractAction {
 
     public RosterFrameAction(String s, WindowInterface wi) {

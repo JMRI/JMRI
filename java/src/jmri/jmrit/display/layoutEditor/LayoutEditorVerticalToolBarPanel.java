@@ -9,11 +9,15 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This is the vertical toolbar panel
  *
  * @author George Warner Copyright: (c) 2019
  */
+@API(status = MAINTAINED)
 public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
 
     /**

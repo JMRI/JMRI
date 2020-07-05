@@ -5,6 +5,8 @@ import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2004-2014
  * @author Giorgio Terdina Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListener {
 
     protected XNetTrafficController tc = null;

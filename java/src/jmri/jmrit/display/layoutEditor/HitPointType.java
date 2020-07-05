@@ -1,5 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Enum denoting the different behaviors of different
  * types of "HitPoints".
@@ -11,6 +14,7 @@ package jmri.jmrit.display.layoutEditor;
  * @author Bob Jacobsen Copyright: (c) 2020
  */
 
+@API(status = MAINTAINED)
 public enum HitPointType {
                     //  Historical numerical values, used in old files, now ordinals with tests
     NONE,           //     0   

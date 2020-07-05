@@ -1,10 +1,14 @@
 package jmri.jmrix;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Basic interface for messages to and from the layout hardware.
  *
  * @author jake Copyright 2008
  */
+@API(status = EXPERIMENTAL)
 public interface Message {
 
     /**

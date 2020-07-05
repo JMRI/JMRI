@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.dccpp.dccppovertcp.ConnectionConfig;
 import jmri.jmrix.dccpp.dccppovertcp.DCCppTcpDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the
  * LnTcpDriverAdapter (and connections).
@@ -18,6 +21,7 @@ import jmri.jmrix.dccpp.dccppovertcp.DCCppTcpDriverAdapter;
  * @author Bob Jacobsen Copyright (c) 2003
  * @author Mark Underwood Copyright (c) 2015
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

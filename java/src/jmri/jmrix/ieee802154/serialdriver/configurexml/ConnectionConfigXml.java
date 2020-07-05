@@ -7,6 +7,8 @@ import jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.ieee802154.serialdriver.SerialNode;
 import jmri.jmrix.ieee802154.serialdriver.SerialSystemConnectionMemo;
 import jmri.jmrix.ieee802154.serialdriver.SerialTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -21,6 +23,7 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

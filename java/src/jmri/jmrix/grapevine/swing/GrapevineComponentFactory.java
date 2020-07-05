@@ -3,6 +3,9 @@ package jmri.jmrix.grapevine.swing;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.GrapevineMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Grapevine subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.grapevine.GrapevineMenu;
  * @author Paul Bender Copyright (C) 2017
  * @since 4.9.6
  */
+@API(status = EXPERIMENTAL)
 public class GrapevineComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public GrapevineComponentFactory(GrapevineSystemConnectionMemo memo) {

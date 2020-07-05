@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.annotation.Nonnull;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author John Harper Copyright 2005
  *
  */
+@API(status = STABLE)
 public class TurnoutOperationManager implements InstanceManagerAutoDefault {
 
     private final SortedMap<String, TurnoutOperation> turnoutOperations = new TreeMap<>();

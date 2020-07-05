@@ -8,12 +8,16 @@ import jmri.ThrottleManager;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Start, and create if needed, the WiThrottle server.
  *
  * @author Brett Hoffman Copyright (C) 2009
  *
  */
+@API(status = MAINTAINED)
 public class WiThrottleCreationAction extends JmriAbstractAction {
 
     public WiThrottleCreationAction(String s, WindowInterface wi) {

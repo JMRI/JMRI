@@ -19,6 +19,8 @@ import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSimulatorPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.util.ImmediatePipedOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on {@link jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter}
  */
+@API(status = EXPERIMENTAL)
 public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implements Runnable {
 
     final static int SENSOR_MSG_RATE = 10;

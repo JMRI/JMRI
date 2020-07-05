@@ -20,6 +20,8 @@ import jmri.implementation.DefaultIdTag;
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTagManager, Disposable {
 
     protected boolean dirty = false;

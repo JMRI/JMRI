@@ -1,11 +1,15 @@
 package jmri.jmrix.tams;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants to represent values seen in Tams traffic
  *
  * @author  Jan Boen 151216
  * @author Based on work from Kevin Dickerson
  */
+@API(status = EXPERIMENTAL)
 public final class TamsConstants {
 
     // Various bit masks

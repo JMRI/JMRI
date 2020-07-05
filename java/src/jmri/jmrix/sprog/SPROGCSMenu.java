@@ -2,11 +2,15 @@ package jmri.jmrix.sprog;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a Systems menu containing the Jmri SPROG-specific tools.
  *
  * @author Andrew Crosland Copyright 2006
  */
+@API(status = EXPERIMENTAL)
 public class SPROGCSMenu extends JMenu {
 
     private SprogSystemConnectionMemo _memo = null;

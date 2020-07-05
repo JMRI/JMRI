@@ -5,6 +5,8 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.NamedBean;
 import jmri.managers.AbstractLightManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class XBeeLightManager extends AbstractLightManager {
 
     protected XBeeTrafficController tc = null;

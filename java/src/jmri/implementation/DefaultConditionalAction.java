@@ -20,6 +20,8 @@ import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = EXPERIMENTAL)
 public class DefaultConditionalAction implements ConditionalAction {
 
     private int _option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;

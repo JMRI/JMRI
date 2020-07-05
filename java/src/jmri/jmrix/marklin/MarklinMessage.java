@@ -1,5 +1,8 @@
 package jmri.jmrix.marklin;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Encodes a message to a Marklin command station.
@@ -22,6 +25,7 @@ package jmri.jmrix.marklin;
  CAN message 8 BYTES
  Can Message Bytes 0 to 3 are the address bytes, with byte 0 High, byte 3 low
  */
+@API(status = EXPERIMENTAL)
 public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
 
     static int MY_UID = 0x12345678;

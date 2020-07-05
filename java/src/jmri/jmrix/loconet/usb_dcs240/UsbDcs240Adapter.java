@@ -5,6 +5,8 @@ import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPort;
@@ -19,6 +21,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006, 2008
  * @author B. Milhaupt Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class UsbDcs240Adapter extends LocoBufferAdapter {
 
     public UsbDcs240Adapter() {

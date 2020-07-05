@@ -2,6 +2,8 @@ package jmri.jmrix.dccpp;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetSensor
  */
+@API(status = EXPERIMENTAL)
 public class DCCppSensor extends AbstractSensor implements DCCppListener {
 
     private boolean statusRequested = false;

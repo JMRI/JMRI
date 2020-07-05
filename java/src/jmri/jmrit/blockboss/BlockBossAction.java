@@ -4,11 +4,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and show a "Simple Signal Logic" GUI panel.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
+@API(status = MAINTAINED)
 public class BlockBossAction extends AbstractAction {
 
     public BlockBossAction(String s) {

@@ -2,11 +2,15 @@ package jmri.jmrix.openlcb.swing.send;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create and register a tool to send OpenLCB CAN frames.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class OpenLcbCanSendAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
     public OpenLcbCanSendAction() {

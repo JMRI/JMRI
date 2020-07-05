@@ -5,6 +5,8 @@ import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
+@API(status = MAINTAINED)
 public class PaneServiceProgFrame extends PaneProgFrame {
 
     jmri.jmrit.progsupport.ProgModeSelector modePane;

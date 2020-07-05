@@ -5,6 +5,8 @@ import jmri.Manager.NameValidity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.NamedBean;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author Ken Cameron, Copyright (C) 2008, 2009, 2010
  */
+@API(status = EXPERIMENTAL)
 public class SerialAddress {
 
     private Matcher hCodes = null;

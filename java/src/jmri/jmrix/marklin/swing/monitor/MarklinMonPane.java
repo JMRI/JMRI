@@ -6,11 +6,15 @@ import jmri.jmrix.marklin.MarklinReply;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.jmrix.marklin.swing.MarklinPanelInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a MonFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
+@API(status = EXPERIMENTAL)
 public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements MarklinListener, MarklinPanelInterface {
 
     public MarklinMonPane() {

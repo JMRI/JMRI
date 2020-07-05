@@ -3,6 +3,9 @@ package jmri.jmrit.ctc.editor.code;
 import java.util.HashSet;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  *
@@ -19,6 +22,7 @@ import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
  *
  */
 
+@API(status = MAINTAINED)
 public class InternalSensorManager {
     private final HashSet<String> _mInternalSensorsToDelete;
 

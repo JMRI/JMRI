@@ -16,6 +16,8 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class SoundSetPane extends JPanel
         implements ReadingListener, MeasurementListener, PropertyChangeListener {
 

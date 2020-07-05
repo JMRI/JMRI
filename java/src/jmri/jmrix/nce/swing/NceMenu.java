@@ -6,12 +6,16 @@ import javax.swing.JMenu;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the JMRI NCE-specific tools.
  *
  * @author Bob Jacobsen Copyright 2003, 2010 converted to multiple connection
  * @author kcameron Copyright 2010, 2013
  */
+@API(status = EXPERIMENTAL)
 public class NceMenu extends JMenu {
 
     /**

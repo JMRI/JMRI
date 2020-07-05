@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 import jmri.InstanceManager;
@@ -11,6 +13,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  */
+@API(status = MAINTAINED)
 public class CarOwners extends RollingStockAttribute implements InstanceManagerAutoDefault {
 
     public static final String CAROWNERS_NAME_CHANGED_PROPERTY = "CarOwners Name"; // NOI18N

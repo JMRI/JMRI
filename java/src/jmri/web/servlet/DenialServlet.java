@@ -1,5 +1,7 @@
 package jmri.web.servlet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import java.io.IOException;
@@ -21,6 +23,7 @@ import org.openide.util.lookup.ServiceProvider;
 @WebServlet(name = "DenialServlet",
         urlPatterns = {"/prefs/networkServices"})
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class DenialServlet extends HttpServlet {
 
     @Override

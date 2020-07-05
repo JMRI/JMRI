@@ -14,6 +14,8 @@ import javax.swing.SpinnerNumberModel;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.util.StringUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
+@API(status = MAINTAINED)
 public class SendPacketFrame extends jmri.util.JmriJFrame {
 
     // member declarations

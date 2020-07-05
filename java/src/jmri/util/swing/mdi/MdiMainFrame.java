@@ -19,12 +19,16 @@ import jmri.util.swing.JMenuUtil;
 import jmri.util.swing.JToolBarUtil;
 import jmri.util.swing.JTreeUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Core JMRI JInternalPane GUI window.
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class MdiMainFrame extends jmri.util.JmriJFrame {
 
     /**

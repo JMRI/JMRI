@@ -1,11 +1,15 @@
 package jmri.jmrix.cmri.serial.cmrinetmetrics;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * CMRInet metric data variables and access methods.
  * The metric data is not persistent between runs.
  * 
  * @author Chuck Catania  Copyright (C) 2016, 2018
  */
+@API(status = EXPERIMENTAL)
     public class CMRInetMetricsData
     {
         /**

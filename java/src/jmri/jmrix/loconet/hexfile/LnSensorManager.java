@@ -6,6 +6,8 @@ import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.loconet.LnSensor;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2001
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is in effect the same as its super class")
+@API(status = EXPERIMENTAL)
 public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager {
 
     public LnSensorManager(LocoNetSystemConnectionMemo memo) {

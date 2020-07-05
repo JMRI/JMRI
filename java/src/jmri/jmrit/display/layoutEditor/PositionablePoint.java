@@ -17,6 +17,8 @@ import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
 import jmri.util.swing.*;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.*;
 
 /**
@@ -42,6 +44,7 @@ import org.slf4j.*;
  * @author Bob Jacobsen Copyright (2) 2014
  * @author George Warner Copyright (c) 2017-2019
  */
+@API(status = MAINTAINED)
 public class PositionablePoint extends LayoutTrack {
 
     // defined constants

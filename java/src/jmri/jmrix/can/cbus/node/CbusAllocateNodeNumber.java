@@ -22,9 +22,12 @@ import jmri.jmrix.can.cbus.CbusSend;
 import java.util.TimerTask;
 import jmri.util.TimerUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class CbusAllocateNodeNumber implements CanListener {
     
     private final CbusNodeTableDataModel nodeModel;    

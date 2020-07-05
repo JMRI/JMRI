@@ -8,6 +8,9 @@ import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Programmer support for DCC++.
  * <p>
@@ -22,6 +25,7 @@ import jmri.jmrix.AbstractProgrammer;
  * @author Giorgio Terdina Copyright (c) 2007
  * @author Mark Underwood Copyright (c) 2015
  */
+@API(status = EXPERIMENTAL)
 public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener {
 
     // NOTE: We will embed the command opcode in the CALLBACKSUB field

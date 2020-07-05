@@ -8,6 +8,8 @@ import jmri.UserPreferencesManager;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceEvent;
 import jmri.util.zeroconf.ZeroConfServiceListener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Brett Hoffman Copyright (C) 2009, 2010
  * @author Paul Bender Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
     private final static Logger log = LoggerFactory.getLogger(FacelessServer.class);

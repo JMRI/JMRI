@@ -22,6 +22,8 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.border.Border;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +60,7 @@ import org.slf4j.LoggerFactory;
  * @author Nathan Blomquist
  * @version 1.0.1
  */
+@API(status = EXPERIMENTAL)
 public class URIDrop {
 
     private transient Border normalBorder;

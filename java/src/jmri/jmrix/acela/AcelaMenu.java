@@ -2,6 +2,9 @@ package jmri.jmrix.acela;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri Acela-specific tools
  * Based on CMRI serial example, modified to establish Acela support.
@@ -9,6 +12,7 @@ import javax.swing.JMenu;
  * @author Bob Jacobsen Copyright 2003
  * @author Bob Coleman, Copyright (C) 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class AcelaMenu extends JMenu {
 
     public AcelaMenu(String name, AcelaSystemConnectionMemo memo) {

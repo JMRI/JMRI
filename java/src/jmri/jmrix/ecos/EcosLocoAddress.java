@@ -8,11 +8,15 @@ import jmri.beans.Bean;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Stores all the loco information from the ECoS into JMRI
  *
  * @author Kevin Dickerson
  */
+@API(status = EXPERIMENTAL)
 public class EcosLocoAddress extends Bean implements jmri.LocoAddress {
 
     private String _ecosObject = null;

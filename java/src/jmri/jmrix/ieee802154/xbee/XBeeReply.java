@@ -3,6 +3,9 @@ package jmri.jmrix.ieee802154.xbee;
 import com.digi.xbee.api.packet.UnknownXBeePacket;
 import com.digi.xbee.api.packet.XBeePacket;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
@@ -12,6 +15,7 @@ import com.digi.xbee.api.packet.XBeePacket;
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
 
     XBeePacket xbresponse = null;

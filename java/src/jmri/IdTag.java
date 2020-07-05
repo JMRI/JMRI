@@ -3,6 +3,8 @@ package jmri;
 import java.util.Date;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -45,6 +47,7 @@ import org.jdom2.Element;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = STABLE)
 public interface IdTag extends NamedBean {
 
     /**

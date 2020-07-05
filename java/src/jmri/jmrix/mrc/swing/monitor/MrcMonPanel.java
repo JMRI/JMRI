@@ -7,6 +7,8 @@ import jmri.jmrix.mrc.MrcMessage;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 import jmri.jmrix.mrc.MrcTrafficListener;
 import jmri.jmrix.mrc.swing.MrcPanelInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2011 copied from SerialMonPane.java
  * @author Daniel Boudreau Copyright (C) 2012 added human readable format
  */
+@API(status = EXPERIMENTAL)
 public class MrcMonPanel extends jmri.jmrix.AbstractMonPane implements MrcTrafficListener, MrcPanelInterface {
 
     public MrcMonPanel() {

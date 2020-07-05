@@ -39,6 +39,8 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +55,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class ProfileManagerDialog extends JDialog {
 
     private Timer timer;

@@ -4,11 +4,15 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Save throttles to XML
  *
  * @author Lionel Jeanson Copyright 2009
  */
+@API(status = MAINTAINED)
 public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
 
     /**

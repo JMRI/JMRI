@@ -1,5 +1,8 @@
 package jmri.jmrix.marklin;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Carries the reply to an MarklinMessage.
  *
@@ -7,6 +10,7 @@ package jmri.jmrix.marklin;
  * @author Kevin Dickerson Copyright (C) 2007
  *
  */
+@API(status = EXPERIMENTAL)
 public class MarklinReply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one

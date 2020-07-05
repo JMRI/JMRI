@@ -8,6 +8,8 @@ import java.text.NumberFormat;
 
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016
  */
+@API(status = MAINTAINED)
 public class ImportCars extends ImportRollingStock {
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);

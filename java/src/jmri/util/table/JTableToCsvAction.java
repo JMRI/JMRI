@@ -20,6 +20,8 @@ import jmri.util.FileUtil;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2020
  * @since 4.19.5
  */ 
+@API(status = EXPERIMENTAL)
 public class JTableToCsvAction extends AbstractAction {
 
     private final JFileChooser _fileChooser;

@@ -4,6 +4,9 @@ import jmri.SpeedStepMode;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents a single command or response on the XpressNet.
  * <p>
@@ -14,6 +17,7 @@ import jmri.jmrix.lenz.XNetMessage;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2003-2010
  */
+@API(status = EXPERIMENTAL)
 public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
 
     /**

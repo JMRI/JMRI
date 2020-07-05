@@ -11,6 +11,8 @@ import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.streamport.LnStreamPortController;
 import jmri.util.ImmediatePipedOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable {
 
     LnStreamPortController lsc = null;

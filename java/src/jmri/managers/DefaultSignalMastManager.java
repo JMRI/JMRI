@@ -12,6 +12,9 @@ import jmri.implementation.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Default implementation of a SignalMastManager.
  * <p>
@@ -20,6 +23,7 @@ import jmri.util.StringUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2020
  */
+@API(status = EXPERIMENTAL)
 public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         implements SignalMastManager {
 

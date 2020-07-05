@@ -3,11 +3,15 @@ package jmri.jmrit.beantable.signalmast;
 import javax.swing.BoxLayout;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JFrame to create a new SignalMast
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class SignalMastRepeaterJFrame extends JmriJFrame {
 
     public SignalMastRepeaterJFrame() {

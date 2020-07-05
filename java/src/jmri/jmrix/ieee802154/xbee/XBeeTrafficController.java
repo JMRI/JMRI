@@ -18,6 +18,8 @@ import jmri.jmrix.ieee802154.IEEE802154Listener;
 import jmri.jmrix.ieee802154.IEEE802154Message;
 import jmri.jmrix.ieee802154.IEEE802154Reply;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2013, 2016
  */
+@API(status = EXPERIMENTAL)
 public class XBeeTrafficController extends IEEE802154TrafficController implements IPacketReceiveListener, IModemStatusReceiveListener, IDataReceiveListener, XBeeInterface {
 
     private XBeeDevice xbee = null;

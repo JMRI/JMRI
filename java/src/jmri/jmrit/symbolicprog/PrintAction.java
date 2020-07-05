@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to print the information in a VariableTable.
  * <p>
@@ -13,6 +16,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  */
+@API(status = MAINTAINED)
 public class PrintAction extends AbstractAction {
 
     public PrintAction(String actionName, PaneProgFrame frame, boolean preview) {

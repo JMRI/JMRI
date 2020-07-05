@@ -32,6 +32,8 @@ import jmri.Turnout;
 import jmri.jmrit.beantable.AddNewDevicePanel;
 import jmri.jmrit.display.Positionable;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Egbert Broerse Copyright (c) 2017, 2018
  */
+@API(status = MAINTAINED)
 public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListener, ActionListener {
 
     private final JButton beanButton;

@@ -6,11 +6,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Panel for sending messages to throttles.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  */
+@API(status = EXPERIMENTAL)
 public class MessagePanel extends jmri.jmrix.loconet.swing.LnPanel {
 
     // GUI member declarations

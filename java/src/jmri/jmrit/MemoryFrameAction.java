@@ -14,11 +14,15 @@ import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Display memory usage on request
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2012
  */
+@API(status = MAINTAINED)
 public class MemoryFrameAction extends AbstractAction {
 
     public MemoryFrameAction(String s) {

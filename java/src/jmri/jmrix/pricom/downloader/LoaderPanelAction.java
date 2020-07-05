@@ -4,11 +4,15 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a LoaderFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class LoaderPanelAction extends AbstractAction {
 
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");

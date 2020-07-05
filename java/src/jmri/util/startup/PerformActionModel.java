@@ -6,6 +6,9 @@ import javax.swing.Action;
 
 import jmri.JmriException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Invokes a Swing Action when the program is started.
  * <p>
@@ -21,6 +24,7 @@ import jmri.JmriException;
  * @author Bob Jacobsen Copyright 2003
  * @see jmri.util.startup.PerformActionModelFactory
  */
+@API(status = EXPERIMENTAL)
 public class PerformActionModel extends AbstractActionModel {
 
     public PerformActionModel() {

@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Definition of objects to handle configuring a LocoNetOverTcp layout
@@ -9,6 +12,7 @@ package jmri.jmrix.loconet.loconetovertcp;
  * @author Stephen Williams Copyright (C) 2008
  *
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**

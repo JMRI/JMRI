@@ -6,6 +6,9 @@ import javax.annotation.Nonnull;
 import jmri.profile.Profile;
 import jmri.util.prefs.InitializationException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An API for Java Service Providers that manage preferences within JMRI. It is
  * strongly recommended that PreferencesManagers use
@@ -23,6 +26,7 @@ import jmri.util.prefs.InitializationException;
  * @see jmri.util.prefs.AbstractPreferencesManager
  * @author Randall Wood 2015, 2019
  */
+@API(status = EXPERIMENTAL)
 public interface PreferencesManager extends JmriServiceProviderInterface {
 
     /**

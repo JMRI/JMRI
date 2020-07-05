@@ -8,6 +8,9 @@ import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Generic interface for Signal Mast Logic. Signal Mast Logic allows to build up
  * a set of criteria for a Signal Mast as to what Aspect it should be displaying
@@ -17,6 +20,7 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = STABLE)
 public interface SignalMastLogic extends NamedBean {
 
     /**

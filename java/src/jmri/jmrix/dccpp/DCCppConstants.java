@@ -1,5 +1,8 @@
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * DCCppConstants.java
  *
@@ -19,6 +22,7 @@ package jmri.jmrix.dccpp;
  * A few variables don't have a prefix. The name should be self explanitory, but
  * a prefix may be added later.
  */
+@API(status = EXPERIMENTAL)
 public final class DCCppConstants {
 
     private DCCppConstants() {

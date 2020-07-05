@@ -1,5 +1,8 @@
 package jmri.jmrit.symbolicprog;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Encapulates DCC address handling logic in one place
  *
@@ -20,6 +23,7 @@ package jmri.jmrit.symbolicprog;
  *
  * @author Bob Jacobsen Copyright (C) 2013
  */
+@API(status = MAINTAINED)
 public class DccAddressVarHandler {
 
     public DccAddressVarHandler(VariableValue primaryAddr, VariableValue extendAddr, EnumVariableValue addMode) {

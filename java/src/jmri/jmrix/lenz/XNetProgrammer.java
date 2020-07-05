@@ -7,6 +7,9 @@ import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Convert the jmri.Programmer interface into commands for the Lenz XpressNet
  * <p>
@@ -74,6 +77,7 @@ import jmri.jmrix.AbstractProgrammer;
  * CommandStation -> XNetProgrammer: Normal Operations Resumed
  * @enduml
  */
+@API(status = EXPERIMENTAL)
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
     protected static final int XNetProgrammerTimeout = 90000;

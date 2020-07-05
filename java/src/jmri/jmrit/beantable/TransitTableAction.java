@@ -51,6 +51,8 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +61,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008, 2010, 2011
  */
+@API(status = STABLE)
 public class TransitTableAction extends AbstractTableAction<Transit> {
 
     /**

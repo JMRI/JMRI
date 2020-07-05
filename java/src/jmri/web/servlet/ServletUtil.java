@@ -12,11 +12,15 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServerPreferences;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Utility methods to reduce code duplication in servlets.
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class ServletUtil implements InstanceManagerAutoDefault {
 
     public static final String UTF8 = StandardCharsets.UTF_8.toString(); // NOI18N

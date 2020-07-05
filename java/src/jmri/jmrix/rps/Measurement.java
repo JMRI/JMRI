@@ -3,6 +3,9 @@ package jmri.jmrix.rps;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Encodes a single measurement point for RPS.
  * <p>
@@ -10,6 +13,7 @@ import javax.vecmath.Vector3d;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class Measurement {
 
     public Measurement(Reading r) {

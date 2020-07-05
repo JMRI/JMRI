@@ -4,11 +4,15 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.can.swing.CanNamedPaneAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a menu containing the JMRI OpenLCB-specific tools.
  *
  * @author Bob Jacobsen Copyright 2010
  */
+@API(status = EXPERIMENTAL)
 public class OpenLcbMenu extends JMenu {
 
     public OpenLcbMenu(jmri.jmrix.can.CanSystemConnectionMemo memo) {

@@ -2,6 +2,8 @@ package jmri.jmrix.roco.z21;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
 
     private boolean statusRequested = false;

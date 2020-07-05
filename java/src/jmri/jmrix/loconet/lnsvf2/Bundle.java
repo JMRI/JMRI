@@ -5,6 +5,8 @@ import java.util.Locale;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
+@API(status = EXPERIMENTAL)
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @CheckForNull

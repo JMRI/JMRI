@@ -5,6 +5,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author  Karl Johan Lisby Copyright (C) 2016
  */
+@API(status = MAINTAINED)
 public class SCWarrant extends Warrant {
 
     private static final String WAIT_UNEXPECTED_EXCEPTION = "{} wait unexpected exception {}";

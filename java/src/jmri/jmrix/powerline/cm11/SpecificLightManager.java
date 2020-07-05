@@ -3,6 +3,9 @@ package jmri.jmrix.powerline.cm11;
 import jmri.Light;
 import jmri.jmrix.powerline.SerialTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement LightManager for powerline serial systems with CM11 adapters.
  * <p>
@@ -13,6 +16,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SpecificLightManager extends jmri.jmrix.powerline.SerialLightManager {
 
     public SpecificLightManager(SerialTrafficController tc) {

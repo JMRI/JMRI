@@ -6,11 +6,15 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 import jmri.server.web.spi.WebMenuItem;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A POJO for Web menu items generated from JSON.
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonMenuItem implements WebMenuItem {
 
     public String path;

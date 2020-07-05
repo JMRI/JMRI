@@ -3,12 +3,16 @@ package jmri.jmris.simpleserver;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "JMRI Simple Server" menu containing the Server interface to the
  * JMRI system-independent tools
  *
  * @author Paul Bender Copyright 2009
  */
+@API(status = EXPERIMENTAL)
 public class SimpleServerMenu extends JMenu {
 
     public SimpleServerMenu(String name) {

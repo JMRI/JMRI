@@ -3,11 +3,15 @@ package jmri.jmrix.lenz.swing.packetgen;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of XpressNet messages
  *
  * @author Bob Jacobsen Copyright (C) 2001,2002
  */
+@API(status = EXPERIMENTAL)
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     /**

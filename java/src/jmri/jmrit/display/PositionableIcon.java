@@ -6,12 +6,16 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import jmri.jmrit.catalog.NamedIcon;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
  *
  * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @author PeteCressman Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class PositionableIcon extends PositionableLabel {
 
     protected HashMap<String, NamedIcon> _iconMap;

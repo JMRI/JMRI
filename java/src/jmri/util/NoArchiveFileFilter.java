@@ -6,6 +6,9 @@ import java.util.Set;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.io.FilenameUtils;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * File filter to suppress zip file archives.
  * <p>
@@ -15,6 +18,7 @@ import org.apache.commons.io.FilenameUtils;
  * @author Bob Jacobsen Copyright 2007 Made from a suggestion by John Plocher
  * @author Randall Wood Copyright 2020
  */
+@API(status = EXPERIMENTAL)
 public class NoArchiveFileFilter extends FileFilter {
 
     private final String description;

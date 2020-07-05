@@ -55,6 +55,8 @@ import jmri.jmrit.logix.WarrantTableAction;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.HelpUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +65,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright: Copyright (c) 2011
  */
+@API(status = MAINTAINED)
 public class CircuitBuilder {
 
     static int STRUT_SIZE = 10;

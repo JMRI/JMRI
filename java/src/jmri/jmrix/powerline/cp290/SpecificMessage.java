@@ -3,6 +3,9 @@ package jmri.jmrix.powerline.cp290;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of a serial packet.
  * <p>
@@ -17,6 +20,7 @@ import jmri.jmrix.powerline.X10Sequence;
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?
 

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.swing.JFrame;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
             "/web/showPanel.html" // redirect to /panel/ since ~ 19 Jan 2014
         })
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class PanelServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(PanelServlet.class);

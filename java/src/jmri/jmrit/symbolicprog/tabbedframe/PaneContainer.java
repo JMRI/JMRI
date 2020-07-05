@@ -2,12 +2,16 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import jmri.util.BusyGlassPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for the container of a set of PaneProgPanes. The panes use services
  * provided here to work with buttons and the busy cursor.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public interface PaneContainer {
 
     public boolean isBusy();

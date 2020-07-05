@@ -2,12 +2,16 @@ package jmri.jmrix.can.adapters.gridconnect.net;
 
 import java.util.ResourceBundle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a connection via a
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class MergConnectionConfig extends ConnectionConfig {
 
     public final static String NAME = "CAN via MERG Network Interface";

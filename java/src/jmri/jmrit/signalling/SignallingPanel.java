@@ -52,6 +52,8 @@ import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +64,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Egbert Broerse Copyright (C) 2017, 2018, 2019
  */
+@API(status = MAINTAINED)
 public class SignallingPanel extends JmriPanel {
 
     private NamedBeanComboBox<SignalMast> sourceMastBox;

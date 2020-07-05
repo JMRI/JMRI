@@ -13,6 +13,8 @@ import jmri.jmrit.XmlFile;
 import jmri.CatalogTreeLeaf;
 import jmri.CatalogTreeNode;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright: Copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class DefaultCatalogTreeManagerXml extends XmlFile {
 
     private final static String DEFAULT_FILE_NAME = FileUtil.getUserFilesPath() + "catalogTrees.xml";

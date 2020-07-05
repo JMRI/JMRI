@@ -25,6 +25,8 @@ import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @since 2.99.2
  */
+@API(status = EXPERIMENTAL)
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements PropertyChangeListener{
 
     public CbusNodeTableDataModel nodeModel;

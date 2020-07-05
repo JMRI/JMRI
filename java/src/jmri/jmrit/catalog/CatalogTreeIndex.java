@@ -3,6 +3,8 @@ package jmri.jmrit.catalog;
 import java.util.HashMap;
 import jmri.CatalogTreeNode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright 2009
  *
  */
+@API(status = MAINTAINED)
 public class CatalogTreeIndex extends AbstractCatalogTree {
 
     public CatalogTreeIndex(String sysName, String userName) {

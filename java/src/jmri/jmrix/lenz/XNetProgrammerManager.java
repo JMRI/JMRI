@@ -4,6 +4,9 @@ import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers on XPressNet
  * @see jmri.managers.DefaultProgrammerManager
@@ -11,6 +14,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @navassoc 1 - 1 jmri.jmrix.lenz.XNetProgrammer
  * @navassoc 1 - * jmri.jmrix.lenz.XNetOpsModeProgrammer
  */
+@API(status = EXPERIMENTAL)
 public class XNetProgrammerManager extends DefaultProgrammerManager {
 
     protected XNetTrafficController tc;

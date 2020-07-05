@@ -3,6 +3,9 @@ package jmri;
 import java.util.List;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for Managers of NamedBeans that are proxies for a collection of
  * Managers for the same type of NamedBean.
@@ -10,6 +13,7 @@ import javax.annotation.Nonnull;
  * @author Randall Wood Copyright 2019
  * @param <B> type of supported NamedBean
  */
+@API(status = STABLE)
 public interface ProxyManager<B extends NamedBean> extends Manager<B> {
 
     /**

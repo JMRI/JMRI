@@ -4,6 +4,8 @@ import jmri.Consist;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2004-2010
  * @navassoc 1 - * jmri.jmrix.lenz.XNetConsist
  */
+@API(status = EXPERIMENTAL)
 public class XNetConsistManager extends AbstractConsistManager {
 
     protected XNetTrafficController tc;

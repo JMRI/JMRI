@@ -6,6 +6,9 @@ import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -14,6 +17,7 @@ import jmri.util.ThreadingUtil;
  * Long event OPCs are not altered for a node number of 0
  * @author Steve Young (C) 2018, 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusFilter {
     private final HashMap<Integer, Boolean> _boolean_hash_map;
     private final CbusFilterFrame _filterFrame;

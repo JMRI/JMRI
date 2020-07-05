@@ -4,6 +4,9 @@ import java.util.Comparator;
 
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Comparator for JMRI NamedBeanHandle of NamedBeans via their System Names.
  * <p>
@@ -20,6 +23,7 @@ import jmri.*;
  * @see NamedBeanHandleManager
  * 
  */
+@API(status = EXPERIMENTAL)
 public class NamedBeanHandleComparator<H extends NamedBeanHandle> implements Comparator<H> {
 
     @Override

@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.List;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * RailCom represents a RailCom enabled decoder that might be fitted to a
  * specific piece of rolling stock to uniquely identify it.<br>
@@ -24,6 +27,7 @@ import java.util.List;
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.4
  */
+@API(status = STABLE)
 public interface RailCom extends AddressedIdTag {
 
     /**

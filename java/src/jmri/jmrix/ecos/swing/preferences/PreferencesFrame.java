@@ -4,11 +4,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for ECoS preferences
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class PreferencesFrame extends jmri.util.JmriJFrame {
 
     public PreferencesFrame() {

@@ -3,11 +3,15 @@ package jmri.util.swing;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Status Bar
  *
  * A little status bar widget that can be put at the bottom of a panel.
  */
+@API(status = EXPERIMENTAL)
 public class StatusBar extends JLabel {
 
     /**

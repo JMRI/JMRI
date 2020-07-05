@@ -5,6 +5,9 @@ import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for Zimo
  * systems.
@@ -15,6 +18,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @author Kevin Dickerson Copyright (C) 2014
  *
  */
+@API(status = EXPERIMENTAL)
 public class Mx1ProgrammerManager extends DefaultProgrammerManager {
 
     public Mx1ProgrammerManager(Programmer serviceModeProgrammer, Mx1SystemConnectionMemo memo) {

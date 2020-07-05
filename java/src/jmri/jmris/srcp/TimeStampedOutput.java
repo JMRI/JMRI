@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /*
  * The SRCP protocol requires that response messages include a timestamp based
  * on the fast clock.  This class is a utility class to generate timestamp
@@ -13,6 +16,7 @@ import java.util.Date;
  *
  * @author Paul Bender Copyright 2014,2020
  */
+@API(status = EXPERIMENTAL)
 public class TimeStampedOutput extends OutputStream {
 
     private final OutputStream outputStream;

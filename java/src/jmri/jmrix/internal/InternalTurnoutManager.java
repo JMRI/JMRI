@@ -7,11 +7,15 @@ import jmri.managers.AbstractTurnoutManager;
 import jmri.util.PreferNumericComparator;
 import jmri.implementation.AbstractTurnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class InternalTurnoutManager extends AbstractTurnoutManager {
 
     public InternalTurnoutManager(InternalSystemConnectionMemo memo) {

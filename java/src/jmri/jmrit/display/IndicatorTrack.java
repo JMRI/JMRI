@@ -5,11 +5,15 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.jmrit.logix.OBlock;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Defines track objects that display status color.
  *
  * @author Pete Cressman Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public interface IndicatorTrack extends Positionable {
 
     void setOccSensor(String pName);

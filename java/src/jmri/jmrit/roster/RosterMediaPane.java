@@ -17,6 +17,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.util.swing.EditableResizableImagePanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
  * @author Lionel Jeanson Copyright (C) 2009
  * @author Randall Wood Copyright (C) 2014
  */
+@API(status = MAINTAINED)
 public class RosterMediaPane extends JPanel {
 
     JLabel _imageFPlabel = new JLabel();

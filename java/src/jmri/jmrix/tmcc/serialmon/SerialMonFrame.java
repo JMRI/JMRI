@@ -5,11 +5,15 @@ import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying (and logging) TMCC serial command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
+@API(status = EXPERIMENTAL)
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
     private TmccSystemConnectionMemo _memo = null;

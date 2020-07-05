@@ -18,6 +18,8 @@ import jmri.ThrottleListener;
 import jmri.Timebase;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +49,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2010-2011
  */
+@API(status = MAINTAINED)
 public class AutoActiveTrain implements ThrottleListener {
 
     /**

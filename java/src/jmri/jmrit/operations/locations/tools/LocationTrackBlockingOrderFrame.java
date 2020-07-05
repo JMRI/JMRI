@@ -18,6 +18,8 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2015
  * 
  */
+@API(status = MAINTAINED)
 public class LocationTrackBlockingOrderFrame extends OperationsFrame {
 
     LocationTrackBlockingOrderTableModel trackModel = new LocationTrackBlockingOrderTableModel();

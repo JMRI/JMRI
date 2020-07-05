@@ -3,6 +3,9 @@ package jmri.jmrit.revhistory;
 import java.util.ArrayList;
 import jmri.InstanceManagerAutoDefault;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Memo class to remember a file revision history.
  * <p>
@@ -10,6 +13,7 @@ import jmri.InstanceManagerAutoDefault;
  *
  * @author Bob Jacobsen Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public class FileHistory implements InstanceManagerAutoDefault {
 
     ArrayList<OperationMemo> list = new ArrayList<>();

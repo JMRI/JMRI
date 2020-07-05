@@ -12,6 +12,9 @@ import jmri.SystemConnectionMemo;
 import jmri.managers.DefaultRailComManager;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -21,6 +24,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public Dcc4PcSystemConnectionMemo(Dcc4PcTrafficController tc) {

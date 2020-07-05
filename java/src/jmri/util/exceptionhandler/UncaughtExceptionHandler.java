@@ -5,6 +5,8 @@ import java.awt.GraphicsEnvironment;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.swing.JOptionPane;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2003, 2010
  */
+@API(status = EXPERIMENTAL)
 public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     @Override

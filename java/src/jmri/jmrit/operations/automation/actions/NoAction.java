@@ -1,6 +1,10 @@
 package jmri.jmrit.operations.automation.actions;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 
+
+@API(status = MAINTAINED)
 public class NoAction extends Action {
 
     private static final int _code = ActionCodes.NO_ACTION;

@@ -15,6 +15,8 @@ import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author George Warner Copyright (c) 2019
  */
+@API(status = MAINTAINED)
 public class EnterReporterDialog {
 
     // operational instance variables shared between tools

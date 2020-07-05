@@ -47,6 +47,8 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +60,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Egbert Broerse 2017, 2018
  */
+@API(status = STABLE)
 public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> implements PropertyChangeListener {
 
     /**

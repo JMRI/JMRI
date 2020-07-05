@@ -4,6 +4,8 @@ import javax.annotation.Nonnull;
 import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractReporterManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Riddoch Copyright (C) 2015
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusReporterManager extends AbstractReporterManager {
 
     public CbusReporterManager(CanSystemConnectionMemo memo) {

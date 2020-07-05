@@ -12,10 +12,14 @@ import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.serialmon.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for a table view to manage a CMRInet network.
  * @author  Chuck Catania   Copyright (C) 2014, 2015, 2016, 2017
  */
+@API(status = EXPERIMENTAL)
 public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 
     ArrayList<SerialNode> cmriNode = new  ArrayList<SerialNode>();  //c2

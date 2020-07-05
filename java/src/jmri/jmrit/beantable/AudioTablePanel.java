@@ -17,6 +17,8 @@ import javax.swing.table.TableRowSorter;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.swing.RowSorterUtil;
 import jmri.util.swing.XTableColumnModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = STABLE)
 public class AudioTablePanel extends JPanel {
 
     private AudioTableDataModel listenerDataModel;

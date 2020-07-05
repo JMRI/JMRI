@@ -1,11 +1,15 @@
 package jmri.jmrix.dcc4pc.serialdriver;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via an DCC4PC
  * SerialDriverAdapter object.
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

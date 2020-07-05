@@ -37,12 +37,16 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.XTableColumnModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide a table of roster entries as a JmriJPanel.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2010
  * @author Randall Wood Copyright (C) 2013
  */
+@API(status = MAINTAINED)
 public class RosterTable extends JmriPanel implements RosterEntrySelector, RosterGroupSelector {
 
     RosterTableModel dataModel;

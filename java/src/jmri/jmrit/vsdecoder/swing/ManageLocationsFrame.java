@@ -35,6 +35,8 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +58,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class ManageLocationsFrame extends JmriJFrame {
 
     // Map of Mnemonic KeyEvent values to GUI Components

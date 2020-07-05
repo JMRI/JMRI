@@ -7,6 +7,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import jmri.util.FileUtil;
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2013
  */
+@API(status = MAINTAINED)
 public class TrainScriptFrame extends OperationsFrame {
 
     TrainManager manager;

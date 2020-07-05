@@ -1,5 +1,8 @@
 package jmri.jmrix.can.cbus;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * CbusConstants.java
  *
@@ -7,6 +10,7 @@ package jmri.jmrix.can.cbus;
  *
  * @author Andrew Crosland Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public final class CbusConstants {
 
     /**

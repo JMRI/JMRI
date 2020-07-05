@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import jmri.jmrix.AbstractStreamPortController;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class SprogCSStreamPortController extends AbstractStreamPortController implements SprogInterface {
 
     private Thread rcvNotice = null;

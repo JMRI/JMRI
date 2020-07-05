@@ -2,6 +2,8 @@ package jmri.jmrix.ecos;
 
 import jmri.InstanceManager;
 import jmri.jmrix.ecos.swing.preferences.PreferencesPane;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
 
     public EcosPreferences(EcosSystemConnectionMemo memo) {

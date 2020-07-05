@@ -8,12 +8,16 @@ import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A JComboBox of Roster Groups.
  *
  * @author Randall Wood Copyright (C) 2011, 2014
  * @see jmri.jmrit.roster.Roster
  */
+@API(status = MAINTAINED)
 public class RosterGroupComboBox extends JComboBox<String> implements RosterGroupSelector {
 
     private Roster _roster;

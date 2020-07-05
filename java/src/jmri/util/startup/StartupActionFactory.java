@@ -4,6 +4,9 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.spi.JmriServiceProviderInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide an SPI for registering potential startup actions with the
  * {@link StartupActionsManager}.
@@ -20,6 +23,7 @@ import jmri.spi.JmriServiceProviderInterface;
  *
  * @author Randall Wood Copyright 2016, 2020
  */
+@API(status = EXPERIMENTAL)
 public interface StartupActionFactory extends JmriServiceProviderInterface {
 
     /**

@@ -2,6 +2,9 @@ package jmri;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extends the {@link Manager} class to handle "provide" methods that
  * can create a {@link NamedBean} on request from just its system name.
@@ -10,6 +13,7 @@ import javax.annotation.Nonnull;
  * @param <E> the type of NamedBean supported by this manager
  * @author Bob Jacobsen Copyright (C) 2003
  */
+@API(status = STABLE)
 public interface ProvidingManager<E extends NamedBean> extends Manager<E> {
 
     /**

@@ -32,6 +32,8 @@ import jmri.script.ScriptFileChooser;
 import jmri.script.ScriptOutput;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.python.google.common.io.Files;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
+@API(status = MAINTAINED)
 public class InputWindow extends JPanel {
 
     JTextArea area;

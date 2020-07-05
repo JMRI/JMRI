@@ -5,11 +5,15 @@ import jmri.InstanceManager;
 import jmri.jmrit.ctc.editor.gui.FrmMainForm;
 import jmri.util.swing.JmriAbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a CtcEditor.
  *
  * @author Dave Sand Copyright (C) 2019
  */
+@API(status = MAINTAINED)
 public class CtcEditorAction extends JmriAbstractAction {
 
     public CtcEditorAction(String s) {

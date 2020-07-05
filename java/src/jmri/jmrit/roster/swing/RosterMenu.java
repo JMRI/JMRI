@@ -13,6 +13,8 @@ import jmri.jmrit.roster.ImportRosterItemAction;
 import jmri.jmrit.roster.PrintListAction;
 import jmri.jmrit.roster.PrintRosterAction;
 import jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
+@API(status = MAINTAINED)
 public class RosterMenu extends JMenu {
 
     /**

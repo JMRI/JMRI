@@ -1,5 +1,8 @@
 package jmri.jmrix.direct;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of a serial reply packet. Note that _only_ the
  * payload, not the header or trailer, nor the padding DLE characters are
@@ -7,6 +10,7 @@ package jmri.jmrix.direct;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
+@API(status = EXPERIMENTAL)
 public class Reply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one

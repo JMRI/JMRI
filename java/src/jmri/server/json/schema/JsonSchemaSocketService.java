@@ -10,11 +10,15 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonRequest;
 import jmri.server.json.JsonSocketService;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JSON Service to provide schema data for the running JSON server.
  *
  * @author Randall Wood Copyright 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonSchemaSocketService extends JsonSocketService<JsonSchemaHttpService> {
 
     JsonSchemaSocketService(JsonConnection connection) {

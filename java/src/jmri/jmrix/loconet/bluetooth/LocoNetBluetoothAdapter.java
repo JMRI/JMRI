@@ -21,12 +21,15 @@ import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to LocoNet via a LocoNet Bluetooth adapter.
  */
+@API(status = EXPERIMENTAL)
 public class LocoNetBluetoothAdapter extends LnPortController {
 
     public LocoNetBluetoothAdapter() {

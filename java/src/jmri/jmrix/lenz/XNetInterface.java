@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * XNetInterface defines the general connection to an XNet layout.
  * <p>
@@ -25,6 +28,7 @@ package jmri.jmrix.lenz;
  * @see jmri.jmrix.lenz.XNetListener
  * @see jmri.jmrix.lenz.XNetTrafficController
  */
+@API(status = EXPERIMENTAL)
 public interface XNetInterface {
 
     /**

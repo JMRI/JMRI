@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring a standalone RFID layout connection via an RfidStreamPortController
  * adapter.
@@ -16,6 +19,7 @@ import javax.swing.JPanel;
  *
  * @see RfidStreamPortController
  */
+@API(status = EXPERIMENTAL)
 public class RfidStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
 
     /**

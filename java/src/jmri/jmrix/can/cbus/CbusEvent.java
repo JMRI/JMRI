@@ -2,9 +2,13 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class CbusEvent extends CbusEventDataElements {
     
     private int _nn;

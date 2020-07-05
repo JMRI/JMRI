@@ -16,6 +16,9 @@ import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.JTableWithColumnToolTips;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -27,6 +30,7 @@ import jmri.util.table.JTableWithColumnToolTips;
  *
  * @since 4.15.5
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeFcuTablePane extends JPanel {
 
     private CbusNodeFromFcuTableDataModel nodeModel=null;

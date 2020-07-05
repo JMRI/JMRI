@@ -7,6 +7,8 @@ import java.util.Properties;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import jmri.server.web.spi.WebServerConfiguration;
  * @author Randall Wood (C) 2016
  */
 @ServiceProvider(service = WebServerConfiguration.class)
+@API(status = EXPERIMENTAL)
 public final class DefaultWebServerConfiguration extends AbstractWebServerConfiguration {
 
     private final HashMap<String, String> redirections = new HashMap<>();

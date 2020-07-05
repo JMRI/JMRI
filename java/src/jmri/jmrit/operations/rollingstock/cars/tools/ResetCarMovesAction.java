@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
  *
  * @author Dan Boudreau Copyright (C) 2012
  */
+@API(status = MAINTAINED)
 public class ResetCarMovesAction extends AbstractAction {
 
     public ResetCarMovesAction() {

@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz.lzv200;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to XpressNet via the built in connection
  * on the LZV200.   This connection is a copy of an LIUSB with
@@ -7,6 +10,7 @@ package jmri.jmrix.lenz.lzv200;
  *
  * @author Paul Bender Copyright (C) 2005-2010,2019
  */
+@API(status = EXPERIMENTAL)
 public class LZV200Adapter extends jmri.jmrix.lenz.liusb.LIUSBAdapter {
 
     public LZV200Adapter() {

@@ -8,10 +8,14 @@ import java.awt.Component;
 import javax.swing.CellEditor;
 import javax.swing.JList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public interface ListCellEditor<E> extends CellEditor {
 
     Component getListCellEditorComponent(JList<E> list, E value,

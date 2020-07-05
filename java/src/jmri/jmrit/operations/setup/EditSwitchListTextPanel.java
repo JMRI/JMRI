@@ -8,12 +8,16 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of switch list text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
 
 //    private static final Logger log = LoggerFactory.getLogger(EditSwitchListTextPanel.class);

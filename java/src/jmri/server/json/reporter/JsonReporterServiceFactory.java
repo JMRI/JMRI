@@ -1,5 +1,7 @@
 package jmri.server.json.reporter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 import static jmri.server.json.reporter.JsonReporter.REPORTERS;
 
@@ -13,6 +15,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood (C) 2016
  */
 @ServiceProvider(service = JsonServiceFactory.class)
+@API(status = EXPERIMENTAL)
 public class JsonReporterServiceFactory implements JsonServiceFactory<JsonReporterHttpService, JsonReporterSocketService> {
 
     @Override

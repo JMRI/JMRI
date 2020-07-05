@@ -1,5 +1,8 @@
 package jmri.jmrit.blockboss.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of Simple Signal Logic objects.
  *
@@ -20,5 +23,6 @@ package jmri.jmrit.blockboss.configurexml;
  * Revisions to add facing point sensors, approach lighting, and limited speed.
  * Dick Bronson (RJB) 2006
  */
+@API(status = MAINTAINED)
 public class BlockBossLogicXml extends BlockBossLogicProviderXml {
 }

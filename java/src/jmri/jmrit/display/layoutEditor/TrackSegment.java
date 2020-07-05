@@ -20,6 +20,9 @@ import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAc
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the
  * layout. A node may be a LayoutTurnout, a LevelXing or a PositionablePoint.
@@ -41,6 +44,7 @@ import jmri.util.swing.JmriColorChooser;
  * @author Dave Duchamp Copyright (p) 2004-2009
  * @author George Warner Copyright (c) 2017-2019
  */
+@API(status = MAINTAINED)
 public class TrackSegment extends LayoutTrack {
 
     // defined constants

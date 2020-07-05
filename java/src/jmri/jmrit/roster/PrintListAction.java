@@ -11,6 +11,8 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright (C) 2005
  * @author Egbert Broerse Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
 
     public PrintListAction(String s, jmri.util.swing.WindowInterface wi) {

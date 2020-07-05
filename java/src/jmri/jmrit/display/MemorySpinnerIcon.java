@@ -14,6 +14,8 @@ import jmri.Memory;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2009
  * @since 2.7.2
  */
+@API(status = MAINTAINED)
 public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListener, PropertyChangeListener {
 
     int _min = 0;

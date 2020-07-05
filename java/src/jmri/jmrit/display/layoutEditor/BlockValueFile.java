@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.jmrit.XmlFile.newDocument;
 import static jmri.jmrit.XmlFile.xsltLocation;
 
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2008
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 public class BlockValueFile extends XmlFile {
 
     public BlockValueFile() {

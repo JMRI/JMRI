@@ -11,6 +11,9 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrix.can.cbus.CbusFilterType;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -18,6 +21,7 @@ import jmri.util.ThreadingUtil;
  * Creates Panel for displaying a single filter
  * @author Steve Young Copyright (C) 2018, 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusFilterPanel extends JPanel {
     
     private final CbusFilterType _fType;

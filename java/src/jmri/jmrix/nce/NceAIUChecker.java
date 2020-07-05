@@ -2,6 +2,8 @@ package jmri.jmrix.nce;
 
 import javax.swing.JOptionPane;
 import jmri.jmrix.ConnectionStatus;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * 
  * 
  */
+@API(status = EXPERIMENTAL)
 public class NceAIUChecker implements NceListener {
 
     private static final int MEM_AIU = 0xDC15;  // NCE CS AIU memory address 

@@ -1,10 +1,14 @@
 package jmri.jmrix.tmcc.serialdriver;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a TMCC layout connection
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

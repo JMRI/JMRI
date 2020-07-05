@@ -5,6 +5,8 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrix.loconet.SE8cSignalHead;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     public SE8cSignalHeadXml() {

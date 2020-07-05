@@ -3,6 +3,9 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JLabel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Like {@link SplitVariableValue}, except that the string representation is in
  * hexadecimal
@@ -15,6 +18,7 @@ import javax.swing.JLabel;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004, 2013, 2014
  * @author Dave Heap Copyright (C) 2016
  */
+@API(status = MAINTAINED)
 public class SplitHexVariableValue extends SplitVariableValue {
 
     public SplitHexVariableValue(String name, String comment, String cvName,

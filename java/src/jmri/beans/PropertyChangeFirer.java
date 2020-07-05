@@ -2,12 +2,16 @@ package jmri.beans;
 
 import java.beans.PropertyChangeEvent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface that defines the methods needed to fire property changes.
  *
  * @author Randall Wood Copyright 2020
  */
 //This interface exists so that multiple implementations can inherit the Javadocs
+@API(status = EXPERIMENTAL)
 public interface PropertyChangeFirer {
 
     /**

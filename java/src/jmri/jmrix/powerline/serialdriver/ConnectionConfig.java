@@ -2,11 +2,15 @@ package jmri.jmrix.powerline.serialdriver;
 
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a Powerline layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

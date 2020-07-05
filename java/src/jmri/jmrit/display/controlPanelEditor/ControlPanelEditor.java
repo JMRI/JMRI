@@ -70,6 +70,9 @@ import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ColorDialog;
 import jmri.jmrit.display.palette.ItemPalette;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 //import jmri.jmrit.display.palette.DecoratorPanel.AJSpinner;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
@@ -102,6 +105,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  */
+@API(status = MAINTAINED)
 public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
 
     protected JMenuBar _menuBar;

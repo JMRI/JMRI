@@ -7,6 +7,8 @@ import jmri.JmriException;
 import jmri.Light;
 import jmri.jmris.AbstractLightServer;
 import jmri.jmris.JmriConnection;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class SimpleLightServer extends AbstractLightServer {
 
     private static final String LIGHT = "LIGHT";

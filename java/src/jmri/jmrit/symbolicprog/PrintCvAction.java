@@ -10,6 +10,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003; D Miller Copyright 2003, 2005
  */
+@API(status = MAINTAINED)
 public class PrintCvAction extends AbstractAction {
 
     final int TABLE_COLS = 3;

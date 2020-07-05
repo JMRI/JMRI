@@ -7,6 +7,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood 2011
  */
+@API(status = MAINTAINED)
 public class LoadVSDFileAction extends AbstractAction {
 
     /**

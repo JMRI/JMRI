@@ -4,6 +4,9 @@ import java.util.Arrays;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Encodes a message to an NCE command station.
  * <p>
@@ -30,6 +33,7 @@ import javax.annotation.Nonnull;
  * @author Daniel Boudreau Copyright (C) 2007
  * @author kcameron Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
  
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceMessage.class); // called in static block

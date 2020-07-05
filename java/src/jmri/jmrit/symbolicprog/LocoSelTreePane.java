@@ -5,6 +5,9 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import jmri.jmrit.progsupport.ProgModeSelector;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide GUI controls to select a new decoder.
  * <p>
@@ -19,6 +22,7 @@ import jmri.jmrit.progsupport.ProgModeSelector;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008, 2015
  */
+@API(status = MAINTAINED)
 public class LocoSelTreePane extends CombinedLocoSelTreePane {
 
     public LocoSelTreePane(JLabel s, ProgModeSelector selector) {

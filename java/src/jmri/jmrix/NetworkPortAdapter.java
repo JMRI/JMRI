@@ -1,5 +1,8 @@
 package jmri.jmrix;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Enables basic setup of a network interface for a jmrix implementation. Based
  * upon work by Bob Jacobsen from SerialPortAdapter
@@ -8,6 +11,7 @@ package jmri.jmrix;
  * @author Bob Jacobsen Copyright (C) 2010
  * @see jmri.jmrix.NetworkConfigException
  */
+@API(status = EXPERIMENTAL)
 public interface NetworkPortAdapter extends PortAdapter {
 
     /**

@@ -2,6 +2,9 @@ package jmri.jmrix.bachrus.serialdriver;
 
 import jmri.util.SystemType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a connection via a Bachrus
  * SerialDriverAdapter object.
@@ -9,6 +12,7 @@ import jmri.util.SystemType;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

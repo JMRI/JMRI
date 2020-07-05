@@ -4,6 +4,9 @@ import jmri.CabSignal;
 import jmri.LocoAddress;
 import jmri.implementation.DefaultCabSignal;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Default implementation of the {@link jmri.CabSignalManager} interface.
  *
@@ -20,6 +23,7 @@ import jmri.implementation.DefaultCabSignal;
  *
  * @author Paul Bender Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class DefaultCabSignalManager extends AbstractCabSignalManager {
 
     /**

@@ -17,11 +17,15 @@ import javax.swing.JTextField;
 import jmri.jmrix.loconet.spjfile.SpjFile;
 import jmri.util.FileUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Pane for downloading .hex files
  *
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     // GUI member declarations

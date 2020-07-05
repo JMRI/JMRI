@@ -20,6 +20,8 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2009
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusThrottleManager extends AbstractThrottleManager implements CanListener {
 
     private boolean _handleExpected = false;

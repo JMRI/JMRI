@@ -7,6 +7,8 @@ import jmri.Route;
 import jmri.RouteManager;
 import jmri.implementation.DefaultRoute;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class DefaultRouteManager extends AbstractManager<Route> implements RouteManager {
 
     public DefaultRouteManager(InternalSystemConnectionMemo memo) {

@@ -6,6 +6,9 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a JythonSiglet object
  *
@@ -14,6 +17,7 @@ import javax.swing.JPanel;
  * to have been used since 1.2.3
  */
 @Deprecated
+@API(status = MAINTAINED)
 public class JythonSigletAction extends AbstractAction {
 
     public JythonSigletAction(String s, JPanel who) {

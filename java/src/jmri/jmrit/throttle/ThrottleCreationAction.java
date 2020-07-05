@@ -8,11 +8,15 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a new throttle.
  *
  * @author Glen Oberhauser
  */
+@API(status = MAINTAINED)
 public class ThrottleCreationAction extends JmriAbstractAction {
 
     public ThrottleCreationAction(String s, WindowInterface wi) {

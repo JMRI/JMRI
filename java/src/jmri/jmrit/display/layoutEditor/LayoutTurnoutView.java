@@ -12,12 +12,16 @@ import jmri.util.*;
 
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * MVC View component for the LayoutTurnout class.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
  */
+@API(status = MAINTAINED)
 public class LayoutTurnoutView extends LayoutTrackView {
 
     /**

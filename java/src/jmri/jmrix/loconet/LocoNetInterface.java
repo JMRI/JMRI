@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * LocoNetInterface defines the general connection to a LocoNet layout.
  * <p>
@@ -25,6 +28,7 @@ package jmri.jmrix.loconet;
  * @see jmri.jmrix.loconet.LocoNetListener
  * @see jmri.jmrix.loconet.LnTrafficController
  */
+@API(status = EXPERIMENTAL)
 public interface LocoNetInterface {
 
     /*

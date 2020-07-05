@@ -13,6 +13,9 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.ExceptionContext;
 import jmri.util.swing.ExceptionDisplayFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to load the operation demo files.
  *
@@ -20,6 +23,7 @@ import jmri.util.swing.ExceptionDisplayFrame;
  * @author Daniel Boudreau Copyright (C) 2008
  * @author Gregory Madsen Copyright(C) 2012
  */
+@API(status = MAINTAINED)
 public class LoadDemoAction extends AbstractAction {
 
 //    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class);

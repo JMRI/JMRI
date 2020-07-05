@@ -1,10 +1,14 @@
 package jmri.server.json.consist;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants used by the internal JMRI JSON Consist service.
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonConsist {
 
     /**

@@ -1,5 +1,7 @@
 package jmri.jmrix.can.adapters.gridconnect.net.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 import jmri.jmrix.PortAdapter;
@@ -20,6 +22,7 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

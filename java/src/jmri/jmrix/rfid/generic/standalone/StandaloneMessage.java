@@ -2,6 +2,9 @@ package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.rfid.RfidMessage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * <hr>
@@ -17,6 +20,7 @@ import jmri.jmrix.rfid.RfidMessage;
  *
  * @author Matthew Harris Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class StandaloneMessage extends RfidMessage {
 
     public StandaloneMessage(int l) {

@@ -3,6 +3,9 @@ package jmri.util;
 import java.util.Enumeration;
 import java.util.Iterator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide an {@link Iterable} interface for an Enumeration
  * <p>
@@ -13,6 +16,7 @@ import java.util.Iterator;
  * @author Randall Wood
  * @param <T> the supported type
  */
+@API(status = EXPERIMENTAL)
 public class IterableEnumeration<T> implements Iterable<T> {
 
     private final Enumeration<T> en;

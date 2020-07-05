@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import jmri.web.server.WebServerPreferences;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  */
+@API(status = MAINTAINED)
 public class OperationsSetupPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
     private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);

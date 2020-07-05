@@ -3,6 +3,9 @@ package jmri;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Locate a Memory object representing some specific information.
  * <p>
@@ -39,6 +42,7 @@ import javax.annotation.Nonnull;
  * @see jmri.managers.AbstractMemoryManager
  * @see jmri.InstanceManager
  */
+@API(status = STABLE)
 public interface MemoryManager extends ProvidingManager<Memory> {
 
     /**

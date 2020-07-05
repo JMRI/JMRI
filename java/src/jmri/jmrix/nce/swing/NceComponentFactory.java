@@ -2,12 +2,16 @@ package jmri.jmrix.nce.swing;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Nce subsystem.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author kcameron Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class NceComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public NceComponentFactory(NceSystemConnectionMemo memo) {

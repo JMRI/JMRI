@@ -3,11 +3,15 @@ package jmri.jmrix.ieee802154.swing;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a menu containing the IEEE 802.15.4 specific tools
  *
  * @author Paul Bender Copyright 2013
  */
+@API(status = EXPERIMENTAL)
 public class IEEE802154Menu extends JMenu {
 
     public IEEE802154Menu(String name, jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo memo) {

@@ -10,6 +10,8 @@ import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.EcosTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
     JPanel statusPanel = new JPanel();

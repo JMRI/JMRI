@@ -2,6 +2,8 @@ package jmri.jmrit.revhistory.configurexml;
 
 import java.util.ArrayList;
 import jmri.jmrit.revhistory.FileHistory;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -13,6 +15,7 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**

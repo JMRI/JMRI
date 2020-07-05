@@ -11,6 +11,9 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Conditional is layout control logic, consisting of a logical expression and
  * an action.
@@ -43,6 +46,7 @@ import javax.annotation.Nonnull;
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = STABLE)
 public interface Conditional extends NamedBean {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");

@@ -40,6 +40,9 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
 import jmri.util.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
  * <p>
@@ -62,6 +65,7 @@ import jmri.util.swing.*;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
+@API(status = MAINTAINED)
 final public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
 

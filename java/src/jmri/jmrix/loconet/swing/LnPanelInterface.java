@@ -2,6 +2,9 @@ package jmri.jmrix.loconet.swing;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel interface to handle providing system connection information to a
  * panel.
@@ -9,6 +12,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public interface LnPanelInterface {
 
     /**

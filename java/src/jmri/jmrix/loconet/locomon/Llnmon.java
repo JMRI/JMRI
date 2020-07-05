@@ -15,6 +15,8 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.util.StringUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +69,7 @@ import org.slf4j.LoggerFactory;
  * for each individual LocoNet message instead of creating a formatter.
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class Llnmon {
 
     /**

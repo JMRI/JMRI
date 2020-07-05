@@ -8,6 +8,9 @@ import java.util.List;
 
 import jmri.jmrit.timetable.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * The left column has the layout information along with the station names next to the diagram box.
  * The column width is dynamic based on the width of the items.
@@ -31,6 +34,7 @@ import jmri.jmrit.timetable.*;
  * reverse will be "z2-y2-z2-c2-b1-a1".  Notice:  While c is in both segments, for
  * train stop purposes, the arrival "c" is used and the departure "c" is skipped.
  */
+@API(status = MAINTAINED)
 public class TimeTableGraphCommon {
 
     /**

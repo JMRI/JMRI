@@ -32,6 +32,8 @@ import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDManagerEvent;
 import jmri.jmrit.vsdecoder.VSDManagerListener;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +55,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class VSDConfigDialog extends JDialog {
 
     private static final String CONFIG_PROPERTY = "Config";

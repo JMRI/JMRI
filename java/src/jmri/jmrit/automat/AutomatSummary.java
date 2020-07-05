@@ -2,6 +2,9 @@ package jmri.jmrit.automat;
 
 import java.util.ArrayList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A singlet providing access to information about existing Automat instances.
  * <p>
@@ -13,6 +16,7 @@ import java.util.ArrayList;
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007
  */
+@API(status = MAINTAINED)
 public class AutomatSummary {
 
     private AutomatSummary() {

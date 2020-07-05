@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An ArrayList that SpotBugs understands will never contain null elements.
  *
@@ -10,6 +13,7 @@ import javax.annotation.Nonnull;
  * @see java.util.List
  * @author Bob Jacobsen, Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class NonNullArrayList<E> extends ArrayList<E> {
 
     @Override

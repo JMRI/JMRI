@@ -11,6 +11,8 @@ import javax.annotation.Nonnull;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2016
  *
  */
+@API(status = MAINTAINED)
 public class LongAddrVariableValue extends VariableValue
         implements ActionListener, FocusListener {
 

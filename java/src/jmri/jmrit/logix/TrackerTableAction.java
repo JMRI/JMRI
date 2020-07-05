@@ -50,6 +50,8 @@ import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +65,7 @@ import org.slf4j.LoggerFactory;
  * @author Peter Cressman
  *
  */
+@API(status = MAINTAINED)
 public class TrackerTableAction extends AbstractAction implements PropertyChangeListener{
 
     static int STRUT_SIZE = 10;

@@ -1,5 +1,7 @@
 package jmri.util.jdom;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.JDOMException;
 import org.jdom2.input.DOMBuilder;
 import org.jdom2.output.DOMOutputter;
@@ -12,6 +14,7 @@ import org.jdom2.output.DOMOutputter;
  *
  * @author Randall Wood 2015
  */
+@API(status = EXPERIMENTAL)
 public class JDOMUtil {
 
     private DOMOutputter outputter = null;

@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Allow notification of the completion of programming operations.
  * <p>
@@ -24,6 +27,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = STABLE)
 public interface ProgListener extends java.util.EventListener {
 
     /**

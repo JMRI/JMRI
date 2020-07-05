@@ -5,6 +5,8 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalAppearanceMap;
 import jmri.jmrix.openlcb.OlcbSignalMast;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright: Copyright (c) 2017, 2018
  * 
  */
+@API(status = EXPERIMENTAL)
 public class OlcbSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

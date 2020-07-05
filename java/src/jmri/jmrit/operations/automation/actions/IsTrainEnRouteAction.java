@@ -3,6 +3,10 @@ package jmri.jmrit.operations.automation.actions;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class IsTrainEnRouteAction extends Action {
 
     private static final int _code = ActionCodes.IS_TRAIN_EN_ROUTE;

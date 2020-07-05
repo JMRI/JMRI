@@ -3,6 +3,8 @@ package jmri.jmrit.timetable.swing;
 import jmri.util.startup.AbstractStartupActionFactory;
 import jmri.util.startup.StartupActionFactory;
 import java.util.Locale;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -12,6 +14,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Dave Sand Copyright (C) 2018
  */
 @ServiceProvider(service = StartupActionFactory.class)
+@API(status = MAINTAINED)
 public final class TimeTableStartup extends AbstractStartupActionFactory {
 
     @Override

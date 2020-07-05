@@ -7,12 +7,16 @@ import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements the jmri.Programmer interface via commands for the EasyDCC
  * powerstation.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
     public EasyDccProgrammer(EasyDccSystemConnectionMemo memo) {

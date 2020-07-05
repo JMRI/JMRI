@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2012
  * 
  */
+@API(status = MAINTAINED)
 public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
 
     private static final Logger log = LoggerFactory.getLogger(PrintMoreOptionPanel.class);

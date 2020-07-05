@@ -3,6 +3,9 @@ package jmri.jmrix.pi;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement Pi turnout manager.
  * <p>
@@ -11,6 +14,7 @@ import jmri.Turnout;
  *
  * @author   Paul Bender Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     // ctor has to register for RaspberryPi events

@@ -14,6 +14,8 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import jmri.jmrit.XmlFile;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class VSDFile extends ZipFile {
 
     private static final String VSDXmlFileName = "config.xml"; // NOI18N

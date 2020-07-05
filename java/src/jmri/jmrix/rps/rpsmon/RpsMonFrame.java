@@ -7,11 +7,15 @@ import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying (and logging) RPS messages.
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         implements ReadingListener, MeasurementListener {
 

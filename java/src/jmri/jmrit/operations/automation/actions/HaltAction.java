@@ -1,5 +1,9 @@
 package jmri.jmrit.operations.automation.actions;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class HaltAction extends Action {
 
     private static final int _code = ActionCodes.HALT_ACTION;

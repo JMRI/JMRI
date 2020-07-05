@@ -2,6 +2,8 @@ package jmri.jmrix.roco;
 
 import jmri.LocoAddress;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2002-2004
  */
+@API(status = EXPERIMENTAL)
 public class RocoXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager {
 
     /**

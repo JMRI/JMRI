@@ -1,5 +1,7 @@
 package jmri.jmrix.rfid.generic.standalone.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class StandaloneReporterManagerXml extends jmri.jmrix.rfid.configurexml.RfidReporterManagerXml {
 
     public StandaloneReporterManagerXml() {

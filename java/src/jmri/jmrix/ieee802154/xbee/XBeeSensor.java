@@ -10,6 +10,8 @@ import com.digi.xbee.api.io.IOValue;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListener {
 
     private String nodeIdentifier; /* This is a string representation of

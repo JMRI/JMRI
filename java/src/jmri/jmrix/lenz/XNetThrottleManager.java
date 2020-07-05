@@ -5,6 +5,8 @@ import java.util.HashMap;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2002-2004
  * @navassoc 1 - * jmri.jmrix.lenz.XNetThrottle
  */
+@API(status = EXPERIMENTAL)
 public class XNetThrottleManager extends AbstractThrottleManager implements XNetListener {
 
     protected final HashMap<LocoAddress, XNetThrottle> throttles = new HashMap<>(5);

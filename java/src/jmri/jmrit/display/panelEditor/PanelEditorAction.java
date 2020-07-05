@@ -5,12 +5,16 @@ import javax.swing.AbstractAction;
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Start a PanelEditor.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.display.panelEditor.PanelEditorAction
  */
+@API(status = MAINTAINED)
 public class PanelEditorAction extends AbstractAction {
 
     public PanelEditorAction(String s) {

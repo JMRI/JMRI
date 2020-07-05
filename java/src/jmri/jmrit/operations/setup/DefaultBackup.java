@@ -1,5 +1,8 @@
 package jmri.jmrit.operations.setup;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Specific Backup class for backing up and restoring Operations working files
@@ -7,6 +10,7 @@ package jmri.jmrit.operations.setup;
  *
  * @author Gregory Madsen Copyright (C) 2012
  */
+@API(status = MAINTAINED)
 public class DefaultBackup extends BackupBase {
 
 //    private final static Logger log = LoggerFactory.getLogger(DefaultBackup.class);

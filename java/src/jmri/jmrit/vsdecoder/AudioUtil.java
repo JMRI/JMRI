@@ -13,6 +13,8 @@ import jmri.Audio;
 import jmri.AudioException;
 import jmri.jmrit.audio.AudioFactory;
 import jmri.jmrit.audio.AudioBuffer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood copyright (c) 2009, 2013
  */
+@API(status = MAINTAINED)
 public class AudioUtil {
     //------------------------
     // New Methods to allow creating a set of (sub)Buffers built off a single

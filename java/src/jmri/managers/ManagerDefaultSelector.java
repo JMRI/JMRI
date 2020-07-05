@@ -29,6 +29,8 @@ import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -50,6 +52,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @see jmri.SystemConnectionMemo#provides(java.lang.Class)
  */
 @ServiceProvider(service = PreferencesManager.class)
+@API(status = EXPERIMENTAL)
 public class ManagerDefaultSelector extends AbstractPreferencesManager {
 
     public final HashMap<Class<?>, String> defaults = new HashMap<>();

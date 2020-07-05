@@ -14,6 +14,8 @@ import javax.swing.table.AbstractTableModel;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.util.jdom.LocaleSelector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Howard G. Penny Copyright (C) 2005
  */
+@API(status = MAINTAINED)
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
     private String headers[] = {"Label", "Name",

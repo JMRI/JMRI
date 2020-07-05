@@ -2,11 +2,15 @@ package jmri.implementation;
 
 import jmri.TurnoutOperator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Concrete subclass of TurnoutOperator for a turnout that has no feedback.
  *
  * @author John Harper Copyright 2005
  */
+@API(status = EXPERIMENTAL)
 public class NoFeedbackTurnoutOperator extends TurnoutOperator {
 
     long interval;

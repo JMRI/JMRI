@@ -2,6 +2,9 @@ package jmri.util;
 
 import java.util.Comparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Perform an comparison using {@link AlphanumComparator}, followed up with a
  * standard String comparison if
@@ -17,6 +20,7 @@ import java.util.Comparator;
  * 
  * @author Randall Wood Copyright 2019
  */
+@API(status = EXPERIMENTAL)
 public class PreferNumericComparator extends AlphanumComparator {
 
     @Override

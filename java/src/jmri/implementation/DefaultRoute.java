@@ -17,6 +17,8 @@ import jmri.Turnout;
 import jmri.jmrit.Sound;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.ThreadingUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class DefaultRoute extends AbstractNamedBean implements Route, java.beans.VetoableChangeListener {
 
     /**

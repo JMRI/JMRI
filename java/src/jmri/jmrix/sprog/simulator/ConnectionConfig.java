@@ -1,5 +1,8 @@
 package jmri.jmrix.sprog.simulator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an SPROG layout connection via a SprogSimulator
  * adapter.
@@ -14,6 +17,7 @@ package jmri.jmrix.sprog.simulator;
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig, copied from DCCpp
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

@@ -13,6 +13,8 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2010
  */
+@API(status = EXPERIMENTAL)
 public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     public static final String NONE_SELECTED = Bundle.getMessage("noneSelected");

@@ -4,6 +4,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -13,6 +16,7 @@ import javax.swing.JTextField;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class CbusConsoleStatsPane extends javax.swing.JPanel {
     
     private JTextField sentCountField;

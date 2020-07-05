@@ -5,6 +5,8 @@ import jmri.Turnout;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetTurnoutManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016 
  */
+@API(status = EXPERIMENTAL)
 public class Z21XNetTurnoutManager extends XNetTurnoutManager {
 
     public Z21XNetTurnoutManager(XNetSystemConnectionMemo memo) {

@@ -6,6 +6,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.event.MouseInputAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Visitor class for installing a MouseInputAdapter on a container and all of
  * its subcomponents.
@@ -14,6 +17,7 @@ import javax.swing.event.MouseInputAdapter;
  *
  * @author Paul Bender Copyright 2005
  */
+@API(status = EXPERIMENTAL)
 public class MouseInputAdapterInstaller {
 
     /**

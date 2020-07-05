@@ -4,9 +4,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a ModeSwitcherPane.
  */
+@API(status = EXPERIMENTAL)
 public class SprogCbusModeSwitcherAction extends AbstractAction {
     
     private CanSystemConnectionMemo _memo = null;

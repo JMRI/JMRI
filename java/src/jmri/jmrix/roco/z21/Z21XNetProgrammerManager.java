@@ -5,6 +5,9 @@ import jmri.Programmer;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend XNetProgrammerManager for Z21.
  * @see jmri.jmrix.lenz.XNetProgrammerManager
@@ -12,6 +15,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * @navassoc 1 - 1 jmri.jmrix.roco.z21.Z21XNetProgrammer
  * @navassoc 1 - * jmri.jmrix.roco.z21.Z21XNetOpsModeProgrammer
  */
+@API(status = EXPERIMENTAL)
 public class Z21XNetProgrammerManager extends jmri.jmrix.lenz.XNetProgrammerManager {
 
     private LocoNetSystemConnectionMemo lnMemo = null;

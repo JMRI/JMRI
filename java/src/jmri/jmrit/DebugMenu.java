@@ -4,11 +4,15 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Debug" menu containing the JMRI system-independent debugging tools.
  *
  * @author Bob Jacobsen Copyright 2003
  */
+@API(status = MAINTAINED)
 public class DebugMenu extends JMenu {
 
     public DebugMenu(String name, JPanel panel) {

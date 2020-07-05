@@ -9,6 +9,9 @@ import javax.swing.Timer;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Utilities for handling JMRI's threading conventions.
  * <p>
@@ -22,6 +25,7 @@ import javax.annotation.concurrent.ThreadSafe;
  * @author Bob Jacobsen Copyright 2015
  */
 @ThreadSafe
+@API(status = EXPERIMENTAL)
 public class ThreadingUtil {
 
     /**

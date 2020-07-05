@@ -1,6 +1,8 @@
 package jmri.jmrix.openlcb;
 
 import jmri.DccLocoAddress;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.NodeID;
 
 /**
@@ -13,6 +15,7 @@ import org.openlcb.NodeID;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class OpenLcbLocoAddress extends DccLocoAddress {
 
     public OpenLcbLocoAddress(NodeID node) {

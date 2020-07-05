@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.ProgListener;
 import jmri.Programmer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2013
  * @author Howard G. Penny Copyright (C) 2005
  */
+@API(status = MAINTAINED)
 public class CvValue extends AbstractValue implements ProgListener {
 
     public CvValue(String num, Programmer pProgrammer) {

@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +37,7 @@ import jmri.jmrit.operations.trains.tools.*;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012, 2013, 2014
  */
+@API(status = MAINTAINED)
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     TrainManager trainManager;

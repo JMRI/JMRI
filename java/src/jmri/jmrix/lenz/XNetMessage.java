@@ -2,6 +2,8 @@ package jmri.jmrix.lenz;
 
 import java.io.Serializable;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.SpeedStepMode;
@@ -17,6 +19,7 @@ import jmri.SpeedStepMode;
  * @author Paul Bender Copyright (C) 2003-2010
   *
  */
+@API(status = EXPERIMENTAL)
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
 
     private static final String X_NET_MESSAGE_REQUEST_LI_BAUD = "XNetMessageRequestLIBaud";

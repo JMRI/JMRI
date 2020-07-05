@@ -27,10 +27,13 @@ import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class PrintRosterEntry implements PaneContainer {
 
     RosterEntry _rosterEntry;

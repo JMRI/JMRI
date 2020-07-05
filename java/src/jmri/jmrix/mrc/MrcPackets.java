@@ -2,6 +2,8 @@ package jmri.jmrix.mrc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson 2014
  * @author Ken Cameron 2014
  */
+@API(status = EXPERIMENTAL)
 public class MrcPackets {
 
     private static final Logger log = LoggerFactory.getLogger(MrcPackets.class);

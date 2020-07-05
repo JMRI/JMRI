@@ -1,5 +1,7 @@
 package jmri.jmrix.acela.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Coleman, Copyright (c) 2007, 2008 Based on LocoNet example,
  * modified to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class AcelaLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public AcelaLightManagerXml() {

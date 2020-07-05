@@ -2,6 +2,9 @@ package jmri.jmrix.zimo.swing;
 
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel interface to handle providing system connection information to a
  * panel.
@@ -10,6 +13,7 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */
+@API(status = EXPERIMENTAL)
 public interface Mx1PanelInterface {
 
     /**

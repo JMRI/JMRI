@@ -6,6 +6,8 @@ import jmri.jmrix.acela.AcelaAddress;
 import jmri.jmrix.acela.AcelaNode;
 import jmri.jmrix.acela.AcelaSignalHead;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Coleman Copyright: Copyright (c) 2009
  */
+@API(status = EXPERIMENTAL)
 public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     AcelaSystemConnectionMemo _memo = null;

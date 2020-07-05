@@ -14,6 +14,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
 import jmri.util.FileUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Pane for building Signal Mast definitions.
  * Demo, not in any JMRI menu or tool as of 4.9.6
@@ -23,6 +26,7 @@ import jmri.util.FileUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class MastBuilderPane extends jmri.util.JmriJFrame {
 
     public MastBuilderPane() {

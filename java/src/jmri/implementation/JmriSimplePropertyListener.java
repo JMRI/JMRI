@@ -7,6 +7,9 @@ import jmri.Conditional;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A service base class for monitoring a bound property in one of the JMRI Named
  * beans (Turnout, Sensor, etc).
@@ -24,6 +27,7 @@ import jmri.NamedBeanHandle;
  * @author Pete Cressman Copyright (C) 2009
  * @since 2.5.1
  */
+@API(status = EXPERIMENTAL)
 public class JmriSimplePropertyListener implements PropertyChangeListener {
 
     int _type;

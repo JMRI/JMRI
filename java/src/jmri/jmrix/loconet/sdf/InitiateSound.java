@@ -2,12 +2,16 @@ package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition
  * language
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class InitiateSound extends SdfMacro {
 
     public InitiateSound(int byte1, int byte2) {

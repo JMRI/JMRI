@@ -3,6 +3,9 @@ package jmri.jmrix.can.cbus.swing;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Cbus subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.can.ConfigurationManager;
  * 
  * @since 2.99.2
  */
+@API(status = EXPERIMENTAL)
 public class CbusComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public CbusComponentFactory(CanSystemConnectionMemo memo) {

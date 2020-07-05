@@ -6,11 +6,15 @@ import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Starts the ImportCars thread
  *
  * @author Dan Boudreau Copyright (C) 2008
  */
+@API(status = MAINTAINED)
 public class ExportCarRosterAction extends AbstractAction {
 
     CarsTableFrame _carsTableFrame;

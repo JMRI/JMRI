@@ -8,6 +8,9 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * ItemPanel for for PortalIcons. Since this class has been introduced after
  * users may have customized the defaultPanelIcons, the default family,
@@ -15,6 +18,7 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
  * 
 * @author Pete Cressman Copyright (c) 2013, 2020
  */
+@API(status = MAINTAINED)
 public class PortalItemPanel extends FamilyItemPanel {
 
     /*

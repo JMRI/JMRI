@@ -1,5 +1,8 @@
 package jmri.jmrix.nce;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Contains the map for the command station and memory parts
@@ -7,6 +10,7 @@ package jmri.jmrix.nce;
  * @author Ken Cameron Copyright (C) 2013
  * 
  */
+@API(status = EXPERIMENTAL)
 public class NceCmdStationMemory {
 
     /**

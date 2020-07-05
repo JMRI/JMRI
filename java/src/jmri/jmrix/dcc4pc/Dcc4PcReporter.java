@@ -5,6 +5,8 @@ import java.util.Map;
 import jmri.RailCom;
 import jmri.Sensor;
 import jmri.implementation.AbstractRailComReporter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcReporter extends AbstractRailComReporter {
 
     public Dcc4PcReporter(String systemName, String userName) {  // a human-readable Reporter number must be specified!

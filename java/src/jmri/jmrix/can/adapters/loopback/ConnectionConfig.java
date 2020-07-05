@@ -3,6 +3,9 @@ package jmri.jmrix.can.adapters.loopback;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via a CAN
  * hexfile emulator.
@@ -10,6 +13,7 @@ import javax.swing.JPanel;
  * @author Bob Jacobsen Copyright (C) 2008
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**

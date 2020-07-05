@@ -7,6 +7,8 @@ import javax.annotation.Nonnull;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.AddressedProgrammer {
 
     int mAddress;

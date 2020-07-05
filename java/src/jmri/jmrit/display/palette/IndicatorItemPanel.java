@@ -16,12 +16,15 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrackIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for for Indicating track blocks.
  */
+@API(status = MAINTAINED)
 public class IndicatorItemPanel extends FamilyItemPanel {
 
     private DetectionPanel _detectPanel;

@@ -18,6 +18,9 @@ import jmri.implementation.AbstractAudio;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define a GUI to edit AudioListener objects
  *
@@ -34,6 +37,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class AudioListenerFrame extends AbstractAudioFrame {
 
     JPanelVector3f position = new JPanelVector3f(Bundle.getMessage("LabelPosition"),

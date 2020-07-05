@@ -11,6 +11,8 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.roster.RosterEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2008
  * @author Steve Gigiel Copyright (C) 2017
  */
+@API(status = MAINTAINED)
 public class SpeedPanel extends JInternalFrame implements java.beans.PropertyChangeListener, AddressListener {
 
     private DccThrottle throttle;

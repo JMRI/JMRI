@@ -3,6 +3,8 @@ package jmri.jmrix.dcc4pc;
 import java.util.ArrayList;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcBoardManager implements Dcc4PcListener {
 
     public Dcc4PcBoardManager(Dcc4PcTrafficController tc, Dcc4PcSensorManager senManager) {

@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.trains;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -9,6 +11,7 @@ import org.jdom2.Element;
  * @author Daniel Boudreau Copyright (C) 2014
  *
  */
+@API(status = MAINTAINED)
 public class TrainManifestHeaderText {
 
     private static String road = Bundle.getMessage("Road"); // the supported message format options

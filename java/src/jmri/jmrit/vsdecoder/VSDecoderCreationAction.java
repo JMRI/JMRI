@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * <hr>
  * This file is part of JMRI.
@@ -20,6 +23,7 @@ import javax.swing.JFrame;
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class VSDecoderCreationAction extends AbstractAction {
 
     /**

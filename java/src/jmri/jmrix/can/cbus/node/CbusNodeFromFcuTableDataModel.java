@@ -6,6 +6,9 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -16,6 +19,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * @see CbusNodeFromBackup
  * 
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
 
     // column order needs to match list in column tooltips

@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants to represent values seen in XpressNet traffic.
  * <p>
@@ -15,6 +18,7 @@ package jmri.jmrix.lenz;
  *
  * @author Paul Bender Copyright (C) 2003-2009
  */
+@API(status = EXPERIMENTAL)
 public final class XNetConstants {
 
     private XNetConstants(){

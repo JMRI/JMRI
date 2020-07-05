@@ -19,6 +19,8 @@ import jmri.Memory;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2012
  * @since 2.7.2
  */
+@API(status = MAINTAINED)
 public class MemoryComboIcon extends PositionableJPanel
         implements java.beans.PropertyChangeListener, ActionListener {
 

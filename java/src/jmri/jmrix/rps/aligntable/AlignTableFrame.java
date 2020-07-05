@@ -6,6 +6,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user configuration of RPS alignment.
  * <p>
@@ -15,6 +18,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 
     RpsSystemConnectionMemo memo = null;

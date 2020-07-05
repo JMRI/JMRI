@@ -7,11 +7,15 @@ import javax.swing.JPanel;
 import jmri.jmrix.xpa.XpaMessage;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for configuring an XPA using a modem.
  *
  * @author Paul Bender Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 
     // member declarations

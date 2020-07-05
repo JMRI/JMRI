@@ -2,6 +2,9 @@ package jmri.jmrix.nce.usbdriver;
 
 import jmri.util.SystemType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
  * via an NCE SerialDriverAdapter object.
@@ -9,6 +12,7 @@ import jmri.util.SystemType;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Daniel Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     public final static String NAME = "NCE USB"; // NOI18N

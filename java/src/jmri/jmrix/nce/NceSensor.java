@@ -2,11 +2,15 @@ package jmri.jmrix.nce;
 
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.AbstractSensor for NCE systems
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
+@API(status = EXPERIMENTAL)
 public class NceSensor extends AbstractSensor {
 
     public NceSensor(String systemName) {

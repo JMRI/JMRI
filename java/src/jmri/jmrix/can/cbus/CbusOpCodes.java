@@ -12,6 +12,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanFrame;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2009
  * @author Steve Young (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class CbusOpCodes {
     
     private final static Logger log = LoggerFactory.getLogger(CbusOpCodes.class);

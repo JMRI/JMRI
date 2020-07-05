@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * LocoNetListener provides the call-back interface for notification when a new
  * LocoNet message arrives from the layout.
@@ -12,6 +15,7 @@ package jmri.jmrix.loconet;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public interface LocoNetListener extends java.util.EventListener {
 
     /**

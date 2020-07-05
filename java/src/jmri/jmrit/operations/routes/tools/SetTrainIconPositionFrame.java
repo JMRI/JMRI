@@ -9,6 +9,8 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,7 @@ import jmri.jmrit.operations.trains.TrainIcon;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class SetTrainIconPositionFrame extends OperationsFrame {
 
     RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);

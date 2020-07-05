@@ -4,6 +4,9 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  * 
@@ -38,6 +41,7 @@ import java.util.Iterator;
  * 
  */
 
+@API(status = MAINTAINED)
 public class ClassCompareContents {
     public static boolean objectsEqual(Object obj1, Object obj2) {
 //  Basic safety checks:        

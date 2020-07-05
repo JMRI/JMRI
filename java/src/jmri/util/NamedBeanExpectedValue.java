@@ -8,6 +8,9 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.beans.Bean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Retain a NamedBean and its expected value (called a state in this class).
  * <p>
@@ -17,6 +20,7 @@ import jmri.beans.Bean;
  * @param <T> the supported type of NamedBean
  * @param <S> the supported type of value
  */
+@API(status = EXPERIMENTAL)
 public class NamedBeanExpectedValue<T extends NamedBean, S extends Object> extends Bean implements ExpectedState<T, S> {
 
     private final NamedBeanHandle<T> handle;

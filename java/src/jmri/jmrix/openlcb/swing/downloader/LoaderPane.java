@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.Connection;
 import org.openlcb.LoaderClient;
 import org.openlcb.LoaderClient.LoaderStatusReporter;
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * Milhaupt Copyright (C) 2013, 2014) David R Harris (C) 2016 Balazs Racz (C)
  * 2016
  */
+@API(status = EXPERIMENTAL)
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements jmri.jmrix.can.swing.CanPanelInterface {
 

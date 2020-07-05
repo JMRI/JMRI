@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet.hexfile;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is "active" via a LocoNet hexfile emulator.
  * <p>
@@ -8,6 +11,7 @@ package jmri.jmrix.loconet.hexfile;
  *
  * @author Kevin Dickerson Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class HexFileSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSystemConnectionMemo {
 
     @Override

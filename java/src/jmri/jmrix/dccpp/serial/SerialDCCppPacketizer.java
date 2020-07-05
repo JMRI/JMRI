@@ -5,6 +5,8 @@ package jmri.jmrix.dccpp.serial;
 
 import java.util.concurrent.DelayQueue;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,7 @@ import jmri.util.ThreadingUtil;
  *
  *         Based on LIUSBXNetPacketizer by Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public class SerialDCCppPacketizer extends DCCppPacketizer {
 
     final DelayQueue<DCCppMessage> resendFunctions = new DelayQueue<>();

@@ -1,6 +1,8 @@
 package jmri.implementation.decorators;
 
 import jmri.*;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import java.beans.PropertyChangeListener;
  * @author Paul Bender Copyright (C) 2020
  * @since 4.19.4
  */
+@API(status = EXPERIMENTAL)
 public class TimeoutReporter extends AbstractNamedBeanDecorator implements Reporter, IdTagListener,PropertyChangeListener {
 
     /**

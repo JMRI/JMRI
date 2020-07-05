@@ -2,6 +2,8 @@ package jmri.jmrix.tmcc;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
  */
+@API(status = EXPERIMENTAL)
 public class SerialTurnout extends AbstractTurnout {
 
     // data members

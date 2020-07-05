@@ -7,6 +7,9 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Cell Renderer for a progress bar.
  * 
@@ -14,6 +17,7 @@ import javax.swing.table.TableCellRenderer;
  * Percentage value also displayed as text.
  * @author Steve Young Copyright (C) 2020
  */ 
+@API(status = EXPERIMENTAL)
 public class ProgressCellRender extends JProgressBar implements TableCellRenderer {
 
     private final Color _oddRowColor;

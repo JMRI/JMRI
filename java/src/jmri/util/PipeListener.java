@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.io.PipedReader;
 import javax.swing.JTextArea;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Small service class to read characters from a pipe and post them to a
  * JTextArea for display
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class PipeListener extends Thread {
 
     private final PipedReader pr;

@@ -5,6 +5,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileView;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2013, 2014
  */
+@API(status = EXPERIMENTAL)
 public class ProfileFileView extends FileView {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileFileView.class);

@@ -3,6 +3,8 @@ package jmri.managers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import jmri.implementation.AbstractInstanceInitializer;
  * constructor.
  */
 @ServiceProvider(service = InstanceInitializer.class)
+@API(status = EXPERIMENTAL)
 public class ShutDownManagerInitializer extends AbstractInstanceInitializer {
 
     private static final Logger log = LoggerFactory.getLogger(ShutDownManagerInitializer.class);

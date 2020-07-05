@@ -7,6 +7,8 @@ import jmri.LocoAddress;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Todd Copyright 2012
  */
+@API(status = EXPERIMENTAL)
 public class HexFileServer {
         
     private int connectedAddresses = 0;

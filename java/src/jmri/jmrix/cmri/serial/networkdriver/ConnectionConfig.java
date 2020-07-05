@@ -5,12 +5,16 @@ import javax.swing.JPanel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via a
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2015
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     public final static String NAME = "Network Interface";

@@ -3,6 +3,9 @@ package jmri.jmrix.rps.swing;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import jmri.jmrix.rps.RpsMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the RPS subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.rps.RpsMenu;
  * @author Paul Bender Copyright (C) 2010
  * @since 2.11.1
  */
+@API(status = EXPERIMENTAL)
 public class RpsComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public RpsComponentFactory(RpsSystemConnectionMemo memo) {

@@ -13,6 +13,8 @@ import java.util.TreeSet;
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,6 +82,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class JoalAudioFactory extends AbstractAudioFactory {
 
     private static AL al;

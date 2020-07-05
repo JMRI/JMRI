@@ -3,6 +3,8 @@ package jmri.server.json.consist;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -10,6 +12,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright (C) 2016
  */
 @ServiceProvider(service = JsonServiceFactory.class)
+@API(status = EXPERIMENTAL)
 public class JsonConsistServiceFactory implements JsonServiceFactory<JsonConsistHttpService, JsonConsistSocketService> {
 
 

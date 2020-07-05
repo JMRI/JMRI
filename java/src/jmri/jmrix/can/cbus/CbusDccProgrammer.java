@@ -10,12 +10,16 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements the jmri.Programmer interface via commands for the CBUS
  * programmer.
  *
  * @author Andrew Crosland Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
     public CbusDccProgrammer(jmri.jmrix.can.TrafficController tc) {

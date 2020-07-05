@@ -6,11 +6,15 @@ import javax.swing.JPanel;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a Grapevine layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

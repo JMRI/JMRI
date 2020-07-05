@@ -18,6 +18,8 @@ import jmri.jmrix.rps.ReadingListener;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
  */
+@API(status = EXPERIMENTAL)
 public class CsvExportAction extends AbstractAction implements ReadingListener {
 
     RpsSystemConnectionMemo memo = null;

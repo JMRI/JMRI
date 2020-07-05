@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.trains;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -10,6 +12,7 @@ import org.jdom2.Element;
  * 
  *
  */
+@API(status = MAINTAINED)
 public class TrainSwitchListText {
 
     private static String switchListFor = Bundle.getMessage("SwitchListFor");

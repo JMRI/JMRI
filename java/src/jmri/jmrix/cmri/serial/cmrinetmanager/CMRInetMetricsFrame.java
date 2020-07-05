@@ -18,11 +18,15 @@ import javax.swing.border.TitledBorder;
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for CMRInet Network Metrics.
  *
  * @author Chuck Catania Copyright (C) 2016, 2017, 2018
  */
+@API(status = EXPERIMENTAL)
 public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
 
     // node table pane items

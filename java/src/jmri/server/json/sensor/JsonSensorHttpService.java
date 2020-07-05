@@ -1,5 +1,7 @@
 package jmri.server.json.sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.sensor.JsonSensor.SENSOR;
 import static jmri.server.json.sensor.JsonSensor.SENSORS;
 
@@ -23,6 +25,7 @@ import jmri.server.json.JsonRequest;
  *
  * @author Randall Wood Copyright 2016, 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
 
     public JsonSensorHttpService(ObjectMapper mapper) {

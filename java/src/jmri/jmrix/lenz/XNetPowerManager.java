@@ -3,6 +3,8 @@ package jmri.jmrix.lenz;
 import jmri.JmriException;
 import jmri.managers.AbstractPowerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Paul Bender Copyright (C) 2003-2010
  */
+@API(status = EXPERIMENTAL)
 public class XNetPowerManager extends AbstractPowerManager<XNetSystemConnectionMemo> implements XNetListener {
 
     XNetTrafficController tc;

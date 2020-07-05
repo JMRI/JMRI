@@ -5,6 +5,9 @@ import java.time.Instant;
 import java.util.Date;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to clock capabilities in hardware or software.
  * <p>
@@ -20,6 +23,7 @@ import javax.annotation.Nonnull;
  * 
  * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
  */
+@API(status = STABLE)
 public interface Timebase extends NamedBean {
 
     /**

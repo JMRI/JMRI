@@ -2,6 +2,8 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.can.CanReply;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class Reply extends AbstractMRReply {
 
     // Creates a new instance of ConnectReply

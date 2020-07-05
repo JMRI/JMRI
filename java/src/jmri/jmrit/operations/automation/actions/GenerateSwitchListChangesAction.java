@@ -2,6 +2,8 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.io.File;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
 
+@API(status = MAINTAINED)
 public class GenerateSwitchListChangesAction extends Action {
 
     private static final int _code = ActionCodes.GENERATE_SWITCHLIST_CHANGES;

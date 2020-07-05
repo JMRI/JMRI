@@ -44,12 +44,16 @@ import java.beans.PropertyChangeListener;
 import javax.swing.Action;
 import javax.swing.JComponent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A class that tracks the focused component. This is necessary to delegate the
  * menu cut/copy/paste commands to the right component. An instance of this
  * class is listening and when the user fires one of these commands, it calls
  * the appropriate action on the currently focused component.
  */
+@API(status = EXPERIMENTAL)
 public class TransferActionListener implements ActionListener,
         PropertyChangeListener {
 

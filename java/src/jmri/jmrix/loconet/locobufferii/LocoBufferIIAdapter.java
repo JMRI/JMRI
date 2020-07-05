@@ -4,12 +4,16 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
  * switch settings on the new LocoBuffer-II.
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
     public LocoBufferIIAdapter(LocoNetSystemConnectionMemo adapterMemo) {

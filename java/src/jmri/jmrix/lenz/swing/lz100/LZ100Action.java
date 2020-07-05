@@ -3,6 +3,9 @@ package jmri.jmrix.lenz.swing.lz100;
 import java.awt.event.ActionEvent;
 import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register an LZ100Frame object.
  * <p>
@@ -10,6 +13,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
  *
  * @author Paul Bender Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class LZ100Action extends AbstractXPressNetAction {
 
     public LZ100Action(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo){

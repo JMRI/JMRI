@@ -31,6 +31,8 @@ import jmri.profile.ProfileManager;
 import jmri.util.MultipartMessage;
 import jmri.util.javaworld.GridLayout2;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Matthew Harris Copyright (c) 2014
  */
+@API(status = MAINTAINED)
 public class ReportPanel extends JPanel {
 
     JButton sendButton;

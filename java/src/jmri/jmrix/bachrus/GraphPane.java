@@ -15,6 +15,8 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import javax.swing.JPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2010
  * @author Dennis Miller Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class GraphPane extends JPanel implements Printable {
 
     final int PAD = 40;

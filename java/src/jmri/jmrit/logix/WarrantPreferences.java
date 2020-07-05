@@ -21,6 +21,8 @@ import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2015
  */
 @ServiceProvider(service = PreferencesManager.class)
+@API(status = MAINTAINED)
 public class WarrantPreferences extends AbstractPreferencesManager {
 
     public static final String LAYOUT_PARAMS = "layoutParams"; // NOI18N
@@ -554,6 +557,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         this.save();
     }
 
+@API(status = MAINTAINED)
     public static class WarrantPreferencesXml extends XmlFile {
     }
 

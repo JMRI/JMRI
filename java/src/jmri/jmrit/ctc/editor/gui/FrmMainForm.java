@@ -41,11 +41,15 @@ import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 // public class FrmMainForm extends jmri.util.JmriJFrame {
+@API(status = MAINTAINED)
 public class FrmMainForm extends JFrame {
 
     private static final String FORM_PROPERTIES = "FrmMainForm";    // NOI18N

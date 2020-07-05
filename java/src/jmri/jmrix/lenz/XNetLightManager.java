@@ -5,6 +5,9 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement LightManager for XpressNet systems.
  * <p>
@@ -16,6 +19,7 @@ import jmri.managers.AbstractLightManager;
  * @author Paul Bender Copyright (C) 2008
  * @navassoc 1 - * jmri.jmrix.lenz.XNetLight
  */
+@API(status = EXPERIMENTAL)
 public class XNetLightManager extends AbstractLightManager {
 
     private XNetTrafficController tc;

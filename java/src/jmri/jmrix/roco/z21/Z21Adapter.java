@@ -3,6 +3,8 @@ package jmri.jmrix.roco.z21;
 import java.net.DatagramSocket;
 import java.util.ResourceBundle;
 import jmri.jmrix.ConnectionStatus;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2004,2010,2011,2014
  */
+@API(status = EXPERIMENTAL)
 public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
     protected static ResourceBundle rb =  ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21AdapterConfigurationBundle");

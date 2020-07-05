@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Open a window to receive Log4J output.
  *
@@ -11,6 +14,7 @@ import javax.swing.JFrame;
  * @see jmri.util.JLogoutputFrame
  * @see jmri.util.JTextPaneAppender
  */
+@API(status = MAINTAINED)
 public class LogOutputWindowAction extends AbstractAction {
 
     public LogOutputWindowAction(String s) {

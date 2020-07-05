@@ -6,10 +6,14 @@ import javax.annotation.Nonnull;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class to define location for a CbusNodeBackup File.
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeBackupFile extends XmlFile {
     
     /**

@@ -4,9 +4,13 @@
  */
 package jmri.jmrit.withrottle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public interface ControllerInterface {
 
     public void sendPacketToDevice(String message);

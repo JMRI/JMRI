@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Makes a workaround for standard {@link PipedOutputStream} wait.
  * <p>The {@link PipedInputStream#read()}, in case the receive buffer is
@@ -21,6 +24,7 @@ import java.io.PipedOutputStream;
  * @author Svata Dedic Copyright (C) 2020
  */
 
+@API(status = EXPERIMENTAL)
 public class ImmediatePipedOutputStream extends PipedOutputStream {
     @Override
     public void write(byte[] b, int off, int len) throws IOException {

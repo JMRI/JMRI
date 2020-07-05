@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,7 @@ import jmri.util.ColorUtil;
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011, 2012, 2013
  */
+@API(status = MAINTAINED)
 public class TrainCommon {
 
     protected static final String TAB = "    "; // NOI18N

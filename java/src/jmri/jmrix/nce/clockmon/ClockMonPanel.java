@@ -27,6 +27,8 @@ import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +66,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2007
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  */
+@API(status = EXPERIMENTAL)
 public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceListener {
 
     public static final int CS_CLOCK_MEM_ADDR = 0xDC00;

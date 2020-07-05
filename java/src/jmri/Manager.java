@@ -15,6 +15,9 @@ import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.beans.SilenceablePropertyChangeProvider;
 import jmri.beans.VetoableChangeProvider;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Basic interface for access to named, managed objects.
  * <p>
@@ -51,6 +54,7 @@ import jmri.beans.VetoableChangeProvider;
  * @param <E> the type of NamedBean supported by this manager
  * @author Bob Jacobsen Copyright (C) 2003
  */
+@API(status = STABLE)
 public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeProvider, VetoableChangeProvider {
 
     /**
@@ -827,6 +831,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      */
     @Deprecated
     @javax.annotation.concurrent.Immutable
+@API(status = STABLE)
     public final class ManagerDataEvent<E extends NamedBean> extends java.util.EventObject {
 
         /**

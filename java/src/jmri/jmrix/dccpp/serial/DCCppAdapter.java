@@ -11,6 +11,8 @@ import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -27,6 +29,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public class DCCppAdapter extends DCCppSerialPortController {
 
     public DCCppAdapter() {

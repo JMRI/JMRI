@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an XpressNet layout connection via an XNetStreamPortController
  * adapter.
@@ -11,6 +14,7 @@ package jmri.jmrix.lenz;
  *
  * @see XNetStreamPortController
  */
+@API(status = EXPERIMENTAL)
 public class XNetStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
 
     /**

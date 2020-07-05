@@ -30,12 +30,15 @@ import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfPreferences;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = MAINTAINED)
 public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     JCheckBox eStopCB;

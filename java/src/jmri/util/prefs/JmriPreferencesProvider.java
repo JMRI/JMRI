@@ -23,6 +23,9 @@ import jmri.util.FileUtil;
 import jmri.util.OrderedProperties;
 import jmri.util.node.NodeIdentity;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides instances of {@link java.util.prefs.Preferences} backed by a
  * JMRI-specific storage implementation based on a Properties file.
@@ -46,6 +49,7 @@ import jmri.util.node.NodeIdentity;
  *
  * @author Randall Wood 2015
  */
+@API(status = EXPERIMENTAL)
 public final class JmriPreferencesProvider {
 
     private final JmriPreferences root;

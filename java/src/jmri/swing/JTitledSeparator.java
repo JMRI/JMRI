@@ -14,6 +14,9 @@ import javax.swing.JSeparator;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A separator with a title.
  *
@@ -25,6 +28,7 @@ import javax.swing.border.TitledBorder;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JTitledSeparator extends JPanel {
 
     private final static class SeparatorPane extends JPanel {

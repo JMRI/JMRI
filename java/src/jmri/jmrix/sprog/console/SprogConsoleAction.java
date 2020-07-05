@@ -3,6 +3,8 @@ package jmri.jmrix.sprog.console;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class SprogConsoleAction extends AbstractAction {
 
     private SprogSystemConnectionMemo _memo;

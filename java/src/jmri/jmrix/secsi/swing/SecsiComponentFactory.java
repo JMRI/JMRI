@@ -3,6 +3,9 @@ package jmri.jmrix.secsi.swing;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 import jmri.jmrix.secsi.SecsiMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the SECSI subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.secsi.SecsiMenu;
  * @author Paul Bender Copyright (C) 2010
  * @since 2.11.1
  */
+@API(status = EXPERIMENTAL)
 public class SecsiComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public SecsiComponentFactory(SecsiSystemConnectionMemo memo) {

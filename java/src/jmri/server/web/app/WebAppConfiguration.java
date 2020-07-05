@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import jmri.server.web.AbstractWebServerConfiguration;
 import jmri.server.web.spi.WebServerConfiguration;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -12,6 +14,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood (C) 2016
  */
 @ServiceProvider(service = WebServerConfiguration.class)
+@API(status = EXPERIMENTAL)
 public class WebAppConfiguration extends AbstractWebServerConfiguration {
 
     /**

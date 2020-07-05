@@ -6,6 +6,9 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.util.NamedBeanPreferNumericComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -25,6 +28,7 @@ import jmri.util.NamedBeanPreferNumericComparator;
  *
  * @author Bob Jacobsen Copyright (C) 2010, 2016
  */
+@API(status = EXPERIMENTAL)
 public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
     public InternalSystemConnectionMemo(String prefix, String name, boolean defaultInstanceType) {

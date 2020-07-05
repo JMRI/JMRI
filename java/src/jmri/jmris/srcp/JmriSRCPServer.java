@@ -14,6 +14,8 @@ import jmri.jmris.srcp.parser.SRCPVisitor;
 import jmri.jmris.srcp.parser.SimpleNode;
 import jmri.jmris.srcp.parser.TokenMgrError;
 import jmri.util.zeroconf.ZeroConfService;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2009
  *
  */
+@API(status = EXPERIMENTAL)
 public class JmriSRCPServer extends JmriServer {
 
     // Create a new server using the default port

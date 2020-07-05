@@ -4,6 +4,8 @@ import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.jmrix.lenz.XNetAddress;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager {
 
     public EliteXNetTurnoutManager(XNetSystemConnectionMemo memo) {

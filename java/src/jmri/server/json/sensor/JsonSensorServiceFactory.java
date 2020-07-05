@@ -1,5 +1,7 @@
 package jmri.server.json.sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.sensor.JsonSensor.SENSOR;
 import static jmri.server.json.sensor.JsonSensor.SENSORS;
 
@@ -14,6 +16,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood
  */
 @ServiceProvider(service = JsonServiceFactory.class)
+@API(status = EXPERIMENTAL)
 public class JsonSensorServiceFactory implements JsonServiceFactory<JsonSensorHttpService, JsonSensorSocketService> {
 
 

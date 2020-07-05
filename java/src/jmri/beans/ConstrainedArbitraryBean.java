@@ -4,11 +4,15 @@ import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.Set;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Bean with support for {@link java.beans.VetoableChangeListener}s.
  *
  * @author Randall Wood Copyright 2015, 2016, 2020
  */
+@API(status = EXPERIMENTAL)
 public class ConstrainedArbitraryBean extends ConstrainedBean {
 
     protected final ArbitraryPropertySupport arbitraryPropertySupport = new ArbitraryPropertySupport(this);

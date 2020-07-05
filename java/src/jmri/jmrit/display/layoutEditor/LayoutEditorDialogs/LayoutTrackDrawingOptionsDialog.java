@@ -9,6 +9,8 @@ import javax.swing.event.ChangeEvent;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
 import jmri.util.swing.JmriColorChooser;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
     private final LayoutEditor layoutEditor;

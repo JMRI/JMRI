@@ -10,6 +10,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.XTableColumnModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2012
  */
+@API(status = MAINTAINED)
 public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);

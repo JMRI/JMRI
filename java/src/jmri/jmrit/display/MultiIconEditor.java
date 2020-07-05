@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 import jmri.jmrit.catalog.CatalogPane;
 import jmri.jmrit.catalog.NamedIcon;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides a simple editor for selecting N NamedIcons, perhaps for use in
  * creating a panel icon.
@@ -21,6 +24,7 @@ import jmri.jmrit.catalog.NamedIcon;
  * @see jmri.jmrit.display.panelEditor.PanelEditor
  * @see jmri.jmrit.catalog
  */
+@API(status = MAINTAINED)
 public class MultiIconEditor extends JPanel {
 
     JButton[] buttonList;

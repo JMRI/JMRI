@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent a device that can report identification information.
  * <p>
@@ -40,6 +43,7 @@ package jmri;
  * @see jmri.ReporterManager
  * @see jmri.InstanceManager
  */
+@API(status = STABLE)
 public interface Reporter extends NamedBean {
 
     /**

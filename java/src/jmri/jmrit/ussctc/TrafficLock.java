@@ -3,6 +3,9 @@ package jmri.jmrit.ussctc;
 import jmri.*;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements a traffic lock.
  * <p>
@@ -11,6 +14,7 @@ import jmri.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
+@API(status = MAINTAINED)
 public class TrafficLock implements Lock {
 
     /**

@@ -16,6 +16,9 @@ import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /*
 This module supports Call On functionality.
 
@@ -61,6 +64,7 @@ By the way, there is NO way to do flashing any color with a semaphore!
 You should probably use "YELLOW" in that case!
 
 */
+@API(status = MAINTAINED)
 public class CallOn {
     private static class GroupingData {
         public final NBHAbstractSignalCommon _mSignal;    // Signal

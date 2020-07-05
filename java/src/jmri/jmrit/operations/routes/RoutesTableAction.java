@@ -7,12 +7,16 @@ import javax.swing.AbstractAction;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a RoutesTableFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
  */
+@API(status = MAINTAINED)
 public class RoutesTableAction extends AbstractAction {
 
     public RoutesTableAction() {

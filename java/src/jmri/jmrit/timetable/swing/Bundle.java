@@ -6,6 +6,9 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides standard access for resource bundles in a package.
  *
@@ -19,6 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 @javax.annotation.concurrent.Immutable
+@API(status = MAINTAINED)
 public class Bundle extends jmri.jmrit.timetable.Bundle {
 
     @CheckForNull

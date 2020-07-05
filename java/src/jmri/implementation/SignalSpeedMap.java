@@ -18,6 +18,8 @@ import jmri.InstanceManagerAutoInitialize;
 import jmri.beans.Bean;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize // auto-initialize in InstanceManager
 {
 

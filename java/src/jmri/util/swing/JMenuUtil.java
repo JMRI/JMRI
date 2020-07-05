@@ -13,6 +13,8 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
 import jmri.util.SystemType;
 import jmri.util.jdom.LocaleSelector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2003, 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class JMenuUtil extends GuiUtilBase {
 
     static public JMenu[] loadMenu(String path, WindowInterface wi, Object context) {

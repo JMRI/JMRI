@@ -1,6 +1,8 @@
 package jmri.jmrix.nce;
 
 import jmri.NmraPacket;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,6 +77,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau (C) 2007, 2010
  * @author ken cameron (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class NceBinaryCommand {
 
 // all commands moved to NceMessage 07/17/2018 DAB

@@ -14,6 +14,8 @@ import jmri.jmrix.can.cbus.node.*;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 
 import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * Pane for displaying CBUS Node Configuration Backups.
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeBackupsPane extends CbusNodeConfigTab implements TableModelListener {
     public SimpleDateFormat readableDateStyle = new SimpleDateFormat ("HH:mm EEE d MMM"); // NOI18N
     private JScrollPane eventScroll;

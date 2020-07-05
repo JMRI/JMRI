@@ -5,6 +5,8 @@ import java.io.OutputStream;
 
 import jmri.PowerManager;
 import jmri.jmris.AbstractPowerServer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class JmriSRCPPowerServer extends AbstractPowerServer {
 
     private OutputStream output;

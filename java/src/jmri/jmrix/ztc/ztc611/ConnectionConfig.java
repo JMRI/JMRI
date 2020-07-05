@@ -1,5 +1,8 @@
 package jmri.jmrix.ztc.ztc611;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an XpressNet layout connection via a ZTC Controls ZTC611
  * command station.
@@ -10,6 +13,7 @@ package jmri.jmrix.ztc.ztc611;
  *
  * @see ZTC611Adapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**

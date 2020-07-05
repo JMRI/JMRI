@@ -4,6 +4,9 @@ import java.beans.PropertyVetoException;
 import javax.annotation.Nonnull;
 import jmri.beans.ConstrainedBean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define the characteristics of a layout scale.  A scale has four properties.
  * <ul>
@@ -32,6 +35,7 @@ import jmri.beans.ConstrainedBean;
  * @author Dave Sand Copyright (C) 2018
  * @since 4.13.6
  */
+@API(status = STABLE)
 public class Scale extends ConstrainedBean {
 
     public Scale() {

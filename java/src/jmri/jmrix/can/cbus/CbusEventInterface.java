@@ -3,10 +3,14 @@ package jmri.jmrix.can.cbus;
 import javax.annotation.CheckForNull;
 import jmri.jmrix.can.CanMessage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for CBUS Sensors, Turnouts and Lights to report CBUS Events.
  * @author Steve Young (c) 2020
  */
+@API(status = EXPERIMENTAL)
 public interface CbusEventInterface {
     
     /**

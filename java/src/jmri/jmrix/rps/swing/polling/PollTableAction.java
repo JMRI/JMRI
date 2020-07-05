@@ -2,6 +2,8 @@ package jmri.jmrix.rps.swing.polling;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
@@ -13,6 +15,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class PollTableAction extends AbstractAction {
 
     public PollTableAction(String s,RpsSystemConnectionMemo _memo) {

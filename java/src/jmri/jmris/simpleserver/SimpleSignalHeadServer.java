@@ -10,12 +10,16 @@ import jmri.SignalHead;
 import jmri.jmris.AbstractSignalHeadServer;
 import jmri.jmris.JmriConnection;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Simple Server interface between the JMRI Sensor manager and a network
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
 
     private DataOutputStream output;

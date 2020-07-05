@@ -6,6 +6,8 @@ import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.implementation.TripleOutputSignalHead;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Suzie Tall based on work by Bob Jacobson
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  */
+@API(status = EXPERIMENTAL)
 public class TripleOutputSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 
     public TripleOutputSignalHeadXml() {

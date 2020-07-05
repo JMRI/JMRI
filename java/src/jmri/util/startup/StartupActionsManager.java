@@ -15,6 +15,8 @@ import jmri.spi.PreferencesManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.openide.util.lookup.ServiceProvider;
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood (C) 2015, 2016, 2020
  */
 @ServiceProvider(service = PreferencesManager.class)
+@API(status = EXPERIMENTAL)
 public class StartupActionsManager extends AbstractPreferencesManager {
 
     private final List<StartupModel> actions = new ArrayList<>();

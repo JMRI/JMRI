@@ -36,6 +36,8 @@ import jmri.Sensor;
 import jmri.CatalogTreeLeaf;
 import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.NamedIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +53,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2009
  *
  */
+@API(status = MAINTAINED)
 public class MultiSensorIconAdder extends IconAdder {
 
     JRadioButton _updown;

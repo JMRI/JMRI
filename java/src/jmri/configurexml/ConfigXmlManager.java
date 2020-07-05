@@ -11,6 +11,8 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * overall structure</a>
  * @author Bob Jacobsen Copyright (c) 2002, 2008
  */
+@API(status = EXPERIMENTAL)
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
         implements jmri.ConfigureManager {
 

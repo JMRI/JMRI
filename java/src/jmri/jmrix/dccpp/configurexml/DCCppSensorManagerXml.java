@@ -1,6 +1,8 @@
 package jmri.jmrix.dccpp.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (c) 2003
  * @author Mark Underwood Copyright (c) 2015
  */
+@API(status = EXPERIMENTAL)
 public class DCCppSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public DCCppSensorManagerXml() {

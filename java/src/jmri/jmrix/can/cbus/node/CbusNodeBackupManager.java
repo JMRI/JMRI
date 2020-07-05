@@ -13,6 +13,8 @@ import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.util.ThreadingUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -25,6 +27,7 @@ import org.jdom2.JDOMException;
  * @author Dave Sand Copyright (C) 2018
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeBackupManager {
     
     public final SimpleDateFormat xmlDateStyle = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss"); // NOI18N

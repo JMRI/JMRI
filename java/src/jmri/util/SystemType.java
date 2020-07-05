@@ -1,5 +1,7 @@
 package jmri.util;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright 2012 (add Unix)
  * @author Randall Wood Copyright 2013
  */
+@API(status = EXPERIMENTAL)
 public class SystemType {
 
     static final public int MACCLASSIC = 1; // no longer supported - latest JVM is 1.1.8

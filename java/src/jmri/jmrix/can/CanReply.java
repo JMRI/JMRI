@@ -3,6 +3,9 @@ package jmri.jmrix.can;
 import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Base class for replies in a CANbus based message/reply protocol.
  * <p>
@@ -19,6 +22,7 @@ import jmri.jmrix.AbstractMRReply;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
  */
+@API(status = EXPERIMENTAL)
 public class CanReply extends AbstractMRReply implements CanMutableFrame {
 
     /**

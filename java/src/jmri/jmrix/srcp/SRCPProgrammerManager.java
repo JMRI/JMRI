@@ -4,6 +4,9 @@ import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for SRCP
  * systems
@@ -11,6 +14,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SRCPProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer localProgrammer;

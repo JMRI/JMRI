@@ -4,10 +4,14 @@ import java.io.File;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class to provide access to the EventTableData.xml file.
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventTableXmlFile extends XmlFile {
 
     public static String getDefaultFileName() {

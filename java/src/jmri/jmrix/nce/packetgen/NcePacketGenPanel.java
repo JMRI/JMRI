@@ -9,6 +9,9 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of Nce messages.
  *
@@ -16,6 +19,7 @@ import jmri.util.StringUtil;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();

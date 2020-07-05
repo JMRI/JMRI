@@ -3,6 +3,8 @@ package jmri.jmrix.bachrus;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPortEvent;
@@ -20,6 +22,7 @@ import purejavacomm.SerialPortEventListener;
  * @author Andrew Crosland Copyright (C) 2010
  * @author Andrew Berridge Copyright (C) 2010 for gnu io (RXTX)
  */
+@API(status = EXPERIMENTAL)
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
     private SpeedoReply reply = new SpeedoReply();

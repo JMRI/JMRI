@@ -3,6 +3,8 @@ package jmri.jmrix.loconet;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.Reporter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
     protected final LnTrafficController tc;

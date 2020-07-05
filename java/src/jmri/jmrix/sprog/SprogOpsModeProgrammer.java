@@ -9,6 +9,9 @@ import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the SPROG
  * command station object.
@@ -18,6 +21,7 @@ import jmri.ProgrammingMode;
  * @see jmri.Programmer
  * @author Andrew Crosland Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class SprogOpsModeProgrammer extends SprogProgrammer implements AddressedProgrammer {
 
     int mAddress;

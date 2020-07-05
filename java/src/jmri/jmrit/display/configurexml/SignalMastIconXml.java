@@ -3,6 +3,8 @@ package jmri.jmrit.display.configurexml;
 import jmri.SignalMast;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public class SignalMastIconXml extends PositionableLabelXml {
 
     public SignalMastIconXml() {

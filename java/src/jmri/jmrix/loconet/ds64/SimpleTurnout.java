@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.ds64;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015
  */
+@API(status = EXPERIMENTAL)
 public class SimpleTurnout {
     private Integer address;
     private boolean isClosed;

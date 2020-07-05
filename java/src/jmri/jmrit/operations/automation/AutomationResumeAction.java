@@ -5,11 +5,15 @@ import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to resume all automations
  *
  * @author Daniel Boudreau Copyright (C) 2019
  */
+@API(status = MAINTAINED)
 public class AutomationResumeAction extends AbstractAction {
 
     public AutomationResumeAction() {

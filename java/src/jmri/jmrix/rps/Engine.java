@@ -7,6 +7,8 @@ import javax.vecmath.Point3d;
 import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
+@API(status = EXPERIMENTAL)
 public class Engine implements ReadingListener {
 
     public Engine() {

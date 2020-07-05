@@ -6,6 +6,8 @@ import java.util.List;
 import jmri.BeanSetting;
 import jmri.Path;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2008
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 final public class LayoutEditorAuxTools {
     // constants
 

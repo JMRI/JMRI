@@ -7,6 +7,9 @@ import jmri.Scale;
 import jmri.ScaleManager;
 import jmri.jmrit.timetable.swing.TimeTableFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define the content of a Layout record.
  * <p>
@@ -17,6 +20,7 @@ import jmri.jmrit.timetable.swing.TimeTableFrame;
  * rolling back the changes.
  * @author Dave Sand Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class Layout implements VetoableChangeListener {
 
     public static final String SCALE_RATIO = "ScaleRatio";

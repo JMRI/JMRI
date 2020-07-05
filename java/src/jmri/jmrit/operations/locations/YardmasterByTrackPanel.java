@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import jmri.jmrit.operations.trains.TrainSwitchListText;
  * @author Dan Boudreau Copyright (C) 2015
  *
  */
+@API(status = MAINTAINED)
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
     protected static final boolean IS_MANIFEST = false;

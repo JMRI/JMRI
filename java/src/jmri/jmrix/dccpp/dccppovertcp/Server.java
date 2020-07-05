@@ -17,6 +17,8 @@ import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class Server {
 
     private final LinkedList<ClientRxHandler> clients = new LinkedList<>();

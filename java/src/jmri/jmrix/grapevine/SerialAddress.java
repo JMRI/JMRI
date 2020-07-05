@@ -7,6 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.Manager;
 import jmri.NamedBean;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +44,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SerialAddress {
 
     public SerialAddress() {

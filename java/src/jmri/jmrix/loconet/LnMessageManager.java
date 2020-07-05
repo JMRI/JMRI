@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to throttle-messaging on a LocoNet.
  * <p>
@@ -11,6 +14,7 @@ package jmri.jmrix.loconet;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class LnMessageManager implements LocoNetListener {
 
     public LnMessageManager(LnTrafficController tc) {

@@ -1,5 +1,8 @@
 package jmri.util.iharder.dnd;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * When using the FileDrop package in its JavaBean form, this listener will
  * receive events when files are dropped onto registered targets.
@@ -12,6 +15,7 @@ package jmri.util.iharder.dnd;
  * @author rharder@usa.net
  * @version 1.1
  */
+@API(status = EXPERIMENTAL)
 public interface URIDropListener extends java.util.EventListener {
 
     /**

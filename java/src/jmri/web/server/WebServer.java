@@ -16,6 +16,8 @@ import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.servlet.DenialServlet;
 import jmri.web.servlet.RedirectionServlet;
 import jmri.web.servlet.directory.DirectoryHandler;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -49,6 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2005, 2006
  * @author Randall Wood Copyright 2012, 2016
  */
+@API(status = EXPERIMENTAL)
 public final class WebServer implements LifeCycle, LifeCycle.Listener {
 
     private enum Registration {

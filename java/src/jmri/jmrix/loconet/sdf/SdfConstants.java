@@ -2,12 +2,16 @@ package jmri.jmrix.loconet.sdf;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2010
  */
 @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT") // Don't worry about malicious code changing constants
 @SuppressWarnings("InterfaceIsType") // Silence Checkstyle
+@API(status = EXPERIMENTAL)
 public interface SdfConstants {
 
     /* **********************

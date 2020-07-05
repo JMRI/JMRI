@@ -9,6 +9,8 @@ import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @see CbusSimulator
  * @since 4.15.2
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventResponder extends CbusSimCanListener {
     
     private int _node;

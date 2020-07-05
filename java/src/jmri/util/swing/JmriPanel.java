@@ -6,6 +6,9 @@ import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel extension to handle automatic creation of window title and help
  * reference.
@@ -32,6 +35,7 @@ import javax.swing.JPanel;
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class JmriPanel extends JPanel {
 
     /**

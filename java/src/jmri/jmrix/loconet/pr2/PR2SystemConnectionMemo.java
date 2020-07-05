@@ -8,11 +8,15 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a PR2 is active
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
     public PR2SystemConnectionMemo(LnTrafficController lt,

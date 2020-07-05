@@ -14,6 +14,8 @@ import jmri.DccThrottle;
 import jmri.SpeedStepMode;
 
 import jmri.Throttle;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2008
  *
  */
+@API(status = MAINTAINED)
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener {
 
     private LearnThrottleFrame _throttleFrame;

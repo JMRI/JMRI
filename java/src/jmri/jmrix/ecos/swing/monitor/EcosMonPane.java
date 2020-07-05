@@ -6,11 +6,15 @@ import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.swing.EcosPanelInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a MonFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
+@API(status = EXPERIMENTAL)
 public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListener, EcosPanelInterface {
 
     public EcosMonPane() {

@@ -14,6 +14,8 @@ import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonRequest;
 import jmri.server.json.JsonSocketService;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonConsistSocketService extends JsonSocketService<JsonConsistHttpService> {
 
     private final HashSet<LocoAddress> consists = new HashSet<>();

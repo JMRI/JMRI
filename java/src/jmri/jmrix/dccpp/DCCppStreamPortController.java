@@ -3,6 +3,9 @@ package jmri.jmrix.dccpp;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Abstract base for classes representing a DCCpp communications port
  * <p>
@@ -11,6 +14,7 @@ import java.io.DataOutputStream;
  * @author Paul Bender Copyright (C) 2004,2010,2014
  * @author Mark Underwood Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class DCCppStreamPortController extends jmri.jmrix.AbstractStreamPortController implements DCCppPortController {
 
     public DCCppStreamPortController(DataInputStream in, DataOutputStream out, String pname) {

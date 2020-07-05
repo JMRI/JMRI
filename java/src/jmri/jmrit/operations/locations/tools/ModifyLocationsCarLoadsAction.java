@@ -7,12 +7,16 @@ import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.locations.Location;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a LocationsByCarTypeFrame object.
  *
  * @author Daniel Boudreau Copyright (C) 2009
  * 
  */
+@API(status = MAINTAINED)
 public class ModifyLocationsCarLoadsAction extends AbstractAction {
 
     public ModifyLocationsCarLoadsAction(Location location) {

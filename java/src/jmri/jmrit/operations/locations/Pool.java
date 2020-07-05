@@ -3,6 +3,8 @@ package jmri.jmrit.operations.locations;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.beans.Bean;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Gregory Madsen Copyright (C) 2012
  *
  */
+@API(status = MAINTAINED)
 public class Pool extends Bean {
 
     public static final String LISTCHANGE_CHANGED_PROPERTY = "poolListChange"; // NOI18N

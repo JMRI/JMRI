@@ -1,11 +1,15 @@
 package jmri.jmrix.xpa;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define interface for sending and receiving messages from an XpressNet System
  * using an XPA and a modem.
  *
  * @author Paul Bender Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public interface XpaInterface {
 
     void addXpaListener(XpaListener l);

@@ -18,6 +18,9 @@ import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
 import jmri.util.TimerUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -25,6 +28,7 @@ import jmri.util.TimerUtil;
  * Drag and drop handler for CBUS Events being dragged from a table.
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusTableRowEventDnDHandler extends TransferHandler implements DragSourceMotionListener {
 
     private int nn,en;

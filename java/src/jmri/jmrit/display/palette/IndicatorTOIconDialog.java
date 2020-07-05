@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.NamedIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public class IndicatorTOIconDialog extends IconDialog {
 
     String _key;

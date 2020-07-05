@@ -4,6 +4,9 @@ import jmri.AddressedProgrammer;
 import jmri.jmrix.can.TrafficController;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend DefaultProgrammerManager to provide node variable programmer for CBUS
  *
@@ -12,6 +15,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @deprecated since 4.17.1; use {@link jmri.jmrix.can.cbus.node.CbusNode} instead
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class CbusProgrammerManager extends DefaultProgrammerManager {
 
     public CbusProgrammerManager(TrafficController tc) {

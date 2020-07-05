@@ -10,6 +10,8 @@ import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsCollector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Chuck Catania Copyright: Copyright (c) 2014, 2015, 2016, 2017
  *
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

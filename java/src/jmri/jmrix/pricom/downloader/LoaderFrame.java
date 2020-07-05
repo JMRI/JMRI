@@ -2,6 +2,9 @@ package jmri.jmrix.pricom.downloader;
 
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for downloading (mangled) .hex files
  * <p>
@@ -9,6 +12,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class LoaderFrame extends JmriJFrame {
 
     // GUI member declarations

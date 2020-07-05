@@ -6,6 +6,9 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * {@link java.util.Properties} implementation that enumerates properties sorted
  * by key.
@@ -15,6 +18,7 @@ import java.util.TreeSet;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class OrderedProperties extends Properties {
 
     @Override

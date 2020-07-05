@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet;
 
 import java.util.NoSuchElementException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2018
  */
+@API(status = EXPERIMENTAL)
 public class LnPacketizerStrict extends LnPacketizer {
 
     // waiting for this echo

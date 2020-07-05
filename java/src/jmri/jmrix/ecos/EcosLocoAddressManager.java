@@ -28,6 +28,8 @@ import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
 import jmri.jmrix.ecos.utilities.RosterToEcos;
 import jmri.managers.AbstractManager;
 import jmri.profile.ProfileManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson
  */
+@API(status = EXPERIMENTAL)
 public class EcosLocoAddressManager extends AbstractManager<NamedBean> implements EcosListener {
 
     private boolean addLocoToRoster = false;

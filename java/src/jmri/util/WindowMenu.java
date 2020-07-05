@@ -11,11 +11,15 @@ import javax.swing.JSeparator;
 import javax.swing.event.MenuEvent;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Creates a menu showing all open windows and allows to bring one in front
  *
  * @author Giorgio Terdina Copyright 2008
  */
+@API(status = EXPERIMENTAL)
 public class WindowMenu extends JMenu implements javax.swing.event.MenuListener {
 
     private Frame parentFrame; // Keep note of the window containing the menu

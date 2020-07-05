@@ -3,6 +3,9 @@ package jmri.jmrix.lenz.hornbyelite;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active and provide general
  * information
@@ -12,6 +15,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class EliteXNetSystemConnectionMemo extends XNetSystemConnectionMemo {
 
     public EliteXNetSystemConnectionMemo(XNetTrafficController xt) {

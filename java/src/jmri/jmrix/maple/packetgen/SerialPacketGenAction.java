@@ -2,6 +2,8 @@ package jmri.jmrix.maple.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
@@ -11,6 +13,7 @@ import jmri.jmrix.maple.MapleSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class SerialPacketGenAction extends AbstractAction {
 
     private MapleSystemConnectionMemo _memo = null;

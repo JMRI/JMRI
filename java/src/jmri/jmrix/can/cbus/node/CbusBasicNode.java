@@ -2,6 +2,9 @@ package jmri.jmrix.can.cbus.node;
 
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.CopyOnWriteArraySet;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusSend;
@@ -14,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusBasicNode {
     protected CanSystemConnectionMemo _memo;
     private int _nodeNumber;    

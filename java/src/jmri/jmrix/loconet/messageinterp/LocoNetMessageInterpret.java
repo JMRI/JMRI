@@ -21,6 +21,8 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +65,7 @@ import org.slf4j.LoggerFactory;
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
  */
+@API(status = EXPERIMENTAL)
 public class LocoNetMessageInterpret {
 
     /**

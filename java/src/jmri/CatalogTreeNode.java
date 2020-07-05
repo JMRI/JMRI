@@ -5,6 +5,9 @@ import java.util.Enumeration;
 import jmri.util.swing.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Node of a CatalogTree.
  * <p>
@@ -12,6 +15,7 @@ import javax.swing.tree.TreeNode;
  *
  * @author Pete Cressman Copyright 2009
  */
+@API(status = STABLE)
 public class CatalogTreeNode extends DefaultMutableTreeNode {
 
     // Sorted by height for ease of display in CatalogPanel

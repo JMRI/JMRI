@@ -3,6 +3,9 @@ package jmri.swing;
 import javax.swing.JComponent;
 import jmri.spi.JmriServiceProviderInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An interface to define methods that the Preferences Window can and should
  * expect Preferences panels to implement.
@@ -14,6 +17,7 @@ import jmri.spi.JmriServiceProviderInterface;
  *
  * @author Randall Wood (C) 2012, 2014
  */
+@API(status = EXPERIMENTAL)
 public interface PreferencesPanel extends JmriServiceProviderInterface {
 
     /**

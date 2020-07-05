@@ -35,6 +35,8 @@ import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,6 +142,7 @@ ReporterItemPanel *-- preview
 @enduml
 */
 
+@API(status = MAINTAINED)
 public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     public static final int STRUT_SIZE = 10;

@@ -3,6 +3,9 @@ package jmri.util;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * PropertyChangeListener that resends the event on the passed in thread when
  * constructed.
@@ -12,6 +15,7 @@ import java.beans.PropertyChangeListener;
  * to ensure notifications are on EDT.
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class ThreadingPropertyChangeListener implements PropertyChangeListener {
 
     private PropertyChangeListener listener;

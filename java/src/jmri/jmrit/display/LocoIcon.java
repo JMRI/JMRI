@@ -16,6 +16,8 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
  */
+@API(status = MAINTAINED)
 public class LocoIcon extends PositionableLabel {
 
     public static final String WHITE = Bundle.getMessage("White");  //loco background colors

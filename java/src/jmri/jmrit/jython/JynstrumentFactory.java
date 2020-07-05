@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import javax.script.ScriptEngine;
 import jmri.script.JmriScriptEngineManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Lionel Jeanson Copyright 2009
  * @since 2.7.8
  */
+@API(status = MAINTAINED)
 public class JynstrumentFactory {
 
     private static final String instanceName = "jynstrumentObjectInstance";

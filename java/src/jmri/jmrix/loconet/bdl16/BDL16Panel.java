@@ -15,6 +15,8 @@ import jmri.jmrix.loconet.AbstractBoardProgPanel;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2004, 2007, 2010
  */
+@API(status = EXPERIMENTAL)
 public class BDL16Panel extends AbstractBoardProgPanel {
 
     /**

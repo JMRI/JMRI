@@ -2,6 +2,9 @@ package jmri.util;
 
 import jmri.NamedBean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Comparator for JMRI NamedBeans via their User Names.
  * <p>
@@ -10,6 +13,7 @@ import jmri.NamedBean;
  * 
  * @param <B> supported type of NamedBean
  */
+@API(status = EXPERIMENTAL)
 public class NamedBeanUserNameComparator<B extends NamedBean> implements java.util.Comparator<B> {
 
     public NamedBeanUserNameComparator() {

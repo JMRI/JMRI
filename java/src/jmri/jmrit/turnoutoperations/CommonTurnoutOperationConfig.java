@@ -8,12 +8,16 @@ import javax.swing.SpinnerNumberModel;
 import jmri.CommonTurnoutOperation;
 import jmri.TurnoutOperation;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extension of TurnoutOperationConfig to handle config for common aspects of
  * some subclasses.
  *
  * @author John Harper Copyright 2005
  */
+@API(status = MAINTAINED)
 public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
     JSpinner intervalSpinner;
     JSpinner maxTriesSpinner;

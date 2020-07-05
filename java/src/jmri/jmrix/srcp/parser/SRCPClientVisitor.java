@@ -2,6 +2,8 @@ package jmri.jmrix.srcp.parser;
 
 import jmri.jmrix.srcp.SRCPBusConnectionMemo;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {
 
     @Override

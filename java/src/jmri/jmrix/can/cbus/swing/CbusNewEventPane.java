@@ -7,6 +7,9 @@ import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.cbus.swing.eventrequestmonitor.CbusEventRequestTablePane;
 import jmri.jmrix.can.cbus.swing.eventtable.CbusEventTablePane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -14,6 +17,7 @@ import jmri.jmrix.can.cbus.swing.eventtable.CbusEventTablePane;
  * Creates Panel for displaying New Event JSpinners and Button.
  * @author Steve Young Copyright (C) 2018, 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusNewEventPane extends JPanel {
     
     private JSpinner newnodenumberSpinner;

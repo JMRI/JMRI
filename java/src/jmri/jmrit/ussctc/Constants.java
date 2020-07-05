@@ -1,5 +1,8 @@
 package jmri.jmrit.ussctc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define common constants for the ussctc package.
  * <p>
@@ -11,6 +14,7 @@ package jmri.jmrit.ussctc;
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = MAINTAINED)
 public interface Constants {
 
     final static String nameDivider = ":";

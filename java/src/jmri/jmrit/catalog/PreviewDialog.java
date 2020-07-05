@@ -30,6 +30,8 @@ import jmri.InstanceManager;
 import jmri.util.swing.DrawSquares;
 import jmri.util.swing.ImagePanel;
 import org.apache.commons.io.FilenameUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +46,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright 2009
  * @author Egbert Broerse Copyright 2017
  */
+@API(status = MAINTAINED)
 public class PreviewDialog extends JDialog {
 
     JPanel _selectedImage;

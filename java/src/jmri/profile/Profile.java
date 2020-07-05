@@ -5,6 +5,9 @@ import java.io.IOException;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A JMRI application profile. Profiles allow a JMRI application to load
  * completely separate set of preferences at each launch without relying on host
@@ -26,6 +29,7 @@ import javax.annotation.Nonnull;
  * 
  * @author Randall Wood Copyright (C) 2013, 2014, 2015, 2018
  */
+@API(status = EXPERIMENTAL)
 public class Profile implements Comparable<Profile> {
 
     private String name;

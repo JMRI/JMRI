@@ -22,6 +22,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,6 +59,7 @@ import jmri.util.swing.JComboBoxUtil;
  *
  * @author Dave Duchamp Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class ActivateTrainFrame {
 
     public ActivateTrainFrame(DispatcherFrame d) {

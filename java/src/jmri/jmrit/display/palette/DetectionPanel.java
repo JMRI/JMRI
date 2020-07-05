@@ -20,9 +20,13 @@ import jmri.jmrit.logix.OPath;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Panel for Occupancy and Error detection.
  */
+@API(status = MAINTAINED)
 public class DetectionPanel extends JPanel {
 
     private final JTextField _occDetectorName = new JTextField(); // can be either a Sensor or OBlock name

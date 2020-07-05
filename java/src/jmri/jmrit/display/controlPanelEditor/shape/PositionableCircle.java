@@ -7,11 +7,15 @@ import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * PositionableCircle PositionableShapes.
  *
  * @author Pete Cressman Copyright (c) 2012
  */
+@API(status = MAINTAINED)
 public class PositionableCircle extends PositionableShape {
 
     public PositionableCircle(Editor editor) {

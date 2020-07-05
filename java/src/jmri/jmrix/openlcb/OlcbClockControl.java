@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.protocols.TimeBroadcastConsumer;
@@ -22,6 +24,7 @@ import jmri.util.ThreadingUtil;
  * @author Balazs Racz, 2018
  */
 
+@API(status = EXPERIMENTAL)
 public class OlcbClockControl extends DefaultClockControl {
     public OlcbClockControl(OlcbInterface iface, NodeID clockID, boolean isMaster) {
         this.clockId = clockID;

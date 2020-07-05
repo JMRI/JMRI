@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet;
 
 import jmri.ThrottleManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author B. Milhaupt Copyright (C) 2018
  */
 @javax.annotation.concurrent.Immutable
+@API(status = EXPERIMENTAL)
 public enum LnCommandStationType {
 
     //  enum value(name, canRead, progEndOp, ThrottleManager, SlotManager, supportsIdle, supportsMultimeter

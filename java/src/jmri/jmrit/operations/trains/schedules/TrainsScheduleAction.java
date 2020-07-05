@@ -5,11 +5,15 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a TrainsScheduleTableFrame object.
  *
  * @author Daniel Boudreau Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class TrainsScheduleAction extends AbstractAction {
     
     public TrainsScheduleAction() {

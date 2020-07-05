@@ -4,6 +4,9 @@ import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the JMRI Powerline-specific tools.
  *
@@ -11,6 +14,7 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class PowerlineMenu extends JMenu {
 
     /**

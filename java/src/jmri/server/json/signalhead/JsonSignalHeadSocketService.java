@@ -1,5 +1,7 @@
 package jmri.server.json.signalhead;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHeadHttpService> {
 
     private final HashMap<String, SignalHeadListener> beanListeners = new HashMap<>();

@@ -17,10 +17,14 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author John Harper
  *
  */
+@API(status = MAINTAINED)
 public class TurnoutOperationFrame extends JDialog {
 
     TurnoutOperationFrame self = this;

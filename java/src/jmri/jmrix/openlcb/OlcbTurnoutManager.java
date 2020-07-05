@@ -10,6 +10,8 @@ import jmri.NamedBeanPropertyDescriptor;
 import jmri.Turnout;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.OlcbInterface;
 
 /**
@@ -20,6 +22,7 @@ import org.openlcb.OlcbInterface;
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  * @since 2.3.1
  */
+@API(status = EXPERIMENTAL)
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
 
     public OlcbTurnoutManager(CanSystemConnectionMemo memo) {

@@ -13,9 +13,12 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = EXPERIMENTAL)
 public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel {
 
     private JTextField railroadName;

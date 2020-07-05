@@ -5,6 +5,8 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetThrottle by Paul Bender and Giorgio Terdina
  */
+@API(status = EXPERIMENTAL)
 public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     protected DCCppTrafficController tc = null;

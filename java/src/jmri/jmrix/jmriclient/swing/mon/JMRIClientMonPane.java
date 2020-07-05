@@ -6,11 +6,15 @@ import jmri.jmrix.jmriclient.JMRIClientReply;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Pane displaying (and logging) JMRIClient command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientMonPane extends jmri.jmrix.AbstractMonPane implements JMRIClientListener {
 
     protected JMRIClientTrafficController tc = null;

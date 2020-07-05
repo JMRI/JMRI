@@ -37,6 +37,8 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.sdi.JmriJFrameInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,6 +74,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2003, 2008
  */
+@API(status = EXPERIMENTAL)
 public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedFlag,
         ComponentListener, WindowInterface, BeanInterface {
 

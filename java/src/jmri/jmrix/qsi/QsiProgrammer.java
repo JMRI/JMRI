@@ -7,11 +7,15 @@ import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
+@API(status = EXPERIMENTAL)
 public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
     private QsiSystemConnectionMemo _memo = null;

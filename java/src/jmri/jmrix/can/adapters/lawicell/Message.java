@@ -2,6 +2,8 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.can.CanMessage;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2009
  */
+@API(status = EXPERIMENTAL)
 public class Message extends AbstractMRMessage {
 
     static final int MAXLEN = 27;

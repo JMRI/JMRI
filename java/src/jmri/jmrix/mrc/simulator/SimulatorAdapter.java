@@ -11,6 +11,8 @@ import jmri.jmrix.mrc.MrcPackets;
 import jmri.jmrix.mrc.MrcPortController;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 import jmri.util.ImmediatePipedOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class SimulatorAdapter extends MrcPortController implements Runnable {
 
     // private control members

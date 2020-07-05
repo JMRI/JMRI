@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Chuck Catania  Copyright (C) 2014, 2016, 2017
  */
+@API(status = EXPERIMENTAL)
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
     // member declarations
     String deltaTCheck = this.getClass().getName()+".DeltaT"; // NOI18N

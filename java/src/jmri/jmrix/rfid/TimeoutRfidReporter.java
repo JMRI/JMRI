@@ -1,6 +1,8 @@
 package jmri.jmrix.rfid;
 
 import jmri.IdTag;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @deprecated since 4.19.4.  Use jmri.implementation.decorators.TimeoutReporter as a replacement.
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class TimeoutRfidReporter extends RfidReporter {
 
     /**

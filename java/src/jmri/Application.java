@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A lightweight class that provides a methods to retrieve the current JMRI
  * application name and icon.
@@ -18,6 +21,7 @@ package jmri;
  *
  * @author Matthew Harris Copyright (C) 2011
  */
+@API(status = STABLE)
 public class Application {
 
     private static String name = null;

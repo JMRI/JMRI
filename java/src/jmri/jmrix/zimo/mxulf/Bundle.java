@@ -7,6 +7,9 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 @ParametersAreNonnullByDefault
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",justification="Desired pattern is repeated class names with package-level access to members")
@@ -22,6 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author      Bob Jacobsen  Copyright (C) 2012
  * @since       3.7.2
  */
+@API(status = EXPERIMENTAL)
 public class Bundle extends jmri.jmrix.zimo.Bundle {
 
     @CheckForNull private static final String name = null; // No local resources

@@ -5,12 +5,16 @@ import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Update the decoder index and store
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2011
  * @see jmri.jmrit.XmlFile
  */
+@API(status = MAINTAINED)
 public class DecoderIndexCreateAction extends JmriAbstractAction {
 
     public DecoderIndexCreateAction(String s, WindowInterface wi) {

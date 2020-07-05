@@ -10,11 +10,15 @@ import jmri.jmrix.tams.TamsReply;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of Tams messages Based on work by Bob Jacobsen and Kevin Dickerson
  *
  * @author Jan Boen
  */
+@API(status = EXPERIMENTAL)
 public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
     // member declarations

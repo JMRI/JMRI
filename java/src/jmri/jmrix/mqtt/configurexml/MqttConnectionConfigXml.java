@@ -4,10 +4,14 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.mqtt.MqttAdapter;
 import jmri.jmrix.mqtt.MqttConnectionConfig;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author lionel
  */
+@API(status = EXPERIMENTAL)
 public class MqttConnectionConfigXml  extends AbstractNetworkConnectionConfigXml {
 
     public MqttConnectionConfigXml() {

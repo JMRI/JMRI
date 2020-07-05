@@ -5,6 +5,10 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class ActivateTrainScheduleAction extends Action {
 
     private static final int _code = ActionCodes.ACTIVATE_TRAIN_SCHEDULE;

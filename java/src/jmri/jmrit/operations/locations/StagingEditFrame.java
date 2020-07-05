@@ -13,11 +13,15 @@ import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.trains.Train;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of a staging track
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
  */
+@API(status = MAINTAINED)
 public class StagingEditFrame extends TrackEditFrame {
 
     // check boxes

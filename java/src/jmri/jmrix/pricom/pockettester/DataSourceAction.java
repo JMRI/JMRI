@@ -1,5 +1,8 @@
 package jmri.jmrix.pricom.pockettester;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * JmriJFrameAction to create and register a pricom.pockettester.DataSource
@@ -9,6 +12,7 @@ package jmri.jmrix.pricom.pockettester;
  *
  * @author Bob Jacobsen Copyright (C) 2002,2005
  */
+@API(status = EXPERIMENTAL)
 public class DataSourceAction extends jmri.util.JmriJFrameAction {
 
     public DataSourceAction(String s) {

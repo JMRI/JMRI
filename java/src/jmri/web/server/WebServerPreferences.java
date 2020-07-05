@@ -10,6 +10,8 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.beans.PreferencesBean;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Randall Wood Copyright (C) 2012, 2017
  */
+@API(status = EXPERIMENTAL)
 public class WebServerPreferences extends PreferencesBean implements InstanceManagerAutoDefault {
 
     // preferences elements

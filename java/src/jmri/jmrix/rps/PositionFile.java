@@ -6,6 +6,8 @@ import java.util.List;
 import javax.vecmath.Point3d;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class PositionFile extends XmlFile {
 
     Document doc;

@@ -22,6 +22,8 @@ import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
  * @author Dave Duchamp Copyright (C) 2004, 2006
  */
+@API(status = EXPERIMENTAL)
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
     private GrapevineSystemConnectionMemo memo = null;

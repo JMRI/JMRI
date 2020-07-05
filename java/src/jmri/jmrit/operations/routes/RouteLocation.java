@@ -14,6 +14,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.ColorUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2013
  */
+@API(status = MAINTAINED)
 public class RouteLocation extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
     public static final String NONE = "";

@@ -10,6 +10,8 @@ import jmri.*;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.*;
 import org.jdom2.output.*;
 import org.openide.util.lookup.ServiceProvider;
@@ -23,6 +25,7 @@ import org.slf4j.*;
 @WebServlet(name = "LayoutPanelServlet",
         urlPatterns = {"/panel/Layout"})
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class LayoutPanelServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(LayoutPanelServlet.class);

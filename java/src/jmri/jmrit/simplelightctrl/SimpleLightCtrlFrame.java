@@ -10,6 +10,8 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.swing.NamedBeanComboBox;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
+@API(status = MAINTAINED)
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
 
     DecimalFormat threeDigits = new DecimalFormat("000");

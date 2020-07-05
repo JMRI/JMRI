@@ -9,6 +9,9 @@ import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 import jmri.util.swing.ValidatedTextField;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides a JPanel for querying and configuring Digitrax Duplex (radio)
  * network identification. Provides useful function if one or more UR92 devices
@@ -27,6 +30,7 @@ import jmri.util.swing.ValidatedTextField;
  *
  * @author B. Milhaupt Copyright 2010, 2011
  */
+@API(status = EXPERIMENTAL)
 public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
 

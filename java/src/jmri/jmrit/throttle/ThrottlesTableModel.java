@@ -8,6 +8,10 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.Throttle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class ThrottlesTableModel extends AbstractTableModel implements AddressListener, java.beans.PropertyChangeListener {
 
     private ArrayList<ThrottleFrame> throttleFrames = new ArrayList<ThrottleFrame>(5);

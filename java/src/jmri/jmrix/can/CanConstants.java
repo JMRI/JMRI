@@ -1,10 +1,14 @@
 package jmri.jmrix.can;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants to represent CAN protocols and adapters
  *
  * @author Andrew Crosland Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public final class CanConstants {
 
     /**

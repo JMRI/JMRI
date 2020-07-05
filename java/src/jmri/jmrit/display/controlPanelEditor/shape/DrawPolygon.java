@@ -15,12 +15,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.display.Editor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Pete Cressman Copyright (c) 2013
  */
+@API(status = MAINTAINED)
 public class DrawPolygon extends DrawFrame {
 
     ArrayList<Point> _vertices;

@@ -5,6 +5,9 @@ import javax.swing.JPanel;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.nodeconfig.NodeConfigAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an oaktree layout connection via an OaktreeSimulator
  * adapter.
@@ -19,6 +22,7 @@ import jmri.jmrix.oaktree.nodeconfig.NodeConfigAction;
  *
  * Based on jmri.jmrix.grapevine.simulator.ConnectionConfig and SecsiSimulator
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

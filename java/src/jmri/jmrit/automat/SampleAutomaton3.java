@@ -3,6 +3,8 @@ package jmri.jmrit.automat;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @see jmri.jmrit.automat.SampleAutomaton3Action
  */
+@API(status = MAINTAINED)
 public class SampleAutomaton3 extends AbstractAutomaton {
 
     /**

@@ -6,6 +6,8 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -16,6 +18,7 @@ import org.jdom2.Element;
  * @author David Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 public class PositionablePointXml extends AbstractXmlAdapter {
 
     static final EnumIO<PositionablePoint.PointType> pTypeEnumMap = new EnumIoNamesNumbers<>(PositionablePoint.PointType.class);

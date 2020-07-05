@@ -10,6 +10,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import jmri.jmrix.can.cbus.node.CbusNode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -17,6 +20,7 @@ import jmri.jmrix.can.cbus.node.CbusNode;
  *
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeUserCommentsPane extends CbusNodeConfigTab implements KeyListener {
     
     private JScrollPane eventScroll;

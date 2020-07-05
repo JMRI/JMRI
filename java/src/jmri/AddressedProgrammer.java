@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to the hardware DCC decoder programming capability.
  * <p>
@@ -39,6 +42,7 @@ package jmri;
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2014
  */
+@API(status = STABLE)
 public interface AddressedProgrammer extends Programmer {
 
     public boolean getLongAddress();

@@ -7,6 +7,8 @@ import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender (C) 2019
  */
 @ServiceProvider(service = PreferencesManager.class)
+@API(status = MAINTAINED)
 public class ConsistPreferencesManager extends AbstractPreferencesManager {
 
     private static final Logger log = LoggerFactory.getLogger(ConsistPreferencesManager.class);

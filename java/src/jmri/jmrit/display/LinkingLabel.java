@@ -6,6 +6,8 @@ import java.net.URISyntaxException;
 import javax.annotation.Nonnull;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2013
  */
+@API(status = MAINTAINED)
 public class LinkingLabel extends PositionableLabel implements LinkingObject {
 
     public LinkingLabel(@Nonnull String s, @Nonnull Editor editor, @Nonnull String url) {

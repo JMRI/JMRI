@@ -9,6 +9,8 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeFromBackup;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * Table model for Backup Files.
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeBackupTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener  {
 
     private CbusNode _nodeOfInterest;

@@ -14,9 +14,12 @@ import jmri.Turnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class CTCMain {
     private final static Logger log = LoggerFactory.getLogger(CTCMain.class);
     private final CTCSerialData _mCTCSerialData = new CTCSerialData();

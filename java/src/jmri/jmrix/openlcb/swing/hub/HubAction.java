@@ -2,6 +2,10 @@ package jmri.jmrix.openlcb.swing.hub;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = EXPERIMENTAL)
 public class HubAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
     public HubAction() {

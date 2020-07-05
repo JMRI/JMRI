@@ -3,6 +3,9 @@ package jmri.util;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Calendar;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common utility class for handling the "spurious wakeup from wait()" problem
  * documented in {@link java.lang.Object#wait(long)}.
@@ -23,6 +26,7 @@ import java.util.Calendar;
  *
  * @author Bob Jacobsen Copyright 2010
  */
+@API(status = EXPERIMENTAL)
 public class WaitHandler {
 
     /**

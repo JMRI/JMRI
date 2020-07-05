@@ -10,6 +10,8 @@ import jmri.jmrix.easydcc.EasyDccPortController; // no special xSimulatorControl
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.util.ImmediatePipedOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class SimulatorAdapter extends EasyDccPortController implements Runnable {
 
     // private control members

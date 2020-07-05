@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import jmri.*;
 import jmri.jmris.AbstractThrottleServer;
 import jmri.SystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JmriSRCPThrottleServer extends AbstractThrottleServer {
 
     private static final Logger log = LoggerFactory.getLogger(JmriSRCPThrottleServer.class);

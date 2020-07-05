@@ -5,6 +5,9 @@ import jmri.jmrix.sprog.SPROGMenu;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Sprog subsystem.
  *
@@ -12,6 +15,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2010
  * @since 3.5.1
  */
+@API(status = EXPERIMENTAL)
 public class SprogComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public SprogComponentFactory(SprogSystemConnectionMemo memo) {

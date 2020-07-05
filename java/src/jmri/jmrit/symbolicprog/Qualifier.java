@@ -1,11 +1,15 @@
 package jmri.jmrit.symbolicprog;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define capability to watch other things and "Qualify" CVs and Variables.
  *
  * @author Bob Jacobsen Copyright (C) 2014
  *
  */
+@API(status = MAINTAINED)
 public interface Qualifier {
 
     /**

@@ -3,6 +3,8 @@ package jmri.jmrix.loconet.uhlenbrock;
 import java.util.Arrays;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPort;
@@ -21,6 +23,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
  */
+@API(status = EXPERIMENTAL)
 public class UhlenbrockAdapter extends LocoBufferAdapter {
 
     public UhlenbrockAdapter() {

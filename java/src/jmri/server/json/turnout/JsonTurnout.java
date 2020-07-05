@@ -1,11 +1,15 @@
 package jmri.server.json.turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Tokens used by the JMRI JSON Sensor service.
  *
  * @author Randall Wood (C) 2020
  * @since 4.19.4
  */
+@API(status = EXPERIMENTAL)
 public class JsonTurnout {
 
     public static final String TURNOUT = "turnout"; // NOI18N

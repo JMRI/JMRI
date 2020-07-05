@@ -12,11 +12,15 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Layout Editor Dialogs implements some dialogs for the Layout Editor
  *
  * @author George Warner Copyright (c) 2019
  */
+@API(status = MAINTAINED)
 public class EnterGridSizesDialog {
 
     // operational instance variables shared between dialogs

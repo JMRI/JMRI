@@ -4,6 +4,8 @@ import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.CommandStation;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class NmraConsist extends DccConsist {
         
     private CommandStation commandStation = null;

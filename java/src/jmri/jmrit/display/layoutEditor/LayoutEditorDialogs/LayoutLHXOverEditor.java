@@ -12,12 +12,16 @@ import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * MVC Editor component for LayoutLHXOver objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
  */
+@API(status = MAINTAINED)
 public class LayoutLHXOverEditor extends LayoutXOverEditor {
 
     /**

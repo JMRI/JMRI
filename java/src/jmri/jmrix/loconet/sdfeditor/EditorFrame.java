@@ -4,6 +4,9 @@ import javax.swing.BoxLayout;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for editing Digitrax SDF files.
  * <p>
@@ -13,6 +16,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class EditorFrame extends JmriJFrame {
 
     // GUI member declarations

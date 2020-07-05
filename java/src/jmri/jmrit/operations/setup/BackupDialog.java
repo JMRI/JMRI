@@ -22,9 +22,12 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.ExceptionContext;
 import jmri.util.swing.ExceptionDisplayFrame;
 import jmri.util.swing.UnexpectedExceptionContext;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class BackupDialog extends JDialog {
 
     private final static Logger log = LoggerFactory

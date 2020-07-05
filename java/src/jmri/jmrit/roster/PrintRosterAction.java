@@ -10,6 +10,8 @@ import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  */
+@API(status = MAINTAINED)
 public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
 
     public PrintRosterAction(String s, jmri.util.swing.WindowInterface wi) {

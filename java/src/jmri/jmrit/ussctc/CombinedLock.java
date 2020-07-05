@@ -3,11 +3,15 @@ package jmri.jmrit.ussctc;
 
 import java.util.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Combines multiple locks into one with an AND operation.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
+@API(status = MAINTAINED)
 public class CombinedLock implements Lock {
 
     public CombinedLock(List<Lock> list) {

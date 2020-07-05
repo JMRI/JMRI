@@ -20,6 +20,9 @@ import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import jmri.util.FileUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide simple way to load and play sounds in JMRI.
  * <p>
@@ -34,6 +37,7 @@ import jmri.util.FileUtil;
  * @author Bob Jacobsen Copyright (C) 2004, 2006
  * @author Dave Duchamp Copyright (C) 2011 - add streaming play of large files
  */
+@API(status = MAINTAINED)
 public class Sound {
 
     // files over this size will be streamed

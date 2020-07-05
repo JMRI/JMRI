@@ -15,6 +15,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015
  */
+@API(status = MAINTAINED)
 public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     private final List<Track> _nextLocationTracks = new ArrayList<>();

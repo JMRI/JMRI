@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet.streamport;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an LocoNet layout connection via an LnStreamPortController
  * adapter.
@@ -11,6 +14,7 @@ package jmri.jmrix.loconet.streamport;
  *
  * @see LnStreamPortController
  */
+@API(status = EXPERIMENTAL)
 public class LnStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
 
     /**

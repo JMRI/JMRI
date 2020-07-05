@@ -3,10 +3,14 @@ package jmri.jmrit.ctc.editor.gui;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+@API(status = MAINTAINED)
 public class FrmAbout extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "dlgAbout";

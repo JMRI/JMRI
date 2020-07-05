@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to open a window that allows a user to edit the manifest header
  * text strings.
@@ -13,6 +16,7 @@ import javax.swing.AbstractAction;
  * @author Daniel Boudreau Copyright (C) 2014
  * 
  */
+@API(status = MAINTAINED)
 public class EditManifestHeaderTextAction extends AbstractAction {
 
     public EditManifestHeaderTextAction() {

@@ -3,6 +3,9 @@ package jmri.jmrix.qsi;
 import jmri.ProgrammingMode;
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Encodes a message to an QSI command station.
  * <p>
@@ -10,6 +13,7 @@ import jmri.util.StringUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
     // Special characters (NOTE: microchip bootloader does not use standard ASCII)

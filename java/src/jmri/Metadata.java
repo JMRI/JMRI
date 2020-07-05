@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import jmri.profile.ProfileManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Meta data concerning the JMRI application.
  * <p>
@@ -23,6 +26,7 @@ import jmri.profile.ProfileManager;
  *
  * @author Randall Wood Copyright (C) 2011
  */
+@API(status = STABLE)
 public interface Metadata {
 
     public static final String JMRIVERSION = "JMRIVERSION"; // NOI18N

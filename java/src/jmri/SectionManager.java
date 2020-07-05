@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
+@API(status = STABLE)
 public class SectionManager extends AbstractManager<Section> implements InstanceManagerAutoDefault {
 
     public SectionManager() {

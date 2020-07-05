@@ -16,6 +16,9 @@ import jmri.util.swing.StayOpenCheckBoxItem;
 import jmri.util.table.JTableToCsvAction;
 import jmri.util.table.JTableWithColumnToolTips;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -29,6 +32,7 @@ import jmri.util.table.JTableWithColumnToolTips;
  *
  * @since 2.99.2
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     protected CbusEventTableDataModel eventModel;

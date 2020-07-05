@@ -5,12 +5,16 @@ import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of a ReporterManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
+@API(status = EXPERIMENTAL)
 public class ProxyReporterManager extends AbstractProxyManager<Reporter> implements ReporterManager {
 
     public ProxyReporterManager() {

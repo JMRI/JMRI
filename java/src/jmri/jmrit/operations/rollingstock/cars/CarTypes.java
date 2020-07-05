@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  */
+@API(status = MAINTAINED)
 public class CarTypes extends RollingStockAttribute implements InstanceManagerAutoDefault {
 
     private static final String TYPES = Bundle.getMessage("carTypeNames");

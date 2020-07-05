@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz.xnetsimulator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an XpressNet layout connection via an XNetSimulator
  * adapter.
@@ -11,6 +14,7 @@ package jmri.jmrix.lenz.xnetsimulator;
  *
  * @see XNetSimulatorAdapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

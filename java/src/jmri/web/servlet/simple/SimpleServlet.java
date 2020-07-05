@@ -19,6 +19,8 @@ import jmri.util.FileUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
 import jmri.web.servlet.ServletUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError;
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
 @WebServlet(name = "SimpleServlet",
         urlPatterns = {"/simple"})
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class SimpleServlet extends WebSocketServlet {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleServlet.class);

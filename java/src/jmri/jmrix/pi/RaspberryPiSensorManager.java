@@ -3,6 +3,9 @@ package jmri.jmrix.pi;
 import javax.annotation.Nonnull;
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manage the RaspberryPi specific Sensor implementation.
  *
@@ -11,6 +14,7 @@ import jmri.Sensor;
  *
  * @author   Paul Bender Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManager {
 
     // ctor has to register for RaspberryPi events

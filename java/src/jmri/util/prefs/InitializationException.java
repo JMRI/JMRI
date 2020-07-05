@@ -1,11 +1,15 @@
 package jmri.util.prefs;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This exception represents an exception thrown while attempting to initialize
  * a PreferencesProvider.
  *
  * @author Randall Wood (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class InitializationException extends Exception {
 
     private String localizedMessage = null;

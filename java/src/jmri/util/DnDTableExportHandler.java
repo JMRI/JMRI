@@ -10,9 +10,12 @@ import java.awt.datatransfer.Transferable;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.TransferHandler;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class DnDTableExportHandler extends TransferHandler {
 
     @Override

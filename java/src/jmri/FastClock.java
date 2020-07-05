@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to fast clock capabilities in hardware or software.
  * <br>
@@ -16,6 +19,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = STABLE)
 public interface FastClock {
 
     // time

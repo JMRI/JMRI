@@ -4,6 +4,8 @@ import java.util.List;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MultiSensorIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  */
+@API(status = MAINTAINED)
 public class MultiSensorIconXml extends PositionableLabelXml {
 
     public MultiSensorIconXml() {

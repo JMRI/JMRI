@@ -4,6 +4,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for controlling sensors.
  *
@@ -20,6 +23,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = STABLE)
 public interface SensorManager extends ProvidingManager<Sensor> {
 
     /**

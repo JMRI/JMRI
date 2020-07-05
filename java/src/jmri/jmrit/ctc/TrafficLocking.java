@@ -6,6 +6,8 @@ import java.util.HashSet;
 import jmri.Sensor;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 
+@API(status = MAINTAINED)
 public class TrafficLocking {
     private final static Logger log = LoggerFactory.getLogger(TrafficLocking.class);
 

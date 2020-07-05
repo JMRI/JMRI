@@ -13,6 +13,8 @@ import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.JmriJFrame;
 import jmri.util.NonNullArrayList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,6 +83,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008,2010
  */
+@API(status = STABLE)
 public class Section extends AbstractNamedBean {
 
     private static final NamedBean.DisplayOptions USERSYS = NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;

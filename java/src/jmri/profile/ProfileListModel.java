@@ -4,12 +4,16 @@ import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import javax.swing.AbstractListModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A list of {@link jmri.profile.Profile}s, suitable for use in Swing components
  * that display a list of items.
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class ProfileListModel extends AbstractListModel<Profile> {
 
     public ProfileListModel() {

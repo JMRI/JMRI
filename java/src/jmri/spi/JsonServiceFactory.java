@@ -8,6 +8,9 @@ import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonSocketService;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Factory interface for JSON services.
  * <p>
@@ -20,6 +23,7 @@ import jmri.server.json.JsonSocketService;
  * @param <S> the specific supported (Web)Socket service
  * @author Randall Wood Copyright 2016, 2018
  */
+@API(status = EXPERIMENTAL)
 public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSocketService<H>> extends JmriServiceProviderInterface {
 
     /**

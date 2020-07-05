@@ -7,9 +7,13 @@ import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Pete cresman Copyright (c) 2012
  */
+@API(status = MAINTAINED)
 public class PositionableRectangle extends PositionableShape {
 
     public PositionableRectangle(Editor editor) {

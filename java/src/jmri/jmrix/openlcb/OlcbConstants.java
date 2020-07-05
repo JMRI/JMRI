@@ -1,5 +1,8 @@
 package jmri.jmrix.openlcb;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * OlcbConstants.java
  *
@@ -9,6 +12,7 @@ package jmri.jmrix.openlcb;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public final class OlcbConstants {
 
     private OlcbConstants(){

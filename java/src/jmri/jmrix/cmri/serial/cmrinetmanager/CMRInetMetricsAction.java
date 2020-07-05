@@ -2,6 +2,8 @@ package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import java.awt.event.ActionEvent;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import javax.swing.AbstractAction;
  *
  * @author Chuck Catania 2016, 2017
  */
+@API(status = EXPERIMENTAL)
 public class CMRInetMetricsAction extends AbstractAction {
 
     CMRISystemConnectionMemo _memo = null;

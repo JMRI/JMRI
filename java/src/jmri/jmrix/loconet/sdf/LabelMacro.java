@@ -1,10 +1,14 @@
 package jmri.jmrix.loconet.sdf;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An SdfMacro for carrying a comment
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class LabelMacro extends SdfMacro {
 
     public LabelMacro(String label) {

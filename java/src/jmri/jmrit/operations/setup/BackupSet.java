@@ -7,6 +7,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.util.Date;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents the set of Operations files that is considered a "Backup" of the
  * current Operations files.
@@ -18,6 +21,7 @@ import java.util.Date;
  * @author Gregory Madsen Copyright (C) 2012
  *
  */
+@API(status = MAINTAINED)
 public class BackupSet {
 
     private String _setName;

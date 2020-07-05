@@ -9,6 +9,8 @@ import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.roster.RosterEntry
  * @see javax.swing.JComboBox
  */
+@API(status = MAINTAINED)
 public class RosterEntryComboBox extends JComboBox<Object> implements RosterEntrySelector {
 
     protected Roster _roster;

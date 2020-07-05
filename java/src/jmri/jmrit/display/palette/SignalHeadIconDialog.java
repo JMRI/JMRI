@@ -3,6 +3,8 @@ package jmri.jmrit.display.palette;
 import java.util.HashMap;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.NamedIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  * families.
  * @author Pete Cressman Copyright (c) 2018
  */
+@API(status = MAINTAINED)
 public class SignalHeadIconDialog extends IconDialog {
     
     public SignalHeadIconDialog(String type, String family, FamilyItemPanel parent, HashMap<String, NamedIcon> iconMap) {

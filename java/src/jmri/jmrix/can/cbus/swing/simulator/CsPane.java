@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
 import jmri.util.swing.ComboBoxToolTipRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2018 2019
  * @since 4.15.2
  */
+@API(status = EXPERIMENTAL)
 public class CsPane extends JPanel {
     
     private final CbusDummyCS _cs;

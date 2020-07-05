@@ -8,6 +8,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.IllegalComponentStateException;
 import java.awt.Point;
 import java.awt.Window;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 //import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +28,7 @@ import jmri.InstanceManagerAutoDefault;
  * @author Pete Cressman Copyright (C) 2018
  * @since 4.13.1
  */
+@API(status = EXPERIMENTAL)
 public class PlaceWindow implements InstanceManagerAutoDefault {
     static GraphicsEnvironment _environ = GraphicsEnvironment.getLocalGraphicsEnvironment();
     static Dimension _screenSize[];

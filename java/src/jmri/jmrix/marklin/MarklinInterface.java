@@ -1,11 +1,15 @@
 package jmri.jmrix.marklin;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define the interface for sending and receiving messages to the Marklin command
  * station.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
+@API(status = EXPERIMENTAL)
 public interface MarklinInterface {
 
     public void addMarklinListener(MarklinListener l);

@@ -7,6 +7,9 @@ import jmri.Manager.NameValidity;
 import jmri.NamedBean;
 import jmri.ReporterManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Utility Class supporting parsing and testing of addresses for Z21 CanBus  
  * <p>
@@ -21,6 +24,7 @@ import jmri.ReporterManager;
  * @author Bob Coleman Copyright (C) 2007, 2008, 2009
  * @author Egbert Broerse (C) 2017 Based on Acela example, modified for XpressNet.
  */
+@API(status = EXPERIMENTAL)
 public class Z21CanBusAddress {
 
     private Z21CanBusAddress() {

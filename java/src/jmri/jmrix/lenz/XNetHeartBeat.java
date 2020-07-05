@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * XNet specific class to send heartbeat messages to
  * the XNet.  Heartbeat messages are only required if
@@ -9,6 +12,7 @@ package jmri.jmrix.lenz;
  *
  * @author Paul Bender Copyright (C) 2019 
  */
+@API(status = EXPERIMENTAL)
 public class XNetHeartBeat implements XNetListener {
 
     private javax.swing.Timer keepAliveTimer; // Timer used to periodically

@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.EnumSet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * DCC Speed Step Mode.
  *
@@ -19,6 +22,7 @@ import java.util.EnumSet;
  * @author Austin Hendrix Copyright (C) 2019
  */
 @javax.annotation.concurrent.Immutable
+@API(status = STABLE)
 public enum SpeedStepMode {
     // NOTE: keep these up to date with xml/schema/locomotive-config.xsd
     UNKNOWN("unknown", 1, 0.0f, "SpeedStepUnknown"),

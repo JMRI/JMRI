@@ -7,6 +7,9 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusSend;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Simulating event request responses.
  *
@@ -14,6 +17,7 @@ import jmri.jmrix.can.cbus.CbusSend;
  * @see CbusSimulator
  * @since 4.15.2
  */
+@API(status = EXPERIMENTAL)
 public class CbusSimCanListener extends jmri.jmrix.can.cbus.node.CbusNodeCanListener {
     
     private int _networkDelay;

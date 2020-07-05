@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 import jmri.InstanceManager;
@@ -12,6 +14,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  */
+@API(status = MAINTAINED)
 public class CarLengths extends RollingStockAttribute implements InstanceManagerAutoDefault {
 
     private static final String LENGTHS = Bundle.getMessage("carLengths");

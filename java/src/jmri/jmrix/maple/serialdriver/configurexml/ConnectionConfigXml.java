@@ -8,6 +8,8 @@ import jmri.jmrix.maple.SerialNode;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.serialdriver.ConnectionConfig;
 import jmri.jmrix.maple.serialdriver.SerialDriverAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -25,6 +27,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp Copyright (c) 2009 - Maple modifications
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

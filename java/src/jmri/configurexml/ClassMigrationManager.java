@@ -5,11 +5,15 @@ import java.util.ServiceLoader;
 import javax.annotation.Nonnull;
 import jmri.InstanceManagerAutoDefault;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Get class migrations for the {@link ConfigXmlManager}.
  *
  * @author Randall Wood Copyright 2017
  */
+@API(status = EXPERIMENTAL)
 public class ClassMigrationManager implements InstanceManagerAutoDefault {
 
     private final HashMap<String, String> migrations = new HashMap<>();

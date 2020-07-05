@@ -1,5 +1,7 @@
 package jmri.server.json.light;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.OFF;
@@ -28,6 +30,7 @@ import jmri.server.json.JsonRequest;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
 
     public JsonLightHttpService(ObjectMapper mapper) {

@@ -12,11 +12,15 @@ import jmri.InvokeOnGuiThread;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements the move selection dialog for the Layout Editor
  *
  * @author George Warner Copyright (c) 2019
  */
+@API(status = MAINTAINED)
 public class MoveSelectionDialog {
 
     // operational instance variables

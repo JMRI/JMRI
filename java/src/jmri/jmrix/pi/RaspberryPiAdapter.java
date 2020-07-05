@@ -3,6 +3,8 @@ package jmri.jmrix.pi;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import javax.annotation.CheckForNull;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Paul Bender Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController {
 
     // in theory gpio can be static, because there will only ever

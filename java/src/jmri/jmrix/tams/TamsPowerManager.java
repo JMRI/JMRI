@@ -3,6 +3,8 @@ package jmri.jmrix.tams;
 import jmri.JmriException;
 import jmri.managers.AbstractPowerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Jan Boen
  * 
  */
+@API(status = EXPERIMENTAL)
 public class TamsPowerManager extends AbstractPowerManager<TamsSystemConnectionMemo> implements TamsListener {
     
     //This dummy message is used in case we expect a reply from polling

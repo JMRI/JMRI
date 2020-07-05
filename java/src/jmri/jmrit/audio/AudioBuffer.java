@@ -4,6 +4,9 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import jmri.Audio;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent an AudioBuffer, a place to store or control sound information.
  * <p>
@@ -33,6 +36,7 @@ import jmri.Audio;
  *
  * @author Matthew Harris copyright (c) 2009, 2011
  */
+@API(status = MAINTAINED)
 public interface AudioBuffer extends Audio {
 
     /**

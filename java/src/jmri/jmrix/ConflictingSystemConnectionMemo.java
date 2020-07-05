@@ -5,6 +5,9 @@ import java.util.ResourceBundle;
 import jmri.NamedBean;
 import jmri.util.NamedBeanPreferNumericComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A SystemConnectionMemo that does not get registered its prefix registered
  * with the {@link jmri.InstanceManager} and is likely to have a system prefix
@@ -19,6 +22,7 @@ import jmri.util.NamedBeanPreferNumericComparator;
  * remove immediately when no longer used
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class ConflictingSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public ConflictingSystemConnectionMemo(String prefix, String userName) {

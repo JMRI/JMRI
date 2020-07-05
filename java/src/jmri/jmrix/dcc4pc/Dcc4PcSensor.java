@@ -2,6 +2,9 @@ package jmri.jmrix.dcc4pc;
 
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement a Sensor via Dcc4Pc communications.
  * <p>
@@ -12,6 +15,7 @@ import jmri.implementation.AbstractSensor;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Kevin Dickerson (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcSensor extends AbstractSensor {
 
     public Dcc4PcSensor(String systemName, String userName) {

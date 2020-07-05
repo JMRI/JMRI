@@ -8,12 +8,16 @@ import java.util.Properties;
 import jmri.util.FileUtil;
 import jmri.jmrit.ctc.CTCFiles;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  *
  * This just maintains all of the properties a user can create. Stupid simple.
  */
+@API(status = MAINTAINED)
 public class ProgramProperties {
 
     private static final String PROPERTIES_FILENAME = "ProgramProperties.xml";  // NOI18N

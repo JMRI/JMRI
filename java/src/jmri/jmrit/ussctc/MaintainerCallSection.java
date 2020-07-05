@@ -2,6 +2,9 @@ package jmri.jmrit.ussctc;
 
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Drive a single Maintainer Call section on a USS CTC panel.
  *
@@ -9,6 +12,7 @@ import jmri.*;
  * TODO - add field state diagram
  */
 
+@API(status = MAINTAINED)
 public class MaintainerCallSection implements Section<CodeGroupOneBit, CodeGroupNoBits> {
 
     /**

@@ -9,6 +9,9 @@ import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of Powerline messages.
  *
@@ -16,6 +19,7 @@ import jmri.util.StringUtil;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePanel implements SerialListener {
 
     // member declarations

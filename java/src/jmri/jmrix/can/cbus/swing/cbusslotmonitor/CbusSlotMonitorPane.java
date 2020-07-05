@@ -21,6 +21,9 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.util.table.JTableWithColumnToolTips;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -30,6 +33,7 @@ import jmri.util.table.JTableWithColumnToolTips;
  * @author Steve Young Copyright (C) 2018
  * @since 4.13.4
  */
+@API(status = EXPERIMENTAL)
 public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
 
     private JScrollPane scrolltablefeedback;

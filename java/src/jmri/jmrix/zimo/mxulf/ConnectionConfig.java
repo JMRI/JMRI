@@ -2,6 +2,8 @@ package jmri.jmrix.zimo.mxulf;
 
 import java.util.ResourceBundle;
 import jmri.util.SystemType;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  *
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);

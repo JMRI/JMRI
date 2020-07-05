@@ -5,6 +5,8 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 import java.util.Arrays;
 import javax.vecmath.Point3d;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 @javax.annotation.concurrent.Immutable
+@API(status = EXPERIMENTAL)
 public class Region {
 
     public Region(Point3d[] points) {

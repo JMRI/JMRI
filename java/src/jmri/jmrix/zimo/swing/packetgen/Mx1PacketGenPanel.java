@@ -7,6 +7,9 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import jmri.jmrix.zimo.Mx1TrafficController;
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of Mrc messages
  *
@@ -14,6 +17,7 @@ import jmri.util.StringUtil;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
 
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();

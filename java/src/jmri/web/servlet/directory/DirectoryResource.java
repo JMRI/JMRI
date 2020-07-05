@@ -8,6 +8,8 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.eclipse.jetty.util.StringUtil;
 import org.eclipse.jetty.util.URIUtil;
 import org.eclipse.jetty.util.resource.PathResource;
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copright 2016, 2020
  */
+@API(status = EXPERIMENTAL)
 public class DirectoryResource extends PathResource {
 
     private final Locale locale;

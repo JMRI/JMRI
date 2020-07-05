@@ -2,6 +2,9 @@ package jmri.jmrit.display.palette;
 
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Container for dialogs that modify the user's changes to his/her icon catalog.
  * e.g additions, deletions or modifications of icon families. (User's
@@ -12,6 +15,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Pete Cressman Copyright (c) 2010, 2020
  */
+@API(status = MAINTAINED)
 public class ItemDialog extends JmriJFrame {
 
     protected FamilyItemPanel _parent;

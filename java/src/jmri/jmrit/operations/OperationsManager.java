@@ -3,6 +3,8 @@ package jmri.jmrit.operations;
 import java.io.File;
 import java.io.IOException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  *
  * @author Randall Wood 2014
  */
+@API(status = MAINTAINED)
 public final class OperationsManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     private ShutDownTask shutDownTask = null;

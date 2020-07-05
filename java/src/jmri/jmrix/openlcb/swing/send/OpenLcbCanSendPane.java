@@ -21,6 +21,8 @@ import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.openlcb.swing.ClientActions;
 import jmri.util.StringUtil;
 import jmri.util.javaworld.GridLayout2;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.Connection;
 import org.openlcb.DatagramAcknowledgedMessage;
 import org.openlcb.DatagramMessage;
@@ -52,6 +54,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2008, 2012
  *
  */
+@API(status = EXPERIMENTAL)
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
     // member declarations

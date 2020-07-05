@@ -2,6 +2,9 @@ package jmri.jmrix.mrc;
 
 import java.util.Date;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * MrcTrafficListenerFilter is a helper class used to suppress notifications a
  * client is not interested in.
@@ -11,6 +14,7 @@ import java.util.Date;
  * 
  *
  */
+@API(status = EXPERIMENTAL)
 public class MrcTrafficListenerFilter {
 
     /* Overridden to compare the listener, not the filter objects.

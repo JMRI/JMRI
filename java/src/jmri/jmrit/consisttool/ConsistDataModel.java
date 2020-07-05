@@ -11,6 +11,8 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (c) 2004-2005
  */
+@API(status = MAINTAINED)
 public class ConsistDataModel extends AbstractTableModel {
 
     private static final int ADDRCOLUMN = 0;    // Locomotive address

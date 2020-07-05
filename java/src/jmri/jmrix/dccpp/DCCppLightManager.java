@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_TURNOUT_ADDRESS;
 import javax.annotation.Nonnull;
 import java.util.Locale;
@@ -16,6 +18,7 @@ import jmri.managers.AbstractLightManager;
  * @author Paul Bender Copyright (C) 2008
  * @author Mark Underwood Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class DCCppLightManager extends AbstractLightManager {
 
     private DCCppTrafficController tc = null;

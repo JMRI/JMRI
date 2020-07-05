@@ -12,6 +12,8 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.MathUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.*;
 
 /**
@@ -48,6 +50,7 @@ import org.slf4j.*;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2019
  */
+@API(status = MAINTAINED)
 public class LayoutDoubleSlip extends LayoutSlip {
 
     /**

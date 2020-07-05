@@ -7,11 +7,15 @@ import javax.swing.JMenuBar;
 
 import jmri.jmrit.operations.OperationsFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of operation parameters
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  */
+@API(status = MAINTAINED)
 public class OperationsSetupFrame extends OperationsFrame {
 
     public OperationsSetupFrame() {

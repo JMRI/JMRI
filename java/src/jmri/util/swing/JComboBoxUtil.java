@@ -7,6 +7,9 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.ListModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common utility methods for working with JComboBoxes.
  * <p>
@@ -17,6 +20,7 @@ import javax.swing.ListModel;
  * @author Bob Jacobsen Copyright 2003, 2010
  * @since 4.9.5
  */
+@API(status = EXPERIMENTAL)
 public class JComboBoxUtil {
 
     /**

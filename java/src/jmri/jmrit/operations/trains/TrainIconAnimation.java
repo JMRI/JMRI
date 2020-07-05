@@ -1,6 +1,8 @@
 package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.routes.RouteLocation;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau (C) Copyright 2009, 2010
  */
+@API(status = MAINTAINED)
 public class TrainIconAnimation extends Thread {
 
     TrainIcon _trainIcon;

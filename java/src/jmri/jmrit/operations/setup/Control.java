@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.setup;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -16,6 +18,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  */
 @SuppressFBWarnings(value = "MS_CANNOT_BE_FINAL")
+@API(status = MAINTAINED)
 public class Control {
 
     // debug flags

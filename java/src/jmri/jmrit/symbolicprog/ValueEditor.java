@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = MAINTAINED)
 public class ValueEditor extends JComboBox<Object> implements TableCellEditor, FocusListener {
 
     protected transient Vector<CellEditorListener> listeners;

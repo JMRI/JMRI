@@ -1,10 +1,14 @@
 package jmri.jmrix.loconet.sdf;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement the SDL_VERSION macro from the Digitrax sound definition language
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class SdlVersion extends SdfMacro {
 
     public SdlVersion(int version) {

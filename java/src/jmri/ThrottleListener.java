@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.EventListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A listener interface for a class requesting a DccThrottle from the
  * ThrottleManager.
@@ -22,6 +25,7 @@ import java.util.EventListener;
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = STABLE)
 public interface ThrottleListener extends EventListener {
     
     /**

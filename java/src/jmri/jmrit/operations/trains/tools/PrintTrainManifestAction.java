@@ -8,11 +8,15 @@ import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.trains.Train;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to print a train's manifest
  *
  * @author Daniel Boudreau Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class PrintTrainManifestAction extends AbstractAction {
 
     public PrintTrainManifestAction(boolean isPreview, Train train) {

@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.rfid.networkdriver.ConnectionConfig;
 import jmri.jmrix.rfid.networkdriver.NetworkDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistence of layout connections by persisting the
  * NetworkDriverAdapter (and connections).
@@ -18,6 +21,7 @@ import jmri.jmrix.rfid.networkdriver.NetworkDriverAdapter;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2015
  * @author kcameron Copyright (C) 2010 added multiple connections
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

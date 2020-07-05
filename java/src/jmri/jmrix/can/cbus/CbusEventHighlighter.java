@@ -5,6 +5,9 @@ import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -13,6 +16,7 @@ import jmri.jmrix.can.CanReply;
  *
  * @author Andrew Crosland Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventHighlighter {
     
     private boolean _nnEnabled;

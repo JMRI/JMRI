@@ -11,6 +11,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * class VSDOptionsDialog
  *
@@ -30,6 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class VSDOptionsDialog extends JDialog {
 
     public static final String OPTIONS_PROPERTY = "Options"; // NOI18N

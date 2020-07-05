@@ -3,6 +3,9 @@ package jmri.util;
 import java.util.Comparator;
 import jmri.LocoAddress;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Comparator for LocoAddress objects.
  * <p>
@@ -10,6 +13,7 @@ import jmri.LocoAddress;
  *
  * @author Paul Bender Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class LocoAddressComparator implements Comparator<LocoAddress> {
 
     public LocoAddressComparator() {

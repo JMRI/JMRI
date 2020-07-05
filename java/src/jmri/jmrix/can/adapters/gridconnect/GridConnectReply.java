@@ -2,6 +2,8 @@ package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.can.CanReply;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2008, 2009
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class GridConnectReply extends AbstractMRReply {
 
     static final int MAXLEN = 27;

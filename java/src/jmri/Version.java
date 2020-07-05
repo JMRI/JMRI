@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.ResourceBundle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Defines a simple place to get the JMRI version string.
  * <p>
@@ -58,6 +61,7 @@ import java.util.ResourceBundle;
  *
  * @author Bob Jacobsen Copyright 1997-2016
  */
+@API(status = STABLE)
 public class Version {
 
     static final private ResourceBundle VERSION_BUNDLE = ResourceBundle.getBundle("jmri.Version"); // NOI18N

@@ -6,6 +6,9 @@ import java.util.Queue;
 import jmri.implementation.AbstractTurnout;
 import javax.annotation.concurrent.GuardedBy;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.AbstractTurnout for XNet layouts
  * <p>
@@ -105,6 +108,7 @@ import javax.annotation.concurrent.GuardedBy;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author      Paul Bender Copyright (C) 2003-2010
  */
+@API(status = EXPERIMENTAL)
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     /* State information */

@@ -2,6 +2,9 @@ package jmri.jmrit.roster.rostergroup;
 
 import java.beans.PropertyChangeListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * The getter method for a roster group selection.
  * <p>
@@ -10,6 +13,7 @@ import java.beans.PropertyChangeListener;
  *
  * @author Randall Wood
  */
+@API(status = MAINTAINED)
 public interface RosterGroupSelector {
 
     /**

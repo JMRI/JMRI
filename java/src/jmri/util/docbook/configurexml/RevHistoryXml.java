@@ -3,6 +3,8 @@ package jmri.util.docbook.configurexml;
 import java.util.ArrayList;
 import jmri.util.docbook.RevHistory;
 import jmri.util.docbook.Revision;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
@@ -15,6 +17,7 @@ import org.jdom2.Namespace;
  *
  * @author Bob Jacobsen Copyright (c) 2010
  */
+@API(status = EXPERIMENTAL)
 public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
     private static final String NAMESPACE = "http://docbook.org/ns/docbook"; // NOI18N

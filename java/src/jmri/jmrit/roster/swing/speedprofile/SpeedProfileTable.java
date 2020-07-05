@@ -24,11 +24,15 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Display Speed Profile.
  *
  * @author  Pete Cressman Copyright (C) 2015
  */
+@API(status = MAINTAINED)
 public class SpeedProfileTable extends jmri.util.JmriJFrame {
 
     java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");

@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.powerline.simulator.ConnectionConfig;
 import jmri.jmrix.powerline.simulator.SimulatorAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistence of layout connections by persisting the
  * SerialDriverAdapter (and connections). Note this is named as the XML version
@@ -17,6 +20,7 @@ import jmri.jmrix.powerline.simulator.SimulatorAdapter;
  * @author Ken Cameron Copyright: Copyright (c) 2011 Copied from NCE simulator
  * by Bob Jacobsen
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

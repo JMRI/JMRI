@@ -31,6 +31,8 @@ import javax.swing.ImageIcon;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.util.FileUtil;
 import jmri.util.MathUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +51,7 @@ import org.slf4j.LoggerFactory;
  *
  * Modified by Joe Comuzzi and Larry Allen to rotate animated GIFs
  */
+@API(status = MAINTAINED)
 public class NamedIcon extends ImageIcon {
 
     /**

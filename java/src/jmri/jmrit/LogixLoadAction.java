@@ -5,6 +5,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
+@API(status = MAINTAINED)
 public class LogixLoadAction extends AbstractAction {
 
     public LogixLoadAction(String s, JPanel who) {

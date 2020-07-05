@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import jmri.jmrit.roster.RosterEntry;
  * @author Daniel Boudreau Copyright (C) 2008
  *
  */
+@API(status = MAINTAINED)
 public class ImportRosterEngines extends Thread {
 
     EngineManager manager = InstanceManager.getDefault(EngineManager.class);

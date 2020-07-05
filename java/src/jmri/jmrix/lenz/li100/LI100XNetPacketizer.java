@@ -2,6 +2,8 @@ package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.lenz.XNetPacketizer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class LI100XNetPacketizer extends XNetPacketizer {
 
     public LI100XNetPacketizer(jmri.jmrix.lenz.LenzCommandStation pCommandStation) {

@@ -6,12 +6,16 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An implementation of DccThrottle with code specific to a Direct serial
  * connection.
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class Throttle extends AbstractThrottle {
 
     private CommandStation tcl = null;

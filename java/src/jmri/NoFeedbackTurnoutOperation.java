@@ -3,12 +3,16 @@ package jmri;
 import jmri.implementation.AbstractTurnout;
 import jmri.implementation.NoFeedbackTurnoutOperator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * NoFeedBackTurnoutOperation class - specialization of TurnoutOperation to
  * provide automatic retry for a turnout with no feedback.
  *
  * @author John Harper
  */
+@API(status = STABLE)
 public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 
     // This class can deal with ANY feedback mode, although it may not be the best one

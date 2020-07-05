@@ -2,11 +2,15 @@ package jmri.jmrix.qsi;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri QSI-specific tools.
  *
  * @author Bob Jacobsen Copyright 2007
  */
+@API(status = EXPERIMENTAL)
 public class QSIMenu extends JMenu {
 
     public QSIMenu(String name, QsiSystemConnectionMemo memo) {

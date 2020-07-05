@@ -3,6 +3,8 @@ package jmri.jmrix.loconet;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Stephen Williams Copyright (C) 2008
  * @author B. Milhaupt, Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class LocoNetSlot {
 
     // create a specific slot

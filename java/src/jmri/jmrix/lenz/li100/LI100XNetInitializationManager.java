@@ -3,6 +3,9 @@ package jmri.jmrix.lenz.li100;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This class performs Command Station dependent initialization for XpressNet.
  * It adds the appropriate Managers via the Initialization Manager based on the
@@ -12,6 +15,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  * @deprecated since 4.21.1.  Use {@link XNetInitializationManager} instead.
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class LI100XNetInitializationManager extends XNetInitializationManager {
 
 

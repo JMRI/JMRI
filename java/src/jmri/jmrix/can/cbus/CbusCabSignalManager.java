@@ -5,6 +5,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.LocoAddress;
 import jmri.managers.AbstractCabSignalManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -26,6 +29,7 @@ import jmri.managers.AbstractCabSignalManager;
  * @author Paul Bender Copyright (C) 2019
  * @author Steve Young Copyright (C) 2019 
  */
+@API(status = EXPERIMENTAL)
 public class CbusCabSignalManager extends AbstractCabSignalManager {
 
     private final CanSystemConnectionMemo _memo;

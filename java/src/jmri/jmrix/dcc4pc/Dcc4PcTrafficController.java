@@ -9,6 +9,8 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 import jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPort;
@@ -26,6 +28,7 @@ import purejavacomm.SerialPort;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcTrafficController extends AbstractMRTrafficController implements Dcc4PcInterface {
 
     /**

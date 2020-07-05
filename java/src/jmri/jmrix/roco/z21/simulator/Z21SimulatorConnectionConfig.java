@@ -3,6 +3,9 @@ package jmri.jmrix.roco.z21.simulator;
 import javax.swing.JPanel;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an z21 layout connection via a z21Simulator
  * adapter.
@@ -14,6 +17,7 @@ import javax.swing.JPanel;
  *
  * @see Z21SimulatorAdapter
  */
+@API(status = EXPERIMENTAL)
 public class Z21SimulatorConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
 
     /**

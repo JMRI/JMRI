@@ -5,6 +5,8 @@ import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.util.zeroconf.ZeroConfClient;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood (C) 2015
  * Based on LIUSBEthernetAdapter
  */
+@API(status = EXPERIMENTAL)
 public class DCCppEthernetAdapter extends DCCppNetworkPortController {
 
     static final int COMMUNICATION_TCP_PORT = 2560;

@@ -9,6 +9,8 @@ import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.jmrix.marklin.MarklinTrafficController;
 import jmri.util.com.rbnb.UDPInputStream;
 import jmri.util.com.rbnb.UDPOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class NetworkDriverAdapter extends MarklinPortController {
 
     protected DatagramSocket datagramSocketConn = null;

@@ -13,6 +13,8 @@ import jmri.AudioException;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractAudioManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class DefaultAudioManager extends AbstractAudioManager {
 
     private static int countListeners = 0;

@@ -11,6 +11,10 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.EventListenerList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = EXPERIMENTAL)
 public class BasicCellEditor implements CellEditor,
         PropertyChangeListener {
 

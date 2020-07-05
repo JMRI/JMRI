@@ -1,5 +1,7 @@
 package jmri.web.servlet.frameimage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.URL;
 import static jmri.web.servlet.ServletUtil.UTF8;
@@ -70,6 +72,7 @@ import org.slf4j.LoggerFactory;
 @WebServlet(name = "FrameServlet",
         urlPatterns = {"/frame"})
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class JmriJFrameServlet extends HttpServlet {
 
     void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions

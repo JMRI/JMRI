@@ -3,9 +3,13 @@ package jmri.jmrit.logix;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
 */
 
+@API(status = MAINTAINED)
 public class RampData {
 
     private int _timeInterval;

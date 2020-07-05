@@ -13,10 +13,14 @@ import jmri.server.json.JsonRequest;
 import jmri.server.json.JsonSocketService;
 import jmri.web.server.WebServerPreferences;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService> {
 
     private PropertyChangeListener rrNameListener;

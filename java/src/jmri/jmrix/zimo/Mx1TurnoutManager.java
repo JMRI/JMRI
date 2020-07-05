@@ -3,6 +3,9 @@ package jmri.jmrix.zimo;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement turnout manager for Mx1 Turnouts.
  * <p>
@@ -11,6 +14,7 @@ import jmri.Turnout;
  *
  * @author Kevin Dickerson (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public Mx1TurnoutManager(Mx1SystemConnectionMemo memo) {

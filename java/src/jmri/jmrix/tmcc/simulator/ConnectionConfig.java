@@ -1,5 +1,8 @@
 package jmri.jmrix.tmcc.simulator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an TMCC layout connection via a SimulatorAdapter adapter.
  * <p>
@@ -14,6 +17,7 @@ package jmri.jmrix.tmcc.simulator;
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig, copied from DCCpp,
  * EasyDCC
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

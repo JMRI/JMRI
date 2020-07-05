@@ -18,12 +18,15 @@ import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Pete Cressman Copyright (c) 2011
  */
+@API(status = MAINTAINED)
 public class DropJLabel extends JLabel implements DropTargetListener {
 
     private DataFlavor _dataFlavor;

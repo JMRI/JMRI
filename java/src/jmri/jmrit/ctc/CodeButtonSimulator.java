@@ -5,6 +5,9 @@ import java.beans.PropertyChangeListener;
 import javax.swing.Timer;
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -15,6 +18,7 @@ import jmri.Sensor;
  * specified in the constructor, so that the user can change multiple items
  * on the CTC panel (ONLY in this O.S. section) before the "code is sent to the field".
  */
+@API(status = MAINTAINED)
 public class CodeButtonSimulator {
     private final NBHSensor _mCodeButtonSensor;
     private final NBHSensor _mSwitchLeverSensor;

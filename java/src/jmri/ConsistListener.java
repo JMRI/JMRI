@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.EventListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Allow notification of delayed consisting errors.
  * <p>
@@ -20,6 +23,7 @@ import java.util.EventListener;
  *
  * @author Paul Bender Copyright (C) 2004
  */
+@API(status = STABLE)
 public interface ConsistListener extends EventListener {
 
     /**

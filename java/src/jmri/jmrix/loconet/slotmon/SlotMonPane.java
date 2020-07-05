@@ -19,6 +19,9 @@ import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame providing a command station slot manager.
  * <p>
@@ -27,6 +30,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     /**

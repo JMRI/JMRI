@@ -14,6 +14,9 @@ import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame providing a simple clock showing Nixie tubes.
  * <p>
@@ -24,6 +27,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = MAINTAINED)
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations

@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ import jmri.jmrit.operations.trains.TrainIcon;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyChangeListener {
 
     RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);

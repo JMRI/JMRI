@@ -8,6 +8,8 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 import jmri.util.StringUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 // May/June 2018 - adjust so it works properly in synchronous mode.
 
+@API(status = EXPERIMENTAL)
 public class TamsTrafficController extends AbstractMRTrafficController implements TamsInterface, CommandStation {
 
     /**

@@ -1,5 +1,7 @@
 package jmri.util.iharder.dnd;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Robert Harder rharder@usa.net
  * @version 1.1
  */
+@API(status = EXPERIMENTAL)
 public class DnDList<E>
         extends javax.swing.JList<E>
         implements java.awt.dnd.DropTargetListener,

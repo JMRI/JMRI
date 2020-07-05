@@ -8,6 +8,9 @@ import jmri.jmrix.rfid.swing.RfidComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -28,6 +31,7 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class RfidSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     private RfidTrafficController rt;

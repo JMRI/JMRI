@@ -52,6 +52,8 @@ import jmri.jmrit.display.ToolTip;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +78,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2009, 2010, 2011
  * @author Egbert Broerse Copyright (c) 2017, 2018
  */
+@API(status = MAINTAINED)
 public class SwitchboardEditor extends Editor {
 
     protected JMenuBar _menuBar;

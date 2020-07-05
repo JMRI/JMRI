@@ -1,5 +1,7 @@
 package jmri.server.json;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.JSON;
 import static jmri.server.json.JSON.JSON_PROTOCOL_VERSION;
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonServer extends JmriServer implements InstanceManagerAutoDefault {
 
     private static final Logger log = LoggerFactory.getLogger(JsonServer.class);

@@ -3,6 +3,8 @@ package jmri.server.json;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import jmri.InstanceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.eclipse.jetty.io.EofException;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright (C) 2012, 2013, 2016
  */
 @WebSocket
+@API(status = EXPERIMENTAL)
 public class JsonWebSocket {
 
     private static final Logger log = LoggerFactory.getLogger(JsonWebSocket.class);

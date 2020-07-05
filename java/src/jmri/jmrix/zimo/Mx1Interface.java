@@ -1,5 +1,8 @@
 package jmri.jmrix.zimo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Mx1Interface defines the general connection to a MX-1 layout.
  * <p>
@@ -28,6 +31,7 @@ package jmri.jmrix.zimo;
  * Adapted by Sip Bosch for use with MX-1
  *
  */
+@API(status = EXPERIMENTAL)
 public interface Mx1Interface {
 
     /*

@@ -3,6 +3,8 @@ package jmri.jmrix.lenz.xntcp.configurexml;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.xntcp.ConnectionConfig;
 import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob
  * Jacobsen, Copyright (C) 2003
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

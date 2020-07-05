@@ -9,6 +9,8 @@ import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */
+@API(status = EXPERIMENTAL)
 public class Mx1NamedPaneAction extends jmri.util.swing.JmriNamedPaneAction implements SystemConnectionAction<Mx1SystemConnectionMemo> {
 
     /**

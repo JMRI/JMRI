@@ -7,11 +7,15 @@ import javax.swing.AbstractAction;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to create the ShowTrainsServingLocationFrame.
  *
  * @author Daniel Boudreau Copyright (C) 2014
  */
+@API(status = MAINTAINED)
 public class ShowTrainsServingLocationAction extends AbstractAction {
 
     public ShowTrainsServingLocationAction(Location location, Track track) {

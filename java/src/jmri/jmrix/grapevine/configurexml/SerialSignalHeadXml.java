@@ -5,6 +5,8 @@ import jmri.SignalHead;
 import jmri.jmrix.grapevine.SerialSignalHead;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     private GrapevineSystemConnectionMemo memo = null;

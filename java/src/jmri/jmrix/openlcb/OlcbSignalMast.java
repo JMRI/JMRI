@@ -6,6 +6,8 @@ import javax.annotation.*;
 import jmri.implementation.AbstractSignalMast;
 import jmri.SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.Connection;
 import org.openlcb.EventID;
 import org.openlcb.EventState;
@@ -54,6 +56,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen    Copyright (c) 2017, 2018
  */
+@API(status = EXPERIMENTAL)
 public class OlcbSignalMast extends AbstractSignalMast {
 
     public OlcbSignalMast(String sys, String user) {

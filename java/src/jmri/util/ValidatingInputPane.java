@@ -10,6 +10,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A helper Panel for input-validating input boxes. It converts and validates the
  * text input, disabling {@link #confirmUI} component (usually a button) when
@@ -17,6 +20,7 @@ import javax.swing.event.DocumentListener;
  * 
  * @author Svata Dedic Copyright (c) 2019
  */
+@API(status = EXPERIMENTAL)
 final class ValidatingInputPane<T> extends javax.swing.JPanel  {
     private final Function<String, T> convertor;
     private final DocumentListener l = new DocumentListener() {

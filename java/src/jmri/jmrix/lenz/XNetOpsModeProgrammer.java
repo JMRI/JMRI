@@ -9,6 +9,9 @@ import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides an Ops mode programming interface for XpressNet Currently only Byte
  * mode is implemented, though XpressNet also supports bit mode writes for POM
@@ -17,6 +20,7 @@ import jmri.ProgrammingMode;
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Girgio Terdina Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener, AddressedProgrammer {
 
     protected final int mAddressHigh;

@@ -17,6 +17,8 @@ import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cresman Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class DefaultConditionalManager extends AbstractManager<Conditional>
         implements ConditionalManager {
 

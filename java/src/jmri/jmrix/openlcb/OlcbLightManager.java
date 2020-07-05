@@ -9,12 +9,15 @@ import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.managers.AbstractLightManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.OlcbInterface;
 
 /**
  *
  * @author jcollell
  */
+@API(status = EXPERIMENTAL)
 public class OlcbLightManager extends AbstractLightManager {
 
     public OlcbLightManager(CanSystemConnectionMemo memo) {

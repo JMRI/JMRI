@@ -10,6 +10,9 @@ import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the NCE command
  * station object.
@@ -20,6 +23,7 @@ import jmri.ProgrammingMode;
  * @author Bob Jacobsen Copyright (C) 2002, 2014
  * @author kcameron Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProgrammer {
 
     int mAddress;

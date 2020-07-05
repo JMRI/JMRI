@@ -4,6 +4,9 @@ import java.beans.VetoableChangeListener;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A set of methods that would need to be implemented to ensure the implementing
  * class provides a complete external interface for vetoable property changes.
@@ -23,6 +26,7 @@ import javax.annotation.CheckForNull;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public interface VetoableChangeProvider {
 
     /**

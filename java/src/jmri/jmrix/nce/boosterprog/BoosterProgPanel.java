@@ -10,12 +10,16 @@ import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Panel for configuring an NCE booster.
  *
  * @author ken cameron Copyright (C) 2010 Derived from BoosterProgFrame by
  * @author Bob Jacobsen Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
 
     JTextField start = new JTextField(6);

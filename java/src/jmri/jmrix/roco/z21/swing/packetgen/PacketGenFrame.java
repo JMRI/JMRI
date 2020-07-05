@@ -3,11 +3,15 @@ package jmri.jmrix.roco.z21.swing.packetgen;
 import jmri.jmrix.roco.z21.Z21Message;
 import jmri.jmrix.roco.z21.Z21TrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of XpressNet messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001,2002
  */
+@API(status = EXPERIMENTAL)
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     /** 

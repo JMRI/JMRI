@@ -3,12 +3,16 @@ package jmri.jmrit.ctc;
 import java.awt.event.ActionEvent;
 import jmri.util.swing.JmriAbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register the CTC Run Time.
  * Replaces the original custom file opener.
  *
  * @author Dave Sand Copyright (C) 2019
  */
+@API(status = MAINTAINED)
 public class CtcRunAction extends JmriAbstractAction {
 
     public CtcRunAction(String s) {

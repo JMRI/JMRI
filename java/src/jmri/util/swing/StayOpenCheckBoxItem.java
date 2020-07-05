@@ -6,6 +6,9 @@ import javax.swing.MenuSelectionManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Default swing behaviour is to close a JCheckBoxMenuItem when clicked. This
  * leaves the menu open following a selection. Used when long lists are
@@ -13,6 +16,7 @@ import javax.swing.event.ChangeListener;
  * 
  * @author Steve Young (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class StayOpenCheckBoxItem extends JCheckBoxMenuItem {
 
     private MenuElement[] path;

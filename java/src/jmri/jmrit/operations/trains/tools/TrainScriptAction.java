@@ -7,12 +7,16 @@ import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.trains.TrainEditFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a TrainScriptFrame.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class TrainScriptAction extends AbstractAction {
 
     public TrainScriptAction(TrainEditFrame frame) {

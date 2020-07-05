@@ -6,6 +6,9 @@ import jmri.jmrix.can.swing.CanPanel;
 import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.util.swing.ValidationNotifications;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -15,6 +18,7 @@ import jmri.util.swing.ValidationNotifications;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class CbusSendEventPane extends JPanel {
     
     private final CanPanel _mainPane;

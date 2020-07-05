@@ -22,10 +22,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.AbstractButton;
 import javax.swing.JComponent;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class SoundEvent implements PropertyChangeListener {
 
     public enum ButtonType {

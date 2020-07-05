@@ -1,5 +1,8 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A convenient place to access operations xml element and attribute names.
  *
@@ -7,6 +10,7 @@ package jmri.jmrit.operations.rollingstock.cars;
  * 
  *
  */
+@API(status = MAINTAINED)
 public class Xml {
 
     private Xml() {

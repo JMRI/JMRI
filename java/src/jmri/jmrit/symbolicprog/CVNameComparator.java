@@ -2,6 +2,9 @@ package jmri.jmrit.symbolicprog;
 
 import jmri.util.AlphanumComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /*
  * Compare CV names.
  * <p>
@@ -11,6 +14,7 @@ import jmri.util.AlphanumComparator;
  * <li>Each group is ordered, left group first, by an AlphanumComparator
  *
  */
+@API(status = MAINTAINED)
 public class CVNameComparator extends AlphanumComparator {
 
     @Override

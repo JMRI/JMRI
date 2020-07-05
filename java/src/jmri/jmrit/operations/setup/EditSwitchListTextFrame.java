@@ -2,12 +2,16 @@ package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.operations.OperationsFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of switch list text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class EditSwitchListTextFrame extends OperationsFrame {
 
     public EditSwitchListTextFrame() {

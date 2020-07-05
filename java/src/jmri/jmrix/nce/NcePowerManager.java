@@ -4,11 +4,15 @@ import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.managers.AbstractPowerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * PowerManager implementation for controlling layout power.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class NcePowerManager extends AbstractPowerManager<NceSystemConnectionMemo> implements NceListener {
 
     public NcePowerManager(NceSystemConnectionMemo memo) {

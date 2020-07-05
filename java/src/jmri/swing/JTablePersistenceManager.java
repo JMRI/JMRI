@@ -3,6 +3,9 @@ package jmri.swing;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manager for ensuring that {@link javax.swing.JTable} user interface state is
  * persisted.
@@ -38,6 +41,7 @@ import javax.swing.JTable;
  *
  * @author Randall Wood Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public interface JTablePersistenceManager {
 
     /**

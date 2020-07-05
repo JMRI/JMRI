@@ -55,6 +55,8 @@ import jmri.util.CvUtil;
 import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -176,6 +178,7 @@ import org.slf4j.LoggerFactory;
  * == Callback triggered repeat occurs until no more values ==
  * @enduml 
  */
+@API(status = MAINTAINED)
 public class PaneProgPane extends javax.swing.JPanel
         implements java.beans.PropertyChangeListener {
 

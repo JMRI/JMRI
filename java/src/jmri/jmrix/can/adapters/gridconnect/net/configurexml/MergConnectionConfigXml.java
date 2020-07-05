@@ -3,6 +3,9 @@ package jmri.jmrix.can.adapters.gridconnect.net.configurexml;
 import jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the
  * NetworkDriverAdapter (and connections).
@@ -16,6 +19,7 @@ import jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  */
+@API(status = EXPERIMENTAL)
 public class MergConnectionConfigXml extends ConnectionConfigXml {
 
     public MergConnectionConfigXml() {

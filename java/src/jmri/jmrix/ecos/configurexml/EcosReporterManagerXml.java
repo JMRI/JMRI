@@ -1,5 +1,7 @@
 package jmri.jmrix.ecos.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2012
  */
+@API(status = EXPERIMENTAL)
 public class EcosReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
     public EcosReporterManagerXml() {

@@ -2,9 +2,13 @@ package jmri.jmrit.beantable.beanedit;
 
 import javax.swing.JComponent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Hold the information for each bean panel in a structured manner.
  */
+@API(status = MAINTAINED)
 public class BeanEditItem {
 
     String help;

@@ -15,6 +15,8 @@ import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A JInternalFrame that contains buttons for each decoder function.
  */
+@API(status = MAINTAINED)
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener, AddressListener {
 
     public static final int NUM_FUNCTION_BUTTONS = 29;

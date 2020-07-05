@@ -3,11 +3,15 @@ package jmri.jmrix.dcc4pc;
 import javax.annotation.Nonnull;
 import jmri.Reporter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Dcc4PcReporterManager implements the ReporterManage for dcc4pc
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager {
 
     // ctor has to register for LocoNet events

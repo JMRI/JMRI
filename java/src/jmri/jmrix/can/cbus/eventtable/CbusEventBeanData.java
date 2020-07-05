@@ -4,10 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 import jmri.NamedBean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class to provide access to the EventTableData.xml file.
  * @author Steve Young Copyright (C) 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventBeanData  {
 
     private final Set<NamedBean> _nbActiveA;

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import jmri.util.FileUtil;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class HtmlConductor extends HtmlTrainCommon {
 
     private final static Logger log = LoggerFactory.getLogger(HtmlConductor.class);

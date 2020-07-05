@@ -2,11 +2,15 @@ package jmri.jmrix.roco.z21.swing;
 
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Roco Z21 subsystem.
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class Z21ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public Z21ComponentFactory(Z21SystemConnectionMemo memo) {

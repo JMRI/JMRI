@@ -2,10 +2,14 @@ package jmri.swing;
 
 import javax.swing.DefaultListModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class DefaultEditableListModel<E> extends DefaultListModel<E> implements EditableListModel<E> {
 
     @Override

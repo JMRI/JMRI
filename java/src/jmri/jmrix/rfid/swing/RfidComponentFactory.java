@@ -3,6 +3,9 @@ package jmri.jmrix.rfid.swing;
 import javax.swing.JMenu;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Rfid subsystem.
  * <hr>
@@ -18,6 +21,7 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  *
  * @author Matthew Harris Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class RfidComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     RfidSystemConnectionMemo memo;

@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for a Cab Signal Object, describing the state of the track ahead
  * relative to a locomotive with a given address.  This is effectively a mobile
@@ -19,6 +22,7 @@ package jmri;
  * @author Steve Young Copyright (C) 2018
  * @author Paul Bender Copyright (C) 2019
  */
+@API(status = STABLE)
 public interface CabSignal {
 
     /**

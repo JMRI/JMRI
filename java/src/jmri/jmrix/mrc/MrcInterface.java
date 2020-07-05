@@ -1,10 +1,14 @@
 package jmri.jmrix.mrc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Layout interface, similar to command station
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public interface MrcInterface {
 
     public void sendMrcMessage(MrcMessage msg);

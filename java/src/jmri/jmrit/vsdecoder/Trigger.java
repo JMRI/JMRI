@@ -17,10 +17,13 @@ package jmri.jmrit.vsdecoder;
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 abstract public class Trigger implements PropertyChangeListener {
 
+@API(status = MAINTAINED)
     static public enum TriggerType {
 
         BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT, THROTTLE

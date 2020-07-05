@@ -2,6 +2,9 @@ package jmri.util.iharder.dnd;
 
 import java.awt.datatransfer.DataFlavor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * At last an easy way to encapsulate your custom objects for dragging and
  * dropping in your Java programs! When you need to create a
@@ -52,6 +55,7 @@ import java.awt.datatransfer.DataFlavor;
  * @author Robert.Harder copyright 2001
  * @version 1.1
  */
+@API(status = EXPERIMENTAL)
 public class TransferableObject implements java.awt.datatransfer.Transferable {
 
     /**

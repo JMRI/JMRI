@@ -12,6 +12,8 @@ import jmri.IdTag;
 import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.Reporter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = STABLE)
 public class RailComTableAction extends AbstractTableAction<IdTag> {
 
     /**

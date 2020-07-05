@@ -12,6 +12,8 @@ import java.util.Locale;
 import java.util.Properties;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class HtmlTrainCommon extends TrainCommon {
 
     protected final Properties strings = new Properties();

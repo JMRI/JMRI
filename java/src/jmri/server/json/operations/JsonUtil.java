@@ -1,5 +1,7 @@
 package jmri.server.json.operations;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.COLOR;
 import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.TRAIN_DIRECTION;
@@ -63,6 +65,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Randall Wood Copyright 2019
  */
+@API(status = EXPERIMENTAL)
 public class JsonUtil {
 
     private final ObjectMapper mapper;

@@ -3,6 +3,8 @@ package jmri.jmrix.openlcb.configurexml;
 import jmri.InstanceManager;
 import jmri.jmrix.openlcb.OlcbConfigurationManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import javax.annotation.Nonnull;
  *
  * @author Jeff Collell
  */
+@API(status = EXPERIMENTAL)
 public class OlcbLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public OlcbLightManagerXml() {

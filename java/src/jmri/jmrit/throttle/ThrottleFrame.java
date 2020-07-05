@@ -40,6 +40,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.iharder.dnd.URIDrop.Listener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -53,6 +55,7 @@ import org.slf4j.LoggerFactory;
  * @author Glen Oberhauser
  * @author Andrew Berridge Copyright 2010
  */
+@API(status = MAINTAINED)
 public class ThrottleFrame extends JDesktopPane implements ComponentListener, AddressListener {
 
     private final Integer BACKPANEL_LAYER = Integer.MIN_VALUE;

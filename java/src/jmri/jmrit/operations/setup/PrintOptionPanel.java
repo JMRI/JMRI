@@ -10,6 +10,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import jmri.util.swing.SplitButtonColorChooserPanel;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  */
+@API(status = MAINTAINED)
 public class PrintOptionPanel extends OperationsPreferencesPanel {
 
     private static final Logger log = LoggerFactory.getLogger(PrintOptionPanel.class);

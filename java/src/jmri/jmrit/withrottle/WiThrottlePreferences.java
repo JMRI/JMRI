@@ -5,6 +5,8 @@ import java.util.Set;
 import jmri.InstanceInitializer;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
 
     public static final int DEFAULT_PORT = 12090;

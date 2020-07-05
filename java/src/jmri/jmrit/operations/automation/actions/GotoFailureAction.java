@@ -2,6 +2,10 @@ package jmri.jmrit.operations.automation.actions;
 
 import jmri.jmrit.operations.automation.AutomationItem;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class GotoFailureAction extends GotoAction {
 
     private static final int _code = ActionCodes.GOTO_IF_FALSE;

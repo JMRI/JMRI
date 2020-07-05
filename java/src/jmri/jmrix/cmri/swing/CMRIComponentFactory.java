@@ -3,6 +3,9 @@ package jmri.jmrix.cmri.swing;
 import jmri.jmrix.cmri.CMRIMenu;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the CMRI subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2010
  * @since 3.5.1
  */
+@API(status = EXPERIMENTAL)
 public class CMRIComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public CMRIComponentFactory(CMRISystemConnectionMemo memo) {

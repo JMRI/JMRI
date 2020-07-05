@@ -32,11 +32,14 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.iharder.dnd.URIDrop.Listener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // Should be named ThrottleFrame, but ThrottleFrame already exit, hence ThrottleWindow
+@API(status = MAINTAINED)
 public class ThrottleWindow extends JmriJFrame {
 
     private JPanel throttlesPanel;

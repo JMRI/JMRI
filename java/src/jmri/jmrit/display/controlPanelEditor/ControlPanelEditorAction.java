@@ -5,12 +5,16 @@ import javax.swing.AbstractAction;
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Start a ControlPanelEditor.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction
  */
+@API(status = MAINTAINED)
 public class ControlPanelEditorAction extends AbstractAction {
 
     public ControlPanelEditorAction(String s) {

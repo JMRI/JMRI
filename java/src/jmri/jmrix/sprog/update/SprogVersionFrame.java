@@ -2,6 +2,8 @@ package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVersionListener {
 
     private SprogSystemConnectionMemo _memo = null;

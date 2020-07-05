@@ -4,12 +4,16 @@ import java.util.EventListener;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for classes that wish to get notification that a new decoder
  * address has been selected.
  *
  * @author glen Copyright (C) 2002
  */
+@API(status = MAINTAINED)
 public interface AddressListener extends EventListener {
 
     /**

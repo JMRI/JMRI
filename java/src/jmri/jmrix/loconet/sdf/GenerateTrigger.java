@@ -1,11 +1,15 @@
 package jmri.jmrix.loconet.sdf;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement the GENERATE_TRIGGER macro from the Digitrax sound definition
  * language
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class GenerateTrigger extends SdfMacro {
 
     public GenerateTrigger(int trigger) {

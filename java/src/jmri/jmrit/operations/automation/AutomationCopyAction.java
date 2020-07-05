@@ -4,11 +4,15 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to reset an automation
  *
  * @author Daniel Boudreau Copyright (C) 2016
  */
+@API(status = MAINTAINED)
 public class AutomationCopyAction extends AbstractAction {
 
     private Automation _automation;

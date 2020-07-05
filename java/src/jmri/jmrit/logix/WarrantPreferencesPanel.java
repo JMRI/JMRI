@@ -30,6 +30,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import jmri.implementation.SignalSpeedMap;
 import jmri.swing.PreferencesPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2015
  */
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = MAINTAINED)
 public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel, ItemListener {
 
     static int STRUT_SIZE = 10;

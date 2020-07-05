@@ -2,6 +2,9 @@ package jmri.jmrix.tams.swing;
 
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel interface to handle providing system connection information to a
  * panel.
@@ -10,6 +13,7 @@ import jmri.jmrix.tams.TamsSystemConnectionMemo;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public interface TamsPanelInterface {
 
     /**

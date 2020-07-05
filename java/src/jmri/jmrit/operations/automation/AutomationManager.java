@@ -11,6 +11,8 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2016
  */
+@API(status = MAINTAINED)
 public class AutomationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "automationListLength"; // NOI18N

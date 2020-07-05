@@ -11,6 +11,9 @@ import jmri.util.swing.JmriNamedPaneAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to create and load a JmriPanel from just its name.
  *
@@ -18,6 +21,7 @@ import jmri.util.swing.WindowInterface;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class TamsNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction<TamsSystemConnectionMemo> {
 
     /**

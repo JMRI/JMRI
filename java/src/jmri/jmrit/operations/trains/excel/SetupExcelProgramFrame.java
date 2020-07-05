@@ -13,12 +13,16 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of the file name and setup of an Excel program.
  *
  * @author Dan Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class SetupExcelProgramFrame extends OperationsFrame {
 
     // checkboxes

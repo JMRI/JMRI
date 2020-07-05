@@ -1,10 +1,14 @@
 package jmri.jmrix.loconet.locostats;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Raw status.  Used when LocoNet interface returns undeciphered data.
  * 
  * @author Bob Milhaupt Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class RawStatus {
     public RawStatus(int rawdata0, int rawdata1, int rawdata2, int rawdata3, int rawdata4, int rawdata5, int rawdata6, int rawdata7) {
         raw[0] = rawdata0;

@@ -2,6 +2,9 @@ package jmri.jmrit.turnoutoperations;
 
 import jmri.TurnoutOperation;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Configuration for NoFeedbackTurnoutOperation class All the work is done by
  * the Common... class
@@ -9,6 +12,7 @@ import jmri.TurnoutOperation;
  * @author John Harper Copyright 2005
  *
  */
+@API(status = MAINTAINED)
 public class NoFeedbackTurnoutOperationConfig extends CommonTurnoutOperationConfig {
 
     /**

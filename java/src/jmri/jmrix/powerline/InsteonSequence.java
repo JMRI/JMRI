@@ -1,5 +1,8 @@
 package jmri.jmrix.powerline;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent a sequence of one or more Insteon commands (addresses and
  * functions).
@@ -13,6 +16,7 @@ package jmri.jmrix.powerline;
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Ken Cameron Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class InsteonSequence {
 
     // First implementation of this class uses a fixed length

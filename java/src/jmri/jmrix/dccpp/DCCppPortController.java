@@ -1,5 +1,8 @@
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * interface for DCCppPortController objects.
  * <p>
@@ -9,6 +12,7 @@ package jmri.jmrix.dccpp;
   *
  * Based on XNetPortController by Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public interface DCCppPortController extends jmri.jmrix.PortAdapter {
 
     /**

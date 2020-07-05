@@ -13,6 +13,8 @@ import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.ExceptionContext;
 import jmri.util.swing.ExceptionDisplayFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2011
  * @author Gregory Madsen Copyright (C) 2012
  */
+@API(status = MAINTAINED)
 public class RestoreFilesAction extends AbstractAction {
 
 //    private final static Logger log = LoggerFactory.getLogger(RestoreFilesAction.class);

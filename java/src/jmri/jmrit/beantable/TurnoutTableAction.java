@@ -59,6 +59,8 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.XTableColumnModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +70,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
  * @author Egbert Broerse Copyright (C) 2017
  */
+@API(status = STABLE)
 public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
     /**

@@ -2,11 +2,15 @@ package jmri.jmrix.ieee802154.xbee.swing;
 
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the XBee subsystem.
  *
  * @author Bob Jacobsen Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class XBeeComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public XBeeComponentFactory(XBeeConnectionMemo memo) {

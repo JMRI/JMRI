@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.SortOrder;
 import jmri.InstanceManager;
 import jmri.swing.JmriJTablePersistenceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * jmri.managers.DefaultUserMessagePreferences class so that the current
  * {@link jmri.UserPreferencesManager} can use it.
  */
+@API(status = EXPERIMENTAL)
 public class DefaultUserMessagePreferencesXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public DefaultUserMessagePreferencesXml() {

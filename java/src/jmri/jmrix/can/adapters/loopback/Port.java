@@ -6,11 +6,15 @@ import java.io.DataOutputStream;
 import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Loopback connection to simulate a CAN link.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  */
+@API(status = EXPERIMENTAL)
 public class Port extends AbstractSerialPortController {
 
     public Port() {

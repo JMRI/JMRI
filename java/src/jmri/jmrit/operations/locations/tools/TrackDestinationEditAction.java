@@ -6,12 +6,16 @@ import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.locations.Track;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to create the TrackDestinationEditFrame.
  *
  * @author Daniel Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class TrackDestinationEditAction extends AbstractAction {
 
     private Track _track;

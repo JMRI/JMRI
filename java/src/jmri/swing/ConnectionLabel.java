@@ -8,11 +8,15 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A JLabel that listens to a system connection and reports its status
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public final class ConnectionLabel extends JLabel implements PropertyChangeListener {
 
     ConnectionConfig connection;

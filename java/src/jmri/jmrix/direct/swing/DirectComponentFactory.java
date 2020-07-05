@@ -3,6 +3,9 @@ package jmri.jmrix.direct.swing;
 import jmri.jmrix.direct.DirectSystemConnectionMemo;
 import jmri.jmrix.direct.DirectMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Direct subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.direct.DirectMenu;
  * @author Paul Bender Copyright (C) 2017
  * @since 4.9.6
  */
+@API(status = EXPERIMENTAL)
 public class DirectComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public DirectComponentFactory(DirectSystemConnectionMemo memo) {

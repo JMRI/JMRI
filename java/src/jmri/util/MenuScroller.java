@@ -23,6 +23,8 @@ import javax.swing.event.MenuKeyEvent;
 import javax.swing.event.MenuKeyListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,7 @@ import org.slf4j.LoggerFactory;
  */
 // NOTE: Provided by Darryl Burke from <https://tips4java.wordpress.com/2009/02/01/menu-scroller/>
 // (Thank you DarrylB! ;-)
+@API(status = EXPERIMENTAL)
 public class MenuScroller
         implements MouseWheelListener {
 

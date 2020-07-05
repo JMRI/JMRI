@@ -4,6 +4,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.cmri.serial.sim.ConnectionConfig;
 import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persisting the
  * SimDriverAdapter (and connections). Note this is named as the XML version of
@@ -19,6 +22,7 @@ import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS") // OK by convention
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.configurexml.ConnectionConfigXml {
 
     public ConnectionConfigXml() {

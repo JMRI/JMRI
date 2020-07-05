@@ -22,6 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 import jmri.InstanceManager;
@@ -44,6 +46,7 @@ import jmri.util.javaworld.GridLayout2;
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
  */
+@API(status = MAINTAINED)
 public class SignalHeadSignalMastAddPane extends SignalMastAddPane {
 
     public SignalHeadSignalMastAddPane() {

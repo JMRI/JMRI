@@ -6,6 +6,9 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractConsistManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Default Consist Manager which uses the NmraConsist class for
  * the consists it builds.
@@ -13,6 +16,7 @@ import jmri.implementation.AbstractConsistManager;
  * @author Paul Bender Copyright (C) 2003
  * @author Randall Wood Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class InternalConsistManager extends AbstractConsistManager {
 
     public InternalConsistManager() {

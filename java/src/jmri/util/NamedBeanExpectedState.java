@@ -4,12 +4,16 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 import jmri.NamedBean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Retain a NamedBean and its expected state.
  *
  * @author Randall Wood Copyright 2017
  * @param <T> the supported type of NamedBean
  */
+@API(status = EXPERIMENTAL)
 public class NamedBeanExpectedState<T extends NamedBean> extends NamedBeanExpectedValue<T, Integer> {
 
     public NamedBeanExpectedState(@Nonnull T bean, @Nonnull String name, @Nonnull Integer state) {

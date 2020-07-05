@@ -1,6 +1,8 @@
 package jmri.jmrix.zimo;
 
 import jmri.jmrix.ConnectionTypeList;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -11,6 +13,7 @@ import org.openide.util.lookup.ServiceProvider;
   *
  */
 @ServiceProvider(service = ConnectionTypeList.class)
+@API(status = EXPERIMENTAL)
 public class Mx1ConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String ZIMO = "Zimo";

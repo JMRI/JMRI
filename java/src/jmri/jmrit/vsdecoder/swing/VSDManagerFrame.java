@@ -30,6 +30,8 @@ import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDecoder;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +53,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class VSDManagerFrame extends JmriJFrame {
 
     public static final String MUTE = "VSDMF:Mute"; // NOI18N

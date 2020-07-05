@@ -3,6 +3,8 @@ package jmri.jmrix.maple.assignment;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class ListAction extends AbstractAction {
 
     private MapleSystemConnectionMemo _memo = null;

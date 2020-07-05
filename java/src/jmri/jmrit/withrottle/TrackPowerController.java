@@ -5,6 +5,8 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Brett Hoffman Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class TrackPowerController extends AbstractController implements PropertyChangeListener {
 
     private PowerManager pwrMgr = null;

@@ -4,6 +4,8 @@ import java.util.ResourceBundle;
 import jmri.jmrix.jmriclient.JMRIClientPortController;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 import jmri.util.zeroconf.ZeroConfClient;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class NetworkDriverAdapter extends JMRIClientPortController {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jmriclient.JMRIClientConfigurationBundle");

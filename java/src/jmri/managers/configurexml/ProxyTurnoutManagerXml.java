@@ -1,6 +1,8 @@
 package jmri.managers.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -11,6 +13,7 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  */
+@API(status = EXPERIMENTAL)
 public class ProxyTurnoutManagerXml extends AbstractXmlAdapter {
 
     public ProxyTurnoutManagerXml() {

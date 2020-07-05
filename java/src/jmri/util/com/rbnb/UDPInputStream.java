@@ -44,6 +44,10 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = EXPERIMENTAL)
 public class UDPInputStream extends InputStream {
 
     private static final int PACKET_BUFFER_SIZE = 5000;

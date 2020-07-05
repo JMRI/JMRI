@@ -1,5 +1,8 @@
 package jmri.jmrit.ussctc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Section is the base type for the pieces that make up and are referenced by a {@link jmri.jmrit.ussctc.Station}.
  * It combines a {@link jmri.jmrit.ussctc.CentralSection} and a {@link jmri.jmrit.ussctc.FieldSection}
@@ -10,6 +13,7 @@ package jmri.jmrit.ussctc;
  * @param <To> communications from field to central.
  * @param <From> communications from central to field.
  */
+@API(status = MAINTAINED)
 public interface Section<To extends Enum<To>, From extends Enum<From>>
                  extends CentralSection<To, From>, FieldSection<To, From> {
                  

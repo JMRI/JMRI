@@ -4,6 +4,9 @@ import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanMessage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -13,6 +16,7 @@ import jmri.jmrix.can.CanMessage;
  * 
  * @author Steve Young Copyright (C) 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventDataElements {
     
     private int _dat1;

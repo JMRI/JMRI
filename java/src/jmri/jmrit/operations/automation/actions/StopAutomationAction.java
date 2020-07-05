@@ -2,6 +2,10 @@ package jmri.jmrit.operations.automation.actions;
 
 import jmri.jmrit.operations.automation.Automation;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class StopAutomationAction extends RunAutomationAction {
 
     private static final int _code = ActionCodes.STOP_AUTOMATION;

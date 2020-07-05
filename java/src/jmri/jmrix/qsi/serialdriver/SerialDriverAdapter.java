@@ -8,6 +8,8 @@ import java.io.InputStream;
 import jmri.jmrix.qsi.QsiPortController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.QsiTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -28,6 +30,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends QsiPortController {
 
     public SerialDriverAdapter() {

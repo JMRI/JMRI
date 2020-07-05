@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an XpressNet layout connection via the built in USB port
  * on the Hornby Elite.
@@ -11,6 +14,7 @@ package jmri.jmrix.lenz.hornbyelite;
  *
  * @see EliteAdapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**

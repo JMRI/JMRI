@@ -5,6 +5,9 @@ import javax.swing.JPanel;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.nodeconfig.NodeConfigAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an Grapevine layout connection via a GrapevineSimulator
  * adapter.
@@ -19,6 +22,7 @@ import jmri.jmrix.grapevine.nodeconfig.NodeConfigAction;
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig, copied from EasyDCC
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

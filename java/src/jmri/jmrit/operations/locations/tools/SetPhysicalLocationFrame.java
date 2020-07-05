@@ -16,6 +16,8 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.PhysicalLocation;
 import jmri.util.PhysicalLocationPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class SetPhysicalLocationFrame extends OperationsFrame {
 
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);

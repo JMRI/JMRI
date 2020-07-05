@@ -7,6 +7,8 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.ConnectionStatus;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController implements Z21Interface {
 
     private java.net.InetAddress host;

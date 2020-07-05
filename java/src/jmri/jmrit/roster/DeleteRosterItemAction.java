@@ -12,6 +12,8 @@ import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.XmlFile
  */
+@API(status = MAINTAINED)
 public class DeleteRosterItemAction extends JmriAbstractAction {
 
     public DeleteRosterItemAction(String s, WindowInterface wi) {

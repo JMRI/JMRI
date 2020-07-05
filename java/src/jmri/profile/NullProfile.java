@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An empty JMRI application profile. Profiles allow a JMRI application to load
  * completely separate set of preferences at each launch without relying on host
@@ -20,6 +23,7 @@ import javax.annotation.Nonnull;
  * @author Randall Wood Copyright (C) 2014
  * @see jmri.profile.ProfileManager#setActiveProfile(jmri.profile.Profile)
  */
+@API(status = EXPERIMENTAL)
 public class NullProfile extends Profile {
 
     /**

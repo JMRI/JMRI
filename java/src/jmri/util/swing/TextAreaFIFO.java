@@ -8,6 +8,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * Modified for JMRI by Steve Young (c) 2018
  * 
  */
+@API(status = EXPERIMENTAL)
 public class TextAreaFIFO extends JTextArea implements DocumentListener {
     private int _maxLines;
     private Boolean _autoScroll;

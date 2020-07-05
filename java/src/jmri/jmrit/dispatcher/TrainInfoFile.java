@@ -8,6 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.util.FileUtil;
 import jmri.util.XmlFilenameFilter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
 
     public TrainInfoFile() {

@@ -4,12 +4,16 @@ import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.managers.AbstractPowerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * PowerManager implementation for controlling layout power
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientPowerManager extends AbstractPowerManager<JMRIClientSystemConnectionMemo> implements JMRIClientListener {
 
     JMRIClientTrafficController tc = null;

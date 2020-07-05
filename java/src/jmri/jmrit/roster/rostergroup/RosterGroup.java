@@ -6,6 +6,9 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterObject;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A RosterGroup object contains information about groupings of entries within
  * the {@link jmri.jmrit.roster.Roster}.
@@ -14,6 +17,7 @@ import jmri.jmrit.roster.RosterObject;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
+@API(status = MAINTAINED)
 public class RosterGroup extends Bean implements RosterObject {
 
     private String name;

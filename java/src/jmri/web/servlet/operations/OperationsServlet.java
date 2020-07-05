@@ -1,5 +1,7 @@
 package jmri.web.servlet.operations;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -45,6 +47,7 @@ import org.slf4j.LoggerFactory;
             "/web/operationsTrains.html" // redirect to default since ~ 13 May 2014
         })
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class OperationsServlet extends HttpServlet {
 
     private ObjectMapper mapper;

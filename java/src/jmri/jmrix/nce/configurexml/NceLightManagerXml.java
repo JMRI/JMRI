@@ -1,5 +1,7 @@
 package jmri.jmrix.nce.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2010
  */
+@API(status = EXPERIMENTAL)
 public class NceLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public NceLightManagerXml() {

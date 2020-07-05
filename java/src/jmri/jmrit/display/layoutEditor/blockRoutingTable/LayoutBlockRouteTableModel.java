@@ -3,6 +3,8 @@ package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 import java.beans.PropertyChangeListener;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009, 2010
  * @since 2.7.5
  */
+@API(status = MAINTAINED)
 public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     public static final int DESTCOL = 0;

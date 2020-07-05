@@ -1,5 +1,8 @@
 package jmri.jmrix;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This turned out to be a dead-end interface, which has now been deprecated.
  * {@link jmri.CommandStation} is the replacement.
@@ -9,6 +12,7 @@ package jmri.jmrix;
  * use {@link jmri.CommandStation} instead.
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public interface DccCommandStation {
 
     /**

@@ -4,6 +4,8 @@ import javax.swing.Icon;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */
+@API(status = EXPERIMENTAL)
 public class MrcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**

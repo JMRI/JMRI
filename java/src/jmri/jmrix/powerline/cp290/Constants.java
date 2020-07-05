@@ -1,11 +1,15 @@
 package jmri.jmrix.powerline.cp290;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants and functions specific to the CP290 interface
  *
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Ken Cameron, (C) 2009, add sensors from poll replies
  */
+@API(status = EXPERIMENTAL)
 public class Constants {
 
     public static final int CMD_ON = 0x02;

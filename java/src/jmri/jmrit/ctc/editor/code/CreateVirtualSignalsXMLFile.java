@@ -1,5 +1,7 @@
 package jmri.jmrit.ctc.editor.code;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateEpilogue;
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateProlog;
 
@@ -15,6 +17,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+@API(status = MAINTAINED)
 public class CreateVirtualSignalsXMLFile {
     @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not write anything if it fails.")
     public static void writeVirtualSignals(String directoryToCreateThemIn, OtherData otherData, ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {

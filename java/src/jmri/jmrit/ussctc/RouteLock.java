@@ -4,6 +4,9 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lock if any of the SignalHeads controlling traffic over a turnout are not at stop.
  * <p>
@@ -12,6 +15,7 @@ import jmri.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
+@API(status = MAINTAINED)
 public class RouteLock implements Lock {
 
     /**

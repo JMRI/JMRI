@@ -3,6 +3,8 @@ package jmri.jmrit.operations.rollingstock.engines;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import jmri.jmrit.operations.rollingstock.engines.tools.*;
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007, 2012
  */
+@API(status = MAINTAINED)
 public class EngineRosterMenu extends JMenu {
 
     /**

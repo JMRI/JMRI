@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -26,6 +28,7 @@ import jmri.jmrit.operations.trains.Train;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
+@API(status = MAINTAINED)
 public class CarManager extends RollingStockManager<Car> implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     // stores Kernels

@@ -11,6 +11,8 @@ import jmri.Sensor;
 import jmri.Timebase;
 import jmri.TimebaseRateException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2004, 2007 Dave Duchamp - 2007
  *         additions/revisions for handling one hardware clock
  */
+@API(status = MAINTAINED)
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
     public static final double MINIMUM_RATE = 0.1;

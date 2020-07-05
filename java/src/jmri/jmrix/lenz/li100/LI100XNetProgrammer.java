@@ -7,6 +7,9 @@ import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Programmer support for Lenz XpressNet.
  * <p>
@@ -24,6 +27,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * @author Paul Bender Copyright (c) 2003, 2004, 2005, 2009
  * @author Giorgio Terdina Copyright (c) 2007
  */
+@API(status = EXPERIMENTAL)
 public class LI100XNetProgrammer extends XNetProgrammer {
 
     private static final int RETURNSENT = 3;

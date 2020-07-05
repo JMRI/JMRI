@@ -16,12 +16,16 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a where used report based on the selected bean.  The selection combo box is
  * based on the selected type.
 
  * @author Dave Sand Copyright (C) 2020
  */
+@API(status = MAINTAINED)
 public class WhereUsedFrame extends jmri.util.JmriJFrame {
     ItemType _itemType = ItemType.NONE;
     JComboBox<ItemType> _itemTypeBox;

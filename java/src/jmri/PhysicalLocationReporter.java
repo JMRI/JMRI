@@ -2,6 +2,9 @@ package jmri;
 
 import jmri.util.PhysicalLocation;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements a common way that a Reporter that supports having a Physical Location
  * can report that location to querying objects.
@@ -20,6 +23,7 @@ import jmri.util.PhysicalLocation;
  *
  * @author   Mark Underwood Copyright (C) 2012
  */
+@API(status = STABLE)
 public interface PhysicalLocationReporter {
 
     static public enum Direction {

@@ -3,6 +3,8 @@ package jmri.jmrit.beantable.routetable;
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import java.util.ArrayList;
  * @author Egbert Broerse Copyright (C) 2016
  * @author Paul Bender Colyright (C) 2020
  */
+@API(status = MAINTAINED)
 public class RouteExportToLogix {
 
     private final String logixSysName;

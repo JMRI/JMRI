@@ -12,12 +12,16 @@ import jmri.jmris.simpleserver.parser.SimpleNode;
 import jmri.jmris.simpleserver.parser.SimpleVisitor;
 import jmri.jmris.simpleserver.parser.TokenMgrError;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Simple Server interface between the JMRI power manager and a network
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class SimplePowerServer extends AbstractPowerServer {
 
     private DataOutputStream output;

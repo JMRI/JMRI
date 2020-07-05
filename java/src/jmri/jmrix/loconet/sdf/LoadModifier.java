@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet.sdf;
 
 import jmri.util.StringUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class LoadModifier extends SdfMacro {
 
     public LoadModifier(int byte0, int arg1, int arg2, int arg3) {

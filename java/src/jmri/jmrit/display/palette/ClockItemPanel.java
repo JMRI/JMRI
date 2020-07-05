@@ -17,12 +17,15 @@ import jmri.jmrit.display.AnalogClock2Display;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.util.swing.ImagePanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for Clocks.
  */
+@API(status = MAINTAINED)
 public class ClockItemPanel extends IconItemPanel {
 
     public ClockItemPanel(DisplayFrame parentFrame, String type) {

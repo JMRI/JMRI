@@ -6,6 +6,9 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -19,6 +22,7 @@ import jmri.util.NamedBeanComparator;
  * by
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class IEEE802154SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public IEEE802154SystemConnectionMemo() {

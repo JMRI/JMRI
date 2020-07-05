@@ -2,6 +2,9 @@ package jmri.jmrit.audio;
 
 import jmri.Audio;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents a queued command for later processing in the AudioController
  * thread.
@@ -19,6 +22,7 @@ import jmri.Audio;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class AudioCommand {
 
     /**

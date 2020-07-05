@@ -7,6 +7,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import jmri.SignalMast;
 import jmri.jmrit.beantable.signalmast.SignalMastTableDataModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2009, 2010
  */
+@API(status = STABLE)
 public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
 
     /**

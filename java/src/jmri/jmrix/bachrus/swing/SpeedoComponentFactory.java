@@ -3,6 +3,9 @@ package jmri.jmrix.bachrus.swing;
 import jmri.jmrix.bachrus.SpeedoMenu;
 import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Speedo subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2010
  * @since 3.5.1
  */
+@API(status = EXPERIMENTAL)
 public class SpeedoComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public SpeedoComponentFactory(SpeedoSystemConnectionMemo memo) {

@@ -5,6 +5,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for a {@link javax.swing.Action} that is bound to a
  * {@link SystemConnectionMemo}.
@@ -12,6 +15,7 @@ import jmri.SystemConnectionMemo;
  * @author Randall Wood (c) 2016
  * @param <M> the supported subclass of SystemConnectionMemo
  */
+@API(status = EXPERIMENTAL)
 public interface SystemConnectionAction<M extends SystemConnectionMemo> {
 
     /**

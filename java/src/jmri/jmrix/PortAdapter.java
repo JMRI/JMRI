@@ -4,6 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import jmri.SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Enables basic setup of a interface for a jmrix implementation.
  * <p>
@@ -22,6 +25,7 @@ import jmri.SystemConnectionMemo;
  * @see jmri.jmrix.SerialConfigException
  * @since 2.3.1
  */
+@API(status = EXPERIMENTAL)
 public interface PortAdapter {
 
     /**

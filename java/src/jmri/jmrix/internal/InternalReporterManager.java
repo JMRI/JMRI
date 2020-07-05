@@ -3,12 +3,16 @@ package jmri.jmrix.internal;
 import javax.annotation.Nonnull;
 import jmri.Reporter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of the InternalReporterManager interface.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class InternalReporterManager extends jmri.managers.AbstractReporterManager {
 
     public InternalReporterManager(InternalSystemConnectionMemo memo) {

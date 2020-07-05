@@ -1,11 +1,15 @@
 package jmri.jmrix.sprog;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants to represent values seen in SPROG traffic.
  *
  * @author Andrew Crosland Copyright (C) 2006 from LnConstants.java
  */
 
+@API(status = EXPERIMENTAL)
 public final class SprogConstants {
 
     /* SPROG mode */

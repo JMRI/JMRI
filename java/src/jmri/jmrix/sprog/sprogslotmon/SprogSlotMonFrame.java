@@ -19,6 +19,8 @@ import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland (C) 2006 ported to SPROG 2008
  */
+@API(status = EXPERIMENTAL)
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame implements SprogListener {
 
     /**

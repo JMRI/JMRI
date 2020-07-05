@@ -4,6 +4,9 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Simple interface for basic methods that implement JMRI Bean handling methods.
  *
@@ -22,6 +25,7 @@ import javax.annotation.CheckForNull;
  * @see BeanUtil
  * @see Bean
  */
+@API(status = EXPERIMENTAL)
 public interface BeanInterface {
 
     /**

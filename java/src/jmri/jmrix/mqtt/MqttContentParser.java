@@ -3,12 +3,16 @@ package jmri.jmrix.mqtt;
 import javax.annotation.Nonnull;
 import jmri.NamedBean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface defining a content parser, which translates to and from the MQTT payload
  * content.
  * 
  * @author Bob Jacobsen
  */
+@API(status = EXPERIMENTAL)
 public interface MqttContentParser<T extends NamedBean> {
     /**
      * Load a bean's state from a received MQTT payload.

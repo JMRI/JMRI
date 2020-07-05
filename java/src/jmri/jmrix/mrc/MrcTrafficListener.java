@@ -2,6 +2,9 @@ package jmri.jmrix.mrc;
 
 import java.util.Date;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * MrcTrafficListener provides the call-back interface for notification when a
  * new Mrc message arrives from the layout.
@@ -18,6 +21,7 @@ import java.util.Date;
  * 
  *
  */
+@API(status = EXPERIMENTAL)
 public interface MrcTrafficListener {
 
     public void notifyXmit(Date timestamp, MrcMessage m);

@@ -1,5 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // This class may not important any others.
 
 /**
@@ -25,6 +28,7 @@ package jmri.jmrit.display.layoutEditor;
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@API(status = MAINTAINED)
 final public class LayoutEditorViewContext {
 
     LayoutEditorViewContext() {}  // intentionally package-protected to limit exposure

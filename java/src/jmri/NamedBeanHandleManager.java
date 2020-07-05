@@ -8,6 +8,8 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +47,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = STABLE)
 public class NamedBeanHandleManager extends AbstractManager<NamedBean> implements InstanceManagerAutoDefault {
 
     public NamedBeanHandleManager() {

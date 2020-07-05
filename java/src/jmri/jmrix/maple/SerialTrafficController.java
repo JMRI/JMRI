@@ -6,6 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @since 2.3.7
  */
 @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "multiple variables accessed outside synchronized core, which is quite suspicious, but code seems to interlock properly")
+@API(status = EXPERIMENTAL)
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
     /**

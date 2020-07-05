@@ -10,9 +10,12 @@ import jmri.Consist;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class EasyDccConsistManager extends AbstractConsistManager {
 
     private EasyDccConsistReader reader;

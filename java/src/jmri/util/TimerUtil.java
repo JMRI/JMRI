@@ -6,6 +6,9 @@ import java.util.TimerTask;
 import javax.annotation.Nonnull;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common utility methods for working with (@link java.util.Timer)
  * <p>
@@ -31,6 +34,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright 2018
  */
 @javax.annotation.concurrent.Immutable
+@API(status = EXPERIMENTAL)
 final public class TimerUtil {
 
     // Timer implementation methods

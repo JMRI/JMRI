@@ -1,5 +1,7 @@
 package jmri.jmrix.powerline;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2009, 2010 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
     // System-dependent instance variables

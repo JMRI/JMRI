@@ -1,5 +1,7 @@
 package jmri.server.json.layoutblock;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.USERNAME;
@@ -45,6 +47,7 @@ import jmri.util.ColorUtil;
  * @author mstevetodd Copyright (C) 2018
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpService<LayoutBlock> {
 
     public JsonLayoutBlockHttpService(ObjectMapper mapper) {

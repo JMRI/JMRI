@@ -6,11 +6,15 @@ import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * ENUM to represent various CBUS OPC Filters.
  * 
  * @author Steve Young (C) 2020
  */
+@API(status = EXPERIMENTAL)
 public enum CbusFilterType {
     CFIN(Bundle.getMessage("Incoming"),null) {
         @Override

@@ -2,6 +2,8 @@ package jmri.jmrix.roco.z21.swing.configtool;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class Z21ConfigAction extends AbstractAction {
 
     private jmri.jmrix.roco.z21.Z21SystemConnectionMemo _memo;

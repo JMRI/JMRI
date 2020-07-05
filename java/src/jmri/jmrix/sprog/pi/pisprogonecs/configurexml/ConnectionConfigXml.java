@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.sprog.pi.pisprogonecs.ConnectionConfig;
 import jmri.jmrix.sprog.pi.pisprogonecs.PiSprogOneCSSerialDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the
  * SerialDriverAdapter (and connections). Note this is named as the XML version
@@ -16,6 +19,7 @@ import jmri.jmrix.sprog.pi.pisprogonecs.PiSprogOneCSSerialDriverAdapter;
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2016
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.implementations.BitProducerConsumer;
 
 import jmri.NamedBean;
@@ -11,6 +13,7 @@ import jmri.NamedBean;
  * @author Balazs Racz Copyright (C) 2018
  */
 
+@API(status = EXPERIMENTAL)
 public final class OlcbUtils {
 
     private OlcbUtils(){

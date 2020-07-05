@@ -2,6 +2,9 @@ package jmri.jmrit.roster;
 
 import java.beans.PropertyChangeListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * The getter method for a roster entry selection.
  * <p>
@@ -15,6 +18,7 @@ import java.beans.PropertyChangeListener;
  *
  * @author Randall Wood
  */
+@API(status = MAINTAINED)
 public interface RosterEntrySelector {
 
     static final String SELECTED_ROSTER_ENTRIES = "selectedRosterEntries";

@@ -1,5 +1,7 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -28,6 +30,7 @@ import org.jdom2.Element;
  * @see jmri.jmrit.roster.RosterEntry
  *
  */
+@API(status = STABLE)
 public interface BasicRosterEntry {
 
     public String getId();

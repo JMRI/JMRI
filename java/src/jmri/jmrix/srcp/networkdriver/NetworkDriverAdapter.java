@@ -3,6 +3,9 @@ package jmri.jmrix.srcp.networkdriver;
 import jmri.jmrix.srcp.SRCPPortController;
 import jmri.jmrix.srcp.SRCPTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements SerialPortAdapter for the SRCP system network connection.
  * <p>
@@ -12,6 +15,7 @@ import jmri.jmrix.srcp.SRCPTrafficController;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class NetworkDriverAdapter extends SRCPPortController {
 
     public NetworkDriverAdapter() {

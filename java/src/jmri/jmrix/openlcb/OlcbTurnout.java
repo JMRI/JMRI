@@ -3,6 +3,8 @@ package jmri.jmrix.openlcb;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
@@ -35,6 +37,7 @@ import javax.annotation.CheckReturnValue;
 */
 
 
+@API(status = EXPERIMENTAL)
 public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
     OlcbAddress addrThrown;   // go to thrown state

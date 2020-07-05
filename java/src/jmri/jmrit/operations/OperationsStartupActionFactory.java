@@ -11,6 +11,8 @@ import jmri.jmrit.operations.trains.TrainsTableAction;
 import jmri.jmrit.operations.trains.schedules.TrainsScheduleAction;
 import jmri.util.startup.AbstractStartupActionFactory;
 import jmri.util.startup.StartupActionFactory;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -19,6 +21,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright 2020
  */
 @ServiceProvider(service = StartupActionFactory.class)
+@API(status = MAINTAINED)
 public final class OperationsStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override

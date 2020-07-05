@@ -3,6 +3,8 @@ package jmri.jmrit.display.configurexml;
 import jmri.Memory;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryInputIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class MemoryInputIconXml extends PositionableLabelXml {
 
     public MemoryInputIconXml() {

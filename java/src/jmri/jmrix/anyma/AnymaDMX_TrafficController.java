@@ -1,5 +1,7 @@
 package jmri.jmrix.anyma;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static java.lang.System.arraycopy;
 
 import java.util.Arrays;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
+@API(status = EXPERIMENTAL)
 public class AnymaDMX_TrafficController {
 
     private byte[] old_data = new byte[512];

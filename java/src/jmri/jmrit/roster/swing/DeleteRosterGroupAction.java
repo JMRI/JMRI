@@ -10,6 +10,9 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Remove roster group.
  *
@@ -26,6 +29,7 @@ import jmri.util.swing.WindowInterface;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class DeleteRosterGroupAction extends JmriAbstractAction {
 
     public DeleteRosterGroupAction(String s, WindowInterface wi) {

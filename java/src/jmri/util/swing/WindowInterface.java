@@ -2,6 +2,9 @@ package jmri.util.swing;
 
 import java.awt.Frame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for an object that can arrange for a {@link JmriPanel} to be
  * displayed.
@@ -19,6 +22,7 @@ import java.awt.Frame;
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public interface WindowInterface {
 
     /**

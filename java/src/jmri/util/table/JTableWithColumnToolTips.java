@@ -4,10 +4,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extends JTable with Column Header ToolTips.
  * @author Steve Young Copyright (C) 2020
  */
+@API(status = EXPERIMENTAL)
 public class JTableWithColumnToolTips extends JTable {
     
         private final String[] colTips;

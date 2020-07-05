@@ -1,5 +1,8 @@
 package jmri.jmrix.ieee802154;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
@@ -9,6 +12,7 @@ package jmri.jmrix.ieee802154;
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one

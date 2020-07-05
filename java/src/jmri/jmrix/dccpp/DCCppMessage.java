@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * the higher level code from needing to know what order/format the actual message is
  * in.
  */
+@API(status = EXPERIMENTAL)
 public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delayed {
 
     private static int _nRetries = 5;

@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
+@API(status = MAINTAINED)
 public class TrackEditCommentsFrame extends OperationsFrame {
 
     // text areas

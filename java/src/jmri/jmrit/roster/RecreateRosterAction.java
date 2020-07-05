@@ -5,6 +5,9 @@ import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Recreate the roster index file if it's been damaged or lost.
  * <p>
@@ -12,6 +15,7 @@ import jmri.util.swing.WindowInterface;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = MAINTAINED)
 public class RecreateRosterAction extends JmriAbstractAction {
 
     public RecreateRosterAction(String s, WindowInterface wi) {

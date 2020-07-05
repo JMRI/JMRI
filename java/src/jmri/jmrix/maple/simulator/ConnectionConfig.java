@@ -5,6 +5,9 @@ import javax.swing.JPanel;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.nodeconfig.NodeConfigAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an Maple layout connection via a MapleSimulator
  * adapter.
@@ -19,6 +22,7 @@ import jmri.jmrix.maple.nodeconfig.NodeConfigAction;
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig, copied from EasyDCC
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

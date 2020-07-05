@@ -21,6 +21,8 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.SensorIcon;
 import jmri.util.FileUtil;
 import jmri.util.IntlUtilities;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -42,6 +44,7 @@ import org.slf4j.LoggerFactory;
  * @author Adapted for metric system - S.K. Bosch
  * @author Matthew Harris Copyright (c) 2011
  */
+@API(status = MAINTAINED)
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     final String blank = "       ";

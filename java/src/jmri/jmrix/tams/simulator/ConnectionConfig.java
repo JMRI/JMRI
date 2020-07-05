@@ -2,6 +2,9 @@ package jmri.jmrix.tams.simulator;
 
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via a Tams
  * SerialDriverAdapter object.
@@ -9,6 +12,7 @@ import javax.swing.JPanel;
  * @author Bob Jacobsen Copyright (C) 2001, 2003 Copied from NCE
  * @author kcameron Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     public final static String NAME = "Simulator"; // TODO I18N using Bundle.getMessage("key")

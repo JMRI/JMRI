@@ -14,9 +14,12 @@ import jmri.ConsistListener;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.ThrottleListener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class LocoNetConsist extends jmri.implementation.DccConsist implements SlotListener, ThrottleListener {
 
     private SlotManager slotManager = null;

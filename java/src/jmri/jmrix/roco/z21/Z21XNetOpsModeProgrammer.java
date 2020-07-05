@@ -10,6 +10,9 @@ import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides an Ops mode programming interface for Roco Z21 Currently only Byte
  * mode is implemented, though XpressNet also supports bit mode writes for POM
@@ -17,6 +20,7 @@ import jmri.jmrix.loconet.LnTrafficController;
  * @see jmri.Programmer
  * @author Paul Bender Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgrammer implements LocoNetListener {
 
     private int _cv;

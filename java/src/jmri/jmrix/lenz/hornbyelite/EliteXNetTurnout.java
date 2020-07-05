@@ -2,6 +2,9 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.jmrix.XNetTurnout to handle turnouts on Hornby Elite
  * connections.
@@ -9,6 +12,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  *
  * @author Paul Bender Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
 
     public EliteXNetTurnout(String prefix, int pNumber, XNetTrafficController tc) {  // a human-readable turnout number must be specified!

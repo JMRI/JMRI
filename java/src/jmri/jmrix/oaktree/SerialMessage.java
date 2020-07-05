@@ -1,5 +1,8 @@
 package jmri.jmrix.oaktree;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of a serial packet.
  * <p>
@@ -8,6 +11,7 @@ package jmri.jmrix.oaktree;
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006
  */
+@API(status = EXPERIMENTAL)
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
 

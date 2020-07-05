@@ -7,6 +7,8 @@ import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.Reportable;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * the fact, but now we want to leave it on the list to fix.
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="Cannot rename for user data compatiblity reasons.")
+@API(status = MAINTAINED)
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     private final String defaultText = " ";

@@ -4,6 +4,9 @@ import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the JMRI MRC-specific tools.
  *
@@ -11,6 +14,7 @@ import jmri.jmrix.mrc.MrcSystemConnectionMemo;
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */
+@API(status = EXPERIMENTAL)
 public class MrcMenu extends JMenu {
 
     /**

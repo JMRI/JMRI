@@ -2,6 +2,9 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuration for display.layoutEditor.MemoryIcon objects. Adapter
  * needs to find a class here
@@ -10,6 +13,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="Cannot rename for user data compatiblity reasons.")
 // For explanation of annotation, see layoutEditor.MemoryIcon
+@API(status = MAINTAINED)
 public class MemoryIconXml extends jmri.jmrit.display.configurexml.MemoryIconXml {
 
     public MemoryIconXml() {

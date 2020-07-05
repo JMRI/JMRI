@@ -16,6 +16,8 @@ import jmri.ShutDownTask;
 import jmri.beans.Bean;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.RequestProcessor;
 import org.openide.util.Task;
 import org.openide.util.TaskListener;
@@ -51,6 +53,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
     private static boolean shuttingDown = false;

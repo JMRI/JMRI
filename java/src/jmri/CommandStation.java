@@ -2,6 +2,9 @@ package jmri;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide a DCC command station's basic ability: Sending DCC packets to the
  * rails.
@@ -18,6 +21,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
+@API(status = STABLE)
 public interface CommandStation {
 
     /**

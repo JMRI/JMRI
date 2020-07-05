@@ -3,12 +3,16 @@ package jmri.jmrit.operations.setup;
 import java.awt.Dimension;
 import jmri.jmrit.operations.OperationsFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of additional manifest print options
  *
  * @author Dan Boudreau Copyright (C) 2012
  * 
  */
+@API(status = MAINTAINED)
 public class PrintMoreOptionFrame extends OperationsFrame {
 
     public PrintMoreOptionFrame() {

@@ -8,6 +8,8 @@ import java.util.Arrays;
 import jmri.jmrix.tams.TamsPortController;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.jmrix.tams.TamsTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -25,6 +27,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends TamsPortController {
 
     SerialPort activeSerialPort = null;

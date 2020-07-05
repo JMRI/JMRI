@@ -4,12 +4,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrit.operations.locations.TrackEditFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to create a track pool and place a track in that pool.
  *
  * @author Daniel Boudreau Copyright (C) 2011
  * @author Gregory Madsen Copyright (C) 2012
  */
+@API(status = MAINTAINED)
 public class PoolTrackAction extends AbstractAction {
 
     private TrackEditFrame _tef;

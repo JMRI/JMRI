@@ -2,6 +2,8 @@ package jmri.jmris.srcp.parser;
 
 import jmri.InstanceManager;
 import jmri.ProgrammingMode;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
  * parser for the SRCP protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
     private String outputString = null;

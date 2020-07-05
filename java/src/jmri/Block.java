@@ -12,6 +12,8 @@ import javax.annotation.Nonnull;
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,6 +109,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2006, 2008, 2014
  * @author Dave Duchamp Copywright (C) 2009
  */
+@API(status = STABLE)
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
 
     public Block(String systemName) {

@@ -3,12 +3,16 @@ package jmri.jmrix.lenz;
 import javax.annotation.CheckForNull;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents a single response from the XpressNet.
  *
  * @author svatopluk.dedic@gmail.com Copyright (C) 2020
  *
  */
+@API(status = EXPERIMENTAL)
 public class FeedbackItem {
     private final int number;
     private final int data;

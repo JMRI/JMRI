@@ -11,6 +11,8 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonDataModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +56,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016, 2018
  */
+@API(status = EXPERIMENTAL)
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable,
         java.beans.PropertyChangeListener {
 

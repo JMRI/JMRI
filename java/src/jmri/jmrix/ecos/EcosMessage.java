@@ -1,5 +1,8 @@
 package jmri.jmrix.ecos;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Encodes a message to an Ecos command station.
@@ -9,6 +12,7 @@ package jmri.jmrix.ecos;
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
 
     public EcosMessage() {

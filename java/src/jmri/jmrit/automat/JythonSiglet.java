@@ -2,6 +2,8 @@ package jmri.jmrit.automat;
 
 import jmri.script.JmriScriptEngineManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * with a subclass of {@link Siglet} instead
  */
 @Deprecated
+@API(status = MAINTAINED)
 public class JythonSiglet extends Siglet {
 
     PythonInterpreter interp;

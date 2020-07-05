@@ -24,6 +24,9 @@ package jmri.util;
  */
 import java.util.Comparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This is an updated version with enhancements made by Daniel Migowski, Andre
  * Bogus, and David Koelle
@@ -42,6 +45,7 @@ import java.util.Comparator;
  * leading zeros. For example, 0001 is seem as larger than 1 because it's the
  * longer number. A version that does not compare leading zeros is forthcoming.
  */
+@API(status = EXPERIMENTAL)
 public class AlphanumComparator implements Comparator<String> {
 
     private final boolean isDigit(char ch) {

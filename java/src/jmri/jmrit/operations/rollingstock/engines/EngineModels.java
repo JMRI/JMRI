@@ -3,6 +3,8 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.util.Hashtable;
 import java.util.Set;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -48,6 +50,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
+@API(status = MAINTAINED)
 public class EngineModels extends RollingStockAttribute {
 
     private static final String MODELS = Bundle.getMessage("engineDefaultModels");

@@ -2,11 +2,15 @@ package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Holds all the state information for a single receiver.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class Receiver {
 
     public Receiver(Point3d position) {

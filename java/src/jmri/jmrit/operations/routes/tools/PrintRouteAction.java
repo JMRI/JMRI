@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009, 2012
  */
+@API(status = MAINTAINED)
 public class PrintRouteAction extends AbstractAction {
 
     static final String NEW_LINE = "\n"; // NOI18N

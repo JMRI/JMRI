@@ -1,5 +1,7 @@
 package jmri.server.json.util;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.CONTROL_PANEL;
 import static jmri.server.json.JSON.LAYOUT_PANEL;
 import static jmri.server.json.JSON.NAME;
@@ -55,6 +57,7 @@ import jmri.web.server.WebServerPreferences;
 /**
  * @author Randall Wood Copyright 2016, 2017, 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonUtilHttpService extends JsonHttpService {
 
     private static final String RESOURCE_PATH = "jmri/server/json/util/";

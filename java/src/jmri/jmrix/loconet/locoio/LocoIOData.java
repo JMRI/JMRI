@@ -7,6 +7,8 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author John Plocher, January 28, 2007
  */
+@API(status = EXPERIMENTAL)
 public class LocoIOData extends PropertyChangeSupport
         implements LocoNetListener, PropertyChangeListener {
 

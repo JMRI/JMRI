@@ -2,6 +2,8 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.io.IOException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  *
  */
+@API(status = MAINTAINED)
 public class TrainUtilities {
 
     /**

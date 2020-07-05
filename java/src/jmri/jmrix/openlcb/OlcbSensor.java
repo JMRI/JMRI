@@ -9,6 +9,8 @@ import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010, 2011
  */
+@API(status = EXPERIMENTAL)
 public class OlcbSensor extends AbstractSensor {
 
     static final int ON_TIME = 500; // time that sensor is active after being tripped

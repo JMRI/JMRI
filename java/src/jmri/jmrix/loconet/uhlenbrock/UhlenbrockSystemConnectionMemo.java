@@ -6,12 +6,16 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotManager;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that an Uhlenbrock IB-COM or Intellibox II is
  * active
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
     public UhlenbrockSystemConnectionMemo(LnTrafficController lt,

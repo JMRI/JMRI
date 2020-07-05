@@ -7,6 +7,8 @@ import java.util.Set;
 import jmri.InstanceInitializer;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.openide.util.lookup.ServiceProvider;
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = MAINTAINED)
 public class NameFile extends XmlFile {
 
     public Set<String> names() {

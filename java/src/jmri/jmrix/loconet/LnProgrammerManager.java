@@ -6,12 +6,16 @@ import jmri.AddressedProgrammer;
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend DefaultProgrammerManager to provide programmers on LocoNet.
  *
  * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2002
  */
+@API(status = EXPERIMENTAL)
 public class LnProgrammerManager extends DefaultProgrammerManager {
 
     public LnProgrammerManager(LocoNetSystemConnectionMemo memo) {

@@ -17,6 +17,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Daniel Boudreau Copyright (C) 2016
  */
+@API(status = MAINTAINED)
 public class AutomationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     AutomationManager automationManager; // There is only one manager

@@ -4,9 +4,13 @@ import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import jmri.jmrit.display.Editor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Pete Cressman Copyright (c) 2012
  */
+@API(status = MAINTAINED)
 public class DrawEllipse extends DrawRectangle {
 
     public DrawEllipse(String which, String title, PositionableShape ps, Editor ed, boolean create) {

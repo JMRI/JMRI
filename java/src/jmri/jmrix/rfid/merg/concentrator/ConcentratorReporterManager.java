@@ -7,6 +7,8 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.implementation.decorators.TimeoutReporter;
 import jmri.jmrix.rfid.*;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class ConcentratorReporterManager extends RfidReporterManager {
 
     private final RfidTrafficController tc;

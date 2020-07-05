@@ -1,6 +1,8 @@
 package jmri.jmrix.can.cbus.configurexml;
 
 import jmri.managers.configurexml.AbstractReporterManagerConfigXML;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Riddoch Copyright: Copyright (C) 2015
  * @since 2.3.1
  */
+@API(status = EXPERIMENTAL)
 public class CbusReporterManagerXml extends AbstractReporterManagerConfigXML {
 
     public CbusReporterManagerXml() {

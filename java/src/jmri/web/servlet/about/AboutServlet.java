@@ -1,5 +1,7 @@
 package jmri.web.servlet.about;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import java.io.IOException;
@@ -27,6 +29,7 @@ import org.openide.util.lookup.ServiceProvider;
 @WebServlet(name = "AboutServlet",
         urlPatterns = {"/about"})
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class AboutServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

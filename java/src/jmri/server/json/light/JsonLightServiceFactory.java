@@ -1,5 +1,7 @@
 package jmri.server.json.light;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.light.JsonLight.LIGHT;
 import static jmri.server.json.light.JsonLight.LIGHTS;
 
@@ -13,6 +15,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood
  */
 @ServiceProvider(service = JsonServiceFactory.class)
+@API(status = EXPERIMENTAL)
 public class JsonLightServiceFactory implements JsonServiceFactory<JsonLightHttpService, JsonLightSocketService> {
 
 

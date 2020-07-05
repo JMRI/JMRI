@@ -7,12 +7,16 @@ import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.locations.Location;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Opens the location track blocking order window.
  *
  * @author Daniel Boudreau Copyright (C) 2015
  * 
  */
+@API(status = MAINTAINED)
 public class LocationTrackBlockingOrderAction extends AbstractAction {
 
     public LocationTrackBlockingOrderAction(Location location) {

@@ -4,6 +4,9 @@ import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend DefaultProgrammerManager to provide programmers on ECos
  * Programming track is supported from ECoS firmware version 4.1.
@@ -12,6 +15,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @see jmri.managers.DefaultProgrammerManager
  * @author Karl Johan Lisby Copyright (C) 2015 and 2018
  */
+@API(status = EXPERIMENTAL)
 public class EcosProgrammerManager extends DefaultProgrammerManager {
 
     //private Programmer mProgrammer;

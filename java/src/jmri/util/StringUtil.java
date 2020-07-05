@@ -5,6 +5,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common utility methods for working with Strings.
  * <p>
@@ -17,6 +20,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright 2003
  */
+@API(status = EXPERIMENTAL)
 public class StringUtil {
 
     public static final String HTML_CLOSE_TAG = "</html>";

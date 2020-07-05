@@ -1,5 +1,7 @@
 package jmri.server.json;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.GOODBYE;
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handler for JSON messages from a TCP socket or WebSocket client.
  */
+@API(status = EXPERIMENTAL)
 public class JsonClientHandler {
 
     /**

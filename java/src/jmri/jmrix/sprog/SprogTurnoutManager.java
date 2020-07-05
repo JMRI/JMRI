@@ -4,6 +4,9 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement turnout manager for Sprog systems.
  * <p>
@@ -12,6 +15,7 @@ import jmri.Turnout;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public SprogTurnoutManager(SprogSystemConnectionMemo memo) {

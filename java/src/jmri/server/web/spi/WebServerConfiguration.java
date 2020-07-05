@@ -5,12 +5,16 @@ import java.util.Map;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide additional configurations not encapsulated by a servlet for the
  * {@link jmri.web.server.WebServer}.
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public interface WebServerConfiguration {
 
     /**

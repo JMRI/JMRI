@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Abstract Color Chooser extension that presents a split button
  * to set the color. Clicking the button results in a
@@ -18,6 +21,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
  * @author Paul Bender Copyright (C) 2018
  * @since 4.1.1
  */
+@API(status = EXPERIMENTAL)
 public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
 
     //private JLabel swatch = null;

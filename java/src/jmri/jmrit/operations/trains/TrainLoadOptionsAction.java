@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a TrainLoadOptionsFrame.
  *
@@ -11,6 +14,7 @@ import javax.swing.AbstractAction;
  * @author Daniel Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class TrainLoadOptionsAction extends AbstractAction {
 
     public TrainLoadOptionsAction(TrainEditFrame frame) {

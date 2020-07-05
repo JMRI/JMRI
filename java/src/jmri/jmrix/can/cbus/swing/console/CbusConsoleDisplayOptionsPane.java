@@ -11,6 +11,9 @@ import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -20,6 +23,7 @@ import jmri.util.JmriJFrame;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class CbusConsoleDisplayOptionsPane extends javax.swing.JPanel {
     
     private final CbusConsolePane _mainPane;

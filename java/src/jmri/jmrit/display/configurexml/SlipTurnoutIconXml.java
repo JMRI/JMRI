@@ -3,6 +3,8 @@ package jmri.jmrit.display.configurexml;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SlipTurnoutIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 
     public SlipTurnoutIconXml() {

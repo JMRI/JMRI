@@ -1,10 +1,14 @@
 package jmri.server.json.reporter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants used by the {@link jmri.server.json.reporter} package.
  *
  * @author Randall Wood 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonReporter {
 
     /**

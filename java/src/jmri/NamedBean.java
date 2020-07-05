@@ -14,6 +14,9 @@ import javax.annotation.Nonnull;
 
 import jmri.beans.PropertyChangeProvider;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides common services for classes representing objects on the layout, and
  * allows a common form of access by their Managers.
@@ -63,6 +66,7 @@ import jmri.beans.PropertyChangeProvider;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
  * @see jmri.Manager
  */
+@API(status = STABLE)
 public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider {
 
     /**
@@ -71,6 +75,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * initial state of a newly created object before communication with the
      * layout.
      */
+    @API(status = INTERNAL)
     public static final int UNKNOWN = 0x01;
 
     /**
@@ -90,6 +95,7 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * Format used for {@link #getDisplayName(DisplayOptions)} when displaying
      * the user name and system name with quoation marks around the user name.
      */
+    @API(status = DEPRECATED)
     public static final String QUOTED_NAME_FORMAT = "\"%s\" (%s)";
 
     /**

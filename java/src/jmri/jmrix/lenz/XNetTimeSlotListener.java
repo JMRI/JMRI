@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class XNetTimeSlotListener implements XNetListener {
 
     private XNetPortController port;

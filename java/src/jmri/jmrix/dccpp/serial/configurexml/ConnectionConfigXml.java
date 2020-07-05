@@ -4,6 +4,9 @@ import jmri.jmrix.dccpp.configurexml.AbstractDCCppSerialConnectionConfigXml;
 import jmri.jmrix.dccpp.serial.ConnectionConfig;
 import jmri.jmrix.dccpp.serial.DCCppAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the DCC++ serial adapter
  * (and connections). Note this is named as the XML version of a
@@ -16,6 +19,7 @@ import jmri.jmrix.dccpp.serial.DCCppAdapter;
  * @author Paul Bender Copyright (c) 2005
  * @author Mark Underwood Copyright (c) 2015
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractDCCppSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

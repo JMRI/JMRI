@@ -15,6 +15,8 @@ import jmri.InstanceManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -23,6 +25,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2017
  */
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = MAINTAINED)
 public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
 
     private final ResourceBundle apb = ResourceBundle.getBundle("apps.AppsConfigBundle");

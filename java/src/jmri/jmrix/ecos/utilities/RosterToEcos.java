@@ -10,6 +10,10 @@ import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.EcosTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = EXPERIMENTAL)
 public class RosterToEcos implements EcosListener {
 
     private EcosLocoAddress objEcosLoco = null;

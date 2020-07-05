@@ -12,6 +12,8 @@ import javax.usb.UsbException;
 
 import jmri.SystemConnectionMemo;
 import jmri.util.usb.UsbUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = EXPERIMENTAL)
 public class UsbPortAdapter extends AbstractPortController {
 
     private Short vendorID = 0;

@@ -13,11 +13,15 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Service to support getting core JSON Schemas for the JSON Server.
  *
  * @author Randall Wood Copyright 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonSchemaHttpService extends JsonHttpService {
 
     JsonSchemaHttpService(ObjectMapper mapper) {

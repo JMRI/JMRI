@@ -15,6 +15,9 @@ import javax.swing.border.EmptyBorder;
 
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide graphic output to a screen/printer.
  * <p>
@@ -23,6 +26,7 @@ import jmri.util.JmriJFrame;
  *
  * @author David Flanagan
  */
+@API(status = EXPERIMENTAL)
 public class HardcopyWriter extends Writer {
 
     // instance variables

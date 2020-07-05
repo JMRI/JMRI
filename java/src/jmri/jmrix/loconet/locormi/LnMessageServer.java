@@ -6,6 +6,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import jmri.jmrix.loconet.LnTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alex Shepherd Copyright (c) 2002
  */
+@API(status = EXPERIMENTAL)
 public class LnMessageServer extends UnicastRemoteObject implements LnMessageServerInterface {
 
     // This is required for RMI usage, do not remove

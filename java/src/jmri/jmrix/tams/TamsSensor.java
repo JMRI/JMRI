@@ -2,6 +2,9 @@ package jmri.jmrix.tams;
 
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement a Sensor via Tams communications.
  * <p>
@@ -13,6 +16,7 @@ import jmri.implementation.AbstractSensor;
  *
  * @author Kevin Dickerson (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class TamsSensor extends AbstractSensor {
     
     public TamsSensor(String systemName, String userName) {

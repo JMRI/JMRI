@@ -6,6 +6,9 @@ import javax.swing.tree.DefaultTreeModel;
 import jmri.InstanceManagerAutoDefault;
 import jmri.util.FileUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * TreeModel used by CatalogPane to create a tree of resources.
  * <p>
@@ -23,6 +26,7 @@ import jmri.util.FileUtil;
  *
  * @author Bob Jacobsen Copyright 2002
  */
+@API(status = MAINTAINED)
 public class CatalogTreeModel extends DefaultTreeModel implements InstanceManagerAutoDefault {
 
     public CatalogTreeModel() {

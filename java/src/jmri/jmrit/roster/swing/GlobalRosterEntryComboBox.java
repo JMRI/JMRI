@@ -2,6 +2,9 @@ package jmri.jmrit.roster.swing;
 
 import jmri.jmrit.roster.Roster;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A {@link RosterEntryComboBox} that lists all roster entries in the Roster
  * without respect to a roster group.
@@ -9,6 +12,7 @@ import jmri.jmrit.roster.Roster;
  * @author Randall Wood Copyright (C) 2011
  * @see RosterEntryComboBox
  */
+@API(status = MAINTAINED)
 public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
 
     /**

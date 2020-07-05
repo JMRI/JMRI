@@ -4,9 +4,13 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import jmri.jmrix.loconet.LocoNetMessage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Bob Jacobsen, Alex Shepherd Copyright (c) 2002
  */
+@API(status = EXPERIMENTAL)
 public interface LnMessageBufferInterface extends Remote {
 
     public void enable(int mask) throws RemoteException;

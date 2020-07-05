@@ -4,6 +4,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 @ParametersAreNonnullByDefault
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
@@ -19,6 +22,7 @@ import javax.annotation.*;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
+@API(status = MAINTAINED)
 public class Bundle extends jmri.jmrit.display.layoutEditor.Bundle {
 
     @CheckForNull

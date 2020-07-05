@@ -13,6 +13,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,7 @@ import jmri.util.FileUtil;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
  * @author Rodney Black Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class Train extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
     /*

@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common and utility constants used in the JMRI JSON protocol.
  * <p>
@@ -13,6 +16,7 @@ import java.util.List;
  * 
  * @author Randall Wood (C) 2013, 2014, 2016, 2018, 2019
  */
+@API(status = EXPERIMENTAL)
 public final class JSON {
 
     /**

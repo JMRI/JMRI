@@ -4,6 +4,9 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNetworkPortAdapter;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements SerialNetworkPortAdapter for a network connection.
  * <p>
@@ -12,6 +15,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2015
  */
+@API(status = EXPERIMENTAL)
 public class NetworkDriverAdapter extends SerialNetworkPortAdapter {
 
     public NetworkDriverAdapter() {

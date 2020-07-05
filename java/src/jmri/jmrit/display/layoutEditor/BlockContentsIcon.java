@@ -4,6 +4,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.swing.JOptionPane;
 import jmri.Block;
 import jmri.jmrit.roster.RosterEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * on from the MemoryIcon
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@API(status = MAINTAINED)
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
     //TODO: unused - dead-code strip

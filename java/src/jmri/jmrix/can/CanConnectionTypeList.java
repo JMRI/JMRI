@@ -1,5 +1,8 @@
 package jmri.jmrix.can;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Return a list of valid lenz XpressNet Connection Types.
  *
@@ -7,6 +10,7 @@ package jmri.jmrix.can;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
+@API(status = EXPERIMENTAL)
 public class CanConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     @Override

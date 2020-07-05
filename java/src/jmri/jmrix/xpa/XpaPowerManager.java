@@ -4,6 +4,9 @@ import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.managers.AbstractPowerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * PowerManager implementation for controlling layout power from an XPA+modem
  * connected to an XpressNet based system.
@@ -11,6 +14,7 @@ import jmri.managers.AbstractPowerManager;
  * @author Paul Bender Copyright (C) 2004
   *
  */
+@API(status = EXPERIMENTAL)
 public class XpaPowerManager extends AbstractPowerManager<XpaSystemConnectionMemo> implements XpaListener {
 
     XpaTrafficController tc;

@@ -7,12 +7,16 @@ import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of ECoS messages
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
     // member declarations

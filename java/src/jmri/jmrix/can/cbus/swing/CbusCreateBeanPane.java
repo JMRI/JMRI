@@ -12,6 +12,9 @@ import jmri.jmrix.can.swing.CanPanel;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusNameService;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -20,6 +23,7 @@ import jmri.jmrix.can.cbus.CbusNameService;
  * 
  * @author Steve Young Copyright (C) 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusCreateBeanPane extends JPanel {
     
     private final CanPanel _mainPane;

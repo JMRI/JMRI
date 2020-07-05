@@ -3,11 +3,15 @@ package jmri.jmrit.roster.swing.speedprofile;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame Entry Exit Frames
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class SpeedProfileFrame extends jmri.util.JmriJFrame {
 
     public SpeedProfileFrame() {

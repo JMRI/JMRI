@@ -18,6 +18,8 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.builders.ThumbnailParameterBuilder;
 import net.coobird.thumbnailator.filters.ImageFilter;
 import net.coobird.thumbnailator.tasks.io.FileImageSource;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lionel Jeanson - Copyright 2009
  */
+@API(status = EXPERIMENTAL)
 public class ResizableImagePanel extends JPanel implements ComponentListener {
 
     public static final String IMAGE_PATH = "imagePath";

@@ -3,6 +3,9 @@ package jmri.jmrix.srcp;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement TurnoutManager for SRCP systems.
  * <p>
@@ -11,6 +14,7 @@ import jmri.Turnout;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public SRCPTurnoutManager(SRCPBusConnectionMemo memo) {

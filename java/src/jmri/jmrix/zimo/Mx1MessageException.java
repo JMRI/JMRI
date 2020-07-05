@@ -2,6 +2,9 @@ package jmri.jmrix.zimo;
 
 import jmri.JmriException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Zimo-specfic exceptions.
  *
@@ -9,6 +12,7 @@ import jmri.JmriException;
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  */
+@API(status = EXPERIMENTAL)
 public class Mx1MessageException extends JmriException {
 
     public Mx1MessageException(String s) {

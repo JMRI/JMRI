@@ -6,6 +6,8 @@ import java.text.MessageFormat;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
  *
  * @author Dan Boudreau Copyright (C) 2007, 2016
  */
+@API(status = MAINTAINED)
 public class DeleteCarRosterAction extends AbstractAction {
 
     CarsTableFrame _carsTableFrame;

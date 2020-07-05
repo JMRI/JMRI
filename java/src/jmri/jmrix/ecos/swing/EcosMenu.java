@@ -2,6 +2,8 @@ package jmri.jmrix.ecos.swing;
 
 import javax.swing.JMenu;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson
  */
+@API(status = EXPERIMENTAL)
 public class EcosMenu extends JMenu {
 
     public EcosMenu(EcosSystemConnectionMemo memo) {

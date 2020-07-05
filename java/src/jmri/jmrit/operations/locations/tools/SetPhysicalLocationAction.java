@@ -7,6 +7,9 @@ import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.locations.Location;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create a SetPhysicalLocation dialog.
  *
@@ -14,6 +17,7 @@ import jmri.jmrit.operations.locations.Location;
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class SetPhysicalLocationAction extends AbstractAction {
 
     public SetPhysicalLocationAction(Location location) {

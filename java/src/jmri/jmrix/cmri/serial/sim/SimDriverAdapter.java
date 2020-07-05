@@ -8,6 +8,8 @@ import java.io.PipedInputStream;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.util.ImmediatePipedOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -18,6 +20,7 @@ import purejavacomm.UnsupportedCommOperationException;
  */
 @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Access to 'self' OK until multiple instance pattern installed")
+@API(status = EXPERIMENTAL)
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
     @Override

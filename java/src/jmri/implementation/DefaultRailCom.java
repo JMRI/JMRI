@@ -6,6 +6,8 @@ import java.util.Hashtable;
 import java.util.List;
 import jmri.JmriException;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.3
  */
+@API(status = EXPERIMENTAL)
 public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
 
     private int currentState = 0x00;

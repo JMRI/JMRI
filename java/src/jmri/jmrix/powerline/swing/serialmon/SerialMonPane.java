@@ -6,6 +6,9 @@ import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.swing.PowerlinePanelInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a MonFrame object.
  *
@@ -13,6 +16,7 @@ import jmri.jmrix.powerline.swing.PowerlinePanelInterface;
  * to Powerline
  * @author Ken Cameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialListener, PowerlinePanelInterface {
 
    public SerialMonPane() {

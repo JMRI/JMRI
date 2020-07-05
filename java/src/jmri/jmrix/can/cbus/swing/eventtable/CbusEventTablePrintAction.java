@@ -9,12 +9,15 @@ import javax.swing.AbstractAction;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.davidflanagan.HardcopyWriter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Print or Print Preview Action for CBUS Event Table
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventTablePrintAction extends AbstractAction {
     
     private final static int[] whichPrintColumns = {CbusEventTableDataModel.NODE_COLUMN,

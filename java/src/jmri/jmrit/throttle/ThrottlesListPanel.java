@@ -14,8 +14,11 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
+@API(status = MAINTAINED)
 public class ThrottlesListPanel extends JPanel {
 
     private ThrottlesTableModel throttleFramesLM;

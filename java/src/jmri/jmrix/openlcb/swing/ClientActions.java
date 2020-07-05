@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.cdi.impl.ConfigRepresentation;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  * Created by bracz on 11/21/16.
  */
 
+@API(status = EXPERIMENTAL)
 public class ClientActions {
     private final static Logger log = LoggerFactory.getLogger(ClientActions.class);
     private final OlcbInterface iface;

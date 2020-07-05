@@ -2,6 +2,9 @@ package jmri;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent an string I/O on the layout.
  * <p>
@@ -10,6 +13,7 @@ import javax.annotation.Nonnull;
  *
  * @author Daniel Bergqvist Copyright (c) 2018
  */
+@API(status = STABLE)
 public interface StringIO extends NamedBean {
 
     /**

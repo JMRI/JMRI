@@ -11,6 +11,9 @@ import jmri.jmrix.srcp.swing.SRCPComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -21,6 +24,7 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2015-2016
  */
+@API(status = EXPERIMENTAL)
 public class SRCPSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public SRCPSystemConnectionMemo(String prefix, String name, SRCPTrafficController et) {

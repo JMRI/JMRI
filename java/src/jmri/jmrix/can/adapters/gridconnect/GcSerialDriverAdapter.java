@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import jmri.jmrix.can.TrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -23,6 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Balazs Racz Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class GcSerialDriverAdapter extends GcPortController {
 
     protected SerialPort activeSerialPort = null;

@@ -6,12 +6,16 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement the jmri.Programmer interface via commands for the Sprog
  * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
     private SprogSystemConnectionMemo _memo = null;

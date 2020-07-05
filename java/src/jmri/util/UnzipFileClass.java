@@ -8,12 +8,16 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Unzip a local file or URL to into a specified directory
  * <p>
  * Largely from
  * https://examples.javacodegeeks.com/core-java/util/zip/zipinputstream/java-unzip-file-example/
  */
+@API(status = EXPERIMENTAL)
 public class UnzipFileClass {
 
     /**

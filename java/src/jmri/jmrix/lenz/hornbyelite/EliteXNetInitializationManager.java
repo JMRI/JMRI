@@ -2,6 +2,9 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This class performs Command Station dependant initialization for the Hornby
  * Elite. It adds the appropriate Managers via the Initialization Manager based
@@ -11,6 +14,7 @@ import jmri.jmrix.lenz.*;
  * @deprecated since 4.21.1.  Use {@link XNetInitializationManager} instead.
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class EliteXNetInitializationManager extends XNetInitializationManager {
 
     public EliteXNetInitializationManager(XNetSystemConnectionMemo memo) {

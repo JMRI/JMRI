@@ -15,12 +15,16 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.ProxyManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A JComboBox for a set of Managers for the same type of NamedBean.
  *
  * @author Randall Wood
  * @param <B> the type of NamedBean
  */
+@API(status = EXPERIMENTAL)
 public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> {
 
     public ManagerComboBox() {

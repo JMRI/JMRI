@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.ArrayList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for a Consist Object, describing one or more
  * cooperatively-operating locomotives.
@@ -19,6 +22,7 @@ import java.util.ArrayList;
  *
  * @author Paul Bender Copyright (C) 2003-2008
  */
+@API(status = STABLE)
 public interface Consist {
 
     // Constants for the ConsistType

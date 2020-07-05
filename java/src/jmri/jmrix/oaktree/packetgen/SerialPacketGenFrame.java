@@ -11,11 +11,15 @@ import jmri.jmrix.oaktree.SerialReply;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of serial messages.
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006
  */
+@API(status = EXPERIMENTAL)
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.oaktree.SerialListener {
 
     // member declarations

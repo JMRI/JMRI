@@ -8,6 +8,8 @@ import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young (c) 2019
  * 
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTableModel 
     implements PropertyChangeListener {
 

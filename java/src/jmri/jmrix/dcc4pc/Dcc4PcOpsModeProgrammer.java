@@ -11,6 +11,9 @@ import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides an Ops mode proxy programming interface for a RailCom Reader. This
  * forwards the read request to the command station to forward on and handles
@@ -19,6 +22,7 @@ import jmri.ProgrammingMode;
  * @see jmri.Programmer
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements PropertyChangeListener, AddressedProgrammer {
 
     int pAddress = 0;

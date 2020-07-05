@@ -7,6 +7,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = MAINTAINED)
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
     private static final String LOCKED = Bundle.getMessage("Locked");

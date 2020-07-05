@@ -1,5 +1,8 @@
 package jmri.jmrix.rfid;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface to send/receive serial information
  *
@@ -7,6 +10,7 @@ package jmri.jmrix.rfid;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public interface RfidInterface {
 
     public void addRfidListener(RfidListener l);

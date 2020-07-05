@@ -6,6 +6,9 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides an edit panel for the sensor pull up/pull down configuration.
  * This is designed so that it can be re-used in other panels. This is based
@@ -14,6 +17,7 @@ import jmri.Sensor;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Kevin Dickerson Copyright (C) 2017 
  */
+@API(status = MAINTAINED)
 public class SensorPullUpEditAction extends BeanEditAction<Sensor> {
 
     @Override

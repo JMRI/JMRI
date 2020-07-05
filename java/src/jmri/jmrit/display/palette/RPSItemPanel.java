@@ -11,9 +11,12 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.RpsPositionIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class RPSItemPanel extends FamilyItemPanel {
 
     public RPSItemPanel(DisplayFrame parentFrame, String type, String family) {

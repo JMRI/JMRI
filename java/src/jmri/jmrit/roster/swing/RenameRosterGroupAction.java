@@ -10,6 +10,9 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Rename a roster group.
  * <p>
@@ -30,6 +33,7 @@ import jmri.util.swing.WindowInterface;
  * @author Randall Wood Copyright (C) 2011
  * @see Roster
  */
+@API(status = MAINTAINED)
 public class RenameRosterGroupAction extends JmriAbstractAction {
 
     public RenameRosterGroupAction(String s, WindowInterface wi) {

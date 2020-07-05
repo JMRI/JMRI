@@ -27,12 +27,15 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.ImagePanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * JPanel for IndicatorTurnout items.
  */
+@API(status = MAINTAINED)
 public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
 
     private JPanel _tablePanel;

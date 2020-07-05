@@ -7,6 +7,9 @@ import jmri.SpeedStepMode;
 import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An implementation of DccThrottle with code specific to an SRCP connection.
  * <p>
@@ -16,6 +19,7 @@ import jmri.jmrix.AbstractThrottle;
  *
  * @author Bob Jacobsen Copyright (C) 2001,2008
  */
+@API(status = EXPERIMENTAL)
 public class SRCPThrottle extends AbstractThrottle {
 
     /**

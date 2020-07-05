@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.jmris.JmriConnection;
 import jmri.server.json.schema.JsonSchemaServiceCache;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.eclipse.jetty.websocket.api.Session;
 
 /**
@@ -16,6 +18,7 @@ import org.eclipse.jetty.websocket.api.Session;
  *
  * @author Randall Wood Copyright 2019
  */
+@API(status = EXPERIMENTAL)
 public class JsonConnection extends JmriConnection {
 
     private final ObjectMapper objectMapper = new ObjectMapper();

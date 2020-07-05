@@ -5,9 +5,13 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Container for data in JSON request.
  */
+@API(status = EXPERIMENTAL)
 public class JsonRequest {
 
     public final int id;

@@ -2,6 +2,9 @@ package jmri;
 
 import javax.swing.tree.TreeModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents a CatalogTree, a tree displaying a taxonomy - e.g. a file system
  * directory, or an index of references or a table of contents built according
@@ -29,6 +32,7 @@ import javax.swing.tree.TreeModel;
  *
  * @author Pete Cressman Copyright (C) 2009
  */
+@API(status = STABLE)
 public interface CatalogTree extends NamedBean, TreeModel {
 
     public static final char IMAGE = 'I';    // letter to filter for images/icons

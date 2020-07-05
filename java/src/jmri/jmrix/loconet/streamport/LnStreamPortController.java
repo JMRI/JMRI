@@ -2,6 +2,8 @@ package jmri.jmrix.loconet.streamport;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -15,6 +17,7 @@ import jmri.jmrix.loconet.LnConnectionTypeList;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Paul Bender Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class LnStreamPortController extends jmri.jmrix.AbstractStreamPortController {
 
     public LnStreamPortController(LocoNetSystemConnectionMemo connectionMemo, DataInputStream in, DataOutputStream out, String pname) {

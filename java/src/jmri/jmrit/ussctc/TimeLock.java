@@ -3,11 +3,15 @@ package jmri.jmrit.ussctc;
 import java.util.*;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lock if any of the SignalHeadSections controlling traffic are running time.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
+@API(status = MAINTAINED)
 public class TimeLock implements Lock {
 
     /**

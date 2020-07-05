@@ -25,6 +25,8 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.util.table.JTableWithColumnToolTips;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @since 4.15.3
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel implements TableModelListener {
 
     protected CbusEventRequestDataModel eventModel;

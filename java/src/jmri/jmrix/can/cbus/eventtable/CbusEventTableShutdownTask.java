@@ -2,12 +2,16 @@ package jmri.jmrix.can.cbus.eventtable;
 
 import jmri.implementation.AbstractShutDownTask;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class to call dispose on a MERG CBUS event table.
  * This saves the event data to XML prior to shutdown.
  *
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventTableShutdownTask extends AbstractShutDownTask {
 
     private final CbusEventTableDataModel _model;

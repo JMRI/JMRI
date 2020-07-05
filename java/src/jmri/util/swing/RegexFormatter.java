@@ -7,6 +7,9 @@ import java.util.regex.PatternSyntaxException;
 
 import javax.swing.text.DefaultFormatter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * 
  * From an early Java example, later at http://www.oracle.com/technetwork/java/reftf-138955.html#
@@ -14,6 +17,7 @@ import javax.swing.text.DefaultFormatter;
  * Example:
  * new JFormattedTextField(new jmri.util.swing.RegexFormatter("[A-Za-z]\\d*"));
  */
+@API(status = EXPERIMENTAL)
 public class RegexFormatter extends DefaultFormatter {
     private Pattern pattern;
     private Matcher matcher;

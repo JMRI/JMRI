@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  *
  * @author Daniel Boudreau Copyright (C) 2016
  */
+@API(status = MAINTAINED)
 public class AutomationItem extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
     public static final String NONE = ""; // NOI18N

@@ -10,6 +10,10 @@ import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.beantable.AbstractTableTabAction;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = EXPERIMENTAL)
 public class EcosLocoTableTabAction extends AbstractTableTabAction<NamedBean> {  // there is no specific subtype of NamedBean here, see EcosLocoAddressManager
 
     public EcosLocoTableTabAction(String s) {

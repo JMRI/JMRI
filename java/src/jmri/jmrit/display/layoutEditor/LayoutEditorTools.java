@@ -27,6 +27,8 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JComboBoxUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.*;
 
 /**
@@ -38,6 +40,7 @@ import org.slf4j.*;
  * @author Dave Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2019
  */
+@API(status = MAINTAINED)
 final public class LayoutEditorTools {
 
     //constants

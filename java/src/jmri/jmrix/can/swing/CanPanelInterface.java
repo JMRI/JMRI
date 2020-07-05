@@ -2,6 +2,9 @@ package jmri.jmrix.can.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel interface to handle providing system connection information to a
  * panel.
@@ -9,6 +12,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * @author Kevin Dickerson Copyright 2012
  * @since 2.99.2
  */
+@API(status = EXPERIMENTAL)
 public interface CanPanelInterface {
 
     /**

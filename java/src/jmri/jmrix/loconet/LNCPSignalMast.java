@@ -4,6 +4,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import jmri.NmraPacket;
 import jmri.implementation.DccSignalMast;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2002
  */
+@API(status = EXPERIMENTAL)
 public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
     public LNCPSignalMast(String sys, String user) {

@@ -15,6 +15,9 @@ import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import jmri.jmrit.blockboss.BlockBossLogicProvider;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * ConnectivityUtil provides methods supporting use of layout connectivity
  * available in Layout Editor panels. These tools allow outside classes to
@@ -44,6 +47,7 @@ import jmri.jmrit.blockboss.BlockBossLogicProvider;
  * @author Dave Duchamp Copyright (c) 2009
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 final public class ConnectivityUtil {
 
     // constants

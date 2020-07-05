@@ -2,6 +2,9 @@ package jmri.jmrix.dccpp.swing;
 
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the DCC++ subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
  * @author      Mark Underwood Copyright (C) 2015
  * @since 4.2.2
  */
+@API(status = EXPERIMENTAL)
 public class DCCppComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public DCCppComponentFactory(DCCppSystemConnectionMemo memo) {

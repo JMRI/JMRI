@@ -6,11 +6,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame providing a table of Automat instances
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
+@API(status = MAINTAINED)
 public class AutomatTableFrame extends jmri.util.JmriJFrame {
 
     AutomatTableDataModel dataModel;

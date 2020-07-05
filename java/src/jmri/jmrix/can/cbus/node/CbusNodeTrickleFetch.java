@@ -8,6 +8,9 @@ import jmri.jmrix.can.TrafficController;
 import java.util.TimerTask;
 import jmri.util.TimerUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -18,6 +21,7 @@ import jmri.util.TimerUtil;
 // if the network is quiet, ie no messages in the last XX ms, this
 // will trigger a fetch for any unknown node parameters, node variables, or node event variables
 
+@API(status = EXPERIMENTAL)
 public class CbusNodeTrickleFetch implements CanListener {
     
     private final CbusBasicNodeTableFetch nodeModel;

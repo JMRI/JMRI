@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet.hexfile.configurexml;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -12,6 +14,7 @@ import org.jdom2.Element;
  * @author Kevin Dickerson Copyright: Copyright (c) 2003
  */
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
+@API(status = EXPERIMENTAL)
 public class LnSensorManagerXml extends jmri.jmrix.loconet.configurexml.LnSensorManagerXml {
 
     @Override

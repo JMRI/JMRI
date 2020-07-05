@@ -5,6 +5,9 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * ValueRenderer.java
  *
@@ -12,6 +15,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = MAINTAINED)
 public class ValueRenderer implements TableCellRenderer {
 
     public ValueRenderer() {

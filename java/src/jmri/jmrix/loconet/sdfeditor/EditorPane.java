@@ -21,6 +21,9 @@ import javax.swing.tree.TreeSelectionModel;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 import jmri.jmrix.loconet.sdf.SdfMacro;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Pane for editing Digitrax SDF files.
  * <p>
@@ -30,6 +33,7 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class EditorPane extends javax.swing.JPanel implements TreeSelectionListener {
 
     // GUI member declarations

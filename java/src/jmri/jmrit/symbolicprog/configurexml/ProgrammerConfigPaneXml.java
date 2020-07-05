@@ -4,6 +4,8 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.ProgrammerConfigPane;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  */
+@API(status = MAINTAINED)
 public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public ProgrammerConfigPaneXml() {

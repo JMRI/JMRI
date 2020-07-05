@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import jmri.jmrix.dccpp.serial.SerialDCCppPacketizer;
  * @author Mark Underwood Copyright (C) 2015
  * @author Costin Grigoras Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppListener {
     private static final long serialVersionUID = 1L;
 

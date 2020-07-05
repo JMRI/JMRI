@@ -2,6 +2,9 @@ package jmri.util.docbook;
 
 import java.util.ArrayList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Memo class to remember a revision history.
  * <p>
@@ -9,6 +12,7 @@ import java.util.ArrayList;
  *
  * @author Bob Jacobsen Copyright (c) 2010
  */
+@API(status = EXPERIMENTAL)
 public class RevHistory {
 
     ArrayList<Revision> list = new ArrayList<>();

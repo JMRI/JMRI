@@ -5,12 +5,16 @@ import jmri.jmrix.ieee802154.IEEE802154Message;
 import jmri.jmrix.ieee802154.IEEE802154Reply;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Traffic Controller interface for communicating with IEEE 802.15.4 devices
  * directly using IEEE 802.15.4 formated messages.
  *
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class SerialTrafficController extends IEEE802154TrafficController {
 
     /**

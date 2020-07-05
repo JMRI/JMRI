@@ -6,6 +6,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for the User Preferences Manager.
  * <p>
@@ -17,6 +20,7 @@ import java.util.HashMap;
  *
  * @author Kevin Dickerson Copyright (C) 2010
  */
+@API(status = STABLE)
 public interface UserPreferencesManager {
 
     public static final String PREFERENCES_UPDATED = "PreferencesUpdated"; // NOI18N

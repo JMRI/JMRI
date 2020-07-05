@@ -24,6 +24,8 @@ import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * @see ItemPanel palette class diagram
  * @author Pete Cressman Copyright (c) 2010, 2011, 2020
  */
+@API(status = MAINTAINED)
 public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
 
     DecoratorPanel _decorator;

@@ -2,6 +2,9 @@ package jmri.util.iharder.dnd;
 
 import java.util.Arrays;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This is the event that is passed to the
  * {@link URIDropListener#urisDropped URIsDropped(...)} method in your
@@ -17,6 +20,7 @@ import java.util.Arrays;
  * 
  * @version 1.2
  */
+@API(status = EXPERIMENTAL)
 public class URIDropEvent extends java.util.EventObject {
 
     private final java.net.URI[] uris;

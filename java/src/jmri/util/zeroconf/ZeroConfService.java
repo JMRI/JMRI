@@ -9,6 +9,9 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * ZeroConfService objects manage a zeroConf network service advertisement.
  * <p>
@@ -51,6 +54,7 @@ import jmri.InstanceManager;
  * @see javax.jmdns.JmDNS
  * @see javax.jmdns.ServiceInfo
  */
+@API(status = EXPERIMENTAL)
 public class ZeroConfService {
 
     // internal data members

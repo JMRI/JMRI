@@ -7,6 +7,8 @@ import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
  */
+@API(status = EXPERIMENTAL)
 public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 
     protected Mx1TrafficController tc;

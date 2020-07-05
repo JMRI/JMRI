@@ -2,6 +2,9 @@ package jmri.jmrix.zimo;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Defines standard operations for Dcc command stations.
  *
@@ -10,6 +13,7 @@ import javax.annotation.Nonnull;
  * Adapted by Sip Bosch for use with Zimo Mx-1
  *
  */
+@API(status = EXPERIMENTAL)
 public class Mx1CommandStation implements jmri.CommandStation {
 
     public Mx1CommandStation(String systemName, String userName) {

@@ -11,11 +11,15 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 
+@API(status = MAINTAINED)
 public class ProjectsCommonSubs {
     static final public char SSV_SEPARATOR = ';';
     

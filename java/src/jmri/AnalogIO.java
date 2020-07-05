@@ -1,10 +1,14 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent an analog I/O on the layout.
  * 
  * @author Daniel Bergqvist Copyright (C) 2018
  */
+@API(status = STABLE)
 public interface AnalogIO extends NamedBean {
 
     /**

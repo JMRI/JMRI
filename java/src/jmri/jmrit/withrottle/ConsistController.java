@@ -14,6 +14,8 @@ import jmri.LocoAddress;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.jmrit.consisttool.ConsistFile;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class ConsistController extends AbstractController implements ProgListener {
 
     private ConsistManager manager;

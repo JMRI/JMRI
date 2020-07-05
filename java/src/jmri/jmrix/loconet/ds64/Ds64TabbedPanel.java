@@ -31,6 +31,8 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.swing.ValidatedTextField;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,6 +72,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2002, 2004, 2005, 2007, 2010
  * @author B. Milhaupt Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017
  */
+@API(status = EXPERIMENTAL)
 public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     /**

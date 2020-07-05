@@ -27,6 +27,9 @@ import jmri.jmrit.timetable.configurexml.TimeTableXml;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create and maintain timetables.
  * <p>
@@ -43,6 +46,7 @@ import jmri.util.swing.SplitButtonColorChooserPanel;
  *
  * @author Dave Sand Copyright (c) 2018
  */
+@API(status = MAINTAINED)
 public class TimeTableFrame extends jmri.util.JmriJFrame {
 
     public static final String EMPTY_GRID = "EmptyGrid";

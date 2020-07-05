@@ -2,6 +2,9 @@ package jmri.jmrix.tmcc;
 
 import jmri.util.StringUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of a TMCC serial reply packet.
  * <p>
@@ -10,6 +13,7 @@ import jmri.util.StringUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2006
  */
+@API(status = EXPERIMENTAL)
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one

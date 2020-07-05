@@ -3,12 +3,16 @@ package jmri.jmrit.whereused;
 import javax.swing.JTextArea;
 import jmri.NamedBean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Find Section references.
  *
  * @author Dave Sand Copyright (C) 2020
  */
 
+@API(status = MAINTAINED)
 public class SectionWhereUsed {
 
     /**

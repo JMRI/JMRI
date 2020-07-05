@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet.sdf;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement the END_SOUND macro from the Digitrax sound definition language.
  *
@@ -7,6 +10,7 @@ package jmri.jmrix.loconet.sdf;
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class EndSound extends SdfMacro {
 
     public EndSound(int byte1, int byte2) {

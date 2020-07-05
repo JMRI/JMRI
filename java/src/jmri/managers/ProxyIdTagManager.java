@@ -12,6 +12,9 @@ import jmri.Reporter;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of a IdTagManager that can serve as a proxy for multiple
  * system-specific implementations.
@@ -20,6 +23,7 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
  * @author Dave Duchamp Copyright (C) 2004
  * @author Paul Bender Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
         implements IdTagManager {
 

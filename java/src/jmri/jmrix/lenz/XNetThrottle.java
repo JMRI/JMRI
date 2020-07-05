@@ -7,6 +7,8 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender (C) 2002-2019
  */
+@API(status = EXPERIMENTAL)
 public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     protected boolean isAvailable;  // Flag  stating if the throttle is in use or not.

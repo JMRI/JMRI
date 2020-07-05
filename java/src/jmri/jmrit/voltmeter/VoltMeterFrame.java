@@ -12,6 +12,9 @@ import jmri.MultiMeter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame providing a simple LCD-based display of track voltage.
  * <p>
@@ -21,6 +24,7 @@ import jmri.util.JmriJFrame;
  *
  * Adapted from ampmeter to display voltage.
  */
+@API(status = MAINTAINED)
 public class VoltMeterFrame extends JmriJFrame {
 
     // GUI member declarations

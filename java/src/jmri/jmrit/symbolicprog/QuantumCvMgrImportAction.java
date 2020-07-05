@@ -5,12 +5,16 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action to import the CV values from a Quantum CV Manager .qcv file.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dave Heap Copyright (C) 2015
  */
+@API(status = MAINTAINED)
 public class QuantumCvMgrImportAction extends GenericImportAction {
 
     public QuantumCvMgrImportAction(String actionName, CvTableModel pModel, JFrame pParent, JLabel pStatus) {

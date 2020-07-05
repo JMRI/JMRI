@@ -2,6 +2,9 @@ package jmri.jmrix.rfid;
 
 import jmri.implementation.AbstractIdTagReporter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend AbstractIdTagReporter for RFID systems
  * <p>
@@ -20,6 +23,7 @@ import jmri.implementation.AbstractIdTagReporter;
  * @author Matthew Harris Copyright (c) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class RfidReporter extends AbstractIdTagReporter {
 
     public RfidReporter(String systemName) {

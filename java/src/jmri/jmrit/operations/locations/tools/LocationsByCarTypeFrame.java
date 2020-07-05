@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author Dan Boudreau Copyright (C) 2009, 2011
  */
+@API(status = MAINTAINED)
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     LocationManager manager;

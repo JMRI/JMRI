@@ -3,11 +3,15 @@ package jmri.jmrit.sensorgroup;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a SensorGroupFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2007
  */
+@API(status = MAINTAINED)
 public class SensorGroupAction extends AbstractAction {
 
     public SensorGroupAction(String s) {

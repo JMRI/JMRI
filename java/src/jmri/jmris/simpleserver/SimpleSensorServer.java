@@ -9,6 +9,8 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class SimpleSensorServer extends AbstractSensorServer {
 
     private static final String SENSOR = "SENSOR ";

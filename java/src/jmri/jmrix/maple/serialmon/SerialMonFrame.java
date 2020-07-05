@@ -5,11 +5,15 @@ import jmri.jmrix.maple.SerialMessage;
 import jmri.jmrix.maple.SerialReply;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying (and logging) serial command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
     private MapleSystemConnectionMemo _memo = null;

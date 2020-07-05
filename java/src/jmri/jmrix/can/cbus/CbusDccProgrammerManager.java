@@ -4,6 +4,8 @@ import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.DefaultProgrammerManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.managers.DefaultProgrammerManager
  * @author Andrew crosland Copyright (C) 2009, 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusDccProgrammerManager extends DefaultProgrammerManager {
 
     private boolean _isAddressedModePossible = true;

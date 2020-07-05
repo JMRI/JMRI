@@ -5,6 +5,8 @@ import java.util.Arrays;
 import javax.swing.SwingUtilities;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender, Copyright (C) 2011
  * @author      Mark Underwood, Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCppPacketizer {
 
     public DCCppEthernetPacketizer(jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {

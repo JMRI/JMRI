@@ -16,6 +16,9 @@ import jmri.jmrix.can.cbus.swing.CbusSendEventPane;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.TextAreaFIFO;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -25,6 +28,7 @@ import jmri.util.swing.TextAreaFIFO;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
 
     protected static int console_instance_num;

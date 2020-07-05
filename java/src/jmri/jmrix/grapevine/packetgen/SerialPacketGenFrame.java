@@ -14,6 +14,8 @@ import jmri.jmrix.grapevine.SerialMessage;
 import jmri.jmrix.grapevine.SerialReply;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.util.StringUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008, 2018
  */
+@API(status = EXPERIMENTAL)
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.grapevine.SerialListener {
 
     private GrapevineSystemConnectionMemo memo = null;

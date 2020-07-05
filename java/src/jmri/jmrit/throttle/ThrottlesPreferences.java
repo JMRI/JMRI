@@ -7,11 +7,14 @@ import java.io.File;
 import java.util.ArrayList;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class ThrottlesPreferences {
 
     private boolean _useExThrottle = true;

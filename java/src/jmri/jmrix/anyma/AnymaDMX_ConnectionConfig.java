@@ -2,6 +2,8 @@ package jmri.jmrix.anyma;
 
 import java.util.List;
 import jmri.jmrix.AbstractUsbConnectionConfig;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @since 4.9.6
  * @see AnymaDMX_UsbPortAdapter
  */
+@API(status = EXPERIMENTAL)
 public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
 
     /**

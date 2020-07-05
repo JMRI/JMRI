@@ -6,12 +6,16 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
 import javax.swing.JList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Set ToolTips for ComboBox items
  *
  * Steve Young (c) 2019
  * 
  */
+@API(status = EXPERIMENTAL)
 public class ComboBoxToolTipRenderer extends DefaultListCellRenderer {
     List<String> tooltips;
 

@@ -6,6 +6,8 @@ import javax.annotation.Nonnull;
 
 import jmri.JmriException;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Dave Duchamp, multi node extensions, 2004
  */
+@API(status = EXPERIMENTAL)
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         implements SerialListener {
 

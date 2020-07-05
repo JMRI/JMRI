@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent a Memory, a place to store values.
  * <p>
@@ -32,6 +35,7 @@ package jmri;
  * @see jmri.MemoryManager
  * @see jmri.InstanceManager
  */
+@API(status = STABLE)
 public interface Memory extends NamedBean {
 
     /**

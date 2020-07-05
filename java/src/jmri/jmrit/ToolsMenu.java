@@ -5,6 +5,9 @@ import javax.swing.JMenu;
 import javax.swing.JSeparator;
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
  * <p>
@@ -14,6 +17,7 @@ import jmri.InstanceManager;
  * @author Bob Jacobsen Copyright 2003, 2008
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class ToolsMenu extends JMenu {
 
     public ToolsMenu(String name) {

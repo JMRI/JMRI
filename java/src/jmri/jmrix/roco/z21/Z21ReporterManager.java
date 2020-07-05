@@ -4,6 +4,8 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.RailComManager;
 import jmri.Reporter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class Z21ReporterManager extends jmri.managers.AbstractReporterManager implements Z21Listener {
 
     private boolean autoCreateInternalReporter = false;  // disable automatic 

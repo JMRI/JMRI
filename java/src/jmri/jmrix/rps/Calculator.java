@@ -2,6 +2,9 @@ package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Describes a specific method of calculating a measurement.
  * <p>
@@ -11,6 +14,7 @@ import javax.vecmath.Point3d;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public interface Calculator {
 
     public Measurement convert(Reading r);

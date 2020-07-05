@@ -1,5 +1,8 @@
 package jmri.jmrix.can;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Base interface for immutable messages in a CANbus based message/reply
  * protocol.
@@ -15,6 +18,7 @@ package jmri.jmrix.can;
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
  */
 @javax.annotation.concurrent.Immutable
+@API(status = EXPERIMENTAL)
 public interface CanFrame {
 
     /**

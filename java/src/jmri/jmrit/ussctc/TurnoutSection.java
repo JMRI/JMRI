@@ -3,6 +3,9 @@ package jmri.jmrit.ussctc;
 import java.util.*;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Drive a single Turnout section on a USS CTC panel.
  * Implements {@link Section} for both the field and CTC machine parts. 
@@ -86,6 +89,7 @@ import jmri.*;
  * note left of ShowOff : Indications always drive the display
  @end
  */
+@API(status = MAINTAINED)
 public class TurnoutSection implements Section<CodeGroupTwoBits, CodeGroupTwoBits> {
 
     /**

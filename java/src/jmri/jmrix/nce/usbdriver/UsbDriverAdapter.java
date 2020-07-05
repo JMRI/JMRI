@@ -9,6 +9,8 @@ import java.util.Vector;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -27,6 +29,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Daniel Boudreau Copyright (C) 2007
  * @author ken cameron Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class UsbDriverAdapter extends NcePortController {
 
     Vector<String> portNameVector = null;

@@ -12,6 +12,8 @@ import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LnPacketizerStrict;
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -27,6 +29,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
  */
+@API(status = EXPERIMENTAL)
 public class LocoBufferAdapter extends LnPortController {
 
     public LocoBufferAdapter() {

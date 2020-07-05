@@ -11,6 +11,8 @@ import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener, Dcc4PcPanelInterface {
 
     // member declarations

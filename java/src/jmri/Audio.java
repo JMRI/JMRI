@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent an Audio, a place to store or control sound information.
  * <p>
@@ -29,6 +32,7 @@ package jmri;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = STABLE)
 public interface Audio extends NamedBean {
 
     // Define Object sub-type constants

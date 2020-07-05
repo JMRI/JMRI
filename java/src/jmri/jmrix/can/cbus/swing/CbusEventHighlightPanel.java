@@ -11,11 +11,15 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.cbus.CbusConstants;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Andrew Crosland
  * @author Steve Young Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventHighlightPanel extends JPanel {
     
     private int _index;

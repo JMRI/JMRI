@@ -6,6 +6,8 @@ import javax.swing.Icon;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2008
  * @see jmri.jmrit.XmlFile
  */
+@API(status = MAINTAINED)
 public class InstallDecoderFileAction extends InstallDecoderURLAction {
 
     public InstallDecoderFileAction(String s, WindowInterface wi) {

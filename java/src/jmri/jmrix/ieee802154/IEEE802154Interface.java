@@ -1,10 +1,14 @@
 package jmri.jmrix.ieee802154;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface to send/receive serial information
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public interface IEEE802154Interface {
 
     public void addIEEE802154Listener(IEEE802154Listener l);

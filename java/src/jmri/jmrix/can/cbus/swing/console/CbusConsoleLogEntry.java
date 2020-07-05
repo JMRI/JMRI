@@ -1,5 +1,8 @@
 package jmri.jmrix.can.cbus.swing.console;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -9,6 +12,7 @@ package jmri.jmrix.can.cbus.swing.console;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class CbusConsoleLogEntry {
     
     private final String _frame;

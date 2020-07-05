@@ -12,6 +12,8 @@ import jmri.jmrix.can.ConfigurationManager.SubProtocol;
 import jmri.util.NamedBeanComparator;
 
 import jmri.util.startup.StartupActionFactory;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class CanSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
     // This user name will be overwritten by the adapter and saved to the connection config.
     public static String DEFAULT_USERNAME = "CAN";

@@ -8,11 +8,15 @@ import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * User interface for setting the LocoNet ID.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2010
  */
+@API(status = EXPERIMENTAL)
 public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         LocoNetListener {
 

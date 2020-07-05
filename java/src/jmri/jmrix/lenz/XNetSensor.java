@@ -2,6 +2,8 @@ package jmri.jmrix.lenz;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2003-2010
  */
+@API(status = EXPERIMENTAL)
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
     private boolean statusRequested = false;

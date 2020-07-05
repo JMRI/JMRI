@@ -46,6 +46,8 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JComboBoxUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +67,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2008, 2011
  * @author GT 2009
  */
+@API(status = STABLE)
 public class SectionTableAction extends AbstractTableAction<Section> {
 
     /**

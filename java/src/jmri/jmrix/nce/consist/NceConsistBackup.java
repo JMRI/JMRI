@@ -19,6 +19,8 @@ import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.util.swing.TextFilter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListener {
 
     private static final int CONSIST_LNTH = 16; // 16 bytes per line

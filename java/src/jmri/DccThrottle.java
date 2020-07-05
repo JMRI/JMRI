@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide DCC-specific extensions to Throttle interface.
  *
@@ -17,6 +20,7 @@ package jmri;
  * @author Bob Jacobsen Copyright (C) 2001
  * @see Throttle
  */
+@API(status = STABLE)
 public interface DccThrottle extends Throttle {
 
     // to handle quantized speed. Note this can change! Valued returned is

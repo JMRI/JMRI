@@ -2,6 +2,9 @@ package jmri.jmrix.lenz.swing;
 
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the XpressNet subsystem.
  *
@@ -9,6 +12,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2010
  * @since 2.11.1
  */
+@API(status = EXPERIMENTAL)
 public class XNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public XNetComponentFactory(XNetSystemConnectionMemo memo) {

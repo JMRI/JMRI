@@ -6,6 +6,8 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import jmri.swing.JTablePersistenceManager;
  *
  * @author Dan Boudreau Copyright (C) 2016
  */
+@API(status = MAINTAINED)
 public class AutomationTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     AutomationTableModel _automationTableModel = new AutomationTableModel();

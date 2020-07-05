@@ -13,6 +13,10 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import jmri.jmrit.display.PositionablePopupUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class FontPanel extends JPanel implements ItemListener {
 
     static final String[] JUSTIFICATION = {Bundle.getMessage("left"),

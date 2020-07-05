@@ -4,6 +4,10 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class PrintTrainManifestAction extends Action {
 
     private static final int _code = ActionCodes.PRINT_TRAIN_MANIFEST;

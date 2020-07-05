@@ -15,6 +15,9 @@ import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame providing a simple clock showing Pragotron clock.
  * <p>
@@ -25,6 +28,7 @@ import jmri.util.JmriJFrame;
  *
  * Based on Nixie clock by Bob Jacobsen.
  */
+@API(status = MAINTAINED)
 public class PragotronClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations

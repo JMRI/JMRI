@@ -53,6 +53,8 @@ import jmri.util.IterableEnumeration;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +67,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright (C) 2011
  * @see jmri.jmrit.roster.Roster
  */
+@API(status = MAINTAINED)
 public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     private static int GROUPS_MENU = 1;

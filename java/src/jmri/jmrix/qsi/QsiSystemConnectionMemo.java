@@ -8,6 +8,9 @@ import jmri.NamedBean;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -18,6 +21,7 @@ import jmri.util.NamedBeanComparator;
  * @author Kevin Dickerson Copyright (C) 2012
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class QsiSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public QsiSystemConnectionMemo(QsiTrafficController st) {

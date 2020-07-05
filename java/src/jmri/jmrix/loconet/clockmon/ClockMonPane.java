@@ -13,6 +13,8 @@ import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.swing.LnPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2010
  */
+@API(status = EXPERIMENTAL)
 public class ClockMonPane extends LnPanel implements SlotListener {
 
     @Override

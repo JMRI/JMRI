@@ -1,5 +1,7 @@
 package jmri.util;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
@@ -16,6 +18,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @deprecated since 4.19.4; use {@link SerialPort#setSerialPortParams(int, int, int, int) } instead
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class SerialUtil {
 
     static public void setSerialPortParams(SerialPort activeSerialPort, int baud, int databits, int stopbits, int parity)

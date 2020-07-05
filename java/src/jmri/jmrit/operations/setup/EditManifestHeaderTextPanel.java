@@ -8,12 +8,16 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of manifest header text strings
  *
  * @author Dan Boudreau Copyright (C) 2014
  * 
  */
+@API(status = MAINTAINED)
 public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
 //    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);

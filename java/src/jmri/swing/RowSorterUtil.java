@@ -11,6 +11,9 @@ import javax.swing.event.RowSorterEvent;
 import javax.swing.event.RowSorterListener;
 import javax.swing.table.TableModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Utilities for handling JTable row sorting, assuming only a single column
  * influences the table sort order.
@@ -21,6 +24,7 @@ import javax.swing.table.TableModel;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public final class RowSorterUtil {
 
     /**

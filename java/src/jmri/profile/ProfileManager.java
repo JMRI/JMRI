@@ -18,6 +18,8 @@ import java.util.zip.ZipOutputStream;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -45,6 +47,7 @@ import jmri.util.prefs.InitializationException;
  *
  * @author Randall Wood (C) 2014, 2015, 2016, 2019
  */
+@API(status = EXPERIMENTAL)
 public class ProfileManager extends Bean {
 
     private final ArrayList<Profile> profiles = new ArrayList<>();

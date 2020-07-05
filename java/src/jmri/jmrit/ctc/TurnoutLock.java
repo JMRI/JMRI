@@ -11,6 +11,9 @@ import jmri.Turnout;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
 This only works with Digitrax DS54's and DS64's configured to LOCALLY change the switch via either
 a pushbutton or toggle switch.  Specifically in JMRI / DS64 programmer, OpSw 21 SHOULD
@@ -45,6 +48,7 @@ point to lock the turnout, since this starts up with the turnout unlocked!
 * See the documentation for the matrix regarding Command and Feedback normal/reversed.
  */
 
+@API(status = MAINTAINED)
 public class TurnoutLock {
     private final NBHSensor _mDispatcherSensorLockToggle;
     private int _mCommandedState = Turnout.CLOSED;  // Assume

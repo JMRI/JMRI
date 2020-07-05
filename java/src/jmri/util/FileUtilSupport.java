@@ -1,5 +1,7 @@
 package jmri.util;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.util.FileUtil.HOME;
 import static jmri.util.FileUtil.PREFERENCES;
 import static jmri.util.FileUtil.PROFILE;
@@ -62,6 +64,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015, 2016, 2019, 2020
  */
+@API(status = EXPERIMENTAL)
 public class FileUtilSupport extends Bean {
 
     /* User's home directory */

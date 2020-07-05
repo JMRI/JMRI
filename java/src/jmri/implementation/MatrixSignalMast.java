@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.util.ThreadingUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009, 2014, 2020
  * @author Egbert Broerse Copyright (C) 2016, 2018, 2020
  */
+@API(status = EXPERIMENTAL)
 public class MatrixSignalMast extends AbstractSignalMast {
     /**
      *  Number of columns in logix matrix, default to 6, set in Matrix Mast panel &amp; on loading xml.

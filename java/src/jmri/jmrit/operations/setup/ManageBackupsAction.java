@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to show a dialog to allow the user to delete Automatic backups.
  *
@@ -13,6 +16,7 @@ import javax.swing.AbstractAction;
  *
  * @author Gregory Madsen Copyright (C) 2012
  */
+@API(status = MAINTAINED)
 public class ManageBackupsAction extends AbstractAction {
 
 //    private final static Logger log = LoggerFactory.getLogger(ManageBackupsAction.class);

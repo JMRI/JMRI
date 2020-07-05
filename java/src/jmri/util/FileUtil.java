@@ -16,6 +16,9 @@ import javax.annotation.CheckForNull;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common utility methods for working with Files.
  * <p>
@@ -26,6 +29,7 @@ import jmri.profile.ProfileManager;
  * @author Randall Wood Copyright 2012, 2013, 2014, 2016, 2019
  * @see FileUtilSupport
  */
+@API(status = EXPERIMENTAL)
 public final class FileUtil {
 
     /**

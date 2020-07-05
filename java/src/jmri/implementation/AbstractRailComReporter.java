@@ -3,6 +3,9 @@ package jmri.implementation;
 import jmri.LocoAddress;
 import jmri.RailCom;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend AbstractReporter for RailCom reporters
  * <p>
@@ -12,6 +15,7 @@ import jmri.RailCom;
  * @author Paul Bender Copyright (c) 2016,2019
  * @since 4.5.4
  */
+@API(status = EXPERIMENTAL)
 public class AbstractRailComReporter extends AbstractIdTagReporter {
 
     public AbstractRailComReporter(String systemName) {

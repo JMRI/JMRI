@@ -8,6 +8,9 @@ import jmri.jmrix.tams.TamsReply;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.jmrix.tams.swing.TamsPanelInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a MonFrame object.
  *
@@ -15,6 +18,7 @@ import jmri.jmrix.tams.swing.TamsPanelInterface;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListener, TamsPanelInterface {
 
     private TamsMessage tm; // Keeping a local copy of the latest TamsMessage for helping with decoding

@@ -9,6 +9,8 @@ import jmri.Scale;
 import jmri.Reporter;
 import jmri.util.FileUtil;
 import jmri.util.PhysicalLocation;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Klaus Killinger Copyright (C) 2018-2020
  */
+@API(status = MAINTAINED)
 public class VSDGeoFile extends XmlFile {
 
     static final String VSDGeoDataFileName = "VSDGeoData.xml"; // NOI18N

@@ -6,12 +6,16 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood
  * @deprecated since 4.21.1; use {@link apps.swing.AboutAction} instead
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class AboutAction extends JmriAbstractAction {
 
     public AboutAction(String s, WindowInterface wi) {

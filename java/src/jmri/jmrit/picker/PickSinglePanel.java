@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Container with a single PickList table
  * <p>
@@ -14,6 +17,7 @@ import jmri.*;
  * @author Bob Jacobsen  Copyright (c) 2017
  * @author Pete Cressman Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public class PickSinglePanel<T extends NamedBean> extends JPanel {
 
     private int ROW_HEIGHT;

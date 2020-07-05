@@ -3,6 +3,9 @@
  */
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Defines and Manages the Registers (~ slots) for DCC++ Base Station
  *
@@ -19,6 +22,7 @@ package jmri.jmrix.dccpp;
  * if the BaseStation handled this, since there may be more than just JMRI
  * asking for slots.
  */
+@API(status = EXPERIMENTAL)
 public class DCCppRegisterManager {
 
     protected int maxMainRegisters = 0;

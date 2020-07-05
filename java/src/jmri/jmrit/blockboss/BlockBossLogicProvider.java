@@ -1,6 +1,8 @@
 package jmri.jmrit.blockboss;
 
 import jmri.*;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import java.util.*;
  *
  * @author Paul Bender Copyright (C) 2020
  */
+@API(status = MAINTAINED)
 public class BlockBossLogicProvider implements Disposable, InstanceManagerAutoDefault {
 
     private final SignalHeadManager signalHeadManager;

@@ -38,6 +38,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +69,7 @@ import jmri.util.table.ButtonRenderer;
  * @author Dave Duchamp Copyright (C) 2004
  * @author Egbert Broerse Copyright (C) 2017
  */
+@API(status = STABLE)
 public class LightTableAction extends AbstractTableAction<Light> {
 
     /**

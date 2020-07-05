@@ -2,11 +2,15 @@ package jmri.jmrix.rps.serial;
 
 import java.util.ResourceBundle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring an RPS layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

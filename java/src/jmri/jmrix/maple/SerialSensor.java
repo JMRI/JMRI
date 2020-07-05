@@ -2,11 +2,15 @@ package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.AbstractSensor for Maple systems.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SerialSensor extends AbstractSensor {
 
     /**

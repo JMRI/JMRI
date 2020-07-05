@@ -3,6 +3,9 @@ package jmri.jmrix.tmcc.swing;
 import jmri.jmrix.tmcc.TmccMenu;
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the TMCC subsystem.
  * Copied from EasyDCC 2017
@@ -11,6 +14,7 @@ import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2010
  * @since 4.9.6
  */
+@API(status = EXPERIMENTAL)
 public class TmccComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public TmccComponentFactory(TmccSystemConnectionMemo memo) {

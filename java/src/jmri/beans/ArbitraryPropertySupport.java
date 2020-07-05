@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide support for converging the Arbitrary* classes with the non-arbitrary
  * versions of those classes so that the Arbitrary* version can extend the
@@ -12,6 +15,7 @@ import java.util.Set;
  * 
  * @author Randall Wood Copyright 2015, 2020
  */
+@API(status = EXPERIMENTAL)
 public class ArbitraryPropertySupport implements BeanInterface {
 
     private final HashMap<String, Object> properties = new HashMap<>();

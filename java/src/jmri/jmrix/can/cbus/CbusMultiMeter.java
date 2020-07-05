@@ -8,6 +8,8 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland 2020
  * Added voltage capability to use with new jmrit.voltmeter class
  */
+@API(status = EXPERIMENTAL)
 public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter implements CanListener {
 
     private final TrafficController tc;

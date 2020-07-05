@@ -5,6 +5,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Locate an IdTag object representing a specific IdTag.
  * <p>
@@ -39,6 +42,7 @@ import javax.annotation.Nonnull;
  * @see jmri.InstanceManager
  * @since 2.11.4
  */
+@API(status = STABLE)
 public interface IdTagManager extends ProvidingManager<IdTag> {
 
     /**

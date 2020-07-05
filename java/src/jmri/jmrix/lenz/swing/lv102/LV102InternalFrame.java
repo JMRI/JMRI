@@ -13,6 +13,8 @@ import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     private static final String LV_102_STATUS_CHANGED = "LV102StatusChanged";

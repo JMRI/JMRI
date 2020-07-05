@@ -5,11 +5,15 @@ import javax.swing.BoxLayout;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of Sprog messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
+@API(status = EXPERIMENTAL)
 public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 
     private SprogSystemConnectionMemo _memo = null;

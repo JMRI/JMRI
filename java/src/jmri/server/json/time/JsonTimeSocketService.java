@@ -14,10 +14,14 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonRequest;
 import jmri.server.json.JsonSocketService;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService> implements PropertyChangeListener {
 
     private boolean listening = false;

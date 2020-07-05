@@ -36,6 +36,8 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,6 +100,7 @@ import jmri.util.table.ButtonRenderer;
  * @author Matthew Harris copyright (c) 2009
  * @author Dave Sand copyright (c) 2017
  */
+@API(status = MAINTAINED)
 public class ConditionalListEdit extends ConditionalEditBase {
 
     /**

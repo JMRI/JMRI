@@ -7,6 +7,8 @@ import java.io.InputStream;
 import jmri.jmrix.acela.AcelaPortController;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import jmri.jmrix.acela.AcelaTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -28,6 +30,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
  * to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends AcelaPortController {
 
     public SerialDriverAdapter() {

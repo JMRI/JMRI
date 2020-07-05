@@ -29,6 +29,8 @@ import jmri.profile.ProfileManager;
 import jmri.util.SystemType;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +78,7 @@ import org.slf4j.LoggerFactory;
  * @see javax.jmdns.JmDNS
  * @see javax.jmdns.ServiceInfo
  */
+@API(status = EXPERIMENTAL)
 public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Disposable {
 
     public enum Protocol {

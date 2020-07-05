@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.loconet.loconetovertcp.ConnectionConfig;
 import jmri.jmrix.loconet.loconetovertcp.LnTcpDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the
  * LnTcpDriverAdapter (and connections).
@@ -17,6 +20,7 @@ import jmri.jmrix.loconet.loconetovertcp.LnTcpDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

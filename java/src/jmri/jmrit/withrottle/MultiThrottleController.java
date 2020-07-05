@@ -6,12 +6,15 @@ import java.lang.reflect.Method;
 
 import jmri.*;
 import jmri.jmrit.roster.RosterEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class MultiThrottleController extends ThrottleController {
     
     protected boolean isStealAddress;

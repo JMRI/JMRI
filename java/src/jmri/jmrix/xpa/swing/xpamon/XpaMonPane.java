@@ -5,12 +5,16 @@ import jmri.jmrix.xpa.XpaMessage;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Panel displaying (and logging) Xpa+Modem command messages.  
  * Derived from XpaMonFrame.
  *
  * @author Paul Bender Copyright (C) 2004,2016
  */
+@API(status = EXPERIMENTAL)
 public class XpaMonPane extends jmri.jmrix.AbstractMonPane implements XpaListener {
 
     protected XpaTrafficController tc = null;

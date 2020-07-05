@@ -19,6 +19,8 @@ import jmri.Version;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @deprecated since 4.21.1; use {@link apps.swing.AboutDialog} instead
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public final class AboutDialog extends JDialog {
 
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.

@@ -11,6 +11,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.openlcb.swing.ClientActions;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.Connection;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2010, 2012
  */
+@API(status = EXPERIMENTAL)
 public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
     public NetworkTreePane() {

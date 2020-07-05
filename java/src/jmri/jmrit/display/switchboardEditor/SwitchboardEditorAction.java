@@ -5,12 +5,16 @@ import javax.swing.AbstractAction;
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Start a SwitchboardEditor.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @see jmri.jmrit.display.switchboardEditor.SwitchboardEditor
  */
+@API(status = MAINTAINED)
 public class SwitchboardEditorAction extends AbstractAction {
 
     public SwitchboardEditorAction(String s) {

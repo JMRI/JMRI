@@ -8,6 +8,9 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides standard access for resource bundles in a package.
  * <p>
@@ -49,6 +52,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @CheckReturnValue
 @javax.annotation.concurrent.Immutable
+@API(status = STABLE)
 public class Bundle {
 
     @CheckForNull

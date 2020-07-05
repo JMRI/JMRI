@@ -1,10 +1,14 @@
 package jmri.jmrit.ussctc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a OsIndicatorFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2007
  */
+@API(status = MAINTAINED)
 public class OsIndicatorAction extends jmri.util.JmriJFrameAction {
 
     public OsIndicatorAction(String s) {

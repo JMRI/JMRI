@@ -11,6 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for editing Digitrax SPJ files.
  * <p>
@@ -20,6 +23,7 @@ import javax.swing.JPanel;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
  */
+@API(status = EXPERIMENTAL)
 public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     // GUI member declarations

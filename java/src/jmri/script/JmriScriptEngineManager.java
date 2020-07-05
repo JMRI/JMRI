@@ -48,6 +48,8 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.util.FileUtil;
 import jmri.util.FileUtilSupport;
 import org.apache.commons.io.FilenameUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
@@ -70,6 +72,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public final class JmriScriptEngineManager implements InstanceManagerAutoDefault {
 
     private final ScriptEngineManager manager = new ScriptEngineManager();

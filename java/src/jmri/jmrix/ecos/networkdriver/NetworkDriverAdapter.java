@@ -3,6 +3,8 @@ package jmri.jmrix.ecos.networkdriver;
 import java.io.IOException;
 import jmri.jmrix.ecos.EcosPortController;
 import jmri.jmrix.ecos.EcosTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  */
+@API(status = EXPERIMENTAL)
 public class NetworkDriverAdapter extends EcosPortController {
 
     public NetworkDriverAdapter() {

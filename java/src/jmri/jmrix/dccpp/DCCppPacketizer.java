@@ -1,6 +1,8 @@
 package jmri.jmrix.dccpp;
 
 import java.nio.charset.StandardCharsets;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetPacketizer by Bob Jacobsen
  */
+@API(status = EXPERIMENTAL)
 public class DCCppPacketizer extends DCCppTrafficController {
 
     public DCCppPacketizer(DCCppCommandStation pCommandStation) {

@@ -10,11 +10,15 @@ import jmri.InstanceManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonHttpService;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A message to be sent by the JMRI JSON message service.
  *
  * @author Randall Wood Copyright 2017
  */
+@API(status = EXPERIMENTAL)
 public class JsonMessage {
 
     /**

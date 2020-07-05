@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 import jmri.JmriException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alex Shepherd Copyright (C) 2003
  */
+@API(status = MAINTAINED)
 public class Pr1Importer {
 
     private final static Logger log = LoggerFactory.getLogger(Pr1Importer.class);

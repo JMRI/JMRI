@@ -3,11 +3,15 @@
  */
 package jmri.jmrit.ctc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // This object "does nothing" but provide routines that do nothing that the "CodeButtonHandler" object calls.
 // This is typically used when there is ONLY a "turnout lock" object and a code button, nothing else.
 // I did this as an expedient, since I didn't want to put complex conditional if statements all over CodeButtonHandler
 // testing whether "_mSignalDirectionIndicators" was null and dealing with the side effects.
 
+@API(status = MAINTAINED)
 public class SignalDirectionIndicatorsNull  implements SignalDirectionIndicatorsInterface {
     public SignalDirectionIndicatorsNull() {}
 

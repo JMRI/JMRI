@@ -9,6 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import jmri.jmrit.operations.setup.Control;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2010
  */
+@API(status = MAINTAINED)
 public class RouteCopyFrame extends OperationsFrame {
 
     RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);

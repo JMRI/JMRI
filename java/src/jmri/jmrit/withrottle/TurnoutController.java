@@ -7,6 +7,8 @@ import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Brett Hoffman Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class TurnoutController extends AbstractController implements PropertyChangeListener {
 
     private TurnoutManager manager = null;

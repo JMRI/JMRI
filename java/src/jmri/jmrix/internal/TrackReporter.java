@@ -5,6 +5,9 @@ import java.util.ArrayDeque;
 import jmri.implementation.AbstractReporter;
 import jmri.CollectingReporter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extension of the AbstractReporter class that implements CollectingReporter
  * and represents the contents of a track.  This is an internal construct that
@@ -12,6 +15,7 @@ import jmri.CollectingReporter;
  *
  * @author Paul Bender Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class TrackReporter extends AbstractReporter implements CollectingReporter {
 
     private Deque collection = null;

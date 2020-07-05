@@ -2,11 +2,15 @@ package jmri.jmrix.oaktree;
 
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.AbstractSensor for serial systems
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
  */
+@API(status = EXPERIMENTAL)
 public class SerialSensor extends AbstractSensor {
 
     public SerialSensor(String systemName) {

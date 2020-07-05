@@ -2,11 +2,15 @@ package jmri.jmrix.easydcc;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri EasyDCC-specific tools.
  *
  * @author Bob Jacobsen Copyright 2003
  */
+@API(status = EXPERIMENTAL)
 public class EasyDccMenu extends JMenu {
 
     public EasyDccMenu(String name, EasyDccSystemConnectionMemo memo) {

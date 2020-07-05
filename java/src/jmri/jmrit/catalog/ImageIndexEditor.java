@@ -25,6 +25,8 @@ import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright 2009
  */
+@API(status = MAINTAINED)
 public final class ImageIndexEditor extends JmriJFrame {
 
     private static final String RESOURCES = "resources";

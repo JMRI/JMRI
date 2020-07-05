@@ -8,12 +8,16 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to preview or print a switch list for a location.
  *
  * @author Daniel Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class PrintSwitchListAction extends AbstractAction {
 
     public PrintSwitchListAction(Location location, boolean isPreview) {

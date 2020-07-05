@@ -1,5 +1,7 @@
 package jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 import jmri.jmrix.PortAdapter;
@@ -20,6 +22,7 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Andrew Crosland 2008
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

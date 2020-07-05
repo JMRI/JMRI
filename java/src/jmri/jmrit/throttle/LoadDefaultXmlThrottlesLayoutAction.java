@@ -7,6 +7,8 @@ import jmri.InstanceManager;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lionel Jeanson Copyright 2009
  */
+@API(status = MAINTAINED)
 public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
 
     public LoadDefaultXmlThrottlesLayoutAction(String s, WindowInterface wi) {

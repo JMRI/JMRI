@@ -3,6 +3,8 @@ package jmri.jmrix.powerline.insteon2412s;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.util.StringUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author Ken Cameron Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?
 

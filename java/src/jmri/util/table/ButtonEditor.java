@@ -14,6 +14,9 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Make a JButton in a table cell function.
  * <p>
@@ -26,6 +29,7 @@ import javax.swing.table.TableCellEditor;
  * This also now implements and registers as a MouseListener, so you can change
  * the mouse-event behavior by overriding the needed methods.
  */
+@API(status = EXPERIMENTAL)
 public class ButtonEditor extends BasicCellEditor
         implements ActionListener,
         TableCellEditor,

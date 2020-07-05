@@ -3,6 +3,9 @@ package jmri.util;
 import java.io.File;
 import java.util.HashSet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Allow selection of possible files by their extension.
  *
@@ -15,6 +18,7 @@ import java.util.HashSet;
  * @deprecated since 4.19.4; use {@link javax.swing.filechooser.FileNameExtensionFilter} instead
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class FileChooserFilter extends javax.swing.filechooser.FileFilter {
 
     String mDescription;

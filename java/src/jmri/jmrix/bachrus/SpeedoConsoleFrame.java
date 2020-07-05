@@ -49,6 +49,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +62,7 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright (C) 2015
  * @author Todd Wegter Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         ThrottleListener,
         ProgListener,

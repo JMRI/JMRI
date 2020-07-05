@@ -12,10 +12,14 @@ import javax.swing.text.BadLocationException;
 import jmri.jmrix.can.cbus.CbusEventDataElements.EvState;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common CBUS swing functions.
  * @author Steve Young Copyright (C) 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusCommonSwing {
     
     public static final Color VERY_LIGHT_RED = new Color(255,176,173);

@@ -4,6 +4,9 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to the hardware DCC decoder programming capability.
  * <p>
@@ -44,6 +47,7 @@ import javax.annotation.Nonnull;
  * @see jmri.AddressedProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013
  */
+@API(status = STABLE)
 public interface Programmer {
 
     /**

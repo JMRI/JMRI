@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for obtaining Conditionals
  * <p>
@@ -23,6 +26,7 @@ import java.util.List;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
+@API(status = STABLE)
 public interface ConditionalManager extends Manager<Conditional> {
 
     // to free resources when no longer used

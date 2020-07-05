@@ -18,6 +18,10 @@ package jmri.jmrit.vsdecoder;
  */
 import java.util.EventObject;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class VSDManagerEvent extends EventObject {
 
     public static enum EventType {

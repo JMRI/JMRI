@@ -3,6 +3,9 @@ package jmri;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for obtaining Routes.
  * <p>
@@ -22,6 +25,7 @@ import javax.annotation.Nonnull;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
+@API(status = STABLE)
 public interface RouteManager extends ProvidingManager<Route> {
 
     // to free resources when no longer used

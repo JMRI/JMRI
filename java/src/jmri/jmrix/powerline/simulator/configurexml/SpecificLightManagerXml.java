@@ -1,5 +1,8 @@
 package jmri.jmrix.powerline.simulator.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Simple class to allow configurexml to locate a persistance class for
  * {@link jmri.jmrix.powerline.SerialLightManager} and its subclasses.
@@ -15,6 +18,7 @@ package jmri.jmrix.powerline.simulator.configurexml;
  * @author Bob Jacobsen 2008
  * @author Ken Cameron 2011
  */
+@API(status = EXPERIMENTAL)
 public class SpecificLightManagerXml extends jmri.jmrix.powerline.configurexml.SerialLightManagerXml {
 
 }

@@ -11,11 +11,15 @@ import jmri.jmrit.operations.locations.tools.PrintSwitchListAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Yardmaster Frame. Shows work at one location.
  *
  * @author Dan Boudreau Copyright (C) 2013
  */
+@API(status = MAINTAINED)
 public class YardmasterFrame extends OperationsFrame {
 
     public YardmasterFrame(Location location) {

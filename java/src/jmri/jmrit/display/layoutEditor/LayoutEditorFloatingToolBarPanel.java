@@ -6,11 +6,15 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This is the floating toolbar panel
  *
  * @author George Warner Copyright: (c) 2017-2019
  */
+@API(status = MAINTAINED)
 public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
 
     private JPanel floatEditTabsPanel = new JPanel();

@@ -7,11 +7,15 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user to place engine on the layout
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010
  */
+@API(status = MAINTAINED)
 public class EngineSetFrame extends RollingStockSetFrame<Engine> {
 
     protected static final ResourceBundle rb = ResourceBundle

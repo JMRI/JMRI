@@ -1,6 +1,8 @@
 package jmri.configurexml;
 
 import jmri.DccLocoAddress;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005
  */
+@API(status = EXPERIMENTAL)
 public class DccLocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public DccLocoAddressXml() {

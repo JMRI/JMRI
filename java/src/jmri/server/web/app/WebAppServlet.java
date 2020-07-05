@@ -1,5 +1,7 @@
 package jmri.server.web.app;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JAVASCRIPT;
@@ -47,6 +49,7 @@ import org.slf4j.LoggerFactory;
     "/app/about"
 })
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class WebAppServlet extends HttpServlet {
 
     private final static Logger log = LoggerFactory.getLogger(WebAppServlet.class);

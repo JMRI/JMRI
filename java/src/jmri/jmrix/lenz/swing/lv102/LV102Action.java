@@ -3,6 +3,9 @@ package jmri.jmrix.lenz.swing.lv102;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register an LV102Frame object.
  * <p>
@@ -11,6 +14,7 @@ import javax.swing.AbstractAction;
  *
  * @author Paul Bender Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class LV102Action extends AbstractAction {
 
     public LV102Action(String s) {

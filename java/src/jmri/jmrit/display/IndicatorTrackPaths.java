@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import jmri.Sensor;
 import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.logix.OBlock;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2012
  */
+@API(status = MAINTAINED)
 public class IndicatorTrackPaths {
 
     protected ArrayList<String> _paths;      // list of paths that this icon displays

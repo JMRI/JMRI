@@ -1,5 +1,7 @@
 package jmri.server.json.throttle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.throttle.JsonThrottle.THROTTLE;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonThrottleSocketService extends JsonSocketService<JsonThrottleHttpService> {
 
     private final HashMap<String, JsonThrottle> throttles = new HashMap<>();

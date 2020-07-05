@@ -5,11 +5,15 @@ import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a menu containing the Z21 specific tools
  *
  * @author Paul Bender Copyright 2014
  */
+@API(status = EXPERIMENTAL)
 public class Z21Menu extends JMenu {
 
     public Z21Menu(String name, jmri.jmrix.roco.z21.Z21SystemConnectionMemo memo) {

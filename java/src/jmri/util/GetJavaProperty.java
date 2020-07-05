@@ -1,5 +1,8 @@
 package jmri.util;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Print a Java system variable from the command line.
  * <p>
@@ -12,6 +15,7 @@ package jmri.util;
  *
  * @author Bob Jacobsen, Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class GetJavaProperty {
 
     // Main entry point

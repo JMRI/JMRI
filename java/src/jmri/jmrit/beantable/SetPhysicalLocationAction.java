@@ -22,6 +22,8 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsPanel;
 import jmri.util.PhysicalLocation;
 import jmri.util.PhysicalLocationPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2011
  */
+@API(status = STABLE)
 public class SetPhysicalLocationAction extends AbstractAction {
 
     Reporter _reporter;

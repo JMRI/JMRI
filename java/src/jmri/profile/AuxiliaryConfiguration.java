@@ -2,6 +2,8 @@ package jmri.profile;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.w3c.dom.Element;
 
 /**
@@ -14,6 +16,7 @@ import org.w3c.dom.Element;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public interface AuxiliaryConfiguration {
 
     /**

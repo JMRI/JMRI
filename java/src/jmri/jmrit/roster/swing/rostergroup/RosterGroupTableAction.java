@@ -10,12 +10,16 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a Roster Group Table.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
 
     public RosterGroupTableAction(String s, WindowInterface wi) {

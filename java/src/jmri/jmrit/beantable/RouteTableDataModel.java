@@ -3,6 +3,8 @@ package jmri.jmrit.beantable;
 import jmri.*;
 import jmri.jmrit.beantable.routetable.RouteEditFrame;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import java.awt.event.MouseEvent;
  * @author Egbert Broerse Copyright (C) 2016
  * @author Paul Bender Colyright (C) 2020
  */
+@API(status = STABLE)
 public class RouteTableDataModel extends BeanTableDataModel<Route> {
 
     private static final int ENABLECOL = NUMCOLUMN;

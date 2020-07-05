@@ -1,5 +1,8 @@
 package jmri.jmrix;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for objects that handle configuring a layout connection.
  * <p>
@@ -10,5 +13,6 @@ package jmri.jmrix;
  * @see JmrixConfigPane
  * @see PortAdapter
  */
+@API(status = EXPERIMENTAL)
 public interface StreamConnectionConfig extends ConnectionConfig {
 }

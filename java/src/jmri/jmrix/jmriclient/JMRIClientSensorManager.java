@@ -3,6 +3,9 @@ package jmri.jmrix.jmriclient;
 import javax.annotation.Nonnull;
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement sensor manager for JMRIClient systems.
  * <p>
@@ -11,6 +14,7 @@ import jmri.Sensor;
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager {
 
     public JMRIClientSensorManager(JMRIClientSystemConnectionMemo memo) {

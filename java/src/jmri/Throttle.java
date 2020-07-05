@@ -5,6 +5,9 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.beans.PropertyChangeProvider;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Throttle object can be manipulated to change the speed, direction and
  * functions of a single locomotive.
@@ -30,6 +33,7 @@ import jmri.beans.PropertyChangeProvider;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
+@API(status = STABLE)
 public interface Throttle extends PropertyChangeProvider {
 
     /**

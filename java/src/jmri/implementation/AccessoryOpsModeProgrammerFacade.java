@@ -13,6 +13,8 @@ import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammerFacade;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,7 @@ import org.slf4j.LoggerFactory;
 // @ToDo("finish mode handling; what gets passed through?")
 // @ToDo("read handling needs to be aligned with other ops mode programmers")
 // @ToDo("make sure jmri/jmrit/progsupport/ProgServiceModePane shows the modes, and that DP/DP3 displays them as it configures a decoder")
+@API(status = EXPERIMENTAL)
 public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**

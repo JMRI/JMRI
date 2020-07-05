@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.Path;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2007-2008
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 public class LayoutConnectivity {
 
     /**

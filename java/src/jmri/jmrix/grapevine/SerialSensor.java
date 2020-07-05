@@ -2,6 +2,9 @@ package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement Sensor for Grapevine.
  * <p>
@@ -10,6 +13,7 @@ import jmri.implementation.AbstractSensor;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SerialSensor extends AbstractSensor {
 
     /**

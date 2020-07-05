@@ -3,6 +3,9 @@ package jmri;
 import java.util.Objects;
 import jmri.util.NamedBeanExpectedState;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent a NamedBean (such as a Turnout) and specific desired setting for
  * it. These can be used to represent the setting a NamedBean has as part of a
@@ -17,6 +20,7 @@ import jmri.util.NamedBeanExpectedState;
  * @author Bob Jacobsen Copyright (C) 2006, 2008, 2010
  */
 @javax.annotation.concurrent.Immutable
+@API(status = STABLE)
 public class BeanSetting extends NamedBeanExpectedState<NamedBean> {
 
     public BeanSetting(NamedBean t, String pName, int setting) {

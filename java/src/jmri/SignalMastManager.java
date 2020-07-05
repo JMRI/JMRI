@@ -3,6 +3,9 @@ package jmri;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for obtaining signal masts.
  * <p>
@@ -23,6 +26,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = STABLE)
 public interface SignalMastManager extends ProvidingManager<SignalMast> {
 
     // to free resources when no longer used

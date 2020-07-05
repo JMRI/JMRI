@@ -5,6 +5,8 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
 import jmri.Throttle;
 import jmri.jmrit.vsdecoder.swing.DieselPane;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018-2020
  */
+@API(status = MAINTAINED)
 public class EngineSoundEvent extends SoundEvent {
 
     EnginePane engine_pane;

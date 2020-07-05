@@ -3,6 +3,8 @@ package jmri.jmrix.openlcb;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.OlcbInterface;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
@@ -16,6 +18,7 @@ import javax.annotation.CheckReturnValue;
  *
  * @author Bob Jacobsen Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnectionMemo {
 
     public OlcbSystemConnectionMemo() {

@@ -12,6 +12,8 @@ import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.TransitSection;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
+@API(status = MAINTAINED)
 public class AllocatedSection {
 
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);

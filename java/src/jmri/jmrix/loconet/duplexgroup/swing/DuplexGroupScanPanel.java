@@ -15,6 +15,8 @@ import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author B. Milhaupt Copyright 2010, 2011
  */
+@API(status = EXPERIMENTAL)
 public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener, javax.swing.event.ChangeListener {
 

@@ -8,6 +8,9 @@ import jmri.beans.Bean;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manager for SystemConnectionMemos. Manages SystemConnectionMemos and
  * SystemConnectionMemo registration with the InstanceManager, ensuring that no
@@ -17,6 +20,7 @@ import jmri.SystemConnectionMemo;
  *
  * @author Randall Wood Copyright 2017
  */
+@API(status = EXPERIMENTAL)
 public class SystemConnectionMemoManager extends Bean implements InstanceManagerAutoDefault {
 
     /**

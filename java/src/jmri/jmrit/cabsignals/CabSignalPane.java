@@ -30,6 +30,8 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.util.table.JTableWithColumnToolTips;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * @see CabSignalTableModel
  * @since 4.13.4
  */
+@API(status = MAINTAINED)
 public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSignalListListener {
 
     private CabSignalManager cabSignalManager;

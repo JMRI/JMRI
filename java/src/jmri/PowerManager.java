@@ -5,6 +5,9 @@ import javax.annotation.Nonnull;
 
 import jmri.beans.PropertyChangeProvider;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide controls for layout power.
  * <p>
@@ -36,6 +39,7 @@ import jmri.beans.PropertyChangeProvider;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = STABLE)
 public interface PowerManager extends PropertyChangeProvider {
 
     static final int UNKNOWN = NamedBean.UNKNOWN;

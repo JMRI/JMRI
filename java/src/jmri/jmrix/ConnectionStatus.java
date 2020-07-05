@@ -6,6 +6,8 @@ import javax.annotation.Nonnull;
 
 import jmri.SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2007
  * @author Paul Bender Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionStatus {
 
     public static final String CONNECTION_UNKNOWN = "Unknown";

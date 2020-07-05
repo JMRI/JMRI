@@ -6,6 +6,8 @@ import java.util.Date;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.implementation.DefaultClockControl;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Bob Jacobsen, Alex Shepherd
  */
+@API(status = EXPERIMENTAL)
 public class MrcClockControl extends DefaultClockControl implements MrcTrafficListener {
 
     /**

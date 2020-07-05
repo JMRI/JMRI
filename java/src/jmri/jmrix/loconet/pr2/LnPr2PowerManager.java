@@ -11,6 +11,9 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * PowerManager implementation for controlling layout power via PR2.
  * <p>
@@ -22,6 +25,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class LnPr2PowerManager extends LnPowerManager {
 
     public LnPr2PowerManager(LocoNetSystemConnectionMemo memo) {

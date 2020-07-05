@@ -1,5 +1,8 @@
 package jmri.jmrix.direct.simulator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an Direct layout connection via a Simulator
  * adapter.
@@ -14,6 +17,7 @@ package jmri.jmrix.direct.simulator;
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig, copied from EasyDCC
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

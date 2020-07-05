@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
 
@@ -52,6 +54,7 @@ import org.slf4j.*;
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2019
  */
+@API(status = MAINTAINED)
 public class LevelXing extends LayoutTrack {
 
     // defined constants

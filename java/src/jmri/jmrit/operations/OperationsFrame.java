@@ -13,11 +13,15 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for operations
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012
  */
+@API(status = MAINTAINED)
 public class OperationsFrame extends JmriJFrame {
 
     public static final String NEW_LINE = "\n"; // NOI18N

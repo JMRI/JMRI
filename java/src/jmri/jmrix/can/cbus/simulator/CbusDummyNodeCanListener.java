@@ -5,6 +5,9 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -13,6 +16,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
  *
  * @author Steve Young Copyright (C) 2019,2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusDummyNodeCanListener extends CbusSimCanListener {
 
     private final CbusDummyNode _dummyNode;

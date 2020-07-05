@@ -25,9 +25,12 @@ import jmri.jmrit.display.MemoryInputIcon;
 import jmri.jmrit.display.MemorySpinnerIcon;
 import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.picker.PickListModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeListener {
 
     enum Type {

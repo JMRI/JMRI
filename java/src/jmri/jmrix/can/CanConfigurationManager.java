@@ -3,11 +3,15 @@ package jmri.jmrix.can;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Does configuration for CAN communications implementations.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class CanConfigurationManager extends ConfigurationManager {
 
     /**

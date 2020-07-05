@@ -8,6 +8,8 @@ import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsCollector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Chuck Catania Copyright (C) 2014,2016 CMRInet extensions
  */
+@API(status = EXPERIMENTAL)
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
     /**

@@ -5,6 +5,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle painting checkbox classes in a JTable.
  * <p>
@@ -14,6 +17,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Bob Jacobsen
  */
+@API(status = STABLE)
 public class EnablingCheckboxRenderer extends JCheckBox implements TableCellRenderer {
 
     public EnablingCheckboxRenderer() {

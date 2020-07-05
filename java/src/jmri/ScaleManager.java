@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a list of layout scale objects and provide retrieval methods.
  * <p>
@@ -13,6 +16,7 @@ import javax.annotation.Nonnull;
  * @author Dave Sand Copyright (C) 2018
  * @since 4.13.6
  */
+@API(status = STABLE)
 public class ScaleManager {
 
     private static HashMap<String, Scale> _scaleMap = new HashMap<>();

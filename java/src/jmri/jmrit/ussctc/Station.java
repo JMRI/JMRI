@@ -3,6 +3,9 @@ package jmri.jmrit.ussctc;
 
 import java.util.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Station represents a specific codeline field station.
  * It defines the bits in the code message and holds references to the 
@@ -24,6 +27,7 @@ import java.util.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
+@API(status = MAINTAINED)
 public class Station {
 
     public Station(String name, CodeLine codeline, CodeButton button) {

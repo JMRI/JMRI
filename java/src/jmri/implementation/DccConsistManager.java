@@ -5,6 +5,9 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.AddressedProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * The Default Consist Manager which uses the DccConsist class for
  * the consists it builds. This implementation just tracks the
@@ -14,6 +17,7 @@ import jmri.AddressedProgrammerManager;
  * @author Paul Bender Copyright (C) 2003
  * @author Randall Wood Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class DccConsistManager extends AbstractConsistManager {
 
     private AddressedProgrammerManager opsProgManager = null;

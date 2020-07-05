@@ -100,9 +100,12 @@ import jmri.util.ThreadingUtil;
 import jmri.web.server.WebServerPreferences;
 import jmri.web.servlet.ServletUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
 
     //  Manually increment as features are added

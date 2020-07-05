@@ -4,11 +4,15 @@
  */
 package jmri.jmrix.bachrus;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Useful stuff for speed conversion
  *
  * @author Andrew Crosland Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class Speed {
 
     static final int MPH = 0;

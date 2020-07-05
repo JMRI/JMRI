@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz.li101;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an XpressNet layout connection via a Lenz LI101 adapter.
  * <p>
@@ -9,6 +12,7 @@ package jmri.jmrix.lenz.li101;
  *
  * @see LI101Adapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**

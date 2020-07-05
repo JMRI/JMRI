@@ -2,6 +2,9 @@ package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This class performs Command Station dependant initialization for the Roco
  * z21/Z21 XpressNet implementation. It adds the appropriate Managers via the
@@ -11,6 +14,7 @@ import jmri.jmrix.lenz.*;
  * @deprecated since 4.21.1.  Use {@link XNetInitializationManager} instead.
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class Z21XNetInitializationManager extends XNetInitializationManager {
 
     public Z21XNetInitializationManager(XNetSystemConnectionMemo memo) {

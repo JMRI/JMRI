@@ -8,6 +8,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class RosterEntryToGroupAction extends AbstractAction {
 
     /**

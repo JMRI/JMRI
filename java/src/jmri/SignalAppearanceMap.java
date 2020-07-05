@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.Vector;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Access to signal appearance information.
  * <p>
@@ -11,6 +14,7 @@ import java.util.Vector;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = STABLE)
 public interface SignalAppearanceMap {
 
     /**

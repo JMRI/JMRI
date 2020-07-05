@@ -24,6 +24,8 @@ import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -32,6 +34,7 @@ import org.jdesktop.beansbinding.ELProperty;
 import org.openide.util.lookup.ServiceProvider;
 
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = EXPERIMENTAL)
 public class WebServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private JSpinner port;

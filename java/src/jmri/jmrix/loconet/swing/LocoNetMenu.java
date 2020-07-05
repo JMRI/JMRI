@@ -4,11 +4,15 @@ import javax.swing.JMenu;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnCommandStationType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author Bob Jacobsen Copyright 2003, 2010
  */
+@API(status = EXPERIMENTAL)
 public class LocoNetMenu extends JMenu {
 
     /**

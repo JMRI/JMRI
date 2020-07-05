@@ -3,6 +3,8 @@ package jmri.jmrix.can.cbus.simulator;
 import java.util.ArrayList;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @see CbusDummyNode
  * @since 4.15.2
  */
+@API(status = EXPERIMENTAL)
 public class CbusSimulator {
 
     private final CanSystemConnectionMemo memo;

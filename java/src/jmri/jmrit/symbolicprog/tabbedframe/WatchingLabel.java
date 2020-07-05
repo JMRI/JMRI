@@ -1,11 +1,15 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JLabel that watches another component, setting itself invisible if when the
  * other component is
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class WatchingLabel extends javax.swing.JLabel {
 
     public WatchingLabel(String name, javax.swing.JComponent c) {

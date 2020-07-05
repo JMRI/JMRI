@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class PrintNceConsistRosterAction extends AbstractAction {
 
     public PrintNceConsistRosterAction(String actionName, Frame frame, boolean preview) {

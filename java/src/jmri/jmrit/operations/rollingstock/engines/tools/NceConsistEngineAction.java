@@ -9,11 +9,15 @@ import jmri.InstanceManager;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Starts the NceConsistEngine thread
  *
  * @author Dan Boudreau Copyright (C) 2008
  */
+@API(status = MAINTAINED)
 public class NceConsistEngineAction extends AbstractAction {
 
     NceTrafficController tc;

@@ -8,11 +8,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying start/stop buttons for the JMRI server.
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class JmriServerFrame extends jmri.util.JmriJFrame {
 
     public JmriServerFrame() {

@@ -4,6 +4,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2019
  */
+@API(status = EXPERIMENTAL)
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
     public RpsSensorManager(RpsSystemConnectionMemo memo) {

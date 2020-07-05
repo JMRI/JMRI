@@ -6,6 +6,8 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.RosterEntry;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Brett Hoffman Copyright (C) 2010, 2011
  */
+@API(status = MAINTAINED)
 public class ConsistFunctionController implements ThrottleListener {
 
     private DccThrottle throttle;

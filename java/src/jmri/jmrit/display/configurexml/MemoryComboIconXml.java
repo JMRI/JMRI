@@ -5,6 +5,8 @@ import javax.swing.DefaultComboBoxModel;
 import jmri.Memory;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryComboIcon;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2012
  */
+@API(status = MAINTAINED)
 public class MemoryComboIconXml extends PositionableLabelXml {
 
     public MemoryComboIconXml() {

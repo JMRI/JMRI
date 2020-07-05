@@ -1,5 +1,7 @@
 package jmri.jmrix.mrc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2014
  * @author kcameron Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class MrcMessage {
 
     // create a new one

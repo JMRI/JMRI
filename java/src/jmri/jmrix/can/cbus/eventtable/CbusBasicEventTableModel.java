@@ -7,6 +7,8 @@ import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * Class to provide access to the EventTableData.xml file.
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusBasicEventTableModel extends javax.swing.table.AbstractTableModel {
 
     static public final int NODE_COLUMN = 0; 

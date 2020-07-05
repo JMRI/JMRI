@@ -1,5 +1,8 @@
 package jmri.jmrix.pricom.pockettester;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Receive notification when data arrives from a Pocket Tester.
  * <p>
@@ -9,6 +12,7 @@ package jmri.jmrix.pricom.pockettester;
  *
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public interface DataListener {
 
     public void asciiFormattedMessage(String m);

@@ -19,6 +19,8 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.util.ThreadingUtil;
 import org.apache.commons.io.FilenameUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright 2010
  */
+@API(status = MAINTAINED)
 public class DirectorySearcher implements InstanceManagerAutoDefault {
 
     // For choosing image directories

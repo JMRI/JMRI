@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2014
  *
  */
+@API(status = EXPERIMENTAL)
 public class MrcPacketizer extends MrcTrafficController {
 
     /**

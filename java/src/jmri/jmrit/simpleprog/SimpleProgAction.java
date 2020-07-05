@@ -8,11 +8,15 @@ import jmri.InstanceManager;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a SimpleProgAction object
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
+@API(status = MAINTAINED)
 public class SimpleProgAction extends JmriAbstractAction {
 
     public SimpleProgAction(String s, WindowInterface wi) {

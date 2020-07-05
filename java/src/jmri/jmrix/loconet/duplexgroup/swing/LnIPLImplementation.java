@@ -5,6 +5,9 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements a class to handle message creation and message interpretation of
  * LocoNet messages associated with IPL. IPL is a mechanism which allows
@@ -12,6 +15,7 @@ import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
  *
  * @author B. Milhaupt Copyright 2010, 2011, 2018
  */
+@API(status = EXPERIMENTAL)
 public class LnIPLImplementation extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
 
     /**

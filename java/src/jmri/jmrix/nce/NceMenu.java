@@ -2,6 +2,9 @@ package jmri.jmrix.nce;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri NCE-specific tools.
  * <p>
@@ -13,6 +16,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @Deprecated
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@API(status = EXPERIMENTAL)
 public class NceMenu extends jmri.jmrix.nce.swing.NceMenu {
 
     public NceMenu(NceSystemConnectionMemo memo) {

@@ -5,12 +5,16 @@ import javax.swing.BoxLayout;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user configuration of serial nodes.
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007
  * @author Dave Duchamp Copyright (C) 2004, 2006
  */
+@API(status = EXPERIMENTAL)
 public class NodeTableFrame extends JmriJFrame {
 
     private GrapevineSystemConnectionMemo memo = null;

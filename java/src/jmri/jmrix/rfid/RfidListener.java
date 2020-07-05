@@ -1,5 +1,8 @@
 package jmri.jmrix.rfid;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Listener interface to be notified about serial traffic
  *
@@ -7,6 +10,7 @@ package jmri.jmrix.rfid;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public interface RfidListener extends jmri.jmrix.AbstractMRListener {
 
     public void message(RfidMessage m);

@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import javax.swing.JPanel;
 import jmri.TurnoutOperation;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author John Harper Copyright 2005
  */
+@API(status = MAINTAINED)
 public class TurnoutOperationConfig extends JPanel {
 
     TurnoutOperation myOperation;

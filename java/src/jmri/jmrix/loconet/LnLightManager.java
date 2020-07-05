@@ -5,6 +5,9 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement LightManager for LocoNet systems.
  * <p>
@@ -15,6 +18,7 @@ import jmri.managers.AbstractLightManager;
  *
  * @author Dave Duchamp Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class LnLightManager extends AbstractLightManager {
 
     public LnLightManager(LocoNetSystemConnectionMemo memo) {

@@ -2,6 +2,10 @@ package jmri.jmrit.throttle;
 
 import jmri.jmrit.catalog.NamedIcon;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class LargePowerManagerButton extends PowerManagerButton {
 
     public LargePowerManagerButton(Boolean fullText) {

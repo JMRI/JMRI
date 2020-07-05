@@ -3,6 +3,9 @@ package jmri.jmrix.loconet.locoio;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manage the communication to/from a LocoIO board.
  * 
@@ -61,6 +64,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  *
  * @author John Plocher 2006, 2007
  */
+@API(status = EXPERIMENTAL)
 public class LocoIO {
 
     public static final int LOCOIO_SV_WRITE = 0x01;

@@ -1,5 +1,8 @@
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * DCCppInterface defines the general connection to a DCC++ layout.
  * <p>
@@ -28,6 +31,7 @@ package jmri.jmrix.dccpp;
  *
  * Based on jmri.jmrix.lenz.XNetInterface
  */
+@API(status = EXPERIMENTAL)
 public interface DCCppInterface {
 
     /*

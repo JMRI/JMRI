@@ -5,6 +5,9 @@ import java.util.HashMap;
 import jmri.CatalogTreeNode;
 import org.apache.commons.io.FilenameUtils;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.
  * <p>
@@ -14,6 +17,7 @@ import org.apache.commons.io.FilenameUtils;
  * @author Pete Cressman Copyright 2009
  *
  */
+@API(status = MAINTAINED)
 public class CatalogTreeFS extends AbstractCatalogTree {
 
     String[] _filter;

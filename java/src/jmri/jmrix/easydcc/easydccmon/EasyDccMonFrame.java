@@ -5,11 +5,15 @@ import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying (and logging) EasyDCC command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements EasyDccListener {
 
     private EasyDccSystemConnectionMemo _memo = null;

@@ -9,6 +9,10 @@ import java.util.ResourceBundle;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class JynstrumentPopupMenu extends JPopupMenu {
 
     private static final ResourceBundle jythonBundle = ResourceBundle.getBundle("jmri/jmrit/jython/JythonBundle");

@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +65,7 @@ import jmri.util.swing.JComboBoxUtil;
  *
  * @author Dave Sand copyright (c) 2017
  */
+@API(status = MAINTAINED)
 public class ConditionalEditBase {
 
     /**

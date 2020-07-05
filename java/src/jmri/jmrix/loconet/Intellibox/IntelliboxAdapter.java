@@ -4,6 +4,9 @@ import java.util.Arrays;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it operates
  * correctly with the Intellibox on-board serial port.
@@ -14,6 +17,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
  */
+@API(status = EXPERIMENTAL)
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
     public IntelliboxAdapter() {

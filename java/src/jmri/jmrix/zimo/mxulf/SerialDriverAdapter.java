@@ -9,6 +9,8 @@ import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -25,6 +27,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * Adapted for use with Zimo MXULF by Kevin Dickerson
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends Mx1PortController {
 
     public SerialDriverAdapter() {

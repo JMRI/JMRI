@@ -1,11 +1,15 @@
 package jmri.jmrix.nce.networkdriver;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring an NCE layout connection via a
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     public final static String NAME = "Network Interface";

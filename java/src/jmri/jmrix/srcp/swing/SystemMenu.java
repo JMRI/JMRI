@@ -5,11 +5,15 @@ import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 import jmri.jmrix.srcp.swing.packetgen.PacketGenAction;
 import jmri.jmrix.srcp.swing.srcpmon.SRCPMonAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the system-specific SRCP tools.
  *
  * @author Bob Jacobsen Copyright 2008
  */
+@API(status = EXPERIMENTAL)
 public class SystemMenu extends JMenu {
 
     public SystemMenu(String name, SRCPSystemConnectionMemo memo) {

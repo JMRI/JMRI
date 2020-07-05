@@ -1,5 +1,8 @@
 package jmri.jmrix.tams;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Encodes a message to a Tams MasterControl command station.
  * <p>
@@ -9,6 +12,7 @@ package jmri.jmrix.tams;
  *
  * @author Jan Boen
  */
+@API(status = EXPERIMENTAL)
 public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
     static private final int TamsProgrammingTimeout = 5000;//ms

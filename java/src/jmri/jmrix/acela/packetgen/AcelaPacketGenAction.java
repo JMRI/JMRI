@@ -3,6 +3,8 @@ package jmri.jmrix.acela.packetgen;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class AcelaPacketGenAction extends AbstractAction {
 
     private AcelaSystemConnectionMemo _memo = null;

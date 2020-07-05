@@ -2,6 +2,9 @@ package jmri.jmrit.ctc.editor.code;
 
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -10,6 +13,7 @@ import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
  * in CodeButtonHandlerData objects.  It is also a "factory" to produce
  * new CodeButtonHandlerData objects from those patterns..
  */
+@API(status = MAINTAINED)
 public class CodeButtonHandlerDataRoutines {
     public static CodeButtonHandlerData createNewCodeButtonHandlerData(int newUniqueID, int newSwitchNumber, int newSignalEtcNumber, int newGUIColumnNumber, ProgramProperties programProperties) {
         CodeButtonHandlerData returnValue = new CodeButtonHandlerData(newUniqueID, newSwitchNumber, newSignalEtcNumber, newGUIColumnNumber);

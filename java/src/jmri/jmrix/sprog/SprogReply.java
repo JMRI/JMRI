@@ -1,6 +1,8 @@
 package jmri.jmrix.sprog;
 
 import jmri.jmrix.AbstractMRReply;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Berridge - refactored, cleaned up, Feb 2010
  */
+@API(status = EXPERIMENTAL)
 public class SprogReply extends AbstractMRReply {
 
     // Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX

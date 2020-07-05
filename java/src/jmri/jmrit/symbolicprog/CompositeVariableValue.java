@@ -10,6 +10,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +48,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005, 2013
  */
+@API(status = MAINTAINED)
 public class CompositeVariableValue extends EnumVariableValue {
 
     public CompositeVariableValue(String name, String comment, String cvName,

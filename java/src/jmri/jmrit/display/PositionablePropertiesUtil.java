@@ -35,6 +35,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import jmri.util.swing.SplitButtonColorChooserPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +44,7 @@ import org.slf4j.LoggerFactory;
  * Creates the UI to set the properties of a range of Positionable Icons on
  * (Control) Panels.
  */
+@API(status = MAINTAINED)
 public class PositionablePropertiesUtil {
 
     Frame mFrame = null;

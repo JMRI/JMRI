@@ -5,6 +5,10 @@ package jmri.jmrit.ctc;
 
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class SignalDirectionLever {
     public static class LNR_NBHSensors {   // L = Left, N = Normal, R = Right.
         public final NBHSensor _mLeftSensor;

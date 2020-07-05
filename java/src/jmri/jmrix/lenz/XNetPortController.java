@@ -1,10 +1,14 @@
 package jmri.jmrix.lenz;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for XNetPortController objects.
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public interface XNetPortController extends jmri.jmrix.PortAdapter {
 
     /**

@@ -1,5 +1,7 @@
 package jmri.server.json.operations;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.COLOR;
 import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.ENGINES;
@@ -72,6 +74,7 @@ import jmri.server.json.JsonRequest;
 /**
  * @author Randall Wood (C) 2016, 2018, 2019, 2020
  */
+@API(status = EXPERIMENTAL)
 public class JsonOperationsHttpService extends JsonHttpService {
 
     private final JsonUtil utilities;

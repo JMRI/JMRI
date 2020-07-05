@@ -7,6 +7,9 @@ import javax.annotation.Nonnull;
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to the hardware DCC decoder programming capability.
  * <p>
@@ -46,6 +49,7 @@ import jmri.ProgrammingMode;
  * @author Bob Jacobsen Copyright (C) 2015
  * @since 4.1.1
  */
+@API(status = EXPERIMENTAL)
 public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmri.AddressedProgrammer  {
     
     /** 

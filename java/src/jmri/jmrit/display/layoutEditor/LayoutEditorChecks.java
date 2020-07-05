@@ -9,6 +9,8 @@ import javax.annotation.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import jmri.util.MathUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.*;
 
 /**
@@ -16,6 +18,7 @@ import org.slf4j.*;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 final public class LayoutEditorChecks {
 
     private final LayoutEditor layoutEditor;

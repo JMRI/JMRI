@@ -1,11 +1,15 @@
 package jmri.jmrix.loconet.sdf;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement generic four-byte macros from the Digitrax sound definition
  * language
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class FourByteMacro extends SdfMacro {
 
     public FourByteMacro(int byte1, int byte2, int byte3, int byte4) {

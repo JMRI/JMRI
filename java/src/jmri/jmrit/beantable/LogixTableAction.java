@@ -54,6 +54,8 @@ import jmri.jmrit.conditional.ConditionalTreeEdit;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,6 +96,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris copyright (c) 2009
  * @author Dave Sand copyright (c) 2017
  */
+@API(status = STABLE)
 public class LogixTableAction extends AbstractTableAction<Logix> {
 
     /**

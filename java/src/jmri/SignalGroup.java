@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Signal Groups are used to represent European subsidary signals that would
  * be sited with a signal mast. Such subsidary signals would be used to
@@ -25,6 +28,7 @@ package jmri;
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse Copyright (C) 2017
  */
+@API(status = STABLE)
 public interface SignalGroup extends NamedBean {
 
     /**

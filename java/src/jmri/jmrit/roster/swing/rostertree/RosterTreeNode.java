@@ -5,12 +5,16 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a TreeNode representing the entire Roster.
  *
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class RosterTreeNode extends DefaultMutableTreeNode {
 
     public RosterTreeNode() {

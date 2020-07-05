@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Popup menu for displaying recently selected colors along with standard
  * java colors.
@@ -17,6 +20,7 @@ import javax.swing.JMenuItem;
  * @author Paul Bender Copyright (C) 2018
  * @since 4.13.1
  */
+@API(status = EXPERIMENTAL)
 public class ColorListPopupMenu extends JPopupMenu {
 
     private static final int ICON_DIMENSION = 20;

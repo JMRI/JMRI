@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static java.awt.event.KeyEvent.KEY_PRESSED;
 import static jmri.jmrit.display.layoutEditor.LayoutEditor.setupComboBox;
 
@@ -26,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author George Warner Copyright: (c) 2017-2019
  */
+@API(status = MAINTAINED)
 public class LayoutEditorToolBarPanel extends JPanel {
 
     final protected LayoutEditor layoutEditor; // initialized in constuctor

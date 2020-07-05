@@ -4,10 +4,14 @@ package jmri.jmrix.mqtt;
 import javax.swing.*;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Lionel Jeanson
  */
+@API(status = EXPERIMENTAL)
 public class MqttConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     public MqttConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {

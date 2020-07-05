@@ -1,5 +1,8 @@
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an DCC++ layout connection via an DCCppStreamPortController
  * adapter.
@@ -11,6 +14,7 @@ package jmri.jmrix.dccpp;
  *
  * @see DCCppStreamPortController
  */
+@API(status = EXPERIMENTAL)
 public class DCCppStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
 
     /**

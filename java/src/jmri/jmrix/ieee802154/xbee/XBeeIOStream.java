@@ -10,6 +10,8 @@ import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import jmri.jmrix.AbstractPortController;
 import jmri.util.ImmediatePipedOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @Author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 final public class XBeeIOStream extends AbstractPortController {
 
     private DataOutputStream pout = null; // for output to other classes

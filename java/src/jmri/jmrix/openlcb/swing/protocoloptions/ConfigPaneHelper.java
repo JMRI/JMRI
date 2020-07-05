@@ -9,6 +9,9 @@ import jmri.jmrix.AbstractConnectionConfig;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.configurexml.ConnectionConfigXml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Helper class for implementing OpenLCB compatible port adapters. Common code for those adapters
  * is factored out into functions in this class.
@@ -16,6 +19,7 @@ import jmri.jmrix.openlcb.configurexml.ConnectionConfigXml;
  * @author Balazs Racz, (C) 2018.
  */
 
+@API(status = EXPERIMENTAL)
 public class ConfigPaneHelper {
     /**
      * Adds a button to the connection config setup panel that opens the openLCB protocol options.

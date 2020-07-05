@@ -12,6 +12,8 @@ import jmri.implementation.*;
 import jmri.util.*;
 import jmri.util.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -22,6 +24,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Egbert Broerse Copyright (C) 2016, 2019
  * @since 4.11.2
  */
+@API(status = MAINTAINED)
 public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
     public MatrixSignalMastAddPane() {

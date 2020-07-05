@@ -6,6 +6,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrit.audio.AudioFactory;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Locate an Audio object representing some specific audio information.
  * <p>
@@ -38,6 +41,7 @@ import jmri.jmrit.audio.AudioFactory;
  *
  * @author Matthew Harris Copyright (c) 2009
  */
+@API(status = STABLE)
 public interface AudioManager extends Manager<Audio> {
 
     /**

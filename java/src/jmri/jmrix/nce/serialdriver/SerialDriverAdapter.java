@@ -8,6 +8,8 @@ import java.util.Arrays;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -25,6 +27,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author ken ccameron Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends NcePortController {
 
     SerialPort activeSerialPort = null;

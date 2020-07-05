@@ -6,6 +6,8 @@ import com.jogamp.openal.util.ALut;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +69,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris copyright (c) 2009, 2011
  */
+@API(status = MAINTAINED)
 public class JoalAudioBuffer extends AbstractAudioBuffer {
 
     private static AL al = JoalAudioFactory.getAL();

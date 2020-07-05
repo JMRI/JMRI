@@ -3,11 +3,15 @@ package jmri.jmrit.ctc.ctcserialdata;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  * 
  * This describes a single line of Call On Data from the GUI screen.
  */
+@API(status = MAINTAINED)
 public class CallOnEntry {
     public final String _mExternalSignal;
     public final String _mSignalFacingDirection;

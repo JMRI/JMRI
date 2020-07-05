@@ -12,6 +12,8 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
  */
+@API(status = MAINTAINED)
 public class RouteManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLengthChanged"; // NOI18N

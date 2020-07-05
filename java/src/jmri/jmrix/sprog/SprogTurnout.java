@@ -3,6 +3,8 @@ package jmri.jmrix.sprog;
 import jmri.NmraPacket;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class SprogTurnout extends AbstractTurnout {
 
     private SprogSystemConnectionMemo _memo = null;

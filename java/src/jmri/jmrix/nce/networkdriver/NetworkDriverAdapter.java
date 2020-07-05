@@ -4,6 +4,9 @@ import jmri.jmrix.nce.NceNetworkPortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements SerialPortAdapter for the NCE system network connection.
  * <p>
@@ -12,6 +15,7 @@ import jmri.jmrix.nce.NceTrafficController;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
  */
+@API(status = EXPERIMENTAL)
 public class NetworkDriverAdapter extends NceNetworkPortController {
 
     public NetworkDriverAdapter() {

@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for obtaining information about signal systems.
  * <p>
@@ -21,6 +24,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = STABLE)
 public interface SignalSystemManager extends Manager<SignalSystem> {
 
     public SignalSystem getSystem(String name);

@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on LenzCommandStation by Bob Jacobsen and Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public class DCCppCommandStation implements jmri.CommandStation {
 
     /* The First group of routines is for obtaining the Software and

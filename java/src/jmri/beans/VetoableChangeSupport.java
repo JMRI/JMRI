@@ -7,6 +7,9 @@ import java.beans.VetoableChangeListener;
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of {@link java.beans.PropertyChangeSupport} and
  * {@link java.beans.VetoableChangeSupport} that can be extended by classes that
@@ -26,6 +29,7 @@ import javax.annotation.concurrent.ThreadSafe;
  * @author Randall Wood Copyright 2020
  */
 @ThreadSafe
+@API(status = EXPERIMENTAL)
 public class VetoableChangeSupport extends PropertyChangeSupport implements VetoableChangeProvider, VetoableChangeFirer {
 
     /**

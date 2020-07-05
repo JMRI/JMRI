@@ -6,6 +6,9 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.sdi.JmriJFrameInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri RFID-specific tools.
  *
@@ -13,6 +16,7 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
  * @author Matthew Harris Copyright 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class RfidMenu extends JMenu {
 
     @SuppressWarnings("OverridableMethodCallInConstructor")

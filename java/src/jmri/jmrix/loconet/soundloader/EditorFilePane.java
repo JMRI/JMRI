@@ -13,6 +13,8 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.loconet.spjfile.SpjFile;
 import jmri.swing.RowSorterUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2010
  */
+@API(status = EXPERIMENTAL)
 public class EditorFilePane extends javax.swing.JPanel {
 
     // GUI member declarations

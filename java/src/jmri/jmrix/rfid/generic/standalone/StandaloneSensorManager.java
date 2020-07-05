@@ -11,6 +11,8 @@ import jmri.jmrix.rfid.RfidSensorManager;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidTrafficController;
 import jmri.jmrix.rfid.TimeoutRfidSensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class StandaloneSensorManager extends RfidSensorManager {
 
     private final RfidTrafficController tc;

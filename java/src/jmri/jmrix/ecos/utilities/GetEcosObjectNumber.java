@@ -1,5 +1,8 @@
 package jmri.jmrix.ecos.utilities;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * This method simply returns a integer value from a string, that is between
@@ -7,6 +10,7 @@ package jmri.jmrix.ecos.utilities;
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class GetEcosObjectNumber {
 
     /**

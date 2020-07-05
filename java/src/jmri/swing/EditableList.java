@@ -22,10 +22,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class EditableList<E> extends JList<E> implements CellEditorListener {
 
     protected Component editorComp = null;

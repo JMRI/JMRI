@@ -7,6 +7,8 @@ import jmri.jmrix.secsi.SerialTrafficController;
 import jmri.jmrix.secsi.simulator.ConnectionConfig;
 import jmri.jmrix.secsi.simulator.SimulatorAdapter;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -23,6 +25,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright (c) 2003 copied from NCE/Tams code
  * @author kcameron Copyright (c) 2014
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

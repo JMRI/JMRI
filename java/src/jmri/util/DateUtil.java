@@ -3,11 +3,15 @@ package jmri.util;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common utility methods for working with Calendar and Date objects.
  *
  * @author Paul Bender Copyright 2014
  */
+@API(status = EXPERIMENTAL)
 public class DateUtil {
 
     // return a GregorianCalendar representation of the given julian date 

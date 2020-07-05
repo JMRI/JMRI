@@ -1,5 +1,8 @@
 package jmri.jmrix.powerline.insteon2412s.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Simple class to allow configurexml to locate a persistance class for
  * {@link jmri.jmrix.powerline.SerialSensorManager} and its subclasses.
@@ -15,6 +18,7 @@ package jmri.jmrix.powerline.insteon2412s.configurexml;
  * @author Bob Jacobsen 2008, 2009
  * @author Ken Cameron, (C) 2009, add sensors from poll replies
  */
+@API(status = EXPERIMENTAL)
 public class SpecificSensorManagerXml extends jmri.jmrix.powerline.configurexml.SerialSensorManagerXml {
 
 }

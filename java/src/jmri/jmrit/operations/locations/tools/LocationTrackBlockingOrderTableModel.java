@@ -15,6 +15,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2015
  */
+@API(status = MAINTAINED)
 public class LocationTrackBlockingOrderTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     protected Location _location;

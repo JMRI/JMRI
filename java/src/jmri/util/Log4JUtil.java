@@ -20,6 +20,8 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.RollingFileAppender;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2009, 2010
  * @author Randall Wood Copyright 2014
  */
+@API(status = EXPERIMENTAL)
 public class Log4JUtil {
 
     private static boolean log4JSetUp = false;

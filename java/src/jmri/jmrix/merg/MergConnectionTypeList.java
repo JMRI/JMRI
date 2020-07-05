@@ -1,6 +1,8 @@
 package jmri.jmrix.merg;
 
 import jmri.jmrix.ConnectionTypeList;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -9,6 +11,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Matthew Harris Copyright (c) 2011
  */
 @ServiceProvider(service = ConnectionTypeList.class)
+@API(status = EXPERIMENTAL)
 public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String MERG = "MERG";

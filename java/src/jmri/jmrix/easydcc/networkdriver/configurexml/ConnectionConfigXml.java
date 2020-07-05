@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.easydcc.networkdriver.ConnectionConfig;
 import jmri.jmrix.easydcc.networkdriver.NetworkDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the
  * NetworkDriverAdapter (and connections).
@@ -17,6 +20,7 @@ import jmri.jmrix.easydcc.networkdriver.NetworkDriverAdapter;
  *
  * @author Bob Jacobsen, Copyright (c) 2003
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

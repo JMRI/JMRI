@@ -29,6 +29,8 @@ import jmri.jmrit.display.LightIcon;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.TurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2010, 2011, 2020
  */
 
+@API(status = MAINTAINED)
 public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel implements ListSelectionListener {
 
     int ROW_HEIGHT;

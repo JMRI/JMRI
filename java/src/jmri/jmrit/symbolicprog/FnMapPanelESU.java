@@ -22,6 +22,8 @@ import jmri.util.CvUtil;
 import jmri.util.FileUtil;
 import jmri.util.jdom.LocaleSelector;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.*;
 
 import org.slf4j.Logger;
@@ -100,6 +102,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Dave Heap Copyright (C) 2016, 2019
  */
+@API(status = MAINTAINED)
 public final class FnMapPanelESU extends JPanel {
 
     // columns

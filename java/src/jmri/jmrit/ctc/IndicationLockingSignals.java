@@ -13,6 +13,10 @@ import jmri.TurnoutManager;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class IndicationLockingSignals {
     private final ArrayList<NBHAbstractSignalCommon> _mListOfSignals = new ArrayList<>();
     private final Turnout turnout;

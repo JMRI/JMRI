@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import jmri.util.FileUtil;
  * @author Daniel Boudreau Copyright (C) 2011, 2015
  *
  */
+@API(status = MAINTAINED)
 public class TrainCsvManifest extends TrainCsvCommon {
 
     public TrainCsvManifest(Train train) {

@@ -6,6 +6,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.cbus.simulator.CbusSimCanListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -15,6 +18,7 @@ import jmri.jmrix.can.cbus.simulator.CbusSimCanListener;
  * @author Steve Young Copyright (C) 2019
  * @since 4.15.1
  */
+@API(status = EXPERIMENTAL)
 public class DirectionPane extends JPanel {
     
     private JCheckBox processIn;

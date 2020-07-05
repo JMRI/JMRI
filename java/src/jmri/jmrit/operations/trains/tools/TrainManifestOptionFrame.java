@@ -6,6 +6,8 @@ import java.io.File;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import jmri.util.FileUtil;
  *
  * @author Dan Boudreau Copyright (C) 2010, 2013
  */
+@API(status = MAINTAINED)
 public class TrainManifestOptionFrame extends OperationsFrame {
 
     Train _train = null;

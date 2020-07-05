@@ -2,6 +2,9 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.List;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Force a set of Qualifiers to work in an AND relationship.
  * <p>
@@ -11,6 +14,7 @@ import java.util.List;
  * @author Bob Jacobsen Copyright (C) 2011
  *
  */
+@API(status = MAINTAINED)
 public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeListener {
 
     public QualifierCombiner(List<Qualifier> qualifiers) {

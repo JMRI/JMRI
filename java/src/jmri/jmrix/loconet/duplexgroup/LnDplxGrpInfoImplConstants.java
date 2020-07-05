@@ -1,11 +1,15 @@
 package jmri.jmrix.loconet.duplexgroup;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants related to Digitrax Duplex Groups and related GUI
  * operations.
  *
  * @author B. Milhaupt Copyright 2010, 2011
  */
+@API(status = EXPERIMENTAL)
 public final class LnDplxGrpInfoImplConstants {
 
     public final static int GENERAL_BYTE_MASK = 0xFF;

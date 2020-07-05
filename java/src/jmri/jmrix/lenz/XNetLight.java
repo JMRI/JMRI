@@ -1,6 +1,8 @@
 package jmri.jmrix.lenz;
 
 import jmri.implementation.AbstractLight;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008-2010
  */
+@API(status = EXPERIMENTAL)
 public class XNetLight extends AbstractLight implements XNetListener {
 
     private XNetTrafficController tc;

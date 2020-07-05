@@ -12,6 +12,8 @@ import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author kevin
  */
+@API(status = EXPERIMENTAL)
 public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public DefaultSignalMastLogicManagerXml() {

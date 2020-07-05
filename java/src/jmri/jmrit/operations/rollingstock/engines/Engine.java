@@ -3,6 +3,8 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author Daniel Boudreau (C) Copyright 2008
  */
+@API(status = MAINTAINED)
 public class Engine extends RollingStock {
 
     public static final int NCE_REAR_BLOCK_NUMBER = 8;

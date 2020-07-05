@@ -3,9 +3,12 @@ package jmri.server.json;
 import java.util.Locale;
 import jmri.util.startup.AbstractStartupActionFactory;
 import jmri.util.startup.StartupActionFactory;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 @ServiceProvider(service = StartupActionFactory.class)
+@API(status = EXPERIMENTAL)
 public final class JsonServerStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override

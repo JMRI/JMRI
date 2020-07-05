@@ -13,6 +13,9 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.automat.Siglet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Drives the "simple signal" logic for one signal.
  * <p>
@@ -117,6 +120,7 @@ import jmri.jmrit.automat.Siglet;
  * @author Dick Bronson 2006 Revisions to add facing point sensors, approach lighting
  * and check box to limit speed.
  */
+@API(status = MAINTAINED)
 public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeListener {
 
     public static final int SINGLEBLOCK = 1;

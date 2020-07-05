@@ -1,10 +1,14 @@
 package jmri.jmrit.ussctc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JmriJFrameAction to create and register a FollowerFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2007
  */
+@API(status = MAINTAINED)
 public class FollowerAction extends jmri.util.JmriJFrameAction {
 
     public FollowerAction(String s) {

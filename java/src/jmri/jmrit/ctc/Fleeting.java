@@ -5,6 +5,10 @@ package jmri.jmrit.ctc;
 
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class Fleeting {
     private NBHSensor _mFleetingToggleInternalSensor;
     private boolean _mDefaultFleetingEnabled;

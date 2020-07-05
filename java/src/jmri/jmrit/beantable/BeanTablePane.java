@@ -10,6 +10,9 @@ import javax.swing.table.TableRowSorter;
 import jmri.NamedBean;
 import jmri.swing.RowSorterUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide a JPanel to display a table of NamedBeans.
  * <p>
@@ -24,6 +27,7 @@ import jmri.swing.RowSorterUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
+@API(status = STABLE)
 public class BeanTablePane<E extends NamedBean> extends jmri.util.swing.JmriPanel {
 
     BeanTableDataModel<E> dataModel;

@@ -3,6 +3,8 @@ package jmri.util.swing;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -16,6 +18,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright 2003, 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class JToolBarUtil extends GuiUtilBase {
 
     static public JToolBar loadToolBar(String name) {

@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.Enumeration;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A SignalSystem defines a signalling system by representing the properties of
  * various signal aspects it contains.
@@ -29,6 +32,7 @@ import java.util.Enumeration;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = STABLE)
 public interface SignalSystem extends NamedBean {
 
     public void setProperty(String aspect, String key, Object value);

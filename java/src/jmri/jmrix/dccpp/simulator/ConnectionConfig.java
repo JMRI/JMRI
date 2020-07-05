@@ -1,5 +1,8 @@
 package jmri.jmrix.dccpp.simulator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring a DCC++ layout connection via a DCCppSimulator
  * adapter.
@@ -14,6 +17,7 @@ package jmri.jmrix.dccpp.simulator;
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

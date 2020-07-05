@@ -22,6 +22,9 @@ import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -29,6 +32,7 @@ import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
  This represents all of the codeButtonHandlerData data in a CTC machine relating to the GUI
  interface.  It maintains the state of the screen for the higher level functions.
  */
+@API(status = MAINTAINED)
 public class Columns {
     public final static String REFERENCES_PRESENT_INDICATOR = " (";
     private final static String ERROR_STRING = " ***ERROR***";

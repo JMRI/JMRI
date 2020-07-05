@@ -1,6 +1,8 @@
 package jmri.jmrix.acela;
 
 import jmri.implementation.DefaultSignalHead;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Coleman Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class AcelaSignalHead extends DefaultSignalHead {
 
     AcelaSystemConnectionMemo _memo = null;

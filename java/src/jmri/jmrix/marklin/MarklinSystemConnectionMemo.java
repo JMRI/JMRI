@@ -6,6 +6,9 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -16,6 +19,7 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public MarklinSystemConnectionMemo(MarklinTrafficController et) {

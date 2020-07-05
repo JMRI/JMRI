@@ -5,11 +5,15 @@ import jmri.jmrix.ieee802154.IEEE802154Message;
 import jmri.jmrix.ieee802154.IEEE802154Reply;
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Pane displaying (and logging) IEEE 802.15.4 messages
  *
  * @author Paul Bender Copyright (C) 2013,2018
  */
+@API(status = EXPERIMENTAL)
 public class IEEE802154MonPane extends jmri.jmrix.AbstractMonPane implements IEEE802154Listener {
 
     private IEEE802154SystemConnectionMemo _memo = null;

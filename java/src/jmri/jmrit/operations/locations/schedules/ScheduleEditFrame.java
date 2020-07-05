@@ -6,6 +6,8 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import jmri.swing.JTablePersistenceManager;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
  */
+@API(status = MAINTAINED)
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     ScheduleTableModel scheduleModel = new ScheduleTableModel();

@@ -3,6 +3,10 @@
  */
 package jmri.jmrit.ctc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class CTCConstants {
     public static final int LEFTTRAFFIC = 0;            // Indicator lights are presently left traffic
     public static final int SIGNALSNORMAL = 1;          // Indicator lights are presently all stop

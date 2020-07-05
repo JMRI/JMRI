@@ -8,6 +8,8 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2014
  * 
  */
+@API(status = MAINTAINED)
 public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
 
     @Override

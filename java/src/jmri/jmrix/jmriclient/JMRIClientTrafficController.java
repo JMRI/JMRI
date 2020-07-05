@@ -5,6 +5,9 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Converts Stream-based I/O to/from JMRIClient messages. The
  * "JMRIClientInterface" side sends/receives message objects.
@@ -18,6 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientTrafficController extends AbstractMRTrafficController
         implements JMRIClientInterface {
 

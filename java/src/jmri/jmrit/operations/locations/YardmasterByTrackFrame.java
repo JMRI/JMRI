@@ -4,12 +4,16 @@ import java.awt.Dimension;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Yardmaster by track frame. Shows work at one location listed by track.
  *
  * @author Dan Boudreau Copyright (C) 2015
  * 
  */
+@API(status = MAINTAINED)
 public class YardmasterByTrackFrame extends OperationsFrame {
 
     public YardmasterByTrackFrame(Location location) {

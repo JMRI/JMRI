@@ -1,5 +1,8 @@
 package jmri.jmrix.acela;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Contains the data payload of an Acela reply packet
@@ -9,6 +12,7 @@ package jmri.jmrix.acela;
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class AcelaReply extends jmri.jmrix.AbstractMRReply {
 
     // Create a new one

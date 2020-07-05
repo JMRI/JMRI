@@ -27,6 +27,8 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2016
  */
+@API(status = MAINTAINED)
 public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDefault, PropertyChangeListener {
 
     private boolean engLog = false; // when true logging engine movements

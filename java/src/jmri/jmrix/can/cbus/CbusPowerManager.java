@@ -8,12 +8,16 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.managers.AbstractPowerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * PowerManager implementation for controlling CBUS layout power.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew CRosland Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMemo> implements CanListener {
 
     private TrafficController tc;

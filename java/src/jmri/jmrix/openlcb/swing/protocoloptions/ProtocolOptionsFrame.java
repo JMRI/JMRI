@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb.swing.protocoloptions;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ import static jmri.jmrix.openlcb.OlcbConfigurationManager.*;
  * @author Balazs Racz, (C) 2018.
  */
 
+@API(status = EXPERIMENTAL)
 public class ProtocolOptionsFrame extends JmriJFrame {
     final CanSystemConnectionMemo scm;
 

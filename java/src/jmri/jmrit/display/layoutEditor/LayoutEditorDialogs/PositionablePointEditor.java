@@ -12,6 +12,9 @@ import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * MVC Editor component for PositionablePoint objects.
  *
@@ -22,6 +25,7 @@ import jmri.util.*;
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
  */
+@API(status = MAINTAINED)
 public class PositionablePointEditor extends LayoutTrackEditor {
 
     /**

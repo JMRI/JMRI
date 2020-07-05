@@ -4,6 +4,9 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 import jmri.InstanceManagerAutoDefault;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Generate and cache icons at a given height. A managed instance will generate
  * icons for a default height, while unmanaged instances can be created to
@@ -21,6 +24,7 @@ import jmri.InstanceManagerAutoDefault;
  *
  * @author Lionel Jeanson Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class RosterIconFactory implements InstanceManagerAutoDefault {
 
     private final int iconHeight;

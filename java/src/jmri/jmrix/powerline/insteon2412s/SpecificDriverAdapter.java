@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -24,6 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SpecificDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;

@@ -11,6 +11,8 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
  */
+@API(status = MAINTAINED)
 public class Route extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
     public static final String NONE = "";

@@ -1,10 +1,14 @@
 package jmri.jmrix.roco.z21;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface to send/receive serial information.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public interface Z21Interface {
 
     void addz21Listener(Z21Listener l);

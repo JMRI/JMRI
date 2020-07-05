@@ -9,7 +9,11 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // Grid Layout which allows components of differrent sizes
+@API(status = EXPERIMENTAL)
 public class GridLayout2 extends GridLayout {
 
     public GridLayout2() {

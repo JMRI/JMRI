@@ -10,10 +10,14 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood
  */
+@API(status = MAINTAINED)
 public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelector, RosterGroupSelector {
 
     private RosterEntryComboBox entryCombo;

@@ -12,6 +12,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import jmri.util.FileUtil;
 import jmri.util.jdom.LocaleSelector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2010
  */
+@API(status = EXPERIMENTAL)
 public class GuiUtilBase {
 
     static Action actionFromNode(Element child, WindowInterface wi, Object context) {

@@ -21,12 +21,16 @@ import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for running CMRI diagnostics
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Chuck Catania Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
     protected int numTestNodes = 0;
     protected SerialNode[] testNodes = new SerialNode[128];  // Node control blocks

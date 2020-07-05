@@ -1,5 +1,8 @@
 package jmri.jmrix.can.adapters.gridconnect.net;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Implements NetworkDriverAdapter for the MERG system network connection.
@@ -9,6 +12,7 @@ package jmri.jmrix.can.adapters.gridconnect.net;
  * @author Bob Jacobsen Copyright (C) 2010
  * 
  */
+@API(status = EXPERIMENTAL)
 public class MergNetworkDriverAdapter extends NetworkDriverAdapter {
 
     public MergNetworkDriverAdapter() {

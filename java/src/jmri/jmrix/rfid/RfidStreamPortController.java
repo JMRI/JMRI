@@ -15,6 +15,8 @@ import jmri.jmrix.rfid.protocol.olimex.OlimexRfid1356mifareProtocol;
 import jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol;
 import jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol;
 import jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class RfidStreamPortController extends AbstractStreamPortController implements RfidInterface {
 
     public RfidStreamPortController(DataInputStream in, DataOutputStream out, String pname) {

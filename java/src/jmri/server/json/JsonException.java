@@ -4,11 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Throw an exception, but include an HTTP error code.
  *
  * @author Randall Wood Copyright (C) 2015, 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonException extends Exception {
 
     /* JSON protocol keys */

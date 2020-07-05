@@ -2,6 +2,9 @@ package jmri.jmrix.can.nmranet.swing;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the LocoNet subsystem.
  *
@@ -9,6 +12,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * 
  * @since 2.99.2
  */
+@API(status = EXPERIMENTAL)
 public class NmraNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public NmraNetComponentFactory(CanSystemConnectionMemo memo) {

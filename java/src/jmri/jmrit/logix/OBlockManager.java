@@ -5,6 +5,9 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.ProvidingManager;
 import jmri.managers.AbstractManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Basic Implementation of an OBlockManager.
  * <p>
@@ -18,6 +21,7 @@ import jmri.managers.AbstractManager;
  * @author Bob Jacobsen Copyright (C) 2006
  * @author Pete Cressman Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class OBlockManager extends AbstractManager<OBlock>
         implements ProvidingManager<OBlock>, InstanceManagerAutoDefault {
 

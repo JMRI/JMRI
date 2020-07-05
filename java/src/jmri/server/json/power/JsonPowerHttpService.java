@@ -1,5 +1,7 @@
 package jmri.server.json.power;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.DEFAULT;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.OFF;
@@ -24,6 +26,7 @@ import jmri.server.json.JsonRequest;
 /**
  * @author Randall Wood Copyright 2016, 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonPowerHttpService extends JsonHttpService {
 
     public JsonPowerHttpService(ObjectMapper mapper) {

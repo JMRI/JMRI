@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import jmri.jmrit.operations.setup.Setup;
  * @author Dan Boudreau Copyright (C) 2011, 2013
  * 
  */
+@API(status = MAINTAINED)
 public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     protected static final boolean IS_MANIFEST = true;

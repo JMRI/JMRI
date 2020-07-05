@@ -3,6 +3,9 @@ package jmri.jmrit.lcdclock;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a LcdClockFrame object
  *
@@ -11,6 +14,7 @@ import javax.swing.AbstractAction;
  * This was a direct steal form the Nixie clock code, ver 1.5. Thank you Bob
  * Jacobsen.
  */
+@API(status = MAINTAINED)
 public class LcdClockAction extends AbstractAction {
 
     public LcdClockAction() {

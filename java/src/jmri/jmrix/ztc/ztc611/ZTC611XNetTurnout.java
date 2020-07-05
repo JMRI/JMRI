@@ -2,12 +2,16 @@ package jmri.jmrix.ztc.ztc611;
 
 import jmri.jmrix.lenz.XNetTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.jmrix.XNetTurnout to handle turnouts on ZTC ZTC611
  * connections. See XNetTurnout for further documentation.
  *
  * @author Paul Bender Copyright (C) 2008,2017
  */
+@API(status = EXPERIMENTAL)
 public class ZTC611XNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
 
     public ZTC611XNetTurnout(String prefix, int pNumber, XNetTrafficController tc) {  // a human-readable turnout number must be specified!

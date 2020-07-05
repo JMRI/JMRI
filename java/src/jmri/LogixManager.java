@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for obtaining Logixs
  * <p>
@@ -18,6 +21,7 @@ package jmri;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
+@API(status = STABLE)
 public interface LogixManager extends Manager<Logix> {
 
     /**

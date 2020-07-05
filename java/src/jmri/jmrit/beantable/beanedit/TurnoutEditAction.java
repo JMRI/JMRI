@@ -19,11 +19,15 @@ import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.swing.NamedBeanComboBox;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides an edit panel for a turnout object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class TurnoutEditAction extends BeanEditAction<Turnout> {
     @Override
     public String helpTarget() {

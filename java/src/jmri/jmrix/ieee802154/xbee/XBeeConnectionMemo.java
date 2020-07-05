@@ -5,6 +5,8 @@ import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * for multiple connections by
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo {
 
     jmri.jmrix.swing.ComponentFactory componentFactory = null;

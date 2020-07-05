@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.tams.TamsMessage;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
 
     LocoDataModel locoModel;

@@ -5,6 +5,9 @@ import java.util.*;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Drive a signal section on a USS CTC panel.
  * Implements {@link Section} for both the field and CTC machine parts.
@@ -14,6 +17,7 @@ import jmri.*;
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  * TODO: Update state diagram
  */
+@API(status = MAINTAINED)
 public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupThreeBits> {
 
     /**

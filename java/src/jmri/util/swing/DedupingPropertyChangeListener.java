@@ -6,6 +6,9 @@ import java.util.HashMap;
 
 import javax.swing.SwingUtilities;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Helper class for wrapping a PropertyChangeListener. This wrapper ensures that the events are
  * dispatched to the target listener only on the swing thread, and collapses multiple events into
@@ -20,6 +23,7 @@ import javax.swing.SwingUtilities;
  * @deprecated since 4.17.1; use {@link jmri.util.ThreadingPropertyChangeListener} instead
  */
 @Deprecated // retroactively deprecated to match deprecation of only using class
+@API(status = EXPERIMENTAL)
 public class DedupingPropertyChangeListener implements PropertyChangeListener {
     public DedupingPropertyChangeListener(PropertyChangeListener listener) {
         this.listener = listener;

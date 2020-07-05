@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.EventID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018
  */
+@API(status = EXPERIMENTAL)
 public class OlcbAddress {
 
     // groups

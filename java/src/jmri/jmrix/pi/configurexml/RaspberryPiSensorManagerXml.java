@@ -1,6 +1,8 @@
 package jmri.jmrix.pi.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author  Paul Bender Copyright (c) 2003
  */
+@API(status = EXPERIMENTAL)
 public class RaspberryPiSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public RaspberryPiSensorManagerXml() {

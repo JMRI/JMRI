@@ -14,6 +14,9 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manager for JMRI Editors. This manager tracks editors, extending the Set
  * interface to do so (so it can be interacted with as a normal set), while also
@@ -29,6 +32,7 @@ import jmri.beans.Bean;
  *
  * @author Randall Wood Copyright 2020
  */
+@API(status = MAINTAINED)
 public class EditorManager extends Bean implements PropertyChangeListener, InstanceManagerAutoDefault {
 
     public static final String EDITORS = "editors";

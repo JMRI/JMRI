@@ -5,6 +5,8 @@ import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.web.servlet.ServletUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.eclipse.jetty.server.ResourceService;
 import org.eclipse.jetty.util.resource.Resource;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright 2016, 2017
  */
+@API(status = EXPERIMENTAL)
 public class DirectoryService extends ResourceService {
 
     private static final Logger log = LoggerFactory.getLogger(DirectoryService.class);

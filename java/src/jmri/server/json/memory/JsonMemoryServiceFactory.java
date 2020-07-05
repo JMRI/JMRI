@@ -1,5 +1,7 @@
 package jmri.server.json.memory;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.memory.JsonMemory.MEMORIES;
 import static jmri.server.json.memory.JsonMemory.MEMORY;
 
@@ -13,6 +15,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood
  */
 @ServiceProvider(service = JsonServiceFactory.class)
+@API(status = EXPERIMENTAL)
 public class JsonMemoryServiceFactory implements JsonServiceFactory<JsonMemoryHttpService, JsonMemorySocketService> {
 
 

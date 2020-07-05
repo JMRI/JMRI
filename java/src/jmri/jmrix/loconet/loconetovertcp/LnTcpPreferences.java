@@ -12,6 +12,8 @@ import jmri.beans.PreferencesBean;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class LnTcpPreferences extends PreferencesBean {
 
     public final static String PORT = jmri.web.server.WebServerPreferences.PORT;

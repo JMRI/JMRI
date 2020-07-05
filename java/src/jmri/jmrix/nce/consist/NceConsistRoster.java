@@ -10,6 +10,8 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -45,6 +47,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau (C) 2008
  * @see NceConsistRosterEntry
  */
+@API(status = EXPERIMENTAL)
 public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
     
     public NceConsistRoster() {

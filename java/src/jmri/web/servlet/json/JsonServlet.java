@@ -1,5 +1,7 @@
 package jmri.web.servlet.json;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.ID;
 import static jmri.server.json.JSON.NAME;
@@ -62,6 +64,7 @@ import org.slf4j.LoggerFactory;
 @WebServlet(name = "JsonServlet",
         urlPatterns = {"/json"})
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class JsonServlet extends WebSocketServlet {
 
     private final transient ObjectMapper mapper = new ObjectMapper();

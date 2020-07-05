@@ -22,11 +22,15 @@ import jmri.jmrix.cmri.swing.CMRIComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Minimal SystemConnectionMemo for C/MRI systems.
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public CMRISystemConnectionMemo() {

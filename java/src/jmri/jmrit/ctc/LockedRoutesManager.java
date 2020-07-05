@@ -3,6 +3,8 @@ package jmri.jmrit.ctc;
 import java.util.ArrayList;
 import java.util.HashSet;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
+@API(status = MAINTAINED)
 public class LockedRoutesManager {
     private final static Logger log = LoggerFactory.getLogger(LockedRoutesManager.class);
     private final ArrayList<LockedRoute> _mArrayListOfLockedRoutes = new ArrayList<>();

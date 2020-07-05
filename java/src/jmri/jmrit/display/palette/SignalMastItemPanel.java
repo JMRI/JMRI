@@ -30,6 +30,8 @@ import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.ImagePanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2010, 2011, 2020
  * @author Egbert Broerse 2017
  */
+@API(status = MAINTAINED)
 public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
 
     private SignalMast _mast;

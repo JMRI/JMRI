@@ -12,6 +12,8 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse 2017
  */
+@API(status = EXPERIMENTAL)
 public class DefaultSignalGroup extends AbstractNamedBean implements jmri.SignalGroup {
 
     /**

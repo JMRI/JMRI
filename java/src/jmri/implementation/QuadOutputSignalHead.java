@@ -4,6 +4,9 @@ import java.util.Arrays;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Drive a single signal head via four "Turnout" objects.
  * <p>
@@ -19,6 +22,7 @@ import jmri.Turnout;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
 
     public QuadOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> yellow, NamedBeanHandle<Turnout> red, NamedBeanHandle<Turnout> lunar) {

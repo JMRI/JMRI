@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Frame;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @see NceConsistRosterEntry
  * @see NceConsistRoster
  */
+@API(status = EXPERIMENTAL)
 public class NceConsistRosterMenu extends JMenu {
 
     /**

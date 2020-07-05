@@ -3,6 +3,8 @@ package jmri.jmrix.lenz;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.*;
 import jmri.jmrix.roco.RocoXNetThrottleManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author Paul Bender Copyright (C) 2003-2010,2020
  * @author Giorgio Terdina Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class XNetInitializationManager {
 
     /**

@@ -1,4 +1,7 @@
 package jmri.jmrix.roco.z21;
+
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 /**
  * Constants to represent values seen in z21 traffic
  *
@@ -11,6 +14,7 @@ package jmri.jmrix.roco.z21;
  * A few variables don't have a prefix. The name should be self explanitory, but
  * a prefix may be added later.
  */
+@API(status = EXPERIMENTAL)
 public final class Z21Constants {
 
     private Z21Constants(){

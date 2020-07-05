@@ -6,6 +6,8 @@ import jmri.PowerManager;
 import java.beans.PropertyChangeListener;
 import jmri.managers.AbstractPowerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class MarklinPowerManager extends AbstractPowerManager<MarklinSystemConnectionMemo> implements MarklinListener {
 
     MarklinTrafficController tc;

@@ -2,6 +2,9 @@ package jmri.jmrix.loconet.usb_dcs52;
 
 import jmri.jmrix.loconet.pr3.PR3SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a DCS52 USB interface is active
  * <p>
@@ -13,6 +16,7 @@ import jmri.jmrix.loconet.pr3.PR3SystemConnectionMemo;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author B. Milhaupt Copyright (C) 2017, 2019
  */
+@API(status = EXPERIMENTAL)
 public class UsbDcs52SystemConnectionMemo extends PR3SystemConnectionMemo {
 
 //    private final static Logger log = LoggerFactory.getLogger(UsbDcs52SystemConnectionMemo.class);

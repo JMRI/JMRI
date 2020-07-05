@@ -3,12 +3,16 @@ package jmri.jmrix.loconet.locoio;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnConstants;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manage the set of valid modes for a particular LocoIO port,
  * as well as the conversions between addresses and SV values.
  *
  * @author John Plocher, January 30, 2007
  */
+@API(status = EXPERIMENTAL)
 public class LocoIOModeList {
 
     protected Vector<LocoIOMode> modeList = new Vector<LocoIOMode>();

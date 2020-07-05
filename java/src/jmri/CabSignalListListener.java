@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Allow notification of changes to the cab signal list.
  * <p>
@@ -18,6 +21,7 @@ package jmri;
  *
  * @author Paul Bender Copyright (C) 2012
  */
+@API(status = STABLE)
 public interface CabSignalListListener extends java.util.EventListener {
 
     /**

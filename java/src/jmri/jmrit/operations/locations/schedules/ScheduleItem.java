@@ -8,6 +8,8 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2014
  */
+@API(status = MAINTAINED)
 public class ScheduleItem extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
     public static final String NONE = ""; // NOI18N

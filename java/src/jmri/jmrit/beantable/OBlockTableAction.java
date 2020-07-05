@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrit.beantable.oblock.TableFrames;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * GUI to define OBlocks, OPaths and Portals
  * <br>
@@ -20,6 +23,7 @@ import jmri.jmrit.beantable.oblock.TableFrames;
  *
  * @author Pete Cressman (C) 2009, 2010
  */
+@API(status = STABLE)
 public class OBlockTableAction extends AbstractAction {
 
     public OBlockTableAction() {

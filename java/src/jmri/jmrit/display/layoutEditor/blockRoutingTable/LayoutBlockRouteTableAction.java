@@ -5,11 +5,15 @@ import javax.swing.AbstractAction;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a Block Routing Table.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class LayoutBlockRouteTableAction extends AbstractAction {
 
     /**

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.idtag.JsonIdTag.IDTAG;
 
 import java.util.Date;
@@ -26,6 +28,7 @@ import jmri.server.json.reporter.JsonReporter;
  *
  * @author Randall Wood Copyright 2019
  */
+@API(status = EXPERIMENTAL)
 public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
 
     public JsonIdTagHttpService(ObjectMapper mapper) {

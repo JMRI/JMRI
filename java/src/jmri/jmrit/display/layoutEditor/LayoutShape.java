@@ -16,6 +16,9 @@ import javax.swing.*;
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A LayoutShape is a set of LayoutShapePoint used to draw a shape. Each point
  * can ether be a point on the shape or a control point that defines a curve
@@ -24,6 +27,7 @@ import jmri.util.swing.JmriColorChooser;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 public class LayoutShape {
 
     public static final int MAX_LINEWIDTH = 200;
@@ -766,6 +770,7 @@ public class LayoutShape {
      * These are the points that make up the outline of the shape. Each point
      * can be ether a straight or a control point for a curve
      */
+@API(status = MAINTAINED)
     public static class LayoutShapePoint {
 
         private LayoutShapePointType type;
@@ -817,6 +822,7 @@ public class LayoutShape {
     /**
      * enum LayoutShapeType
      */
+@API(status = MAINTAINED)
     public enum LayoutShapeType {
         Open, 
         Closed,
@@ -826,6 +832,7 @@ public class LayoutShape {
     /**
      * enum LayoutShapePointType Straight, Curve
      */
+@API(status = MAINTAINED)
     public enum LayoutShapePointType {
         Straight,
         Curve;

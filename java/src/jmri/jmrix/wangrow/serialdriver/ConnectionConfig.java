@@ -2,12 +2,16 @@ package jmri.jmrix.wangrow.serialdriver;
 
 import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via an
  * Wangrow SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     public final static String NAME = Bundle.getMessage("TypeSerial");

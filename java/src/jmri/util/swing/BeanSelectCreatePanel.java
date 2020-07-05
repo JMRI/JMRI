@@ -21,9 +21,12 @@ import jmri.ProxyManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
 
     //Manager<E> _manager;

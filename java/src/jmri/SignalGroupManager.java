@@ -3,6 +3,9 @@ package jmri;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for obtaining information about signal groups.
  * <p>
@@ -15,6 +18,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2018
  */
+@API(status = STABLE)
 public interface SignalGroupManager extends Manager<SignalGroup> {
 
     /**

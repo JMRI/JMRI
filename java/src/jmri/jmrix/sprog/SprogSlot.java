@@ -4,6 +4,8 @@ import java.util.Arrays;
 import jmri.DccLocoAddress;
 import jmri.SpeedStepMode;
 import jmri.NmraPacket;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2006, 2012
  * @author Andrew Berridge 2010
  */
+@API(status = EXPERIMENTAL)
 public class SprogSlot {
 
     private boolean speedPacket = false;

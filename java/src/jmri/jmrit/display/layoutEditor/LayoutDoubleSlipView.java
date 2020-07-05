@@ -10,12 +10,16 @@ import javax.swing.JPopupMenu;
 import jmri.*;
 import jmri.util.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * MVC View component for the LayoutDoubleSlipclass.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
  * 
  */
+@API(status = MAINTAINED)
 public class LayoutDoubleSlipView extends LayoutSlipView {
 
     /**

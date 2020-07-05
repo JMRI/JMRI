@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.DrawSquares;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +69,7 @@ jmri.util.swing.ImagePanel -- preview
 
 @enduml
 */
+@API(status = MAINTAINED)
 public class DisplayFrame extends JmriJFrame {
 
     static Color _grayColor = new Color(235, 235, 235);

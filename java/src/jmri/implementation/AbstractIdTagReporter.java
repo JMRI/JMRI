@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import jmri.*;
 import jmri.util.PhysicalLocation;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (c) 2016, 2019
  * @since 4.15.3
  */
+@API(status = EXPERIMENTAL)
 public class AbstractIdTagReporter extends AbstractReporter
         implements IdTagListener, PhysicalLocationReporter {
 

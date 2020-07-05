@@ -1,6 +1,8 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.ConnectionTypeList;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -10,6 +12,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Kevin Dickerson Copyright (C) 2010
  */
 @ServiceProvider(service = ConnectionTypeList.class)
+@API(status = EXPERIMENTAL)
 public class EliteConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String HORNBY = "Hornby"; // NOI18N

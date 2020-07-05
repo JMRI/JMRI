@@ -13,6 +13,9 @@ import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Find references.  Each collector method calls a corresponding getUsageReport(NamedBean)
  * in the main implementation class for the object type.  The matches are returned in an
@@ -41,6 +44,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
  * @author Dave Sand Copyright (C) 2020
  */
 
+@API(status = MAINTAINED)
 public class WhereUsedCollectors {
 
     /**

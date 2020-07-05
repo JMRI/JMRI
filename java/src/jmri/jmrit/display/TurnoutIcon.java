@@ -15,6 +15,8 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002
  * @author PeteCressman Copyright (C) 2010, 2011
  */
+@API(status = MAINTAINED)
 public class TurnoutIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
     protected HashMap<Integer, NamedIcon> _iconStateMap;     // state int to icon

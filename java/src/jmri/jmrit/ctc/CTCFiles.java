@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import jmri.util.FileUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * CTC File utility
 
  * @author Dave Sand Copyright (C) 2019
  */
 
+@API(status = MAINTAINED)
 public class CTCFiles {
 
     /**

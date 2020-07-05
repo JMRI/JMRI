@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.annotation.Nonnull;
 import javax.swing.Timer;
 import jmri.ProgListener;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.ProgrammerException;
@@ -13,6 +15,7 @@ import jmri.ProgrammerException;
  *
  * @author given
  */
+@API(status = EXPERIMENTAL)
 public class CsOpSwAccess implements LocoNetListener {
 
     private Timer csOpSwAccessTimer;

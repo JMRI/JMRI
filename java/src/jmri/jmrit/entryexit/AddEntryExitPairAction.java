@@ -3,6 +3,8 @@ package jmri.jmrit.entryexit;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class AddEntryExitPairAction extends AbstractAction {
 
     public AddEntryExitPairAction(String s, LayoutEditor panel) {

@@ -3,6 +3,9 @@ package jmri;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Utility class for managing access to a NamedBean.
  * <p>
@@ -18,6 +21,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright 2009
  */
+@API(status = STABLE)
 public class NamedBeanHandle<T extends NamedBean> {
 
     /**

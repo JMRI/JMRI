@@ -3,6 +3,8 @@ package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends GcSerialDriverAdapter {
 
     public SerialDriverAdapter() {

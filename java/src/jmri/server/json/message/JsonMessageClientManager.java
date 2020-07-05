@@ -15,12 +15,16 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManagerAutoDefault;
 import jmri.server.json.JsonConnection;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manager for JSON streaming clients that are subscribing to messages triggered
  * by out-of-channel events.
  *
  * @author Randall Wood Copyright 2017
  */
+@API(status = EXPERIMENTAL)
 public class JsonMessageClientManager implements InstanceManagerAutoDefault {
 
     final ObjectMapper mapper = new ObjectMapper();

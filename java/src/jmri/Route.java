@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Routes represent a collection of Turnouts that may be set at the same time.
  * <p>
@@ -35,6 +38,7 @@ package jmri;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Simon Reader Copyright (C) 2008
  */
+@API(status = STABLE)
 public interface Route extends NamedBean {
 
     public static final int TOGGLE = 0x08;

@@ -1,9 +1,13 @@
 package jmri.jmrix.loconet.locoio;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author John Plocher, January 3, 2007
  */
+@API(status = EXPERIMENTAL)
 public class LocoIOMode {
 
     /**

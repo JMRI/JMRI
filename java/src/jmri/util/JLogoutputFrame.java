@@ -16,6 +16,9 @@ import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.Filter;
 import org.apache.log4j.spi.LoggingEvent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A standalone window for receiving and displaying log outputs
  * <p>
@@ -31,6 +34,7 @@ import org.apache.log4j.spi.LoggingEvent;
  *
  * @author bender heri See 4/15/2009 Log4J email
  */
+@API(status = EXPERIMENTAL)
 public class JLogoutputFrame {
 
     private static final Logger myLog = Logger.getLogger(JLogoutputFrame.class);

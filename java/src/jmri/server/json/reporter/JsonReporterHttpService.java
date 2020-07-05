@@ -1,5 +1,7 @@
 package jmri.server.json.reporter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.reporter.JsonReporter.LAST_REPORT;
 import static jmri.server.json.reporter.JsonReporter.REPORT;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
@@ -21,6 +23,7 @@ import jmri.server.json.JsonRequest;
  *
  * @author Randall Wood Copyright 2016, 2018, 2019
  */
+@API(status = EXPERIMENTAL)
 public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> {
 
     public JsonReporterHttpService(ObjectMapper mapper) {

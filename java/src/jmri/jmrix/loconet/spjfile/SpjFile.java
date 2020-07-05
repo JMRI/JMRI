@@ -9,6 +9,9 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide tools for reading, writing and accessing Digitrax SPJ files.
  * <p>
@@ -16,6 +19,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2009
  */
+@API(status = EXPERIMENTAL)
 public class SpjFile {
 
     public SpjFile(File file) {

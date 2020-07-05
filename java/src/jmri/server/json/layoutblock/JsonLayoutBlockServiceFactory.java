@@ -1,5 +1,7 @@
 package jmri.server.json.layoutblock;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCK;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCKS;
 
@@ -14,6 +16,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright 2018
  */
 @ServiceProvider(service = JsonServiceFactory.class)
+@API(status = EXPERIMENTAL)
 public class JsonLayoutBlockServiceFactory implements JsonServiceFactory<JsonLayoutBlockHttpService, JsonLayoutBlockSocketService> {
 
 

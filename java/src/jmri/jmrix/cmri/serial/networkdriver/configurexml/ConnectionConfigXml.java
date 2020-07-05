@@ -7,6 +7,8 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.networkdriver.NetworkDriverAdapter;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -23,6 +25,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2015
  * @author kcameron Copyright (C) 2010 added multiple connections
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

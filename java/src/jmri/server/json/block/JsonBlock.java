@@ -2,11 +2,15 @@ package jmri.server.json.block;
 
 import jmri.server.json.JSON;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants used by the internal JMRI JSON Block service.
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonBlock {
 
     /**

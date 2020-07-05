@@ -2,12 +2,16 @@ package jmri.jmrix.powerline.swing;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Powerline subsystem.
  *
  * @author Bob Jacobsen Copyright (C) 2010 coverted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class PowerlineComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public PowerlineComponentFactory(SerialSystemConnectionMemo memo) {

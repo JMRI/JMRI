@@ -16,6 +16,8 @@ import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -48,6 +50,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.decoderdefn.DecoderIndexBuilder
  * 
  */
+@API(status = MAINTAINED)
 public class DecoderIndexFile extends XmlFile {
 
     public static final String MANUFACTURER = "manufacturer";

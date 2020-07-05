@@ -4,6 +4,8 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 import jmri.jmrix.jmriclient.networkdriver.ConnectionConfig;
 import jmri.jmrix.jmriclient.networkdriver.NetworkDriverAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -20,6 +22,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender Copyright: Copyright (c) 2010
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

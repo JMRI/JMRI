@@ -4,6 +4,8 @@ import java.util.Locale;
 
 import jmri.JmriException;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import javax.annotation.Nonnull;
  * @navassoc 1 - * jmri.jmrix.lenz.Z21RMBusSensor
  * @navassoc 1 - * jmri.jmrix.lenz.Z21CanSensor
  */
+@API(status = EXPERIMENTAL)
 public class Z21SensorManager extends jmri.managers.AbstractSensorManager implements Z21Listener {
 
     // ctor has to register for Z21 events

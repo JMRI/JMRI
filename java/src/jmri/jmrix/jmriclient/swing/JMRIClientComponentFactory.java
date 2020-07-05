@@ -2,6 +2,9 @@ package jmri.jmrix.jmriclient.swing;
 
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the JMRI Network Client.
  *
@@ -9,6 +12,7 @@ import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2010
  * @since 2.11.1
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public JMRIClientComponentFactory(JMRIClientSystemConnectionMemo memo) {

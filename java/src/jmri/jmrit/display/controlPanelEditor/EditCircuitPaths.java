@@ -34,6 +34,8 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright: Copyright (c) 2011
  *
  */
+@API(status = MAINTAINED)
 public class EditCircuitPaths extends EditFrame implements ListSelectionListener {
 
     // mouse selections of track icons that define the path

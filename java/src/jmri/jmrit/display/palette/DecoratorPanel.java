@@ -38,12 +38,16 @@ import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
 import jmri.util.swing.ImagePanel;
 import jmri.util.swing.JmriColorChooser;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Panel for positionables with text and/or colored margins and borders.
  * @see ItemPanel palette class diagram
  *
  * @author PeteCressman Copyright (C) 2009, 2015
  */
+@API(status = MAINTAINED)
 public class DecoratorPanel extends JPanel {
 
     public static final int STRUT = 6;

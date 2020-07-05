@@ -3,6 +3,9 @@ package jmri.jmrit.dispatcher;
 import java.util.ArrayList;
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This class holds information and options for an AllocationRequestt.
  * <p>
@@ -27,6 +30,7 @@ import jmri.InstanceManager;
  *
  * @author Dave Duchamp Copyright (C) 2008-2010
  */
+@API(status = MAINTAINED)
 public class AllocationRequest {
 
     /**

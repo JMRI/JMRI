@@ -7,6 +7,9 @@ import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Convert the jmri.Programmer interface into commands for the NCE power house.
  * <p>
@@ -16,6 +19,7 @@ import jmri.jmrix.AbstractProgrammer;
  * @author Bob Jacobsen Copyright (C) 2001, 2016
  * @author kcameron Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
     protected NceTrafficController tc;

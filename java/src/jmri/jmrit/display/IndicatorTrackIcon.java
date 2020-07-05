@@ -14,6 +14,8 @@ import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.logix.OBlock;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public class IndicatorTrackIcon extends PositionableIcon
         implements java.beans.PropertyChangeListener, IndicatorTrack {
 

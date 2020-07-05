@@ -18,6 +18,8 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * AbstractNetworkController. GT - May 2011 - Fixed problems arising from recent
  * refactoring
  */
+@API(status = EXPERIMENTAL)
 public class XnTcpAdapter extends XNetNetworkPortController {
 
     static final int DEFAULT_UDP_PORT = 61234;

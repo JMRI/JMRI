@@ -11,6 +11,8 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @since 4.19.6
  * @author Steve Young (C) 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusClockControl extends jmri.implementation.DefaultClockControl implements CanListener {
 
     private boolean isRunning;

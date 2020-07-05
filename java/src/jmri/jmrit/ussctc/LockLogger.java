@@ -4,6 +4,9 @@ import javax.annotation.Nonnull;
 import java.util.*;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manages user-level logging information from Locks and Lock-like functions.
  * Locking objects store their status as a string, which is kept for them until
@@ -13,6 +16,7 @@ import jmri.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2019
  */
+@API(status = MAINTAINED)
 public class LockLogger {
 
     /**

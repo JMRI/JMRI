@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet.usb_dcs240;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a DCS240 USB layout connection via a
  * PR2Adapter object.
@@ -10,6 +13,7 @@ package jmri.jmrix.loconet.usb_dcs240;
  * @author B. Milhaupt Copyright (C) 2019
  */
 
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

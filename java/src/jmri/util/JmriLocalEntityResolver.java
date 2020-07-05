@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.EntityResolver;
@@ -26,6 +28,7 @@ import org.xml.sax.InputSource;
  *
  * @author Bob Jacobsen Copyright 2007, 2009
  */
+@API(status = EXPERIMENTAL)
 public class JmriLocalEntityResolver implements EntityResolver {
 
     @Override

@@ -3,6 +3,8 @@ package jmri.jmrix.easydcc;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class EasyDccConsist extends jmri.implementation.DccConsist implements EasyDccListener {
 
     private EasyDccSystemConnectionMemo _memo = null;

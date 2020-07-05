@@ -8,6 +8,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumnModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import jmri.swing.JTablePersistenceManager;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
  */
+@API(status = MAINTAINED)
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
     public CarsTableModel carsTableModel;

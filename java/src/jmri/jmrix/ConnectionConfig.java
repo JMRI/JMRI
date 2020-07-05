@@ -2,6 +2,9 @@ package jmri.jmrix;
 
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for objects that handle configuring a layout connection.
  * <p>
@@ -12,6 +15,7 @@ import javax.swing.JPanel;
  * @see JmrixConfigPane
  * @see PortAdapter
  */
+@API(status = EXPERIMENTAL)
 public interface ConnectionConfig {
 
     public String name();

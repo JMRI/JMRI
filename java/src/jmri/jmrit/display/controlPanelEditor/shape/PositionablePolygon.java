@@ -13,12 +13,15 @@ import java.util.ArrayList;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Pete cresman Copyright (c) 2013
  */
+@API(status = MAINTAINED)
 public class PositionablePolygon extends PositionableShape {
 
     private ArrayList<Rectangle> _vertexHandles;

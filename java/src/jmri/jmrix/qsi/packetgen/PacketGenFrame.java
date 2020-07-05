@@ -6,12 +6,16 @@ import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of QSI messages. Input is a sequence of hex pairs,
  * including the length, but not the lead 'A', checksum or final 'E'.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.qsi.QsiListener {
 
     private QsiSystemConnectionMemo _memo = null;

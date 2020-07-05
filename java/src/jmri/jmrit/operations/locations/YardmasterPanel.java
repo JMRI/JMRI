@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * @author Dan Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     protected static final boolean IS_MANIFEST = false;

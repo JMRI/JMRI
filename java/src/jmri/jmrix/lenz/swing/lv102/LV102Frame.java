@@ -4,6 +4,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying the LV102 configuration utility
  * <p>
@@ -12,6 +15,7 @@ import javax.swing.JPanel;
  *
  * @author Paul Bender Copyright (C) 2004,2005
  */
+@API(status = EXPERIMENTAL)
 public class LV102Frame extends jmri.util.JmriJFrame {
 
     public LV102Frame() {

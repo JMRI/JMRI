@@ -3,6 +3,9 @@ package jmri;
 import java.beans.PropertyChangeListener;
 import java.util.EnumSet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for allocating {@link Throttle} objects.
  * <p>
@@ -27,6 +30,7 @@ import java.util.EnumSet;
  * @author Glen Oberhauser
  * @author Bob Jacobsen Copyright 2006
  */
+@API(status = STABLE)
 public interface ThrottleManager {
 
     /**

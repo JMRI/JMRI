@@ -22,11 +22,15 @@ import jmri.ConfigureManager;
 import jmri.jmrix.ecos.EcosPreferences;
 import jmri.swing.PreferencesPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Pane to show ECoS preferences
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener, PreferencesPanel {
 
     JPanel throttletabpanel = new JPanel();

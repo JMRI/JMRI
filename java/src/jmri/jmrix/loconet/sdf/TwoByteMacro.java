@@ -1,10 +1,14 @@
 package jmri.jmrix.loconet.sdf;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement generic two-byte macros from the Digitrax sound definition language
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class TwoByteMacro extends SdfMacro {
 
     public TwoByteMacro(int byte1, int byte2) {

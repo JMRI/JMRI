@@ -10,6 +10,8 @@ import jmri.script.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007
  */
+@API(status = MAINTAINED)
 public class RunJythonScript extends JmriAbstractAction {
 
     public RunJythonScript(String s, WindowInterface wi) {

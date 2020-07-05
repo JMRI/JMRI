@@ -1,5 +1,8 @@
 package jmri.jmrit.operations.automation.actions;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Action codes for automation
  *
@@ -7,6 +10,7 @@ package jmri.jmrit.operations.automation.actions;
  * 
  *
  */
+@API(status = MAINTAINED)
 public class ActionCodes {
 
     // lower byte used in the construction of action codes

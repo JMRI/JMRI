@@ -6,6 +6,8 @@ import javax.annotation.Nonnull;
 
 import jmri.AddressedProgrammer;
 import jmri.ProgrammingMode;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.Programmer Based on work by Bob Jacobsen
  * @author Karl Johan Lisby Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class EcosOpsModeProgrammer extends EcosProgrammer implements AddressedProgrammer {
 
     int mAddress;

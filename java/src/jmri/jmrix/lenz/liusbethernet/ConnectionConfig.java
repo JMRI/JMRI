@@ -2,6 +2,9 @@ package jmri.jmrix.lenz.liusbethernet;
 
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an XpressNet layout connection via a LIUSBEthernet.
  * <p>
@@ -11,6 +14,7 @@ import javax.swing.JPanel;
  *
  * @see LIUSBEthernetAdapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**

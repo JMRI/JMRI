@@ -2,11 +2,15 @@ package jmri.jmrix.lenz.swing;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a menu containing the XpressNet specific tools
  *
  * @author Paul Bender Copyright 2003,2010
  */
+@API(status = EXPERIMENTAL)
 public class XNetMenu extends JMenu {
 
     public XNetMenu(String name, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {

@@ -12,6 +12,8 @@ import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import javax.annotation.Nonnull;
  *
  * @author Pete Cressman Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> implements CatalogTreeManager {
 
     private boolean _indexChanged = false;

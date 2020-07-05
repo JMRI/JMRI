@@ -5,6 +5,9 @@ import jmri.jmrix.roco.z21.Z21Message;
 import jmri.jmrix.roco.z21.Z21Reply;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Panel displaying (and logging) Z21 messages derived from Z21MonFrame.
  *
@@ -12,6 +15,7 @@ import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2004-2014
  * @author Giorgio Terdina Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listener {
 
     protected Z21SystemConnectionMemo memo = null;

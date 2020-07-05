@@ -39,6 +39,8 @@ import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.picker.PickListModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +55,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2009, 2010
  */
+@API(status = MAINTAINED)
 public class IconAdder extends JPanel implements ListSelectionListener {
 
     private int ROW_HEIGHT;

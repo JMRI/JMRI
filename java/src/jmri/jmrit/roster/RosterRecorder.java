@@ -2,6 +2,8 @@ package jmri.jmrit.roster;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @deprecated since 4.19.7 without direct replacement
  */
 @Deprecated
+@API(status = MAINTAINED)
 public class RosterRecorder extends Thread {
 
     public RosterRecorder() {

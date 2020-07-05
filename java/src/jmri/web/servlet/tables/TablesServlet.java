@@ -1,5 +1,7 @@
 package jmri.web.servlet.tables;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import java.io.IOException;
@@ -31,6 +33,7 @@ import org.openide.util.lookup.ServiceProvider;
             "/tables", // default
         })
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class TablesServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

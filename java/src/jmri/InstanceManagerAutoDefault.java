@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface indicating that the InstanceManager can create an object of this
  * type when needed by a request.
@@ -25,5 +28,6 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
+@API(status = STABLE)
 public interface InstanceManagerAutoDefault {
 }

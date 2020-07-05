@@ -2,6 +2,8 @@ package jmri.jmrix.tams.swing;
 
 import javax.swing.JMenu;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class TamsMenu extends JMenu {
 
     public TamsMenu(TamsSystemConnectionMemo memo) {

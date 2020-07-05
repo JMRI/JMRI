@@ -51,6 +51,9 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register groups of Logix Condtionals to perform a
  * railroad control task.
@@ -59,6 +62,7 @@ import jmri.util.JmriJFrame;
  * @author Egbert Broerse i18n 2016
  *
  */
+@API(status = STABLE)
 public class LRouteTableAction extends AbstractTableAction<Logix> {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LRouteTableBundle");

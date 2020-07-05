@@ -1,5 +1,8 @@
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Implements SerialPortAdapter for the CAN-USB.
@@ -10,6 +13,7 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  */
+@API(status = EXPERIMENTAL)
 public class CanUsbDriverAdapter extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter {
 
     /**

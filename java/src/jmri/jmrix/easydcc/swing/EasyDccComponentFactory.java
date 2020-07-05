@@ -3,6 +3,9 @@ package jmri.jmrix.easydcc.swing;
 import jmri.jmrix.easydcc.EasyDccMenu;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the EasyDCC subsystem.
  * Copied from Acela 2017
@@ -11,6 +14,7 @@ import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2010
  * @since 4.9.5
  */
+@API(status = EXPERIMENTAL)
 public class EasyDccComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public EasyDccComponentFactory(EasyDccSystemConnectionMemo memo) {

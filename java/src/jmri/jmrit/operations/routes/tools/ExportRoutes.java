@@ -6,6 +6,8 @@ import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.apache.commons.csv.CSVPrinter;
 /**
  * Export Routes to CSV file
  */
+@API(status = MAINTAINED)
 public class ExportRoutes extends XmlFile {
 
     public ExportRoutes() {

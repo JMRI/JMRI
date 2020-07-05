@@ -5,6 +5,9 @@ import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This is the "master" class that handles everything when a code button is
  * pressed.  As such, it has a LOT of external data passed into it's constructor,
@@ -19,6 +22,7 @@ import jmri.Sensor;
  * 
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
+@API(status = MAINTAINED)
 public class CodeButtonHandler {
     private final boolean _mTurnoutLockingOnlyEnabled;
     private final LockedRoutesManager _mLockedRoutesManager;

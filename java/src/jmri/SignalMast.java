@@ -3,6 +3,9 @@ package jmri;
 import java.util.Vector;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent a signal mast. A signal mast is one or more signal heads that are
  * treated as a single signal. (Imagine several heads attached to a single mast,
@@ -46,6 +49,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  * @author Pete Cressman Copyright (C) 2009
  */
+@API(status = STABLE)
 public interface SignalMast extends NamedBean {  // to eventually be Signal
 
     /**

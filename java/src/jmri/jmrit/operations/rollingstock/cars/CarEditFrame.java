@@ -13,6 +13,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014, 2018
  */
+@API(status = MAINTAINED)
 public class CarEditFrame extends RollingStockEditFrame {
 
     protected static final ResourceBundle rb = ResourceBundle

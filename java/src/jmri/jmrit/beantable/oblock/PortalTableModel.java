@@ -11,6 +11,8 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman (C) 2010
  */
+@API(status = MAINTAINED)
 public class PortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int FROM_BLOCK_COLUMN = 0;

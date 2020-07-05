@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This interface specifies that an object provides a report value suitable
  * for display in an on-screen reporter.
@@ -19,6 +22,7 @@ package jmri;
  * @see jmri.Reporter
  * @since 4.15.3
  */
+@API(status = STABLE)
 public interface Reportable {
 
      /**

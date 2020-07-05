@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Logix is a group of Conditionals that monitor one or more conditions
  * (internal or on the layout). It services these Conditionals by installing and
@@ -29,6 +32,7 @@ package jmri;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Additional modifications Pete Cressman 2009
  */
+@API(status = STABLE)
 public interface Logix extends NamedBean {
 
     public static final int LISTENER_TYPE_SENSOR = 1;

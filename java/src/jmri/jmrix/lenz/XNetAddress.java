@@ -1,6 +1,8 @@
 package jmri.jmrix.lenz;
 
 import jmri.Manager.NameValidity;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import javax.annotation.Nonnull;
  * @author Bob Coleman Copyright (C) 2007, 2008, 2009
  * @author Egbert Broerse (C) 2017 Based on Acela example, modified for XpressNet.
  */
+@API(status = EXPERIMENTAL)
 public class XNetAddress {
 
     public XNetAddress() {

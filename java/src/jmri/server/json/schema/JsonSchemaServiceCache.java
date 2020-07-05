@@ -22,12 +22,16 @@ import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
 import jmri.spi.JsonServiceFactory;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Cache for mapping {@link jmri.server.json.JsonHttpService}s to types for
  * getting schemas.
  *
  * @author Randall Wood Copyright 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
 
     private Map<String, Map<String, Set<JsonHttpService>>> services = new HashMap<>();

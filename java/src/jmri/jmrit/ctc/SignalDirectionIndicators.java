@@ -17,6 +17,10 @@ import jmri.implementation.AbstractSignalHead;
 import jmri.implementation.AbstractSignalMast;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public final class SignalDirectionIndicators implements SignalDirectionIndicatorsInterface {
     static final HashSet<NBHAbstractSignalCommon> _mSignalsUsed = new HashSet<>();
     public static void resetSignalsUsed() { _mSignalsUsed.clear(); }

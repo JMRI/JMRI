@@ -1,5 +1,8 @@
 package jmri.jmrix.can;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Base interface for mutable messages in a CANbus based message/reply protocol.
  * <p>
@@ -13,6 +16,7 @@ package jmri.jmrix.can;
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
  */
+@API(status = EXPERIMENTAL)
 public interface CanMutableFrame extends CanFrame {
 
     /**

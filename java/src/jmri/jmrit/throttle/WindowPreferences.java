@@ -4,11 +4,14 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import javax.swing.JInternalFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
  * A helper class for getting and setting XML attributes of a JInternalFrame.
  */
+@API(status = MAINTAINED)
 public class WindowPreferences {
 
     /**

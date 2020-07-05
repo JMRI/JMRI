@@ -5,6 +5,9 @@ import jmri.jmrix.rfid.RfidReporterManager;
 import jmri.jmrix.rfid.RfidSensorManager;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -26,6 +29,7 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class ConcentratorSystemConnectionMemo extends RfidSystemConnectionMemo {
 
     public ConcentratorSystemConnectionMemo() {

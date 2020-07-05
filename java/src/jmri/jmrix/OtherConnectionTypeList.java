@@ -1,5 +1,7 @@
 package jmri.jmrix;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -10,6 +12,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Kevin Dickerson Copyright (C) 2010
  */
 @ServiceProvider(service = ConnectionTypeList.class)
+@API(status = EXPERIMENTAL)
 public class OtherConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String OTHER = "Others"; // NOI18N

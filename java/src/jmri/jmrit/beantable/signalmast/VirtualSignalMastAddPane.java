@@ -12,6 +12,8 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.implementation.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -21,6 +23,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
  */
+@API(status = MAINTAINED)
 public class VirtualSignalMastAddPane extends SignalMastAddPane {
 
     public VirtualSignalMastAddPane() {

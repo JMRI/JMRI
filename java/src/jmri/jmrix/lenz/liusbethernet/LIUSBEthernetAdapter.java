@@ -5,6 +5,8 @@ import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.zeroconf.ZeroConfClient;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender (C) 2011-2013
  */
+@API(status = EXPERIMENTAL)
 public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 
     static final int COMMUNICATION_TCP_PORT = 5550;

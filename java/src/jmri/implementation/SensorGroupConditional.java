@@ -5,6 +5,8 @@ import jmri.ConditionalAction;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class SensorGroupConditional extends DefaultConditional {
 
     public SensorGroupConditional(String systemName, String userName) {

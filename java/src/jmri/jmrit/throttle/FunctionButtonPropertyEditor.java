@@ -13,9 +13,13 @@ import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A very specific dialog for editing the properties of a FunctionButton object.
  */
+@API(status = MAINTAINED)
 public class FunctionButtonPropertyEditor extends JDialog {
 
     private FunctionButton button;

@@ -2,6 +2,9 @@ package jmri.jmrix.nce.swing;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel interface to handle providing system connection information to a
  * panel.
@@ -10,6 +13,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  * @since 2.11.1
  * @author kcameron 2010
  */
+@API(status = EXPERIMENTAL)
 public interface NcePanelInterface {
 
     /**

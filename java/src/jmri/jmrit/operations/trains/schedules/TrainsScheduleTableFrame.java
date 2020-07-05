@@ -34,6 +34,8 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.swing.JTablePersistenceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010, 2012, 2016
  */
+@API(status = MAINTAINED)
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);

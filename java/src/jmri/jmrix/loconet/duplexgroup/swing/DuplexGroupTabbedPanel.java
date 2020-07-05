@@ -4,6 +4,9 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.swing.LnPanel;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements a panel with tabs which allows:
  * <ul>
@@ -16,6 +19,7 @@ import jmri.util.JmriJFrame;
  *
  * @author B. Milhaupt, Copyright 2011
  */
+@API(status = EXPERIMENTAL)
 public class DuplexGroupTabbedPanel extends LnPanel {
 
     javax.swing.JTabbedPane tabbedPane = null;

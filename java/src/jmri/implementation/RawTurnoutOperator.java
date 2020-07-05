@@ -4,6 +4,8 @@ import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutOperator;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright 2008
  */
+@API(status = EXPERIMENTAL)
 public class RawTurnoutOperator extends TurnoutOperator {
 
     long interval;

@@ -11,6 +11,8 @@ import javax.help.plaf.basic.BasicContentViewerUI;
 import javax.swing.JComponent;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.plaf.ComponentUI;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @since JMRI 2.5.3 (or perhaps later, please check CVS)
  */
+@API(status = EXPERIMENTAL)
 public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
 
     public ExternalLinkContentViewerUI(JHelpContentViewer x) {

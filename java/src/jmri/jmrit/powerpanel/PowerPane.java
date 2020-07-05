@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import jmri.JmriException;
 import jmri.PowerManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
+@API(status = MAINTAINED)
 public class PowerPane extends jmri.util.swing.JmriPanel
         implements java.beans.PropertyChangeListener {
 

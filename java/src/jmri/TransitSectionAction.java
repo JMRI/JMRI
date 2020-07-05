@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This class holds information and options for a Action to be applied when an
  * automated train enters, exits, or is inside of a Section in a Transit.
@@ -20,6 +23,7 @@ package jmri;
  *
  * @author Dave Duchamp Copyright (C) 2009, 2010
  */
+@API(status = STABLE)
 public class TransitSectionAction {
 
     /**

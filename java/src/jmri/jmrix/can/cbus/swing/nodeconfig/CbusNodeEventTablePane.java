@@ -14,6 +14,9 @@ import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Pane providing a CBUS Node Event table for a single node.
  *
@@ -22,6 +25,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @since 4.15.5
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     private final CbusNodeEventTableDataModel nodeEventModel;

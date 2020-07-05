@@ -5,9 +5,12 @@ import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.SignalMast;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class SignalMastRepeater {
 
     public final static int BOTHWAY = 0x00;

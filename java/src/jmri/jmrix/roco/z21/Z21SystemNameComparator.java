@@ -3,12 +3,16 @@ package jmri.jmrix.roco.z21;
 import java.util.Comparator;
 import java.util.Objects;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * implements a comparator for Z21 CAN bus system names, which include a
  * hex string for the node address.
  *
  * @author Paul Bender Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class Z21SystemNameComparator implements Comparator<String> {
 
     private String prefix;

@@ -4,11 +4,15 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri DCC4PC-specific tools
  *
  * @author Kevin Dickerson
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcMenu extends JMenu {
 
     public Dcc4PcMenu(Dcc4PcSystemConnectionMemo memo) {

@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileValidateAction
  */
+@API(status = MAINTAINED)
 public class XmlFileCheckAction extends JmriAbstractAction {
 
     public XmlFileCheckAction(String s, Component who) {

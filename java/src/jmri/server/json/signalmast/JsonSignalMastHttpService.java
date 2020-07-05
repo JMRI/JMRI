@@ -1,5 +1,7 @@
 package jmri.server.json.signalmast;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.ASPECT;
 import static jmri.server.json.JSON.ASPECT_DARK;
 import static jmri.server.json.JSON.ASPECT_HELD;
@@ -28,6 +30,7 @@ import jmri.server.json.JsonRequest;
  *
  * @author Randall Wood Copyright 2016, 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMast> {
 
     public JsonSignalMastHttpService(ObjectMapper mapper) {

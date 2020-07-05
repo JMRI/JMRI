@@ -9,6 +9,9 @@ import jmri.jmrix.tams.TamsReply;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.jmrix.tams.TamsTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Panel to show TAMS status.
  *
@@ -16,6 +19,7 @@ import jmri.jmrix.tams.TamsTrafficController;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
     String appString = Bundle.getMessage("ApplicationVersionLabel");

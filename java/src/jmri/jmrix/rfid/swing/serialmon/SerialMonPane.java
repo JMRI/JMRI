@@ -9,6 +9,9 @@ import jmri.jmrix.rfid.swing.RfidNamedPaneAction;
 import jmri.jmrix.rfid.swing.RfidPanelInterface;
 import jmri.util.swing.sdi.JmriJFrameInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a MonFrame object.
  *
@@ -16,6 +19,7 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidListener, RfidPanelInterface {
 
     public SerialMonPane() {

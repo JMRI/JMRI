@@ -1,5 +1,7 @@
 package jmri.jmrix.zimo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * Adapted by Sip Bosch for use with zimo MX-1
  *
  */
+@API(status = EXPERIMENTAL)
 public class Mx1Message extends jmri.jmrix.NetMessage {
 
     public Mx1Message(int len) {

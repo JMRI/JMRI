@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractStreamConnectionConfigXml;
 import jmri.jmrix.sprog.SprogCSStreamConnectionConfig;
 import jmri.jmrix.sprog.SprogCSStreamPortController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the
  * SerialDriverAdapter (and connections). Note this is named as the XML version
@@ -16,6 +19,7 @@ import jmri.jmrix.sprog.SprogCSStreamPortController;
  *
  * @author Andrew Crosland Copyright (c) 2006
  */
+@API(status = EXPERIMENTAL)
 public class SprogCSStreamConnectionConfigXml extends AbstractStreamConnectionConfigXml {
 
     public SprogCSStreamConnectionConfigXml() {

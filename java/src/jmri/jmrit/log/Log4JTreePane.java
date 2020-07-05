@@ -9,12 +9,16 @@ import javax.swing.JTextArea;
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggerRepository;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Show the current Log4J Logger tree; not dynamic.
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = MAINTAINED)
 public class Log4JTreePane extends jmri.util.swing.JmriPanel {
 
     /**

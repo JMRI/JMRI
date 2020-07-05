@@ -6,6 +6,8 @@ import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.implementation.SingleTurnoutSignalHead;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson: Copyright (c) 2010
  */
+@API(status = EXPERIMENTAL)
 public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public SingleTurnoutSignalHeadXml() {

@@ -1,5 +1,8 @@
 package jmri.jmrix.nce;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * USB {@literal ->} Cab bus adapter: When used with PowerCab V1.28 - 6.3.0 When used with
  * SB3 V1.28 - 6.3.1 (No program track on an SB3) When used with PH-Pro or PH-10
@@ -224,6 +227,7 @@ package jmri.jmrix.nce;
  * @author Daniel Boudreau Copyright (C) 2007
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class NceUSB {
 
 }

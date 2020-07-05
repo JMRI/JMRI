@@ -8,6 +8,8 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.swing.simulator.NdPane;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @see CbusSimulator
  * @since 4.15.2
  */
+@API(status = EXPERIMENTAL)
 public class CbusDummyNode extends CbusNode {
     
     private NdPane _pane;

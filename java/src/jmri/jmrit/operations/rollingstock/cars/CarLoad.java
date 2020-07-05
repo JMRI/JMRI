@@ -2,12 +2,16 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents a car load, includes pickup and drop comments.
  *
  * @author Daniel Boudreau (C) 2010
  *
  */
+@API(status = MAINTAINED)
 public class CarLoad {
 
     public static final String NONE = "";

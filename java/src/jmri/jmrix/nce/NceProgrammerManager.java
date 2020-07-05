@@ -6,6 +6,9 @@ import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for NCE
  * systems.
@@ -14,6 +17,7 @@ import jmri.managers.DefaultProgrammerManager;
  * @author Bob Jacobsen Copyright (C) 2002, 2016
  * @author Ken Cameron Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class NceProgrammerManager extends DefaultProgrammerManager {
 
     NceTrafficController tc;

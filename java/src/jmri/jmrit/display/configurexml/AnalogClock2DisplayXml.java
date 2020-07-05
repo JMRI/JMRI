@@ -5,6 +5,8 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.AnalogClock2Display;
 import jmri.jmrit.display.Editor;
 import jmri.util.ColorUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Howard G. Penny Copyright (c) 2005
  */
+@API(status = MAINTAINED)
 public class AnalogClock2DisplayXml
         extends AbstractXmlAdapter {
 

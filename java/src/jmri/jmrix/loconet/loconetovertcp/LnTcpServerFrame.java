@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying the status of the a LocoNet over TCP server.
  * <p>
@@ -22,6 +25,7 @@ import jmri.util.JmriJFrame;
  * @author Alex Shepherd Copyright (C) 2006
  * @author Randall Wood Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class LnTcpServerFrame extends JmriJFrame {
 
     private final JLabel portNumberLabel = new JLabel(Bundle.getMessage("PortLabel", 1234));

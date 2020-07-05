@@ -27,6 +27,9 @@ import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Pane providing a CBUS Event table.
  *
@@ -35,6 +38,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @since 4.15.5
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventTable extends JScrollPane implements TableModelListener {
 
     private final CbusEventTablePane _mainPane;

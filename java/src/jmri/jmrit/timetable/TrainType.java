@@ -2,11 +2,15 @@ package jmri.jmrit.timetable;
 
 import java.awt.Color;
 import jmri.util.swing.JmriColorChooser;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define the content of a Train Type record.
  *
  * @author Dave Sand Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class TrainType {
 
     /**

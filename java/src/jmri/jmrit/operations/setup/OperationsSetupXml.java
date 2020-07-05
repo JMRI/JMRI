@@ -2,6 +2,8 @@ package jmri.jmrit.operations.setup;
 
 import java.io.File;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
@@ -20,6 +22,7 @@ import jmri.jmrit.operations.trains.TrainSwitchListText;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010
  */
+@API(status = MAINTAINED)
 public class OperationsSetupXml extends OperationsXml implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public OperationsSetupXml() {

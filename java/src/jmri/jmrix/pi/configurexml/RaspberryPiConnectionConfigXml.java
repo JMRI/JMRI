@@ -3,6 +3,8 @@ package jmri.jmrix.pi.configurexml;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.pi.RaspberryPiAdapter;
 import jmri.jmrix.pi.RaspberryPiConnectionConfig;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright: Copyright (c) 2015
  */
+@API(status = EXPERIMENTAL)
 public class RaspberryPiConnectionConfigXml extends AbstractConnectionConfigXml {
 
     private RaspberryPiAdapter adapter = null;

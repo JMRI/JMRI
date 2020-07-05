@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,6 +9,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to current meter from the Digitrax Evolution Base Station
  *
  */
+@API(status = EXPERIMENTAL)
 public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter implements LocoNetListener {
 
     private SlotManager sm = null;

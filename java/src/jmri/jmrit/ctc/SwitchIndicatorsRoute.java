@@ -2,6 +2,9 @@ package jmri.jmrit.ctc;
 
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -10,6 +13,7 @@ import jmri.Sensor;
  * lit (Sensor.ACTIVE), meaning that the specified route is "selected".
  * Any unspecified indicators are ignored.
  */
+@API(status = MAINTAINED)
 public class SwitchIndicatorsRoute {
     private final NBHSensor _mSwitchIndicator1;
     private final NBHSensor _mSwitchIndicator2;

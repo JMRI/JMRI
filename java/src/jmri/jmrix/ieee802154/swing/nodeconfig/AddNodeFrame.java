@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.jmrix.ieee802154.IEEE802154TrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  * @author Paul Bender Copyright (C) 2013,2016
  */
+@API(status = EXPERIMENTAL)
 public class AddNodeFrame extends jmri.util.JmriJFrame {
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField();

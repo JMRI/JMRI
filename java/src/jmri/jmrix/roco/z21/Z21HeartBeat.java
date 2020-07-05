@@ -1,5 +1,8 @@
 package jmri.jmrix.roco.z21;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Z21 specific class to send heartbeat messages to
  * the Z21.  Heartbeat messages are only required if
@@ -9,6 +12,7 @@ package jmri.jmrix.roco.z21;
  *
  * @author Paul Bender Copyright (C) 2019 
  */
+@API(status = EXPERIMENTAL)
 public class Z21HeartBeat implements Z21Listener {
 
     private javax.swing.Timer keepAliveTimer; // Timer used to periodically

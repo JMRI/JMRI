@@ -1,6 +1,8 @@
 package jmri.jmrit.dispatcher;
 
 import jmri.Section;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class AllocationPlan {
 
     public AllocationPlan(AutoAllocate aa, int planNum) {

@@ -1,6 +1,8 @@
 package jmri.jmrix.dccpp;
 
 import jmri.GlobalProgrammerManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetInitializationManager by Paul Bender and Giorgio Terdina
  */
+@API(status = EXPERIMENTAL)
 public class DCCppInitializationManager extends AbstractDCCppInitializationManager {
 
     public DCCppInitializationManager(DCCppSystemConnectionMemo memo) {

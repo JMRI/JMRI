@@ -7,6 +7,9 @@ import javax.swing.AbstractAction;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Displays and allows user to modify {@literal x & y} coordinates of
  * positionable labels This class has been generalized to provide popup edit
@@ -29,6 +32,7 @@ import javax.swing.event.ChangeListener;
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
     MemoryIcon pl;    // positional label tracked by this frame

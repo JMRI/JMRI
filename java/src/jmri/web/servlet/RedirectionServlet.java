@@ -8,12 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Redirect traffic to another location.
  *
  * @author Randall Wood (C) 2016
  */
 @WebServlet(name = "RedirectionServlet")
+@API(status = EXPERIMENTAL)
 public class RedirectionServlet extends HttpServlet {
 
     private final Properties redirections = new Properties();

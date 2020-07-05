@@ -13,12 +13,15 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.FunctionButton;
 import jmri.jmrit.throttle.FunctionListener;
 import jmri.jmrit.throttle.KeyListenerInstaller;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * A JInternalFrame that contains buttons for each decoder function.
  */
+@API(status = MAINTAINED)
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener {
 
     public static final int NUM_FUNCTION_BUTTONS = 29;

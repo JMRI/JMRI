@@ -3,6 +3,8 @@ package jmri.util.swing;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Egbert Broerse copyright (c) 2017
  */
+@API(status = EXPERIMENTAL)
 public class DrawSquares {
 
     /**

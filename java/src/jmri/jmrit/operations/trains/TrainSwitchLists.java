@@ -6,6 +6,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import jmri.util.FileUtil;
  *
  *
  */
+@API(status = MAINTAINED)
 public class TrainSwitchLists extends TrainCommon {
 
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);

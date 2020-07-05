@@ -3,12 +3,16 @@ package jmri.jmrit.operations.setup;
 import java.io.File;
 import java.io.IOException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Specific Backup class for backing up and restoring Operations working files
  * to the Automatic Backup Store. Derived from BackupBase.
  *
  * @author Gregory Madsen Copyright (C) 2012
  */
+@API(status = MAINTAINED)
 public class AutoBackup extends BackupBase {
 
 //    private final static Logger log = LoggerFactory.getLogger(AutoBackup.class);

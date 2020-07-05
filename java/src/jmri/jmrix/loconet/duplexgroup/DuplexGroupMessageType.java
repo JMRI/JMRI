@@ -1,9 +1,13 @@
 package jmri.jmrix.loconet.duplexgroup;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author B. Milhaupt Copyright 2011
  */
+@API(status = EXPERIMENTAL)
 public enum DuplexGroupMessageType {
 
     NOT_A_DUPLEX_GROUP_MESSAGE,

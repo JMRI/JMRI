@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import jmri.jmrit.operations.setup.Control;
  * 
  *
  */
+@API(status = MAINTAINED)
 public class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // text box

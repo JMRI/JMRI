@@ -6,6 +6,8 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood (c) 2016
  * @see jmri.util.startup.PerformFileModelFactory
  */
+@API(status = EXPERIMENTAL)
 public class PerformFileModel extends AbstractStartupModel {
 
     private final static Logger log = LoggerFactory.getLogger(PerformFileModel.class);

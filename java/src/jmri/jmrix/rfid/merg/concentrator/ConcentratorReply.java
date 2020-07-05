@@ -4,6 +4,9 @@ import jmri.jmrix.rfid.RfidProtocol;
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidTrafficController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
@@ -12,6 +15,7 @@ import jmri.jmrix.rfid.RfidTrafficController;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class ConcentratorReply extends RfidReply {
 
     RfidProtocol pr = null;

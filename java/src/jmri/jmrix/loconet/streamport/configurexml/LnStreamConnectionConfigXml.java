@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractStreamConnectionConfigXml;
 import jmri.jmrix.loconet.streamport.LnStreamConnectionConfig;
 import jmri.jmrix.loconet.streamport.LnStreamPortController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the
  * LnStreamConnectionConfig (and connections). Note this is named as the 
@@ -16,6 +19,7 @@ import jmri.jmrix.loconet.streamport.LnStreamPortController;
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2006
  */
+@API(status = EXPERIMENTAL)
 public class LnStreamConnectionConfigXml extends AbstractStreamConnectionConfigXml {
 
     public LnStreamConnectionConfigXml() {

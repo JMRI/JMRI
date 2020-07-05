@@ -2,12 +2,16 @@ package jmri.jmrix.powerline.simulator;
 
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via a
  * Powerline Simulator object.
  *
  * @author Ken Cameron Copyright (C) 2011 based on NceSimulator by Bob Jacobson
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     public final static String NAME = Bundle.getMessage("PlSimulatorName");

@@ -15,6 +15,9 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Dialog to display the details of an Exception. The Exception and additional
  * details about what was happening when the exception occurred are passed in
@@ -26,6 +29,7 @@ import javax.swing.border.EmptyBorder;
  * @author Gregory Madsen Copyright (C) 2012
  *
  */
+@API(status = EXPERIMENTAL)
 public class ExceptionDisplayFrame extends JDialog {
 
     private final transient ExceptionContext context;

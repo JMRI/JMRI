@@ -8,6 +8,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
  */
+@API(status = MAINTAINED)
 public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int SORTBYNAME = 1;

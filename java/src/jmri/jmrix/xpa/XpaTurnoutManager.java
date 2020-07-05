@@ -3,6 +3,9 @@ package jmri.jmrix.xpa;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement turnout manager for Xpa+Modem connections to XpressNet Based
  * systems.
@@ -12,6 +15,7 @@ import jmri.Turnout;
  *
  * @author Paul Bender Copyright (C) 2004,2016
  */
+@API(status = EXPERIMENTAL)
 public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public XpaTurnoutManager(XpaSystemConnectionMemo memo) {

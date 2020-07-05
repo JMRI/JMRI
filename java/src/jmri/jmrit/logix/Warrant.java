@@ -10,6 +10,9 @@ import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An Warrant contains the operating permissions and directives needed for a
  * train to proceed from an Origin to a Destination. There are three modes that
@@ -38,6 +41,7 @@ import jmri.util.ThreadingUtil;
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
+@API(status = MAINTAINED)
 public class Warrant extends jmri.implementation.AbstractNamedBean implements ThrottleListener, java.beans.PropertyChangeListener {
 
     public static final String Stop = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getNamedSpeed(0.0f); // aspect name

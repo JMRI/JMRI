@@ -3,6 +3,9 @@ package jmri;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Locate a CatalogTree object representing some specific information.
  * <p>
@@ -26,6 +29,7 @@ import javax.annotation.Nonnull;
  * @author Pete Cressman Copyright (C) 2009
  *
  */
+@API(status = STABLE)
 public interface CatalogTreeManager extends Manager<CatalogTree> {
 
     /**

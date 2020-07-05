@@ -3,6 +3,9 @@ package jmri.jmrix.ieee802154.serialdriver;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -16,6 +19,7 @@ import jmri.InstanceManager;
  * for multiple connections by
  * @author Paul Bender Copyright (C) 2013
  */
+@API(status = EXPERIMENTAL)
 public class SerialSystemConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo {
 
     public SerialSystemConnectionMemo() {

@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import jmri.jmrit.logix.Portal;
  * @author Pete Cressman Copyright: Copyright (c) 2014
  *
  */
+@API(status = MAINTAINED)
 public class PortalList extends JList<Portal> {
 
     private final PortalListModel _portalListModel;
@@ -65,6 +68,7 @@ public class PortalList extends JList<Portal> {
         }
     }
 
+@API(status = MAINTAINED)
     static class PortalListModel extends AbstractListModel<Portal> implements PropertyChangeListener {
 
         OBlock _homeBlock;

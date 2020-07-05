@@ -11,9 +11,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.display.Editor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Pete Cressman Copyright (c) 2012
  */
+@API(status = MAINTAINED)
 public class DrawRoundRect extends DrawRectangle {
 
     JTextField _radiusText;

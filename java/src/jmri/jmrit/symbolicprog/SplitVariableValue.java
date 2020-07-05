@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
 import jmri.util.CvUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +44,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap Copyright (C) 2016, 2019
  *
  */
+@API(status = MAINTAINED)
 public class SplitVariableValue extends VariableValue
         implements ActionListener, FocusListener {
 

@@ -13,6 +13,9 @@ import jmri.util.swing.JMenuUtil;
 import jmri.util.swing.JToolBarUtil;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * MultiPane JMRI window with a "top" area over "left" and "right" lower panes,
  * optional toolbar and menu.
@@ -20,6 +23,7 @@ import jmri.util.swing.WindowInterface;
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
 
     /**

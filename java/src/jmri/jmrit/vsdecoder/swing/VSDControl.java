@@ -24,6 +24,8 @@ import javax.swing.border.Border;
 import jmri.jmrit.vsdecoder.EngineSoundEvent;
 import jmri.jmrit.vsdecoder.SoundEvent;
 import jmri.jmrit.vsdecoder.VSDConfig;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class VSDControl extends JPanel {
 
     public static final String OPTION_CHANGE = "OptionChange"; // NOI18N

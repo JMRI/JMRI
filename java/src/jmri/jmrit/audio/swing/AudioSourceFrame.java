@@ -22,6 +22,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Defines a GUI for editing AudioSource objects.
  *
@@ -38,6 +41,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class AudioSourceFrame extends AbstractAudioFrame {
 
     private static int counter = 1;

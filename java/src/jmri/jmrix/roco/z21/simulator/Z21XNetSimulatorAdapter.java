@@ -4,6 +4,8 @@ import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.roco.z21.Z21Constants;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender, Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class Z21XNetSimulatorAdapter {
 
     private int csStatus;

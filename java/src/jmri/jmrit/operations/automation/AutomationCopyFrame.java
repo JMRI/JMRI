@@ -6,6 +6,8 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import jmri.jmrit.operations.setup.Control;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2016
  */
+@API(status = MAINTAINED)
 public class AutomationCopyFrame extends OperationsFrame {
 
     AutomationManager automationManager = InstanceManager.getDefault(AutomationManager.class);

@@ -7,6 +7,8 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import jmri.InstanceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * @see NceConsistRoster
  *
  */
+@API(status = EXPERIMENTAL)
 public class NceConsistRosterEntry {
 
     /**

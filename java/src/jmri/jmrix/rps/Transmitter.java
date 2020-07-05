@@ -4,6 +4,9 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents an RPS transmitter, generally a locomotive.
  * <p>
@@ -12,6 +15,7 @@ import jmri.ThrottleListener;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
+@API(status = EXPERIMENTAL)
 public class Transmitter implements ThrottleListener {
 
     Transmitter(String id, boolean polled, int address, boolean longAddress) {

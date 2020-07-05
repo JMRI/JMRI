@@ -18,6 +18,8 @@ import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;
 import org.apache.commons.text.StringEscapeUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +38,7 @@ import org.slf4j.LoggerFactory;
  * the JSON file, and tidied up the code a bit.
  *
  */
+@API(status = MAINTAINED)
 public class JsonManifest extends TrainCommon {
 
     protected final Locale locale = Locale.getDefault();

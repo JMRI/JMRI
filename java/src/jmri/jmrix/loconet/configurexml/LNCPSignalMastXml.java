@@ -4,6 +4,8 @@ package jmri.jmrix.loconet.configurexml;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrix.loconet.LNCPSignalMast;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  */
+@API(status = EXPERIMENTAL)
 public class LNCPSignalMastXml extends jmri.implementation.configurexml.DccSignalMastXml {
 
     public LNCPSignalMastXml() {

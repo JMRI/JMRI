@@ -3,6 +3,9 @@ package jmri.jmrix.roco.z21.simulator.configurexml;
 import jmri.jmrix.roco.z21.simulator.Z21SimulatorAdapter;
 import jmri.jmrix.roco.z21.simulator.Z21SimulatorConnectionConfig;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistence of layout connections by persisting the
  * Z21SimulatorAdapter (and connections).
@@ -17,6 +20,7 @@ import jmri.jmrix.roco.z21.simulator.Z21SimulatorConnectionConfig;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender Copyright: Copyright (c) 2009
  */
+@API(status = EXPERIMENTAL)
 public class Z21SimulatorConnectionConfigXml extends jmri.jmrix.roco.z21.configurexml.ConnectionConfigXml {
 
     public Z21SimulatorConnectionConfigXml() {

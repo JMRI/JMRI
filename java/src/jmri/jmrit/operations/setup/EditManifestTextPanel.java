@@ -9,12 +9,16 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of manifest text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
 //    private static final Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class);

@@ -2,11 +2,15 @@ package jmri.jmrix.maple;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri Maple-specific tools.
  *
  * @author Bob Jacobsen Copyright 2008
  */
+@API(status = EXPERIMENTAL)
 public class MapleMenu extends JMenu {
 
     public MapleMenu(String name, MapleSystemConnectionMemo memo) {

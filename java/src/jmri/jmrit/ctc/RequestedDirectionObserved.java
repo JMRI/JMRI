@@ -6,10 +6,14 @@ package jmri.jmrit.ctc;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This object ONLY maintains ONE property: _mRequestedDirection.  Ergo no need
  * to call "addPropertyChangeListener" form with the "propertyName" variant.
  */
+@API(status = MAINTAINED)
 public class RequestedDirectionObserved {
     private int _mRequestedDirection;
     private final PropertyChangeSupport _mPropertyChangeSupport = new PropertyChangeSupport(this);

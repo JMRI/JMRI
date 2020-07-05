@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
+@API(status = STABLE)
 public class Transit extends AbstractNamedBean {
 
     /**

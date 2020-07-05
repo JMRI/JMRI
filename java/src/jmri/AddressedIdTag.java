@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This interface extends {@link jmri.IdTag} to include a locomotive address.
  * Typical uses are for RailCom and Transponding.  The default assumption is
@@ -18,6 +21,7 @@ package jmri;
  * @author Paul Bender Copyright (C) 2019
  * @since 4.15.4
  */
+@API(status = STABLE)
 public interface AddressedIdTag extends IdTag {
 
     /**

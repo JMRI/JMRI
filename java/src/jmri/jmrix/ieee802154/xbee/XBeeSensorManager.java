@@ -14,6 +14,8 @@ import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2003-2016
  */
+@API(status = EXPERIMENTAL)
 public class XBeeSensorManager extends jmri.managers.AbstractSensorManager implements IIOSampleReceiveListener{
 
     // ctor has to register for XBee events

@@ -17,6 +17,9 @@ import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.OutputBits;
 import jmri.jmrix.maple.SerialNode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user configuration of Maple panel nodes.
  * <p>
@@ -27,6 +30,7 @@ import jmri.jmrix.maple.SerialNode;
  * @author Bob Jacobsen Copyright (C) 2004, 2008
  * @author Dave Duchamp Copyright (C) 2004, 2009
  */
+@API(status = EXPERIMENTAL)
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected JSpinner nodeAddrSpinner;

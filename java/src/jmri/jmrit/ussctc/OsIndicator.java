@@ -10,6 +10,9 @@ import jmri.Logix;
 import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide bean-like access to the collection of Logix, Routes, Memories, etc
  * that make up a OsIndicator.
@@ -20,6 +23,7 @@ import jmri.implementation.DefaultConditionalAction;
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = MAINTAINED)
 public class OsIndicator implements Constants {
 
     static String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();

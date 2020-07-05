@@ -8,12 +8,16 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a connection to a remote JMRI
  * instance via the JMRI Network Protocol.
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     protected JLabel transmitPrefixLabel = new JLabel("Server Connection Prefix");

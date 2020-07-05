@@ -5,6 +5,9 @@ import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -22,6 +25,7 @@ import jmri.jmrit.ctc.ctcserialdata.OtherData;
  * 
  */
 
+@API(status = MAINTAINED)
 public class OriginalCopy {
 //  Original copies after read in for modification detection:
     private OtherData _mOriginalCopyOtherData;

@@ -4,6 +4,9 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.beans.PropertyChangeProvider;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Get access to available {@link Programmer} objects.
  * <p>
@@ -34,6 +37,7 @@ import jmri.beans.PropertyChangeProvider;
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @since 3.9.6
  */
+@API(status = STABLE)
 public interface GlobalProgrammerManager extends PropertyChangeProvider {
 
     /**

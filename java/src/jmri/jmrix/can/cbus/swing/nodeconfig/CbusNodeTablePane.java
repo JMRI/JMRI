@@ -16,6 +16,8 @@ import jmri.util.ThreadingUtil;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @since 2.99.2
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeTablePane extends JPanel {
 
     private CbusNodeTableDataModel nodeModel;

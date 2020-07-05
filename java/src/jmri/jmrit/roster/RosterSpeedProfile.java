@@ -8,6 +8,8 @@ import jmri.DccThrottle;
 import jmri.NamedBean;
 import jmri.Section;
 import jmri.implementation.SignalSpeedMap;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * step settings. So a profile generate for a loco using 28 steps can be used
  * for a throttle using 126 steps.
  */
+@API(status = MAINTAINED)
 public class RosterSpeedProfile {
 
     RosterEntry _re = null;

@@ -9,6 +9,9 @@ import javax.swing.JToggleButton;
 
 import jmri.jmrit.logix.OBlock;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A simple panel to collect lengths with units bring either inches or centimeters
  * 
@@ -16,6 +19,7 @@ import jmri.jmrit.logix.OBlock;
  *
  */
 
+@API(status = MAINTAINED)
 public class LengthPanel extends JPanel
 {
     private final OBlock _block;

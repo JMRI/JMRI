@@ -2,12 +2,16 @@ package jmri.jmrix.qsi.serialdriver;
 
 import java.util.ResourceBundle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a layout connection via a QSI
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

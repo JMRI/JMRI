@@ -2,6 +2,9 @@ package jmri.jmrix.dccpp.serial;
 
 import jmri.util.SystemType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring a DCC++ layout connection via a Serial adaptor.
  * <p>
@@ -13,6 +16,7 @@ import jmri.util.SystemType;
  *
  * Based on jmri.jmrix.lenz.liusb.ConnectionConfig by Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.dccpp.AbstractDCCppSerialConnectionConfig {
 
     /**

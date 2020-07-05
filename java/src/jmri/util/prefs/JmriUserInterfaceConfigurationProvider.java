@@ -7,6 +7,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import jmri.profile.AuxiliaryConfiguration;
 import jmri.profile.Profile;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides a general purpose XML element storage mechanism for the storage of
  * user interface configuration.
@@ -31,6 +34,7 @@ import jmri.profile.Profile;
  *
  * @author Randall Wood 2015, 2016
  */
+@API(status = EXPERIMENTAL)
 public final class JmriUserInterfaceConfigurationProvider extends AbstractConfigurationProvider {
 
     private final Configuration configuration;

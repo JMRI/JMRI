@@ -2,11 +2,15 @@ package jmri.jmrix.oaktree;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the JMRI Oak Tree-specific tools.
  *
  * @author Bob Jacobsen Copyright 2003, 2006
  */
+@API(status = EXPERIMENTAL)
 public class OakTreeMenu extends JMenu {
 
     public OakTreeMenu(String name, OakTreeSystemConnectionMemo memo) {

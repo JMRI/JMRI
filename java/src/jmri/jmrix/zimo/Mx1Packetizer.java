@@ -1,5 +1,7 @@
 package jmri.jmrix.zimo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.jmrix.zimo.Mx1Message.PROGCMD;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
  */
+@API(status = EXPERIMENTAL)
 public class Mx1Packetizer extends Mx1TrafficController {
 
     public Mx1Packetizer(Mx1CommandStation pCommandStation, boolean prot) {

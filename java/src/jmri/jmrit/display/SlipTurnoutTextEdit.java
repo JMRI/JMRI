@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Displays and allows user to modify the text display used in a turnout slip
  *
@@ -16,6 +19,7 @@ import jmri.util.JmriJFrame;
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (SlipTurnoutTextEditor version);
  */
+@API(status = MAINTAINED)
 public class SlipTurnoutTextEdit extends JmriJFrame {
 
     SlipTurnoutIcon pl;  // layout positional label tracked by this frame

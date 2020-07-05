@@ -4,6 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.SwingUtilities;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * If constructed with {@code SwingPropertyChangeListener(listener, true)} this
  * subclass of {@link PropertyChangeListener} ensures listener is only ever
@@ -11,6 +14,7 @@ import javax.swing.SwingUtilities;
  *
  * @author Randall Wood Copyright 2020
  */
+@API(status = EXPERIMENTAL)
 public class SwingPropertyChangeListener implements PropertyChangeListener {
 
     private final PropertyChangeListener listener;

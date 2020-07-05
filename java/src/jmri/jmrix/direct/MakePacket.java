@@ -1,5 +1,8 @@
 package jmri.jmrix.direct;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide utilities for coding/decoding NMRA {@literal S&RP} DCC packets into
  * sequences to send through a standard serial port.
@@ -83,6 +86,7 @@ package jmri.jmrix.direct;
  * @author Bob Jacobsen Copyright (C) 2001
  *
  */
+@API(status = EXPERIMENTAL)
 public class MakePacket {
 
     private static int preambleLength = 15;

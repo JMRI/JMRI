@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Leaf of a CatalogTree.
  * <p>
@@ -8,6 +11,7 @@ package jmri;
  * @author Pete Cressman Copyright 2009
  *
  */
+@API(status = STABLE)
 public class CatalogTreeLeaf {
 
     private String _name; // non-localized

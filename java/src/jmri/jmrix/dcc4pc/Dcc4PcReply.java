@@ -1,6 +1,8 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.jmrix.AbstractMRReply;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
+@API(status = EXPERIMENTAL)
 public class Dcc4PcReply extends AbstractMRReply {
 
     static public final int maxSize = 2048;

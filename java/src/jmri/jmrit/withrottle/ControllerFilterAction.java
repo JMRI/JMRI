@@ -3,12 +3,15 @@ package jmri.jmrit.withrottle;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010
  */
+@API(status = MAINTAINED)
 public class ControllerFilterAction extends AbstractAction {
 
     public ControllerFilterAction(String name) {

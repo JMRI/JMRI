@@ -3,6 +3,8 @@ package jmri.jmrix.loconet.lnsvf2;
 import java.util.Locale;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
  * @author B. Milhaupt Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class LnSv2MessageContents {
     private int src;
     private int sv_cmd;

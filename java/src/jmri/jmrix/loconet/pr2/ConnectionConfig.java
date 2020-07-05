@@ -1,11 +1,15 @@
 package jmri.jmrix.loconet.pr2;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring an PR2 layout connection via a
  * PR2Adapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

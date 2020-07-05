@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -22,6 +24,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author lionel
  */
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = MAINTAINED)
 public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeListener, PreferencesPanel {
 
     private JCheckBox cbUseToolBar;

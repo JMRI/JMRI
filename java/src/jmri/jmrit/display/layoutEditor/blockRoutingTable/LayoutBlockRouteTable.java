@@ -13,11 +13,15 @@ import javax.swing.table.TableRowSorter;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.swing.RowSorterUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide a table of block route entries as a JmriJPanel
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class LayoutBlockRouteTable extends jmri.util.swing.JmriPanel {
 
     private LayoutBlockRouteTableModel dataModel;

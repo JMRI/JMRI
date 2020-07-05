@@ -1,5 +1,7 @@
 package jmri.server.json.turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.CLOSED;
 import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.INVERTED;
@@ -37,6 +39,7 @@ import jmri.server.json.sensor.JsonSensorHttpService;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
 
     private final JsonSensorHttpService sensorService;

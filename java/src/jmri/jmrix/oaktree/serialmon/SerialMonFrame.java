@@ -5,11 +5,15 @@ import jmri.jmrix.oaktree.SerialMessage;
 import jmri.jmrix.oaktree.SerialReply;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame displaying (and logging) serial command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
+@API(status = EXPERIMENTAL)
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
     private OakTreeSystemConnectionMemo _memo = null;

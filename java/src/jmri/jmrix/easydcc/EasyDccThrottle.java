@@ -6,6 +6,9 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An implementation of DccThrottle with code specific to an EasyDCC connection.
  * <p>
@@ -16,6 +19,7 @@ import jmri.jmrix.AbstractThrottle;
  *
  * @author Bob Jacobsen Copyright (C) 2001, modified 2004 by Kelly Loyd
  */
+@API(status = EXPERIMENTAL)
 public class EasyDccThrottle extends AbstractThrottle {
 
     /**

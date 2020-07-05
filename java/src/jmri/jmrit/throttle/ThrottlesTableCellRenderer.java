@@ -16,6 +16,10 @@ import jmri.Throttle;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.util.FileUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class ThrottlesTableCellRenderer implements TableCellRenderer {
 
     private static final ImageIcon fwdIcon = new ImageIcon(FileUtil.findURL("resources/icons/throttles/up-green.png"));

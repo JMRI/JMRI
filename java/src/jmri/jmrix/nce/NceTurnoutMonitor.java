@@ -2,6 +2,8 @@ package jmri.jmrix.nce;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChangeListener {
 
     // scope constants

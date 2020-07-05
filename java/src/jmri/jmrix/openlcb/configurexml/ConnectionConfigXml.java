@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import jmri.jmrix.can.ConfigurationManager;
  * (C) Balazs Racz, 2018.
  */
 
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml {
     /**
      * Checks if we are loading an OpenLCB protocol adapter. If no, returns without doing

@@ -7,12 +7,16 @@ import java.util.Locale;
 import java.util.Set;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide integration for the JMRI web services so servlets can visually
  * integrate into the JMRI web site.
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public interface WebManifest {
 
     /**

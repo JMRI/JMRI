@@ -5,6 +5,9 @@ import jmri.InstanceManager;
 import jmri.RailCom;
 import jmri.RailComManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Z21Reporter implements the Reporter Manager interface
  * for Roco Z21 systems.
@@ -13,6 +16,7 @@ import jmri.RailComManager;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class Z21Reporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener {
 
     private Z21SystemConnectionMemo _memo;

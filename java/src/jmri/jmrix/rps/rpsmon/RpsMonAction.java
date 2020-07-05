@@ -4,11 +4,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a RpsMonFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class RpsMonAction extends AbstractAction {
 
     RpsSystemConnectionMemo memo = null;

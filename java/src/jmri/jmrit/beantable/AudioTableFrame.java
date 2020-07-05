@@ -7,6 +7,9 @@ import javax.swing.JMenuBar;
 
 import jmri.Audio;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * <hr>
@@ -23,6 +26,7 @@ import jmri.Audio;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = STABLE)
 public class AudioTableFrame extends BeanTableFrame<Audio> {
 
     AudioTablePanel audioPanel;

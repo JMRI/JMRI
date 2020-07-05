@@ -7,6 +7,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import jmri.beans.PropertyChangeProvider;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manage tasks to be completed when the program shuts down normally.
  * <p>
@@ -28,6 +31,7 @@ import jmri.beans.PropertyChangeProvider;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = STABLE)
 public interface ShutDownManager extends PropertyChangeProvider {
 
     /**

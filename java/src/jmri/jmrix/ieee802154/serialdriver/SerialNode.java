@@ -4,6 +4,8 @@ import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.ieee802154.IEEE802154Node;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright 2013
  */
+@API(status = EXPERIMENTAL)
 public class SerialNode extends IEEE802154Node {
 
     /**

@@ -12,6 +12,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matt Harris
  */
+@API(status = EXPERIMENTAL)
 public class JmriInsets {
 
     private static final String DESKTOP_ENVIRONMENTS = "kdesktop|gnome-panel|xfce|darwin|icewm"; // NOI18N

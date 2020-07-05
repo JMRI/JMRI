@@ -1,5 +1,8 @@
 package jmri.jmrit.audio;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An AudioFactory is responsible for the initialisation of specific audio
  * system implementations, creation of audio system specific Audio objects and
@@ -29,6 +32,7 @@ package jmri.jmrit.audio;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public interface AudioFactory {
 
     /**

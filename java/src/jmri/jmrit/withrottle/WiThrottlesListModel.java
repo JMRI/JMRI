@@ -11,9 +11,12 @@ package jmri.jmrit.withrottle;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.table.AbstractTableModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class WiThrottlesListModel extends AbstractTableModel {
 
     ArrayList<DeviceServer> deviceList;

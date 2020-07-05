@@ -45,6 +45,9 @@ import javax.swing.event.MouseInputAdapter;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSliderUI;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This corrects the behaviour of JSliders to correctly snap whilst sliding,
  * rather than to snap after sliding.
@@ -67,6 +70,7 @@ import javax.swing.plaf.basic.BasicSliderUI;
  * reflective access
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class SliderSnap extends BasicSliderUI {
 
     /**

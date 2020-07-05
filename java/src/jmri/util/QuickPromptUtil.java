@@ -1,5 +1,7 @@
 package jmri.util;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 
 import java.awt.Component;
@@ -19,6 +21,7 @@ import javax.swing.SwingConstants;
  *
  * @author George Warner Copyright: (c) 2017
  */
+@API(status = EXPERIMENTAL)
 public class QuickPromptUtil {
 
     /**

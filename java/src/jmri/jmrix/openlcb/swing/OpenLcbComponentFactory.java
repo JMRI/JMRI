@@ -3,12 +3,16 @@ package jmri.jmrix.openlcb.swing;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.OpenLcbMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the LocoNet subsystem.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class OpenLcbComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public OpenLcbComponentFactory(CanSystemConnectionMemo memo) {

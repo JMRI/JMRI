@@ -8,6 +8,9 @@ import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Display the Java color chooser that includes a custom JMRI panel.
  * The custom panel is provided by {@link JmriColorChooserPanel}.
@@ -17,6 +20,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
  * @author Dave Sand Copyright (C) 2018
  * @since 4.13.1
  */
+@API(status = EXPERIMENTAL)
 public class JmriColorChooser {
 
     /**

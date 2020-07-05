@@ -7,12 +7,16 @@ import jmri.RouteManager;
 import jmri.Turnout;
 import jmri.implementation.DefaultRoute;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide bean-like access to the collection of Logix, Routes, Memories, etc
  * that make up a Follower.
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = MAINTAINED)
 public class Follower implements Constants {
 
     static String routePrefix = InstanceManager.getDefault(jmri.RouteManager.class).getSystemNamePrefix();

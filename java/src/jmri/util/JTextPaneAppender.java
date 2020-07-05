@@ -18,6 +18,9 @@ import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.spi.Filter;
 import org.apache.log4j.spi.LoggingEvent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements a log4j appender which writes to a swing JTextPane
  * <p>
@@ -27,6 +30,7 @@ import org.apache.log4j.spi.LoggingEvent;
  *
  * @author bender heri See 4/15/2009 Log4J email
  */
+@API(status = EXPERIMENTAL)
 public class JTextPaneAppender extends AppenderSkeleton {
 
     JTextPane myTextPane;

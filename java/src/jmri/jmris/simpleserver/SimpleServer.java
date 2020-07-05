@@ -13,6 +13,8 @@ import jmri.JmriException;
 import jmri.jmris.JmriServer;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2010
  *
  */
+@API(status = EXPERIMENTAL)
 public class SimpleServer extends JmriServer {
 
     private static final String NOT_SUPPORTED = "not supported\n";

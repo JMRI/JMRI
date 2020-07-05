@@ -19,12 +19,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A very specific dialog for editing the properties of a ThrottleFrame object.
  *
  * @author Original Unknown
  * @author Ken Cameron, copyright 2008
  */
+@API(status = MAINTAINED)
 public class ThrottleFramePropertyEditor extends JDialog {
 
     private ThrottleWindow frame;

@@ -5,6 +5,8 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalAppearanceMap;
 import jmri.implementation.MatrixSignalMast;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -13,6 +15,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: (C) 2009
  * @author Egbert Broerse Copyright: (C) 2016, 2017
  */
+@API(status = EXPERIMENTAL)
 public class MatrixSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

@@ -22,6 +22,8 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected JTextField nodeAddrField = new JTextField(3);

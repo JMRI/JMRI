@@ -26,6 +26,8 @@ import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @author Bob Jacobsen Copyright (c) 2002
  */
+@API(status = MAINTAINED)
 public class PositionableLabel extends JLabel implements Positionable {
 
     protected Editor _editor;

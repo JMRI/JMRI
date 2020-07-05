@@ -1,5 +1,8 @@
 package jmri.jmrix.easydcc.simulator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an EasyDCC layout connection via an EasyDccSimulator
  * adapter.
@@ -14,6 +17,7 @@ package jmri.jmrix.easydcc.simulator;
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig, copied from DCCpp
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

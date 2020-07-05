@@ -4,6 +4,8 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2014
  */
+@API(status = EXPERIMENTAL)
 public class TurnoutSignalMast extends AbstractSignalMast {
 
     public TurnoutSignalMast(String systemName, String userName) {

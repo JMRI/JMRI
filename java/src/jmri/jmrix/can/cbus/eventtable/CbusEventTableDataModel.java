@@ -11,6 +11,8 @@ import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.ShutDownTask;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young (c) 2018 2019
  * 
  */
+@API(status = EXPERIMENTAL)
 public class CbusEventTableDataModel extends CbusBasicEventTableModel implements CanListener {
 
     

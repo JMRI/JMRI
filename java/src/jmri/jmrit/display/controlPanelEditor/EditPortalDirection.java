@@ -20,11 +20,15 @@ import javax.swing.event.ListSelectionListener;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Pete Cressman Copyright: Copyright (c) 2013
  *
  */
+@API(status = MAINTAINED)
 public class EditPortalDirection extends EditFrame implements ActionListener, ListSelectionListener {
 
     private PortalIcon _icon;

@@ -1,5 +1,7 @@
 package jmri.server.json.memory;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.memory.JsonMemory.MEMORIES;
@@ -27,6 +29,7 @@ import jmri.server.json.roster.JsonRosterHttpService;
 /**
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
 
     private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);

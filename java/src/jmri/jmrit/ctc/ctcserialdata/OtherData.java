@@ -13,10 +13,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import javax.swing.ButtonGroup;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+@API(status = MAINTAINED)
 public class OtherData implements Serializable {
     private final static int FILE_VERSION = 0;
     

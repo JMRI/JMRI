@@ -10,11 +10,15 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JComboBox that provides a list of SystemConnectionMemos by user name.
  *
  * @author Randall Wood Copyright 2017
  */
+@API(status = EXPERIMENTAL)
 public class SystemConnectionComboBox extends JComboBox<SystemConnectionMemo> {
 
     private final SystemConnectionComboBoxModel model = new SystemConnectionComboBoxModel();

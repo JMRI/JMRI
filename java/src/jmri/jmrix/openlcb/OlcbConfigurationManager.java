@@ -19,6 +19,8 @@ import jmri.jmrix.can.TrafficController;
 import jmri.profile.ProfileManager;
 import jmri.util.ThreadingUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.Connection;
 import org.openlcb.LoaderClient;
 import org.openlcb.MessageDecoder;
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
     // Constants for the protocol options keys. These option keys are used to save configuration

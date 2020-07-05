@@ -12,6 +12,9 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.NamedIcon;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Creates a JPanel containing an Dial type speedo display.
  *
@@ -22,6 +25,7 @@ import jmri.jmrit.catalog.NamedIcon;
  * @author Dennis Miller Copyright (C) 2015
  *
  */
+@API(status = EXPERIMENTAL)
 public class SpeedoDial extends JPanel {
 
     // GUI member declarations

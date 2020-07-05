@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.Date;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * ClockControl defines an interface for control of hardware Fast Clocks
  * <p>
@@ -33,6 +36,7 @@ import java.util.Date;
  *
  * @author Dave Duchamp Copyright (C) 2007
  */
+@API(status = STABLE)
 public interface ClockControl {
 
     /**

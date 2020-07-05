@@ -16,6 +16,8 @@ import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright: Copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public class OBlockManagerXml // extends XmlFile
         extends jmri.configurexml.AbstractXmlAdapter {
 

@@ -16,6 +16,8 @@ import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.ToggleOrPressButtonModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  * @author Glen Oberhauser
  * @author Bob Jacobsen Copyright 2008
  */
+@API(status = MAINTAINED)
 public class FunctionButton extends JToggleButton {
 
     private final ArrayList<FunctionListener> listeners;

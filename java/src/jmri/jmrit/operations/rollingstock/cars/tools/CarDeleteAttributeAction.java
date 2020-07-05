@@ -4,9 +4,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 final class CarDeleteAttributeAction extends AbstractAction {
 
     public CarDeleteAttributeAction(CarAttributeEditFrame caef) {

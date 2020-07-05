@@ -5,6 +5,8 @@ import jmri.Consist;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.NmraConsistManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Brett Hoffman Copyright (C) 2010, 2011
  * 
  */
+@API(status = MAINTAINED)
 public class WiFiConsistManager extends NmraConsistManager {
 
     ArrayList<ControllerInterface> listeners = null;

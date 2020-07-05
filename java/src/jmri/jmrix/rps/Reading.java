@@ -3,6 +3,9 @@ package jmri.jmrix.rps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Encodes a single set of input values (a "reading") for RPS.
  * <p>
@@ -17,6 +20,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 @javax.annotation.concurrent.Immutable
+@API(status = EXPERIMENTAL)
 public class Reading {
 
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2") // We accept the external access by design

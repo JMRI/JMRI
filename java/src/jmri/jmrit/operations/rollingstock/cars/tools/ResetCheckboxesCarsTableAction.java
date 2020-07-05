@@ -6,6 +6,9 @@ import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.rollingstock.cars.CarsTableModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to reset checkboxes in the cars window.
  *
@@ -13,6 +16,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarsTableModel;
  * @author Daniel Boudreau Copyright (C) 2014
  * 
  */
+@API(status = MAINTAINED)
 public class ResetCheckboxesCarsTableAction extends AbstractAction {
 
     CarsTableModel _carsTableModel;

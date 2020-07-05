@@ -1,5 +1,7 @@
 package jmri.server.json.operations;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.CARS;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
@@ -45,6 +47,7 @@ import jmri.server.json.JsonSocketService;
 /**
  * @author Randall Wood (C) 2016, 2019, 2020
  */
+@API(status = EXPERIMENTAL)
 public class JsonOperationsSocketService extends JsonSocketService<JsonOperationsHttpService> {
 
     private final HashMap<String, BeanListener<Car>> carListeners = new HashMap<>();

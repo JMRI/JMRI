@@ -7,11 +7,15 @@ import jmri.jmrit.operations.locations.tools.IgnoreUsedTrackAction;
 import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
 import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of a yard
  *
  * @author Dan Boudreau Copyright (C) 2008
  */
+@API(status = MAINTAINED)
 public class YardEditFrame extends TrackEditFrame {
 
     public YardEditFrame() {

@@ -6,6 +6,8 @@ import jmri.jmrix.zimo.Mx1Listener;
 import jmri.jmrix.zimo.Mx1Message;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import jmri.jmrix.zimo.swing.Mx1PanelInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2011 copied from SerialMonPane.java
  * @author Daniel Boudreau Copyright (C) 2012 added human readable format
  */
+@API(status = EXPERIMENTAL)
 public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listener, Mx1PanelInterface {
 
     public Mx1MonPanel() {

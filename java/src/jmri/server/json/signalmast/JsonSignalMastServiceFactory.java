@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.signalmast.JsonSignalMast.SIGNAL_MAST;
 import static jmri.server.json.signalmast.JsonSignalMast.SIGNAL_MASTS;
 
@@ -14,6 +16,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood (C) 2016
  */
 @ServiceProvider(service = JsonServiceFactory.class)
+@API(status = EXPERIMENTAL)
 public class JsonSignalMastServiceFactory implements JsonServiceFactory<JsonSignalMastHttpService, JsonSignalMastSocketService> {
 
     @Override

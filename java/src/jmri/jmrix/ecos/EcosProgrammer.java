@@ -8,12 +8,16 @@ import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements the jmri.Programmer interface via commands for the ECoS
  * programmer. This provides a service mode programmer.
  *
  * @author Karl Johan Lisby Copyright (C) 2015 and 2018
  */
+@API(status = EXPERIMENTAL)
 public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
 
     public EcosProgrammer(EcosTrafficController etc) {

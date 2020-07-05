@@ -5,6 +5,8 @@ import java.util.Map;
 
 import jmri.configurexml.ClassMigration;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -14,6 +16,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright 2020
  */
 @ServiceProvider(service = ClassMigration.class)
+@API(status = EXPERIMENTAL)
 public class StartupClassMigration implements ClassMigration {
 
     @Override

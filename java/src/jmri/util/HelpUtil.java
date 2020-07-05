@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 import javax.help.*;
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2007
  */
+@API(status = EXPERIMENTAL)
 public class HelpUtil {
 
     private HelpUtil(){

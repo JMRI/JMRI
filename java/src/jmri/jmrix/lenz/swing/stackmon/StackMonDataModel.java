@@ -7,6 +7,8 @@ import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (c) 2008
  */
+@API(status = EXPERIMENTAL)
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
 
     static private final int ADDRCOLUMN = 0;     // Locomotive address

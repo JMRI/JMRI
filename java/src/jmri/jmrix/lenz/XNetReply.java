@@ -5,12 +5,16 @@ import java.util.function.Function;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents a single response from the XpressNet.
  *
  * @author Paul Bender Copyright (C) 2004
  *
  */
+@API(status = EXPERIMENTAL)
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     private static final String RS_TYPE = "rsType";

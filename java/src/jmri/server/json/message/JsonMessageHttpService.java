@@ -10,10 +10,14 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood Copyright 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonMessageHttpService extends JsonHttpService {
 
     public JsonMessageHttpService(ObjectMapper mapper) {

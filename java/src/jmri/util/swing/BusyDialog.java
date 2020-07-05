@@ -7,6 +7,9 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Creates a simple "indeterminate" busy spinner dialog...
  * <hr>
@@ -25,6 +28,7 @@ import javax.swing.JProgressBar;
  * @author   Mark Underwood Copyright (C) 2011
  * 
  */
+@API(status = EXPERIMENTAL)
 public class BusyDialog extends JDialog {
 
     JFrame frame;

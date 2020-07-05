@@ -15,6 +15,8 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008
  */
+@API(status = MAINTAINED)
 public class ConsistFile extends XmlFile implements PropertyChangeListener {
 
     private static final String CONSIST = "consist"; // NOI18N

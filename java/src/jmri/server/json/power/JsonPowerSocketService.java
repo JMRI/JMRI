@@ -1,5 +1,7 @@
 package jmri.server.json.power;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
@@ -20,6 +22,7 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonPowerSocketService extends JsonSocketService<JsonPowerHttpService> implements PropertyChangeListener {
 
     private boolean listening = false;

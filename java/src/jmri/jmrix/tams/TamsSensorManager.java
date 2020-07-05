@@ -5,6 +5,8 @@ import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * xEvtSen reports sensor changes
  */
+@API(status = EXPERIMENTAL)
 public class TamsSensorManager extends jmri.managers.AbstractSensorManager implements TamsListener {
 
     public int maxSE; //Will hold the highest value of board number x 2 and we use this value to determine to tell the Tams MC how many S88 half-modules to poll

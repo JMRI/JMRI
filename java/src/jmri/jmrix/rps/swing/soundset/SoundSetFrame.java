@@ -3,11 +3,15 @@ package jmri.jmrix.rps.swing.soundset;
 import javax.swing.BoxLayout;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for controlling sound-speed calculation for RPS system.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class SoundSetFrame extends jmri.util.JmriJFrame {
 
     RpsSystemConnectionMemo memo = null;

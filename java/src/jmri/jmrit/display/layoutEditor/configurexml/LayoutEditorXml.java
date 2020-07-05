@@ -23,6 +23,8 @@ import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.ColorUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (c) 2007
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
     public LayoutEditorXml() {

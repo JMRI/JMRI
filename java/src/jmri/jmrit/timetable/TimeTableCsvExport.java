@@ -12,6 +12,9 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Export a timetable in CSV format for import into a speadsheet.
  * <pre>
@@ -24,6 +27,7 @@ import org.apache.commons.csv.CSVPrinter;
  * @author Dave Sand Copyright (C) 2019
  * @since 4.15.3
  */
+@API(status = MAINTAINED)
 public class TimeTableCsvExport {
 
     TimeTableDataManager tdm = TimeTableDataManager.getDataManager();

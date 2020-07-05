@@ -3,6 +3,8 @@ package jmri.implementation;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Petr Koud'a Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class LsDecSignalHead extends DefaultSignalHead {
 
     public LsDecSignalHead(String sys, String user, NamedBeanHandle<Turnout> t1, int s1, NamedBeanHandle<Turnout> t2, int s2, NamedBeanHandle<Turnout> t3, int s3, NamedBeanHandle<Turnout> t4, int s4, NamedBeanHandle<Turnout> t5, int s5, NamedBeanHandle<Turnout> t6, int s6, NamedBeanHandle<Turnout> t7, int s7) {

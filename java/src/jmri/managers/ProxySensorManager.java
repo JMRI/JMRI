@@ -6,12 +6,16 @@ import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of a SensorManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
+@API(status = EXPERIMENTAL)
 public class ProxySensorManager extends AbstractProxyManager<Sensor>
         implements SensorManager {
 

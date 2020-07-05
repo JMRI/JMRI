@@ -1,11 +1,15 @@
 package jmri.profile;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JMRI local copy of the NetBeans Platform
  * org.netbeans.spi.project.AuxiliaryProperties.
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public interface AuxiliaryProperties {
 
     String get(String key, boolean shared);

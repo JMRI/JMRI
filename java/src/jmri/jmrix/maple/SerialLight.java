@@ -1,6 +1,8 @@
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractLight;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004, 2009, 2010
  */
+@API(status = EXPERIMENTAL)
 public class SerialLight extends AbstractLight {
 
     private MapleSystemConnectionMemo _memo = null;

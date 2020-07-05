@@ -4,6 +4,9 @@ import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the JMRI Zimo-specific tools.
  *
@@ -11,6 +14,7 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */
+@API(status = EXPERIMENTAL)
 public class Mx1Menu extends JMenu {
 
     /**

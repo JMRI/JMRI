@@ -1,6 +1,8 @@
 package jmri.jmrix.xpa;
 
 import java.util.Arrays;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class XpaMessage implements jmri.jmrix.Message {
 
     public final static int MAX_SIZE = 64;

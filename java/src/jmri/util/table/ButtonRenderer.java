@@ -12,7 +12,11 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // A holder for data and an associated icon
+@API(status = EXPERIMENTAL)
 public class ButtonRenderer extends JButton
         implements TableCellRenderer {
 

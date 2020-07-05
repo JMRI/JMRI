@@ -1,5 +1,8 @@
 package jmri.jmrix.lenz.ztc640;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an XpressNet layout connection via a ZTC Controls ZTC640
  * adapter.
@@ -10,6 +13,7 @@ package jmri.jmrix.lenz.ztc640;
  *
  * @see ZTC640Adapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**

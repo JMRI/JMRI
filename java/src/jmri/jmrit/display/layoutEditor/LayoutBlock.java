@@ -15,6 +15,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
 import jmri.util.swing.*;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.*;
 
 /**
@@ -60,6 +62,7 @@ import org.slf4j.*;
  * @author Dave Duchamp Copyright (c) 2004-2008
  * @author George Warner Copyright (c) 2017-2019
  */
+@API(status = MAINTAINED)
 public class LayoutBlock extends AbstractNamedBean implements PropertyChangeListener {
 
     private final boolean enableAddRouteLogging = false;
@@ -1089,6 +1092,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         editLayoutBlockFrame = null;
     }
 
+@API(status = MAINTAINED)
     protected class LayoutBlockEditAction extends BlockEditAction {
 
         @Override

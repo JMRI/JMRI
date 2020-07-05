@@ -10,6 +10,8 @@ import jmri.jmrix.oaktree.SerialPortController; // no special xSimulatorControll
 import jmri.jmrix.oaktree.SerialReply;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.util.ImmediatePipedOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members

@@ -4,12 +4,16 @@ import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Listener class for collecting CMRInet network traffic and error messages.
  *
  * @author Chuck Catania  Copyright (C) 2016, 2017, 2018
  */
 
+@API(status = EXPERIMENTAL)
 public class CMRInetMetricsCollector implements SerialListener {
     
     /**

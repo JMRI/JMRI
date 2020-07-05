@@ -9,6 +9,8 @@ import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete cressman Copyright (C) 2017
  */
+@API(status = MAINTAINED)
 public class WarrantShutdownTask extends AbstractShutDownTask {
 
     HashMap<String, Boolean> _mergeCandidates;

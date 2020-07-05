@@ -5,12 +5,16 @@ import javax.swing.JButton;
 import jmri.SignalMast;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide a JFrame to display a pane to edit the Signal Mast Logic for one Signal Mast.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Egbert Broerse 2018
  */
+@API(status = MAINTAINED)
 public class SignallingFrame extends JmriJFrame {
 
     public SignallingFrame() {

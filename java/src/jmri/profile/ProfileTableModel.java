@@ -5,12 +5,16 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import javax.swing.table.AbstractTableModel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A tabular data model of {@link jmri.profile.Profile}s, suitable for use in a
  * {@link javax.swing.JTable}.
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class ProfileTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     @SuppressWarnings("LeakingThisInConstructor")

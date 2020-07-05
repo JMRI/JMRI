@@ -4,6 +4,9 @@ import java.util.Locale;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide a menu item used in the navigation bar on the JMRI web server.
  * <p>
@@ -12,6 +15,7 @@ import javax.annotation.Nonnull;
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public interface WebMenuItem {
 
     /**

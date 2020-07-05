@@ -6,6 +6,8 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import jmri.jmrit.operations.trains.tools.TrainsByCarTypeFrame;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  */
+@API(status = MAINTAINED)
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);

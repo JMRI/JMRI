@@ -14,6 +14,8 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +46,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2015
  */
+@API(status = MAINTAINED)
 public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListener {
 
     private boolean syncOK = true; // used to flag status messages

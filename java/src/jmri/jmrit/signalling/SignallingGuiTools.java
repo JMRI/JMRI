@@ -5,9 +5,13 @@ import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class SignallingGuiTools {
 
     private SignallingGuiTools() {

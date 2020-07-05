@@ -1,5 +1,7 @@
 package jmri.server.json.operations;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.operations.JsonOperations.CAR;
 import static jmri.server.json.operations.JsonOperations.CARS;
@@ -24,6 +26,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright 2016, 2018
  */
 @ServiceProvider(service = JsonServiceFactory.class)
+@API(status = EXPERIMENTAL)
 public class JsonOperationsServiceFactory implements JsonServiceFactory<JsonOperationsHttpService, JsonOperationsSocketService> {
 
     @Override

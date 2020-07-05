@@ -4,6 +4,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2013,2016
  */
+@API(status = EXPERIMENTAL)
 public class AssignmentTableModel extends AbstractTableModel {
 
    private XBeeNode curNode = null;

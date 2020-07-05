@@ -4,6 +4,8 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015
  */
+@API(status = MAINTAINED)
 public class OptionPanel extends OperationsPreferencesPanel {
 
     // labels

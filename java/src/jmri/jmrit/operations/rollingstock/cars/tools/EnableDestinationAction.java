@@ -6,6 +6,9 @@ import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a CarsSetFrame object.
  *
@@ -13,6 +16,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
  * @author Daniel Boudreau Copyright (C) 2010
  * 
  */
+@API(status = MAINTAINED)
 public class EnableDestinationAction extends AbstractAction {
 
     CarSetFrame _csFrame;

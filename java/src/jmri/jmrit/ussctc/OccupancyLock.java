@@ -3,11 +3,15 @@ package jmri.jmrit.ussctc;
 import java.util.*;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lock if any of a list of sensors isn't INACTIVE.
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
+@API(status = MAINTAINED)
 public class OccupancyLock implements Lock {
 
     public OccupancyLock(List<NamedBeanHandle<Sensor>> list) {

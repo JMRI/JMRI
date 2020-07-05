@@ -5,12 +5,16 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common utility method for returning the System Connection Name from the
  * System Name Prefix
  *
  * @author Kevin Dickerson Copyright 2010
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionNameFromSystemName {
 
     /**

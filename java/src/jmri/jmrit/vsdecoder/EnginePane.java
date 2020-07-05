@@ -4,6 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * <hr>
  * This file is part of JMRI.
@@ -22,6 +25,7 @@ import javax.swing.JPanel;
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class EnginePane extends JPanel {
     // Superclass for Diesel, Steam, Electric panes.
     // Doesn't really do anything.

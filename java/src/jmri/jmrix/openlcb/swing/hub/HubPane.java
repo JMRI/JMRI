@@ -12,6 +12,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
 import jmri.jmrix.can.swing.CanPanelInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openlcb.hub.Hub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2010, 2012
  */
+@API(status = EXPERIMENTAL)
 public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
     String nextLine;

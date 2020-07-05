@@ -1,11 +1,15 @@
 package jmri.jmrix.loconet.sdf;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement the SKIP_ON_TRIGGER macro from the Digitrax sound definition
  * language
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SkipOnTrigger extends SdfMacro {
 
     public SkipOnTrigger(int byte1, int byte2) {

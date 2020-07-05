@@ -5,6 +5,9 @@ import jmri.Turnout;
 import jmri.jmrix.lenz.XNetAddress;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement turnout manager - Specific to ZTC ZTC611
  * <p>
@@ -13,6 +16,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  *
  * @author Paul Bender Copyright (C) 2008, 2017
  */
+@API(status = EXPERIMENTAL)
 public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager {
 
     public ZTC611XNetTurnoutManager(XNetSystemConnectionMemo memo) {

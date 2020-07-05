@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static javax.swing.SwingUtilities.getWindowAncestor;
 
 import java.awt.BorderLayout;
@@ -47,6 +49,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2020
  */
+@API(status = EXPERIMENTAL)
 public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         implements CanListener {
 

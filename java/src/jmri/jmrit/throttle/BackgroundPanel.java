@@ -7,6 +7,10 @@ import jmri.LocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.ResizableImagePanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class BackgroundPanel extends ResizableImagePanel implements AddressListener {
 
     public BackgroundPanel() {

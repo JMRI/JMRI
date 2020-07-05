@@ -10,6 +10,8 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014,
  *         2015
  */
+@API(status = MAINTAINED)
 public class Car extends RollingStock {
 
     CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);

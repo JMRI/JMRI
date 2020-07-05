@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to open a window that allows a user to edit the switch list text
  * strings.
@@ -13,6 +16,7 @@ import javax.swing.AbstractAction;
  * @author Daniel Boudreau Copyright (C) 2013
  * 
  */
+@API(status = MAINTAINED)
 public class EditSwitchListTextAction extends AbstractAction {
 
     public EditSwitchListTextAction() {

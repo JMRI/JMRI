@@ -8,6 +8,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableRowSorter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide a JFrame to display the Roster Data Based upon BeanTableFrame.
  * <p>
@@ -23,6 +26,7 @@ import javax.swing.table.TableRowSorter;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Kevin Dickerson Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 
     RosterGroupTableModel dataModel;

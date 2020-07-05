@@ -30,6 +30,8 @@ import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.simpleclock.SimpleTimebase;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -54,6 +56,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @since 2.9.4
  */
 @ServiceProvider(service = InstanceInitializer.class)
+@API(status = EXPERIMENTAL)
 public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
     @Override

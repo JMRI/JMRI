@@ -1,5 +1,7 @@
 package jmri.server.json;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.DELETE;
 import static jmri.server.json.JSON.GET;
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @param <T> the NamedBean class supported by this service
  * @param <H> the supporting JsonNamedBeanHttpService class
  */
+@API(status = EXPERIMENTAL)
 public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamedBeanHttpService<T>> extends JsonSocketService<H> {
 
     protected final HashMap<T, NamedBeanListener> beanListeners = new HashMap<>();

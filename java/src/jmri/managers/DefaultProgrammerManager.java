@@ -9,6 +9,8 @@ import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.GlobalProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2001, 2015, 2016
  */
+@API(status = EXPERIMENTAL)
 public class DefaultProgrammerManager extends PropertyChangeSupport implements AddressedProgrammerManager, GlobalProgrammerManager {
 
     // For the record, these were the original numerical definitions:

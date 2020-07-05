@@ -5,6 +5,9 @@ import java.beans.PropertyChangeListener;
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of {@link java.beans.PropertyChangeSupport} that can be
  * extended by classes that would normally need to implement the methods of
@@ -22,6 +25,7 @@ import javax.annotation.concurrent.ThreadSafe;
  * @author Randall Wood Copyright 2020
  */
 @ThreadSafe
+@API(status = EXPERIMENTAL)
 public class PropertyChangeSupport implements PropertyChangeProvider, PropertyChangeFirer {
 
     /**

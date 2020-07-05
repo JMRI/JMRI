@@ -2,6 +2,9 @@ package jmri.jmrix.zimo.swing;
 
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Mrc subsystem.
  *
@@ -9,6 +12,7 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */
+@API(status = EXPERIMENTAL)
 public class Mx1ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public Mx1ComponentFactory(Mx1SystemConnectionMemo memo) {

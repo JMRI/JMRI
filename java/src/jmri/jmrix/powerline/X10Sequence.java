@@ -1,5 +1,8 @@
 package jmri.jmrix.powerline;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent a sequence of one or more X10 commands (addresses and functions).
  * <p>
@@ -17,6 +20,7 @@ package jmri.jmrix.powerline;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class X10Sequence {
 
     public static final int FUNCTION_ALL_UNITS_OFF = 0;

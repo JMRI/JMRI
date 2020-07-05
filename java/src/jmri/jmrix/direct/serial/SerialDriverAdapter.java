@@ -9,6 +9,8 @@ import java.util.Enumeration;
 import java.util.Vector;
 import jmri.jmrix.direct.PortController;
 import jmri.jmrix.direct.TrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -27,6 +29,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends PortController {
 
     Vector<String> portNameVector = null;

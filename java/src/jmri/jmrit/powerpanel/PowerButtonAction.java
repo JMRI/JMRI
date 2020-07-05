@@ -4,11 +4,15 @@ import javax.swing.Action;
 import jmri.InstanceManager;
 import jmri.PowerManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a PowerPanelFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
+@API(status = MAINTAINED)
 public class PowerButtonAction extends javax.swing.AbstractAction implements java.beans.PropertyChangeListener {
 
     public PowerButtonAction(String title) {

@@ -4,12 +4,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of the DCCppOverTcp LbServer Server Protocol.
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class ServerAction
         extends AbstractAction {
 

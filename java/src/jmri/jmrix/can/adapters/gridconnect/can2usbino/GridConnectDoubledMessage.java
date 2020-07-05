@@ -2,6 +2,8 @@ package jmri.jmrix.can.adapters.gridconnect.can2usbino;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2012
  * @author Andrew Crosland Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class GridConnectDoubledMessage extends GridConnectMessage {
 
     // Creates a new instance of GridConnectDoubledMessage

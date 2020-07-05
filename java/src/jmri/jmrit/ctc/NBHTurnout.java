@@ -8,6 +8,9 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This object additionally supports "inverted feedback", so that when someone
  * calls "getKnownState", (typically my own code in this CTC project) we return
@@ -17,6 +20,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 // Prefix NBH = Named Bean Handler....
 
+@API(status = MAINTAINED)
 public class NBHTurnout {
 
 //  Special case sane return values:

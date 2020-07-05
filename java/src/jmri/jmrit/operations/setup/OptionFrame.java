@@ -2,11 +2,15 @@ package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.operations.OperationsFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of setup options
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
  */
+@API(status = MAINTAINED)
 public class OptionFrame extends OperationsFrame {
 
     public OptionFrame() {

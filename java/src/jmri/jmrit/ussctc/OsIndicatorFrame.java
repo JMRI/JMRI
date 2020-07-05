@@ -2,12 +2,16 @@ package jmri.jmrit.ussctc;
 
 import javax.swing.BoxLayout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * User interface frame for creating and editing "OS Indicator" logic on USS CTC
  * machines.
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = MAINTAINED)
 public class OsIndicatorFrame extends jmri.util.JmriJFrame {
 
     public OsIndicatorFrame() {

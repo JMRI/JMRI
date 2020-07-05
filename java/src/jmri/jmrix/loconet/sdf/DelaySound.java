@@ -1,10 +1,14 @@
 package jmri.jmrix.loconet.sdf;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement the DELAY_SOUND macro from the Digitrax sound definition language
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class DelaySound extends SdfMacro {
 
     public DelaySound(int byte1, int byte2) {

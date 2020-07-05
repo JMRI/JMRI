@@ -2,12 +2,16 @@ package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
 import jmri.DccLocoAddress;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class to represent a session in the MERG CBUS Command Station Session Slot Monitor
  *
  * @see CbusSlotMonitorDataModel
  * @author Steve Young Copyright (C) 2019
  */
+@API(status = EXPERIMENTAL)
 public class CbusSlotMonitorSession  {
     
     private final DccLocoAddress _locoAddr;

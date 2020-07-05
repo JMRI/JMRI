@@ -1,5 +1,7 @@
 package jmri.server.json.roster;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.ADD;
 import static jmri.server.json.JSON.DELETE;
 import static jmri.server.json.JSON.GET;
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2014, 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonRosterSocketService extends JsonSocketService<JsonRosterHttpService> {
 
     private static final Logger log = LoggerFactory.getLogger(JsonRosterSocketService.class);

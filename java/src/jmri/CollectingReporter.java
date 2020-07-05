@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This is an extension of a reporter device that is capable of collecting 
  * multiple reports in a collection.  The type of collection is not specified 
@@ -19,6 +22,7 @@ package jmri;
  * @author Paul Bender Copyright (C) 2019
  * @see jmri.Reporter
  */
+@API(status = STABLE)
 public interface CollectingReporter extends Reporter {
 
      /**

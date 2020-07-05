@@ -2,6 +2,8 @@ package jmri.jmrix.maple;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +52,7 @@ import org.slf4j.LoggerFactory;
  * @author David Duchamp Copyright (C) 2004, 2007
  * @author Dan Boudreau Copyright (C) 2007
  */
+@API(status = EXPERIMENTAL)
 public class SerialTurnout extends AbstractTurnout {
 
     private MapleSystemConnectionMemo _memo = null;

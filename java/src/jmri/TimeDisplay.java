@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to basic functions of a clock face, that displays time in some
  * particular way.
@@ -19,6 +22,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
+@API(status = STABLE)
 public interface TimeDisplay {
 
     public void setUpdateRate(int msec);

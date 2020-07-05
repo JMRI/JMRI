@@ -1,5 +1,7 @@
 package jmri.jmrix.tams;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  *
  */
+@API(status = EXPERIMENTAL)
 public class TamsReply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one

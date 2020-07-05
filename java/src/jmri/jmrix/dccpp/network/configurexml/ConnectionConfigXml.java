@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.dccpp.network.ConnectionConfig;
 import jmri.jmrix.dccpp.network.DCCppEthernetAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistence of layout connections by persisting the DCC++ Server
  * (and connections). Note this is named as the XML version of a
@@ -19,6 +22,7 @@ import jmri.jmrix.dccpp.network.DCCppEthernetAdapter;
  * @author Paul Bender Copyright (C) 2011
  * @author Mark Underwood Copyright (C) 2015
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

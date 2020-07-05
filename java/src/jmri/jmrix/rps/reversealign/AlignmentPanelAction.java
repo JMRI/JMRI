@@ -5,11 +5,15 @@ import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register an RpsTrackingFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class AlignmentPanelAction extends AbstractAction {
 
     RpsSystemConnectionMemo memo = null;

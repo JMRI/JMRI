@@ -11,6 +11,9 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Defines display objects.
  * <p>
@@ -37,6 +40,7 @@ import javax.swing.border.Border;
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
  */
+@API(status = MAINTAINED)
 public interface Positionable extends Cloneable {
 
     void setPositionable(boolean enabled);

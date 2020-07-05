@@ -2,6 +2,9 @@ package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement the SKEME_START macro from the Digitrax sound definition language.
  * <p>
@@ -9,6 +12,7 @@ import java.util.ArrayList;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class SkemeStart extends SdfMacro {
 
     public SkemeStart(int byte1, int byte2, int byte3, int byte4) {

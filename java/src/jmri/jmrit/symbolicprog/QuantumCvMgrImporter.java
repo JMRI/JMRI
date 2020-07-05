@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Alex Shepherd Copyright (C) 2003
  * @author Dave Heap Copyright (C) 2015
  */
+@API(status = MAINTAINED)
 public class QuantumCvMgrImporter {
 
     private final static Logger log = LoggerFactory.getLogger(QuantumCvMgrImporter.class);

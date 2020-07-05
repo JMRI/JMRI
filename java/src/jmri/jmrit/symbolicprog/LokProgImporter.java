@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Alex Shepherd Copyright (C) 2003
  * @author Dave Heap Copyright (C) 2014
  */
+@API(status = MAINTAINED)
 public class LokProgImporter {
 
     private final static Logger log = LoggerFactory.getLogger(LokProgImporter.class);

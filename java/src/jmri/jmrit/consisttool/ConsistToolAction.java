@@ -5,11 +5,15 @@ import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a ConsistToolFrame object.
  *
  * @author Paul Bender Copyright (C) 2003
  */
+@API(status = MAINTAINED)
 public class ConsistToolAction extends JmriAbstractAction {
 
     public ConsistToolAction(String s, WindowInterface wi) {

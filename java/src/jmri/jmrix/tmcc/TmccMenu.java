@@ -2,11 +2,15 @@ package jmri.jmrix.tmcc;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri TMCC-specific tools
  *
  * @author Bob Jacobsen Copyright 2003, 2006
  */
+@API(status = EXPERIMENTAL)
 public class TmccMenu extends JMenu {
 
     public TmccMenu(String name, TmccSystemConnectionMemo memo) {

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -18,6 +20,7 @@ import org.jdom2.JDOMException;
  * @author Dave Sand Copyright (C) 2018
  * @since 4.13.6
  */
+@API(status = EXPERIMENTAL)
 public class ScaleConfigXML {
 
     public static boolean doStore() {

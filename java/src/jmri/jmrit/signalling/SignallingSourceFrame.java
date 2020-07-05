@@ -3,11 +3,15 @@ package jmri.jmrit.signalling;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for Signal Logic Source Mast status.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class SignallingSourceFrame extends jmri.util.JmriJFrame {
 
     public SignallingSourceFrame() {

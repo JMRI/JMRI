@@ -5,11 +5,15 @@ import javax.swing.JCheckBox;
 import jmri.InstanceManager;
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provides an edit panel for a Sensor object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class SensorEditAction extends BeanEditAction<Sensor> {
 
     @Override

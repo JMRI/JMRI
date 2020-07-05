@@ -8,6 +8,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Display a JmriPanel in a JInternalFrame of its own.
  *
@@ -17,6 +20,7 @@ import jmri.util.JmriJFrame;
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = EXPERIMENTAL)
 public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterface {
 
     public JmriJInternalFrameInterface(JmriJFrame mainFrame, JDesktopPane desktop) {

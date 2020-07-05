@@ -22,6 +22,8 @@ import java.util.regex.PatternSyntaxException;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import jmri.NamedBean;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * the layout.
  *
  */
+@API(status = EXPERIMENTAL)
 public class PhysicalLocation extends Vector3f {
 
     private boolean _isTunnel;

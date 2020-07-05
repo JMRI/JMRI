@@ -1,5 +1,7 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
+@API(status = STABLE)
 public class EntryPoint {
 
     public EntryPoint(jmri.Block b, jmri.Block pb, String fbDir) {

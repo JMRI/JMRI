@@ -40,6 +40,8 @@ import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +55,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.XmlFile
  * @author Dave Heap 2017 - Provide user GUI
  */
+@API(status = MAINTAINED)
 public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
 
     /**

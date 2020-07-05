@@ -18,6 +18,8 @@ import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood (C) 2015
  */
 @ServiceProvider(service = PreferencesManager.class)
+@API(status = MAINTAINED)
 public class RosterConfigManager extends AbstractPreferencesManager {
 
     private final HashMap<Profile, String> directories = new HashMap<>();

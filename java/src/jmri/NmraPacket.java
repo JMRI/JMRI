@@ -1,6 +1,8 @@
 package jmri;
 
 import javax.annotation.CheckForNull;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +52,7 @@ import org.slf4j.LoggerFactory;
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "null returned is documented in each method to mean no valid result")
+@API(status = STABLE)
 public class NmraPacket {
 
     static final public int accIdLowLimit = 1;

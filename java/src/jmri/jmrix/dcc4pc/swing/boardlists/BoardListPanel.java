@@ -21,6 +21,8 @@ import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
 import jmri.swing.RowSorterUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2011
  * 
  */
+@API(status = EXPERIMENTAL)
 public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements PropertyChangeListener, Dcc4PcPanelInterface {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dcc4pc.swing.boardlists.BoardListBundle");

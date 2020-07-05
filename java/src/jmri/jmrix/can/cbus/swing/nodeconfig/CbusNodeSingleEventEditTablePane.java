@@ -13,6 +13,9 @@ import javax.swing.table.TableColumnModel;
 import jmri.jmrix.can.cbus.node.CbusNodeSingleEventTableDataModel;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -22,6 +25,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  *
  * @since 4.15.5
  */
+@API(status = EXPERIMENTAL)
 public class CbusNodeSingleEventEditTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     private final CbusNodeSingleEventTableDataModel singleEVModel;

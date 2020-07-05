@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import jmri.util.prefs.JmriPreferencesProvider;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class ProfileProperties implements AuxiliaryProperties {
 
     private final File path;

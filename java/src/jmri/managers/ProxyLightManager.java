@@ -5,6 +5,9 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implementation of a LightManager that can serve as a proxy for multiple
  * system-specific implementations.
@@ -12,6 +15,7 @@ import jmri.Manager;
  * @author Bob Jacobsen Copyright (C) 2010, 2018
  * @author Dave Duchamp Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class ProxyLightManager extends AbstractProxyManager<Light>
         implements LightManager {
 

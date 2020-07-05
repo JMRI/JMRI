@@ -37,6 +37,8 @@ import jmri.jmrix.dccpp.DCCppSensorManager;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +58,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener {
 
     // Map of Mnemonic KeyEvent values to GUI Components

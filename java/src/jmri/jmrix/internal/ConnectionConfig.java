@@ -3,11 +3,15 @@ package jmri.jmrix.internal;
 import jmri.jmrix.AbstractSimulatorConnectionConfig;
 import jmri.jmrix.SerialPortAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a virtual layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends AbstractSimulatorConnectionConfig {
 
     /**

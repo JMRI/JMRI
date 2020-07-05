@@ -6,6 +6,8 @@ import java.util.Set;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  *             server preferences
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class WebServerPreferencesInstanceInitializer extends AbstractInstanceInitializer {
 
     private static final Logger log = LoggerFactory.getLogger(WebServerPreferencesInstanceInitializer.class);

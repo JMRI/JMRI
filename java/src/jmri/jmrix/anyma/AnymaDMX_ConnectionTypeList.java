@@ -1,6 +1,8 @@
 package jmri.jmrix.anyma;
 
 import jmri.jmrix.ConnectionTypeList;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -10,6 +12,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @since       4.9.6
  */
 @ServiceProvider(service = ConnectionTypeList.class)
+@API(status = EXPERIMENTAL)
 public class AnymaDMX_ConnectionTypeList implements ConnectionTypeList {
 
     protected static final String ANYMA_DMX = "Anyma DMX512";

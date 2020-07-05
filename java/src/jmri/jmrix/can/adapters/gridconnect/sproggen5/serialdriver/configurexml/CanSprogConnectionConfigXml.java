@@ -1,5 +1,7 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 import jmri.jmrix.PortAdapter;
@@ -21,6 +23,7 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
  * @author Andrew Crosland 2008
  * @author Andrew Crosland 2019
  */
+@API(status = EXPERIMENTAL)
 public class CanSprogConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public CanSprogConnectionConfigXml() {

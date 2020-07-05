@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Concrete implementation of the {@link jmri.IdTag} interface for the LocoNet
  * based Transponding reports.
@@ -18,6 +21,7 @@ package jmri.jmrix.loconet;
  * @author Paul Bender Copyright (C) 2019
  * @since 4.15.4
  */
+@API(status = EXPERIMENTAL)
 public class TranspondingTag extends jmri.implementation.DefaultIdTag implements jmri.AddressedIdTag {
 
     public TranspondingTag(String systemName) {

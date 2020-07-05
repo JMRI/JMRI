@@ -2,6 +2,9 @@ package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.AbstractSensor for serial systems
  *
@@ -9,6 +12,7 @@ import jmri.implementation.AbstractSensor;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class SerialSensor extends AbstractSensor {
 
     public SerialSensor(String systemName, SerialTrafficController tc) {

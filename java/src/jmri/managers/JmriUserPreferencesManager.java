@@ -36,6 +36,8 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.node.NodeIdentity;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -55,6 +57,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JmriUserPreferencesManager extends Bean implements UserPreferencesManager, InstanceManagerAutoInitialize {
 
     public static final String SAVE_ALLOWED = "saveAllowed";

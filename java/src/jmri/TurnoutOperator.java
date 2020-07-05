@@ -2,6 +2,9 @@ package jmri;
 
 import jmri.implementation.AbstractTurnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Some (not much) common machinery for the concrete turnout operator classes.
  *
@@ -28,6 +31,7 @@ public abstract class TurnoutOperator extends Thread {
      * operator is running. This implies that another operation has been started
      * and that this one should just quietly stop doing its thing.
      */
+@API(status = STABLE)
     static public class TurnoutOperatorException extends Exception {
     }
 }

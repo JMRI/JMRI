@@ -5,12 +5,16 @@ import javax.swing.AbstractAction;
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Start a LayoutEditor.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  * @see jmri.jmrit.display.panelEditor.PanelEditorAction
  */
+@API(status = MAINTAINED)
 public class LayoutEditorAction extends AbstractAction {
 
     public LayoutEditorAction(String s) {

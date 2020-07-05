@@ -4,11 +4,15 @@ import javax.swing.JDialog;
 import jmri.util.JmriJFrame;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for control of RPS polling.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class PollTableFrame extends JmriJFrame {
 
     RpsSystemConnectionMemo memo = null;

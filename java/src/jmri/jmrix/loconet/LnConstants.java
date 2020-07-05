@@ -1,5 +1,8 @@
 package jmri.jmrix.loconet;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants to represent values seen in LocoNet traffic.
  * <p>
@@ -90,6 +93,7 @@ package jmri.jmrix.loconet;
  * @author Alain Le Marchand
  * @author B. Milhaupt Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public final class LnConstants {
 
     /* various bit masks */

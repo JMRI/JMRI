@@ -3,6 +3,9 @@ package jmri.util.startup;
 import java.awt.Component;
 import jmri.spi.JmriServiceProviderInterface;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A factory for {@link StartupModel}s.
  *
@@ -12,6 +15,7 @@ import jmri.spi.JmriServiceProviderInterface;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public interface StartupModelFactory extends JmriServiceProviderInterface {
 
     /**

@@ -5,6 +5,8 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
+@API(status = MAINTAINED)
 public class StagingTableModel extends TrackTableModel {
 
     public StagingTableModel() {

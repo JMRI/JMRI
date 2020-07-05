@@ -1,5 +1,7 @@
 package jmri.jmrix.sprog.update;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.jmrix.sprog.SprogConstants.TC_BOOT_REPLY_TIMEOUT;
 
 import java.util.Vector;
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2012, 2016
  */
+@API(status = EXPERIMENTAL)
 public class SprogVersionQuery implements SprogListener {
 
     String replyString;

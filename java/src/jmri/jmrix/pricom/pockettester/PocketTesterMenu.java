@@ -2,11 +2,15 @@ package jmri.jmrix.pricom.pockettester;
 
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a menu or menu item containing the PRICOM Pocket Tester tools
  *
  * @author Bob Jacobsen Copyright 2005
  */
+@API(status = EXPERIMENTAL)
 public class PocketTesterMenu extends JMenu {
 
     public PocketTesterMenu(String name) {

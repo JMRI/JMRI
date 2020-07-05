@@ -3,12 +3,16 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.ExpectedState;
 import jmri.beans.Bean;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Retain a LayoutTrack and its expected state.
  *
  * @author Randall Wood Copyright 2017
  * @param <T> the supported type of LayoutTrack
  */
+@API(status = MAINTAINED)
 public class LayoutTrackExpectedState<T extends LayoutTrack> extends Bean implements ExpectedState<T, Integer> {
 
     private final T layoutTrack;

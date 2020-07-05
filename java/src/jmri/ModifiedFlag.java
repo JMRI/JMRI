@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Tags objects that remember whether they've been modified and need to be
  * (optionally) stored, for example before the program terminates or when a
@@ -22,6 +25,7 @@ package jmri;
  * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.1.6
  */
+@API(status = STABLE)
 public interface ModifiedFlag {
 
     /**

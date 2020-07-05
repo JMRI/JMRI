@@ -11,6 +11,8 @@ import jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList;
 import jmri.jmrix.dcc4pc.Dcc4PcPortController;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -26,6 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends Dcc4PcPortController {
 
     public SerialDriverAdapter() {

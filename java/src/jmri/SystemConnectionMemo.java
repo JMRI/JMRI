@@ -8,6 +8,9 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import jmri.util.startup.StartupActionFactory;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight interface denoting that a system is active, and provide
  * general information.
@@ -17,6 +20,7 @@ import jmri.util.startup.StartupActionFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@API(status = STABLE)
 public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider {
 
     void dispose();

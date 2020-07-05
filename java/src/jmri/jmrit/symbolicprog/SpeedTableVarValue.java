@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.util.CvUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,6 +75,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap - generate cvList array to incorporate Vstart and Vhigh
  *
  */
+@API(status = MAINTAINED)
 public class SpeedTableVarValue extends VariableValue implements ChangeListener {
 
     int nValues;

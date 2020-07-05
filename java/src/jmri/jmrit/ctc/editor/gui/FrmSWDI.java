@@ -9,10 +9,14 @@ import java.util.ArrayList;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
+@API(status = MAINTAINED)
 public class FrmSWDI extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "DlgSWDI";    // NOI18N

@@ -4,12 +4,16 @@ import javax.swing.BorderFactory;
 
 import jmri.jmrit.operations.locations.tools.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of a classification/interchange track. Adds two panels to
  * TrackEditFrame for train/route car drops and pulls.
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012
  */
+@API(status = MAINTAINED)
 public class InterchangeEditFrame extends TrackEditFrame {
 
     public InterchangeEditFrame() {

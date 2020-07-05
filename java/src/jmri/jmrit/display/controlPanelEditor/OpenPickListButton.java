@@ -16,12 +16,16 @@ import jmri.NamedBean;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickSinglePanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Pete Cressman Copyright: Copyright (c) 2019
  *
  * @param <T> type of NamedBean in PickList 
  */
+@API(status = MAINTAINED)
 public class OpenPickListButton<T extends NamedBean> {
 
     private final JPanel _buttonPanel;

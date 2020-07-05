@@ -2,6 +2,9 @@ package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class for replies in a MERG GridConnect based message/reply protocol.
  * <p>
@@ -26,6 +29,7 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class MergReply extends GridConnectReply {
 
     /**

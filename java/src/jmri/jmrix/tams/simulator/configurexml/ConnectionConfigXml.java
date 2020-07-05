@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.tams.simulator.ConnectionConfig;
 import jmri.jmrix.tams.simulator.SimulatorAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistence of layout connections by persisting the
  * SerialDriverAdapter (and connections). Note this is named as the XML version
@@ -17,6 +20,7 @@ import jmri.jmrix.tams.simulator.SimulatorAdapter;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003 copied from NCE code
  * @author kcameron Copyright (c) 2014
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

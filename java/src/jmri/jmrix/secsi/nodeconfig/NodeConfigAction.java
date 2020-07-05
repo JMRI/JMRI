@@ -2,6 +2,8 @@ package jmri.jmrix.secsi.nodeconfig;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
@@ -11,6 +13,7 @@ import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
+@API(status = EXPERIMENTAL)
 public class NodeConfigAction extends AbstractAction {
 
     private SecsiSystemConnectionMemo _memo;

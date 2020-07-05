@@ -10,6 +10,8 @@ import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Reporter;
 import jmri.Turnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
  * @since 2.1.2
  */
+@API(status = EXPERIMENTAL)
 public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryManagerConfigXML {
 
     public BlockManagerXml() {

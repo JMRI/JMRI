@@ -1,5 +1,8 @@
 package jmri.jmrix.cmri.serial;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 
 /**
  * Contains the data payload of a CMRI serial reply packet. Note that _only_ the
@@ -10,6 +13,7 @@ package jmri.jmrix.cmri.serial;
  * @author Chuck Catania Copyright (C) 2014, 2015, 2016  CMRInet changes
 
  */
+@API(status = EXPERIMENTAL)
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one

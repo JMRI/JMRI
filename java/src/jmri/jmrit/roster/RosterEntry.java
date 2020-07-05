@@ -26,6 +26,8 @@ import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -61,6 +63,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap Copyright (C) 2019
  * @see jmri.jmrit.roster.LocoFile
  */
+@API(status = MAINTAINED)
 public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRosterEntry {
 
     // identifiers for property change events and some XML elements

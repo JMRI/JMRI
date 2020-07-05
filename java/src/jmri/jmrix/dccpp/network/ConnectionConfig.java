@@ -2,6 +2,9 @@ package jmri.jmrix.dccpp.network;
 
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring a DCC++ layout connection via Ethernet.Port
  * <p>
@@ -14,6 +17,7 @@ import javax.swing.JPanel;
  * 
  * @see jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**

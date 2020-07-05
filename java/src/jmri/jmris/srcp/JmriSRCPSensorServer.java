@@ -11,12 +11,16 @@ import jmri.SensorManager;
 import jmri.jmris.AbstractSensorServer;
 import jmri.SystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * SRCP Server interface between the JMRI Sensor manager and a network
  * connection
  *
  * @author Paul Bender Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class JmriSRCPSensorServer extends AbstractSensorServer implements PropertyChangeListener {
 
     private static final String ERROR = "Error499";

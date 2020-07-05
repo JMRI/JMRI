@@ -11,6 +11,8 @@ import jmri.SignalHeadManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractSignalHeadManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  */
+@API(status = EXPERIMENTAL)
 public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfigXML {
 
     public AbstractSignalHeadManagerXml() {

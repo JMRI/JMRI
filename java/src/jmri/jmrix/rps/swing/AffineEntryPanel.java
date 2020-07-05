@@ -10,11 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Panel for entry and modifiation of an Affine Transform.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class AffineEntryPanel extends javax.swing.JPanel {
 
     JTextField m00 = new JTextField(8);

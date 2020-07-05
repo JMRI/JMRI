@@ -17,6 +17,8 @@ import jmri.NamedBean;
 import jmri.jmrit.audio.swing.AudioBufferFrame;
 import jmri.jmrit.audio.swing.AudioListenerFrame;
 import jmri.jmrit.audio.swing.AudioSourceFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = STABLE)
 public class AudioTableAction extends AbstractTableAction<Audio> {
 
     AudioTableDataModel listeners;

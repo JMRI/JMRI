@@ -4,6 +4,8 @@ import java.awt.Color;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
  */
+@API(status = EXPERIMENTAL)
 public class ColorUtil {
 
     /*

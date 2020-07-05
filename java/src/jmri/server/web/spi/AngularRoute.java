@@ -4,10 +4,14 @@ import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public final class AngularRoute {
 
     private final String when;

@@ -4,6 +4,9 @@ import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Converts Stream-based I/O to/from EasyDcc messages. The "EasyDccInterface"
  * side sends/receives message objects.
@@ -19,6 +22,7 @@ import jmri.jmrix.easydcc.EasyDccTrafficController;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class EasyDccSimulatorTrafficController extends EasyDccTrafficController {
 
     /**

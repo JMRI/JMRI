@@ -2,6 +2,9 @@ package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.jmrix.rfid.RfidMessage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * <hr>
@@ -17,6 +20,7 @@ import jmri.jmrix.rfid.RfidMessage;
  *
  * @author Matthew Harris Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class ConcentratorMessage extends RfidMessage {
 
     public ConcentratorMessage(int l) {

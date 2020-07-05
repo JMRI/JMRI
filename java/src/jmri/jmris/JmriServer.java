@@ -11,6 +11,8 @@ import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,7 @@ import org.slf4j.LoggerFactory;
  * It starts a thread for each client.
  *
  */
+@API(status = EXPERIMENTAL)
 public class JmriServer {
 
     protected int portNo = 3000; // Port to listen to for new clients.

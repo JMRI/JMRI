@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.util.JmriJFrame;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Glen Oberhauser
  */
+@API(status = MAINTAINED)
 public class ThrottleFrameManager implements InstanceManagerAutoDefault {
 
     private final static int NEXT_THROTTLE_KEY  = KeyEvent.VK_RIGHT;

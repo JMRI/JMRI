@@ -11,11 +11,15 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame containing the entire display tool.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
+@API(status = EXPERIMENTAL)
 public class RpsTrackingFrame extends jmri.util.JmriJFrame {
 
     RpsSystemConnectionMemo memo = null;

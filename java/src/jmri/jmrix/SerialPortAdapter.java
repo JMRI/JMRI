@@ -1,6 +1,8 @@
 package jmri.jmrix;
 
 import java.util.Vector;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import purejavacomm.PortInUseException;
 
@@ -10,6 +12,7 @@ import purejavacomm.PortInUseException;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  * @see jmri.jmrix.SerialConfigException
  */
+@API(status = EXPERIMENTAL)
 public interface SerialPortAdapter extends PortAdapter {
 
     /**

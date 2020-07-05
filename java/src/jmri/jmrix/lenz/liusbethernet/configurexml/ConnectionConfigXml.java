@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbethernet.ConnectionConfig;
 import jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the LIUSB Server
  * (and connections). Note this is named as the XML version of a
@@ -18,6 +21,7 @@ import jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter;
  *
  * @author Paul Bender Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

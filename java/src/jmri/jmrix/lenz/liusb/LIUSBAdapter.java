@@ -9,6 +9,8 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -23,6 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Paul Bender Copyright (C) 2005-2010
  */
+@API(status = EXPERIMENTAL)
 public class LIUSBAdapter extends XNetSerialPortController {
 
     public LIUSBAdapter() {

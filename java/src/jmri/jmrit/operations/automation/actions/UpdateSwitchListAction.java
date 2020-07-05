@@ -5,6 +5,10 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class UpdateSwitchListAction extends Action {
 
     private static final int _code = ActionCodes.UPDATE_SWITCHLIST;

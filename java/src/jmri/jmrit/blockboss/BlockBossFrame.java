@@ -18,6 +18,8 @@ import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.swing.NamedBeanComboBox;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +46,7 @@ import org.slf4j.LoggerFactory;
  * approach lighting, limited speed, changed layout, and tool tips.
  * @author Egbert Broerse 2017
  */
+@API(status = MAINTAINED)
 public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     private static final String SIMPLE_SIGNAL_LOGIC = "Simple_Signal_Logic";

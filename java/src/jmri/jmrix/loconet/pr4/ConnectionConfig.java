@@ -2,6 +2,9 @@ package jmri.jmrix.loconet.pr4;
 
 import jmri.util.SystemType;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a PR4 layout connection via a
  * PR2Adapter object.
@@ -12,6 +15,7 @@ import jmri.util.SystemType;
  * @author B. Milhaupt Copyright (C) 2019
  */
 
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

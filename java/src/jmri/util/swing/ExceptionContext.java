@@ -1,5 +1,8 @@
 package jmri.util.swing;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Wraps an Exception and allows extra contextual information to be added, such
  * as what was happening at the time of the Exception, and a hint as to what the
@@ -9,6 +12,7 @@ package jmri.util.swing;
  * @author Gregory Madsen Copyright (C) 2012
  *
  */
+@API(status = EXPERIMENTAL)
 public class ExceptionContext {
 
     protected Exception _exception;

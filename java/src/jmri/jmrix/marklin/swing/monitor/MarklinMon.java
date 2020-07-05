@@ -3,9 +3,13 @@ package jmri.jmrix.marklin.swing.monitor;
 import jmri.jmrix.marklin.MarklinConstants;
 import jmri.jmrix.marklin.MarklinReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class to convert Marklin Can bus messages to a human readable form
  */
+@API(status = EXPERIMENTAL)
 public class MarklinMon {
 
     public static String displayReply(MarklinReply r) {

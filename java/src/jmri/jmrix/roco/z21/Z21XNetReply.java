@@ -2,6 +2,9 @@ package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.XNetReply;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents a single response from the XpressNet, with extensions
  * from Roco for the Z21.
@@ -9,6 +12,7 @@ import jmri.jmrix.lenz.XNetReply;
  * @author Paul Bender Copyright (C) 2018
  *
  */
+@API(status = EXPERIMENTAL)
 public class Z21XNetReply extends XNetReply {
 
     // Create a new reply.

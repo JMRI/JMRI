@@ -10,6 +10,8 @@ import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.swing.JmriNamedPaneAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConnectionAction<LocoNetSystemConnectionMemo> {
 
     /**

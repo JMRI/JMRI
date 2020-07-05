@@ -9,6 +9,9 @@ import jmri.ShutDownManager;
 import jmri.util.NamedBeanComparator;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Lightweight class to denote that a system is active, and provide general
  * information.
@@ -18,6 +21,7 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo {
 
     public EcosSystemConnectionMemo(EcosTrafficController et) {

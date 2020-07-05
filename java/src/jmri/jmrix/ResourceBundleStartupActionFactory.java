@@ -7,11 +7,15 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import jmri.util.startup.AbstractStartupActionFactory;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a factory of startup actions from a ResourceBundle.
  * 
  * @author Randall Wood Copyright 2020
  */
+@API(status = EXPERIMENTAL)
 public class ResourceBundleStartupActionFactory extends AbstractStartupActionFactory {
 
     private final ResourceBundle bundle;

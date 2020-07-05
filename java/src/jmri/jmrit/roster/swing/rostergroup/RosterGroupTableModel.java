@@ -5,6 +5,9 @@ import javax.swing.JTextField;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Table data model for display of Rosters entries to a specific Roster Group.
  * <p>
@@ -18,6 +21,7 @@ import jmri.jmrit.roster.RosterEntry;
  * @author Kevin Dickerson Copyright (C) 2009
  * @since 2.7.5
  */
+@API(status = MAINTAINED)
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {
 
     static final int IDCOL = 0;

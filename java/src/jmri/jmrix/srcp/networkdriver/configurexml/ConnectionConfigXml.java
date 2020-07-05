@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.srcp.networkdriver.ConnectionConfig;
 import jmri.jmrix.srcp.networkdriver.NetworkDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /*import org.jdom2.*;
  import javax.swing.*;*/
 /**
@@ -20,6 +23,7 @@ import jmri.jmrix.srcp.networkdriver.NetworkDriverAdapter;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender Copyright: Copyright (c) 2010
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {

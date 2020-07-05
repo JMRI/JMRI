@@ -7,6 +7,10 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class PrintSwitchListAction extends Action {
 
     private static final int _code = ActionCodes.PRINT_SWITCHLIST;

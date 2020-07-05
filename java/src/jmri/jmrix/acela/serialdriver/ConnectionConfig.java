@@ -4,6 +4,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Definition of objects to handle configuring a CTI Electronics Acela layout
  * connection via a SerialDriverAdapter object.
@@ -12,6 +15,7 @@ import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
  * @author Bob Coleman, Copyright (C) 2007, 2008 Based on MRC example, modified
  * to establish Acela support.
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**

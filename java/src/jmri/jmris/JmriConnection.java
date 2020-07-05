@@ -4,6 +4,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketException;
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright (C) 2012, 2014
  */
+@API(status = EXPERIMENTAL)
 public class JmriConnection {
 
     private final Session session;

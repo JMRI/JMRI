@@ -29,10 +29,13 @@ import java.util.regex.PatternSyntaxException;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import jmri.util.PhysicalLocation;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class ListeningSpot {
 
     private Vector3d _location;

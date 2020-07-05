@@ -12,6 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Used to intercept inputs and to display a busy cursor during reads and
  * writes.
@@ -22,6 +25,7 @@ import javax.swing.event.MouseInputAdapter;
  *
  * @author Howard G. Penny Copyright (C) 2005
  */
+@API(status = EXPERIMENTAL)
 public class BusyGlassPane extends JComponent {
 
     CBListener listener;

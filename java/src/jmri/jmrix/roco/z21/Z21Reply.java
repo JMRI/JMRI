@@ -4,6 +4,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.AbstractMRReply;
 import jmri.DccLocoAddress;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Class for replies in the z21/Z21 protocol.
  * <p>
@@ -15,6 +18,7 @@ import jmri.DccLocoAddress;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Paul Bender Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class Z21Reply extends AbstractMRReply {
 
     private static final String WRONG_REPLY_TYPE = "Wrong Reply Type";

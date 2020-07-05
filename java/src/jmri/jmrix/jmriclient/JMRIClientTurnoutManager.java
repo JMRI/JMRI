@@ -3,6 +3,9 @@ package jmri.jmrix.jmriclient;
 import javax.annotation.Nonnull;
 import jmri.Turnout;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement turnout manager for JMRIClient systems
  * <p>
@@ -11,6 +14,7 @@ import jmri.Turnout;
  *
  * @author Paul Bender Copyright (C) 2010
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public JMRIClientTurnoutManager(JMRIClientSystemConnectionMemo memo) {

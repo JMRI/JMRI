@@ -5,6 +5,8 @@ import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.ProfileManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -17,6 +19,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
  * @since 2.9.7
  */
+@API(status = EXPERIMENTAL)
 public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
 
     public ManagerDefaultSelectorXml() {

@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.powerline.insteon2412s.ConnectionConfig;
 import jmri.jmrix.powerline.insteon2412s.SpecificDriverAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistence of layout connections by persisting the
  * SerialDriverAdapter (and connections). Note this is named as the XML version
@@ -16,6 +19,7 @@ import jmri.jmrix.powerline.insteon2412s.SpecificDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

@@ -2,6 +2,8 @@ package jmri.jmrit.symbolicprog;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static java.nio.charset.Charset.defaultCharset;
 import static java.nio.charset.Charset.isSupported;
 
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Heap Copyright (C) 2012 Added support for Marklin mfx style
  * speed table
  */
+@API(status = MAINTAINED)
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
     private String[] headers = null;

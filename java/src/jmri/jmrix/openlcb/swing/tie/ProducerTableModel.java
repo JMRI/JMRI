@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 import javax.swing.table.AbstractTableModel;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen 2008
   * @since 2.3.7
  */
+@API(status = EXPERIMENTAL)
 public class ProducerTableModel extends AbstractTableModel {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");

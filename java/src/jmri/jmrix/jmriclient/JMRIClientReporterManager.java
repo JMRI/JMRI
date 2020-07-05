@@ -3,6 +3,9 @@ package jmri.jmrix.jmriclient;
 import javax.annotation.Nonnull;
 import jmri.Reporter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implement reporter manager for JMRIClient systems
  * <p>
@@ -11,6 +14,7 @@ import jmri.Reporter;
  *
  * @author Paul Bender Copyright (C) 2011
  */
+@API(status = EXPERIMENTAL)
 public class JMRIClientReporterManager extends jmri.managers.AbstractReporterManager {
 
     public JMRIClientReporterManager(JMRIClientSystemConnectionMemo memo) {

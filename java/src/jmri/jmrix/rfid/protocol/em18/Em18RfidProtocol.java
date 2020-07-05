@@ -2,6 +2,8 @@ package jmri.jmrix.rfid.protocol.em18;
 
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.rfid.RfidProtocol;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author Oscar A. Pruitt Copyright (C) 2015
  * @since 4.1.2
  */
+@API(status = EXPERIMENTAL)
 public class Em18RfidProtocol extends RfidProtocol {
 
     private static final int SPECIFICMAXSIZE = 12;

@@ -5,12 +5,16 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.swing.CanNamedPaneAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a menu containing the Jmri CAN- and CBUS-specific tools
  *
  * @author Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008, 2020
  */
+@API(status = EXPERIMENTAL)
 public class SprogCbusMenu extends JMenu {
 
     Item[] panelItems;

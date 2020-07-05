@@ -7,6 +7,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import javax.swing.JTable;
 import javax.swing.TransferHandler;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright 2016
  */
+@API(status = EXPERIMENTAL)
 public class DnDTableImportExportHandler extends DnDTableExportHandler {
     
     int[] _skipColumns = new int[]{};

@@ -1,5 +1,8 @@
 package jmri.util;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common utility methods for Internationalization (I18N) and Localization
  * (L12N) in the default {@link java.util.Locale}.
@@ -9,6 +12,7 @@ package jmri.util;
  * @author Bob Jacobsen Copyright 2014
  * @since 3.9.3
  */
+@API(status = EXPERIMENTAL)
 public class IntlUtilities {
 
     /**

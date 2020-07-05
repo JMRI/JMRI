@@ -10,12 +10,16 @@ import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Programmer implementation for Programmer that uses a SlotManager (which is also an AbstractProgrammer)
  * that might be provided later. This is done by connecting through a LocoNetSystemConnectionMemo.
  *
  * @author Bob Jacobsen Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class LnDeferProgrammer implements Programmer {
 
     public LnDeferProgrammer(@Nonnull LocoNetSystemConnectionMemo memo) {

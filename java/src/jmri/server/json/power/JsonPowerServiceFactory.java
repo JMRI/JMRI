@@ -3,6 +3,8 @@ package jmri.server.json.power;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -10,6 +12,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright 2016, 2018
  */
 @ServiceProvider(service = JsonServiceFactory.class)
+@API(status = EXPERIMENTAL)
 public class JsonPowerServiceFactory implements JsonServiceFactory<JsonPowerHttpService, JsonPowerSocketService> {
 
     /**

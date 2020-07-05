@@ -4,11 +4,15 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrit.operations.OperationsFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user edit of manifest and switch list print options
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  */
+@API(status = MAINTAINED)
 public class PrintOptionFrame extends OperationsFrame {
 
     public PrintOptionFrame() {

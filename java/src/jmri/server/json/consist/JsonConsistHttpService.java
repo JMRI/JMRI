@@ -1,5 +1,7 @@
 package jmri.server.json.consist;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.ADDRESS;
 import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.FORWARD;
@@ -33,6 +35,7 @@ import jmri.server.json.util.JsonUtilHttpService;
 /**
  * @author Randall Wood Copyright 2016, 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonConsistHttpService extends JsonHttpService {
 
     final JsonConsistManager manager; // default package visibility

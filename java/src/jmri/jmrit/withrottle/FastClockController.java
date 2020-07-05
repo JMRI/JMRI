@@ -4,6 +4,8 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeListener;
 import java.util.TimeZone;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import jmri.Timebase;
  *
  * @author Brett Hoffman Copyright (C) 2018
  */
+@API(status = MAINTAINED)
 public class FastClockController extends AbstractController {
 
     private final Timebase fastClock;

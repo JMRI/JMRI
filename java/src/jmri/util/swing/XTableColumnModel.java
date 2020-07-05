@@ -6,6 +6,9 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Taken from http://www.stephenkelvin.de/XTableColumnModel/
  * {@code XTableColumnModel} extends the DefaultTableColumnModel . It provides a
@@ -26,6 +29,7 @@ import javax.swing.table.TableColumn;
  * @author Stephen Kelvin, mail@StephenKelvin.de
  * @see DefaultTableColumnModel
  */
+@API(status = EXPERIMENTAL)
 public class XTableColumnModel extends DefaultTableColumnModel {
 
     /**

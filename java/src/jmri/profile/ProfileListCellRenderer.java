@@ -4,11 +4,15 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements a list cell renderer that provides a Profile-specific tool tip.
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class ProfileListCellRenderer extends DefaultListCellRenderer {
 
     public ProfileListCellRenderer() {

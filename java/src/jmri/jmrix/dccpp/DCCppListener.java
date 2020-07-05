@@ -1,5 +1,8 @@
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * DCCppListener provides the call-back interface for notification when a new
  * DCC++ message arrives from the layout.
@@ -16,6 +19,7 @@ package jmri.jmrix.dccpp;
   *
  * Based on XNetListener by Bob Jacobsen
  */
+@API(status = EXPERIMENTAL)
 public interface DCCppListener extends jmri.jmrix.AbstractMRListener {
 
     /**

@@ -11,6 +11,9 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Manager for {@link jmri.server.json.throttle.JsonThrottle} objects. A manager
  * is needed since multiple JsonThrottle objects may be controlling the same
@@ -18,6 +21,7 @@ import jmri.ThrottleManager;
  *
  * @author Randall Wood Copyright 2016, 2018
  */
+@API(status = EXPERIMENTAL)
 public class JsonThrottleManager implements InstanceManagerAutoDefault {
 
     private final HashMap<DccLocoAddress, JsonThrottle> throttles = new HashMap<>();

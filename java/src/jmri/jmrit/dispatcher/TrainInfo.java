@@ -4,6 +4,9 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * TrainInfo is a temporary object specifying New Train information just read
  * from disk, or to be written to disk
@@ -17,6 +20,7 @@ import jmri.SensorManager;
  *
  * @author Dave Duchamp Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class TrainInfo {
 
     public TrainInfo() {

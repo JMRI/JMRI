@@ -1,5 +1,7 @@
 package jmri.jmrix.roco.z21;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see Z21XNetStreamPortController
  */
+@API(status = EXPERIMENTAL)
 public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
 
     /**

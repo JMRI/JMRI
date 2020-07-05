@@ -10,6 +10,8 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Manager.NameValidity;
 import jmri.NamedBean;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
+@API(status = EXPERIMENTAL)
 public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public RpsSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {

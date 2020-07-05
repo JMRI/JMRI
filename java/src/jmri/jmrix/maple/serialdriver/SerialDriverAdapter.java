@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.jmrix.maple.SerialPortController;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -21,6 +23,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2002
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends SerialPortController {
 
     SerialPort activeSerialPort = null;

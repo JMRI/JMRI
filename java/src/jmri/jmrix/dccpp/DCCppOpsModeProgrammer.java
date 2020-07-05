@@ -8,6 +8,8 @@ import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetOpsModeProgrammer by Paul Bender and Girgio Terdina
  */
+@API(status = EXPERIMENTAL)
 public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements AddressedProgrammer {
 
     int mAddressHigh;

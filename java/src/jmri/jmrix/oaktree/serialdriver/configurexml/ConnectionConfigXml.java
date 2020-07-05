@@ -6,6 +6,8 @@ import jmri.jmrix.oaktree.SerialNode;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.serialdriver.ConnectionConfig;
 import jmri.jmrix.oaktree.serialdriver.SerialDriverAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -21,6 +23,7 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright (c) 2003, 2006
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

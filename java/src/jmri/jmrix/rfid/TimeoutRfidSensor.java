@@ -1,6 +1,8 @@
 package jmri.jmrix.rfid;
 
 import jmri.IdTag;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2014
  * @since 3.9.2
  */
+@API(status = EXPERIMENTAL)
 public class TimeoutRfidSensor extends RfidSensor {
 
     /**

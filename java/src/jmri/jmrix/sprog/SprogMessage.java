@@ -3,6 +3,8 @@ package jmri.jmrix.sprog;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.ProgrammingMode;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     // Special characters (NOTE: microchip bootloader does not use standard ASCII)

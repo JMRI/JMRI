@@ -8,6 +8,9 @@ import jmri.InstanceManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
@@ -26,6 +29,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = EXPERIMENTAL)
 public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
     public CbusConfigurationManager(CanSystemConnectionMemo memo) {

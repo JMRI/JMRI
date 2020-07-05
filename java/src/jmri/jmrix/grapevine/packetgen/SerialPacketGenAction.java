@@ -5,6 +5,8 @@ import javax.swing.Action;
 import jmri.InstanceManager;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.swing.GrapevineSystemConnectionAction;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
+@API(status = EXPERIMENTAL)
 public class SerialPacketGenAction extends GrapevineSystemConnectionAction {
 
     public SerialPacketGenAction(String s, GrapevineSystemConnectionMemo memo) {

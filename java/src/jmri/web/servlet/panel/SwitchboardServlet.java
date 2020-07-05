@@ -8,6 +8,8 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.display.switchboardEditor.BeanSwitch;
 import jmri.server.json.JSON;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
 @WebServlet(name = "SwitchboardServlet",
         urlPatterns = {"/panel/Switchboard"})
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class SwitchboardServlet extends AbstractPanelServlet {
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardServlet.class);

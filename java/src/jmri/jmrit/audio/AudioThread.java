@@ -1,5 +1,8 @@
 package jmri.jmrit.audio;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface defining public methods and variables used in AudioThread classes
  * <hr>
@@ -15,6 +18,7 @@ package jmri.jmrit.audio;
  *
  * @author Matthew Harris copyright (c) 2009
  */
+@API(status = MAINTAINED)
 public interface AudioThread extends Runnable {
 
     /**

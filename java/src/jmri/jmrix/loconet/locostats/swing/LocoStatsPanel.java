@@ -17,6 +17,8 @@ import jmri.jmrix.loconet.locostats.RawStatus;
 import jmri.jmrix.loconet.swing.LnPanel;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2008, 2010
  * @since 2.1.5
  */
+@API(status = EXPERIMENTAL)
 public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsListener {
 
     JPanel lb2Panel;

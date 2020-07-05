@@ -3,6 +3,8 @@ package jmri.jmrix.grapevine.serialmon;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import jmri.InstanceManager;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
@@ -13,6 +15,7 @@ import jmri.jmrix.grapevine.swing.GrapevineSystemConnectionAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007
  */
+@API(status = EXPERIMENTAL)
 public class SerialMonAction extends GrapevineSystemConnectionAction {
 
     public SerialMonAction(String s, GrapevineSystemConnectionMemo memo) {

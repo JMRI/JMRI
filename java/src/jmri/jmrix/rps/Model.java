@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Model holds RPS representation of layout geometry and logical structure.
  * <p>
@@ -12,6 +15,7 @@ import java.util.List;
  * @since 2.1.7
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = EXPERIMENTAL)
 public class Model {
 
     public Model() {

@@ -10,6 +10,9 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This object attempts to "extend" (implements) Sensor functionality that
  * is needed by the CTC system.
@@ -60,6 +63,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 // Prefix NBH = Named Bean Handler....
 
+@API(status = MAINTAINED)
 public class NBHSensor {
 //  Special case sane return values:
     public static final int DEFAULT_SENSOR_STATE_RV = Sensor.INACTIVE;

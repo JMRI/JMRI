@@ -53,11 +53,14 @@ import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosPreferences;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = EXPERIMENTAL)
 public class EcosLocoToRoster implements EcosListener {
 
     EcosLocoAddressManager ecosManager;

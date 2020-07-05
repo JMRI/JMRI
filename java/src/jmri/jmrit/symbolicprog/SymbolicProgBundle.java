@@ -1,5 +1,8 @@
 package jmri.jmrit.symbolicprog;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Common access to the SymbolicProgBundle of properties.
  *
@@ -8,6 +11,7 @@ package jmri.jmrit.symbolicprog;
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
  */
+@API(status = MAINTAINED)
 public class SymbolicProgBundle {
 
     static public String getMessage(String key) {

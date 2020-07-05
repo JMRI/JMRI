@@ -10,12 +10,16 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 import jmri.jmrit.operations.trains.tools.ToggleShowFullLocationName;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Conductor Frame. Shows work for a train one location at a time.
  *
  * @author Dan Boudreau Copyright (C) 2011, 2013
  * 
  */
+@API(status = MAINTAINED)
 public class TrainConductorFrame extends OperationsFrame {
 
     public TrainConductorFrame(Train train) {

@@ -5,6 +5,8 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.duplexgroup.DuplexGroupMessageType;
 import jmri.jmrix.loconet.duplexgroup.LnDplxGrpInfoImplConstants;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +71,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author B. Milhaupt Copyright 2011
  */
+@API(status = EXPERIMENTAL)
 public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
 
     private static final boolean limitPasswordToNumericCharacters = false;

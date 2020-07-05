@@ -2,6 +2,9 @@ package jmri.jmrit.display;
 
 import javax.swing.JPopupMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Adds capability for a object to load a browser page or bring a panel frame to
  * the top.
@@ -26,6 +29,7 @@ import javax.swing.JPopupMenu;
  *
  * See LinkingLabel.java or AnalogClock2Display.java for examples
  */
+@API(status = MAINTAINED)
 public interface LinkingObject extends Cloneable {
 
     String getURL();

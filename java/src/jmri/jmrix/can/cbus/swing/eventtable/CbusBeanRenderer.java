@@ -8,6 +8,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * Renderer for Bean Icons, formatting them to similar height for use in tables.
  * Not a permanent location for this class, location likely to change in near future.
  */ 
+@API(status = EXPERIMENTAL)
 public class CbusBeanRenderer  {
     
     private ImageIcon tOff;

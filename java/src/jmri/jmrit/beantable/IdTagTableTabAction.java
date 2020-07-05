@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = STABLE)
 public class IdTagTableTabAction extends AbstractTableTabAction<IdTag> {
 
     public IdTagTableTabAction(String s) {

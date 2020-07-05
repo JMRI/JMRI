@@ -24,6 +24,8 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriColorChooser;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Pete Cressman Copyright (C) 2010, 2011
  */
+@API(status = MAINTAINED)
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
     static final public int UNKOWN_FONT_COLOR = 0x03;

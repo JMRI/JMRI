@@ -3,6 +3,9 @@ package jmri.jmrix.dccpp.swing;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a menu containing the DCC++ specific tools.
  *
@@ -11,6 +14,7 @@ import javax.swing.JMenu;
  *
  * Based on XNetMenu by Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public class DCCppMenu extends JMenu {
 
 

@@ -3,11 +3,15 @@ package jmri.jmrit.ussctc;
 import javax.swing.JPanel;
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Refactored common routines and data for the GUI panels in this package.
  *
  * @author Bob Jacobsen Copyright (C) 2007
  */
+@API(status = MAINTAINED)
 public class BasePanel extends JPanel implements Constants {
 
     BasePanel() {

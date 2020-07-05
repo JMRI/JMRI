@@ -25,6 +25,9 @@ import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.palette.DecoratorPanel.AJSpinner;
 import jmri.util.swing.JmriColorChooser;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A dialog to color a Component in a Window.  The ColorChooser
  * interactively modifies the color of the component on the window
@@ -33,6 +36,7 @@ import jmri.util.swing.JmriColorChooser;
  * @author Pete Cressman Copyright (C) 2018
  * @since 4.13.1
  */
+@API(status = MAINTAINED)
 public class ColorDialog extends JDialog implements ChangeListener {
 
     public static final int STRUT = 6;

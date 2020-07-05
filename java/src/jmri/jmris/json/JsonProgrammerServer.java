@@ -1,5 +1,7 @@
 package jmri.jmris.json;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.MODE;
 import static jmri.server.json.JSON.NODE_CV;
@@ -37,6 +39,7 @@ import org.slf4j.LoggerFactory;
  *             JSON protocol services
  */
 @Deprecated
+@API(status = EXPERIMENTAL)
 public class JsonProgrammerServer extends AbstractProgrammerServer {
 
     private final JmriConnection connection;

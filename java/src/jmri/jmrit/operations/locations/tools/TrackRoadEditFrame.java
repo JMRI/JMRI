@@ -22,6 +22,8 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2013, 2014
  * 
  */
+@API(status = MAINTAINED)
 public class TrackRoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     Location _location = null;

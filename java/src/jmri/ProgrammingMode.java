@@ -3,6 +3,9 @@ package jmri;
 
 import javax.annotation.Nonnull;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Denote a single programming mode.
  * <p>
@@ -24,6 +27,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2014
  */
 @javax.annotation.concurrent.Immutable
+@API(status = STABLE)
 public final class ProgrammingMode {
 
     /**

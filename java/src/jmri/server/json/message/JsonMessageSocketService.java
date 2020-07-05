@@ -1,5 +1,7 @@
 package jmri.server.json.message;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.message.JsonMessage.CLIENT;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,6 +23,7 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood Copyright 2017, 2019
  */
+@API(status = EXPERIMENTAL)
 public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpService> {
 
     public JsonMessageSocketService(JsonConnection connection) {

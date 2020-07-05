@@ -1,6 +1,8 @@
 package jmri.jmrix.grapevine;
 
 import jmri.util.StringUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2006, 2007, 2008
  * @author Egbert Broerse Copyright (C) 2018
  */
+@API(status = EXPERIMENTAL)
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**

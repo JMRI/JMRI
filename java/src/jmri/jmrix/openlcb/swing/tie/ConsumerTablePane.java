@@ -9,12 +9,16 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Pane for showing the consumer table
  *
  * @author Bob Jacobsen 2008
   * @since 2.3.7
  */
+@API(status = EXPERIMENTAL)
 public class ConsumerTablePane extends JPanel {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");

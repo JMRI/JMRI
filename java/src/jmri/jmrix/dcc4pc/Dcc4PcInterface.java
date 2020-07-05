@@ -1,5 +1,8 @@
 package jmri.jmrix.dcc4pc;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define interface for sending and receiving messages to the DCC4PC computer
  * interface device.
@@ -8,6 +11,7 @@ package jmri.jmrix.dcc4pc;
  * @author Bob Jacobsen Copyright (C) 2001
  * 
  */
+@API(status = EXPERIMENTAL)
 public interface Dcc4PcInterface {
 
     public void addDcc4PcListener(Dcc4PcListener l);

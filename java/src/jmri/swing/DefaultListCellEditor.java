@@ -7,10 +7,14 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class DefaultListCellEditor<E> extends DefaultCellEditor implements ListCellEditor<E> {
 
     public DefaultListCellEditor(final JCheckBox checkBox) {

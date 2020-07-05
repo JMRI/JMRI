@@ -1,10 +1,14 @@
 package jmri.server.json.signalhead;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants used by the {@link jmri.server.json.signalhead} package.
  *
  * @author Randall Wood 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonSignalHead {
 
     /**

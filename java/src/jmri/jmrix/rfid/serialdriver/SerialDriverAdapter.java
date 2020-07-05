@@ -21,6 +21,8 @@ import jmri.jmrix.rfid.protocol.olimex.OlimexRfid1356mifareProtocol;
 import jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol;
 import jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol;
 import jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -39,6 +41,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author B. Milhaupt Copyright (C) 2017
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends RfidPortController {
 
     SerialPort activeSerialPort = null;

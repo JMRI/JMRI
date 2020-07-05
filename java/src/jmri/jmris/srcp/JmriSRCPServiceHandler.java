@@ -2,6 +2,9 @@ package jmri.jmris.srcp;
 
 import jmri.InstanceManager;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * This class provides access to the service handlers for individual object
  * types which can be passed to a parser visitor object.
@@ -13,6 +16,7 @@ import jmri.InstanceManager;
  * @author Paul Bender Copyright (C) 2014
  *
  */
+@API(status = EXPERIMENTAL)
 public class JmriSRCPServiceHandler extends jmri.jmris.ServiceHandler {
 
     public JmriSRCPServiceHandler(int port) {

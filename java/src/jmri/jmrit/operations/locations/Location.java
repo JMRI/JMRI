@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -36,6 +38,7 @@ import jmri.util.PhysicalLocation;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2012, 2013
  */
+@API(status = MAINTAINED)
 public class Location extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
     public static final String LOC_TRACK_REGIX = "s";

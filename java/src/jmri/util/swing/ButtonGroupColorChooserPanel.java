@@ -9,6 +9,9 @@ import javax.swing.ButtonGroup;
 import javax.swing.BoxLayout;
 import javax.swing.JRadioButton;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Abstract Color Chooser extension that presents the JMRI preset colors in
  * as a Radio Button list with proper internationalization.
@@ -16,6 +19,7 @@ import javax.swing.JRadioButton;
  * @author Paul Bender Copyright (C) 2017
  * @since 4.9.6
  */
+@API(status = EXPERIMENTAL)
 public class ButtonGroupColorChooserPanel extends AbstractColorChooserPanel {
 
     private String[] colorText = {"Black", "DarkGray", "Gray",

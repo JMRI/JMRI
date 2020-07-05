@@ -2,6 +2,9 @@ package jmri.jmrit.ussctc;
 
 import java.util.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Lock is the base interface for implementations that check layout conditions.
  * <p>
@@ -11,6 +14,7 @@ import java.util.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
+@API(status = MAINTAINED)
 public interface Lock {
 
     enum Valid {

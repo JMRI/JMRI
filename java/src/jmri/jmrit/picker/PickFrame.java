@@ -3,6 +3,10 @@ package jmri.jmrit.picker;
 import javax.swing.JMenuBar;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class PickFrame extends JmriJFrame {
 
     public PickFrame(String title) {

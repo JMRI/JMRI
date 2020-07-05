@@ -5,6 +5,9 @@ import javax.annotation.Nonnull;
 
 import jmri.implementation.LightControl;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represent a single visible Light on the physical layout.
  * <p>
@@ -63,6 +66,7 @@ import jmri.implementation.LightControl;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
+@API(status = STABLE)
 public interface Light extends DigitalIO, AnalogIO {
 
     /**

@@ -2,6 +2,9 @@ package jmri.jmrit.display.layoutEditor;
 
 import jmri.Block;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * TrackNode is a memo object specifying and returning track node
  * information
@@ -31,6 +34,7 @@ import jmri.Block;
  * @author Dave Duchamp Copyright (C) 2009
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 public class TrackNode {
 
     public TrackNode(LayoutTrack node, HitPointType nodeType, TrackSegment segment, boolean endBumper,

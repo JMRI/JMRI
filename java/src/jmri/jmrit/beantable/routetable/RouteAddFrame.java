@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Add frame for the Route Table.
  *
@@ -18,6 +21,7 @@ import java.awt.event.ActionEvent;
  * @author Egbert Broerse Copyright (C) 2016
  * @author Paul Bender Colyright (C) 2020
  */
+@API(status = MAINTAINED)
 public class RouteAddFrame extends AbstractRouteAddEditFrame {
 
 

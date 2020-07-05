@@ -3,11 +3,15 @@ package jmri.jmrix.direct;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create a "Systems" menu containing the Jmri direct-drive-specific tools (none at present).
  *
  * @author Bob Jacobsen Copyright 2003
  */
+@API(status = EXPERIMENTAL)
 public class DirectMenu extends JMenu {
 
     public DirectMenu(String name, DirectSystemConnectionMemo memo) {

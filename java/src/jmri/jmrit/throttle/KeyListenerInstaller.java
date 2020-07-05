@@ -4,12 +4,16 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.KeyListener;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * A Visitor class for installing a KeyListener on a container and all of its
  * subcomponents.
  *
  * @author glen
  */
+@API(status = MAINTAINED)
 public class KeyListenerInstaller {
 
     /**

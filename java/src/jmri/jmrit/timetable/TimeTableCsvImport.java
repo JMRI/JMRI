@@ -11,6 +11,9 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * CSV Record Types. The first field is the record type keyword (not I18N).
  * Most fields are optional.
@@ -71,6 +74,7 @@ import org.apache.commons.csv.CSVRecord;
  * @author Dave Sand Copyright (C) 2019
  * @since 4.15.3
  */
+@API(status = MAINTAINED)
 public class TimeTableCsvImport {
 
     TimeTableDataManager tdm = TimeTableDataManager.getDataManager();

@@ -10,6 +10,9 @@ import jmri.TurnoutManager;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide the required SystemConnectionMemo.
  *
@@ -19,6 +22,7 @@ import jmri.util.NamedBeanComparator;
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  * @author Egbert Broerse Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public TmccSystemConnectionMemo() {

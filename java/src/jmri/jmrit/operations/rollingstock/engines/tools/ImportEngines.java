@@ -7,6 +7,8 @@ import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ import jmri.jmrit.operations.setup.Control;
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2013
  */
+@API(status = MAINTAINED)
 public class ImportEngines extends ImportRollingStock {
 
     private static final String DEFAULT_ENGINE_TYPE = Bundle.getMessage("engineDefaultType");

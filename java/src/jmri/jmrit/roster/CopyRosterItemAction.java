@@ -5,6 +5,8 @@ import java.io.File;
 import javax.swing.Icon;
 import jmri.util.FileUtil;
 import jmri.util.swing.WindowInterface;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.XmlFile
  */
+@API(status = MAINTAINED)
 public class CopyRosterItemAction extends AbstractRosterItemAction {
 
     public CopyRosterItemAction(String s, WindowInterface wi) {

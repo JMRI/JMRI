@@ -1,11 +1,15 @@
 package jmri.jmrix.qsi;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Define interface for sending and receiving messages to the QSI command
  * station.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
+@API(status = EXPERIMENTAL)
 public interface QsiInterface {
 
     public void addQsiListener(QsiListener l);

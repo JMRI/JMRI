@@ -32,9 +32,12 @@ import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.util.IntlUtilities;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@API(status = MAINTAINED)
 public class BlockPathTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int FROM_PORTAL_COLUMN = 0;

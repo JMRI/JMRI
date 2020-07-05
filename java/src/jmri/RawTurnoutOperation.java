@@ -3,6 +3,9 @@ package jmri;
 import jmri.implementation.AbstractTurnout;
 import jmri.implementation.RawTurnoutOperator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * RawTurnoutOperation class - specialization of TurnoutOperation to provide
  * automatic retry for a turnout with no feedback by sending raw NMRA commands
@@ -10,6 +13,7 @@ import jmri.implementation.RawTurnoutOperator;
  *
  * @author Paul Bender
  */
+@API(status = STABLE)
 public class RawTurnoutOperation extends CommonTurnoutOperation {
 
     // This class should only be used with DIRECT, ONESENSOR or TWOSENSOR 

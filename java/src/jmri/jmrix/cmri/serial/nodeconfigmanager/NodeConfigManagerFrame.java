@@ -14,6 +14,8 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.nodeiolist.NodeIOListFrame;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2004
  * @author Chuck Catania Copyright (C) 2013, 2014, 2015, 2016, 2017, 2018
  */
+@API(status = EXPERIMENTAL)
 public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
     ArrayList<SerialNode> cmriNode = new ArrayList<>();

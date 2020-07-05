@@ -12,12 +12,16 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame providing a simple command station programmer
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  * @author Giorgio Terdina Copyright (C) 2007
  */
+@API(status = MAINTAINED)
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
     /**

@@ -4,6 +4,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.text.JTextComponent;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extends JTextField to provide a data validation function and a colorization
  * function.
@@ -14,6 +17,7 @@ import javax.swing.text.JTextComponent;
  *
  * @author B. Milhaupt Copyright 2010, 2011
  */
+@API(status = EXPERIMENTAL)
 public class ValidatedTextField extends javax.swing.JTextField {
 
     ValidatedTextField thisone;

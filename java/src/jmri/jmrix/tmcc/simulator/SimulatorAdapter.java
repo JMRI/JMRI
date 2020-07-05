@@ -12,6 +12,8 @@ import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.ImmediatePipedOutputStream;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
+@API(status = EXPERIMENTAL)
 public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members

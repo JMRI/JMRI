@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 import javax.swing.AbstractAction;
 import jmri.util.zeroconf.ZeroConfService;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Alex Shepherd
  */
+@API(status = EXPERIMENTAL)
 public class LnMessageServerAction extends AbstractAction {
 
     public LnMessageServerAction(String s) {

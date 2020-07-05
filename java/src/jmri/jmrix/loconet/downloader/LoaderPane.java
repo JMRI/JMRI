@@ -17,6 +17,8 @@ import jmri.jmrit.MemoryContents;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2005, 2015
  * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
  */
+@API(status = EXPERIMENTAL)
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements jmri.jmrix.loconet.swing.LnPanelInterface {
 

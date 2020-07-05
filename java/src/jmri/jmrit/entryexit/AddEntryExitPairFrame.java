@@ -9,11 +9,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Create frame for an Add Entry Exit.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = MAINTAINED)
 public class AddEntryExitPairFrame extends jmri.util.JmriJFrame {
 
     public AddEntryExitPairFrame() {

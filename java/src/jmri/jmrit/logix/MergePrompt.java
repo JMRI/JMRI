@@ -28,11 +28,15 @@ import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Prompts user to select SpeedProfile to write to Roster
  *
  * @author Pete Cressman Copyright (C) 2017
  */
+@API(status = MAINTAINED)
 public class MergePrompt extends JDialog {
 
     Map<String, Boolean> _candidates;   // merge candidate choices

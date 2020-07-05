@@ -5,6 +5,9 @@ import jmri.IdTag;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Extend jmri.AbstractSensor for RFID systems
  * <p>
@@ -14,6 +17,7 @@ import jmri.implementation.AbstractSensor;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
+@API(status = EXPERIMENTAL)
 public class RfidSensor extends AbstractSensor
         implements RfidTagListener {
 

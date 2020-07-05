@@ -15,6 +15,10 @@ import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicSliderUI;
 
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
+@API(status = MAINTAINED)
 public class ControlPanelCustomSliderUI extends BasicSliderUI {
     
     // Color are coming from the Tango themes color palette (as well as icons on the Throttle window, for look consistency)

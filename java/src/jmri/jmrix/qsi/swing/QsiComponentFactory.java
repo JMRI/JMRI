@@ -3,6 +3,9 @@ package jmri.jmrix.qsi.swing;
 import jmri.jmrix.qsi.QSIMenu;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Provide access to Swing components for the Qsi subsystem.
  *
@@ -10,6 +13,7 @@ import jmri.jmrix.qsi.QsiSystemConnectionMemo;
  * @author Paul Bender Copyright (C) 2010,2016
  * @since 4.5.1
  */
+@API(status = EXPERIMENTAL)
 public class QsiComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public QsiComponentFactory(QsiSystemConnectionMemo memo) {

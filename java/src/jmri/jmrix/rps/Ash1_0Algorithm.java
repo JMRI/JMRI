@@ -3,6 +3,8 @@ package jmri.jmrix.rps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Arrays;
 import javax.vecmath.Point3d;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
+@API(status = EXPERIMENTAL)
 public class Ash1_0Algorithm implements Calculator {
 
     public Ash1_0Algorithm(Point3d[] sensors, double vsound) {

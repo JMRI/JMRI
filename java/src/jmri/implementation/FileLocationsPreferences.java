@@ -12,6 +12,8 @@ import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -19,6 +21,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood (C) 2015
  */
 @ServiceProvider(service = PreferencesManager.class)
+@API(status = EXPERIMENTAL)
 public class FileLocationsPreferences extends AbstractPreferencesManager {
 
     public static final String USER_FILES = "user-files"; // NOI18N

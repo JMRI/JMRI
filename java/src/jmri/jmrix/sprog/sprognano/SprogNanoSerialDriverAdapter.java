@@ -2,6 +2,9 @@ package jmri.jmrix.sprog.sprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Implements SerialPortAdapter for the Sprog system.
  * <p>
@@ -13,6 +16,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  *
  * @author Andrew Crosland Copyright (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class SprogNanoSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 

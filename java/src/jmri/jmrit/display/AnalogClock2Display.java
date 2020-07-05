@@ -24,6 +24,8 @@ import jmri.Timebase;
 import jmri.TimebaseRateException;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.swing.JmriColorChooser;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Howard G. Penny - Copyright (C) 2005
  */
+@API(status = MAINTAINED)
 public class AnalogClock2Display extends PositionableJComponent implements LinkingObject {
 
     Timebase clock;

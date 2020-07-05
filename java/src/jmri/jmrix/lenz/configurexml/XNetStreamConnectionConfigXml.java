@@ -4,6 +4,9 @@ import jmri.jmrix.configurexml.AbstractStreamConnectionConfigXml;
 import jmri.jmrix.lenz.XNetStreamConnectionConfig;
 import jmri.jmrix.lenz.XNetStreamPortController;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the
  * XNetStreamConnectionConfig (and connections). Note this is named as the 
@@ -16,6 +19,7 @@ import jmri.jmrix.lenz.XNetStreamPortController;
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2006
  */
+@API(status = EXPERIMENTAL)
 public class XNetStreamConnectionConfigXml extends AbstractStreamConnectionConfigXml {
 
     public XNetStreamConnectionConfigXml() {

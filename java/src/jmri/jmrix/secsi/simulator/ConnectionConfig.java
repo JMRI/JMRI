@@ -5,6 +5,9 @@ import javax.swing.JPanel;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 import jmri.jmrix.secsi.nodeconfig.NodeConfigAction;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an SECSI layout connection via a SecsiSimulator
  * adapter.
@@ -19,6 +22,7 @@ import jmri.jmrix.secsi.nodeconfig.NodeConfigAction;
  *
  * Based on jmri.jmrix.grapevine.simulator.ConnectionConfig
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**

@@ -13,6 +13,8 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.picker.PickListModel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010 2012
  */
+@API(status = MAINTAINED)
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
 
     HashMap<String, HashMap<Integer, NamedIcon>> _iconMaps;

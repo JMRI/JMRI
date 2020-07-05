@@ -3,6 +3,9 @@ package jmri.jmrit.roster.swing.attributetable;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Table data model for display of Roster attribute values.
  * <p>
@@ -15,6 +18,7 @@ import jmri.jmrit.roster.RosterEntry;
  * @author Bob Jacobsen Copyright (C) 2009
  * @since 2.7.5
  */
+@API(status = MAINTAINED)
 public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
 
     @Override

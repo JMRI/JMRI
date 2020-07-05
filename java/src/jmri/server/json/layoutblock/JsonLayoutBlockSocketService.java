@@ -1,5 +1,7 @@
 package jmri.server.json.layoutblock;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.layoutblock.JsonLayoutBlock.LAYOUTBLOCK;
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author mstevetodd Copyright (C) 2018
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBlockHttpService> {
 
     private final HashMap<LayoutBlock, LayoutBlockListener> layoutBlockListeners = new HashMap<>();

@@ -1,6 +1,8 @@
 package jmri.util.jdom;
 
 import java.util.Locale;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
@@ -16,6 +18,7 @@ import org.jdom2.Namespace;
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.3
  */
+@API(status = EXPERIMENTAL)
 public class LocaleSelector {
 
     static String[] suffixes

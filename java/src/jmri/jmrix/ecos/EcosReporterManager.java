@@ -3,11 +3,15 @@ package jmri.jmrix.ecos;
 import javax.annotation.Nonnull;
 import jmri.Reporter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * EcosReporterManager implements the ReporterManager for ECoS
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
+@API(status = EXPERIMENTAL)
 public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
 
     // ctor has to register for ECoS events

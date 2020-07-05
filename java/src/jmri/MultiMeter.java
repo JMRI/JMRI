@@ -2,11 +2,15 @@ package jmri;
 
 import jmri.beans.PropertyChangeProvider;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for displaying (and controlling where appropriate) Current,
  * Voltage, and other status data from the layout.
  *
  */
+@API(status = STABLE)
 public interface MultiMeter extends PropertyChangeProvider {
 
     public static final String CURRENT = "MultiMeterCurrent";

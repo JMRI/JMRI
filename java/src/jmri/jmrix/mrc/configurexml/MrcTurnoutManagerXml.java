@@ -1,5 +1,7 @@
 package jmri.jmrix.mrc.configurexml;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @author Martin Wade Copyright (C) 2014
  */
+@API(status = EXPERIMENTAL)
 public class MrcTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
     public MrcTurnoutManagerXml() {

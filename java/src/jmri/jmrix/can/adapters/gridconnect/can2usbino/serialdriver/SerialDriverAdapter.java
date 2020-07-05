@@ -5,6 +5,8 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.GridConnectDoubledMessage;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPort;
@@ -19,6 +21,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009, 2012
  */
+@API(status = EXPERIMENTAL)
 public class SerialDriverAdapter extends GcSerialDriverAdapter {
 
     public SerialDriverAdapter() {

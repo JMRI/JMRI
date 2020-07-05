@@ -18,12 +18,16 @@ import jmri.Manager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JPanel to create a new hardware-backed NamedBean.
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
  */
+@API(status = STABLE)
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
     /**

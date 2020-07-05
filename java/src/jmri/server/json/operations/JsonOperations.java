@@ -1,10 +1,14 @@
 package jmri.server.json.operations;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * JSON Tokens used by JSON Operations.
  *
  * @author Randall Wood (C) 2016
  */
+@API(status = EXPERIMENTAL)
 public class JsonOperations {
 
     /**

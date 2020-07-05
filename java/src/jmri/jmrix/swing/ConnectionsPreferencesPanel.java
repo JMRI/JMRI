@@ -32,6 +32,8 @@ import jmri.profile.ProfileManager;
 import jmri.swing.ManagingPreferencesPanel;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +43,7 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
 @ServiceProvider(service = PreferencesPanel.class)
+@API(status = EXPERIMENTAL)
 public class ConnectionsPreferencesPanel extends JTabbedPane implements ManagingPreferencesPanel {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // for some items // NOI18N

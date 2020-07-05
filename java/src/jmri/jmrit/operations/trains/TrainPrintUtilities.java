@@ -12,6 +12,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +26,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  *
  * @author Daniel Boudreau (C) 2010
  */
+@API(status = MAINTAINED)
 public class TrainPrintUtilities {
 
     static final String NEW_LINE = "\n"; // NOI18N

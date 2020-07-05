@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.Set;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface for CabSignal Manager objects, which provide access to the existing
  * CabSignals and allows for creation and destruction.
@@ -19,6 +22,7 @@ import java.util.Set;
  *
  * @author Paul Bender Copyright (C) 2019
  */
+@API(status = STABLE)
 public interface CabSignalManager {
 
     /**

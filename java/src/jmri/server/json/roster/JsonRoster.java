@@ -1,10 +1,14 @@
 package jmri.server.json.roster;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Constants for JSON handling of the JMRI Roster.
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class JsonRoster {
 
     /**

@@ -2,6 +2,9 @@ package jmri.jmrit.ussctc;
 
 import jmri.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Models a traffic relay.
  * <p>
@@ -10,6 +13,7 @@ import jmri.*;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2017
  */
+@API(status = MAINTAINED)
 public class TrafficRelay implements Lock {
 
     enum State {

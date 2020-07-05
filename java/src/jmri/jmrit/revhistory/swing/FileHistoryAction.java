@@ -10,11 +10,15 @@ import jmri.InstanceManager;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.JmriJFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to display the file revision history
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class FileHistoryAction extends AbstractAction {
 
     public FileHistoryAction(String s) {

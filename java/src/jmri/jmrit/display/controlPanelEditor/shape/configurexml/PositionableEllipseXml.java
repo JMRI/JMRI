@@ -2,6 +2,8 @@ package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableEllipse;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Element;
 
 /**
@@ -9,6 +11,7 @@ import org.jdom2.Element;
  *
  * @author Pete Cressman Copyright (c) 2012
  */
+@API(status = MAINTAINED)
 public class PositionableEllipseXml extends PositionableShapeXml {
 
     public PositionableEllipseXml() {

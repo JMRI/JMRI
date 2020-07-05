@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
   *
  * Based on XNetFeedbackMessageCache by Paul Bender
  */
+@API(status = EXPERIMENTAL)
 public class DCCppTurnoutReplyCache implements DCCppListener {
 
     protected DCCppTrafficController tc = null;

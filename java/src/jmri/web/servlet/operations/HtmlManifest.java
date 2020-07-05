@@ -7,6 +7,8 @@ import java.util.Locale;
 import java.util.Map.Entry;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import jmri.server.json.operations.JsonOperations;
  *
  * @author Randall Wood
  */
+@API(status = EXPERIMENTAL)
 public class HtmlManifest extends HtmlTrainCommon {
 
     protected ObjectMapper mapper;

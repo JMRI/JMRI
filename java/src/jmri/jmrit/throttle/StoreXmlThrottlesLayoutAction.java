@@ -11,6 +11,8 @@ import javax.swing.JFileChooser;
 import jmri.InstanceManager;
 import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
  */
+@API(status = MAINTAINED)
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
     /**

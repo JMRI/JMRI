@@ -1,5 +1,7 @@
 package jmri.web.servlet.home;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import java.io.IOException;
@@ -24,6 +26,7 @@ import org.openide.util.lookup.ServiceProvider;
             "/prefs/index.html" // some WiThrottle clients require this URL to show web services
         })
 @ServiceProvider(service = HttpServlet.class)
+@API(status = EXPERIMENTAL)
 public class HomeServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

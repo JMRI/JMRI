@@ -1,5 +1,7 @@
 package jmri.server.json.block;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.block.JsonBlock.BLOCK;
 import static jmri.server.json.block.JsonBlock.BLOCKS;
@@ -37,6 +39,7 @@ import jmri.server.json.sensor.JsonSensor;
  * @author mstevetodd Copyright 2018
  * @author Randall Wood Copyright 2018, 2019
  */
+@API(status = EXPERIMENTAL)
 public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
 
     private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);

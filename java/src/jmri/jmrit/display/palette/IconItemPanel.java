@@ -38,6 +38,8 @@ import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PreviewPanel;
 import jmri.util.swing.ImagePanel;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +48,7 @@ import org.slf4j.LoggerFactory;
  * Does NOT use IconDialog class to add, replace or delete icons.
  * @see ItemPanel palette class diagram
  */
+@API(status = MAINTAINED)
 public class IconItemPanel extends ItemPanel {
 
     HashMap<String, NamedIcon> _iconMap;

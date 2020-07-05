@@ -2,6 +2,8 @@ package jmri.jmrix.marklin;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Kevin Dickerson Copyright (C) 2012
  * 
  */
+@API(status = EXPERIMENTAL)
 public class MarklinTurnout extends AbstractTurnout
         implements MarklinListener {
 

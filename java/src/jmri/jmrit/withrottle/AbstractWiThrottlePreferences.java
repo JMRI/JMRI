@@ -3,6 +3,8 @@ package jmri.jmrit.withrottle;
 import java.io.File;
 import java.io.IOException;
 import jmri.jmrit.XmlFile;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -76,6 +78,7 @@ abstract public class AbstractWiThrottlePreferences {
     public AbstractWiThrottlePreferences() {
     }
 
+@API(status = MAINTAINED)
     public static class AbstractWiThrottlePreferencesXml extends XmlFile {
     }
 

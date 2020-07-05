@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +37,7 @@ import jmri.swing.JTablePersistenceManager;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
  */
+@API(status = MAINTAINED)
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     public static final String MOVE = Bundle.getMessage("Move");

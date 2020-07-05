@@ -8,12 +8,16 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing action to create and register a CarsTableFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
  */
+@API(status = MAINTAINED)
 public class ShowCarsByLocationAction extends AbstractAction {
 
     public ShowCarsByLocationAction(boolean showAllCars, Location location, Track track) {

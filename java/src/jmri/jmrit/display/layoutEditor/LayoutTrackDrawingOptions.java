@@ -4,6 +4,9 @@ import java.awt.Color;
 import javax.annotation.Nonnull;
 import jmri.util.swing.JmriColorChooser;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /*******************************************************************************
  * Hold various values defining how to draw various LayoutTrack elements.
  * 
@@ -11,6 +14,7 @@ import jmri.util.swing.JmriColorChooser;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
+@API(status = MAINTAINED)
 public class LayoutTrackDrawingOptions {
 
     private String name;

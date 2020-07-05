@@ -2,12 +2,16 @@ package jmri.configurexml.swing;
 
 import java.awt.HeadlessException;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Swing dialog for reporting errors while loading. Shows each one, could save
  * until end if needed.
  *
  * @author Bob Jacobsen Copyright (c) 2010
  */
+@API(status = EXPERIMENTAL)
 public class DialogErrorHandler extends jmri.configurexml.ErrorHandler {
 
     /**

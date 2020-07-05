@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 import jmri.jmrix.qsi.serialdriver.SerialDriverAdapter;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.SerialPort;
@@ -21,6 +23,7 @@ import purejavacomm.SerialPort;
  *
  * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
+@API(status = EXPERIMENTAL)
 public class QsiTrafficController implements QsiInterface, Runnable {
 
     /**

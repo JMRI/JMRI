@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Objects;
 import jmri.util.MathUtil;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Represents a particular set of NamedBean (usually turnout) settings to put a
  * path through trackwork to a Block.
@@ -40,6 +43,7 @@ import jmri.util.MathUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
+@API(status = STABLE)
 public class Path implements Comparable<Path> {
 
     /**

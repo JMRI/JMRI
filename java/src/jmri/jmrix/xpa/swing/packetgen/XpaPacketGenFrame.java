@@ -4,11 +4,15 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.xpa.XpaMessage;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Frame for user input of Xpa+Modem (dialing) messages.
  *
  * @author Paul Bender Copyright (C) 2004
  */
+@API(status = EXPERIMENTAL)
 public class XpaPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 
     // member declarations

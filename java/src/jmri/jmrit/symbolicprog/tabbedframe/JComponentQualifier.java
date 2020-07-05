@@ -4,6 +4,9 @@ import javax.swing.JComponent;
 import jmri.jmrit.symbolicprog.ArithmeticQualifier;
 import jmri.jmrit.symbolicprog.VariableValue;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Qualify a JComponent on a numerical test by setting the JComponent's
  * visibility
@@ -11,6 +14,7 @@ import jmri.jmrit.symbolicprog.VariableValue;
  * @author Bob Jacobsen Copyright (C) 2010, 2014
   *
  */
+@API(status = MAINTAINED)
 public class JComponentQualifier extends ArithmeticQualifier {
 
     JComponent component;

@@ -4,10 +4,14 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
+@API(status = STABLE)
 public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
 
     /*public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);*/

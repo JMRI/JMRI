@@ -4,6 +4,9 @@ import jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXml;
 import jmri.jmrix.lenz.liusb.ConnectionConfig;
 import jmri.jmrix.lenz.liusb.LIUSBAdapter;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle XML persistance of layout connections by persistening the LIUSBAdapter
  * (and connections). Note this is named as the XML version of a
@@ -15,6 +18,7 @@ import jmri.jmrix.lenz.liusb.LIUSBAdapter;
  *
  * @author Paul Bender Copyright: Copyright (c) 2005
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfigXml extends AbstractXNetSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {

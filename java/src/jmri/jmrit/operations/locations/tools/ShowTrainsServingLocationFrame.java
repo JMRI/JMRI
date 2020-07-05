@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +36,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * @author Dan Boudreau Copyright (C) 2014
  * 
  */
+@API(status = MAINTAINED)
 public class ShowTrainsServingLocationFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // location

@@ -22,6 +22,8 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.util.IntlUtilities;
 import jmri.util.NamedBeanComparator;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman (C) 2010
  */
+@API(status = MAINTAINED)
 public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OBlock> {
 
     static public final int SYSNAMECOL = 0;

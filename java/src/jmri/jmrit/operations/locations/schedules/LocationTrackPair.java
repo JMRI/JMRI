@@ -3,12 +3,16 @@ package jmri.jmrit.operations.locations.schedules;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * An Object representing a location and track.
  *
  * @author Daniel Boudreau Copyright (C) 2009
  *
  */
+@API(status = MAINTAINED)
 public class LocationTrackPair {
 
     Location _location;

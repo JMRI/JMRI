@@ -1,5 +1,8 @@
 package jmri;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Interface that indicates that a class has a {@link #dispose()} method that
  * can be called without arguments.
@@ -10,6 +13,7 @@ package jmri;
  *
  * @author Randall Wood Copyright 2017
  */
+@API(status = STABLE)
 public interface Disposable {
 
     /**

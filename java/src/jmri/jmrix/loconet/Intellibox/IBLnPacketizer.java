@@ -7,6 +7,9 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Converts Stream-based I/O to/from LocoNet messages. The "LocoNetInterface"
  * side sends/receives LocoNetMessage objects. The connection to a
@@ -30,6 +33,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
+@API(status = EXPERIMENTAL)
 public class IBLnPacketizer extends LnPacketizer {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",

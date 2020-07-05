@@ -3,6 +3,8 @@ package jmri.jmrix.dccpp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * Throttle reply starts with a "T").
  */
 
+@API(status = EXPERIMENTAL)
 public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     protected String myRegex;

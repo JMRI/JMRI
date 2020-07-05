@@ -2,6 +2,9 @@ package jmri.jmrix.roco.z21;
 
 import javax.swing.JPanel;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Handle configuring an layout connection via a Roco z21 or Z21.
  * <p>
@@ -11,6 +14,7 @@ import javax.swing.JPanel;
  *
  * @see Z21Adapter
  */
+@API(status = EXPERIMENTAL)
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**

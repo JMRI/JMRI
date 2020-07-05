@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.concurrent.locks.ReentrantLock;
 import jmri.Sensor;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
+
 /**
  * Each of these objects describe a route consisting of all of the
  * occupancy sensors(s) that specify a route.  This is the "topology"
@@ -37,6 +40,7 @@ import jmri.Sensor;
  * 
 */
 
+@API(status = MAINTAINED)
 public class LockedRoute {
     
 /**

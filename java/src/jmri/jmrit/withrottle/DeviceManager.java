@@ -1,5 +1,7 @@
 package jmri.jmrit.withrottle;
 
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright 2011, 2017
  */
+@API(status = MAINTAINED)
 public interface DeviceManager {
 
     public void listen();
@@ -49,6 +52,7 @@ public interface DeviceManager {
     /**
      * Container for running {@link #listen() } in a separate thread.
      */
+@API(status = MAINTAINED)
     public static class DeviceManagerThread extends Thread {
 
         DeviceManager manager;
