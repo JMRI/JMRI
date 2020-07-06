@@ -3,8 +3,6 @@ package jmri.jmrit.logixng.implementation.configurexml;
 import java.util.List;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultLogixNGManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -12,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -58,18 +55,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 }
                 elem.addContent(e);
 
-/*
-                // add conditionalNG elements
-                DefaultConditionalNGXml defaultConditionalNGXml = new DefaultConditionalNGXml();
-                for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
-                    elem.addContent(defaultConditionalNGXml.store(logixNG.getConditionalNG(i)));
-                }
-*/
-                if (enabled) {
-                    elem.setAttribute("enabled", "yes");  // NOI18N
-                } else {
-                    elem.setAttribute("enabled", "no");  // NOI18N
-                }
+                elem.setAttribute("enabled", enabled ? "yes" : "no");  // NOI18N
                 
                 logixNGs.addContent(elem);
             }
@@ -151,12 +137,11 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                     }
                 }
                 
-//                Element conditionalNG_Element = logixNG_Element.getChild("conditionalngs");
                 List<Element> conditionalNGList =
                         logixNG_Element.getChild("conditionalngs").getChildren();  // NOI18N
+                
                 for (int j = 0; j < conditionalNGList.size(); j++) {
-//                for (Element socketElement : conditionalNG_Element.getChildren()) {
-//                    Element systemNameElement = socketElement.getChild("systemName");
+                    
                     Element systemNameElement = conditionalNGList.get(j);
                     String systemName = null;
                     if (systemNameElement != null) {
@@ -164,23 +149,6 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                     }
                     logixNG.setConditionalNG_SystemName(j, systemName);
                 }
-/*                
-                // load conditionals, if there are any
-                List<Element> logixNGConditionalList = logixNG_Element.getChildren("conditionalng");  // NOI18N
-                if (logixNGConditionalList.size() > 0) {
-                    
-                    // add conditionalNGs
-                    DefaultConditionalNGXml defaultConditionalNGXml = new DefaultConditionalNGXml();
-                    
-                    for (int n = 0; n < logixNGConditionalList.size(); n++) {
-                        try {
-                            logixNG.addConditionalNG(defaultConditionalNGXml.loadConditionalNG(logixNG, logixNGConditionalList.get(n)));
-                        } catch (JmriException e) {
-                            log.error("exception thrown", e);
-                        }
-                    }
-                }
-*/                
             }
         }
     }

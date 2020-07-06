@@ -60,11 +60,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                 }
                 elem.addContent(e2);
                 
-                if (enabled) {
-                    elem.setAttribute("enabled", "yes");  // NOI18N
-                } else {
-                    elem.setAttribute("enabled", "no");  // NOI18N
-                }
+                elem.setAttribute("enabled", enabled ? "yes" : "no");  // NOI18N
                 
                 conditionalNGs.addContent(elem);
             }
@@ -124,9 +120,9 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
 
             String userName = getUserName(conditionalNG_Element);
 
-            String yesno = "";
+            String enabled = "";
             if (conditionalNG_Element.getAttribute("enabled") != null) {  // NOI18N
-                yesno = conditionalNG_Element.getAttribute("enabled").getValue();  // NOI18N
+                enabled = conditionalNG_Element.getAttribute("enabled").getValue();  // NOI18N
             }
             log.debug("create conditionalng: (" + sysName + ")("  // NOI18N
                     + (userName == null ? "<null>" : userName) + ")");  // NOI18N
@@ -148,10 +144,10 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                 }
                 
                 // set enabled/disabled if attribute was present
-                if ((yesno != null) && (!yesno.equals(""))) {
-                    if (yesno.equals("yes")) {  // NOI18N
+                if ((enabled != null) && (!enabled.equals(""))) {
+                    if (enabled.equals("yes")) {  // NOI18N
                         conditionalNG.setEnabled(true);
-                    } else if (yesno.equals("no")) {  // NOI18N
+                    } else if (enabled.equals("no")) {  // NOI18N
                         conditionalNG.setEnabled(false);
                     }
                 }

@@ -83,7 +83,7 @@ public class StoreAndLoadTest {
 //    @Ignore
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
-        
+/*        
         // FOR TESTING ONLY. REMOVE LATER.
         if (1==0) {
             if (!GraphicsEnvironment.isHeadless()) {
@@ -97,7 +97,7 @@ public class StoreAndLoadTest {
                 }
             }
         }
-        
+*/        
         Light light1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light1.setCommandedState(Light.OFF);
         Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
@@ -118,8 +118,23 @@ public class StoreAndLoadTest {
         turnout5.setCommandedState(Turnout.CLOSED);
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
-        LogixNG logixNG = logixNG_Manager.createLogixNG("A logixNG");
+        
+        // Create an empty LogixNG
+        logixNG_Manager.createLogixNG("An empty logixNG");
+        
+        // Create a LogixNG with an empty ConditionalNG
+        LogixNG logixNG = logixNG_Manager.createLogixNG("A logixNG with an empty conditionlNG");
         ConditionalNG conditionalNG =
+                InstanceManager.getDefault(ConditionalNG_Manager.class)
+                        .createConditionalNG("An empty conditionalNG");
+        logixNG.addConditionalNG(conditionalNG);
+        logixNG.setEnabled(false);
+        conditionalNG.setEnabled(false);
+        
+        
+        // Create LogixNG with a tree of stuff
+        logixNG = logixNG_Manager.createLogixNG("A logixNG");
+        conditionalNG =
                 InstanceManager.getDefault(ConditionalNG_Manager.class)
                         .createConditionalNG("A conditionalNG");
         InstanceManager.getDefault(ConditionalNG_Manager.class)
