@@ -693,7 +693,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         start = 0;
     }
 
-    protected void finishRecord() {
+    synchronized protected void finishRecord() {
         if (re == null) {
             return;
         }
