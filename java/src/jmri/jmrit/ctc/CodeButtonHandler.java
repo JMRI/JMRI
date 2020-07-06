@@ -1,10 +1,9 @@
 package jmri.jmrit.ctc;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
-
 import jmri.*;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is the "master" class that handles everything when a code button is
@@ -54,12 +53,13 @@ public class CodeButtonHandler {
         public int      _mSwitchDirectionLeverWas = CTCConstants.OUTOFCORRESPONDENCE;
     }
     
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not do anything if it fails.")
     private static Sensor initializePreconditioningEnabledSensor() {
         Sensor returnValue = InstanceManager.sensorManagerInstance().newSensor("IS:PRECONDITIONING_ENABLED", null); // NOI18N
         int knownState = returnValue.getKnownState();
         if (Sensor.ACTIVE != knownState && Sensor.INACTIVE != knownState) {
-            try {returnValue.setKnownState(Sensor.INACTIVE); } catch (JmriException ex) {}
+            try {returnValue.setKnownState(Sensor.INACTIVE); } catch (JmriException ex) {
+                LoggerFactory.getLogger(CodeButtonHandler.class).debug("Sensor problem, preconditioning won't work.");          // NOI18N
+            }
         }
         return returnValue;
     }
