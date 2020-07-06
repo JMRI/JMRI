@@ -44,6 +44,23 @@ If that becomes a problem, maybe the table can be split in several files.
 The script reads the *.md file and looks for the table. Everything before the
 table that doesn't look like a table is skipped, to allow comments in the file.
 
+Comments may be added in the table. Every row that starts with a dot "." will
+be treated as a comment. The first column in the table is narrow since it holds
+the type, so it's recommended to write the comment in the second column, for
+example:
+
+Type | Name | Status | Force
+---- | ---- | ------ | -----
+package | jmri.** | EXPERIMENTAL | X
+package | jmri | STABLE
+. | This is a comment
+package | jmri.jmrit.** | MAINTAINED
+package | jmri.jmrit.beantable | STABLE
+
+Empty lines may be inserted in the table as well, but they must start with
+a dot to make the table work when viewed on GitHub.
+
+
 Note!
 This script has not yet support for inner classes or inner enums. It means that
 inner classes and inner enums will get the same status as the outer class.
@@ -123,20 +140,24 @@ $count = 0;
 
 foreach ($md_file_content_array as $line)
 {
+//	echo "$line\n";
+
 	if ($line == "") continue;
 
-	$parts = explode(" | ", $line);
+	if ($line[0] == ".") continue;
+
+	$parts = explode("|", $line);
 
 	if ($found_table)
 	{
 		$rule = new Rule();
-		$rule->type = strtoupper($parts[0]);
-		$rule->name = $parts[1];
+		$rule->type = strtoupper(trim($parts[0]));
+		$rule->name = trim($parts[1]);
 		$rule->root_package = null;
-		$rule->status = strtoupper($parts[2]);
+		$rule->status = strtoupper(trim($parts[2]));
 
 		if (isset($parts[3])) {
-			$rule->force = strtoupper($parts[3]) == "X" ? true : false;
+			$rule->force = strtoupper(trim($parts[3])) == "X" ? true : false;
 		}
 
 		if (substr($rule->name,-3) == ".**") $rule->root_package = substr($rule->name,0,-3);
@@ -184,7 +205,7 @@ foreach ($md_file_content_array as $line)
 	}
 
 
-	if ($parts[1] == "----")
+	if (substr(trim($parts[1]),0,2) == "--")
 	{
 		$found_table = true;
 	}
@@ -235,6 +256,8 @@ function add_apiguardian_import(&$new_content_array, $file)
 
 function update_class($file, $class, $class_status, $method_field_rules, $force)
 {
+//	echo "Update class: $class\n";
+
 	$changed = false;
 
 	$file_content = file_get_contents($file);
@@ -344,6 +367,8 @@ function update_class($file, $class, $class_status, $method_field_rules, $force)
 
 function check_file($path, $class, $package, $package_and_file, $file)
 {
+//	echo "Check file: $file\n";
+
 	global $rules;
 
 	$method_field_rules = array();
@@ -356,6 +381,8 @@ function check_file($path, $class, $package, $package_and_file, $file)
 
 	foreach ($rules as $rule)
 	{
+//		echo "{$rule->type}, {$rule->name}\n";
+
 		if (($rule->type == "PACKAGE") && ($package == $rule->name)) {
 			$last_rule = $rule;
 			$force |= $rule->force;
