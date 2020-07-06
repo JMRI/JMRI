@@ -3,6 +3,8 @@ package jmri.jmrit.ctc;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
+
+import jmri.InstanceManager;
 import jmri.Sensor;
 
 /**
@@ -41,6 +43,7 @@ public class CodeButtonHandler {
     private final CodeButtonSimulator _mCodeButtonSimulator;
     private LockedRoute _mLockedRoute = null;
     
+    private static Sensor _mPreconditioningEnabledSensor = InstanceManager.sensorManagerInstance().newSensor("IS:PRECONDITIONING_ENABLED", null);
     private static class PreconditioningData {
         public boolean  _mCodeButtonPressed = false;    // If false, values in these don't matter:
         public int      _mSignalDirectionLeverWas = CTCConstants.OUTOFCORRESPONDENCE;   // Safety:
@@ -159,11 +162,13 @@ public class CodeButtonHandler {
 //  NOTE: If the primary O.S. section is occupied, you CANT DO ANYTHING via a CTC machine, except:
 //  Preconditioning: IF the O.S. section is occupied, then it is a pre-conditioning request:
             if (isPrimaryOSSectionOccupied()) {
-                _mPreconditioningData._mSignalDirectionLeverWas = getCurrentSignalDirectionLever(false);
-                _mPreconditioningData._mSwitchDirectionLeverWas = getSwitchDirectionLeverRequestedState(false);
-                _mPreconditioningData._mCodeButtonPressed = true;   // Do this LAST so that the above variables are stable in this object,
-                                                                    // in case there is a multi-threading issue (yea, lock it would be better,
-                                                                    // but this is good enough for now!)
+                if (Sensor.ACTIVE == _mPreconditioningEnabledSensor.getKnownState()) {  // ONLY if turned on:
+                    _mPreconditioningData._mSignalDirectionLeverWas = getCurrentSignalDirectionLever(false);
+                    _mPreconditioningData._mSwitchDirectionLeverWas = getSwitchDirectionLeverRequestedState(false);
+                    _mPreconditioningData._mCodeButtonPressed = true;   // Do this LAST so that the above variables are stable in this object,
+                                                                        // in case there is a multi-threading issue (yea, lock it would be better,
+                                                                        // but this is good enough for now!)
+                }
             } else {
                 doCodeButtonPress();
             }
