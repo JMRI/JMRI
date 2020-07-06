@@ -1,11 +1,10 @@
 package jmri.jmrit.ctc;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 
-import jmri.InstanceManager;
-import jmri.Sensor;
+import jmri.*;
 
 /**
  * This is the "master" class that handles everything when a code button is
@@ -18,6 +17,11 @@ import jmri.Sensor;
  * <p>
  * Changing both signal direction to non signals normal and switch direction at the same time "is allowed".
  * Lock/Unlock is the LOWEST priority!  Call on is the HIGHEST priority.
+ * <p>
+ * As of V1.04 of the CTC system, preconditioning (a.k.a. stacking) is supported.  It is enabled
+ * by setting the internal sensor (automatically created) "IS:PRECONDITIONING_ENABLED" to active.
+ * Any other value inactivates this feature.  For example, the user can create a toggle
+ * switch to activate / inactivate it.
  * 
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
@@ -43,11 +47,21 @@ public class CodeButtonHandler {
     private final CodeButtonSimulator _mCodeButtonSimulator;
     private LockedRoute _mLockedRoute = null;
     
-    private static Sensor _mPreconditioningEnabledSensor = InstanceManager.sensorManagerInstance().newSensor("IS:PRECONDITIONING_ENABLED", null);
+    private static final Sensor _mPreconditioningEnabledSensor = initializePreconditioningEnabledSensor();
     private static class PreconditioningData {
         public boolean  _mCodeButtonPressed = false;    // If false, values in these don't matter:
         public int      _mSignalDirectionLeverWas = CTCConstants.OUTOFCORRESPONDENCE;   // Safety:
         public int      _mSwitchDirectionLeverWas = CTCConstants.OUTOFCORRESPONDENCE;
+    }
+    
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not do anything if it fails.")
+    private static Sensor initializePreconditioningEnabledSensor() {
+        Sensor returnValue = InstanceManager.sensorManagerInstance().newSensor("IS:PRECONDITIONING_ENABLED", null); // NOI18N
+        int knownState = returnValue.getKnownState();
+        if (Sensor.ACTIVE != knownState && Sensor.INACTIVE != knownState) {
+            try {returnValue.setKnownState(Sensor.INACTIVE); } catch (JmriException ex) {}
+        }
+        return returnValue;
     }
     private PreconditioningData _mPreconditioningData = new PreconditioningData();
     
