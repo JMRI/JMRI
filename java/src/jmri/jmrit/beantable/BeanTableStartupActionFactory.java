@@ -27,6 +27,8 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             return Bundle.getMessage(locale, "StartupListedTableAction"); // NOI18N
         } else if (clazz.equals(LogixTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLogixTableAction"); // NOI18N
+        } else if (clazz.equals(LogixNGTableAction.class)) {
+            return Bundle.getMessage(locale, "StartupLogixNGTableAction"); // NOI18N
         } else if (clazz.equals(LRouteTableAction.class)) {
             return Bundle.getMessage(locale, "StartupLRouteTableAction"); // NOI18N
         } else if (clazz.equals(MemoryTableAction.class)) {
@@ -63,6 +65,7 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             LightTableAction.class,
             ListedTableAction.class,
             LogixTableAction.class,
+            LogixNGTableAction.class,
             LRouteTableAction.class,
             MemoryTableAction.class,
             OBlockTableAction.class,

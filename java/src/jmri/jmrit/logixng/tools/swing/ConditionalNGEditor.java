@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Editor of LogixNG
+ * Editor of ConditionalNG
  * 
  * @author Daniel Bergqvist 2018
  */
@@ -98,6 +98,8 @@ public final class ConditionalNGEditor extends JmriJFrame {
      * @param conditionalNG the ConditionalNG to be edited
      */
     public ConditionalNGEditor(ConditionalNG conditionalNG) {
+        // Note!! This must be made dynamic, so that new socket types are recognized automaticly and added to the list
+        // and the list must be saved between runs.
         FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket", Color.RED);
         FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket", Color.BLUE);
 //        conditionalNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName(sName);
@@ -298,7 +300,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
         _categoryComboBox.setSelectedIndex(2);
         _categoryComboBox.setSelectedIndex(0);
         
-       
+        
         selectItemTypeFrame  = new JmriJFrame(
                 Bundle.getMessage(
                         "AddMaleSocketDialogTitle",
@@ -534,10 +536,11 @@ public final class ConditionalNGEditor extends JmriJFrame {
         JmriJFrame frame  = new JmriJFrame(
                 Bundle.getMessage(
                         "AddMaleSocketDialogTitle",
-                        femaleSocket.getLongDescription()));
+                        femaleSocket.getLongDescription(),
+                        false, false));     // Don't save window position or size
         frame.addHelpMenu(
                 "package.jmri.jmrit.beantable.LogixNGAddEdit", true);     // NOI18N
-        frame.setLocation(50, 30);
+//        frame.setLocation(50, 30);
         Container contentPanel = frame.getContentPane();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
