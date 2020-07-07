@@ -186,6 +186,8 @@ There is no longer an explicit [deprecation cycle](https://www.jmri.org/help/en/
 
 (This is a temporary section to hold a migration plan.  If/Once we decide to execute, this should be removed from here and made into a JMRI/JMRI Issue to track the work)
 
+ - [ ] Get agreement on private/development build naming, at least for the first few
+
 Once we have agreement
  - [ ] update documentation, which adds this to the main web server
  
@@ -201,27 +203,27 @@ The assumption is that we will start with the new process directly after JMRI 4.
     - [ ] `dev-major`, `dev-minor` from the current `master` as a HEAD of current development, freezing `master` at that point
     - [ ] `dev-update` from v4.20 (in case a v4.20.1 is needed quickly)
     
- - [ ] Figure out how numberings will work in Version.java et al and commit changes as needed to number the three branches as 5.0.0, 4.22.0 and 4.21.1 respectively
+ - [ ] Figure out how numberings will work in practice for Version.java et al and commit changes as needed to number the three branches as 5.0.0, 4.22.0 and 4.21.1 respectively
  - [ ] Figure out and document how release notes will work across these branches, put that mechanism in place
  - [ ] Update the Jenkins webserver tasks to load the three branches
  - [ ] Update Jenkins to build installers from the head of each branch
  - [ ] Update scripts/HOWTO-Distribution.md
  - [ ] Create a GitHub action CI to check the ability to merge `dev-update` -> `dev-minor`, `dev-update` -> `dev-major` and/or `dev-minor` -> `dev-major` as appropriate
 
- - [ ] (Once it's decided it's ready, based on whatever criteria is chosen) Create and tag release 4.21.1 as the first under this system
+ - [ ] (Once it's decided it's ready, based on whatever criteria is chosen) Create and tag release 4.21.1 as the first under this system from the `dev-minor` branch.
     - [ ] Update `master` and `dev-update` to the released 4.21.1
  
-What we're trying to avoid is moving the `master` branch pointer backwards in time. This is likely to cause consistency problems for naive Git users. If we need a 4.20.1 (i.e. bug fixes on production), the PR will have to be manually created on the right `dev-update`, instead of automatically getting it from the right `master`.  Ater 4.22.1 is created, this system will get into its long-term configuration.
+What we're trying to avoid is moving the `master` branch pointer backwards in time. This is likely to cause consistency problems for naive Git users. If we need a 4.20.1 (i.e. bug fixes on production), the PR will have to be manually created _on__ the `dev-update` branch this one time, instead of automatically getting it right from the `master`.  After 4.22.0 is created, this system will get `master` into its long-term configuration.
 
 The endpoint of the migration is then:
- - The `dev-update` will have `v4.20` as its head.
- - `dev-minor` will be marked as pre-4.22.0 and will be at the then-current `master`
+ - The `dev-update` will have `v4.20` as its head and be marked as pre-4.20.1
+ - `dev-minor` will be marked as pre-4.21.1 and will be at the then-current `master`
  - `dev-major` will be marked as pre-5.0.0 and will be at the then-current `master` 
  
 When eventually there's a decision to create/publish 4.22.0:
  - `master` will be 4.22.0
  - `dev-update` will be `master` (4.22.0) marked as pre-4.22.1
  - `dev-minor` will be `master` (4.22.0) marked as pre-4.23.0
- - `dev-major` will have changes-to-date merged in, but doesn't change label at this point
+ - `dev-major` will have changes-to-date merged in, but doesn't change label (pre-5.0.0) at this point
  
  
