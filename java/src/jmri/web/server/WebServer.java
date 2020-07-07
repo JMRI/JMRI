@@ -176,7 +176,7 @@ public final class WebServer implements LifeCycle, LifeCycle.Listener {
         } else if (path.startsWith(FileUtil.SETTINGS)) {
             return path.replaceFirst(FileUtil.SETTINGS, "/settings/"); // NOI18N
         } else if (path.startsWith(FileUtil.PROGRAM)) {
-            return path.replaceFirst(FileUtil.PROGRAM, "/dist/"); // NOI18N
+            return path.replaceFirst(FileUtil.PROGRAM, "/"); // NOI18N
         } else {
             return null;
         }
