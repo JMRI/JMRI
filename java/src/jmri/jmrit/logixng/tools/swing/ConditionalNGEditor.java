@@ -41,10 +41,10 @@ public final class ConditionalNGEditor extends JmriJFrame {
     
     JTree tree;
     
-    // Add LogixNG Variables
+    // Add ConditionalNG Variables
     private JmriJFrame selectItemTypeFrame = null;
     private JmriJFrame addItemFrame = null;
-    private JmriJFrame editLogixNGFrame = null;
+    private JmriJFrame editConditionalNGFrame = null;
     private FemaleSocketTreeModel femaleSocketTreeModel;
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
@@ -73,7 +73,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
     private SwingConfiguratorInterface addSwingConfiguratorInterface;
     private SwingConfiguratorInterface editSwingConfiguratorInterface;
     
-    // Edit LogixNG Variables
+    // Edit ConditionalNG Variables
     private boolean _inEditMode = false;
     
     
@@ -93,7 +93,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
     }
     
     /**
-     * Construct a LogixNGEditor.
+     * Construct a ConditionalEditor.
      *
      * @param conditionalNG the ConditionalNG to be edited
      */
@@ -106,9 +106,9 @@ public final class ConditionalNGEditor extends JmriJFrame {
         this._conditionalNG = conditionalNG;
         
         if (_conditionalNG.getUserName() == null) {
-            setTitle(Bundle.getMessage("TitleEditLogixNG", _conditionalNG.getSystemName()));
+            setTitle(Bundle.getMessage("TitleEditConditionalNG", _conditionalNG.getSystemName()));
         } else {
-            setTitle(Bundle.getMessage("TitleEditLogixNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
+            setTitle(Bundle.getMessage("TitleEditConditionalNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
         }
     }
     
@@ -219,18 +219,18 @@ public final class ConditionalNGEditor extends JmriJFrame {
     
     
     /**
-     * Check if another LogixNG editing session is currently open or no system
+     * Check if another ConditionalNG editing session is currently open or no system
      * name is provided.
      *
-     * @param sName system name of LogixNG to be copied
+     * @param sName system name of ConditionalNG to be copied
      * @return true if a new session may be started
      */
     boolean checkFlags(String sName) {
         if (_inEditMode) {
-            // Already editing a LogixNG, ask for completion of that edit
+            // Already editing a ConditionalNG, ask for completion of that edit
             JOptionPane.showMessageDialog(null,
-//                    Bundle.getMessage("LogixNGError32", _curLogixNG.getSystemName()),
-                    Bundle.getMessage("LogixNGError32", "aaa"),
+//                    Bundle.getMessage("ConditionalNGError32", _curConditionalNG.getSystemName()),
+                    Bundle.getMessage("ConditionalNGError32", "aaa"),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             toFront();
@@ -242,9 +242,9 @@ public final class ConditionalNGEditor extends JmriJFrame {
         }
 /*
         if (_inCopyMode) {
-            // Already editing a LogixNG, ask for completion of that edit
+            // Already editing a ConditionalNG, ask for completion of that edit
             JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("LogixNGError31", _logixNGSysName),
+                    Bundle.getMessage("ConditionalNGError31", _logixNGSysName),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
             return false;
@@ -306,7 +306,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
                         "AddMaleSocketDialogTitle",
                         femaleSocket.getLongDescription()));
         selectItemTypeFrame.addHelpMenu(
-                "package.jmri.jmrit.beantable.LogixNGAddEdit", true);     // NOI18N
+                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
         selectItemTypeFrame.setLocation(50, 30);
         Container contentPanel = selectItemTypeFrame.getContentPane();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -417,8 +417,8 @@ public final class ConditionalNGEditor extends JmriJFrame {
         // make an Add Item Frame
         if (addItemFrame == null) {
             addSwingConfiguratorInterface = swingConfiguratorInterface;
-            JPanel panel5 = makeAddEditFrame("AddMessage", femaleSocket, addSwingConfiguratorInterface);  // NOI18N
-            // Create LogixNG
+            JPanel panel5 = makeAddEditFrame(true, "AddMessage", femaleSocket, addSwingConfiguratorInterface);  // NOI18N
+            // Create ConditionalNG
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             panel5.add(create);
             create.addActionListener((ActionEvent e) -> {
@@ -474,11 +474,11 @@ public final class ConditionalNGEditor extends JmriJFrame {
             return;
         }
         _showReminder = true;
-        // make an Add LogixNG Frame
-        if (editLogixNGFrame == null) {
+        // make an Edit Frame
+        if (editConditionalNGFrame == null) {
             editSwingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getObject().getClass());
-            JPanel panel5 = makeAddEditFrame(null, femaleSocket, editSwingConfiguratorInterface);  // NOI18N
-            // Create LogixNG
+            JPanel panel5 = makeAddEditFrame(false, null, femaleSocket, editSwingConfiguratorInterface);  // NOI18N
+            // Edit ConditionalNG
             edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             panel5.add(edit);
             edit.addActionListener((ActionEvent e) -> {
@@ -488,8 +488,8 @@ public final class ConditionalNGEditor extends JmriJFrame {
                     ((NamedBean)object).setUserName(_addUserName.getText());
                     editSwingConfiguratorInterface.updateObject(femaleSocket.getConnectedSocket().getObject());
                     editSwingConfiguratorInterface.dispose();
-                    editLogixNGFrame.dispose();
-                    editLogixNGFrame = null;
+                    editConditionalNGFrame.dispose();
+                    editConditionalNGFrame = null;
                     for (TreeModelListener l : femaleSocketTreeModel.listeners) {
                         TreeModelEvent tme = new TreeModelEvent(
                                 femaleSocket,
@@ -511,8 +511,8 @@ public final class ConditionalNGEditor extends JmriJFrame {
             });
 //            edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
         }
-        editLogixNGFrame.pack();
-        editLogixNGFrame.setVisible(true);
+        editConditionalNGFrame.pack();
+        editConditionalNGFrame.setVisible(true);
         _autoSystemName.setSelected(true);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
@@ -520,27 +520,28 @@ public final class ConditionalNGEditor extends JmriJFrame {
     }
 
     /**
-     * Create or copy LogixNG frame.
+     * Create or copy ConditionalNG frame.
      * <P>
      * If the femaleSocket is connected, we edit the connected item. If the
      * femaleSocket is not connected, we add something new to it.
      *
+     * @param addOrEdit true if add, false if edit
      * @param messageId part 1 of property key to fetch as user instruction on
      *                  pane, either 1 or 2 is added to form the whole key
      * @param femaleSocket the female socket to which we want to add something
      * @param swingConfiguratorInterface the swing interface to configure this item
      * @return the button JPanel
      */
-    JPanel makeAddEditFrame(String messageId, FemaleSocket femaleSocket,
+    JPanel makeAddEditFrame(boolean addOrEdit, String messageId,
+            FemaleSocket femaleSocket,
             SwingConfiguratorInterface swingConfiguratorInterface) {
         JmriJFrame frame  = new JmriJFrame(
                 Bundle.getMessage(
-                        "AddMaleSocketDialogTitle",
+                        addOrEdit ? "AddMaleSocketDialogTitle" : "EditMaleSocketDialogTitle",
                         femaleSocket.getLongDescription(),
                         false, false));     // Don't save window position or size
         frame.addHelpMenu(
-                "package.jmri.jmrit.beantable.LogixNGAddEdit", true);     // NOI18N
-//        frame.setLocation(50, 30);
+                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
         Container contentPanel = frame.getContentPane();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
@@ -666,7 +667,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
         if (!femaleSocket.isConnected()) {
             addItemFrame = frame;
         } else {
-            editLogixNGFrame = frame;
+            editConditionalNGFrame = frame;
         }
         
         return panel5;
@@ -687,9 +688,9 @@ public final class ConditionalNGEditor extends JmriJFrame {
     }
 
     /**
-     * Respond to the Cancel button in Add LogixNG window.
+     * Respond to the Cancel button in Add ConditionalNG window.
      * <p>
-     * Note: Also get there if the user closes the Add LogixNG window.
+     * Note: Also get there if the user closes the Add ConditionalNG window.
      *
      * @param e The event heard
      */
@@ -701,9 +702,9 @@ public final class ConditionalNGEditor extends JmriJFrame {
         this.setVisible(true);
     }
     /**
-     * Respond to the Cancel button in Add LogixNG window.
+     * Respond to the Cancel button in Add ConditionalNG window.
      * <p>
-     * Note: Also get there if the user closes the Add LogixNG window.
+     * Note: Also get there if the user closes the Add ConditionalNG window.
      *
      * @param e The event heard
      */
@@ -718,17 +719,17 @@ public final class ConditionalNGEditor extends JmriJFrame {
 
 
     /**
-     * Respond to the Cancel button in Add LogixNG window.
+     * Respond to the Cancel button in Add ConditionalNG window.
      * <p>
-     * Note: Also get there if the user closes the Add LogixNG window.
+     * Note: Also get there if the user closes the Add ConditionalNG window.
      *
      * @param e The event heard
      */
     void cancelEditPressed(ActionEvent e) {
-        editLogixNGFrame.setVisible(false);
+        editConditionalNGFrame.setVisible(false);
         editSwingConfiguratorInterface.dispose();
-        editLogixNGFrame.dispose();
-        editLogixNGFrame = null;
+        editConditionalNGFrame.dispose();
+        editConditionalNGFrame = null;
 //        _inCopyMode = false;
         this.setVisible(true);
     }
