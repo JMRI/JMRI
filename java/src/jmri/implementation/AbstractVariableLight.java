@@ -6,11 +6,11 @@ import java.util.Date;
 
 import javax.annotation.Nonnull;
 
-import static jmri.CommonLight.INTERMEDIATE;
-import static jmri.CommonLight.TRANSITIONINGHIGHER;
-import static jmri.CommonLight.TRANSITIONINGLOWER;
-import static jmri.CommonLight.TRANSITIONINGTOFULLOFF;
-import static jmri.CommonLight.TRANSITIONINGTOFULLON;
+import static jmri.Light.INTERMEDIATE;
+import static jmri.Light.TRANSITIONINGHIGHER;
+import static jmri.Light.TRANSITIONINGLOWER;
+import static jmri.Light.TRANSITIONINGTOFULLOFF;
+import static jmri.Light.TRANSITIONINGTOFULLON;
 import static jmri.DigitalIO.OFF;
 import static jmri.DigitalIO.ON;
 import jmri.InstanceManager;

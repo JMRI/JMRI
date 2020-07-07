@@ -58,7 +58,7 @@ package jmri;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface VariableLight extends CommonLight, AnalogIO {
+public interface VariableLight extends Light, AnalogIO {
 
     /** {@inheritDoc} */
     @Override
@@ -82,15 +82,6 @@ public interface VariableLight extends CommonLight, AnalogIO {
         return isConsistentState();
     }
     
-    /*.*
-     * Check if this object can handle variable intensity.
-     * <p>
-     * Unbound property.
-     *
-     * @return false if only ON/OFF is available.
-     *./
-    public boolean isIntensityVariable();
-*/
     /**
      * Set the intended new intensity value for the Light. If transitions are in
      * use, they will be applied.

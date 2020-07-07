@@ -1,5 +1,10 @@
 package jmri;
 
+import java.util.ArrayList;
+import javax.annotation.Nonnull;
+
+import jmri.implementation.LightControl;
+
 /**
  * Represent a single visible Light on the physical layout.
  * <p>
@@ -58,212 +63,160 @@ package jmri;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface Light extends CommonLight {
+public interface Light extends DigitalIO {
 
     /**
-     * Check if this object can handle variable intensity.
-     * <p>
-     * Unbound property.
-     *
-     * @return false if only ON/OFF is available.
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
+     * State value indicating output intensity is less than maxIntensity and
+     * more than minIntensity, and no transition is in progress
      */
-    @Deprecated
-    default public boolean isIntensityVariable() {
-        return false;
+    public static final int INTERMEDIATE = 0x08;
+
+    /**
+     * State value indicating output intensity is currently changing toward
+     * higher intensity, and will continue until full ON is reached
+     */
+    public static final int TRANSITIONINGTOFULLON = 0x310;
+
+    /**
+     * State value indicating output intensity is currently changing toward
+     * higher intensity. The current transition will stop before full ON is
+     * reached.
+     */
+    public static final int TRANSITIONINGHIGHER = 0x210;
+
+    /**
+     * State value indicating output intensity is currently changing toward
+     * lower intensity. The current transition will stop before full OFF is
+     * reached.
+     */
+    public static final int TRANSITIONINGLOWER = 0x110;
+
+    /**
+     * State value indicating output intensity is currently changing toward
+     * lower intensity, and will continue until full OFF is reached
+     */
+    public static final int TRANSITIONINGTOFULLOFF = 0x010;
+
+    /**
+     * State value mask representing status where output is changing due to a
+     * request to transition.
+     */
+    public static final int TRANSITIONING = 0x010;
+    
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentState() {
+        return (getState() == DigitalIO.ON)
+                || (getState() == DigitalIO.OFF);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    default public void setCommandedState(int s) {
+        setState(s);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getCommandedState() {
+        return getState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getKnownState() {
+        return getState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    default public void requestUpdateFromLayout() {
+        // Do nothing
     }
 
     /**
-     * Set the intended new intensity value for the Light. If transitions are in
-     * use, they will be applied.
+     * Set the demanded output state. Valid values are ON and OFF. ON
+     * corresponds to the maxIntensity setting, and OFF corresponds to
+     * minIntensity.
      * <p>
-     * Bound property between 0 and 1.
+     * Bound parameter.
      * <p>
-     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
-     * full on.
+     * Note that the state may have other values, such as INTERMEDIATE or a form
+     * of transitioning, but that these may not be directly set.
      * <p>
-     * Attempting to set a value below the MinIntensity property value will
-     * result in MinIntensity being set. Similarly, setting a value above
-     * MaxIntensity will result in MaxINtensity being set.
-     * <p>
-     * Setting the intensity to the value of the MinIntensity property will
-     * result in the Light going to the OFF state at the end of the transition.
-     * Similarly, setting the intensity to the MaxIntensity value will result in
-     * the Light going to the ON state at the end of the transition.
-     * <p>
-     * All others result in the INTERMEDIATE state.
-     * <p>
-     * Light implementations with isIntensityVariable false may not have their
-     * TargetIntensity set to values between MinIntensity and MaxIntensity,
-     * which would result in the INTERMEDIATE state, as that is invalid for
-     * them.
-     * <p>
-     * If a non-zero value is set in the transitionTime property, the state will
-     * be one of TRANSITIONTOFULLON, TRANSITIONHIGHER, TRANSITIONLOWER or
-     * TRANSITIONTOFULLOFF until the transition is complete.
-     *
-     * @param intensity the desired brightness
-     * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     *                                  than 1.0
-     * @throws IllegalArgumentException if isIntensityVariable is false and the
-     *                                  new value is between MaxIntensity and
-     *                                  MinIntensity
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
+     * @param newState the new desired state
+     * @throws IllegalArgumentException if invalid newState provided
      */
-    @Deprecated
+    @Override
     @InvokeOnLayoutThread
-    public void setTargetIntensity(double intensity);
+    public void setState(int newState);
 
     /**
-     * Get the current intensity value. If the Light is currently transitioning,
-     * this may be either an intermediate or final value.
-     * <p>
-     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
-     * full on.
-     *
-     * @return the current brightness
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
+     * Get the current state of the Light's output.
      */
-    @Deprecated
-    public double getCurrentIntensity();
+    @Override
+    public int getState();
+
+    // control types - types defined
+    public static final int NO_CONTROL = 0x00;
+    public static final int SENSOR_CONTROL = 0x01;
+    public static final int FAST_CLOCK_CONTROL = 0x02;
+    public static final int TURNOUT_STATUS_CONTROL = 0x03;
+    public static final int TIMED_ON_CONTROL = 0x04;
+    public static final int TWO_SENSOR_CONTROL = 0x05;
+
+    // LightControl information management methods
+     
+    /**
+     * Clears (removes) all LightControl objects for this light
+     */
+    public void clearLightControls();
+
+    /** 
+     * Add a LightControl to this Light.
+     * <p>
+     * Duplicates are considered the same, hence not added
+     * @param c the light control to add.
+     */
+    public void addLightControl(@Nonnull jmri.implementation.LightControl c);
 
     /**
-     * Get the target intensity value for the current transition, if any. If the
-     * Light is not currently transitioning, this is the current intensity
-     * value.
-     * <p>
-     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
-     * full on.
-     * <p>
-     * Bound property
-     *
-     * @return the desired brightness
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
+     * @return a list of all LightControls
      */
-    @Deprecated
-    public double getTargetIntensity();
+    @Nonnull
+    public ArrayList<LightControl> getLightControlList();
 
     /**
-     * Set the value of the maxIntensity property.
-     * <p>
-     * Bound property between 0 and 1.
-     * <p>
-     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
-     * full on.
+     * Set the Enabled property, which determines whether the control logic
+     * built in the light object is operating or not. Light objects are usually
+     * enabled.
      *
-     * @param intensity the maximum brightness
-     * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     *                                  than 1.0
-     * @throws IllegalArgumentException when intensity is not greater than the
-     *                                  current value of the minIntensity
-     *                                  property
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
+     * @param state true if control logic is enabled; false otherwise
      */
-    @Deprecated
     @InvokeOnLayoutThread
-    public void setMaxIntensity(double intensity);
+    public void setEnabled(boolean state);
 
     /**
-     * Get the current value of the maxIntensity property.
-     * <p>
-     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
-     * full on.
+     * Get the Enabled property, which determines whether the control logic
+     * built in the light object is operating or not.
      *
-     * @return the maximum brightness
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
+     * @return true if control logic is enabled; false otherwise
      */
-    @Deprecated
-    public double getMaxIntensity();
+    public boolean getEnabled();
 
     /**
-     * Set the value of the minIntensity property.
-     * <p>
-     * Bound property between 0 and 1.
-     * <p>
-     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
-     * full on.
-     *
-     * @param intensity the minimum brightness
-     * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     *                                  than 1.0
-     * @throws IllegalArgumentException when intensity is not less than the
-     *                                  current value of the maxIntensity
-     *                                  property
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
+     * Activates a Light. This method activates each LightControl, setting up a
+     * control mechanism, appropriate to its control type.
      */
-    @Deprecated
     @InvokeOnLayoutThread
-    public void setMinIntensity(double intensity);
+    public void activateLight();
 
     /**
-     * Get the current value of the minIntensity property.
-     * <p>
-     * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
-     * full on.
-     *
-     * @return the minimum brightness
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
+     * Deactivates a Light. This method deactivates each LightControl, shutting
+     * down its control mechanism.
      */
-    @Deprecated
-    public double getMinIntensity();
-
-    /**
-     * Can the Light change its intensity setting slowly?
-     * <p>
-     * If true, this Light supports a non-zero value of the transitionTime
-     * property, which controls how long the Light will take to change from one
-     * intensity level to another.
-     * <p>
-     * Unbound property
-     *
-     * @return true if brightness can fade between two states; false otherwise
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
-     */
-    @Deprecated
-    public boolean isTransitionAvailable();
-
-    /**
-     * Set the fast-clock duration for a transition from full ON to full OFF or
-     * vice-versa.
-     * <p>
-     * Note there is no guarantee of how this scales when other changes in
-     * intensity take place. In particular, some Light implementations will
-     * change at a constant fraction per fastclock minute and some will take a
-     * fixed duration regardless of the size of the intensity change.
-     * <p>
-     * Bound property
-     * <p>
-     * @param minutes time to fade
-     * @throws IllegalArgumentException if isTransitionAvailable() is false and
-     *                                  minutes is not 0.0
-     * @throws IllegalArgumentException if minutes is negative
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
-     */
-    @Deprecated
     @InvokeOnLayoutThread
-    public void setTransitionTime(double minutes);
-
-    /**
-     * Get the number of fastclock minutes taken by a transition from full ON to
-     * full OFF or vice versa.
-     * <p>
-     * @return 0.0 if the output intensity transition is instantaneous
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
-     */
-    @Deprecated
-    public double getTransitionTime();
-
-    /**
-     * Convenience method for checking if the intensity of the light is
-     * currently changing due to a transition.
-     * <p>
-     * Bound property so that listeners can conveniently learn when the
-     * transition is over.
-     *
-     * @return true if light is between two states; false otherwise
-     * @deprecated since 4.22.1; use the {@link VariableLight} instead
-     */
-    @Deprecated
-    public boolean isTransitioning();
-
+    public void deactivateLight();
 }

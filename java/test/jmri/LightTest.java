@@ -36,14 +36,6 @@ public class LightTest {
         Assert.assertTrue("TRANSITIONINGTOFULLOFF overlap", (Light.TRANSITIONINGTOFULLOFF & Light.TRANSITIONING) != 0);
     }
     
-    @SuppressWarnings("deprecation")
-    @Test
-    public void testIsConsistentState() {
-        MyLight light = new MyLight("IL1");
-        Assert.assertFalse("State is is not intensity variable",
-                light.isIntensityVariable());
-    }
-    
     @Before
     public void setUp() {
           jmri.util.JUnitUtil.setUp();
