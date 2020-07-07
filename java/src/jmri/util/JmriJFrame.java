@@ -117,7 +117,10 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         windowFrameRef = this.getClass().getName();
         if (!this.getClass().getName().equals(JmriJFrame.class.getName())) {
             generateWindowRef();
-            setFrameLocation();
+            
+            if (saveSize || savePosition) {
+                setFrameLocation();
+            }
         }
     }
 
@@ -156,7 +159,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                 return;
             }
         }
-        setFrameLocation();
+        if (saveSize || savePosition) {
+            setFrameLocation();
+        }
     }
 
     /**
