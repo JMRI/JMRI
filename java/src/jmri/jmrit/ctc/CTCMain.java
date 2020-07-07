@@ -1,5 +1,6 @@
 /**
  *  @author Gregory J. Bedlek Copyright (C) 2018, 2019
+ * 
  */
 
 package jmri.jmrit.ctc;
