@@ -1,10 +1,9 @@
 package jmri.jmrix.mrc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -18,7 +17,7 @@ public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
     }    
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -30,7 +29,7 @@ public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         programmer = t;
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

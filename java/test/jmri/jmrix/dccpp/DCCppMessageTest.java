@@ -1,10 +1,9 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -705,14 +704,14 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Output Cmd: \n\tOutput ID: 23\n\tState: LOW", msg.toMonitorString());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
         m = msg = new DCCppMessage("T 42 1");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = msg = null;
         JUnitUtil.resetWindows(false, false);

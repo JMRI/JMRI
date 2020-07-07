@@ -1,12 +1,16 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
+
 import jmri.InstanceManager;
 import jmri.ReporterManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the ReporterIcon.
@@ -43,7 +47,7 @@ public class ReporterIconTest extends PositionableTestBase {
         jf.setVisible(true);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -62,7 +66,7 @@ public class ReporterIconTest extends PositionableTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         to = null;
         super.tearDown();

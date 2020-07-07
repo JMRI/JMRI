@@ -1,9 +1,12 @@
 package jmri.jmrit.ussctc;
 
 import java.util.*;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for OccupancyLock classes in the jmri.jmrit.ussctc package
@@ -122,7 +125,7 @@ public class OccupancyLockTest {
         Assert.assertTrue(!lock.isLockClear());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -130,7 +133,7 @@ public class OccupancyLockTest {
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

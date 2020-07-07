@@ -3,7 +3,9 @@ package jmri.jmrix.bachrus;
 import java.awt.GraphicsEnvironment;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -37,7 +39,7 @@ public class SpeedoConsoleActionTest {
 
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initRosterConfigManager();
@@ -45,7 +47,7 @@ public class SpeedoConsoleActionTest {
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

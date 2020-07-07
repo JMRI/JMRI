@@ -5,10 +5,9 @@ import jmri.jmrix.zimo.Mx1Message;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import jmri.jmrix.zimo.Mx1TrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -24,7 +23,7 @@ public class Mx1ComponentFactoryTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         Mx1TrafficController tc = new Mx1TrafficController(){
@@ -39,7 +38,7 @@ public class Mx1ComponentFactoryTest {
         memo = new Mx1SystemConnectionMemo(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -5,7 +5,9 @@ import java.awt.geom.*;
 
 import jmri.JmriException;
 import jmri.util.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of PositionablePoint
@@ -373,12 +375,12 @@ public class PositionablePointTest extends LayoutTrackTest {
         JUnitAppender.assertErrorMessage("test.replaceTrackConnection(null, testCD); Attempt to assign more than allowed number of connections");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         super.tearDown();

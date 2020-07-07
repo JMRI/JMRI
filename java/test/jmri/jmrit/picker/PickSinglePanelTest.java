@@ -4,7 +4,9 @@ import java.awt.GraphicsEnvironment;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -74,12 +76,12 @@ public class PickSinglePanelTest {
         return t;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

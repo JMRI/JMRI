@@ -4,10 +4,9 @@ import jmri.ProgListener;
 import jmri.ProgrammingMode;
 import jmri.jmrix.loconet.SlotManager.SlotMapEntry;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -1265,7 +1264,7 @@ public class SlotManagerTest {
     ProgListener lstn;
     int releaseTestDelay = 150; // probably needs to be at least 150, see SlotManager.postProgDelay
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -1306,7 +1305,7 @@ public class SlotManagerTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         slotmanager.dispose();
         JUnitUtil.tearDown();

@@ -3,10 +3,9 @@ package jmri.jmrix.acela;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +57,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     AcelaNode a0, a1, a2, a3;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -101,7 +100,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

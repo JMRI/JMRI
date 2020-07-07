@@ -69,16 +69,18 @@ public class TrafficLocking {
         public boolean isEnabled() { return _mRuleEnabled; }
         public boolean isValid() {
             if (!_mRuleEnabled) return false;    // If disabled, treat as invalid so we skip this rule and try the next rule.
+//  6/22/2020 Bug Fix: Occupancy IS NOT a requirement, since it prevents a follow on move, either thru dispatcher recoding the same
+//                     route again, or with fleeting on.  Besides, the "Vital Relay Logic" signal system prevents problems anyways.
 //  For all of these, ONLY unoccupied(INACTIVE) is "valid".  ACTIVE, INCONSISTENT and UNKNOWN all are considered occupied (ACTIVE):
-            if (_mOccupancyExternalSensor1.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor2.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor3.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor4.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor5.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor6.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor7.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor8.getKnownState() != Sensor.INACTIVE) return false;
-            if (_mOccupancyExternalSensor9.getKnownState() != Sensor.INACTIVE) return false;
+//          if (_mOccupancyExternalSensor1.getKnownState() != Sensor.INACTIVE) return false;
+//          if (_mOccupancyExternalSensor2.getKnownState() != Sensor.INACTIVE) return false;
+//          if (_mOccupancyExternalSensor3.getKnownState() != Sensor.INACTIVE) return false;
+//          if (_mOccupancyExternalSensor4.getKnownState() != Sensor.INACTIVE) return false;
+//          if (_mOccupancyExternalSensor5.getKnownState() != Sensor.INACTIVE) return false;
+//          if (_mOccupancyExternalSensor6.getKnownState() != Sensor.INACTIVE) return false;
+//          if (_mOccupancyExternalSensor7.getKnownState() != Sensor.INACTIVE) return false;
+//          if (_mOccupancyExternalSensor8.getKnownState() != Sensor.INACTIVE) return false;
+//          if (_mOccupancyExternalSensor9.getKnownState() != Sensor.INACTIVE) return false;
             if (!_mSwitchIndicatorsRoute.isRouteSelected()) return false;
             if (!isOptionalSensorActive(_mOptionalSensor1)) return false;
             if (!isOptionalSensorActive(_mOptionalSensor2)) return false;
@@ -176,11 +178,11 @@ public class TrafficLocking {
     }
 
     public TrafficLockingInfo valid(int presentSignalDirectionLever) {
-        if (presentSignalDirectionLever == CTCConstants.LEFTTRAFFIC) return validForTraffic(_mLeftTrafficLockingRulesArrayList);
-        return validForTraffic(_mRightTrafficLockingRulesArrayList);
+        if (presentSignalDirectionLever == CTCConstants.LEFTTRAFFIC) return validForTraffic(_mLeftTrafficLockingRulesArrayList, false);
+        return validForTraffic(_mRightTrafficLockingRulesArrayList, true);
     }
 
-    private TrafficLockingInfo validForTraffic(ArrayList<TrafficLockingRecord> trafficLockingRecordArrayList) {
+    private TrafficLockingInfo validForTraffic(ArrayList<TrafficLockingRecord> trafficLockingRecordArrayList, boolean rightTraffic) {
         TrafficLockingInfo returnValue = new TrafficLockingInfo(true);          // ASSUME valid return status
         if (trafficLockingRecordArrayList.isEmpty()) return returnValue; // No rules, OK all of the time.
 //  If ALL are disabled, then treat as if nothing in there, always allow, otherwise NONE would be valid!
@@ -193,10 +195,10 @@ public class TrafficLocking {
         for (int index = 0; index < trafficLockingRecordArrayList.size(); index++) {
             TrafficLockingRecord trafficLockingRecord = trafficLockingRecordArrayList.get(index);
             if (trafficLockingRecord.isValid()) {
-//  Ah, we found a rule that matches the route, and is not occupied.  See if that route
+//  Ah, we found a rule that matches the route.  See if that route
 //  is in conflict with any other routes presently in effect:
                 String ruleNumber = Integer.toString(index+1);
-                returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(trafficLockingRecord.getOccupancySensors(), _mUserIdentifier, "Rule #" + ruleNumber);
+                returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(trafficLockingRecord.getOccupancySensors(), _mUserIdentifier, "Rule #" + ruleNumber, rightTraffic);
                 if (returnValue._mLockedRoute != null) { // OK:
                     if (jmri.InstanceManager.getDefault(CTCMain.class)._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) log.info("Rule {} valid", ruleNumber);
                     return returnValue;

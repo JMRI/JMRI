@@ -70,7 +70,7 @@
       <turnoutname defines="high">324</turnoutname>
     </signalhead>
   </signalheads>
-  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
+  <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicProviderXml">
     <signalelement signal="Sig2 T&amp;DR Up Distant" mode="2" watchedturnout="IT1" watchedsignal1="LH323" watchedsignal2="LH323" watchedsensor2="IS305" watchedsensor2alt="IS35" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IS305</sensorname>
       <sensorname>IS35</sensorname>

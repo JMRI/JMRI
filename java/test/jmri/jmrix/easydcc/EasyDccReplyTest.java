@@ -8,10 +8,9 @@
 package jmri.jmrix.easydcc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 public class EasyDccReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -92,14 +91,14 @@ public class EasyDccReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("not find ", -1, msg.match("foo"));
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new EasyDccReply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = msg = null;
         JUnitUtil.tearDown();

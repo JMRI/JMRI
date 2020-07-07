@@ -8,7 +8,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.roster.Roster;
@@ -20,10 +22,9 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -34,7 +35,7 @@ public class JsonRosterSocketServiceTest {
     private JsonMockConnection connection = null;
     private final Locale locale = Locale.ENGLISH;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -48,7 +49,7 @@ public class JsonRosterSocketServiceTest {
         connection = new JsonMockConnection((DataOutputStream) null);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         connection = null;
         JUnitUtil.tearDown();

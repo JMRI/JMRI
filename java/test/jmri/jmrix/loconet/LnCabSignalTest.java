@@ -2,7 +2,9 @@ package jmri.jmrix.loconet;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -39,7 +41,7 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -56,7 +58,7 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;

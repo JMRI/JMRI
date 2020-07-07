@@ -1,12 +1,13 @@
 package jmri.jmrit.operations.locations;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -32,7 +33,7 @@ public class TrackTest extends OperationsTestCase {
         Assert.assertEquals("Location Track Constant STAGING", "Staging", Track.STAGING);
         Assert.assertEquals("Location Track Constant INTERCHANGE", "Interchange", Track.INTERCHANGE);
         Assert.assertEquals("Location track Constant YARD", "Yard", Track.YARD);
-        Assert.assertEquals("Location Track Constant SIDING", "Siding", Track.SPUR);
+        Assert.assertEquals("Location Track Constant SPUR", "Spur", Track.SPUR);
 
         Assert.assertEquals("Location Track Constant EAST", 1, Track.EAST);
         Assert.assertEquals("Location Track Constant WEST", 2, Track.WEST);
@@ -425,7 +426,7 @@ public class TrackTest extends OperationsTestCase {
         Track t = l.addTrack("New track 1", Track.SPUR);
         Assert.assertEquals("Location", l, t.getLocation());
 
-        // sidings and staging don't support this feature
+        // spurs and staging don't support this feature
         t.setServiceOrder(Track.FIFO);
         Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
         t.setServiceOrder(Track.LIFO);

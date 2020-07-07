@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import javax.servlet.http.HttpServletResponse;
+
+import jmri.BasicRosterEntry;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
@@ -28,6 +30,7 @@ import jmri.server.json.JsonRequest;
 import jmri.server.json.idtag.JsonIdTagHttpService;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.reporter.JsonReporterHttpService;
+import jmri.server.json.roster.JsonRosterHttpService;
 import jmri.server.json.sensor.JsonSensor;
 
 /**
@@ -38,6 +41,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
 
     private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
     private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
+    private JsonRosterHttpService rosterService = new JsonRosterHttpService(mapper);
 
     public JsonBlockHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -65,6 +69,9 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         } else if (bv instanceof jmri.Reporter) {
             ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) bv, name, REPORTER, request);
             data.set(VALUE, reporterValue);
+        } else if (bv instanceof jmri.BasicRosterEntry) {
+            ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(request.locale, ((BasicRosterEntry) bv).getId(), request.id);
+            data.set(VALUE, rosterValue);
         } else {
             // send string for types not explicitly handled
             data.put(VALUE, bv.toString());

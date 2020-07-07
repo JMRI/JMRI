@@ -1,10 +1,9 @@
 package jmri.jmrix.maple;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the jmri.jmrix.maple.SerialLight class
@@ -28,7 +27,7 @@ public class SerialLightTest {
         Assert.assertNotNull("exists", l2);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -36,7 +35,7 @@ public class SerialLightTest {
         _memo = new MapleSystemConnectionMemo("K", "Maple");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         _memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

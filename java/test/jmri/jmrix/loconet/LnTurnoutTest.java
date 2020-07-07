@@ -7,7 +7,9 @@ import static jmri.Turnout.THROWN;
 import static jmri.Turnout.UNKNOWN;
 import static jmri.Turnout.INCONSISTENT;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -815,7 +817,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     LocoNetSystemConnectionMemo memo;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -836,7 +838,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnt=(LnTurnout) t;
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
         t.dispose();
         JUnitUtil.tearDown();

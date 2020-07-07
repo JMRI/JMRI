@@ -2,10 +2,9 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * LevelXingXmlTest.java
@@ -22,12 +21,12 @@ public class LevelXingXmlTest {
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

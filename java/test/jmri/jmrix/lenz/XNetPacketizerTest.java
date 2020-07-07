@@ -1,10 +1,9 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.XNetPacketizer package
@@ -185,7 +184,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
 
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -198,7 +197,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc.terminateThreads();

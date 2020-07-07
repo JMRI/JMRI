@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.GraphicsEnvironment;
+
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
@@ -16,8 +17,11 @@ import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
-import org.junit.rules.TemporaryFolder;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test simple functioning of ConsistToolFrame
@@ -25,9 +29,6 @@ import org.junit.rules.TemporaryFolder;
  * @author Paul Bender Copyright (C) 2015,2016
  */
 public class ConsistToolFrameTest {
-
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void testCtor() {
@@ -240,10 +241,10 @@ public class ConsistToolFrameTest {
         Assert.assertEquals("1 New Consists after scan", numConsists + 1, InstanceManager.getDefault(ConsistManager.class).getConsistList().size());
     }
 
-    @Before
-    public void setUp() throws java.io.IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
-        jmri.profile.Profile profile = new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE));
+        jmri.profile.Profile profile = new jmri.profile.NullProfile(folder);
         JUnitUtil.resetProfileManager(profile);
         JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
@@ -251,7 +252,7 @@ public class ConsistToolFrameTest {
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

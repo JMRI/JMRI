@@ -4,7 +4,9 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -58,7 +60,7 @@ public class PickFrameTest extends JmriJFrameTestBase {
         JUnitUtil.dispose(f);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -68,7 +70,7 @@ public class PickFrameTest extends JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();

@@ -1,10 +1,8 @@
 package jmri.util;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
@@ -26,7 +24,7 @@ public class PlaceWindowTest {
     }
 
     @Test
-//    @Ignore("Placement point dependent on GraphicsEnvironment and test screen size")
+//    @Disabled("Placement point dependent on GraphicsEnvironment and test screen size")
     public void testNextTo() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame w1 = new JFrame();
@@ -80,12 +78,12 @@ public class PlaceWindowTest {
         Assert.assertEquals("pt.y at screen top",0, pt.y);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

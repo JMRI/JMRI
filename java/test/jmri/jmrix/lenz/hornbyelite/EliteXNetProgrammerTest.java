@@ -14,20 +14,22 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
 
     @Test
     @Override
-    @Ignore("Elite behavior is unknown for this sequence")
+    @Disabled("Elite behavior is unknown for this sequence")
     @ToDo("investigate proper sequence and reimplement test")
     public void testWriteHighCvSequence() throws JmriException {
     }
 
     @Test
     @Override
-    @Ignore("Elite behavior is unknown for this sequence")
+    @Disabled("Elite behavior is unknown for this sequence")
     @ToDo("investigate proper sequence and reimplement test")
     public void testReadHighCvSequence() throws JmriException {
     }
@@ -255,7 +257,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
 
     // The minimal setup is for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -265,7 +267,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.terminateThreads();
         t = null;

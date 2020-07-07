@@ -1,16 +1,16 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of CbusNodeConfigTab
@@ -59,7 +59,7 @@ public class CbusNodeConfigTabTest {
     private CbusNodeTableDataModel nodeModel;
     private CbusNode nodeToEdit;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -75,7 +75,7 @@ public class CbusNodeConfigTabTest {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         nodeToEdit.dispose();
         nodeModel.dispose();

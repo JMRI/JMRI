@@ -1,8 +1,16 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
+import jmri.jmrix.lenz.XNetProgrammerManager;
+import jmri.jmrix.lenz.XNetStreamPortController;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.streamport.LnStreamPortController;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.mockito.Mockito;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21SystemConnectionMemo class
@@ -18,25 +26,20 @@ public class Z21SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Z2
 
     @Test
     public void testProvidesAddressedProgrammerManager() {
-        // there is a an addressed program manager, but it is provided
-        // by delegation to the XPressNet tunnel, which setUp doesn't 
-        // currently enable.
+        // There is an addressed program manager, but it is provided by delegation to the XPressNet tunnel.
         Assert.assertFalse("Provides Addressed programmer", scm.provides(jmri.AddressedProgrammerManager.class));
     }
 
     @Test
     public void testProvidesGlobalProgrammerManager() {
-        // there is a an global program manager, but it is provided
-        // by delegation to the XPressNet tunnel, which setUp doesn't 
-        // currently enable.
+        // There is a global program manager, but it is provided by delegation to the XPressNet tunnel.
         Assert.assertFalse("provides golbal programmer", scm.provides(jmri.GlobalProgrammerManager.class));
     }
 
     @Override
     @Test
     public void testProvidesConsistManager() {
-        // there is a consist manager, but it is provided by delegation to 
-        // the XPressNet tunnel, which setUp doesn't currently enable.
+        // there is a consist manager provided by delegation to the XPressNet tunnel.
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
@@ -51,16 +54,34 @@ public class Z21SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Z2
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new Z21SystemConnectionMemo();
         scm.setTrafficController(new Z21InterfaceScaffold());
         scm.setRocoZ21CommandStation(new RocoZ21CommandStation());
+
+        Z21LocoNetTunnel locoNetTunnel = Mockito.mock(Z21LocoNetTunnel.class);
+        LnStreamPortController loconetStreamPortController = Mockito.mock(LnStreamPortController.class);
+        Mockito.when(locoNetTunnel.getStreamPortController()).thenReturn(loconetStreamPortController);
+        LocoNetSystemConnectionMemo locoNetSystemConnectionMemo = Mockito.mock(LocoNetSystemConnectionMemo.class);
+        Mockito.when(loconetStreamPortController.getSystemConnectionMemo()).thenReturn(locoNetSystemConnectionMemo);
+        scm.store(locoNetTunnel,Z21LocoNetTunnel.class);
+
+        Z21XPressNetTunnel xNetTunnel = Mockito.mock(Z21XPressNetTunnel.class);
+        XNetStreamPortController xNetPortController = Mockito.mock(XNetStreamPortController.class);
+        Mockito.when(xNetTunnel.getStreamPortController()).thenReturn(xNetPortController);
+        XNetSystemConnectionMemo xNetSystemConnectionMemo = Mockito.mock(XNetSystemConnectionMemo.class);
+        Mockito.when(xNetPortController.getSystemConnectionMemo()).thenReturn(xNetSystemConnectionMemo);
+        XNetProgrammerManager xNetProgrammerManager = Mockito.mock(XNetProgrammerManager.class);
+        Mockito.when(xNetSystemConnectionMemo.getProgrammerManager()).thenReturn(xNetProgrammerManager);
+        scm.store(xNetTunnel,Z21XPressNetTunnel.class);
+
+        scm.configureManagers();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

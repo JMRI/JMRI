@@ -7,9 +7,8 @@ import static org.junit.Assert.assertTrue;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.SystemConnectionMemo;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -33,14 +32,14 @@ public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTes
         assertEquals("internal", c.getUserName());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         scm = new ConflictingSystemConnectionMemo("c", "conflicting");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

@@ -3,18 +3,19 @@ package jmri.jmrit.symbolicprog;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
 import javax.swing.JLabel;
+
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test VariableTableModel table methods.
@@ -733,12 +734,12 @@ public class VariableTableModelTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

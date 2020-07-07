@@ -12,13 +12,13 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -32,7 +32,7 @@ public class TrackerTest {
         Tracker t = new Tracker(new OBlock("OB1", "Test"), "Test", 
                 new LocoIcon(new EditorScaffold()), 
                 InstanceManager.getDefault(TrackerTableAction.class));
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @Test
@@ -44,9 +44,9 @@ public class TrackerTest {
         Tracker t = new Tracker(blk1, "Test", 
                 new LocoIcon(new EditorScaffold()), 
                 trackTable);
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         List<OBlock> occupied = t.getBlocksOccupied();
-        Assert.assertEquals("Number Blocks Occupied", 1, occupied.size());
+        assertThat(occupied.size()).withFailMessage("Number Blocks Occupied").isEqualTo(1);
     }
 
     @Test
@@ -59,52 +59,52 @@ public class TrackerTest {
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
-        Assert.assertNotNull("TrackerTableAction not found", tta);
+        assertThat(tta).withFailMessage("TrackerTableAction not found").isNotNull();
         OBlockManager _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         
         OBlock West = _OBlockMgr.getByUserName("West");
         Sensor sWest = West.getSensor();
-        Assert.assertNotNull("Senor sWest found", sWest);
+        assertThat(sWest).withFailMessage("Senor sWest found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sWest, Sensor.ACTIVE, West);
 
         OBlock Main = _OBlockMgr.getByUserName("Main");
         Sensor sMain = Main.getSensor();
-        Assert.assertNotNull("Senor sWest found", sMain);
+        assertThat(sMain).withFailMessage("Senor sWest found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sMain, Sensor.ACTIVE, Main);
 
         OBlock East = _OBlockMgr.getByUserName("East");
         Sensor sEast = East.getSensor();
-        Assert.assertNotNull("Senor sFarWest found", sEast);
+        assertThat(sEast).withFailMessage("Senor sFarWest found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sEast, Sensor.ACTIVE, East);
 
         tta.actionPerformed(null);  // called to make TrackerTableAction._frame
         Tracker TkrWest = new Tracker(West, "TkrFW", null, tta);
-        Assert.assertNotNull("Tracker TkrWest found", TkrWest);
+        assertThat(TkrWest).withFailMessage("Tracker TkrWest found").isNotNull();
 
         JFrameOperator nfo = new JFrameOperator(tta._frame);
         JDialogOperator jdo = new JDialogOperator(nfo, Bundle.getMessage("TrackerTitle"));
-        Assert.assertNotNull("Dialog operator found", jdo);
+        assertThat(jdo).withFailMessage("Dialog operator found").isNotNull();
         
         Tracker.ChooseStartBlock dialog = (Tracker.ChooseStartBlock)jdo.getSource();
-        Assert.assertNotNull("JDialog found", dialog);
+        assertThat(dialog).withFailMessage("JDialog found").isNotNull();
         
         dialog._jList.setSelectedIndex(0);
 
         List<OBlock> occupied = TkrWest.getBlocksOccupied();
-        Assert.assertEquals("TkrWest Blocks Occupied", 2, occupied.size());
+        assertThat(occupied.size()).withFailMessage("TkrWest Blocks Occupied").isEqualTo(2);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         
         dialog._jList.setSelectedIndex(0);
 
         occupied = TkrWest.getBlocksOccupied();
-        Assert.assertEquals("TkrWest Blocks Occupied", 3, occupied.size());
+        assertThat(occupied.size()).withFailMessage("TkrWest Blocks Occupied").isEqualTo(3);
 
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
         panel.dispose();
         _OBlockMgr.dispose();
     }        
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -113,7 +113,7 @@ public class TrackerTest {
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
