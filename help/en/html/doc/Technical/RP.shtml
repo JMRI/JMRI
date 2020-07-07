@@ -212,24 +212,34 @@
         <a href="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">
             <img src="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=PRIORITY" align="right" width="250" height="100">
         </a></li>
+        <li>These changes can be included in an 
+            <a href="ReleaseProcess.md">update or minor release</a>. You should 
+            PR them to either the <code>dev-update</code> or <code>dev-minor</code>, depending on
+            the <u>other</u> changes associated, as soon as possible so that people get notice
+            of the deprecations. Make sure that the PR includes a note about the deprecations 
+            to help give that notice.
+            
         <li>As soon as you can, remove all JMRI uses of these deprecated classes and/or methods
             until the deprecations report is clean. 
-            (Until you do this, warnings will be showing up in the logs)
+            (Until you do this, warnings will be showing up in the logs; ideally this
+            is done as part of the original deprecation PR)
             You can either compile locally
             with <code>ci-compile-deprecations</code> to check this, or look at the
             <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">Jenkins CI report</a>
             (click the Types tab) to check the JMRI/JMRI master branch.
         <li><strong>Don't forget to migrate the Jython sample scripts!</strong>
-        <li>Wait an appropriate length of time; the more visible the class or method,
-            the longer to wait.  Things that were in scripts should wait at least two
-            production releases.
             
-        <li>Remove the deprecated methods and their tests.
+        <li>Remove the deprecated methods and their tests. Make sure that the PR
+            to do this includes an update to the release note about the removal.
+            This can then be merged to the 
+            <code>dev-major</code> branch; whether it can be merged and 
+            released via the <code>dev-minor</code> is still a subject of discussion.
+            
         </ul>
         
-      <p>Note that a deprecated interface is meant to still work.
+      <p>Note that a deprecated item is meant to still work.
       Deprecated should only mean that you can't count on the
-      deprecated interface working in the future, so that it would
+      deprecated item working in the future, so that it would
       be good to code away from it while it's still working.</p>
 
       <p>There are two forms of marking something as deprecated
