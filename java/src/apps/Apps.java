@@ -18,7 +18,6 @@ import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 
 import jmri.*;
-import jmri.implementation.JmriConfigurationManager;
 
 import apps.jmrit.DebugMenu;
 
@@ -144,8 +143,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
 
         // Install configuration manager and Swing error handler
-        // Constructing the JmriConfigurationManager also loads various configuration services
-        ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
+        // Constructing the AppsConfigurationManager also loads various configuration services
+        ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new AppsConfigurationManager());
 
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);

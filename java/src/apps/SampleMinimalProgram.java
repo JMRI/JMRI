@@ -2,7 +2,6 @@ package apps;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.implementation.JmriConfigurationManager;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
 
@@ -115,7 +114,7 @@ public class SampleMinimalProgram {
         adapter.openPort(portName, "JMRI app");
         adapter.configure();
 
-        ConfigureManager cm = new JmriConfigurationManager();
+        ConfigureManager cm = new AppsConfigurationManager();
 
         // not setting preference file location!
         InstanceManager.setDefault(ConfigureManager.class, cm);

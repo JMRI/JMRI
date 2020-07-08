@@ -10,10 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ServiceLoader;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Action;
@@ -30,10 +27,6 @@ import javax.swing.event.ListSelectionEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import apps.gui3.tabbedpreferences.EditConnectionPreferencesDialog;
-import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
-import java.util.HashSet;
-import java.util.Set;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -218,50 +211,10 @@ public class JmriConfigurationManager implements ConfigureManager {
                         // that list explicit requirements get run before providers
                         // attempting to force themselves to run last by requiring
                         // all providers
-                        .sorted((p1, p2) -> Integer.compare(p1.getRequires().size(), p2.getRequires().size()))
+                        .sorted(Comparator.comparingInt(p -> p.getRequires().size()))
                         .forEachOrdered(provider -> initializeProvider(provider, profile));
                 if (!this.initializationExceptions.isEmpty()) {
-                    if (!GraphicsEnvironment.isHeadless()) {
-                        
-                        AtomicBoolean isUnableToConnect = new AtomicBoolean(false);
-                        
-                        List<String> errors = new ArrayList<>();
-                        this.initialized.forEach((provider) -> {
-                            List<Exception> exceptions = provider.getInitializationExceptions(profile);
-                            if (!exceptions.isEmpty()) {
-                                exceptions.forEach((exception) -> {
-                                    if (exception instanceof HasConnectionButUnableToConnectException) {
-                                        isUnableToConnect.set(true);
-                                    }
-                                    errors.add(exception.getLocalizedMessage());
-                                });
-                            } else if (this.initializationExceptions.get(provider) != null) {
-                                errors.add(this.initializationExceptions.get(provider).getLocalizedMessage());
-                            }
-                        });
-                        Object list;
-                        if (errors.size() == 1) {
-                            list = errors.get(0);
-                        } else {
-                            list = new JList<>(errors.toArray(new String[errors.size()]));
-                        }
-                        
-                        if (isUnableToConnect.get()) {
-                            handleConnectionError(errors, list);
-                        } else {
-                            JOptionPane.showMessageDialog(null,
-                                    new Object[]{
-                                        (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
-                                        list,
-                                        "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
-                                        Bundle.getMessage("InitExMessageLogs"), // NOI18N
-                                        Bundle.getMessage("InitExMessagePrefs"), // NOI18N
-                                    },
-                                    Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), // NOI18N
-                                    JOptionPane.ERROR_MESSAGE);
-                            (new TabbedPreferencesAction()).actionPerformed();
-                        }
-                    }
+                    handleInitializationExceptions(profile);
                 }
                 if (url != null && (new File(url.toURI())).getName().equals(Profile.CONFIG_FILENAME)) {
                     log.debug("Loading legacy configuration...");
@@ -281,6 +234,58 @@ public class JmriConfigurationManager implements ConfigureManager {
         // return true; // always return true once legacy support is dropped
     }
 
+    private void handleInitializationExceptions(Profile profile) {
+        if (!GraphicsEnvironment.isHeadless()) {
+
+            AtomicBoolean isUnableToConnect = new AtomicBoolean(false);
+
+            List<String> errors = new ArrayList<>();
+            this.initialized.forEach((provider) -> {
+                List<Exception> exceptions = provider.getInitializationExceptions(profile);
+                if (!exceptions.isEmpty()) {
+                    exceptions.forEach((exception) -> {
+                        if (exception instanceof HasConnectionButUnableToConnectException) {
+                            isUnableToConnect.set(true);
+                        }
+                        errors.add(exception.getLocalizedMessage());
+                    });
+                } else if (this.initializationExceptions.get(provider) != null) {
+                    errors.add(this.initializationExceptions.get(provider).getLocalizedMessage());
+                }
+            });
+            Object list = getErrorListObject(errors);
+
+            if (isUnableToConnect.get()) {
+                handleConnectionError(errors, list);
+            } else {
+                displayErrorListDialog(list);
+            }
+        }
+    }
+
+    private Object getErrorListObject(List<String> errors) {
+        Object list;
+        if (errors.size() == 1) {
+            list = errors.get(0);
+        } else {
+            list = new JList<>(errors.toArray(new String[0]));
+        }
+        return list;
+    }
+
+    protected void displayErrorListDialog(Object list) {
+        JOptionPane.showMessageDialog(null,
+                new Object[]{
+                    (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
+                    list,
+                    "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
+                    Bundle.getMessage("InitExMessageLogs"), // NOI18N
+                    Bundle.getMessage("InitExMessagePrefs"), // NOI18N
+                },
+                Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), // NOI18N
+                JOptionPane.ERROR_MESSAGE);
+    }
+
     /**
      * Show a dialog with options Quit, Restart, Change profile, Edit connections
      * @param errors the list of error messages
@@ -292,68 +297,31 @@ public class JmriConfigurationManager implements ConfigureManager {
         errorList.add(" "); // blank line below errors
         errorList.add(Bundle.getMessage("InitExMessageLogs"));
 
-        Object[] options = new Object[] {
-            Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()),
-            Bundle.getMessage("ErrorDialogButtonContinue"),
-            Bundle.getMessage("ErrorDialogButtonEditConnections")
-        };
+        Object[] options = generateErrorDialogButtonOptions();
 
         if (list instanceof JList) {
             JPopupMenu popupMenu = new JPopupMenu();
-            JMenuItem copyMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
-            TransferActionListener copyActionListener = new TransferActionListener();
-            copyMenuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
-            copyMenuItem.addActionListener(copyActionListener);
-            if (SystemType.isMacOSX()) {
-                copyMenuItem.setAccelerator(
-                        KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
-            } else {
-                copyMenuItem.setAccelerator(
-                        KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
-            }
-            copyMenuItem.setMnemonic(KeyEvent.VK_C);
-            copyMenuItem.setEnabled(((JList)list).getSelectedIndex() != -1);
+            JMenuItem copyMenuItem = buildCopyMenuItem((JList) list);
             popupMenu.add(copyMenuItem);
 
-            JMenuItem copyAllMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopyAll"));
-            ActionListener copyAllActionListener = (ActionEvent e) -> {
-                StringBuilder text = new StringBuilder();
-                for (int i=0; i < ((JList)list).getModel().getSize(); i++) {
-                    text.append(((JList)list).getModel().getElementAt(i).toString());
-                    text.append(System.getProperty("line.separator")); // NOI18N
-                }
-                Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                systemClipboard.setContents(new StringSelection(text.toString()), null);
-            };
-            copyAllMenuItem.setActionCommand("copyAll"); // NOI18N
-            copyAllMenuItem.addActionListener(copyAllActionListener);
+            JMenuItem copyAllMenuItem = buildCopyAllMenuItem((JList) list);
             popupMenu.add(copyAllMenuItem);
 
             ((JList) list).setComponentPopupMenu(popupMenu);
 
-            ((JList) list).addListSelectionListener((ListSelectionEvent e) -> {
-                copyMenuItem.setEnabled(((JList)e.getSource()).getSelectedIndex() != -1);
-            });
+            ((JList) list).addListSelectionListener((ListSelectionEvent e) -> copyMenuItem.setEnabled(((JList)e.getSource()).getSelectedIndex() != -1));
         }
 
-        JOptionPane pane = new JOptionPane(
-                new Object[] {
-                    (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
-                    list,
-                    "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
-                    Bundle.getMessage("InitExMessageLogs"), // NOI18N
-                    Bundle.getMessage("ErrorDialogConnectLayout"), // NOI18N
-                },
-                JOptionPane.ERROR_MESSAGE,
-                JOptionPane.DEFAULT_OPTION,
-                null,
-                options
-        );
+        JOptionPane pane = getjOptionPane(list, options);
 
         JDialog dialog = pane.createDialog(null, Bundle.getMessage("InitExMessageTitle", Application.getApplicationName())); // NOI18N
         dialog.setVisible(true);
         Object selectedValue = pane.getValue();
 
+        handleRestartSelection(selectedValue);
+    }
+
+    private void handleRestartSelection(Object selectedValue) {
         if (Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()).equals(selectedValue)) {
             // Exit program
             handleQuit();
@@ -362,14 +330,9 @@ public class JmriConfigurationManager implements ConfigureManager {
             // Do nothing. Let the program continue
 
         } else if (Bundle.getMessage("ErrorDialogButtonEditConnections").equals(selectedValue)) {
-           if (EditConnectionPreferencesDialog.showDialog()) {
-                // Restart program
-               try {
-                   InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
-               } catch (Exception er) {
-                   log.error("Continuing after error in handleRestart", er);
-               }
-            } else {
+           if (isEditDialogRestart()) {
+               handleRestart();
+           } else {
                 // Quit program
                 handleQuit();
             }
@@ -380,7 +343,78 @@ public class JmriConfigurationManager implements ConfigureManager {
         }
     }
 
-    private void handleQuit(){
+    protected boolean isEditDialogRestart() {
+        return false;
+    }
+
+    protected void handleRestart() {
+        // Restart program
+        try {
+            InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
+        } catch (Exception er) {
+            log.error("Continuing after error in handleRestart", er);
+        }
+    }
+
+
+    private JOptionPane getjOptionPane(Object list, Object[] options) {
+        return new JOptionPane(
+                    new Object[] {
+                        (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
+                        list,
+                        "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
+                        Bundle.getMessage("InitExMessageLogs"), // NOI18N
+                        Bundle.getMessage("ErrorDialogConnectLayout"), // NOI18N
+                    },
+                    JOptionPane.ERROR_MESSAGE,
+                    JOptionPane.DEFAULT_OPTION,
+                    null,
+                    options
+            );
+    }
+
+    private JMenuItem buildCopyAllMenuItem(JList list) {
+        JMenuItem copyAllMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopyAll"));
+        ActionListener copyAllActionListener = (ActionEvent e) -> {
+            StringBuilder text = new StringBuilder();
+            for (int i = 0; i < list.getModel().getSize(); i++) {
+                text.append(list.getModel().getElementAt(i).toString());
+                text.append(System.getProperty("line.separator")); // NOI18N
+            }
+            Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            systemClipboard.setContents(new StringSelection(text.toString()), null);
+        };
+        copyAllMenuItem.setActionCommand("copyAll"); // NOI18N
+        copyAllMenuItem.addActionListener(copyAllActionListener);
+        return copyAllMenuItem;
+    }
+
+    private JMenuItem buildCopyMenuItem(JList list) {
+        JMenuItem copyMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
+        TransferActionListener copyActionListener = new TransferActionListener();
+        copyMenuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
+        copyMenuItem.addActionListener(copyActionListener);
+        if (SystemType.isMacOSX()) {
+            copyMenuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+        } else {
+            copyMenuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        }
+        copyMenuItem.setMnemonic(KeyEvent.VK_C);
+        copyMenuItem.setEnabled(list.getSelectedIndex() != -1);
+        return copyMenuItem;
+    }
+
+    private Object[] generateErrorDialogButtonOptions() {
+        return new Object[] {
+                Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()),
+                Bundle.getMessage("ErrorDialogButtonContinue"),
+                Bundle.getMessage("ErrorDialogButtonEditConnections")
+            };
+    }
+
+    protected void handleQuit(){
         try {
             InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
         } catch (Exception e) {
@@ -389,12 +423,12 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
     @Override
-    public boolean loadDeferred(File file) throws JmriException {
+    public boolean loadDeferred(File file) {
         return this.legacy.loadDeferred(file);
     }
 
     @Override
-    public boolean loadDeferred(URL file) throws JmriException {
+    public boolean loadDeferred(URL file) {
         return this.legacy.loadDeferred(file);
     }
 

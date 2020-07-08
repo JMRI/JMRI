@@ -10,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 
 import jmri.*;
-import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -176,7 +175,7 @@ public abstract class AppsBase {
     }
 
     protected void installConfigurationManager() {
-        ConfigureManager cm = new JmriConfigurationManager();
+        ConfigureManager cm = new AppsConfigurationManager();
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
         InstanceManager.store(cm, ConfigureManager.class);
         InstanceManager.setDefault(ConfigureManager.class, cm);
