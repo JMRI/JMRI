@@ -29,7 +29,7 @@ import com.alexandriasoftware.swing.Validation;
 
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
-import jmri.implementation.LightControl;
+import jmri.implementation.DefaultLightControl;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
@@ -1206,7 +1206,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // Get a copy of the LightControl list
         controlList = new ArrayList<>();
         curLight.getLightControlList().forEach((lightControlList1) -> {
-            controlList.add(new LightControl(lightControlList1));
+            controlList.add(new DefaultLightControl(lightControlList1));
         });
 
         // variable intensity
@@ -1717,7 +1717,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             log.error("Incorrect value found in a Time: {}", pe);
             return;
         }
-        lc = new LightControl();
+        lc = new DefaultLightControl();
         if (setControlInformation(lc,controlList)) {
             controlList.add(lc);
             lightControlChanged = true;

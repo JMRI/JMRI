@@ -1,9 +1,7 @@
 package jmri;
 
-import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Nonnull;
-
-import jmri.implementation.LightControl;
 
 /**
  * Represent a single visible Light on the physical layout.
@@ -180,13 +178,13 @@ public interface Light extends DigitalIO {
      * Duplicates are considered the same, hence not added
      * @param c the light control to add.
      */
-    public void addLightControl(@Nonnull jmri.implementation.LightControl c);
+    public void addLightControl(@Nonnull LightControl c);
 
     /**
      * @return a list of all LightControls
      */
     @Nonnull
-    public ArrayList<LightControl> getLightControlList();
+    public List<LightControl> getLightControlList();
 
     /**
      * Set the Enabled property, which determines whether the control logic

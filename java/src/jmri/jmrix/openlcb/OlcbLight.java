@@ -6,8 +6,8 @@
 package jmri.jmrix.openlcb;
 
 import jmri.Light;
+import jmri.LightControl;
 import jmri.implementation.AbstractLight;
-import jmri.implementation.LightControl;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.VersionedValueListener;

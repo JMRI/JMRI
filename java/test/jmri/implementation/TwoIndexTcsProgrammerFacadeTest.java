@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2014
  * 
  */
+ @Timeout(60)
 public class TwoIndexTcsProgrammerFacadeTest {
 
     int readValue = -2;

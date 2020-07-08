@@ -1,11 +1,11 @@
 package jmri.managers.configurexml;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
 import jmri.*;
-import jmri.implementation.LightControl;
+import jmri.implementation.DefaultLightControl;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -72,7 +72,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 }
 
                 // save child lightcontrol entries
-                ArrayList<LightControl> lcList = lgt.getLightControlList();
+                List<LightControl> lcList = lgt.getLightControlList();
                 for (LightControl lc : lcList) {
                     if (lc != null) {
                         Element lcElem = new Element("lightcontrol");
@@ -182,7 +182,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 }
                 if (type != Light.NO_CONTROL) {
                     // this legacy light has a control - capture it
-                    LightControl lc = new LightControl(lgt);
+                    LightControl lc = new DefaultLightControl(lgt);
                     lc.setControlType(type);
                     if (type == Light.SENSOR_CONTROL) {
                         lc.setControlSensorName(el.getAttribute("controlSensor").getValue());
@@ -238,7 +238,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             List<Element> lightControlList = el.getChildren("lightcontrol");
             for (Element elem : lightControlList) {
                 boolean noErrors = true;
-                LightControl lc = new LightControl(lgt);
+                LightControl lc = new DefaultLightControl(lgt);
                 String tem = elem.getAttribute("controlType").getValue();
                 int type = Light.NO_CONTROL;
                 try {

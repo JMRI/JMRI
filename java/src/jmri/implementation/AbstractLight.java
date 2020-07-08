@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Light;
+import jmri.LightControl;
 
 /**
  * Abstract class providing partial implementation of the Light interface.
@@ -62,7 +63,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * System independent instance variables (saved between runs).
      */
-    protected ArrayList<LightControl> lightControlList = new ArrayList<>();
+    protected List<LightControl> lightControlList = new ArrayList<>();
     protected double mMaxIntensity = 1.0;
     protected double mMinIntensity = 0.0;
 
@@ -215,7 +216,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     /** {@inheritDoc}
      */
     @Override
-    public void addLightControl(jmri.implementation.LightControl c) {
+    public void addLightControl(LightControl c) {
         if (lightControlList.contains(c)) {
             log.debug("not adding duplicate LightControl {}", c);
             return;
@@ -224,8 +225,8 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     @Override
-    public ArrayList<LightControl> getLightControlList() {
-        ArrayList<LightControl> listCopy = new ArrayList<>();
+    public List<LightControl> getLightControlList() {
+        List<LightControl> listCopy = new ArrayList<>();
         lightControlList.stream().forEach((lightControlList1) -> {
             listCopy.add(lightControlList1);
         });
