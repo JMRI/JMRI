@@ -55,9 +55,9 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
             element.setAttribute("arc", "yes");
             element.setAttribute("flip", "" + (p.isFlip() ? "yes" : "no"));
             element.setAttribute("circle", "" + (p.isCircle() ? "yes" : "no"));
+            element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
             if ((p.isCircle()) && (p.getAngle() != 0.0D)) {
                 element.setAttribute("angle", "" + (p.getAngle()));
-                element.setAttribute("hideConLines", "" + (p.hideConstructionLines() ? "yes" : "no"));
             }
         }
 
