@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public abstract class Category implements Comparable {
+public abstract class Category implements Comparable<Category> {
 
     /**
      * A item on the layout, for example turnout, sensor and signal mast.

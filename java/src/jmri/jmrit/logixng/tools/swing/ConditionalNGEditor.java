@@ -280,7 +280,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
 //        for (Category item : Category.values()) {
 //        for (Category item : connectableClasses.keySet()) {
         List<Category> list = new ArrayList<>(connectableClasses.keySet());
-        Collections.<Category>sort(list);
+        Collections.sort(list);
         for (Category item : list) {
 //            log.error("addPressed: item: {}", item.name());
             _categoryComboBox.addItem(item);
