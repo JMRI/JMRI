@@ -26,7 +26,7 @@ public class DefaultConditionalNG extends AbstractBase
     private MaleSocket.ErrorHandlingType _errorHandlingType = MaleSocket.ErrorHandlingType.LOG_ERROR;
     private Base _parent = null;
     private String _socketSystemName = null;
-    private final FemaleDigitalActionSocket _femaleActionSocket;
+    private final FemaleRootSocket _femaleRootSocket;
     private boolean _enabled = true;
     private Base.Lock _lock = Base.Lock.NONE;
     private final ExecuteLock executeLock = new ExecuteLock();
@@ -41,7 +41,7 @@ public class DefaultConditionalNG extends AbstractBase
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid");
         }
-        _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, "");
+        _femaleRootSocket = new DefaultFemaleRootSocket(this, this, "");
     }
     
     @Override
@@ -58,14 +58,14 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public FemaleSocket getFemaleSocket() {
-        return _femaleActionSocket;
+        return _femaleRootSocket;
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean supportsEnableExecution() {
-        if (_femaleActionSocket.isConnected()) {
-            return _femaleActionSocket.getConnectedSocket().getObject()
+        if (_femaleRootSocket.isConnected()) {
+            return _femaleRootSocket.getConnectedSocket().getObject()
                     instanceof DigitalActionWithEnableExecution;
         } else {
             // ConditionalNGs without a connected socket does not support
@@ -78,10 +78,10 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public void setEnableExecution(boolean b) {
         if (supportsEnableExecution()
-                && (_femaleActionSocket.isConnected())
-                && (_femaleActionSocket.getConnectedSocket().getObject()
+                && (_femaleRootSocket.isConnected())
+                && (_femaleRootSocket.getConnectedSocket().getObject()
                         instanceof DigitalActionWithEnableExecution)) {
-            Base action = _femaleActionSocket.getConnectedSocket().getObject();
+            Base action = _femaleRootSocket.getConnectedSocket().getObject();
             ((DigitalActionWithEnableExecution)action).setEnableExecution(b);
         } else {
             log.error("This conditionalNG does not supports the method setEnableExecution()");
@@ -93,10 +93,10 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public boolean isExecutionEnabled() {
         if (supportsEnableExecution()
-                && (_femaleActionSocket.isConnected())
-                && (_femaleActionSocket.getConnectedSocket().getObject()
+                && (_femaleRootSocket.isConnected())
+                && (_femaleRootSocket.getConnectedSocket().getObject()
                         instanceof DigitalActionWithEnableExecution)) {
-            Base action = _femaleActionSocket.getConnectedSocket().getObject();
+            Base action = _femaleRootSocket.getConnectedSocket().getObject();
             return ((DigitalActionWithEnableExecution)action).isExecutionEnabled();
         } else {
             log.error("This conditionalNG does not supports the method isExecutionEnabled()");
@@ -132,7 +132,7 @@ public class DefaultConditionalNG extends AbstractBase
                 while (executeLock.loop()) {
                     if (isEnabled()) {
                         try {
-                            _femaleActionSocket.execute();
+                            _femaleRootSocket.execute();
                         } catch (JmriException | RuntimeException e) {
                             switch (_errorHandlingType) {
                                 case LOG_ERROR_ONCE:
@@ -235,7 +235,7 @@ public class DefaultConditionalNG extends AbstractBase
                     String.format("index has invalid value: %d", index));
         }
         
-        return _femaleActionSocket;
+        return _femaleRootSocket;
     }
 
     @Override
@@ -274,7 +274,7 @@ public class DefaultConditionalNG extends AbstractBase
 
     public void setSocketSystemName(String systemName) {
         if ((systemName == null) || (!systemName.equals(_socketSystemName))) {
-            _femaleActionSocket.disconnect();
+            _femaleRootSocket.disconnect();
         }
         _socketSystemName = systemName;
     }
@@ -286,11 +286,11 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     final public void setup() {
-        if (!_femaleActionSocket.isConnected()
-                || !_femaleActionSocket.getConnectedSocket().getSystemName()
+        if (!_femaleRootSocket.isConnected()
+                || !_femaleRootSocket.getConnectedSocket().getSystemName()
                         .equals(_socketSystemName)) {
             
-            _femaleActionSocket.disconnect();
+            _femaleRootSocket.disconnect();
             
             if (_socketSystemName != null) {
                 try {
@@ -298,7 +298,7 @@ public class DefaultConditionalNG extends AbstractBase
                             InstanceManager.getDefault(DigitalActionManager.class)
                                     .getBySystemName(_socketSystemName);
                     if (maleSocket != null) {
-                        _femaleActionSocket.connect(maleSocket);
+                        _femaleRootSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
                         log.error("digital action is not found: " + _socketSystemName);
@@ -309,14 +309,14 @@ public class DefaultConditionalNG extends AbstractBase
                 }
             }
         } else {
-            _femaleActionSocket.setup();
+            _femaleRootSocket.setup();
         }
     }
 
     /** {@inheritDoc} */
     @Override
     final public void disposeMe() {
-        _femaleActionSocket.dispose();
+        _femaleRootSocket.dispose();
     }
     
     /** {@inheritDoc} */

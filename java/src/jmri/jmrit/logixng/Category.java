@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public abstract class Category {
+public abstract class Category implements Comparable {
 
     /**
      * A item on the layout, for example turnout, sensor and signal mast.
@@ -86,6 +86,17 @@ public abstract class Category {
     @Override
     public final String toString() {
         return _description;
+    }
+    
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Category) {
+            return this._description.compareTo(((Category)o)._description);
+        } else if (o == null) {
+            throw new IllegalArgumentException("Cannot compare Category to null");
+        } else {
+            throw new IllegalArgumentException("Cannot compare Category to class "+o.getClass().getName());
+        }
     }
     
     

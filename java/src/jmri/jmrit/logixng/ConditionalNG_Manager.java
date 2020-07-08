@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng;
 
 import java.util.List;
+import java.util.Map;
+
 import jmri.Manager;
 
 /**
@@ -94,4 +96,12 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      */
     public void setLoadDisabled(boolean s);
     
+    /**
+     * Get a set of classes that implements the DigitalActionBean interface
+     * and can be used as the root in the ConditionalNG tree.
+     * 
+     * @return a set of entries with category and class
+     */
+    public Map<Category, List<Map.Entry<Class<? extends Base>, Boolean>>> getRootClasses();
+
 }

@@ -3,17 +3,16 @@ package jmri.jmrit.logixng.tools.swing;
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.EventListener;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
+
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -22,6 +21,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,6 +100,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
     public ConditionalNGEditor(ConditionalNG conditionalNG) {
         // Note!! This must be made dynamic, so that new socket types are recognized automaticly and added to the list
         // and the list must be saved between runs.
+        FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.implementation.DefaultFemaleRootSocket", Color.RED);
         FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket", Color.RED);
         FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket", Color.BLUE);
 //        conditionalNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName(sName);
@@ -115,10 +116,6 @@ public final class ConditionalNGEditor extends JmriJFrame {
     @Override
     public void initComponents() {
         super.initComponents();
-        
-        for (Category item : Category.values()) {
-            _categoryComboBox.addItem(item);
-        }
         
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -279,6 +276,16 @@ public final class ConditionalNGEditor extends JmriJFrame {
         Map<Category, List<Class<? extends Base>>> connectableClasses =
                 femaleSocket.getConnectableClasses();
         
+        _categoryComboBox.removeAllItems();
+//        for (Category item : Category.values()) {
+//        for (Category item : connectableClasses.keySet()) {
+        List<Category> list = new ArrayList<>(connectableClasses.keySet());
+        Collections.<Category>sort(list);
+        for (Category item : list) {
+//            log.error("addPressed: item: {}", item.name());
+            _categoryComboBox.addItem(item);
+        }
+        
         for (ItemListener l : _categoryComboBox.getItemListeners()) {
             _categoryComboBox.removeItemListener(l);
         }
@@ -286,18 +293,21 @@ public final class ConditionalNGEditor extends JmriJFrame {
         _categoryComboBox.addItemListener((ItemEvent e) -> {
             Category category = _categoryComboBox.getItemAt(_categoryComboBox.getSelectedIndex());
             _swingConfiguratorComboBox.removeAllItems();
-            for (Class<? extends Base> clazz : connectableClasses.get(category)) {
-                SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
-                if (sci != null) {
-                    _swingConfiguratorComboBox.addItem(sci);
-                } else {
-                    log.error("Class {} has no swing configurator interface", clazz.getName());
+            List<Class<? extends Base>> classes = connectableClasses.get(category);
+            if (classes != null) {
+                for (Class<? extends Base> clazz : classes) {
+                    SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
+                    if (sci != null) {
+                        _swingConfiguratorComboBox.addItem(sci);
+                    } else {
+                        log.error("Class {} has no swing configurator interface", clazz.getName());
+                    }
                 }
             }
         });
         
         // Ensure the type combo box gets updated
-        _categoryComboBox.setSelectedIndex(2);
+        _categoryComboBox.setSelectedIndex(-1);
         _categoryComboBox.setSelectedIndex(0);
         
         

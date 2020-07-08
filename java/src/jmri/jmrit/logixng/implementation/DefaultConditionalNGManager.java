@@ -1,10 +1,10 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.util.*;
+
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
-import jmri.jmrit.logixng.digital.actions.Many;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -18,10 +18,40 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         implements ConditionalNG_Manager {
 
     
+    Map<Category, List<Map.Entry<Class<? extends Base>, Boolean>>> _rootClasses;
+    
     public DefaultConditionalNGManager() {
         // LogixNGPreferences class may load plugins so we must ensure
         // it's loaded here.
         InstanceManager.getDefault(LogixNGPreferences.class);
+        setupRootClasses();
+    }
+    
+    private void setupRootClasses() {
+        _rootClasses = new HashMap<>();
+        
+        for (Map.Entry<Category, List<Class<? extends Base>>> map
+                : InstanceManager.getDefault(DigitalActionManager.class).getActionClasses().entrySet()) {
+            
+            List<Map.Entry<Class<? extends Base>, Boolean>> list = new ArrayList<>();
+            
+            for (Class<? extends Base> clazz : map.getValue()) {
+                boolean allowed = false;
+                
+//                log.error("Class: {}", clazz.getName());
+                
+                switch (clazz.getName()) {
+                    case "jmri.jmrit.logixng.digital.actions.Many":
+                    case "jmri.jmrit.logixng.digital.actions.IfThenElse":
+                    case "jmri.jmrit.logixng.digital.actions.Logix":
+                        allowed = true;
+                }
+                
+                list.add(new HashMap.SimpleEntry<>(clazz, allowed));
+            }
+            
+            _rootClasses.put(map.getKey(), list);
+        }
     }
 
     @Override
@@ -171,6 +201,12 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     public Class<ConditionalNG> getNamedBeanClass() {
         return ConditionalNG.class;
     }
+    
+    @Override
+    public Map<Category, List<Map.Entry<Class<? extends Base>, Boolean>>> getRootClasses() {
+        return _rootClasses;
+    }
+    
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManager.class);
 }

@@ -87,7 +87,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         }
         
         if (!isCompatible(socket)) {
-            throw new IllegalArgumentException("Socket is not compatible");
+            throw new IllegalArgumentException("Socket "+socket.getClass().getName()+" is not compatible with "+this.getClass().getName());
         }
         
         _socket = socket;

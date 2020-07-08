@@ -461,13 +461,6 @@ public final class LogixNGEditor {
 
     /**
      * Create or edit action/expression dialog.
-     *
-     * @param addOrEdit true if add, false if edit
-     * @param messageId part 1 of property key to fetch as user instruction on
-     *                  pane, either 1 or 2 is added to form the whole key
-     * @param femaleSocket the female socket to which we want to add something
-     * @param swingConfiguratorInterface the swing interface to configure this item
-     * @param button a button to add to the dialog
      */
     void showAddLogixNGFrame() {
         JDialog frame  = new JDialog(
