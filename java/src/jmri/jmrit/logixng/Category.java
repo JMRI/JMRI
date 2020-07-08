@@ -104,7 +104,10 @@ public abstract class Category implements Comparable<Category> {
     
     @Override
     public int compareTo(Category c) {
-        return _description.compareTo(c._description);
+        int result = _description.compareTo(c._description);
+        if (result != 0) return result;
+        
+        return _name.compareTo(c._name);
     }
     
     
