@@ -8,7 +8,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Base.Lock;
-import jmri.jmrit.logixng.Bundle;
 import jmri.jmrit.logixng.digital.actions.*;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;

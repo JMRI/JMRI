@@ -1,7 +1,12 @@
 package jmri.jmrit.logixng.tools.swing;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -19,7 +24,8 @@ public class ConditionalNGEditorTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        ConditionalNGEditor editor = new ConditionalNGEditor();
+        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(null);
+        ConditionalNGEditor editor = new ConditionalNGEditor(conditionalNG);
         Assert.assertNotNull("object not null", editor);
     }
     
