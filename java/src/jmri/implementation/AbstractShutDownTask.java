@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ShutDownTask;
 
-import jmri.util.Log4JUtil;
+import jmri.util.LoggingUtil;
 
 /**
  * Abstract ShutDownTask implementation.
@@ -37,7 +37,7 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     @SuppressWarnings("deprecation")
     public boolean isShutdownAllowed() {
-        Log4JUtil.deprecationWarning(log, "isShutdownAllowed");
+        LoggingUtil.deprecationWarning(log, "isShutdownAllowed");
         return call();
     }
 
@@ -60,7 +60,7 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     @SuppressWarnings("deprecation")
     public final boolean execute() {
-        Log4JUtil.deprecationWarning(log, "execute");
+        LoggingUtil.deprecationWarning(log, "execute");
         run();
         return true;
     }
@@ -73,14 +73,14 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     @SuppressWarnings("deprecation")
     public boolean isParallel() {
-        Log4JUtil.deprecationWarning(log, "isParallel");
+        LoggingUtil.deprecationWarning(log, "isParallel");
         return false;
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public boolean isComplete() {
-        Log4JUtil.deprecationWarning(log, "isComplete");
+        LoggingUtil.deprecationWarning(log, "isComplete");
         return !this.isParallel();
     }
 

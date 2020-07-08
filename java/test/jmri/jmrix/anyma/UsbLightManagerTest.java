@@ -59,7 +59,7 @@ public class UsbLightManagerTest extends AbstractLightMgrTestBase {
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
 
         _memo = new AnymaDMX_SystemConnectionMemo();
-        l = _memo.getLightManager();
+        l = new UsbLightManager(_memo);
     }
 
     @AfterEach

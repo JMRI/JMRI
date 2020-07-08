@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.slf4j.LoggerFactory;
 

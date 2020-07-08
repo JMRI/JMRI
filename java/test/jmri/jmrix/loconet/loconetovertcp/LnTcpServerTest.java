@@ -1,11 +1,13 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import jmri.InstanceManager;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 
 /**
  * Tests for LnTcpServer class.
@@ -26,11 +28,9 @@ public class LnTcpServerTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        memo = new LocoNetSystemConnectionMemo();
+        memo = Mockito.mock(LocoNetSystemConnectionMemo.class);
         // ensure memo exists in order to later use InstanceManager.getDefault()
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
-        memo.setLnTrafficController(lnis);
-        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, true, false, true, false);
+        InstanceManager.store(memo,LocoNetSystemConnectionMemo.class);
     }
 
     @AfterEach

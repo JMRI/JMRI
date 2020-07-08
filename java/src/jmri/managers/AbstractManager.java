@@ -68,6 +68,11 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         registerSelf();
     }
 
+    public AbstractManager() {
+        // create and use a reference to an internal connection
+        this(InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
+    }
+    
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
@@ -382,7 +387,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
-        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList");
+        // jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
         if (cachedSystemNameList == null) {
             cachedSystemNameList = new ArrayList<>();
             _beans.forEach(b -> cachedSystemNameList.add(b.getSystemName()));
@@ -395,7 +400,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<E> getNamedBeanList() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList");
+        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList");
         if (cachedNamedBeanList == null) {
             cachedNamedBeanList = new ArrayList<>(_beans);
         }
