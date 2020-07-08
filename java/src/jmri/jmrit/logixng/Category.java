@@ -89,14 +89,8 @@ public abstract class Category implements Comparable<Category> {
     }
     
     @Override
-    public int compareTo(Object o) {
-        if (o instanceof Category) {
-            return this._description.compareTo(((Category)o)._description);
-        } else if (o == null) {
-            throw new IllegalArgumentException("Cannot compare Category to null");
-        } else {
-            throw new IllegalArgumentException("Cannot compare Category to class "+o.getClass().getName());
-        }
+    public int compareTo(Category c) {
+        return this._description.compareTo(c._description);
     }
     
     
