@@ -46,18 +46,4 @@ public class LightTest {
           jmri.util.JUnitUtil.tearDown();
     }
 
-    
-    private static class MyLight extends AbstractLight {
-
-        public MyLight(String systemName) {
-            super(systemName);
-        }
-
-        @Override
-        public void setState(int newState) {
-            mState = newState;
-        }
-        
-    }
-    
 }
