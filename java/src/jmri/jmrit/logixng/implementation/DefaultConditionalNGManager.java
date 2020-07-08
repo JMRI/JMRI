@@ -36,7 +36,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
             List<Map.Entry<Class<? extends Base>, Boolean>> list = new ArrayList<>();
             
             for (Class<? extends Base> clazz : map.getValue()) {
-                boolean allowed = false;
+                boolean allowed;
                 
 //                log.error("Class: {}", clazz.getName());
                 
@@ -45,6 +45,10 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
                     case "jmri.jmrit.logixng.digital.actions.IfThenElse":
                     case "jmri.jmrit.logixng.digital.actions.Logix":
                         allowed = true;
+                        break;
+                        
+                    default:
+                        allowed = false;
                 }
                 
                 list.add(new HashMap.SimpleEntry<>(clazz, allowed));
