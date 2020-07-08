@@ -3,14 +3,7 @@ package jmri.jmrit.logixng.digital.actions;
 import java.lang.reflect.Field;
 
 import jmri.*;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 import jmri.util.*;
 
 import org.apache.log4j.Level;
@@ -204,6 +197,8 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         // Set a secority manager since we don't want this test to shut down
         // the computer!

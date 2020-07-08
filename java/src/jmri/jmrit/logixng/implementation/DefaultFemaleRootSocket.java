@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.implementation;
 import java.util.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket;
 
@@ -21,6 +20,11 @@ public final class DefaultFemaleRootSocket
     
     @Override
     public boolean isCompatible(MaleSocket socket) {
+        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
+        if (!preferences.getLimitRootActions()) {
+            return super.isCompatible(socket);
+        }
+        
         if (! super.isCompatible(socket)) return false;
         
         for (List<Class<? extends Base>> list : getConnectableClasses().values()) {
@@ -34,6 +38,12 @@ public final class DefaultFemaleRootSocket
     
     @Override
     public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
+        LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
+        
+        if (!preferences.getLimitRootActions()) {
+            return super.getConnectableClasses();
+        }
+        
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         for (Map.Entry<Category, List<Map.Entry<Class<? extends Base>, Boolean>>> entry

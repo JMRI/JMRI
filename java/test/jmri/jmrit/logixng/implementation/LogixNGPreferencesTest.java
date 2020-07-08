@@ -18,8 +18,8 @@ public class LogixNGPreferencesTest {
 
     @Test
     public void testCompareValuesDifferent() {
-        LogixNGPreferences prefsA = new LogixNGPreferences();
-        LogixNGPreferences prefsB = new LogixNGPreferences();
+        DefaultLogixNGPreferences prefsA = new DefaultLogixNGPreferences();
+        DefaultLogixNGPreferences prefsB = new DefaultLogixNGPreferences();
         Assert.assertFalse("prefs are equal", prefsA.compareValuesDifferent(prefsB));
         Assert.assertFalse("prefs are equal", prefsB.compareValuesDifferent(prefsA));
         
@@ -44,7 +44,7 @@ public class LogixNGPreferencesTest {
     
     @Test
     public void testSetAndGet() {
-        LogixNGPreferences prefs = new LogixNGPreferences();
+        DefaultLogixNGPreferences prefs = new DefaultLogixNGPreferences();
         
         prefs.setStartLogixNGOnStartup(true);
         Assert.assertTrue(prefs.getStartLogixNGOnStartup());
@@ -67,8 +67,8 @@ public class LogixNGPreferencesTest {
     
     @Test
     public void testApply() {
-        LogixNGPreferences prefsA = new LogixNGPreferences();
-        LogixNGPreferences prefsB = new LogixNGPreferences();
+        DefaultLogixNGPreferences prefsA = new DefaultLogixNGPreferences();
+        DefaultLogixNGPreferences prefsB = new DefaultLogixNGPreferences();
         
         prefsA.setStartLogixNGOnStartup(false);
         prefsB.setStartLogixNGOnStartup(true);
@@ -115,37 +115,37 @@ public class LogixNGPreferencesTest {
     
     @Test
     public void testSave() {
-        LogixNGPreferences prefsA = new LogixNGPreferences();
-        LogixNGPreferences prefsB;
+        DefaultLogixNGPreferences prefsA = new DefaultLogixNGPreferences();
+        DefaultLogixNGPreferences prefsB;
         
         prefsA.setStartLogixNGOnStartup(false);
         prefsA.save();
-        prefsB = new LogixNGPreferences();
+        prefsB = new DefaultLogixNGPreferences();
         Assert.assertFalse(prefsB.getStartLogixNGOnStartup());
         
         prefsA.setStartLogixNGOnStartup(true);
         prefsA.save();
-        prefsB = new LogixNGPreferences();
+        prefsB = new DefaultLogixNGPreferences();
         Assert.assertTrue(prefsB.getStartLogixNGOnStartup());
         
         prefsA.setUseGenericFemaleSockets(false);
         prefsA.save();
-        prefsB = new LogixNGPreferences();
+        prefsB = new DefaultLogixNGPreferences();
         Assert.assertFalse(prefsB.getUseGenericFemaleSockets());
         
         prefsA.setUseGenericFemaleSockets(true);
         prefsA.save();
-        prefsB = new LogixNGPreferences();
+        prefsB = new DefaultLogixNGPreferences();
         Assert.assertTrue(prefsB.getUseGenericFemaleSockets());
         
         prefsA.setAllowDebugMode(false);
         prefsA.save();
-        prefsB = new LogixNGPreferences();
+        prefsB = new DefaultLogixNGPreferences();
         Assert.assertFalse(prefsB.getAllowDebugMode());
         
         prefsA.setAllowDebugMode(true);
         prefsA.save();
-        prefsB = new LogixNGPreferences();
+        prefsB = new DefaultLogixNGPreferences();
         Assert.assertTrue(prefsB.getAllowDebugMode());
     }
     

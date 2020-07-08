@@ -9,8 +9,6 @@ import java.util.Locale;
 
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Abstract female socket.
@@ -88,6 +86,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         
         if (!isCompatible(socket)) {
             throw new IllegalArgumentException("Socket "+socket.getClass().getName()+" is not compatible with "+this.getClass().getName());
+//            throw new IllegalArgumentException("Socket "+socket.getClass().getName()+" is not compatible with "+this.getClass().getName()+". Socket.getObject: "+socket.getObject().getClass().getName());
         }
         
         _socket = socket;
@@ -371,6 +370,6 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         throw new UnsupportedOperationException("Not supported");
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(AbstractFemaleSocket.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
     
 }

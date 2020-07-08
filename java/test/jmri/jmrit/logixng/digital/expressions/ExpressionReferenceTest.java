@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.AudioManager;
@@ -15,22 +16,12 @@ import jmri.SignalMastManager;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
 import jmri.implementation.VirtualSignalHead;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.Is_IsNot_Enum;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.NamedTableManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -372,6 +363,8 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
 //        JUnitUtil.initLogixManager();
 //        JUnitUtil.initConditionalManager();
         JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.ITEM;
         _isExternal = true;

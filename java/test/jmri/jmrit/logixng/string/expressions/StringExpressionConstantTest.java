@@ -1,25 +1,17 @@
 package jmri.jmrit.logixng.string.expressions;
 
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.StringExpressionManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -242,6 +234,8 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         expressionConstant = new StringExpressionConstant("IQSE321", "StringIO_Constant");
         expressionConstant.setValue("Something");

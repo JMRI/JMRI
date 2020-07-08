@@ -4,6 +4,7 @@ import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 

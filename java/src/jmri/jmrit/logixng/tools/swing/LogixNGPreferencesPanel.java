@@ -1,42 +1,18 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.Dimension;
-import jmri.jmrit.logixng.implementation.LogixNGPreferences;
+import jmri.jmrit.logixng.LogixNGPreferences;
+import jmri.jmrit.logixng.implementation.DefaultLogixNGPreferences;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Color;
-import java.awt.Insets;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 import org.openide.util.lookup.ServiceProvider;
-import javax.swing.border.Border;
-import javax.swing.BorderFactory;
+
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
+
 import jmri.InstanceManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
@@ -49,14 +25,18 @@ import jmri.swing.PreferencesPanel;
 @ServiceProvider(service = PreferencesPanel.class)
 public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel {
     
-    private final LogixNGPreferences preferences;
+    private final DefaultLogixNGPreferences preferences;
 //    private jmri.web.server.WebServerPreferences apreferences;
     
     JCheckBox _startLogixNGOnLoadCheckBox;
     JCheckBox _allowDebugModeCheckBox;
     
     public LogixNGPreferencesPanel() {
-        preferences = InstanceManager.getDefault(LogixNGPreferences.class);
+        LogixNGPreferences prefs = InstanceManager.getDefault(LogixNGPreferences.class);
+        if (!(prefs instanceof DefaultLogixNGPreferences)) {
+            throw new RuntimeException("LogixNGPreferences is not of type DefaultLogixNGPreferences");
+        }
+        preferences = (DefaultLogixNGPreferences)prefs;
         initGUI();
         setGUI();
     }

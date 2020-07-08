@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -9,16 +10,10 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -316,6 +311,8 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.ITEM;
         _isExternal = true;

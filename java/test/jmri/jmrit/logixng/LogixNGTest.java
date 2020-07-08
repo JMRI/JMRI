@@ -546,6 +546,8 @@ public class LogixNGTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
     }
 
     @After

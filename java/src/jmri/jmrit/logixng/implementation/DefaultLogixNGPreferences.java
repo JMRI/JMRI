@@ -1,11 +1,9 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.prefs.Preferences;
 
-import jmri.JmriException;
 import jmri.beans.PreferencesBean;
+import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -14,7 +12,7 @@ import jmri.profile.ProfileUtils;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public final class LogixNGPreferences extends PreferencesBean {
+public final class DefaultLogixNGPreferences extends PreferencesBean implements LogixNGPreferences {
 
     public static final String START_LOGIXNG_ON_LOAD = "startLogixNGOnStartup";
     public static final String USE_GENERIC_FEMALE_SOCKETS = "useGenericFemaleSockets";
@@ -23,8 +21,9 @@ public final class LogixNGPreferences extends PreferencesBean {
     private boolean _startLogixNGOnLoad = false;
     private boolean _useGenericFemaleSockets = false;
     private boolean _allowDebugMode = false;
+    private boolean _limitRootActions = true;
     
-    public LogixNGPreferences() {
+    public DefaultLogixNGPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
 //        System.out.format("LogixNG preferences%n");
         Preferences sharedPreferences = ProfileUtils.getPreferences(
@@ -65,9 +64,10 @@ public final class LogixNGPreferences extends PreferencesBean {
         this.port = sharedPreferences.getInt(PORT, this.port);
         this.useZeroConf = sharedPreferences.getBoolean(USE_ZERO_CONF, this.useZeroConf);
 */
-        this.setIsDirty(false);
+        setIsDirty(false);
     }
 
+    @Override
     public boolean compareValuesDifferent(LogixNGPreferences prefs) {
         if (getStartLogixNGOnStartup() != prefs.getStartLogixNGOnStartup()) {
             return true;
@@ -78,12 +78,14 @@ public final class LogixNGPreferences extends PreferencesBean {
         return (getUseGenericFemaleSockets() != prefs.getUseGenericFemaleSockets());
     }
 
+    @Override
     public void apply(LogixNGPreferences prefs) {
         setStartLogixNGOnStartup(prefs.getStartLogixNGOnStartup());
         setUseGenericFemaleSockets(prefs.getUseGenericFemaleSockets());
         setAllowDebugMode(prefs.getAllowDebugMode());
     }
 
+    @Override
     public void save() {
         Preferences sharedPreferences = ProfileUtils.getPreferences(this.getProfile(), this.getClass(), true);
         sharedPreferences.putBoolean(START_LOGIXNG_ON_LOAD, this.getStartLogixNGOnStartup());
@@ -119,28 +121,48 @@ public final class LogixNGPreferences extends PreferencesBean {
 */
     }
     
+    @Override
     public void setStartLogixNGOnStartup(boolean value) {
         _startLogixNGOnLoad = value;
+        setIsDirty(true);
     }
 
+    @Override
     public boolean getStartLogixNGOnStartup() {
         return _startLogixNGOnLoad;
     }
 
+    @Override
     public void setUseGenericFemaleSockets(boolean value) {
         _useGenericFemaleSockets = value;
+        setIsDirty(true);
     }
 
+    @Override
     public boolean getUseGenericFemaleSockets() {
         return _useGenericFemaleSockets;
     }
 
+    @Override
     public void setAllowDebugMode(boolean value) {
         _allowDebugMode = value;
+        setIsDirty(true);
     }
 
+    @Override
     public boolean getAllowDebugMode() {
         return _allowDebugMode;
+    }
+
+    @Override
+    public void setLimitRootActions(boolean value) {
+        _limitRootActions = value;
+        setIsDirty(true);
+    }
+
+    @Override
+    public boolean getLimitRootActions() {
+        return _limitRootActions;
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);

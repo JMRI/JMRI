@@ -147,6 +147,8 @@ public class AbstractScriptDigitalActionTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initLogixNGManager();
         
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
+        
 //        JUnitUtil.initInternalSensorManager();
 //        JUnitUtil.initInternalTurnoutManager();
         

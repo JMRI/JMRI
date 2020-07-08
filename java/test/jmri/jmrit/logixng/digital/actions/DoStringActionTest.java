@@ -279,6 +279,8 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
+        
         _category = Category.OTHER;
         _isExternal = false;
         

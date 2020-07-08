@@ -2,21 +2,8 @@ package jmri.jmrit.logixng.analog.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -258,6 +245,8 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
 //        JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .createLogixNG("A new logix for test");  // NOI18N

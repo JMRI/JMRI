@@ -144,7 +144,7 @@ public class DefaultLogixNGManagerTest {
         
         FemaleSocket child = conditionalNG.getChild(0);
         Assert.assertEquals("action is of correct class",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleRootSocket",
                 child.getClass().getName());
         MaleSocket maleSocket = child.getConnectedSocket();
         Assert.assertEquals("action is of correct class",
@@ -172,6 +172,8 @@ public class DefaultLogixNGManagerTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
     }
 
     @After

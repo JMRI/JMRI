@@ -52,7 +52,7 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
         }
 
         if (type == LogixNGPreferences.class) {
-            return new LogixNGPreferences();
+            return new DefaultLogixNGPreferences();
         }
 
         return super.getDefault(type);

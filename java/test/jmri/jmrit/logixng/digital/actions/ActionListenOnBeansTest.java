@@ -113,6 +113,8 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
         
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
+        
         _category = Category.ITEM;
         _isExternal = true;
         

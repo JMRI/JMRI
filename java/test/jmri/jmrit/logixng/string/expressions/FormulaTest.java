@@ -716,6 +716,8 @@ public class FormulaTest extends AbstractStringExpressionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
+        
         _category = Category.COMMON;
         _isExternal = false;
         

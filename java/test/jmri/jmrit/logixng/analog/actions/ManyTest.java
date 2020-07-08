@@ -325,6 +325,8 @@ public class ManyTest extends AbstractAnalogActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
+        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
+        
         _category = Category.COMMON;
         _isExternal = false;
         

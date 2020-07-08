@@ -16,7 +16,7 @@ import jmri.jmrit.logixng.*;
 import jmri.util.ThreadingUtil;
 import jmri.managers.AbstractManager;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
-import jmri.jmrit.logixng.implementation.LogixNGPreferences;
+import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.util.*;
 
 /**

@@ -13,7 +13,7 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
-import jmri.jmrit.logixng.implementation.LogixNGPreferences;
+import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
