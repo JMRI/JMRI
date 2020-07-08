@@ -89,8 +89,22 @@ public abstract class Category implements Comparable<Category> {
     }
     
     @Override
+    public boolean equals(Object o) {
+        if (o instanceof Category) {
+            Category c = (Category)o;
+            return _description.equals(c._description) && _name.equals(c._name);
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return _description.hashCode();
+    }
+    
+    @Override
     public int compareTo(Category c) {
-        return this._description.compareTo(c._description);
+        return _description.compareTo(c._description);
     }
     
     
