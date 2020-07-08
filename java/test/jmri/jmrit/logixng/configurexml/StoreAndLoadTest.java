@@ -18,45 +18,11 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleAnalogActionSocket;
-import jmri.jmrit.logixng.MaleAnalogExpressionSocket;
-import jmri.jmrit.logixng.MaleDigitalActionSocket;
-import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.MaleStringActionSocket;
-import jmri.jmrit.logixng.MaleStringExpressionSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.StringExpressionManager;
-import jmri.jmrit.logixng.StringActionManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
-import jmri.jmrit.logixng.digital.actions.ActionLight;
-import jmri.jmrit.logixng.digital.actions.ActionSensor;
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
-import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
-import jmri.jmrit.logixng.digital.actions.DoStringAction;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
-import jmri.jmrit.logixng.digital.actions.Many;
-import jmri.jmrit.logixng.digital.actions.ShutdownComputer;
-import jmri.jmrit.logixng.digital.expressions.And;
-import jmri.jmrit.logixng.digital.expressions.Antecedent;
-import jmri.jmrit.logixng.digital.expressions.ExpressionLight;
-import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
-import jmri.jmrit.logixng.digital.expressions.False;
-import jmri.jmrit.logixng.digital.expressions.Hold;
-import jmri.jmrit.logixng.digital.expressions.Or;
-import jmri.jmrit.logixng.digital.expressions.ResetOnTrue;
-import jmri.jmrit.logixng.digital.expressions.ExpressionTimer;
-import jmri.jmrit.logixng.digital.expressions.TriggerOnce;
-import jmri.jmrit.logixng.digital.expressions.True;
+import jmri.jmrit.logixng.digital.actions.*;
+import jmri.jmrit.logixng.digital.expressions.*;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
@@ -80,6 +46,29 @@ import org.slf4j.LoggerFactory;
  */
 public class StoreAndLoadTest {
 
+    public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {
+        try {
+            DigitalActionManager digitalActionManager =
+                    InstanceManager.getDefault(DigitalActionManager.class);
+            
+            FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
+            MaleDigitalActionSocket actionManySocket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .registerAction(new Many(digitalActionManager.getAutoSystemName(), null));
+            femaleSocket.connect(actionManySocket);
+            femaleSocket.setLock(Base.Lock.HARD_LOCK);
+
+            femaleSocket = actionManySocket.getChild(0);
+            MaleDigitalActionSocket actionIfThenSocket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
+            femaleSocket.connect(actionIfThenSocket);
+        } catch (SocketAlreadyConnectedException e) {
+            // This should never be able to happen.
+            throw new RuntimeException(e);
+        }
+    }
+    
 //    @Ignore
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
@@ -137,8 +126,8 @@ public class StoreAndLoadTest {
         conditionalNG =
                 InstanceManager.getDefault(ConditionalNG_Manager.class)
                         .createConditionalNG("A conditionalNG");
-        InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .setupInitialConditionalNGTree(conditionalNG);
+        setupInitialConditionalNGTree(conditionalNG);
+        
         logixNG.addConditionalNG(conditionalNG);
         logixNG.setEnabled(true);
         conditionalNG.setEnabled(true);
@@ -148,16 +137,14 @@ public class StoreAndLoadTest {
                 InstanceManager.getDefault(ConditionalNG_Manager.class)
                         .createConditionalNG(""
                                 + "");
-        InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .setupInitialConditionalNGTree(conditionalNG);
+        setupInitialConditionalNGTree(conditionalNG);
         logixNG.addConditionalNG(conditionalNG);
 
         logixNG = logixNG_Manager.createLogixNG("Yet another logixNG");
         conditionalNG =
                 InstanceManager.getDefault(ConditionalNG_Manager.class)
                         .createConditionalNG("Yet another conditionalNG");
-        InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .setupInitialConditionalNGTree(conditionalNG);
+        setupInitialConditionalNGTree(conditionalNG);
         logixNG.addConditionalNG(conditionalNG);
 
         MaleSocket socketMany = conditionalNG.getChild(0).getConnectedSocket();

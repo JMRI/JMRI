@@ -2,13 +2,11 @@ package jmri.jmrit.logixng.implementation;
 
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.digital.actions.Many;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -108,6 +106,29 @@ public class DefaultLogixNGManagerTest {
         Assert.assertEquals("user name is correct", "Only user name", logixNG.getUserName());
     }
     
+    public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {
+        try {
+            DigitalActionManager digitalActionManager =
+                    InstanceManager.getDefault(DigitalActionManager.class);
+            
+            FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
+            MaleDigitalActionSocket actionManySocket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .registerAction(new Many(digitalActionManager.getAutoSystemName(), null));
+            femaleSocket.connect(actionManySocket);
+//            femaleSocket.setLock(Base.Lock.HARD_LOCK);
+
+            femaleSocket = actionManySocket.getChild(0);
+            MaleDigitalActionSocket actionIfThenSocket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
+            femaleSocket.connect(actionIfThenSocket);
+        } catch (SocketAlreadyConnectedException e) {
+            // This should never be able to happen.
+            throw new RuntimeException(e);
+        }
+    }
+    
     @Test
     public void testSetupInitialConditionalNGTree() {
         // Correct system name
@@ -119,8 +140,7 @@ public class DefaultLogixNGManagerTest {
                 .createConditionalNG("A conditionalNG");  // NOI18N
         Assert.assertNotNull("exists", conditionalNG);
         logixNG.addConditionalNG(conditionalNG);
-        InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .setupInitialConditionalNGTree(conditionalNG);
+        setupInitialConditionalNGTree(conditionalNG);
         
         FemaleSocket child = conditionalNG.getChild(0);
         Assert.assertEquals("action is of correct class",

@@ -32,18 +32,6 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
             throws IllegalArgumentException;
     
     /**
-     * Creates the initial items in the ConditionalNG tree.
-     * 
-     * By default, this is as following:
-     * + ActionMany
-     *   + ActionHoldAnything
-     *   + ActionDoIf
-     * 
-     * @param conditionalNG the ConditionalNG to be initialized with a tree
-     */
-    public void setupInitialConditionalNGTree(ConditionalNG conditionalNG);
-
-    /**
      * Locate via user name, then system name if needed. Does not create a new
      * one if nothing found
      *

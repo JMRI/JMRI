@@ -99,53 +99,6 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     public ConditionalNG createConditionalNG(String userName) throws IllegalArgumentException {
         return createConditionalNG(getAutoSystemName(), userName);
     }
-
-    @Override
-    public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {
-        try {
-            DigitalActionManager digitalActionManager =
-                    InstanceManager.getDefault(DigitalActionManager.class);
-            
-            FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
-            MaleDigitalActionSocket actionManySocket =
-                    InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new Many(digitalActionManager.getAutoSystemName(), null));
-            femaleSocket.connect(actionManySocket);
-            femaleSocket.setLock(Base.Lock.HARD_LOCK);
-
-            femaleSocket = actionManySocket.getChild(0);
-            MaleDigitalActionSocket actionIfThenSocket =
-                    InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
-            femaleSocket.connect(actionIfThenSocket);
-            
-            /* FOR TESTING ONLY */
-            /* FOR TESTING ONLY */
-            /* FOR TESTING ONLY */
-            /* FOR TESTING ONLY */
-/*            
-            femaleSocket = actionIfThenSocket.getChild(0);
-            MaleDigitalExpressionSocket expressionAndSocket =
-                    InstanceManager.getDefault(DigitalExpressionManager.class)
-                            .registerExpression(new And(femaleSocket.getConditionalNG()));
-            femaleSocket.connect(expressionAndSocket);
-            
-            femaleSocket = actionIfThenSocket.getChild(1);
-            MaleDigitalActionSocket actionIfThenSocket2 =
-                    InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new IfThenElse(femaleSocket.getConditionalNG(), IfThenElse.Type.CONTINOUS_ACTION));
-            femaleSocket.connect(actionIfThenSocket2);
-*/            
-            /* FOR TESTING ONLY */
-            /* FOR TESTING ONLY */
-            /* FOR TESTING ONLY */
-            /* FOR TESTING ONLY */
-
-        } catch (SocketAlreadyConnectedException e) {
-            // This should never be able to happen.
-            throw new RuntimeException(e);
-        }
-    }
     
     @Override
     public ConditionalNG getConditionalNG(String name) {

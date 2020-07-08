@@ -42,9 +42,9 @@ public final class ConditionalNGEditor extends JmriJFrame {
     JTree tree;
     
     // Add ConditionalNG Variables
-    private JmriJFrame selectItemTypeFrame = null;
-    private JDialog addItemFrame = null;
-    private JDialog editConditionalNGFrame = null;
+    private JDialog selectItemTypeDialog = null;
+    private JDialog addItemDialog = null;
+    private JDialog editConditionalNGDialog = null;
     private FemaleSocketTreeModel femaleSocketTreeModel;
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
@@ -301,14 +301,16 @@ public final class ConditionalNGEditor extends JmriJFrame {
         _categoryComboBox.setSelectedIndex(0);
         
         
-        selectItemTypeFrame  = new JmriJFrame(
+        selectItemTypeDialog  = new JDialog(
+                this,
                 Bundle.getMessage(
                         "AddMaleSocketDialogTitle",
-                        femaleSocket.getLongDescription()));
-        selectItemTypeFrame.addHelpMenu(
-                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
-        selectItemTypeFrame.setLocation(50, 30);
-        Container contentPanel = selectItemTypeFrame.getContentPane();
+                        femaleSocket.getLongDescription()),
+                true);
+//        selectItemTypeFrame.addHelpMenu(
+//                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
+        selectItemTypeDialog.setLocation(50, 30);
+        Container contentPanel = selectItemTypeDialog.getContentPane();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         JPanel p;
@@ -360,7 +362,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
         cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
 
-        selectItemTypeFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+        selectItemTypeDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 cancelAddPressed(null);
@@ -380,17 +382,13 @@ public final class ConditionalNGEditor extends JmriJFrame {
         
         contentPanel.add(panel5);
 
-        _autoSystemName.addItemListener(
-                new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                autoSystemName();
-            }
+        _autoSystemName.addItemListener((ItemEvent e) -> {
+            autoSystemName();
         });
 //        addLogixNGFrame.setLocationRelativeTo(component);
-        selectItemTypeFrame.setLocationRelativeTo(null);
-        selectItemTypeFrame.pack();
-        selectItemTypeFrame.setVisible(true);
+        selectItemTypeDialog.setLocationRelativeTo(null);
+        selectItemTypeDialog.pack();
+        selectItemTypeDialog.setVisible(true);
 /*        
         if (!femaleSocket.isConnected()) {
             addItemFrame = selectItemTypeFrame;
@@ -415,7 +413,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
         }
         _showReminder = true;
         // make an Add Item Frame
-        if (addItemFrame == null) {
+        if (addItemDialog == null) {
             addSwingConfiguratorInterface = swingConfiguratorInterface;
             // Create ConditionalNG
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
@@ -436,8 +434,8 @@ public final class ConditionalNGEditor extends JmriJFrame {
                     throw new RuntimeException(ex);
                 }
                 addSwingConfiguratorInterface.dispose();
-                addItemFrame.dispose();
-                addItemFrame = null;
+                addItemDialog.dispose();
+                addItemDialog = null;
                 for (TreeModelListener l : femaleSocketTreeModel.listeners) {
                     TreeModelEvent tme = new TreeModelEvent(
                             femaleSocket,
@@ -469,7 +467,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
         }
         _showReminder = true;
         // make an Edit Frame
-        if (editConditionalNGFrame == null) {
+        if (editConditionalNGDialog == null) {
             editSwingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getObject().getClass());
             // Edit ConditionalNG
             edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
@@ -480,9 +478,8 @@ public final class ConditionalNGEditor extends JmriJFrame {
                     ((NamedBean)object).setUserName(_addUserName.getText());
                     editSwingConfiguratorInterface.updateObject(femaleSocket.getConnectedSocket().getObject());
                     editSwingConfiguratorInterface.dispose();
-                    log.error("Set editConditionalNGFrame to null");
-                    editConditionalNGFrame.dispose();
-                    editConditionalNGFrame = null;
+                    editConditionalNGDialog.dispose();
+                    editConditionalNGDialog = null;
                     for (TreeModelListener l : femaleSocketTreeModel.listeners) {
                         TreeModelEvent tme = new TreeModelEvent(
                                 femaleSocket,
@@ -527,7 +524,7 @@ public final class ConditionalNGEditor extends JmriJFrame {
                 Bundle.getMessage(
                         addOrEdit ? "AddMaleSocketDialogTitle" : "EditMaleSocketDialogTitle",
                         femaleSocket.getLongDescription()),
-                        true);
+                true);
 //        frame.addHelpMenu(
 //                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
         Container contentPanel = frame.getContentPane();
@@ -645,11 +642,9 @@ public final class ConditionalNGEditor extends JmriJFrame {
         frame.pack();
         
         if (addOrEdit) {
-            log.error("Set addItemFrame to frame");
-            addItemFrame = frame;
+            addItemDialog = frame;
         } else {
-            log.error("Set editConditionalNGFrame to frame");
-            editConditionalNGFrame = frame;
+            editConditionalNGDialog = frame;
         }
         
         _autoSystemName.setSelected(true);
@@ -682,9 +677,9 @@ public final class ConditionalNGEditor extends JmriJFrame {
      * @param e The event heard
      */
     void cancelAddPressed(ActionEvent e) {
-        selectItemTypeFrame.setVisible(false);
-        selectItemTypeFrame.dispose();
-        selectItemTypeFrame = null;
+        selectItemTypeDialog.setVisible(false);
+        selectItemTypeDialog.dispose();
+        selectItemTypeDialog = null;
 //        _inCopyMode = false;
         this.setVisible(true);
     }
@@ -696,10 +691,10 @@ public final class ConditionalNGEditor extends JmriJFrame {
      * @param e The event heard
      */
     void cancelCreateItem(ActionEvent e) {
-        addItemFrame.setVisible(false);
+        addItemDialog.setVisible(false);
         addSwingConfiguratorInterface.dispose();
-        addItemFrame.dispose();
-        addItemFrame = null;
+        addItemDialog.dispose();
+        addItemDialog = null;
 //        _inCopyMode = false;
         this.setVisible(true);
     }
@@ -713,11 +708,10 @@ public final class ConditionalNGEditor extends JmriJFrame {
      * @param e The event heard
      */
     void cancelEditPressed(ActionEvent e) {
-        log.error("editConditionalNGFrame: {}", editConditionalNGFrame);
-        editConditionalNGFrame.setVisible(false);
+        editConditionalNGDialog.setVisible(false);
         editSwingConfiguratorInterface.dispose();
-        editConditionalNGFrame.dispose();
-        editConditionalNGFrame = null;
+        editConditionalNGDialog.dispose();
+        editConditionalNGDialog = null;
 //        _inCopyMode = false;
         this.setVisible(true);
     }

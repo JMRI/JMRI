@@ -4,41 +4,31 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
 import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.BeanTableFrame;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.ConditionalNG_Manager;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.*;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +57,13 @@ public final class LogixNGEditor {
     boolean _showReminder = false;
     boolean _suppressReminder = false;
     boolean _suppressIndirectRef = false;
+    
+    private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
+    private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
+    private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
+    private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";      // NOI18N
+    private final JTextField _systemName = new JTextField(20);
+    private final JTextField _addUserName = new JTextField(20);
     
     NamedBeanComboBox<LogixNG> _comboNameBox = null;
     
@@ -436,11 +433,17 @@ public final class LogixNGEditor {
             return;
         }
         
+        // make an Add Item Frame
+        showAddLogixNGFrame();  // NOI18N
+        
+        if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
+            _systemName.setText(InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
+        }
+        
+        // Create ConditionalNG
         _curConditionalNG =
                 InstanceManager.getDefault(ConditionalNG_Manager.class)
-                        .createConditionalNG(null);
-        InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .setupInitialConditionalNGTree(_curConditionalNG);
+                        .createConditionalNG(_systemName.getText(), _addUserName.getText());
         
         if (_curConditionalNG == null) {
             // should never get here unless there is an assignment conflict
@@ -454,6 +457,142 @@ public final class LogixNGEditor {
         _numConditionalNGs++;
         _showReminder = true;
         makeEditConditionalNGWindow();
+    }
+
+    /**
+     * Create or edit action/expression dialog.
+     *
+     * @param addOrEdit true if add, false if edit
+     * @param messageId part 1 of property key to fetch as user instruction on
+     *                  pane, either 1 or 2 is added to form the whole key
+     * @param femaleSocket the female socket to which we want to add something
+     * @param swingConfiguratorInterface the swing interface to configure this item
+     * @param button a button to add to the dialog
+     */
+    void showAddLogixNGFrame() {
+        JDialog frame  = new JDialog(
+                _editLogixNGFrame,
+                Bundle.getMessage("AddLogixNGDialogTitle"),
+                true);
+//        frame.addHelpMenu(
+//                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
+        Container contentPanel = frame.getContentPane();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+
+        JPanel p;
+        p = new JPanel();
+//        p.setLayout(new FlowLayout());
+        p.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.EAST;
+        p.add(_sysNameLabel, c);
+        c.gridy = 1;
+        p.add(_userNameLabel, c);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.WEST;
+        c.weightx = 1.0;
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        p.add(_systemName, c);
+        c.gridy = 1;
+        p.add(_addUserName, c);
+        c.gridx = 2;
+        c.gridy = 1;
+        c.anchor = java.awt.GridBagConstraints.WEST;
+        c.weightx = 1.0;
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        c.gridy = 0;
+        p.add(_autoSystemName, c);
+        
+        _systemName.setText("");
+        _systemName.setEnabled(true);
+        _addUserName.setText("");
+        
+        _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));    // NOI18N
+//        _addUserName.setToolTipText("LogixNGUserNameHint");    // NOI18N
+        _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
+//        _systemName.setToolTipText("LogixNGSystemNameHint");   // NOI18N
+        contentPanel.add(p);
+        // set up message
+        JPanel panel3 = new JPanel();
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
+        JPanel panel31 = new JPanel();
+//        panel31.setLayout(new FlowLayout());
+        JPanel panel32 = new JPanel();
+        JLabel message1 = new JLabel(Bundle.getMessage("AddMessage1"));  // NOI18N
+        panel31.add(message1);
+        JLabel message2 = new JLabel(Bundle.getMessage("AddMessage2"));  // NOI18N
+        panel32.add(message2);
+        
+        // set up create and cancel buttons
+        JPanel panel5 = new JPanel();
+        panel5.setLayout(new FlowLayout());
+        
+        // Get panel for the item
+        panel3.add(panel31);
+        panel3.add(panel32);
+        contentPanel.add(panel3);
+        
+        // Cancel
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
+        panel5.add(cancel);
+        cancel.addActionListener((ActionEvent e) -> {
+            frame.dispose();
+        });
+//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+
+        JButton create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
+        create.addActionListener((ActionEvent e2) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
+            });
+            frame.dispose();
+        });
+        create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
+        
+        panel5.add(create);
+
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                frame.dispose();
+            }
+        });
+
+        contentPanel.add(panel5);
+
+        _autoSystemName.addItemListener((ItemEvent e) -> {
+            autoSystemName();
+        });
+//        addLogixNGFrame.setLocationRelativeTo(component);
+        frame.setLocationRelativeTo(null);
+        frame.pack();
+        
+        _autoSystemName.setSelected(true);
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+            _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+        });
+        
+        frame.setVisible(true);
+    }
+    
+    /**
+     * Enable/disable fields for data entry when user selects to have system
+     * name automatically generated.
+     */
+    void autoSystemName() {
+        if (_autoSystemName.isSelected()) {
+            _systemName.setEnabled(false);
+            _sysNameLabel.setEnabled(false);
+        } else {
+            _systemName.setEnabled(true);
+            _sysNameLabel.setEnabled(true);
+        }
     }
 
     // ============ Edit Conditional Window and Methods ============

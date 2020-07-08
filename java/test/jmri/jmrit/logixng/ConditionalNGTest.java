@@ -67,6 +67,29 @@ public class ConditionalNGTest {
         JUnitAppender.assertWarnMessage("Unexpected call to getState in DefaultLogixNG.");
     }
     
+    public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {
+        try {
+            DigitalActionManager digitalActionManager =
+                    InstanceManager.getDefault(DigitalActionManager.class);
+            
+            FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
+            MaleDigitalActionSocket actionManySocket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .registerAction(new Many(digitalActionManager.getAutoSystemName(), null));
+            femaleSocket.connect(actionManySocket);
+//            femaleSocket.setLock(Base.Lock.HARD_LOCK);
+
+//            femaleSocket = actionManySocket.getChild(0);
+//            MaleDigitalActionSocket actionIfThenSocket =
+//                    InstanceManager.getDefault(DigitalActionManager.class)
+//                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
+//            femaleSocket.connect(actionIfThenSocket);
+        } catch (SocketAlreadyConnectedException e) {
+            // This should never be able to happen.
+            throw new RuntimeException(e);
+        }
+    }
+    
     @Test
     public void testConnectDisconnect() throws SocketAlreadyConnectedException {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
@@ -76,8 +99,7 @@ public class ConditionalNGTest {
                         .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
         Assert.assertEquals("socket name is correct", null, conditionalNG.getSocketSystemName());
-        InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .setupInitialConditionalNGTree(conditionalNG);
+        setupInitialConditionalNGTree(conditionalNG);
         MaleSocket many = conditionalNG.getChild(0).getConnectedSocket();
         Assert.assertTrue("description is correct", "Many".equals(many.getLongDescription()));
         Assert.assertEquals("socket name is correct", many.getSystemName(), conditionalNG.getSocketSystemName());

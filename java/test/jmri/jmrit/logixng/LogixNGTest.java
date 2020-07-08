@@ -3,18 +3,20 @@ package jmri.jmrit.logixng;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Base.Lock;
+import jmri.jmrit.logixng.Bundle;
+import jmri.jmrit.logixng.digital.actions.*;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.expressions.And;
 import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -399,7 +401,7 @@ public class LogixNGTest {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        InstanceManager.getDefault(ConditionalNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+        setupInitialConditionalNGTree(conditionalNG);
         logixNG.printTree(new PrintWriter(writer), "...");
         String resultStr = writer.toString();
 /*        
@@ -440,13 +442,36 @@ public class LogixNGTest {
         Assert.assertTrue("isChangeableByUser is correct", "Extravaganza".equals(Category.EXRAVAGANZA.toString()));
     }
     
+    public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {
+        try {
+            DigitalActionManager digitalActionManager =
+                    InstanceManager.getDefault(DigitalActionManager.class);
+            
+            FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
+            MaleDigitalActionSocket actionManySocket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .registerAction(new Many(digitalActionManager.getAutoSystemName(), null));
+            femaleSocket.connect(actionManySocket);
+//            femaleSocket.setLock(Base.Lock.HARD_LOCK);
+
+            femaleSocket = actionManySocket.getChild(0);
+            MaleDigitalActionSocket actionIfThenSocket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
+            femaleSocket.connect(actionIfThenSocket);
+        } catch (SocketAlreadyConnectedException e) {
+            // This should never be able to happen.
+            throw new RuntimeException(e);
+        }
+    }
+    
     @Test
     public void testManagers() throws SocketAlreadyConnectedException {
         String systemName;
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        InstanceManager.getDefault(ConditionalNG_Manager.class).setupInitialConditionalNGTree(conditionalNG);
+        setupInitialConditionalNGTree(conditionalNG);
         MaleSocket many = conditionalNG.getChild(0).getConnectedSocket();
 //        System.err.format("aa: %s%n", many.getLongDescription());
         Assert.assertTrue("description is correct", "Many".equals(many.getLongDescription()));
