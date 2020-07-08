@@ -778,5 +778,5 @@ public class DefaultLightControl implements LightControl {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightControl.class);
+    private final static Logger log = LoggerFactory.getLogger(DefaultLightControl.class);
 }
