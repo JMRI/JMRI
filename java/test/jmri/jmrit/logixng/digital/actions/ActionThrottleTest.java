@@ -626,6 +626,8 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testConnectedDisconnected() throws SocketAlreadyConnectedException {
+        _baseMaleSocket.setEnabled(false);
+        
         Assert.assertEquals("Num children is correct", 3, _base.getChildCount());
         
         MaleSocket analogExpressionMaleSocket =

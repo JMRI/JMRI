@@ -276,8 +276,10 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule checkLogixNG_Digital = noClasses()
             .that().resideOutsideOfPackage("jmri.jmrit.logixng.digital..")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultAnySocket")
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket")
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultFemaleRootSocket")
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.implementation.DefaultConditionalNGManager")
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.ImportConditional")
             .should().dependOnClassesThat().resideInAPackage("jmri.jmrit.logixng.digital..");

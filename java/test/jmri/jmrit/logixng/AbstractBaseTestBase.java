@@ -246,16 +246,13 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testIsActive() {
-        Assert.assertTrue(_base.isActive());
-        if (_base instanceof MaleSocket) {
-            ((MaleSocket)_base).setEnabled(false);
-            Assert.assertFalse("_base is not active", _base.isActive());
-            ((MaleSocket)_base).setEnabled(true);
-        } else if (_base.getParent() instanceof MaleSocket) {
-            ((MaleSocket)_base.getParent()).setEnabled(false);
-            Assert.assertFalse("_base is not active", _base.isActive());
-            ((MaleSocket)_base.getParent()).setEnabled(true);
-        }
+        Assert.assertEquals(_base.getParent(), _baseMaleSocket);
+        
+        Assert.assertTrue("_base is active", _base.isActive());
+        _baseMaleSocket.setEnabled(false);
+        Assert.assertFalse("_base is not active", _base.isActive());
+        _baseMaleSocket.setEnabled(true);
+        Assert.assertTrue("_base is active", _base.isActive());
         
         Assert.assertTrue(_base.isActive());
         ConditionalNG conditionalNG = _base.getConditionalNG();
@@ -286,10 +283,10 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testMaleSocketIsActive() {
-        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
         _baseMaleSocket.setEnabled(false);
         Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
         _baseMaleSocket.setEnabled(true);
+        Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
         
         Base parent = _baseMaleSocket.getParent();
         while ((parent != null) && !(parent instanceof MaleSocket)) {
@@ -387,6 +384,7 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testDispose() {
+        _baseMaleSocket.setEnabled(false);
         _base.dispose();
     }
     
@@ -431,6 +429,8 @@ public abstract class AbstractBaseTestBase {
         });
         
         ab.set(false);
+        
+        _baseMaleSocket.setEnabled(false);
         
         // Some item doesn't support adding new sockets.
         // Return if the item under test doesn't.
@@ -558,6 +558,8 @@ public abstract class AbstractBaseTestBase {
         // Return if the item under test doesn't.
         if (_base.getChildCount() == 0) return;
         
+        _baseMaleSocket.setEnabled(false);
+        
         MaleSocket maleSocket = getConnectableChild();
         
         FemaleSocket child = _base.getChild(0);
@@ -626,6 +628,8 @@ public abstract class AbstractBaseTestBase {
         // Some item doesn't have children.
         // Return if the item under test doesn't.
         if (_base.getChildCount() == 0) return;
+        
+        _baseMaleSocket.setEnabled(false);
         
         MaleSocket maleSocket = getConnectableChild();
         
@@ -734,6 +738,8 @@ public abstract class AbstractBaseTestBase {
         // Return if the item under test doesn't.
         if (_base.getChildCount() == 0) return;
         
+        _baseMaleSocket.setEnabled(false);
+        
         MaleSocket maleSocket = getConnectableChild();
         
         FemaleSocket child = _base.getChild(0);
@@ -790,6 +796,8 @@ public abstract class AbstractBaseTestBase {
         // Some item doesn't have children.
         // Return if the item under test doesn't.
         if (_base.getChildCount() == 0) return;
+        
+        _baseMaleSocket.setEnabled(false);
         
         MaleSocket maleSocket = getConnectableChild();
         

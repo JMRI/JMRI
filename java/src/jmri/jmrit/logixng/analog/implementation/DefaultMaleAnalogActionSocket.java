@@ -322,7 +322,7 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
     @Override
     public void setEnabled(boolean enable) {
         _enabled = enable;
-        if (enable) {
+        if (isActive()) {
             registerListeners();
         } else {
             unregisterListeners();

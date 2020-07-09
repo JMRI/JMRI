@@ -285,7 +285,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         sensor2.setCommandedState(Sensor.INACTIVE);
         light.setCommandedState(Light.OFF);
         
-        actionScript.unregisterListeners();
+        logixNG.unregisterListeners();
         
         // Disconnect the expressionSensor and replace it with a True expression
         // since we always want the result "true" for this test.

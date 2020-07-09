@@ -279,6 +279,8 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testReset() throws SocketAlreadyConnectedException {
+        _baseMaleSocket.setEnabled(false);
+        
         Or a = (Or)_base;
         AtomicBoolean ab = new AtomicBoolean(false);
         

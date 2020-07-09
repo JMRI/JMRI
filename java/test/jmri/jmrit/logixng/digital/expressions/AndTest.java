@@ -283,6 +283,8 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testReset() throws SocketAlreadyConnectedException {
+        _baseMaleSocket.setEnabled(false);
+        
         And a = (And)_base;
         AtomicBoolean ab = new AtomicBoolean(false);
         

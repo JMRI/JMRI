@@ -21,6 +21,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
     protected final FemaleSocketListener _listener;
     private MaleSocket _socket = null;
     private String _name = null;
+    private boolean _listenersAreRegistered = false;
     
     
     public AbstractFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
@@ -80,6 +81,10 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
             throw new NullPointerException("socket cannot be null");
         }
         
+        if (_listenersAreRegistered) {
+            throw new UnsupportedOperationException("A socket must not be connected when listeners are registered");
+        }
+        
         if (isConnected()) {
             throw new SocketAlreadyConnectedException("Socket is already connected");
         }
@@ -99,6 +104,10 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
     public void disconnect() {
         if (_socket == null) {
             return;
+        }
+        
+        if (_listenersAreRegistered) {
+            throw new UnsupportedOperationException("A socket must not be disconnected when listeners are registered");
         }
         
         _socket.setParent(null);
@@ -151,6 +160,10 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
     /** {@inheritDoc} */
     @Override
     public final void dispose() {
+        if (_listenersAreRegistered) {
+            throw new UnsupportedOperationException("This is not currently supported");
+        }
+        
         if (isConnected()) {
             MaleSocket aSocket = getConnectedSocket();
             disconnect();
@@ -184,6 +197,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
      */
     @Override
     public void registerListeners() {
+        _listenersAreRegistered = true;
         registerListenersForThisClass();
         if (isConnected()) {
             ((InternalBase)getConnectedSocket()).registerListeners();
@@ -199,6 +213,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         if (isConnected()) {
             ((InternalBase)getConnectedSocket()).unregisterListeners();
         }
+        _listenersAreRegistered = false;
     }
     
     /** {@inheritDoc} */
@@ -370,6 +385,6 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         throw new UnsupportedOperationException("Not supported");
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);
     
 }

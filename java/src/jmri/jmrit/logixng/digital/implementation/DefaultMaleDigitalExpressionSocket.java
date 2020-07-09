@@ -324,7 +324,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
     @Override
     public void setEnabled(boolean enable) {
         _enabled = enable;
-        if (enable) {
+        if (isActive()) {
             registerListeners();
         } else {
             unregisterListeners();

@@ -290,6 +290,8 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testReset() throws SocketAlreadyConnectedException {
+        _baseMaleSocket.setEnabled(false);
+        
         ResetOnTrue a = (ResetOnTrue)_base;
         AtomicBoolean ab1 = new AtomicBoolean(false);
         AtomicBoolean ab2 = new AtomicBoolean(false);

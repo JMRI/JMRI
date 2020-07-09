@@ -289,6 +289,8 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testReset() throws SocketAlreadyConnectedException {
+        _baseMaleSocket.setEnabled(false);
+        
         Hold a = (Hold)_base;
         AtomicBoolean ab1 = new AtomicBoolean(false);
         AtomicBoolean ab2 = new AtomicBoolean(false);

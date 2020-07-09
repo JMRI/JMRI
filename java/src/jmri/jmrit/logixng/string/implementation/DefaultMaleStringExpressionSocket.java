@@ -320,7 +320,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
     @Override
     public void setEnabled(boolean enable) {
         _enabled = enable;
-        if (enable) {
+        if (isActive()) {
             registerListeners();
         } else {
             unregisterListeners();

@@ -231,6 +231,8 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testReset() throws SocketAlreadyConnectedException, JmriException {
+        _baseMaleSocket.setEnabled(false);
+        
         TriggerOnce a = (TriggerOnce)_base;
         AtomicBoolean ab = new AtomicBoolean(false);
         

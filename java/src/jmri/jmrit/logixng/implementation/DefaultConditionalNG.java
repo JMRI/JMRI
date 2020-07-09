@@ -323,7 +323,7 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public void setEnabled(boolean enable) {
         _enabled = enable;
-        if (enable) {
+        if (isActive()) {
             LogixNG logixNG = getLogixNG();
             if ((logixNG != null) && logixNG.isActive()) {
                 registerListeners();

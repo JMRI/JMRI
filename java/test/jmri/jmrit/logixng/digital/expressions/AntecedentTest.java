@@ -305,6 +305,8 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     
     @Test
     public void testSetChildCount() throws SocketAlreadyConnectedException {
+        _baseMaleSocket.setEnabled(false);
+        
         Antecedent a = (Antecedent)_base;
         AtomicBoolean ab = new AtomicBoolean(false);
         
@@ -344,6 +346,8 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     
     @Test
     public void testReset() throws SocketAlreadyConnectedException {
+        _baseMaleSocket.setEnabled(false);
+        
         Antecedent a = (Antecedent)_base;
         AtomicBoolean ab = new AtomicBoolean(false);
         

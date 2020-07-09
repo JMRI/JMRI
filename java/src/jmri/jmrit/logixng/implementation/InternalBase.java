@@ -21,6 +21,5 @@ public interface InternalBase {
      * this method must ensure that listeners are not unregistered more than once.
      */
     public void unregisterListeners();
-//    public void registerListenersInternal();
     
 }
