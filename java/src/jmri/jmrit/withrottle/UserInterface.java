@@ -248,7 +248,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         menu.add(new ControllerFilterAction());
 
         Action prefsAction = InstanceManager.getDefault(JmriPreferencesActionFactory.class).getCategorizedAction(
-                Bundle.getMessage("MenuItemPrefs"),
+                Bundle.getMessage("MenuMenuPrefs"),
                 "WITHROTTLE");
 
         menu.add(prefsAction);
