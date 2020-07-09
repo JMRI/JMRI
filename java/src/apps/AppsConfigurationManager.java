@@ -10,12 +10,6 @@ import javax.swing.*;
 public class AppsConfigurationManager extends JmriConfigurationManager {
 
     @Override
-    protected void displayErrorListDialog(Object list) {
-        super.displayErrorListDialog(list);
-        (new TabbedPreferencesAction()).actionPerformed();
-    }
-
-    @Override
     protected boolean isEditDialogRestart() {
         return EditConnectionPreferencesDialog.showDialog();
     }

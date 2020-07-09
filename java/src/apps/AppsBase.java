@@ -17,6 +17,7 @@ import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
 
+import jmri.util.prefs.JmriPreferencesActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -175,6 +176,8 @@ public abstract class AppsBase {
     }
 
     protected void installConfigurationManager() {
+        // install a Preferences Action Factory
+        InstanceManager.store(new AppsPreferencesActionFactory(), JmriPreferencesActionFactory.class);
         ConfigureManager cm = new AppsConfigurationManager();
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
         InstanceManager.store(cm, ConfigureManager.class);

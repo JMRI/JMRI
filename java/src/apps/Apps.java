@@ -37,6 +37,7 @@ import jmri.profile.*;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.*;
 import jmri.util.iharder.dnd.URIDrop;
+import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
 import jmri.util.usb.RailDriverMenuItem;
@@ -141,6 +142,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
+
+        // install a Preferences Action Factory.
+        InstanceManager.store(new AppsPreferencesActionFactory(), JmriPreferencesActionFactory.class);
 
         // Install configuration manager and Swing error handler
         // Constructing the AppsConfigurationManager also loads various configuration services

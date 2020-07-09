@@ -2,6 +2,7 @@ package apps;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
 
@@ -113,6 +114,9 @@ public class SampleMinimalProgram {
 
         adapter.openPort(portName, "JMRI app");
         adapter.configure();
+
+        // install a Preferences Action Factory.
+        InstanceManager.store(new AppsPreferencesActionFactory(), JmriPreferencesActionFactory.class);
 
         ConfigureManager cm = new AppsConfigurationManager();
 

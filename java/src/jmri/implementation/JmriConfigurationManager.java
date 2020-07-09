@@ -24,6 +24,7 @@ import javax.swing.KeyStroke;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 
+import jmri.util.prefs.JmriPreferencesActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -284,6 +285,8 @@ public class JmriConfigurationManager implements ConfigureManager {
                 },
                 Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), // NOI18N
                 JOptionPane.ERROR_MESSAGE);
+            InstanceManager.getDefault(JmriPreferencesActionFactory.class)
+                    .getDefaultAction().actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,""));
     }
 
     /**
