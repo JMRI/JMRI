@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
@@ -17,6 +18,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.Portal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +41,8 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     private boolean _hide = false; // true when arrow should NOT show entry into ToBlock
 
     public PortalIcon(Editor editor) {
-        // super ctor call to make sure this is an icon label
         super(editor);
-        initMap();
+        _iconMap = new HashMap<>();
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -49,10 +50,33 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         setPortal(portal);
     }
 
-    public void initMap() {
-        ControlPanelEditor ed = (ControlPanelEditor) _editor;
+    static public HashMap<String, NamedIcon> getPaletteMap() {
+        HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps("Portal");
+        HashMap<String, NamedIcon> iconMap = familyMap.get("Standard");
+        if (iconMap == null) {
+            for (HashMap<String, NamedIcon> map : familyMap.values()) {
+                iconMap = map;
+                break;
+            }
+        }
+        if (iconMap == null) {
+            iconMap = new HashMap<>();
+            iconMap.put(HIDDEN, new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
+            iconMap.put(PATH, new NamedIcon("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
+            iconMap.put(VISIBLE, new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
+            iconMap.put(TO_ARROW, new NamedIcon("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
+            iconMap.put(FROM_ARROW, new NamedIcon("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
+        }
+        // Don't return ItemPalette's map!
+        return cloneMap(iconMap, null);
+    }
+    
+    public void makeIconMap() {
+        _iconMap = ItemPalette.getFamilyMaps("Portal").get(getFamily());
+        if (_iconMap == null) {
+            _iconMap = getPaletteMap();
+        }
         int deg = getDegrees();
-        _iconMap = PositionableIcon.cloneMap(ed.getPortalIconMap(), this);
         if (!_regular) {
             NamedIcon a = _iconMap.get(TO_ARROW);
             NamedIcon b = _iconMap.get(FROM_ARROW);
@@ -71,14 +95,13 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
 
     protected Positionable finishClone(PortalIcon pos) {
-        pos._iconMap = cloneMap(_iconMap, pos);
         pos._regular = _regular;
         pos._hide = _hide;
         pos._status = _status;
         return super.finishClone(pos);
     }
 
-    protected void setIcon(String name, NamedIcon ic) {
+    public void setIcon(String name, NamedIcon ic) {
         if (log.isDebugEnabled()) {
             log.debug("Icon {} put icon key= \"{}\" icon= {}", getPortal().getName(), name, ic);
         }

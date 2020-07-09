@@ -51,10 +51,10 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "SignalHeadStateRed");
+    protected String getDisplayKey() {
+        return "SignalHeadStateGreen";
     }
-
+/*
     @Override
     protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
         closeDialogs();
@@ -98,7 +98,8 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                     }
                 }
                 log.debug("set Signal Head {} map size= {}", _table.getValueAt(row, 0), iconMap.size());
-                setIconMap(iconMap);
+//                _currentIconMap = iconMap;
+                updateFamiliesPanel();
             }
         } else {
             _updateButton.setEnabled(false);
@@ -206,5 +207,4 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class);
-
 }

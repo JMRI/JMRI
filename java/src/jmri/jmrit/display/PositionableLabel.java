@@ -666,20 +666,18 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon"); // NOI18N
         ActionListener updateAction = (ActionEvent a) -> updateIconItem();
         _iconItemPanel.init(updateAction);
+        _iconItemPanel.setUpdateIcon((NamedIcon)getIcon());
         initPaletteFrame(_paletteFrame, _iconItemPanel);
     }
 
     private void updateIconItem() {
-        NamedIcon icon = _iconItemPanel.getIcon();
+        NamedIcon icon = _iconItemPanel.getUpdateIcon();
         if (icon != null) {
             String url = icon.getURL();
             setIcon(NamedIcon.getIconByName(url));
             updateSize();
         }
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _iconItemPanel = null;
-        invalidate();
+        finishItemUpdate(_paletteFrame, _iconItemPanel);
     }
 /* future use to replace editor.setTextAttributes
     public boolean setEditTextMenu(JPopupMenu popup) {

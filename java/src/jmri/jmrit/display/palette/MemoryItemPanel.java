@@ -52,6 +52,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         }
     }
 
+    @Override
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
@@ -88,13 +89,13 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
             _iconFamilyPanel.add(instructions());
         }
 
-        makeDragIconPanel(1);
-        makeDndIconPanel(null, null);
+        makeDragIconPanel();
+        makeDndIcon(null);
         log.debug("initIconFamiliesPanel done");
     }
 
     @Override
-    protected void makeDndIconPanel(java.util.HashMap<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIcon(java.util.HashMap<String, NamedIcon> iconMap) {
         if (_update) {
             return;
         }
@@ -218,8 +219,8 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
             _dragIconPanel.removeAll();
-            makeDragIconPanel(1);
-            makeDndIconPanel(null, null);
+            makeDragIconPanel();
+            makeDndIcon(null); // use override
         }
         validate();
     }

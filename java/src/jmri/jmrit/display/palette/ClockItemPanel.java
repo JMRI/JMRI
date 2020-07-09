@@ -5,8 +5,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map.Entry;
-import javax.swing.BorderFactory;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -16,7 +15,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.AnalogClock2Display;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
-import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +41,44 @@ public class ClockItemPanel extends IconItemPanel {
     }
 
     @Override
-    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
+    public void init() {
+        if (!_initialized) {
+            add(instructions());
+            initIconFamiliesPanel();
+//            addPreviewPanel(true);
+            initLinkPanel();
+            add(Box.createVerticalGlue());
+        }
+        _previewPanel.invalidate();
+    }
+
+    @Override
+    protected void makeDataFlavors() {}
+
+    @Override
+    protected JPanel makeIconDisplayPanel(String key, HashMap<String, NamedIcon> iconMap, boolean dropIcon) {
+        NamedIcon icon = iconMap.get(key);
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        JLabel label;
+        if (dropIcon) {
+            try {
+            label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR), icon);
+            } catch (ClassNotFoundException cnfe) {
+                label = new JLabel(cnfe.toString());
+                log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
+            }
+        } else {
+            label = new JLabel(icon);
+        }
+        if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
+            label.setText(Bundle.getMessage("invisibleIcon"));
+            label.setForeground(Color.lightGray);
+        }
+        wrapIconImage(icon, label, panel, key);
+        return panel;
+    }
+/*    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         if (_iconPanel == null) {
             _iconPanel = new ImagePanel();            
             _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -57,29 +92,15 @@ public class ClockItemPanel extends IconItemPanel {
             panel.setOpaque(false);
             String borderName = ItemPalette.convertText(entry.getKey());
             panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), borderName));
-            try {
-                JLabel label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-                if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
-                    label.setText(Bundle.getMessage("invisibleIcon"));
-                    label.setForeground(Color.lightGray);
-                } else {
-                    icon.reduceTo(100, 100, 0.2);
-                }
-                label.setIcon(icon);
-                label.setName(borderName);
-                panel.add(label);
-            } catch (ClassNotFoundException cnfe) {
-                log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
-            }
             _iconPanel.add(panel);
         }
         _iconPanel.setImage(_frame.getPreviewBackground()); // pick up shared setting
-    }
+    }*/
 
     public class ClockDragJLabel extends DragJLabel {
 
-        public ClockDragJLabel(DataFlavor flavor) {
-            super(flavor);
+        public ClockDragJLabel(DataFlavor flavor, NamedIcon icon) {
+            super(flavor, icon);
         }
 
         @Override

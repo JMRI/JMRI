@@ -1,10 +1,17 @@
 package jmri.jmrit.display.controlPanelEditor.configurexml;
 
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.configurexml.PositionableLabelXml;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -13,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle configuration for display.PortalIcon objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002
+ * @author Pete cressman Copyright: Copyright (c) 2010, 2020
  */
 public class PortalIconXml extends PositionableLabelXml {
 
@@ -54,6 +61,18 @@ public class PortalIconXml extends PositionableLabelXml {
         element.setAttribute("arrowSwitch", "" + (p.getArrowSwitch() ? "yes" : "no"));
         element.setAttribute("arrowHide", "" + (p.getArrowHide() ? "yes" : "no"));
 
+        HashMap<String, NamedIcon> map = p.getIconMap();
+        if (map != null) {
+            Element elem = new Element("icons");
+            String family = p.getFamily();
+            if (family != null) {
+                elem.setAttribute("family", family);
+            }
+            for (Map.Entry<String, NamedIcon> entry : map.entrySet()) {
+                elem.addContent(storeIcon(entry.getKey(), entry.getValue()));
+            }
+        }
+
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml");
         return element;
     }
@@ -77,7 +96,6 @@ public class PortalIconXml extends PositionableLabelXml {
             fromBlk = element.getAttribute("fromBlockName").getValue();
         } catch (NullPointerException e) {
             log.error("incorrect information for portalIcon; must use fromBlockName.");
-//            ed.loadFailed();
             return;
         }
         String portalName;
@@ -85,7 +103,6 @@ public class PortalIconXml extends PositionableLabelXml {
             portalName = element.getAttribute("portalName").getValue();
         } catch (NullPointerException e) {
             log.error("incorrect information for portalIcon; must use portalName.");
-//            ed.loadFailed();
             return;
         }
         OBlock block = jmri.InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(fromBlk);
@@ -93,6 +110,7 @@ public class PortalIconXml extends PositionableLabelXml {
 
         PortalIcon l = new PortalIcon(ed, portal);
         ed.putItem(l);
+        
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, ControlPanelEditor.MARKERS, element);
         Attribute a = element.getAttribute("scale");
@@ -115,7 +133,7 @@ public class PortalIconXml extends PositionableLabelXml {
                 log.error("{} can't convert rotate {}", l.getNameString(), dce);
             }
         }
-        l.rotate(deg);
+        l.setDegrees(deg);
 
         boolean value = true;
         if ((a = element.getAttribute("arrowSwitch")) != null && a.getValue().equals("no")) {
@@ -127,6 +145,34 @@ public class PortalIconXml extends PositionableLabelXml {
             value = true;
         }
         l.setHideArrows(value);
+
+        Element iconsElem = element.getChild("icons");
+        if (iconsElem != null) {
+            Attribute attr = iconsElem.getAttribute("family");
+            if (attr != null) {
+                l.setFamily(attr.getValue());
+            }
+            List<Element> states = iconsElem.getChildren();
+            if (log.isDebugEnabled()) {
+                log.debug("icons element has{} items", states.size());
+            }
+            for (Element stateElem : states) {
+                String state = stateElem.getName();
+                if (log.isDebugEnabled()) {
+                    log.debug("setIcon for state \"{}\"", state);
+                }
+                NamedIcon icon = loadIcon(l, state, iconsElem, "PortalIcon \"" + portalName + "\": icon \"" + state + "\" ", ed);
+                if (icon != null) {
+                    l.setIcon(state, icon);
+                } else {
+                    log.info("PortalIcon \"{}\": icon \"{}\" removed", portalName, state);
+                    return;
+                }
+            }
+        } else {
+            ItemPalette.loadIcons();
+            l.makeIconMap();
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalIconXml.class);

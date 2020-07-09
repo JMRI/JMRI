@@ -13,11 +13,15 @@ import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
@@ -32,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * @see ItemPanel palette class diagram
  * @author Pete Cressman Copyright (c) 2010, 2011, 2020
  */
-public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
+public class TextItemPanel extends ItemPanel {
 
     DecoratorPanel _decorator;
 
@@ -50,14 +54,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     @Override
     public void init() {
         if (!_initialized) {
-            JPanel blurb = new JPanel();
-            blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
-            blurb.add(new JLabel(Bundle.getMessage("addTextAndAttrs")));
-            blurb.add(new JLabel(Bundle.getMessage("ToolTipDragText")));
-            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            JPanel p = new JPanel();
-            p.add(blurb);
-            add(p);
+            add(instructions());
             DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _frame.getEditor());
             _decorator = new DecoratorPanel(_frame);
             _decorator.initDecoratorPanel(sample);
@@ -76,7 +73,15 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     }
 
     @Override
-    public void init(ActionListener doneAction) {
+    protected JPanel instructions() {
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(new JLabel(Bundle.getMessage("addTextAndAttrs")));
+        blurb.add(new JLabel(Bundle.getMessage("ToolTipDragText")));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        JPanel panel = new JPanel();
+        panel.add(blurb);
+        return panel;
     }
 
     @Override
@@ -116,6 +121,22 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         }
         super.closeDialogs();
     }
+
+    @Override
+    protected void makeSpecialBottomPanel(boolean update) {}
+    @Override
+    protected void makeItemButtonPanel() {}
+    @Override
+    protected JButton makeUpdateButton(ActionListener doneAction) {return null;}
+    @Override
+    protected JPanel makeIconDisplayPanel(String k, HashMap<String, NamedIcon> m, boolean d) {return null;}
+    @Override
+    protected void initIconFamiliesPanel() {}
+    @Override
+    protected void hideIcons() {}
+    @Override
+    protected void makeFamiliesPanel() {}
+
 
     /**
      * Export a Positionable item from panel.

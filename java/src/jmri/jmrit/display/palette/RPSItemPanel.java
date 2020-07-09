@@ -21,8 +21,8 @@ public class RPSItemPanel extends FamilyItemPanel {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "active");
+    protected String getDisplayKey() {
+        return "active";
     }
 
     /*

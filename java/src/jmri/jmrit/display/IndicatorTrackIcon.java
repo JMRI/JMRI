@@ -68,10 +68,6 @@ public class IndicatorTrackIcon extends PositionableIcon
         return super.finishClone(pos);
     }
 
-    public HashMap<String, NamedIcon> getIconMap() {
-        return cloneMap(_iconMap, this);
-    }
-
     /**
      * Attach a named sensor to display status.
      *

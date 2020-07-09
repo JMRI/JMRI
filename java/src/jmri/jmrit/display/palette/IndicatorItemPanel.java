@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for for Indicating track blocks.
+ * @author Pete Cressman Copyright (c) 2010, 2020
  */
 public class IndicatorItemPanel extends FamilyItemPanel {
 
@@ -62,11 +63,12 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * Init for conversion of plain track to indicator track by CircuitBuilder.
+     * CircuitBuilder init for conversion of plain track to indicator track.
      */
     @Override
-    public void init(ActionListener doneAction) {
-        super.init(doneAction);
+    public void init(JPanel bottomPanel) {
+        super.init(bottomPanel);
+        add(_iconFamilyPanel, 0);
     }
 
     @Override
@@ -77,8 +79,8 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "ClearTrack");
+    protected String getDisplayKey() {
+        return "ClearTrack";
     }
 
     /**

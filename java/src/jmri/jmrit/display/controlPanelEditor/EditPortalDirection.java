@@ -2,6 +2,7 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.AbstractButton;
@@ -17,6 +18,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 
@@ -30,6 +33,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     private PortalIcon _icon;
     private JRadioButton _toButton;
     private JRadioButton _fromButton;
+    private HashMap<String, NamedIcon> _iconMap;
 
     private PortalList _portalList;
 
@@ -47,19 +51,19 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         panel.add(Box.createHorizontalStrut(200));
 
         ButtonGroup group = new ButtonGroup();
-        _toButton = new JRadioButton(_parent._editor.getPortalIcon(PortalIcon.TO_ARROW));
+        _toButton = new JRadioButton(_iconMap.get(PortalIcon.TO_ARROW));
         _toButton.setActionCommand(PortalIcon.TO_ARROW);
         _toButton.addActionListener(this);
         group.add(_toButton);
         panel.add(_toButton);
 
-        _fromButton = new JRadioButton(_parent._editor.getPortalIcon(PortalIcon.FROM_ARROW));
+        _fromButton = new JRadioButton(_iconMap.get(PortalIcon.FROM_ARROW));
         _fromButton.setActionCommand(PortalIcon.FROM_ARROW);
         _fromButton.addActionListener(this);
         group.add(_fromButton);
         panel.add(_fromButton);
 
-        JRadioButton _noButton = new JRadioButton(Bundle.getMessage("noIcon"), _parent._editor.getPortalIcon(PortalIcon.HIDDEN));
+        JRadioButton _noButton = new JRadioButton(Bundle.getMessage("noIcon"), _iconMap.get(PortalIcon.HIDDEN));
         _noButton.setVerticalTextPosition(AbstractButton.CENTER);
         _noButton.setHorizontalTextPosition(AbstractButton.CENTER);
         _noButton.setActionCommand(PortalIcon.HIDDEN);
@@ -72,6 +76,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
 
     @Override
     protected JPanel makeContentPanel() {
+        _iconMap = PortalIcon.getPaletteMap();
         JPanel portalPanel = new JPanel();
         portalPanel.setLayout(new BoxLayout(portalPanel, BoxLayout.Y_AXIS));
 
@@ -150,13 +155,13 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
             return;
         }
         if (PortalIcon.TO_ARROW.equals(e.getActionCommand())) {
-            _icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.TO_ARROW));
-            _icon.setIcon(PortalIcon.FROM_ARROW, _parent._editor.getPortalIcon(PortalIcon.FROM_ARROW));
+            _icon.setIcon(PortalIcon.TO_ARROW,_iconMap.get(PortalIcon.TO_ARROW));
+            _icon.setIcon(PortalIcon.FROM_ARROW, _iconMap.get(PortalIcon.FROM_ARROW));
             _icon.setArrowOrientatuon(true);
             _icon.setHideArrows(false);
         } else if (PortalIcon.FROM_ARROW.equals(e.getActionCommand())) {
-            _icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.FROM_ARROW));
-            _icon.setIcon(PortalIcon.FROM_ARROW, _parent._editor.getPortalIcon(PortalIcon.TO_ARROW));
+            _icon.setIcon(PortalIcon.TO_ARROW, _iconMap.get(PortalIcon.FROM_ARROW));
+            _icon.setIcon(PortalIcon.FROM_ARROW, _iconMap.get(PortalIcon.TO_ARROW));
             _icon.setArrowOrientatuon(false);
             _icon.setHideArrows(false);
         } else if (PortalIcon.HIDDEN.equals(e.getActionCommand())) {

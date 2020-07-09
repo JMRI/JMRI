@@ -142,7 +142,7 @@ ReporterItemPanel *-- preview
 
 public class ItemPalette extends DisplayFrame implements ChangeListener {
 
-    public static final int STRUT_SIZE = 10;
+    public static final int STRUT_SIZE = 5;
     static final String RED_X = "resources/icons/misc/X-red.gif";
 
     protected static JTabbedPane _tabPane;
@@ -266,7 +266,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         Enumeration<TreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = (CatalogTreeNode)ee.nextElement();
-            String familyName = (String) famNode.getUserObject();
+            String familyName = (String)famNode.getUserObject();
             HashMap<String, NamedIcon> iconMap = new HashMap<>();
             List<CatalogTreeLeaf> list = famNode.getLeaves();
             for (CatalogTreeLeaf catalogTreeLeaf : list) {
@@ -384,7 +384,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types);
             familyTOMap.put(familyName, familyMap);
             if (log.isDebugEnabled()) {
-                log.debug("Add {}  IndicatorTO sub-families to item type {}  to IndicatorTO families.", familyMap.size(), familyName);
+                log.debug("Add {} IndicatorTO sub-families to item type {}  to IndicatorTO families.", familyMap.size(), familyName);
             }
         }
         return familyTOMap;
@@ -607,7 +607,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         }
         while (it.hasNext()) {
             String f = it.next();
-            log.debug("familyNameOK compare {} {} to {}", type, family, f);
             if (family.equals(f)) {
                 JOptionPane.showMessageDialog(null,
                         java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"),
@@ -628,19 +627,13 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      * @return result
      */
     static protected boolean addFamily(String type, String family, HashMap<String, NamedIcon> iconMap) {
-        if (ItemPalette.getFamilyMaps(type) == null) {
-            HashMap<String, HashMap<String, NamedIcon>> typeMap = new HashMap<>();
-            _iconMaps.put(type, typeMap);
-            // typeMap.put(family, iconMap);
+        if (family == null) {
+            return false;
         }
-        Iterator<String> iter = ItemPalette.getFamilyMaps(type).keySet().iterator();
-        if (familyNameOK(type, family, iter)) {
-            getFamilyMaps(type).put(family, iconMap);
-            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-            return true;
-        }
-        log.warn("addFamily: family name \"{}\" for type {} NOT OK! map size= {}", family, type, iconMap.size());
-        return false;
+        HashMap<String, HashMap<String, NamedIcon>> typeMap = ItemPalette.getFamilyMaps(type);
+        typeMap.put(family, iconMap);
+        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        return true;
     }
 
     /**
@@ -649,8 +642,13 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      * @param type type
      * @return map of families
      */
-    static protected HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
-        return _iconMaps.get(type);
+    static public @Nonnull HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
+        HashMap<String, HashMap<String, NamedIcon>> families = _iconMaps.get(type);
+        if (families == null) {
+            families = new HashMap<>();
+            _iconMaps.put(type, families);
+        }
+        return families;
     }
 
     /**
@@ -663,14 +661,12 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (log.isDebugEnabled()) {
             log.debug("removeIconMap for family \"{}\" in type \"{}\"", family, type);
         }
-        _iconMaps.get(type).remove(family);
+        HashMap<String, HashMap<String, NamedIcon>> families = getFamilyMaps(type);
+        families.remove(family);
         InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         if (log.isDebugEnabled()) {
-            HashMap<String, HashMap<String, NamedIcon>> families = getFamilyMaps(type);
-            if (families != null && families.size() > 0) {
-                for (String s : families.keySet()) {
-                    log.debug("removeIconMap remaining Keys: family \"{}\" in type \"{}\"", s, type);
-                }
+            for (String s : families.keySet()) {
+                log.debug("removeIconMap remaining Keys: family \"{}\" in type \"{}\"", s, type);
             }
         }
     }

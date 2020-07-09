@@ -94,8 +94,8 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "second");
+    protected String getDisplayKey() {
+        return "second";
     }
 
     @Override
@@ -147,7 +147,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
             }
         }
     }
-
+/*
     @Override
     protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
         closeDialogs();

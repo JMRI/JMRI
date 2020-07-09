@@ -1,17 +1,9 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.FlowLayout;
-import java.util.HashMap;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
 /**
- * ItemPanel for for PortalIcons. Since this class has been introduced after
- * users may have customized the defaultPanelIcons, the default family,
- * "Standard" is added by overriding the initIconFamiliesPanel method.
+ * ItemPanel for for PortalIcons.
  * 
 * @author Pete Cressman Copyright (c) 2013, 2020
  */
@@ -35,29 +27,14 @@ public class PortalItemPanel extends FamilyItemPanel {
         if (!_initialized) {
             super.init();
             _suppressDragging = true;
-            add(makeChangeDefaultIconsPanel());
             _previewPanel.setVisible(false);
             _previewPanel.invalidate();
         }
     }
 
-    private JPanel makeChangeDefaultIconsPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        JButton setDefaultsButton = new JButton(Bundle.getMessage("setDefaultIcons"));
-        setDefaultsButton.addActionListener(a -> setDefaults());
-        setDefaultsButton.setToolTipText(Bundle.getMessage("ToolTipSetDefaultIcons"));
-        panel.add(setDefaultsButton);
-        return panel;
-    }
-
-    private void setDefaults() {
-        HashMap<String, NamedIcon> map = getIconMap();
-        ((ControlPanelEditor)_frame.getEditor()).setDefaultPortalIcons(jmri.jmrit.display.PositionableIcon.cloneMap(map, null));
-    }
-
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
+    protected String getDisplayKey() {
+        return "toArrow";
     }
 
 }

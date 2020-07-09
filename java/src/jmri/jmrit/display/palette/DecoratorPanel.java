@@ -134,6 +134,7 @@ public class DecoratorPanel extends JPanel {
         _textEditComponent = makeTextPanel("Text", sample, true);
         _samplePanel.add(sample);
         _previewPanel = new PreviewPanel(_frame, _samplePanel, null, true);
+        sampleBgColorChange();
         log.debug("DragDecoratorLabel size {} | panel size {}", sample.getPreferredSize(), _samplePanel.getPreferredSize());
         finishInit(false);
     }
@@ -148,6 +149,7 @@ public class DecoratorPanel extends JPanel {
         
         _samplePanel.setBackground(_editor.getTargetPanel().getBackground());
         _previewPanel = new PreviewPanel(_frame, _samplePanel, null, false);
+        sampleBgColorChange();
 
         boolean hasTextStates;
         if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {

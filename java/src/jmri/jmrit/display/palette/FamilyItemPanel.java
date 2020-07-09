@@ -1,9 +1,9 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.datatransfer.DataFlavor;
@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -23,177 +24,193 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PreviewPanel;
 import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel general implementation for placement of CPE items having sets of icons (families).
+ * ItemPanel general implementation for placement of CPE items having sets of
+ * icons (families). The "family" is the set of icons that represent the various
+ * states and/or status of the item.
+ * 
  * @see ItemPanel palette class diagram
- *
  * @author Pete Cressman Copyright (c) 2010, 2011, 2018
  * @author Egbert Broerse 2017
  */
 public abstract class FamilyItemPanel extends ItemPanel {
 
     protected String _family;
-    protected JPanel _iconFamilyPanel;  // Holds preview of _iconPanel & _dragIconPanel. They alternate being empty
-    protected ImagePanel _dragIconPanel; // a panel on _iconFamilyPanel - to drag to control panel, hidden upon [Show Icons]
-    protected ImagePanel _iconPanel;     // a panel on _iconFamilyPanel - all icons in family, shown upon [Show Icons]
-    protected JPanel _familyButtonPanel;    // panel of radioButtons to select icon family
+    // _iconPanel (from ItemPanel) contains all the images of the icons for a
+    // selected family.
+    // _previewPanel (from ItemPanel) contains _iconPanel and optionally
+    // _dragIconPanel.
+    //protected JPanel _iconFamilyPanel; // Holds _previewPanel, _familyButtonPanel.
+    protected ImagePanel _dragIconPanel; // panel to drag to the icons to the
+                                         // control panel, hidden upon [Show Icons]
+    protected JPanel _familyButtonPanel; // panel of radioButtons to select icon family
+    protected JButton _showIconsButton;
+    protected JButton _editButton;
+    protected JButton _updateButton;
+    protected HashMap<String, NamedIcon> _unstoredMap;
+    protected IconDialog _dialog;
+    protected ButtonGroup _familyButtonGroup;
 
-    protected int _buttonPosition = 0;      // position of _iconFamilyPanel (TableItemPanels use 1)
-    JPanel _bottom1Panel; // typically displays the _showIconsButton and _editIconsButton
-    JPanel _bottom2Panel; // createIconFamilyButton - when all families have been deleted
-    JButton _showIconsButton;
-    JButton _editIconsButton;
-    JButton _updateButton;
-    private HashMap<String, NamedIcon> _currentIconMap;
-    private HashMap<String, NamedIcon> _unstoredMap;
-    IconDialog _dialog;
-    ButtonGroup _familyButtonGroup;
-
-    protected static boolean _suppressNamePrompts = false;
     protected boolean _isUnstoredMap;
 
     /**
      * Constructor types with multiple families and multiple icon families.
      *
-     * @param parentFrame   enclosing parentFrame
-     * @param type          bean type
-     * @param family        icon family
+     * @param parentFrame enclosing parentFrame
+     * @param type        bean type
+     * @param family      icon family
      */
-    public FamilyItemPanel( DisplayFrame parentFrame, String type, String family) {
+    public FamilyItemPanel(DisplayFrame parentFrame, String type, String family) {
         super(parentFrame, type);
         _family = family;
     }
 
     /**
-     * Create a FamilyIconPanel.
-     * Also called by the enclosing TabbedPanel on change of displayed tab Pane to activate a different pane.
+     * Create a FamilyIconPanel. Also called by the enclosing TabbedPanel on
+     * change of displayed tab Pane to activate a different pane.
      */
     @Override
     public void init() {
         if (!_initialized) {
             _update = false;
             _suppressDragging = false;
+            JPanel bottomPanel = makeBottomPanel(null);
             initIconFamiliesPanel();
-            add(_iconFamilyPanel);
-            makeBottomPanel(null);
+            // Must check since ReporterItemPanel overrides and returns null
+            if (bottomPanel != null) {
+                add(bottomPanel);
+            }
             super.init();
-            log.debug("init done for {}, family= {}", _itemType, _family);
+            if (log.isDebugEnabled()) {
+                log.debug("init done for {}, family= {}", _itemType, _family);
+            }
         }
         hideIcons();
     }
 
     /**
      * Init for update of existing palette item type.
-     * _bottom3Panel has an [Update Panel] button put onto _bottom1Panel.
      *
      * @param doneAction doneAction
-     * @param iconMap iconMap
+     * @param iconMap    iconMap
      */
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         _update = true;
         _suppressDragging = true; // no dragging when updating
+        JPanel bottomPanel = makeBottomPanel(doneAction);
         if (iconMap != null) {
-            checkCurrentMap(iconMap); // is map in families?, does user want to add it? etc.
+            checkCurrentMap(iconMap); // is map in catalog?
+        }
+        if (_family == null || _family.isEmpty()) {
+            _family = Bundle.getMessage("unNamed");
         }
         initIconFamiliesPanel();
-        add(_iconFamilyPanel);
-        makeBottomPanel(doneAction);
-    }
-
-    /**
-     * Initialization for conversion of plain track to indicator track by CircuitBuilder.
-     *
-     * @param doneAction doneAction
-     */
-    @Override
-    public void init(ActionListener doneAction) {
-        _update = false;
-        _suppressDragging = true; // no dragging in circuitBuilder
-        _bottom1Panel = new JPanel();
-        addShowButtonToBottom();
-        addUpdateButtonToBottom(doneAction);
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel);
-        add(_bottom1Panel);
+        add(bottomPanel);
         _initialized = true;
     }
 
     /**
-     * _bottom1Panel and _bottom2Panel alternate visibility in bottomPanel
-     * depending on whether icon families exist. They are made first because
-     * they are referenced in initIconFamiliesPanel(). _bottom2Panel is for the
-     * exceptional case where there are no families at all.
-     * <p>
-     * Subclasses will insert other panels.
+     * Initialization for conversion of plain track to indicator track by
+     * CircuitBuilder.
      *
-     * @param doneAction the calling action
+     * @param bottomPanel button panel
      */
-    protected void makeBottomPanel(ActionListener doneAction) {
-        _bottom2Panel = makeCreateNewFamilyPanel(); // special case for when no families exist for a given itemType
-        _bottom1Panel = makeItemButtonPanel();
-        if (doneAction != null) {
-            addUpdateButtonToBottom(doneAction);
-        }
-        JPanel bottomPanel = new JPanel(new FlowLayout());
-        bottomPanel.add(_bottom1Panel);
-        bottomPanel.add(_bottom2Panel);
-        // If families are missing _bottom2Panel will be made visible.
-        _bottom2Panel.setVisible(false);
+    public void init(JPanel bottomPanel) {
+        _update = false;
+        _suppressDragging = true; // no dragging in circuitBuilder
+        initIconFamiliesPanel();
+        bottomPanel.add(makeShowIconsButton(), 0);
         add(bottomPanel);
+        _initialized = true;
     }
 
+    /**
+     * Needed by CPE ConvertDialog.java
+     * 
+     * @return JPanel
+     */
     public JPanel getBottomPanel() {
         return _bottom1Panel;
     }
+
     public JButton getUpdateButton() {
         return _updateButton;
     }
+
     /**
      * Add [Update] button to _bottom1Panel.
+     * 
      * @param doneAction Action for button
      */
-    protected void addUpdateButtonToBottom(ActionListener doneAction) {
-        _updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
+    @Override
+    protected JButton makeUpdateButton(ActionListener doneAction) {
+        _updateButton = new JButton(Bundle.getMessage("updateButton"));
         _updateButton.addActionListener(doneAction);
         _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
-        _bottom1Panel.add(_updateButton);
+        return _updateButton;
     }
 
-    private void addShowButtonToBottom() {
-        _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
-        _showIconsButton.addActionListener(a -> {
-            if (_iconPanel.isVisible()) {
-                hideIcons();
-            } else {
-                showIcons();
-            }
-        });
-        _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
-        _bottom1Panel.add(_showIconsButton);
-    }
-
-    protected JPanel makeItemButtonPanel() {
-        _bottom1Panel = new JPanel(new FlowLayout());
-        addShowButtonToBottom();
-        _editIconsButton = new JButton(Bundle.getMessage("ButtonEditIcons"));
-        _editIconsButton.addActionListener(a -> openDialog(_itemType, _family, _currentIconMap));
-        _editIconsButton.setToolTipText(Bundle.getMessage("ToolTipEditIcons"));
-        _bottom1Panel.add(_editIconsButton);
-
+    @Override
+    protected void makeItemButtonPanel() {
+        _bottom1Panel = new JPanel();
+        _bottom1Panel.add(makeShowIconsButton());
+        _bottom1Panel.add(makeEditButton());
         if (!_update) {
             addCreateDeleteFamilyButtons();
         }
-        return _bottom1Panel;
+    }
+
+    private JButton makeShowIconsButton() {
+        if (_showIconsButton == null) {
+            _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
+            _showIconsButton.addActionListener(a -> {
+                if (_iconPanel.isVisible()) {
+                    hideIcons();
+                } else {
+                    showIcons();
+                }
+            });
+            _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
+        }
+        return _showIconsButton;
+    }
+
+    private JButton makeEditButton() {
+        if (_editButton == null) {
+            _editButton = new JButton(Bundle.getMessage("ButtonEditIcons"));
+            _editButton.addActionListener(a -> openDialog(_itemType, _family));
+            _editButton.setToolTipText(Bundle.getMessage("ToolTipEditIcons"));
+        }
+        return _editButton;
+    }
+
+    /**
+     * Replacement panel for _bottom1Panel when no icon families exist for
+     * _itemType.
+     */
+    @Override
+    protected void makeSpecialBottomPanel(boolean update) {
+        _bottom2Panel = new JPanel();
+        JButton button;
+        if (update) {
+            _bottom2Panel.add(makeEditButton());
+        } else {
+            button = new JButton(Bundle.getMessage("createNewFamily"));
+            button.addActionListener(a -> newFamilyDialog());
+            button.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
+            _bottom2Panel.add(button);
+        }
+        button = new JButton(Bundle.getMessage("RestoreDefault"));
+        button.addActionListener(a -> loadDefaultType());
+        _bottom2Panel.add(button);
     }
 
     protected void addCreateDeleteFamilyButtons() {
@@ -209,10 +226,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     /**
-     * Check whether map is one of the families.
-     * If so, return. If not, does user want to add it to families?
-     * If so, add. If not, save for return when updated.
-     * update ctor has entered a name for _family.
+     * Check whether map is one of the families. If so, return. If not, does
+     * user want to add it to families? If so, add. If not, save for return when
+     * updated. update ctor has entered a name for _family.
      *
      * @param iconMap existing map of the icon
      */
@@ -220,191 +236,262 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (_itemType.equals("SignalMast")) {
             return;
         }
-        HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-        String family = findFamilyOfMap(iconMap, families);
-        if (family != null) {  // icons same as a known family, maybe with another name
-            if (family.equals(_family)) {
+        String family = getValidFamilyName(_family, iconMap);
+
+        if (_isUnstoredMap) {
+            _unstoredMap = iconMap;
+            int result = JOptionPane.showConfirmDialog(_frame.getEditor(), Bundle.getMessage("UnkownFamilyName", family),
+                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            if (result == JOptionPane.YES_OPTION) {
+                ItemPalette.addFamily(_itemType, family, iconMap);
+            }
+            _family = family;
+        } else {
+            if (family != null) { // icons same as a known family, maybe with
+                                  // another name
+                if (!family.equals(_family)) {
+                    log.info(
+                            "{} icon's family \"{}\" found but is called \"{}\" in the Catalog.  Name changed to Catalog name.",
+                            _itemType, _family, family);
+                    _family = family;
+                }
                 return;
             }
-            log.debug("Icon's family \"{}\" found but is called \"{}\".  Change to Catalog name.", _family, family);
-            _family = family;
-        } else {    // icon set not in catalog
-            _unstoredMap = iconMap;
-            if (_family == null || _family.trim().length() == 0) {
-                if (_suppressNamePrompts) {
-                   _family = null;  // user doesn't want to be bothered
-                   return;
-               }
-                InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_frame.getEditor(), null, _frame);
-               _family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("NoFamilyName"),
-                        Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
-            }
-            if (_family != null && _family.trim().length() > 0) {
-                // make sure name does not duplicate a known name
-                Iterator<String> it = families.keySet().iterator();
-                while (!ItemPalette.familyNameOK(_itemType, _family, it)) {
-                    _family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
-                            Bundle.getMessage("createNewIconSet", _itemType), JOptionPane.QUESTION_MESSAGE);
-                    if (_family == null) {
-                        return;  // user cancelled
-                    }
-                }
-                log.debug("family name \"{}\"", _family);
-                // name OK
-                if (_suppressNamePrompts) {
-                    return;     // user not interested in updating catalog
-                }
-                int result = JOptionPane.showConfirmDialog(_frame,
-                        Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("QuestionTitle"),
-                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (result == JOptionPane.YES_OPTION) {
-                    if (!ItemPalette.addFamily(_itemType, _family, iconMap)) {
-                        JOptionPane.showMessageDialog(_frame,
-                                Bundle.getMessage("badName", _family, _itemType),
-                                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-//                    } else {    // icon set added to catalog with name _family
-//                        _unstoredMap = null;
-                    }
-                } else if (result == JOptionPane.NO_OPTION) {
-                    _suppressNamePrompts = true;
-                }
-           }
         }
     }
 
-    protected String getValidFamilyName(String family) {
+    /**
+     * Check that family name proposed by user for an icon family 1. name is not
+     * a duplicate key 2. icon family is already stored. (Sets "_isUnstoredMap"
+     * flag.)
+     * 
+     * @param family  name for icon set
+     * @param iconMap map the family name refers to.
+     * @return valid family name or null if user declines to provide a valid
+     *         name.
+     */
+    protected String getValidFamilyName(String family, HashMap<String, NamedIcon> iconMap) {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-        Iterator<String> it = families.keySet().iterator();
-        while (!ItemPalette.familyNameOK(_itemType, family, it)) {
-            family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
-                    Bundle.getMessage("createNewIconSet", _itemType), JOptionPane.QUESTION_MESSAGE);
-            if (family == null) {
-                return null;  // user cancelled
+        String mapFamily;
+        if (iconMap != null) {
+            mapFamily = findFamilyOfMap(null, iconMap, families);
+            if (mapFamily == null) {
+                _isUnstoredMap = true;
+            } else {
+                if (log.isDebugEnabled()) {
+                    log.debug("getValidFamilyName: findFamilyOfMap {} found stored family \"{}\" for family \"{}\".",
+                            _itemType, mapFamily, family);
+                }
+                _isUnstoredMap = false;
+                if (family != null) {
+                    return mapFamily;
+                }
             }
         }
-        log.debug("getValidFamilyName = \"{}\"", family);
-        return family;
-    }
-
-    protected boolean addFamily(String type, String family, HashMap<String, NamedIcon> iconMap) {
-        if (!ItemPalette.addFamily(type, family, iconMap)) {
-            JOptionPane.showMessageDialog(_frame,
-                    Bundle.getMessage("badName", _family, _itemType),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return false;
-        } else {
-            setIconMap(iconMap);
-            setFamily(family);
-            return true;
+        mapFamily = family;
+        // check that name is not duplicate.
+        boolean nameOK = false;
+        while (!nameOK) {
+            if (mapFamily == null || mapFamily.isEmpty()) {
+                Component fr;
+                if (_dialog != null) fr = _dialog; else fr = this;
+                mapFamily = JOptionPane.showInputDialog(fr, Bundle.getMessage("EnterFamilyName"),
+                        Bundle.getMessage("createNewFamily"), JOptionPane.QUESTION_MESSAGE);
+                if (mapFamily == null) { // user quit
+                    return null;
+                }
+            }
+            if (families.isEmpty()) {
+                break;
+            }
+            Iterator<String> iter = families.keySet().iterator();
+            while (iter.hasNext()) {
+                String fam = iter.next();
+                if (mapFamily.equals(fam)) {
+                    if (_update) {
+                        JOptionPane.showMessageDialog(_frame,
+                                Bundle.getMessage("DuplicateFamilyName", _itemType,
+                                        Bundle.getMessage("CannotUseName", Bundle.getMessage("unNamed"))),
+                                Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        mapFamily = null;
+                        nameOK = false;
+                        break;
+                    } else {
+                        return mapFamily;
+                    }
+                }
+                nameOK = true;
+            }
+            if (!nameOK && _update) {
+                break;
+            }
         }
+        return mapFamily;
     }
 
     /**
      * Find the family name of the map in a families HashMap.
      *
+     * @param exemptFamily exclude from matching
+     * @param newMap       iconMap
+     * @param families     families of itemType
      * @return null if map is not in the family
      */
-    private String findFamilyOfMap(HashMap<String, NamedIcon> iconMap, HashMap<String, HashMap<String, NamedIcon>> families) {
+    protected String findFamilyOfMap(String exemptFamily, HashMap<String, NamedIcon> newMap,
+            HashMap<String, HashMap<String, NamedIcon>> families) {
         for (Entry<String, HashMap<String, NamedIcon>> entry : families.entrySet()) {
-            log.debug("FamilyKey = {}", entry.getKey());
-            if (mapsAreEqual(entry.getValue(), iconMap)) {
-                String family = entry.getKey();
-                log.debug("Icon map found with different name \"{}\"", family);
-                return family;
+            String family = entry.getKey();
+            // log.debug("FamilyKey = {}", entry.getKey());
+            if (!family.equals(exemptFamily)) {
+                if (mapsAreEqual(entry.getValue(), newMap)) {
+                    // log.debug("findFamilyOfMap: Map found with name \"{}\"",
+                    // entry.getKey());
+                    return entry.getKey();
+                }
             }
         }
         return null;
     }
 
     /**
-     * See if the signal head map is supported by the family map.
-     * "Equals" in this context means that each signal head entry matches an entry in the
-     * family map.  Additional entries in the family map are ignored.
-     * @param familyMap The appearance name and icon entries for the family being checked.
-     * @param signalHeadMap The appearance name and icon entries for the current signal head.
-     * @return true if all of signal head entries have matching entries in the family map.
+     * See if the signal head map is supported by the family map. "Equals" in
+     * this context means that each map is the same size, the keys are equal and
+     * the urls for the icons are equal. Note that icons with different urls may
+     * be or appear to be the same.
+     * 
+     * @param mapOne a HashMap<String, NamedIcon>
+     * @param mapTwo another HashMap<String, NamedIcon>
+     * @return true if all of signal head entries have matching entries in the
+     *         family map.
      */
-    protected boolean mapsAreEqual(HashMap<String, NamedIcon> familyMap, HashMap<String, NamedIcon> signalHeadMap) {
-        for (Entry<String, NamedIcon> signlHeadEntry : signalHeadMap.entrySet()) {
-            NamedIcon familyIcon = familyMap.get(signlHeadEntry.getKey());
-            if (familyIcon == null) {
-                log.debug("key = {}, signal head map url= {} family icon is null", signlHeadEntry.getKey(), signlHeadEntry.getValue().getURL());
+    protected boolean mapsAreEqual(HashMap<String, NamedIcon> mapOne, HashMap<String, NamedIcon> mapTwo) {
+        if (mapOne.size() != mapTwo.size()) {
+            return false;
+        }
+        for (Entry<String, NamedIcon> mapTwoEntry : mapTwo.entrySet()) {
+            NamedIcon mapOneIcon = mapOne.get(mapTwoEntry.getKey());
+            if (mapOneIcon == null) {
                 return false;
             }
-            String url = familyIcon.getURL();
-            if (url == null || !url.equals(signlHeadEntry.getValue().getURL())) {
-                log.debug("key = {}, signal head map url= {} family icon url= {}", signlHeadEntry.getKey(), signlHeadEntry.getValue().getURL(), familyIcon.getURL());
+            String url = mapOneIcon.getURL();
+            if (url == null || !url.equals(mapTwoEntry.getValue().getURL())) {
                 return false;
             }
         }
         return true;
     }
 
-    /**
-     * Build lower (icon) element.
-     * Overridden for SignalMastItemPanel.
-     */
-    protected void initIconFamiliesPanel() {
-        log.debug("initIconFamiliesPanel for= {}, {}", _itemType, _family);
+    protected boolean NamesStoredMap(String family) {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-        if (families != null && families.size() > 0) {
-            if (_iconFamilyPanel == null) {
-                _iconFamilyPanel = new JPanel();
-                _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-            }
-            _familyButtonPanel = makeFamilyButtons(families.keySet());
-            if (_currentIconMap == null) {
-                _currentIconMap = families.get(_family);
-                if (_currentIconMap == null) {
-                    _isUnstoredMap = true;
-                    _currentIconMap = _unstoredMap;
+        if (families.keySet().contains(family)) {
+            return true;
+        }
+        return false;
+    }
+    
+    /*
+     * Entry point when returning from result of familiesMissing() call
+     */
+    @Override
+    protected void makeFamiliesPanel() {
+        HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
+        if (families.values().isEmpty()) {
+            if (!familiesMissing()) {   // still no families
+                _currentIconMap = _unstoredMap;
+                addIconsToPanel(_currentIconMap, _iconPanel, false);
+                if (!_suppressDragging) {
+                    makeDragIconPanel();
+                    makeDndIcon(_currentIconMap);
                 }
-            }
-            // make _iconPanel & _dragIconPanel before calls to add icons
-            addFamilyPanels(_familyButtonPanel);
-            if (_currentIconMap == null) {
-                log.error("currentIconMap is null in initIconFamiliesPanel");
-            } else {
-                addIconsToPanel(_currentIconMap, _iconPanel, false); // need to have family iconMap identified before calling
-                makeDndIconPanel(_currentIconMap, "BeanStateUnknown");
+                addFamilyPanels(false);
             }
         } else {
-            familiesMissing();
+            makeFamiliesPanel(families);
         }
-        log.debug("initIconFamiliesPanel update = {}, family = {}", _update, _family);
     }
 
-    protected void updateFamiliesPanel() {
-        log.debug("updateFamiliesPanel for {}", _itemType);
-        if (_iconFamilyPanel != null) {
-            if (_iconPanel != null) {
-                _iconPanel.removeAll();
-            }
-            if (_dragIconPanel != null) {
-                _dragIconPanel.removeAll();
-            }
-            if (_familyButtonPanel != null) {
-                _iconFamilyPanel.remove(_familyButtonPanel);
+    private void makeFamiliesPanel(@Nonnull HashMap<String, HashMap<String, NamedIcon>> families) {
+
+        makeFamilyButtons(families.keySet()); // makes _familyButtonPanel
+        if (_currentIconMap == null) {
+            _currentIconMap = families.get(_family);
+            if (_currentIconMap == null) {
+                _isUnstoredMap = true;
+                _currentIconMap = _unstoredMap;
             }
         }
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel, _buttonPosition);
-        hideIcons();
+        addIconsToPanel(_currentIconMap, _iconPanel, false);
+
+        if (!_suppressDragging) {
+            makeDragIconPanel();
+            makeDndIcon(_currentIconMap);
+        }
+
+        addFamilyPanels(!families.isEmpty());
+    }
+
+    @Override
+    protected JPanel instructions() {
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(new JLabel(Bundle.getMessage("PickRowBean", _itemType)));
+        blurb.add(new JLabel(Bundle.getMessage("DragBean")));
+        JPanel panel = new JPanel();
+        panel.add(blurb);
+        return panel;
+    }
+
+    protected void addFamilyPanels(boolean hasMaps) {
+        makePreviewPanel(hasMaps, _dragIconPanel);
+
+        if (_familyButtonPanel != null) {
+            _iconFamilyPanel.add(_familyButtonPanel);
+        }
+
+        if (_bottom1Panel != null) {
+            _bottom1Panel.setVisible(hasMaps);
+        }
+        if (_bottom2Panel != null) {
+            _bottom2Panel.setVisible(!hasMaps);
+        }
+        _iconPanel.setVisible(false);
+    }
+
+    // the null checks are needed for several rare cases where nulls can occur
+    protected void updateFamiliesPanel() {
+        log.debug("updateFamiliesPanel for {}", _itemType);
+        if (_iconPanel != null) {
+            _iconPanel.removeAll();
+        }
+        if (_dragIconPanel != null) {
+            _dragIconPanel.removeAll();
+        }
+        if (_previewPanel != null) {
+            _previewPanel.setVisible(false);
+        }
+        if (_familyButtonPanel != null) {
+            _familyButtonPanel.removeAll();
+        }
+        makeFamiliesPanel();
         _iconFamilyPanel.invalidate();
-        reset();
     }
 
     /**
-     * Create and set actions of radioButtons to change family on pane.
+     * Make the _familyButtonPanel panel of buttons to select a family. Create
+     * and set actions of radioButtons to change family on pane.
+     * 
      * @param keySet of icon family names
-     * @return family button panel
      */
-    protected JPanel makeFamilyButtons(java.util.Set<String> keySet) {
-        Iterator<String> iter = keySet.iterator();
+    protected void makeFamilyButtons(java.util.Set<String> keySet) {
+        if (_familyButtonPanel == null) {
+            _familyButtonPanel = new JPanel(); // this is only a local object
+            _familyButtonPanel.setLayout(new BoxLayout(_familyButtonPanel, BoxLayout.Y_AXIS));
+        } else {
+            _familyButtonPanel.removeAll();
+        }
         log.debug("makeFamilyButtons for {} family= {}", _itemType, _family);
         String thisType = null;
-        JPanel familyPanel = new JPanel(); // this is only a local object
-        familyPanel.setLayout(new BoxLayout(familyPanel, BoxLayout.Y_AXIS));
         // uses NamedBeanBundle property for basic beans like "Turnout" I18N
         if ("Sensor".equals(_itemType)) {
             thisType = "BeanNameSensor";
@@ -423,7 +510,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
         } else if ("Portal".equals(_itemType)) {
             thisType = "BeanNamePortal";
         } else if ("RPSReporter".equals(_itemType)) {
-            thisType = "RPSreporter"; // adapt for slightly different spelling of Bundle key (2nd r lower case)
+            thisType = "RPSreporter"; // adapt for slightly different spelling
+                                      // of Bundle key (2nd r lower case)
         } else {
             thisType = _itemType;
         }
@@ -431,72 +519,55 @@ public abstract class FamilyItemPanel extends ItemPanel {
         JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(txt));
         p.setOpaque(false);
-        familyPanel.add(p);
+        _familyButtonPanel.add(p);
         _familyButtonGroup = new ButtonGroup();
 
         GridBagLayout gridbag = new GridBagLayout();
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(gridbag);
+        GridBagConstraints c = ItemPanel.itemGridBagConstraint();
 
         int numCol = 4;
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.NONE;
-        c.anchor = GridBagConstraints.CENTER;
-        c.weightx = 1.0;
-        c.weighty = 1.0;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 0;
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(gridbag);
         String family = "";
+        int length = 0;
         JRadioButton button = null;
+
+        Iterator<String> iter = keySet.iterator();
         while (iter.hasNext()) {
             family = iter.next();
-            button = new JRadioButton(ItemPalette.convertText(family));
+            length += family.length();
+            button = new JRadioButton(family);
             addFamilyButtonListener(button, family);
-            log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, family, c.gridx, c.gridy);
             if (family.equals(_family)) {
                 button.setSelected(true);
             }
+            log.debug("{} ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, family,
+                    c.gridx, c.gridy);
             gridbag.setConstraints(button, c);
-            buttonPanel.add(button);
-            c.gridx++;
-            if (c.gridx >= numCol) { //start next row
+            buttonPanel.add(button, c);
+            if (c.gridx >= numCol || length > 50) { // start next row
                 c.gridy++;
                 c.gridx = 0;
+                length = 0;
             }
+            c.gridx++;
         }
-        if (_currentIconMap == null) {
-            if (_unstoredMap !=null) {
-                if (_family == null) {
-                    _family = Bundle.getMessage("unNamed");
-                }
-                _isUnstoredMap = true;
-                _currentIconMap = _unstoredMap;
-            } else if(_family == null || _family.trim().length()==0) {
-                _family = family; // let last family be the selected one
-                if (button != null) {
-                    button.setSelected(true);
-                }
-            }
-        }
-        if (!keySet.contains(_family)) {
+        if (button != null && _family == null) {
+            button.setSelected(true);
+            _family = family;
+        } else if (_family != null && !keySet.contains(_family)) {
             button = new JRadioButton(_family);
             addFamilyButtonListener(button, _family);
-            log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, _family, c.gridx, c.gridy);
+            log.debug("\"{}\" ActionListener and button for family \"{}\" at gridx= {} gridy= {}", _itemType, _family,
+                    c.gridx, c.gridy);
             gridbag.setConstraints(button, c);
-            buttonPanel.add(button);
+            buttonPanel.add(button, c);
             button.setSelected(true);
-            if (_unstoredMap == null) {
-                _unstoredMap = _currentIconMap;
-                _isUnstoredMap = true;
-            }
         }
-        familyPanel.add(buttonPanel);
-        return familyPanel;
+        _familyButtonPanel.add(buttonPanel);
     }
 
-    private void addFamilyButtonListener (JRadioButton button, String family) {
+    private void addFamilyButtonListener(JRadioButton button, String family) {
         button.addActionListener(new ActionListener() {
             String fam;
 
@@ -514,210 +585,81 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     /**
-     * Position secondary Preview component on _iconFamilyPanel (visible after [Show Icons]).
-     * @param familyPanel panel of family buttons
+     * Position initial Preview component on _iconFamilyPanel. If already
+     * present, keep and clear it.
      */
-    protected void addFamilyPanels(JPanel familyPanel) {
-        log.debug("addFamilyPanels for {}", _itemType);
-        if (_iconPanel == null) { // don't overwrite existing _iconPanel
-            _iconPanel = new ImagePanel();
-            _iconPanel.setLayout(new FlowLayout());
-            _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-            _iconPanel.setImage(_frame.getPreviewBackground());
-            _iconFamilyPanel.add(_iconPanel);
-        }
-
-        if (!_suppressDragging) {
-            makeDragIconPanel(0);
-        }
-        if (!_update && !_suppressDragging) {
-            _previewPanel = new PreviewPanel(_frame, _iconPanel, _dragIconPanel, true);
-        } else {
-            _previewPanel = new PreviewPanel(_frame, _iconPanel, null, false);
-            _previewPanel.setVisible(false);
-        }
-        _iconFamilyPanel.add(_previewPanel);
-        _iconFamilyPanel.add(familyPanel);
-        if (_bottom1Panel != null) {
-            _bottom1Panel.setVisible(true);
-        }
-        if (_bottom2Panel != null) {
-            _bottom2Panel.setVisible(false);
-        }
-        _iconPanel.setVisible(false);
-        log.debug("addFamilyPanels for {} update={}", _family, _update);
-    }
-
-    /**
-     * Position initial Preview component on _iconFamilyPanel. If already present, keep and clear it.
-     * @param position Positional order of DragIconPanel on IconFamilyPanel
-     */
-    protected void makeDragIconPanel(int position) {
+    protected void makeDragIconPanel() {
         if (_dragIconPanel == null) {
             _dragIconPanel = new ImagePanel();
             _dragIconPanel.setOpaque(true); // to show background color/squares
             _dragIconPanel.setLayout(new FlowLayout());
             _dragIconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
             _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-            _iconFamilyPanel.add(_dragIconPanel, position); // place icons over background
         } else {
             _dragIconPanel.removeAll();
         }
-
-        _dragIconPanel.setImage(_frame.getPreviewBackground()); // pick up shared setting
+        _dragIconPanel.setImage(_frame.getPreviewBackground()); 
         if (_iconPanel != null) {
-            _iconPanel.setImage(_frame.getPreviewBackground()); // pick up shared setting
+            _iconPanel.setImage(_frame.getPreviewBackground());
         }
         _dragIconPanel.setVisible(true);
-
     }
 
-    protected void familiesMissing() {
-        int result = JOptionPane.showConfirmDialog(_frame,
-                Bundle.getMessage("AllFamiliesDeleted", _itemType), Bundle.getMessage("QuestionTitle"),
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (result == JOptionPane.YES_OPTION) {
-            ItemPalette.loadMissingItemType(_itemType);
-            initIconFamiliesPanel();
-            _bottom1Panel.setVisible(true);
-            _bottom2Panel.setVisible(false);
+    @Override
+    protected JPanel makeIconDisplayPanel(String key, HashMap<String, NamedIcon> iconMap, boolean dropIcon) {
+        NamedIcon icon = iconMap.get(key);
+        JPanel panel = new JPanel();
+        JLabel image;
+        if (dropIcon) {
+            image = new DropJLabel(icon, iconMap);
         } else {
-            _bottom1Panel.setVisible(false);
-            _bottom2Panel.setVisible(true);
+            image = new JLabel(icon);
         }
-    }
-
-    /**
-     * Add family icons to Show Icons pane in Add Item tool.
-     * @see #hideIcons()
-     *
-     * @param iconMap hashmap of icons currently active
-     * @param iconPanel panel to fill with isons
-     * @param dropIcon true for ability to drop new image on icon to change icon source
-     */
-    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap, ImagePanel iconPanel, boolean dropIcon) {
-        if (iconMap == null) {
-            log.debug("iconMap is null for type {} family {}", _itemType, _family);
-            return;
-        }
-        if (iconPanel == null) { // bug for SignalMast icons (is of class ImagePanel)
-            log.error("iconPanel is null for type {}", _itemType);
-            return;
-        }
-        iconPanel.setOpaque(false);
-        GridBagLayout gridbag = new GridBagLayout();
-        iconPanel.setLayout(gridbag);
-        FontMetrics fm = getFontMetrics(iconPanel.getFont());
-
-        int numCol = 4;
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.NONE;
-        c.anchor = GridBagConstraints.CENTER;
-        c.weightx = 1.0;
-        c.weighty = 1.0;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = -1;
-        c.gridy = 0;
-
-        int cnt = iconMap.size();
-        log.debug("adding {} icons to panel iconMap", cnt);
-        for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
-            NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
-            icon.reduceTo(100, 100, 0.2);
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setOpaque(false);
-            // I18N use existing NamedBeanBundle keys
-            String key = entry.getKey();
-            if (log.isDebugEnabled()) {
-                log.debug("add icon {} to Panel. key= {}", icon.getName(), key);
-            }
-            String borderName = ItemPalette.convertText(key);
-            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), borderName));
-            JLabel image;
-            if (dropIcon) {
-                image = new DropJLabel(icon, iconMap, _update);
-            } else {
-                image = new JLabel(icon);
-            }
-            double scale;
-            if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
-                image.setText(Bundle.getMessage("invisibleIcon"));
-                scale = 0;
-            } else {
-                scale = icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
-            }
-            image.setOpaque(false);
-            image.setToolTipText(icon.getName());
-            image.setName(key);
-            JPanel iPanel = new JPanel();
-            iPanel.setOpaque(false);
-            iPanel.add(image);
-            panel.add(iPanel);
-
-            String scaleText = java.text.MessageFormat.format(Bundle.getMessage("scale"),
-                    new Object[]{CatalogPanel.printDbl(scale, 2)});
-            JLabel label = new JLabel(scaleText);
-            JPanel sPanel = new JPanel();
-            sPanel.setOpaque(false);
-            sPanel.add(label);
-            panel.add(sPanel);
-            int width = getFontMetrics(getFont()).stringWidth(borderName) + 10;
-            width = Math.max(fm.stringWidth(scaleText), Math.max(width, CatalogPanel.ICON_WIDTH));
-            int height = panel.getPreferredSize().height;
-            panel.setPreferredSize(new Dimension(width, height));
-            c.gridx += 1;
-            if (c.gridx >= numCol) { //start next row
-                c.gridy++;
-                c.gridx = 0;
-                if (cnt < numCol - 1) { // last row
-                    JPanel p = new JPanel(new FlowLayout());
-                    p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-                    p.setOpaque(false);
-                    p.add(Box.createHorizontalStrut(100));
-                    gridbag.setConstraints(p, c);
-//                    log.debug("addIconsToPanel: gridx = {} gridy = {}", c.gridx, c.gridy);
-                    iconPanel.add(p);
-                    c.gridx = 1;
-                }
-            }
-            cnt--;
-            gridbag.setConstraints(panel, c);
-            iconPanel.add(panel);
-        }
-        log.debug("addIconsToPanel for type {} family \"{}\"", _itemType, _family);
+        wrapIconImage(icon, image, panel, key);
+        return panel;
     }
 
     protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
         return null;
     }
 
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        if (_suppressDragging) {
-            return;
-        }
+    protected void makeDndIcon(HashMap<String, NamedIcon> iconMap) {
+        JLabel label = null;
+        NamedIcon icon = null;
         if (iconMap != null) {
+            String displayKey = getDisplayKey();
             if (iconMap.get(displayKey) == null) {
                 displayKey = (String) iconMap.keySet().toArray()[0];
             }
-            NamedIcon ic = iconMap.get(displayKey);
-            if (ic != null) {
-                NamedIcon icon = new NamedIcon(ic);
-                try {
-                    JLabel label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), iconMap, icon);
-                    JPanel panel = makeDragIcon(icon, label);
-                    _dragIconPanel.add(panel);
-                } catch (java.lang.ClassNotFoundException cnfe) {
-                    log.warn("no DndIconPanel for {}, {} created. {}", _itemType, displayKey, cnfe);
-                }
+            icon = iconMap.get(displayKey);
+            if (log.isDebugEnabled()) {
+                log.debug("makeDndIcon for {}, {}. displayKey \"{}\" has icon {}",
+                        _itemType, _family, displayKey, (icon != null));
+            }
+            if (icon != null) {
+                icon = new NamedIcon(icon);
+            }
+            try {
+                label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), iconMap, icon);
+            } catch (java.lang.ClassNotFoundException cnfe) {
+                log.warn("no DndIconPanel for {}, {} created. {}", _itemType, displayKey, cnfe);
+                label = new JLabel("NO ICON");
             }
         } else {
-            log.error("No iconMap for makeDndIconPanel of {}", _itemType);
+            label = new JLabel("- - - - - -");
         }
+        JPanel panel = makeDragIconPanel(label);
+        _dragIconPanel.add(panel);
     }
 
-    protected JPanel makeDragIcon(NamedIcon icon, JLabel label) {
+    /**
+     * Get the key to display the icon to be used for dragging to the panel
+     * 
+     * @return key for desired icon
+     */
+    abstract protected String getDisplayKey();
+
+    private JPanel makeDragIconPanel(JLabel label) {
         JPanel panel = new JPanel(new FlowLayout());
         String borderName = Bundle.getMessage("dragToPanel");
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
@@ -731,52 +673,60 @@ public abstract class FamilyItemPanel extends ItemPanel {
             label.setOpaque(false);
             panel.add(label);
         }
-        int width = getFontMetrics(getFont()).stringWidth(borderName);
-        width = Math.max(CatalogPanel.ICON_WIDTH, Math.max(width, icon.getIconWidth())+10);
-        panel.setPreferredSize(new Dimension(width, panel.getPreferredSize().height));
+        Dimension dim = panel.getPreferredSize();
+        dim.width = Math.max(CatalogPanel.ICON_WIDTH, dim.width) + 10;
+        panel.setPreferredSize(dim);
         return panel;
     }
 
+    @Override
     protected void hideIcons() {
         boolean isPalette = (_frame instanceof ItemPalette);
         Dimension totalDim = _frame.getSize();
         Dimension oldDim = getSize();
-        if (_update) {
-            _previewPanel.setVisible(false);
+        if (_iconPanel != null) {
+            _iconPanel.setVisible(false);
+            _iconPanel.invalidate(); // force redraw
+            if (_update) {
+                _previewPanel.setVisible(false);
+            }
+            if (!_suppressDragging) {
+                _dragIconPanel.setVisible(true);
+                _dragIconPanel.invalidate();
+                _previewPanel.setVisible(true);
+                _instructions.setVisible(true);
+            } else {
+                _previewPanel.setVisible(false);
+            }
+            _previewPanel.invalidate(); // force redraw
         }
-        _iconPanel.setVisible(false);
-        _iconPanel.invalidate(); // force redraw
-        if (!_suppressDragging) {
-            _dragIconPanel.setVisible(true);
-            _dragIconPanel.invalidate();
-        } else {
-            _previewPanel.setVisible(false);
-        }
-        _previewPanel.invalidate(); // force redraw
         reSizeDisplay(isPalette, oldDim, totalDim);
         _showIconsButton.setText(Bundle.getMessage("ShowIcons"));
-        reset();
+        closeDialogs();
     }
 
     protected void showIcons() {
         boolean isPalette = (_frame instanceof ItemPalette);
         Dimension totalDim = _frame.getSize();
         Dimension oldDim = getSize();
-        if (_update) {
-            _previewPanel.setVisible(true);
+        if (_iconPanel != null) {
+            _iconPanel.setVisible(true);
+            _iconPanel.invalidate(); // force redraw
+            if (_update) {
+                _previewPanel.setVisible(true);
+            }
+            if (!_suppressDragging) {
+                _dragIconPanel.setVisible(false);
+                _dragIconPanel.invalidate();
+                _instructions.setVisible(false);
+            } else {
+                _previewPanel.setVisible(true);
+            }
+            _previewPanel.invalidate(); // force redraw
         }
-        _iconPanel.setVisible(true);
-        _iconPanel.invalidate(); // force redraw
-        if (!_suppressDragging) {
-            _dragIconPanel.setVisible(false);
-            _dragIconPanel.invalidate();
-        } else {
-            _previewPanel.setVisible(true);
-        }
-        _previewPanel.invalidate(); // force redraw
         reSizeDisplay(isPalette, oldDim, totalDim);
         _showIconsButton.setText(Bundle.getMessage("HideIcons"));
-        reset();
+        closeDialogs();
     }
 
     /**
@@ -784,56 +734,69 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     protected void deleteFamilySet() {
         if (JOptionPane.showConfirmDialog(_frame, Bundle.getMessage("confirmDelete", _family),
-                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
+                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             ItemPalette.removeIconMap(_itemType, _family);
             _family = null;
             _currentIconMap = null;
             updateFamiliesPanel();
+            setFamily(_family);
         }
-    }
-
-    /**
-     * Replacement panel for _bottom1Panel when no icon families exist for
-     * _itemType.
-     */
-    private JPanel makeCreateNewFamilyPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        JButton newFamilyButton = new JButton(Bundle.getMessage("createNewFamily"));
-        newFamilyButton.addActionListener(a -> newFamilyDialog());
-        newFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
-        panel.add(newFamilyButton);
-
-        if(!_update) {
-            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-            cancelButton.addActionListener(a -> updateFamiliesPanel());
-            panel.add(cancelButton);
-        }
-        return panel;
     }
 
     protected boolean newFamilyDialog() {
         String family = JOptionPane.showInputDialog(_frame, Bundle.getMessage("EnterFamilyName"),
-                Bundle.getMessage("createNewIconSet", _itemType), JOptionPane.QUESTION_MESSAGE);
-        if (family == null || family.trim().length() == 0) {
-            // bail out
+                Bundle.getMessage("createNewFamily", _itemType), JOptionPane.QUESTION_MESSAGE);
+        if (family == null) {
             return false;
         }
-        for (String s : ItemPalette.getFamilyMaps(_itemType).keySet()) {
-            if (family.equals(s)) {
-                JOptionPane.showMessageDialog(_frame, Bundle.getMessage("DuplicateFamilyName", family, _itemType), Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                return false;
-            }
-        }
-        openDialog(_itemType, family, null);
+        _family = null; // don't delete current family when adding new
+        openDialog(_itemType, family);
         return true;
     }
 
-    protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
+    protected void openDialog(String type, String family) {
         closeDialogs();
-        previewColorChange();  // set panel color for icon's background
-        _dialog = new IconDialog(type, family, this, iconMap);
+        hideIcons();
+        _dialog = new IconDialog(type, family, this);
+        if (_family == null) {
+            _dialog.setMap(null);
+        } else {
+            _dialog.setMap(_currentIconMap);
+        }
+    }
+
+    /**
+     * IconDialog calls this method to make any changes 'permanent'. It is
+     * responsible for testing that the changes are valid.
+     * 
+     * @param family  family name, possibly changed
+     * @param iconMap family map, possibly changed
+     */
+    protected void dialogDoneAction(String family, HashMap<String, NamedIcon> iconMap) {
+        if (!_update && !(family.equals(_family) && mapsAreEqual(iconMap, _currentIconMap))) {
+            ItemPalette.removeIconMap(_itemType, _family);
+            ItemPalette.addFamily(_itemType, family, iconMap);
+        } else {
+            _currentIconMap = iconMap;
+            if (!NamesStoredMap(family)) {
+                _isUnstoredMap = true;
+            }
+            if (_isUnstoredMap) {
+                _unstoredMap = iconMap;
+            }
+        }
+        _family = family;
+        makeFamiliesPanel();
+        setFamily(family);
+        if (log.isDebugEnabled()) {
+            log.debug("dialogDoneAction done for {} {} update={}. unStored={}",
+                    _itemType, _family, _update, _isUnstoredMap);
+        }
+    }
+
+    protected boolean isUpdate() {
+        return _update;
     }
 
     @Override
@@ -841,6 +804,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (_dialog != null) {
             _dialog.closeDialogs();
             _dialog.dispose();
+            _dialog = null;
         }
     }
 
@@ -849,54 +813,57 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     /**
-     * Action of family radio button.
-     * MultiSensorItemPanel and IndicatorTOItemPanel must override.
+     * Recover from cancelled Add Family dialog
+     */
+    protected void setFamily() {
+        if (_familyButtonGroup == null) {
+            return;
+        }
+        Enumeration<AbstractButton> en = _familyButtonGroup.getElements();
+        while (en.hasMoreElements()) {
+            AbstractButton button = en.nextElement();
+            if (button.isSelected()) {
+                _family = button.getText();
+                break;
+            }
+        }
+    }
+    /**
+     * Action of family radio button. MultiSensorItemPanel and
+     * IndicatorTOItemPanel must override.
      *
      * @param family icon family name
      */
     protected void setFamily(String family) {
         _family = family;
-        log.debug("setFamily: for type \"{}\", family \"{}\"", _itemType, family);
-        if (_iconPanel == null) {
-            _iconPanel = new ImagePanel();
-            _iconFamilyPanel.add(_iconPanel, 0);
-            log.error("setFamily called with _iconPanel == null type = {}", _itemType);
-        } else {
-            _iconPanel.removeAll(); // just clear contents
-        }
-        HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
-        if (map == null) {
-            map = _unstoredMap;
-            _isUnstoredMap = true;
-        } else {
-            _isUnstoredMap = false;
-        }
-        if (map != null) {
-            _currentIconMap = map;
-            log.debug("setFamily: {} family \"{}\" map has {} icons", _itemType, _family, map.size());
-        } else {
-            log.warn("Family \"{}\" for type \"{}\" for not found in Catalog.", _family, _itemType);
-        }
-        if (!_suppressDragging) {
-            makeDragIconPanel(0);
-            makeDndIconPanel(_currentIconMap, "BeanStateUnknown");
-        }
-        addIconsToPanel(_currentIconMap, _iconPanel, false);
+        setFamilyMaps();
         _iconFamilyPanel.invalidate(); // force redraw
         hideIcons();
         setFamilyButton();
     }
 
-    protected boolean isUnstoredMap() {
-        return _isUnstoredMap;
+    protected void setFamilyMaps() {
+        _currentIconMap = ItemPalette.getIconMap(_itemType, _family);
+        if (_currentIconMap == null) {
+            _isUnstoredMap = true;
+            _currentIconMap = _unstoredMap;
+        }
+        if (!_suppressDragging) {
+            makeDragIconPanel();
+            makeDndIcon(_currentIconMap);
+        }
+        addIconsToPanel(_currentIconMap, _iconPanel, false);
     }
 
     protected void setFamilyButton() {
+        if (_familyButtonGroup == null) {
+            return;
+        }
         Enumeration<AbstractButton> en = _familyButtonGroup.getElements();
         while (en.hasMoreElements()) {
-            JRadioButton but = (JRadioButton) en.nextElement();
-            if (_family != null && _family.equals(but.getText())) {
-                but.setSelected(true);
+            AbstractButton button =  en.nextElement();
+            if (_family != null && _family.equals(button.getText())) {
+                button.setSelected(true);
                 break;
             }
         }
@@ -917,20 +884,15 @@ public abstract class FamilyItemPanel extends ItemPanel {
         super.previewColorChange();
     }
 
-    protected void setIconMap(HashMap<String, NamedIcon> map) {
-        _currentIconMap = map;
-        if (_isUnstoredMap) {
-            _unstoredMap = map;
-        }
-        log.debug("setIconMap: for {} \"{}\" _isUnstoredMap={}", _itemType, _family, _isUnstoredMap);
-        updateFamiliesPanel();
-    }
     /**
      * Create icon set to panel icon display class.
      *
      * @return updated icon map
      */
     public HashMap<String, NamedIcon> getIconMap() {
+        if (_currentIconMap != null) {
+            return _currentIconMap;
+        }
         HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
         if (map == null) {
             map = _unstoredMap;

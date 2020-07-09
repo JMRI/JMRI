@@ -105,6 +105,7 @@ public class PortalList extends JList<Portal> {
             fireContentsChanged(this, 0, 0);
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             Object source = e.getSource();
             String property = e.getPropertyName();

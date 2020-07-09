@@ -28,7 +28,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -1651,45 +1650,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         popup.add(edit);
     }
 
-    private HashMap<String, NamedIcon> _portalIconMap;
-
-    private void makePortalIconMap() {
-        _portalIconMap = new HashMap<>();
-        _portalIconMap.put(PortalIcon.VISIBLE,
-                new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
-        _portalIconMap.put(PortalIcon.PATH,
-                new NamedIcon("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
-        _portalIconMap.put(PortalIcon.HIDDEN,
-                new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
-        _portalIconMap.put(PortalIcon.TO_ARROW,
-                new NamedIcon("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
-        _portalIconMap.put(PortalIcon.FROM_ARROW,
-                new NamedIcon("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
-    }
-
-    protected NamedIcon getPortalIcon(String name) {
-        if (_portalIconMap == null) {  // set defaults
-            makePortalIconMap();
-        }
-        return _portalIconMap.get(name);
-    }
-
-    public HashMap<String, NamedIcon> getPortalIconMap() {
-        if (_portalIconMap == null) {  // set defaults
-            makePortalIconMap();
-        }
-        return _portalIconMap;
-    }
-
-    public void setDefaultPortalIcons(HashMap<String, NamedIcon> map) {
-        _portalIconMap = map;
-        for (Positionable pos : _contents) {
-            if (pos instanceof PortalIcon) {
-                ((PortalIcon) pos).initMap();
-            }
-        }
-    }
-
     /**
      * ******************* Circuitbuilder ***********************************
      */
@@ -1739,7 +1699,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     protected void setSelectionGroup(ArrayList<Positionable> group) {
         _highlightcomponent = null;
-//        _currentSelection = null;  need non-null for Portal dragging in CircuitBuilder
         _selectionGroup = group;
         repaint();
     }
@@ -1752,7 +1711,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * ************************** DnD *************************************
      */
     protected void makeDataFlavors() {
-//        _targetPanel.setTransferHandler(new DnDIconHandler(this));
         try {
             _positionableDataFlavor = new DataFlavor(POSITIONABLE_FLAVOR);
             _namedIconDataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
