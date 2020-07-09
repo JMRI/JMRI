@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist 2018
  */
-public final class ConditionalNGEditor extends TreeViewer {
+public class ConditionalNGEditor extends TreeViewer {
 
     protected final ConditionalNG _conditionalNG;
     
