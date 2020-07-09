@@ -1,6 +1,5 @@
 package jmri.jmrit.roster.swing;
 
-import apps.gui3.Apps3;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -194,11 +193,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     JButton throttleLabels = new JButton(Bundle.getMessage("ThrottleLabels"));
     JButton throttleLaunch = new JButton(Bundle.getMessage("Throttle"));
 
-    void additionsToToolBar() {
-        //This value may return null if the DP3 window has been called from a the traditional JMRI menu frame
-        if (Apps3.buttonSpace() != null) {
-            getToolBar().add(Apps3.buttonSpace());
-        }
+    protected void additionsToToolBar() {
         getToolBar().add(new LargePowerManagerButton(true));
         getToolBar().add(modePanel);
     }
