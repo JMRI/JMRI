@@ -33,6 +33,7 @@ public class DefaultClipboard implements Clipboard {
 
     @Override
     public void add(MaleSocket maleSocket) {
+        clipboardItems.ensureFreeSocketAtTop();
         try {
             clipboardItems.getChild(0).connect(maleSocket);
         } catch (SocketAlreadyConnectedException ex) {
@@ -41,11 +42,19 @@ public class DefaultClipboard implements Clipboard {
     }
     
     @Override
-    public MaleSocket getTopItem() {
+    public MaleSocket fetchTopItem() {
         if (!isEmpty()) {
             MaleSocket maleSocket = clipboardItems.getChild(0).getConnectedSocket();
             clipboardItems.getChild(0).disconnect();
             return maleSocket;
+        }
+        throw new UnsupportedOperationException("Not supported");
+    }
+    
+    @Override
+    public MaleSocket getTopItem() {
+        if (!isEmpty()) {
+            return clipboardItems.getChild(0).getConnectedSocket();
         }
         throw new UnsupportedOperationException("Not supported");
     }
@@ -57,7 +66,18 @@ public class DefaultClipboard implements Clipboard {
 
     @Override
     public void moveItemToTop(MaleSocket maleSocket) {
-        throw new UnsupportedOperationException("Not supported");
+        clipboardItems.ensureFreeSocketAtTop();
+        if (maleSocket.getParent() != null) {
+            if (!(maleSocket.getParent() instanceof FemaleSocket)) {
+                throw new UnsupportedOperationException("maleSocket.parent() is not a female socket");
+            }
+            ((FemaleSocket)maleSocket.getParent()).disconnect();
+        }
+        try {
+            clipboardItems.getChild(0).connect(maleSocket);
+        } catch (SocketAlreadyConnectedException ex) {
+            throw new UnsupportedOperationException("Cannot move item to clipboard", ex);
+        }
     }
     
 }

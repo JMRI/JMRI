@@ -73,6 +73,20 @@ public interface FemaleSocket extends Base {
     public String getName();
     
     /**
+     * Am I an ancestor to this maleSocket?
+     * 
+     * @param maleSocket the maleSocket that could be a child
+     * @return true if this oject is an ancestor to the maleSocket object
+     */
+    public default boolean isAncestor(MaleSocket maleSocket) {
+        Base base = maleSocket;
+        while ((base != null) && (base != this)) {
+            base = base.getParent();
+        }
+        return base == this;
+    }
+    
+    /**
      * Get a set of classes that are compatible with this female socket.
      * 
      * @return a set of entries with category and class

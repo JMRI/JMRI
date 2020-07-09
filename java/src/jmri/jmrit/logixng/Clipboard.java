@@ -24,7 +24,16 @@ public interface Clipboard {
     public void add(MaleSocket maleSocket);
     
     /**
-     * Get the top item on the clipboard and removes it from the clipboard.
+     * Get the top item on the clipboard and remove it from the clipboard.
+     * <P>
+     * The top item is the last item put on the clipboard
+     * 
+     * @return the top item
+     */
+    public MaleSocket fetchTopItem();
+    
+    /**
+     * Get the top item on the clipboard without removing it from the clipboard.
      * <P>
      * The top item is the last item put on the clipboard
      * 

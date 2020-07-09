@@ -812,13 +812,20 @@ public class ConditionalNGEditor extends TreeViewer {
             _currentFemaleSocket = femaleSocket;
             _currentPath = path;
             
+            Clipboard clipboard = InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
+            
             boolean isConnected = femaleSocket.isConnected();
+            boolean canConnectFromClipboard =
+                    !clipboard.isEmpty()
+                    && femaleSocket.isCompatible(clipboard.getTopItem())
+                    && !femaleSocket.isAncestor(clipboard.getTopItem());
+            
             menuItemAdd.setEnabled(!isConnected);
             menuItemRemove.setEnabled(isConnected);
             menuItemEdit.setEnabled(isConnected);
             menuItemCut.setEnabled(isConnected);
             menuItemCopy.setEnabled(isConnected);
-            menuItemPaste.setEnabled(!isConnected);
+            menuItemPaste.setEnabled(!isConnected && canConnectFromClipboard);
             
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
@@ -870,7 +877,7 @@ public class ConditionalNGEditor extends TreeViewer {
                         Clipboard clipboard =
                                 InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                         try {
-                            _currentFemaleSocket.connect(clipboard.getTopItem());
+                            _currentFemaleSocket.connect(clipboard.fetchTopItem());
                             updateTree();
                         } catch (SocketAlreadyConnectedException ex) {
                             log.error("item cannot be connected", ex);

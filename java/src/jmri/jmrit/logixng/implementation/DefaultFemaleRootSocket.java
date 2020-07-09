@@ -17,7 +17,7 @@ public final class DefaultFemaleRootSocket
     public DefaultFemaleRootSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+/*    
     @Override
     public boolean isCompatible(MaleSocket socket) {
         LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
@@ -35,7 +35,7 @@ public final class DefaultFemaleRootSocket
         
         return false;
     }
-    
+*/    
     @Override
     public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
         LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);

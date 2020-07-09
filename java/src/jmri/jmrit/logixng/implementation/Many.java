@@ -135,6 +135,12 @@ public class Many extends AbstractBase
         }
     }
     
+    public void ensureFreeSocketAtTop() {
+        if (_itemEntries.get(0)._socket.isConnected()) {
+            _itemEntries.add(0, new ItemEntry(new DefaultFemaleAnySocket(this, this, getNewSocketName())));
+        }
+    }
+    
     @Override
     public void connected(FemaleSocket socket) {
         if (disableCheckForUnconnectedSocket) return;
