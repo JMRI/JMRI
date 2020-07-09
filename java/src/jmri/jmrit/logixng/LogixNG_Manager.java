@@ -129,4 +129,6 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
         }
     }
     
+    public Clipboard getClipboard();
+    
 }

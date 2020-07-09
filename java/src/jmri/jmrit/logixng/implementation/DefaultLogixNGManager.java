@@ -2,9 +2,7 @@ package jmri.jmrit.logixng.implementation;
 
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.LogixNGPreferences;
+import jmri.jmrit.logixng.*;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -18,6 +16,9 @@ import jmri.util.*;
 public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         implements LogixNG_Manager {
 
+    
+    private final Clipboard _clipboard = new DefaultClipboard();
+    
     
     public DefaultLogixNGManager() {
         // The LogixNGPreferences class may load plugins so we must ensure
@@ -171,6 +172,11 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public Class<LogixNG> getNamedBeanClass() {
         return LogixNG.class;
+    }
+    
+    @Override
+    public Clipboard getClipboard() {
+        return _clipboard;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);

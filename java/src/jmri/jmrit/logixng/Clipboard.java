@@ -15,6 +15,15 @@ public interface Clipboard {
     public boolean isEmpty();
     
     /**
+     * Add an item to the clipboard.
+     * <P>
+     * The last added item is on the top of the clipboard.
+     * 
+     * @param maleSocket the item to add on the clipboard
+     */
+    public void add(MaleSocket maleSocket);
+    
+    /**
      * Get the top item on the clipboard and removes it from the clipboard.
      * <P>
      * The top item is the last item put on the clipboard

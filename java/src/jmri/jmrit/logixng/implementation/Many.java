@@ -242,14 +242,16 @@ public class Many extends AbstractBase
         while (x < 10000) {     // Protect from infinite loop
             boolean validName = true;
             for (int i=0; i < getChildCount(); i++) {
-                String name = "*" + Integer.toString(x);
+//                String name = "*" + Integer.toString(x);
+                String name = "X" + Integer.toString(x);
                 if (name.equals(getChild(i).getName())) {
                     validName = false;
                     break;
                 }
             }
             if (validName) {
-                return "*" + Integer.toString(x);
+//                return "*" + Integer.toString(x);
+                return "X" + Integer.toString(x);
             }
             x++;
         }

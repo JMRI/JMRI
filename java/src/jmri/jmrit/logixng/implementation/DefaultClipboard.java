@@ -2,6 +2,8 @@ package jmri.jmrit.logixng.implementation;
 
 import jmri.jmrit.logixng.*;
 
+import org.openide.util.Exceptions;
+
 /**
  * Default implementation of the clipboard
  * 
@@ -9,9 +11,9 @@ import jmri.jmrit.logixng.*;
  */
 public class DefaultClipboard implements Clipboard {
 
-    private Many clipboardItems = new Many("", null);
+    private final Many clipboardItems = new Many("", null);
     
-    private FemaleAnySocket _femaleRootSocket = new DefaultFemaleAnySocket(null, new FemaleSocketListener() {
+    private final FemaleAnySocket _femaleRootSocket = new DefaultFemaleAnySocket(null, new FemaleSocketListener() {
         @Override
         public void connected(FemaleSocket socket) {
             // Do nothing
@@ -21,7 +23,7 @@ public class DefaultClipboard implements Clipboard {
         public void disconnected(FemaleSocket socket) {
             // Do nothing
         }
-    }, "*");
+    }, "");
     
     
     @Override
@@ -29,6 +31,15 @@ public class DefaultClipboard implements Clipboard {
         return clipboardItems.getChildCount() == 0;
     }
 
+    @Override
+    public void add(MaleSocket maleSocket) {
+        try {
+            clipboardItems.getChild(0).connect(maleSocket);
+        } catch (SocketAlreadyConnectedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }
+    
     @Override
     public MaleSocket getTopItem() {
         if (!isEmpty()) {

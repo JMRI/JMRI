@@ -20,6 +20,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 
+import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -850,12 +851,33 @@ public class ConditionalNGEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_CUT:
+                    if (_currentFemaleSocket.isConnected()) {
+                        Clipboard clipboard =
+                                InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
+                        clipboard.add(_currentFemaleSocket.getConnectedSocket());
+                        _currentFemaleSocket.disconnect();
+                        updateTree();
+                    } else {
+                        log.error("_currentFemaleSocket is not connected");
+                    }
                     break;
                     
                 case ACTION_COMMAND_COPY:
                     break;
                     
                 case ACTION_COMMAND_PASTE:
+                    if (! _currentFemaleSocket.isConnected()) {
+                        Clipboard clipboard =
+                                InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
+                        try {
+                            _currentFemaleSocket.connect(clipboard.getTopItem());
+                            updateTree();
+                        } catch (SocketAlreadyConnectedException ex) {
+                            log.error("item cannot be connected", ex);
+                        }
+                    } else {
+                        log.error("_currentFemaleSocket is connected");
+                    }
                     break;
                     
                 case ACTION_COMMAND_LOCK:
@@ -869,7 +891,19 @@ public class ConditionalNGEditor extends TreeViewer {
             }
         }
         
+        private void updateTree() {
+            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                TreeModelEvent tme = new TreeModelEvent(
+                        _currentFemaleSocket,
+                        _currentPath.getPath()
+                );
+                l.treeNodesChanged(tme);
+            }
+            tree.updateUI();
+        }
+        
     }
+    
     
     private final static Logger log = LoggerFactory.getLogger(ConditionalNGEditor.class);
 
