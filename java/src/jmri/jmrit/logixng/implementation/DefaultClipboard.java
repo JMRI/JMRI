@@ -2,8 +2,6 @@ package jmri.jmrit.logixng.implementation;
 
 import jmri.jmrit.logixng.*;
 
-import org.openide.util.Exceptions;
-
 /**
  * Default implementation of the clipboard
  * 
@@ -37,7 +35,7 @@ public class DefaultClipboard implements Clipboard {
         try {
             clipboardItems.getChild(0).connect(maleSocket);
         } catch (SocketAlreadyConnectedException ex) {
-            Exceptions.printStackTrace(ex);
+            throw new RuntimeException("Cannot add socket", ex);
         }
     }
     
