@@ -1,4 +1,4 @@
-package apps.plaf.macosx;
+package jmri.plaf.macosx;
 
 import java.awt.GraphicsEnvironment;
 
@@ -15,14 +15,14 @@ import static org.junit.jupiter.api.condition.OS.MAC;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class EawtApplicationTest {
+public class ApplicationTest {
 
     @Test
     @EnabledOnOs(MAC)
     @EnabledOnJre(JAVA_8)
     public void testCtorMacOSXandJDK8() {
         assumeThat(GraphicsEnvironment.isHeadless()).isFalse();
-        assertThat(new EawtApplication()).isNotNull();
+        assertThat(new Application()).isNotNull();
     }
 
     @Test
@@ -30,13 +30,13 @@ public class EawtApplicationTest {
     @EnabledForJreRange(min = JAVA_9)
     public void testCtorMacOSXandJDK9plus() {
         assumeThat(GraphicsEnvironment.isHeadless()).isFalse();
-        assertThatCode(() -> new EawtApplication()).isInstanceOf(NoClassDefFoundError.class);
+        assertThatCode(() -> new Application()).isInstanceOf(NoClassDefFoundError.class);
     }
 
     @Test
     @DisabledOnOs(MAC)
     public void testCtorNotMacOSX() {
-        assertThatCode(() -> new EawtApplication()).isInstanceOf(RuntimeException.class);
+        assertThatCode(() -> new Application()).isInstanceOf(RuntimeException.class);
     }
 
 }

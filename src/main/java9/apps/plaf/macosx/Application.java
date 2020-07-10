@@ -1,6 +1,10 @@
 package apps.plaf.macosx;
 
+import java.awt.Desktop;
+
 import jmri.util.SystemType;
+
+import org.apiguardian.api.API;
 
 /**
  * Wrapper for Apple provided extensions to Java that allow Java apps to feel
@@ -26,7 +30,6 @@ import jmri.util.SystemType;
 public final class Application {
 
     private static volatile Application sharedApplication = null;
-    private com.apple.eawt.Application application = null;
 
     public static Application getApplication() {
         if (!SystemType.isMacOSX()) {
@@ -40,28 +43,28 @@ public final class Application {
 
     // package private
     Application() {
-        application = com.apple.eawt.Application.getApplication();
+        // nothing to do
     }
 
     public void setAboutHandler(final AboutHandler handler) {
         if (handler != null) {
-            application.setAboutHandler(ae -> handler.handleAbout(ae));
+            Desktop.getDesktop().setAboutHandler(ae -> handler.handleAbout(ae));
         } else {
-            application.setAboutHandler(null);
+            Desktop.getDesktop().setAboutHandler(null);
         }
     }
 
     public void setPreferencesHandler(final PreferencesHandler handler) {
         if (handler != null) {
-            application.setPreferencesHandler(pe -> handler.handlePreferences(pe));
+            Desktop.getDesktop().setPreferencesHandler(pe -> handler.handlePreferences(pe));
         } else {
-            application.setPreferencesHandler(null);
+            Desktop.getDesktop().setPreferencesHandler(null);
         }
     }
 
     public void setQuitHandler(final QuitHandler handler) {
         if (handler != null) {
-            application.setQuitHandler((qe, qr) -> {
+            Desktop.getDesktop().setQuitHandler((qe, qr) -> {
                 if (handler.handleQuitRequest(qe)) {
                     qr.performQuit();
                 } else {
@@ -69,7 +72,7 @@ public final class Application {
                 }
             });
         } else {
-            application.setQuitHandler(null);
+            Desktop.getDesktop().setQuitHandler(null);
         }
     }
 }

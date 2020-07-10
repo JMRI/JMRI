@@ -1,6 +1,5 @@
 package jmri.plaf.macosx;
 
-import java.awt.Desktop;
 import jmri.util.SystemType;
 
 /**
@@ -22,42 +21,57 @@ import jmri.util.SystemType;
  * {@link com.apple.eawt.Application} class, as it only provides support for
  * those integration aspects that were implemented in JMRI 3.1.
  *
- * @author Randall Wood (c) 2011, 2016
- * @see EawtApplication
- * @see Jdk9Application
+ * @author Randall Wood (c) 2011, 2016, 2020
  * @deprecated since 4.21.1; use {@link apps.plaf.macosx.Application} instead
  */
 @Deprecated
-abstract public class Application {
+public final class Application {
 
     private static volatile Application sharedApplication = null;
+    private com.apple.eawt.Application application = null;
 
     public static Application getApplication() {
         if (!SystemType.isMacOSX()) {
             return null;
         }
         if (sharedApplication == null) {
-            try {
-                // test that Desktop supports AboutHandlers
-                if (Desktop.getDesktop().isSupported(Desktop.Action.valueOf("APP_ABOUT"))) { // NOI18N
-                    sharedApplication = new Jdk9Application();
-                }
-            } catch (IllegalArgumentException ex) {
-                // if Desktop.Action does not include AboutHandlers, its not
-                // recognized to be (un)supported, so assume the Eawt is available 
-                sharedApplication = new EawtApplication();
-            }
+            sharedApplication = new Application();
         }
         return sharedApplication;
     }
 
+    // package private
     Application() {
-        // do nothing but require that subclass constructors are package private
+        application = com.apple.eawt.Application.getApplication();
     }
 
-    abstract public void setAboutHandler(final AboutHandler handler);
+    public void setAboutHandler(final AboutHandler handler) {
+        if (handler != null) {
+            application.setAboutHandler(ae -> handler.handleAbout(ae));
+        } else {
+            application.setAboutHandler(null);
+        }
+    }
 
-    abstract public void setPreferencesHandler(final PreferencesHandler handler);
+    public void setPreferencesHandler(final PreferencesHandler handler) {
+        if (handler != null) {
+            application.setPreferencesHandler(pe -> handler.handlePreferences(pe));
+        } else {
+            application.setPreferencesHandler(null);
+        }
+    }
 
-    abstract public void setQuitHandler(final QuitHandler handler);
+    public void setQuitHandler(final QuitHandler handler) {
+        if (handler != null) {
+            application.setQuitHandler((qe, qr) -> {
+                if (handler.handleQuitRequest(qe)) {
+                    qr.performQuit();
+                } else {
+                    qr.cancelQuit();
+                }
+            });
+        } else {
+            application.setQuitHandler(null);
+        }
+    }
 }
