@@ -32,6 +32,8 @@ public class ConditionalNGEditor extends TreeViewer {
 
     protected final ConditionalNG _conditionalNG;
     
+    ClipboardEditor _clipboardEditor = null;
+    
     // Add ConditionalNG Variables
     private JDialog selectItemTypeDialog = null;
     private JDialog addItemDialog = null;
@@ -98,23 +100,19 @@ public class ConditionalNGEditor extends TreeViewer {
     @Override
     public void initComponents() {
         super.initComponents();
-/*        
-        // build menu
-        JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-        JMenuItem closeWindowItem = new JMenuItem(Bundle.getMessage("CloseWindow"));
-        closeWindowItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
-        fileMenu.add(closeWindowItem);
-        menuBar.add(fileMenu);
         
-        setJMenuBar(menuBar);
-//        addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
-*/        
+        // The menu is created in parent class TreeViewer
+        JMenuBar menuBar = getJMenuBar();
+        
+        JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        JMenuItem openClipboardItem = new JMenuItem(Bundle.getMessage("MenuOpenClipboard"));
+        openClipboardItem.addActionListener((ActionEvent e) -> {
+            openClipboard();
+        });
+        toolsMenu.add(openClipboardItem);
+        menuBar.add(toolsMenu);
+        
+        
         PopupMenu popup = new PopupMenu(tree, femaleSocketTreeModel);
         popup.init();
         
@@ -143,6 +141,24 @@ public class ConditionalNGEditor extends TreeViewer {
         fireLogixNGEvent();
     }
     
+    public void openClipboard() {
+        if (_clipboardEditor == null) {
+            _clipboardEditor = new ClipboardEditor();
+            _clipboardEditor.initComponents();
+            _clipboardEditor.setVisible(true);
+
+            _clipboardEditor.addLogixNGEventListener(() -> {
+                _clipboardEditor.clipboardData.forEach((key, value) -> {
+                    if (key.equals("Finish")) {                  // NOI18N
+                        _clipboardEditor = null;
+                    }
+                });
+            });
+        } else {
+            _clipboardEditor.setVisible(true);
+        }
+    }
+
     public void addLogixNGEventListener(LogixNGEventListener listener) {
         listenerList.add(listener);
     }
