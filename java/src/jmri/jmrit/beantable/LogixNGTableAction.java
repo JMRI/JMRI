@@ -332,7 +332,7 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
         }
 
         ButtonGroup enableButtonGroup = new ButtonGroup();
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(Bundle.getMessage("EnableAll"));  // NOI18N
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(Bundle.getMessage("EnableAllLogixNGs"));  // NOI18N
         r.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -343,7 +343,7 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
         r.setSelected(true);
         menu.add(r);
 
-        r = new JRadioButtonMenuItem(Bundle.getMessage("DisableAll"));  // NOI18N
+        r = new JRadioButtonMenuItem(Bundle.getMessage("DisableAllLogixNGs"));  // NOI18N
         r.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
