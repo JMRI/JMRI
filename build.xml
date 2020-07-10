@@ -1915,7 +1915,9 @@
                 <param name="--show-members=package"/>
                 <param name="-linksource"/>
                 <param name="-use"/>
-                <param name="--uml-timeout=1800"/> <!-- timeout passed to plantuml -->
+                <param name="--uml-timeout" value="1800" /> <!-- timeout passed to plantuml -->
+                <param name="--uml-image-format" value="svg" />
+                <param name="--uml-excluded-package-dependencies" value="java,javax,com,org,edu,net,io" />
             </doclet>
             
             <group title="Core" packages="jmri"/>
