@@ -674,6 +674,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             this.showable = showable;
         }
 
+        @SuppressWarnings("cast") // (TreeNode) children.elementAt(realIndex)
         public TreeNode getChildAt(int index, boolean filterIsActive) {
             if (children == null) {
                 throw new ArrayIndexOutOfBoundsException("node has no children");

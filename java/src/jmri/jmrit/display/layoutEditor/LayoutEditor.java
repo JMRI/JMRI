@@ -463,6 +463,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         });
     }
 
+    @SuppressWarnings("deprecation") // Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()
     private void setupMenuBar() {
         // initialize menu bar
         JMenuBar menuBar = new JMenuBar();
@@ -759,6 +760,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param menuBar to add the option menu to
      * @return option menu that was added
      */
+    @SuppressWarnings("deprecation") // Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()
     private JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
 
@@ -1680,6 +1682,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     //
     //
     //
+    @SuppressWarnings("deprecation") // Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()
     private void setupZoomMenu(@Nonnull JMenuBar menuBar) {
         zoomMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuZoomMnemonic")));
         menuBar.add(zoomMenu);
