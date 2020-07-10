@@ -2,6 +2,8 @@ package jmri.plaf.macosx;
 
 import java.util.EventObject;
 
+import org.apiguardian.api.API;
+
 /**
  * A QuitHandler responds to externally initiated attempts to quit JMRI apps on
  * Mac OS X.
@@ -10,6 +12,7 @@ import java.util.EventObject;
  * @deprecated since 4.21.1; use {@link apps.plaf.macosx.QuitHandler} instead
  */
 @Deprecated
+@API(status=API.Status.DEPRECATED)
 public interface QuitHandler {
 
     /**

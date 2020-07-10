@@ -2,6 +2,8 @@ package apps.plaf.macosx;
 
 import jmri.util.SystemType;
 
+import org.apiguardian.api.API;
+
 /**
  * Wrapper for Apple provided extensions to Java that allow Java apps to feel
  * more "Mac-like" on Mac OS X.
@@ -23,6 +25,7 @@ import jmri.util.SystemType;
  *
  * @author Randall Wood (c) 2011, 2016, 2020
  */
+@API(status=API.Status.MAINTAINED)
 public final class Application {
 
     private static volatile Application sharedApplication = null;

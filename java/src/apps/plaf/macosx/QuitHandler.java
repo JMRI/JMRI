@@ -2,12 +2,15 @@ package apps.plaf.macosx;
 
 import java.util.EventObject;
 
+import org.apiguardian.api.API;
+
 /**
  * A QuitHandler responds to externally initiated attempts to quit JMRI apps on
  * Mac OS X.
  *
  * @author Randall Wood (c) 2011
  */
+@API(status=API.Status.MAINTAINED)
 public interface QuitHandler {
 
     /**

@@ -2,6 +2,8 @@ package jmri.plaf.macosx;
 
 import java.util.EventObject;
 
+import org.apiguardian.api.API;
+
 /**
  * Handle a trigger to launch the application about dialog from Mac OS X.
  *
@@ -9,6 +11,7 @@ import java.util.EventObject;
  * @deprecated since 4.21.1; use {@link apps.plaf.macosx.AboutHandler} instead
  */
 @Deprecated
+@API(status=API.Status.DEPRECATED)
 public interface AboutHandler {
 
     abstract public void handleAbout(EventObject eo);
