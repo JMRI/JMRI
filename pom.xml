@@ -8,6 +8,8 @@
     <artifactId>jmri</artifactId>
     <version>4.21.1-SNAPSHOT</version>
     <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
         <release.build_date>${maven.build.timestamp}</release.build_date>
@@ -183,7 +185,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.1</version>
                         <configuration>
                             <compilerId>eclipse</compilerId>
                             <source>1.8</source>
@@ -443,11 +444,32 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>compile-java-8</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>compile-java-9</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <release>9</release>
+                            <compileSourceRoots>
+                                <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
+                            </compileSourceRoots>
+                            <multiReleaseOutput>true</multiReleaseOutput>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -725,10 +747,16 @@
             </plugin>
             <plugin>
                 <!-- Warning: do not put this plugin's configuration before surefire plugin one. The sequence
-                     in which the surefire and jacoco goals run is important -->
+                in which the surefire and jacoco goals run is important -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
+                <configuration>
+                    <excludes>
+                        <!-- https://github.com/jacoco/jacoco/issues/407 -->
+                        <exclude>META-INF/**</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -780,10 +808,10 @@
                     </execution>
                     <execution>
                         <!-- Do a merge after unit tests complete, to cover the case that only goals up to 'test' phase
-                             are executed. The post-integration-test will merge in integration tests' coverage -->
+                        are executed. The post-integration-test will merge in integration tests' coverage -->
                         <id>post-test-merge</id>
                         <!-- Must explicitly bind to the phase. Since this plugin is configured AFTER surefire,
-                             it will bind later that surefire:test into the (same) test phase -->
+                        it will bind later that surefire:test into the (same) test phase -->
                         <phase>test</phase>
                         <goals>
                             <goal>merge</goal>
@@ -963,12 +991,33 @@
                     </filesets>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Multi-Release>true</Multi-Release>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
-                <!-- This plugin's configuration is used to store Eclipse m2e
-                settings only. It has no influence on the Maven build itself. -->
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <!-- This plugin's configuration is used to store Eclipse m2e
+                    settings only. It has no influence on the Maven build itself. -->
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
                     <version>1.0.0</version>
