@@ -728,7 +728,7 @@
                 ]]>
                     </bottom>
                     <links>
-                        <link>http://docs.oracle.com/javase/8/docs/api/</link>
+                        <!-- Java Javadoc link is automatically detected -->
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>https://commons.apache.org/proper/commons-csv/apidocs/</link>
