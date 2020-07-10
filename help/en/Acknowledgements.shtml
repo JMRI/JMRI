@@ -230,8 +230,9 @@
         <li>Stuart Brorson, who provided the decoder definition for the 
             SDD-001 from BNM Hobbies</li>
         
-        <li>Andy Brown, who helped solve a problem with NX
-        entry/exit pairs.</li>
+        <li>Andy Brown,  <!-- andybadshot -->
+        who helped solve a problem with NX
+        entry/exit pairs and fixed a problem with memory icons.</li>
 
         <li>Bill Brown, whose layout was used for the first NCE
         tests</li>

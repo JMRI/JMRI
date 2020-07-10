@@ -2028,7 +2028,7 @@
     <target name="remakedecoderindex"
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
-        <java classname="apps.util.decoderdefn.DecoderIndexBuilder"
+        <java classname="apps.jmrit.decoderdefn.DecoderIndexBuilder"
               dir="${basedir}"
               fork="yes"
               resultproperty="decoderindex.returncode"
