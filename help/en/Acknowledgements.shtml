@@ -875,6 +875,9 @@
 
         <li>Bob Phillips provided an MRC decoder definition</li>
 
+        <li>Alger Plke, <!-- AlgerP572 -->
+        who provided programmer fixes for the Zimo MX1 and MXULF</li>
+
         <li>Ronnie Pinkerton, who worked on a throttle update</li>
 
         <li>Martin Pischky improved the LocoNet firmware downloader
@@ -882,7 +885,7 @@
 
         <li>Rob Plevier, who provided instructions for running JMRI
         on OpenSUSE GNU/Linux</li>
-
+        
         <li>John Plocher, who make good suggestions on XML DTD
         items, created the infrastructure for this web site, lead
         the construction of the demo layout for the JavaOne show,
