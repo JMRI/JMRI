@@ -77,14 +77,20 @@
         <li>Version 4.2 requires Java 8.</li>
       </ul>
       
-      As of JMRI 4.20, JMRI is only fully supported when running on the
-      two most recent Java Long Term Support (LTS) releases (8 or 11 as of July 2020)
-      and will receive "best-effort" support on the latest Java release (14 as of July 2020).
-      The JMRI project recommends Java from <a href="https://adoptopenjdk.net">AdoptOpenJDK</a>
-      or the operating system vendor unless using Windows 8 or older, in which case
-      Java from <a href="https://java.com">Oracle</a> is recommended. See the
-      operating system-specific installation guidance for further details.
-      
+      <p>As of JMRI 4.20, JMRI is only fully supported when running on the most
+          current update possible to the two most recent Java Long Term Support
+          (LTS) releases (8 or 11 as of July 2020) and will receive "best effort"
+          support on the latest Java release (14 as of July 2020). Support in
+          this context means that problems found will be fixed or addressed in
+          other means; "best effort" means that fixes to run on the latest Java
+          release that do not break compatibility with the oldest LTS release will
+          be considered.</p>
+
+      <p>The JMRI project recommends Java from <a href="https://adoptopenjdk.net">AdoptOpenJDK</a>
+          or the operating system vendor unless using Windows 8 or older, in which case
+          Java from <a href="https://java.com">Oracle</a> is recommended. See the
+          operating system-specific installation guidance for further details.</p>
+
       <a name="startprog" id="startprog"></a>
 
       <h2>Starting the program</h2>
