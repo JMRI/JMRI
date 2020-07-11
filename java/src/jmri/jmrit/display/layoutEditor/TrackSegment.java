@@ -338,6 +338,8 @@ public class TrackSegment extends LayoutTrack {
                         }
                     }
                     bezier = false;
+                } else if (getAngle() < 1.0D) {
+                    setAngle(90.0D);
                 }
                 arc = true;
                 hideConstructionLines(SHOWCON);
