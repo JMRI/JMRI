@@ -1550,7 +1550,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
             // now adjust tracks
             List<Track> tracks = getTracksList();
             for (Track track : tracks) {
-                if (track.acceptsTypeName(oldType)) {
+                if (track.isTypeNameAccepted(oldType)) {
                     track.deleteTypeName(oldType);
                     if (newType != null) {
                         track.addTypeName(newType);

@@ -612,7 +612,7 @@ public class PrintLocationsAction extends AbstractAction {
             }
             List<Track> tracks = location.getTracksByNameList(trackType);
             for (Track track : tracks) {
-                if (track.acceptsTypeName(carType)) {
+                if (track.isTypeNameAccepted(carType)) {
                     trackLength = trackLength + track.getLength();
                     writer.write(
                             SPACE +
@@ -737,7 +737,7 @@ public class PrintLocationsAction extends AbstractAction {
         int typeCount = 0;
 
         for (String type : cts.getNames()) {
-            if (track.acceptsTypeName(type)) {
+            if (track.isTypeNameAccepted(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
                 if (charCount > charactersPerLine - 2 * TAB_LENGTH) {
@@ -749,7 +749,7 @@ public class PrintLocationsAction extends AbstractAction {
         }
 
         for (String type : InstanceManager.getDefault(EngineTypes.class).getNames()) {
-            if (track.acceptsTypeName(type)) {
+            if (track.isTypeNameAccepted(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
                 if (charCount > charactersPerLine - 2 * TAB_LENGTH) {

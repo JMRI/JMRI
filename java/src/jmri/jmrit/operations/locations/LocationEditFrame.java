@@ -659,7 +659,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             // this location
             List<Track> tracks = _location.getTracksList();
             for (Track track : tracks) {
-                if (track.acceptsTypeName(checkBoxes.get(i).getText())) {
+                if (track.isTypeNameAccepted(checkBoxes.get(i).getText())) {
                     checkBoxes.get(i).setSelected(true);
                 }
             }

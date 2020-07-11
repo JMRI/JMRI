@@ -196,7 +196,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         // report if spur can't service the selected load
                         if (!allLoadsCheckBox.isSelected() &&
                                 si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
-                                !spur.acceptsLoad(load, type)) {
+                                !spur.isLoadNameAndCarTypeAccepted(load, type)) {
                             addItemLeft(locationsPanel,
                                     new JLabel(MessageFormat.format(Bundle.getMessage("spurNotTypeLoad"),
                                             new Object[]{spur.getName(), type, load})),

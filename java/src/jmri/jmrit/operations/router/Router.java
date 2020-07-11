@@ -140,7 +140,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             // determine if there's a track that can service the car
             String status = "";
             for (Track track : clone.getDestination().getTracksList()) {
-                status = track.accepts(clone);
+                status = track.isRollingStockAccepted(clone);
                 if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
                     log.debug("Track ({}) will accept car ({})", track.getName(), car);
                     break;
@@ -443,7 +443,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (car.getTrack() == track) {
                 continue; // don't use car's current track
             }
-            String status = track.accepts(testCar);
+            String status = track.isRollingStockAccepted(testCar);
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 if (_addtoReportVeryDetailed) {
                     addLine(_buildReport, SEVEN, BLANK_LINE);
@@ -938,7 +938,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (_lastLocationTracks.contains(track)) {
                 continue;
             }
-            String status = track.accepts(testCar);
+            String status = track.isRollingStockAccepted(testCar);
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 continue; // track doesn't accept this car
             }

@@ -211,11 +211,11 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
         Assert.assertEquals("Location Accepts Type Name undefined3", false, l.acceptsTypeName("TestTypeName"));
 
-        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
-        Assert.assertEquals("Track Accepts Type Name boxCar", false, t.acceptsTypeName("boxCar"));
-        Assert.assertEquals("Track Accepts Type Name MOW", true, t.acceptsTypeName("MOW"));
-        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName(Bundle.getMessage("Caboose")));
-        Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("undefined"));
+        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.isTypeNameAccepted("BoxCar"));
+        Assert.assertEquals("Track Accepts Type Name boxCar", false, t.isTypeNameAccepted("boxCar"));
+        Assert.assertEquals("Track Accepts Type Name MOW", true, t.isTypeNameAccepted("MOW"));
+        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.isTypeNameAccepted(Bundle.getMessage("Caboose")));
+        Assert.assertEquals("Track Accepts Type Name undefined3", false, t.isTypeNameAccepted("undefined"));
 
         t.addTypeName("Baggage");
         t.addTypeName("BoxCar");
@@ -229,12 +229,12 @@ public class LocationTest extends OperationsTestCase {
         t.addTypeName("Stock");
         t.addTypeName("Tank Oil");
 
-        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
-        Assert.assertEquals("Track Accepts Type Name boxCar", false, t.acceptsTypeName("boxCar"));
-        Assert.assertEquals("Track Accepts Type Name MOW", true, t.acceptsTypeName("MOW"));
-        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName(Bundle.getMessage("Caboose")));
-        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
-        Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("undefined"));
+        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.isTypeNameAccepted("BoxCar"));
+        Assert.assertEquals("Track Accepts Type Name boxCar", false, t.isTypeNameAccepted("boxCar"));
+        Assert.assertEquals("Track Accepts Type Name MOW", true, t.isTypeNameAccepted("MOW"));
+        Assert.assertEquals("Track Accepts Type Name Caboose", true, t.isTypeNameAccepted(Bundle.getMessage("Caboose")));
+        Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.isTypeNameAccepted("BoxCar"));
+        Assert.assertEquals("Track Accepts Type Name undefined3", false, t.isTypeNameAccepted("undefined"));
 
         // test replace
         // also test replace type in schedules
@@ -251,7 +251,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertFalse("Location Does Not Accepts Type Name BoxCar", l.acceptsTypeName("BoxCar"));
         Assert.assertTrue("Location Accepts Type Name boxcar", l.acceptsTypeName("boxcar"));
         Assert.assertFalse("Track Does Not Accepts Type Name BoxCar", l.acceptsTypeName("BoxCar"));
-        Assert.assertTrue("Track Accepts Type Name boxcar", t.acceptsTypeName("boxcar"));
+        Assert.assertTrue("Track Accepts Type Name boxcar", t.isTypeNameAccepted("boxcar"));
         Assert.assertEquals("ScheudleItem i1 Type boxcar", "boxcar", i1.getTypeName());
         Assert.assertEquals("Check ScheudleItem i2 Type Caboose", Bundle.getMessage("Caboose"), i2.getTypeName());
 
@@ -279,18 +279,18 @@ public class LocationTest extends OperationsTestCase {
         i1.setRoadName("Test Road Name");
         i2.setRoadName("Test Road Name 2");
 
-        Assert.assertTrue("track should accept road Test Road Name", t.acceptsRoadName("Test Road Name"));
-        Assert.assertTrue("track should accept road Test Road Name 2", t.acceptsRoadName("Test Road Name 2"));
-        Assert.assertFalse("track should Not accept road New Test Road Name", t.acceptsRoadName("New Test Road Name"));
+        Assert.assertTrue("track should accept road Test Road Name", t.isRoadNameAccepted("Test Road Name"));
+        Assert.assertTrue("track should accept road Test Road Name 2", t.isRoadNameAccepted("Test Road Name 2"));
+        Assert.assertFalse("track should Not accept road New Test Road Name", t.isRoadNameAccepted("New Test Road Name"));
         Assert.assertEquals("ScheudleItem i1 Road Test Road Name", "Test Road Name", i1.getRoadName());
         Assert.assertEquals("ScheudleItem i2 Road Test Road Name", "Test Road Name 2", i2.getRoadName());
 
         CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.replaceName("Test Road Name", "New Test Road Name");
 
-        Assert.assertFalse("track should Not accept road Test Road Name", t.acceptsRoadName("Test Road Name"));
-        Assert.assertTrue("track should accept road Test Road Name 2", t.acceptsRoadName("Test Road Name 2"));
-        Assert.assertTrue("track should accept road New Test Road Name", t.acceptsRoadName("New Test Road Name"));
+        Assert.assertFalse("track should Not accept road Test Road Name", t.isRoadNameAccepted("Test Road Name"));
+        Assert.assertTrue("track should accept road Test Road Name 2", t.isRoadNameAccepted("Test Road Name 2"));
+        Assert.assertTrue("track should accept road New Test Road Name", t.isRoadNameAccepted("New Test Road Name"));
         Assert.assertEquals("ScheudleItem i1 Road Test Road Name", "New Test Road Name", i1.getRoadName());
         Assert.assertEquals("Check ScheudleItem i2 Road Test Road Name", "Test Road Name 2", i2.getRoadName());
 

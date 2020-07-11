@@ -247,7 +247,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
                 cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrackCarType"), new Object[]{carType}));
                 addCheckBoxAction(cb);
                 trackCheckBoxList.add(cb);
-                cb.setSelected(track.acceptsTypeName(carType));
+                cb.setSelected(track.isTypeNameAccepted(carType));
                 addItemLeft(pLocations, cb, 1, x++);
             }
         }
