@@ -81,7 +81,7 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
                         s = TAB + location.getName() + NEW_LINE;
                         writer.write(s);
                         // tracks
-                        List<Track> tracks = location.getTrackByNameList(null);
+                        List<Track> tracks = location.getTracksByNameList(null);
                         for (Track track : tracks) {
                             if (track.acceptsTypeName(type)) {
                                 s = TAB + TAB + TAB + track.getName() + NEW_LINE;

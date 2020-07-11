@@ -447,7 +447,7 @@ public class LocationTest extends OperationsTestCase {
         t7.setMoves(15);
 
         // get all tracks ids
-        List<Track> tracks = l.getTrackByMovesList(null);
+        List<Track> tracks = l.getTracksByMovesList(null);
 
         Assert.assertEquals("number of tracks", 7, tracks.size());
         Assert.assertEquals("1st track", t5, tracks.get(0));
@@ -459,7 +459,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("7th track", t3, tracks.get(6));
 
         // get interchange tracks ids
-        tracks = l.getTrackByMovesList(Track.INTERCHANGE);
+        tracks = l.getTracksByMovesList(Track.INTERCHANGE);
 
         Assert.assertEquals("number of tracks", 3, tracks.size());
         Assert.assertEquals("1st track", t5, tracks.get(0));
@@ -467,14 +467,14 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("3rd track", t6, tracks.get(2));
 
         // get spur tracks ids
-        tracks = l.getTrackByMovesList(Track.SPUR);
+        tracks = l.getTracksByMovesList(Track.SPUR);
 
         Assert.assertEquals("number of tracks", 2, tracks.size());
         Assert.assertEquals("1st track", t4, tracks.get(0));
         Assert.assertEquals("2nd track", t3, tracks.get(1));
 
         // get yard tracks ids
-        tracks = l.getTrackByMovesList(Track.YARD);
+        tracks = l.getTracksByMovesList(Track.YARD);
 
         Assert.assertEquals("number of tracks", 2, tracks.size());
         Assert.assertEquals("1st track", t1, tracks.get(0));
@@ -485,7 +485,7 @@ public class LocationTest extends OperationsTestCase {
         t3.setSchedule(sch);
 
         // get all tracks ids
-        tracks = l.getTrackByMovesList(null);
+        tracks = l.getTracksByMovesList(null);
 
         Assert.assertEquals("number of tracks", 7, tracks.size());
         Assert.assertEquals("1st track", t3, tracks.get(0));
@@ -500,7 +500,7 @@ public class LocationTest extends OperationsTestCase {
         t4.setSchedule(sch);
 
         // get all tracks ids
-        tracks = l.getTrackByMovesList(null);
+        tracks = l.getTracksByMovesList(null);
 
         Assert.assertEquals("number of tracks", 7, tracks.size());
         Assert.assertEquals("1st track", t4, tracks.get(0));

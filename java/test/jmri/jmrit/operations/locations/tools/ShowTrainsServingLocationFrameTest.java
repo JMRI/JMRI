@@ -36,7 +36,7 @@ public class ShowTrainsServingLocationFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         Location ni = InstanceManager.getDefault(LocationManager.class).getLocationByName("North Industries");
         ShowTrainsServingLocationFrame stslf = new ShowTrainsServingLocationFrame();
-        Track track = ni.getTrackList().get(0);
+        Track track = ni.getTracksList().get(0);
         stslf.initComponents(ni, track);
         Assert.assertNotNull("exists", stslf);
         JUnitUtil.dispose(stslf);

@@ -671,7 +671,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     // remove destination tracks that don't service the car's type, road, or load
     private void filterTracks(Location loc, JComboBox<Track> cb, String carType, String carRoad, String carLoad) {
-        List<Track> tracks = loc.getTrackList();
+        List<Track> tracks = loc.getTracksList();
         for (Track track : tracks) {
             if (!track.acceptsTypeName(carType) ||
                     track.isStaging() ||

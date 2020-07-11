@@ -317,7 +317,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         return false; // done
                     }
                     // now determine if there's a track willing to service car type
-                    for (Track track : destination.getTrackList()) {
+                    for (Track track : destination.getTracksList()) {
                         if (track.acceptsTypeName(type)) {
                             continue checkTypes; // yes there's a track
                         }
@@ -337,7 +337,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         continue;
                     }
                     // now determine if there's a track willing to service this road
-                    for (Track track : destination.getTrackList()) {
+                    for (Track track : destination.getTracksList()) {
                         if (track.acceptsRoadName(road)) {
                             continue checkRoads; // yes there's a track
                         }
@@ -362,7 +362,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             continue;
                         }
                         // now determine if there's a track willing to service this load
-                        for (Track track : destination.getTrackList()) {
+                        for (Track track : destination.getTracksList()) {
                             if (track.acceptsLoadName(load)) {
                                 continue checkLoads;
                             }
@@ -381,7 +381,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             continue;
                         }
                         // now determine if there's a track willing to service this load
-                        for (Track track : destination.getTrackList()) {
+                        for (Track track : destination.getTracksList()) {
                             if (track.acceptsLoad(load, type)) {
                                 continue checkLoads;
                             }
@@ -433,7 +433,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             // does the destination accept this car?
                             // this checks tracks that have schedules
                             String testDest = "";
-                            for (Track track : destination.getTrackList()) {
+                            for (Track track : destination.getTracksList()) {
                                 if (track.getScheduleMode() == Track.SEQUENTIAL) {
                                     // must test in match mode
                                     track.setScheduleMode(Track.MATCH);

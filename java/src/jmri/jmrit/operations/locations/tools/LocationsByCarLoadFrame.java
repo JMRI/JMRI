@@ -219,7 +219,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
             location.addPropertyChangeListener(this);
             JLabel locationName = new JLabel(location.getName());
             addItemLeft(pLocations, locationName, 0, x++);
-            List<Track> tracks = location.getTrackByNameList(null);
+            List<Track> tracks = location.getTracksByNameList(null);
             for (Track track : tracks) {
                 track.addPropertyChangeListener(this);
                 JCheckBox cb = new JCheckBox(track.getName());
@@ -245,7 +245,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                     addCheckBoxAction(cb);
                     trackCheckBoxList.add(cb);
                     cb.setEnabled(track.acceptsTypeName(type));
-                    cb.setSelected(track.shipsLoad(load, type));
+                    cb.setSelected(track.isLoadNameShipped(load, type));
                     addItemLeft(pLocations, cb, 1, x++);
                     if (cb.isEnabled()) {
                         cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrackCarShipsLoad"),
@@ -292,7 +292,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                 if (cb.getName().split(HYPHEN)[1].equals(RECEIVE)) {
                     cb.setSelected(track.acceptsLoad(load, type));
                 } else {
-                    cb.setSelected(track.shipsLoad(load, type));
+                    cb.setSelected(track.isLoadNameShipped(load, type));
                 }
             }
         }
@@ -396,14 +396,14 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                         } else if (track.getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
                             track.deleteShipLoadName(loadName);
                             // need to check if load configuration is to exclude all car types using this load
-                            if (!track.shipsLoadName(load)) {
+                            if (!track.isLoadNameAccepted(load)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningExcludeTrackShipLoad"),
                                         new Object[]{track.getLocation().getName(), track.getName(),
                                                 load}),
                                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
-                            } else if (!track.shipsLoad(load, type)) {
+                            } else if (!track.isLoadNameShipped(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningExcludeTrackShipTypeAndLoad"),
                                         new Object[]{track.getLocation().getName(), track.getName(), type, load,
@@ -417,13 +417,13 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                         if (track.getShipLoadOption().equals(Track.INCLUDE_LOADS)) {
                             track.deleteShipLoadName(loadName);
                             // need to check if load configuration is to accept all car types using this load
-                            if (track.shipsLoadName(load)) {
+                            if (track.isLoadNameAccepted(load)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningShipTrackLoad"),
                                         new Object[]{track.getLocation().getName(), track.getName(), load}),
                                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                                 needLoadTrackEditFrame = true;
-                            } else if (track.shipsLoad(load, type)) {
+                            } else if (track.isLoadNameShipped(load, type)) {
                                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningShipTrackTypeAndLoad"),
                                         new Object[]{track.getLocation().getName(), track.getName(),
@@ -454,7 +454,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
     private void removePropertyChangeLocations() {
         for (Location location : locationManager.getList()) {
             location.removePropertyChangeListener(this);
-            List<Track> tracks = location.getTrackList();
+            List<Track> tracks = location.getTracksList();
             for (Track track : tracks) {
                 track.removePropertyChangeListener(this);
             }

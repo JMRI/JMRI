@@ -146,7 +146,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                 continue;
             addItemLeft(locationsPanel, new JLabel(location.getName()), 0, x++);
             // now look for a spur with a schedule
-            for (Track spur : location.getTrackByNameList(Track.SPUR)) {
+            for (Track spur : location.getTracksByNameList(Track.SPUR)) {
                 Schedule sch = spur.getSchedule();
                 if (sch == null) {
                     continue;

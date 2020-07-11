@@ -5172,7 +5172,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track northEndStaging1 = northEndStaging.getTrackById("1s1");
         // test requires only one staging track
         northEndStaging.deleteTrack(northEndStaging.getTrackById("1s2"));
-        Assert.assertEquals("confirm only one staging track", 1, northEndStaging.getTrackList().size());
+        Assert.assertEquals("confirm only one staging track", 1, northEndStaging.getTracksList().size());
 
         Track yardNI = northIndustries.getTrackById("20s1");
 

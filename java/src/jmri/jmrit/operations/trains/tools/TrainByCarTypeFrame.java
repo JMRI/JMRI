@@ -199,7 +199,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 if (_car.getLocation() != location)
                     continue;
             }
-            List<Track> tracks = location.getTrackByNameList(null);
+            List<Track> tracks = location.getTracksByNameList(null);
             for (Track track : tracks) {
                 // show the car's track if there's a track destination
                 // restriction
@@ -452,7 +452,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
     private void addLocationAndTrackPropertyChange() {
         for (Location loc : locationManager.getList()) {
             loc.addPropertyChangeListener(this);
-            for (Track track : loc.getTrackList()) {
+            for (Track track : loc.getTracksList()) {
                 track.addPropertyChangeListener(this);
                 Schedule schedule = track.getSchedule();
                 if (schedule != null) {
@@ -468,7 +468,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
     private void removeLocationAndTrackPropertyChange() {
         for (Location loc : locationManager.getList()) {
             loc.removePropertyChangeListener(this);
-            for (Track track : loc.getTrackList()) {
+            for (Track track : loc.getTracksList()) {
                 track.removePropertyChangeListener(this);
                 Schedule schedule = track.getSchedule();
                 if (schedule != null) {

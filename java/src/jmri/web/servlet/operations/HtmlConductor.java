@@ -240,7 +240,7 @@ public class HtmlConductor extends HtmlTrainCommon {
         StringBuilder builder = new StringBuilder();
         RouteLocation location = train.getCurrentLocation();
         List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
-        List<Track> tracks = location.getLocation().getTrackByNameList(null);
+        List<Track> tracks = location.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         List<String> pickedUp = new ArrayList<>();
         this.clearUtilityCarTypes();
@@ -280,7 +280,7 @@ public class HtmlConductor extends HtmlTrainCommon {
         StringBuilder builder = new StringBuilder();
         RouteLocation location = train.getCurrentLocation();
         List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
-        List<Track> tracks = location.getLocation().getTrackByNameList(null);
+        List<Track> tracks = location.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         List<String> dropped = new ArrayList<>();
         for (Track track : tracks) {

@@ -1173,7 +1173,7 @@ public class Track extends PropertyChangeSupport {
      * @param load the load name to check.
      * @return true if track will service this load.
      */
-    public boolean shipsLoadName(String load) {
+    public boolean isLoadNameAccepted(String load) {
         if (_shipLoadOption.equals(ALL_LOADS)) {
             return true;
         }
@@ -1191,7 +1191,7 @@ public class Track extends PropertyChangeSupport {
      * @param type the type of car used to carry the load.
      * @return true if track will service this load.
      */
-    public boolean shipsLoad(String load, String type) {
+    public boolean isLoadNameShipped(String load, String type) {
         if (_shipLoadOption.equals(ALL_LOADS)) {
             return true;
         }
@@ -2438,7 +2438,7 @@ public class Track extends PropertyChangeSupport {
      * @return true if track is an alternate
      */
     public boolean isAlternate() {
-        for (Track track : getLocation().getTrackList()) {
+        for (Track track : getLocation().getTracksList()) {
             if (track.getAlternateTrack() == this) {
                 return true;
             }

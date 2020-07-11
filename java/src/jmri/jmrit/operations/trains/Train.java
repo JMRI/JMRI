@@ -1671,7 +1671,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     }
                     // determine if there's a destination track that is willing to accept this car
                     String status = "";
-                    List<Track> tracks = rldest.getLocation().getTrackList();
+                    List<Track> tracks = rldest.getLocation().getTracksList();
                     for (Track track : tracks) {
                         if (!isServicableTrack(buildReport, car, rldest, track)) {
                             continue;

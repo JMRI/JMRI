@@ -240,7 +240,7 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("BoxCar"));
                 Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("boxCar"));
                 Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("Boxcar"));
-                List<Track> list = loc.getTrackByNameList(null);
+                List<Track> list = loc.getTracksByNameList(null);
                 Assert.assertEquals("Location 1 has n tracks", 1, list.size());
                 Track t = list.get(0);
                 Assert.assertEquals("Location 1 first track name", "An Interchange", t.getName());
@@ -259,7 +259,7 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("boxCar"));
                 Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("BoxCar"));
 
-                List<Track> list = loc.getTrackByNameList(null);
+                List<Track> list = loc.getTracksByNameList(null);
                 Assert.assertEquals("Location 2 has n tracks", 2, list.size());
                 Track t = list.get(0);
                 Assert.assertEquals("Location 2 first track name", "A Spur", t.getName());
@@ -304,7 +304,7 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("BoxCar"));
                 Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("Boxcar"));
 
-                List<Track> list = loc.getTrackByNameList(null);
+                List<Track> list = loc.getTracksByNameList(null);
                 Assert.assertEquals("Location 3 has n tracks", 1, list.size());
                 Track t = list.get(0);
                 Assert.assertEquals("Location 3 first track name", "A Stage", t.getName());

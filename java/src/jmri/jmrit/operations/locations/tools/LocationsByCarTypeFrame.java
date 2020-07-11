@@ -239,7 +239,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
             boolean locAcceptsType = loc.acceptsTypeName(carType);
             cb.setSelected(locAcceptsType);
             addItemLeft(pLocations, cb, 0, x++);
-            List<Track> tracks = loc.getTrackByNameList(null);
+            List<Track> tracks = loc.getTracksByNameList(null);
             for (Track track : tracks) {
                 track.addPropertyChangeListener(this);
                 cb = new JCheckBox(track.getName());
@@ -322,7 +322,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
                 Location loc = manager.getLocationById(locationCheckBoxList.get(i).getName());
                 if (loc != null) {
                     loc.removePropertyChangeListener(this);
-                    List<Track> tracks = loc.getTrackList();
+                    List<Track> tracks = loc.getTracksList();
                     for (Track track : tracks) {
                         track.removePropertyChangeListener(this);
                     }

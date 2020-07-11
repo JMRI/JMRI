@@ -149,7 +149,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
 
         l1.addTrack("North End 1", Track.STAGING);
         l1.addTrack("North End 2", Track.STAGING);
-        List<Track> templist1 = l1.getTrackByNameList(null);
+        List<Track> templist1 = l1.getTracksByNameList(null);
         for (int i = 0; i < templist1.size(); i++) {
             if (i == 0) {
                 Assert.assertEquals("RL 1 Staging 1 Name", "North End 1", templist1.get(i).getName());
@@ -216,7 +216,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
 
         l3.addTrack("South End 1", Track.STAGING);
         l3.addTrack("South End 2", Track.STAGING);
-        List<Track> templist3 = l3.getTrackByNameList(null);
+        List<Track> templist3 = l3.getTracksByNameList(null);
         for (int i = 0; i < templist3.size(); i++) {
             if (i == 0) {
                 Assert.assertEquals("RL 3 Staging 1 Name", "South End 1", templist3.get(i).getName());

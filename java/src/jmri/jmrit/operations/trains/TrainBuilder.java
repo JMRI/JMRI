@@ -642,7 +642,7 @@ public class TrainBuilder extends TrainCommon {
     private void determineIfTrainTerminatesIntoStaging() throws BuildFailedException {
         // does train terminate into staging?
         _terminateStageTrack = null;
-        List<Track> stagingTracksTerminate = _terminateLocation.getTrackByMovesList(Track.STAGING);
+        List<Track> stagingTracksTerminate = _terminateLocation.getTracksByMovesList(Track.STAGING);
         if (stagingTracksTerminate.size() > 0) {
             addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTerminateStaging"), new Object[]{
@@ -747,7 +747,7 @@ public class TrainBuilder extends TrainCommon {
         }
 
         // determine if train is departing staging
-        List<Track> stagingTracks = _departLocation.getTrackByMovesList(Track.STAGING);
+        List<Track> stagingTracks = _departLocation.getTracksByMovesList(Track.STAGING);
         if (stagingTracks.size() > 0) {
             addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildDepartStaging"), new Object[]{
@@ -932,7 +932,7 @@ public class TrainBuilder extends TrainCommon {
      * @return The departure track the user selected.
      */
     private Track promptFromStagingDialog() {
-        List<Track> tracksIn = _departLocation.getTrackByNameList(null);
+        List<Track> tracksIn = _departLocation.getTracksByNameList(null);
         List<Track> validTracks = new ArrayList<>();
         // only show valid tracks
         for (Track track : tracksIn) {
@@ -972,7 +972,7 @@ public class TrainBuilder extends TrainCommon {
      * @return The termination track selected by the user.
      */
     private Track promptToStagingDialog() {
-        List<Track> tracksIn = _terminateLocation.getTrackByNameList(null);
+        List<Track> tracksIn = _terminateLocation.getTracksByNameList(null);
         List<Track> validTracks = new ArrayList<>();
         // only show valid tracks
         for (Track track : tracksIn) {
@@ -1260,7 +1260,7 @@ public class TrainBuilder extends TrainCommon {
             // find a destination track for this engine
         } else {
             Location destination = rld.getLocation();
-            List<Track> destTracks = destination.getTrackByMovesList(null);
+            List<Track> destTracks = destination.getTracksByMovesList(null);
             if (destTracks.size() == 0) {
                 addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildNoTracksAtDestination"),
                         new Object[]{rld.getName()}));
@@ -2480,7 +2480,7 @@ public class TrainBuilder extends TrainCommon {
             if (!generateCarLoadFromStaging(car)) {
                 if (!generateCarLoadStagingToStaging(car) &&
                         car.getTrack() == _departStageTrack &&
-                        !_departStageTrack.shipsLoad(car.getLoadName(), car.getTypeName())) {
+                        !_departStageTrack.isLoadNameShipped(car.getLoadName(), car.getTypeName())) {
                     // report build failure car departing staging with a restricted load
                     addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageLoad"),
                             new Object[]{car.toString(), car.getLoadName(), _departStageTrack.getName()}));
@@ -3792,7 +3792,7 @@ public class TrainBuilder extends TrainCommon {
             return null;
         }
         // does the departure track allow this load?
-        if (!car.getTrack().shipsLoad(si.getReceiveLoadName(), car.getTypeName())) {
+        if (!car.getTrack().isLoadNameShipped(si.getReceiveLoadName(), car.getTypeName())) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("buildTrackNotLoadSchedule"), new Object[]{
                             car.getTrackName(), si.getReceiveLoadName(), track.getLocation().getName(), track.getName(),
@@ -4161,7 +4161,7 @@ public class TrainBuilder extends TrainCommon {
                     }
                     // no staging at this location, now find a destination track this this car
                 } else {
-                    List<Track> tracks = car.getDestination().getTrackByMovesList(null);
+                    List<Track> tracks = car.getDestination().getTracksByMovesList(null);
                     addLine(_buildReport, SEVEN, MessageFormat
                             .format(Bundle.getMessage("buildSearchForTrack"), new Object[]{tracks.size(),
                                     car.getDestinationName(), car.toString(), car.getLoadName()}));
@@ -4467,14 +4467,14 @@ public class TrainBuilder extends TrainCommon {
             // no staging track assigned, start track search
             } else {
                 // first report if there are any alternate tracks
-                for (Track track : testDestination.getTrackByNameList(null)) {
+                for (Track track : testDestination.getTracksByNameList(null)) {
                     if (track.isAlternate()) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackIsAlternate"),
                                 new Object[]{car.toString(), track.getTrackTypeName(), track.getName()}));
                     }
                 }
                 // now find a track for this car
-                for (Track testTrack : testDestination.getTrackByMovesList(null)) {
+                for (Track testTrack : testDestination.getTracksByMovesList(null)) {
                     if (testTrack == car.getTrack() && !car.isPassenger() && !car.isCaboose() && !car.hasFred()) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                 .getMessage("buildCanNotDropCarSameTrack"),
@@ -4700,6 +4700,9 @@ public class TrainBuilder extends TrainCommon {
             if (finalDestinationTrackSave != null) {
                 car.setFinalDestination(finalDestinationTrackSave.getLocation());
                 car.setFinalDestinationTrack(finalDestinationTrackSave);
+                if (trackSave.isAlternate()) {
+                    finalDestinationTrackSave.setMoves(finalDestinationTrackSave.getMoves() + 1); // bump move count
+                }
             }
             addCarToTrain(car, rl, rldSave, trackSave);
             return true;
@@ -4828,10 +4831,10 @@ public class TrainBuilder extends TrainCommon {
         for (int i = loads.size() - 1; i >= 0; i--) {
             String load = loads.get(i);
             log.debug("Try custom load ({}) for car ({})", load, car.toString());
-            if (!car.getTrack().shipsLoad(load, car.getTypeName()) ||
+            if (!car.getTrack().isLoadNameShipped(load, car.getTypeName()) ||
                     !stageTrack.acceptsLoad(load, car.getTypeName()) ||
                     !_train.isLoadNameAccepted(load, car.getTypeName())) {
-                if (!car.getTrack().shipsLoad(load, car.getTypeName())) {
+                if (!car.getTrack().isLoadNameShipped(load, car.getTypeName())) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackNotNewLoad"),
                             new Object[]{car.getTrackName(), load, stageTrack.getLocation().getName(),
                                     stageTrack.getName()}));
