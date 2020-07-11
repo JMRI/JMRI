@@ -1,12 +1,9 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
-import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * @author   Paul Bender  Copyright (C) 2016
@@ -19,12 +16,12 @@ public class LayoutLHTurnoutViewXmlTest {
         Assert.assertNotNull("LayoutTurnoutXml constructor",new LayoutLHTurnoutViewXml());
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

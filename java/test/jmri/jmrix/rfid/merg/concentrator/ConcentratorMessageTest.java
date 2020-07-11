@@ -1,8 +1,8 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * ConcentratorMessageTest.java
@@ -13,7 +13,7 @@ import org.junit.Before;
  */
 public class ConcentratorMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -25,7 +25,7 @@ public class ConcentratorMessageTest extends jmri.jmrix.AbstractMessageTestBase 
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

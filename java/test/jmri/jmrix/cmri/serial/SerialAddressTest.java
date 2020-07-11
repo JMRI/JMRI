@@ -4,10 +4,8 @@ import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the serial address functions in memo.
@@ -26,7 +24,7 @@ public class SerialAddressTest {
     SerialNode n10;
     SerialNode n18;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
 
@@ -58,7 +56,7 @@ public class SerialAddressTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         if (stcs != null) stcs.terminateThreads();
         stcs = null;

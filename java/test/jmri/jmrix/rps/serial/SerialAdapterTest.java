@@ -3,10 +3,9 @@ package jmri.jmrix.rps.serial;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Reading;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the rps.serial.SerialAdapter class.
@@ -116,12 +115,12 @@ public class SerialAdapterTest {
 //        Assert.assertTrue("val 4", 0.001 > Math.abs(r.getValue(4) - 400.));
 //    }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -12,6 +12,7 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
+import jmri.SystemConnectionMemo;
 import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;

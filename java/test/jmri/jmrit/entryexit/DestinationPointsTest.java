@@ -10,11 +10,11 @@ import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -116,7 +116,7 @@ public class DestinationPointsTest {
         return t;
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -130,7 +130,7 @@ public class DestinationPointsTest {
         tm = InstanceManager.getDefault(TurnoutManager.class);
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         tm = null;

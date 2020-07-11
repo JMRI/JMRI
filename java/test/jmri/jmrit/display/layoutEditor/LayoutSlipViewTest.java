@@ -6,7 +6,11 @@ import java.awt.geom.*;
 import jmri.JmriException;
 import jmri.util.*;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+
 
 /**
  * Test simple functioning of LayoutSlipView
@@ -375,7 +379,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     private LayoutDoubleSlip      ltd = null;
     private LayoutDoubleSlipView  lvd = null;
 
-    @Before
+    @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
@@ -391,7 +395,7 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
         }
     }
 
-    @After
+    @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         if (lts != null) {

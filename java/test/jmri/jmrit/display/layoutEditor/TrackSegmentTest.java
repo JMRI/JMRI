@@ -5,7 +5,11 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import jmri.JmriException;
 import jmri.util.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+
 import org.netbeans.jemmy.operators.Operator;
 
 /**
@@ -17,6 +21,9 @@ import org.netbeans.jemmy.operators.Operator;
  * Should not involve geometry or graphics, as the class undertest is pure layout
  * information.  But at least for now, it needs a LayoutEditor, and that requires 
  * AWT graphics at run time.
+ * <p>
+ * Note this uses <code>@BeforeAll</code> and <code>@AfterAll</code> to do
+ * static setup.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -263,19 +270,23 @@ public class TrackSegmentTest extends LayoutTrackTest {
     }
 
 
+    
+    //
+    // from here down is testing infrastructure
+    //
+
+
     static private LayoutEditor layoutEditor = null;
     static private TrackSegment trackSegment = null;
     //static private TrackSegmentView trackSegmentView = null;
 
-    //
-    // from here down is testing infrastructure
-    //
+
     /**
      * This is called once before all tests
      *
      * @throws Exception
      */
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             // save the old string comparator
@@ -290,7 +301,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             //restore the default string matching comparator
@@ -304,7 +315,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUpEach() throws Exception {
         super.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -329,7 +340,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @After
+    @AfterEach
     public void tearDownEach() throws Exception {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);

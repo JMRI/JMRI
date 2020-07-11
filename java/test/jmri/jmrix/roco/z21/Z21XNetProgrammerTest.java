@@ -4,7 +4,9 @@ import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the z21XNetProgrammer class
@@ -159,7 +161,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -176,7 +178,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t = null;
         l = null;

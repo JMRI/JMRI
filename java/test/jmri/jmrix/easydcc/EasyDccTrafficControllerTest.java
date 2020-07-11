@@ -6,25 +6,19 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Rule;
+import org.junit.jupiter.api.*;
 import jmri.util.junit.rules.RetryRule;
-import org.junit.rules.Timeout;
 
 /**
  * JUnit tests for the EasyDccTrafficController class
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
+@Timeout(90)
 public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(90); // 90 second timeout for methods in this test class.
-
-    @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
@@ -160,14 +154,14 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     DataInputStream istream;   // so the traffic controller can read from this
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new EasyDccTrafficController(new EasyDccSystemConnectionMemo("E", "EasyDCC Test"));
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         if (tc!=null) {
             tc.terminateThreads();

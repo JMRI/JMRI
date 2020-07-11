@@ -1,21 +1,14 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import javax.swing.*;
-import jmri.*;
+
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
-import jmri.util.junit.rules.RetryRule;
-import jmri.util.swing.JemmyUtil;
-import org.junit.*;
-import org.junit.rules.Timeout;
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.*;
-import org.netbeans.jemmy.operators.Operator.StringComparator;
-import org.netbeans.jemmy.util.NameComponentChooser;
+
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutLHTurnoutEditor.
@@ -45,7 +38,7 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
     private LayoutLHTurnout leftHandLayoutTurnout = null;
     private LayoutLHTurnoutView leftHandLayoutTurnoutView = null;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         JUnitUtil.resetProfileManager();
@@ -70,7 +63,7 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     
         if (leftHandLayoutTurnout != null) {

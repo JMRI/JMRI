@@ -1,10 +1,9 @@
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -18,7 +17,7 @@ public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfi
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -26,7 +25,7 @@ public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfi
         cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         cc = null;

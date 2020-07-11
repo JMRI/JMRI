@@ -23,7 +23,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected java.util.TimerTask statusTask;   // Timer Task used to periodically get current
     // status of the throttle when throttle not available.
     protected static final int statTimeoutValue = 1000; // Interval to check the 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     // status of the throttle
     protected static final int THROTTLEIDLE = 0;  // Idle Throttle
@@ -869,14 +869,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     // A queue to hold outstanding messages
-    protected LinkedBlockingQueue<RequestMessage> requestList = null;
+    protected LinkedBlockingQueue<RequestMessage> requestList;
 
     /**
      * Send message from queue.
      */
     protected synchronized void sendQueuedMessage() {
 
-        RequestMessage msg = null;
+        RequestMessage msg;
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
         if (!requestList.isEmpty()) {
@@ -926,8 +926,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      */
     protected static class RequestMessage {
 
-        private int state;
-        private XNetMessage msg;
+        private final int state;
+        private final XNetMessage msg;
 
         RequestMessage(XNetMessage m, int s) {
             state = s;

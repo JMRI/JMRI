@@ -2,10 +2,9 @@ package jmri.jmrix.cmri.swing;
 
 import jmri.jmrix.cmri.serial.SerialTrafficControlScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -22,7 +21,7 @@ public class CMRIComponentFactoryTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -31,7 +30,7 @@ public class CMRIComponentFactoryTest {
         memo.setTrafficController(tcis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (tcis != null) tcis.terminateThreads();
         tcis = null;

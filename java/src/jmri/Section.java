@@ -2382,7 +2382,7 @@ public class Section extends AbstractNamedBean {
      */
     @Deprecated // 4.19.7 for removal;  No usages, so no replacement
     public boolean checkSignals(JmriJFrame frame, LayoutEditor panel) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "checkSignals");
+        jmri.util.LoggingUtil.deprecationWarning(log, "checkSignals");
         if (panel == null) {
             log.error("Null Layout Editor panel on call to 'checkSignals'");
             return false;

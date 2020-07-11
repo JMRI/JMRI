@@ -14,11 +14,9 @@ import jmri.util.JUnitUtil;
 import java.util.ArrayList;
 import java.awt.GraphicsEnvironment;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 //import org.netbeans.jemmy.operators.JComponentOperator;
@@ -61,7 +59,7 @@ public class ConvertDialogTest {
         frame.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -69,7 +67,7 @@ public class ConvertDialogTest {
         JUnitUtil.initOBlockManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

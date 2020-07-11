@@ -2,10 +2,9 @@ package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * StandaloneSystemConnectionMemoTest.java
@@ -13,7 +12,9 @@ import org.junit.Test;
  * Test for the StandaloneSystemConnectionMemo class
  *
  * @author Paul Bender Copyright (C) 2016
+ * @deprecated since 4.21.1 test of deprecated {@link StandaloneSystemConnectionMemo}.
  */
+@Deprecated
 public class StandaloneSystemConnectionMemoTest extends SystemConnectionMemoTestBase<StandaloneSystemConnectionMemo> {
 
     @Override
@@ -23,7 +24,7 @@ public class StandaloneSystemConnectionMemoTest extends SystemConnectionMemoTest
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new StandaloneSystemConnectionMemo();
@@ -43,7 +44,7 @@ public class StandaloneSystemConnectionMemoTest extends SystemConnectionMemoTest
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

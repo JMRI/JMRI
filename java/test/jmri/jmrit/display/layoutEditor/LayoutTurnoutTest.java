@@ -6,7 +6,9 @@ import java.awt.geom.*;
 import jmri.*;
 import jmri.util.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutTurnout.
@@ -908,7 +910,31 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         Assert.assertEquals("THROWN to CLOSED when toggled", Turnout.CLOSED, ptOne.getCommandedState());
     }
 
-    @Before
+    // from here down is testing infrastructure
+    @BeforeAll
+    public static void beforeClass() {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+            JUnitUtil.resetInstanceManager();
+            JUnitUtil.initInternalTurnoutManager();
+            JUnitUtil.initInternalSensorManager();
+            JUnitUtil.initInternalSignalHeadManager();
+            layoutEditor = new LayoutEditor();
+        }
+    }
+
+    @AfterAll
+    public static void afterClass() {
+        if (layoutEditor != null) {
+            JUnitUtil.dispose(layoutEditor);
+        }
+        layoutEditor = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
+    }
+
+    @BeforeEach
     public void setUp() {
         super.setUp();
         
@@ -973,7 +999,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
     private LayoutLHXOverView ltLXv = null;
 
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (ltRH != null) {
             ltRH.remove();

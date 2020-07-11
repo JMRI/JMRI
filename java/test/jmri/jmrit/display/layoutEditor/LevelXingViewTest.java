@@ -3,12 +3,9 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LevelXingView
@@ -28,7 +25,7 @@ public class LevelXingViewTest extends LayoutTrackViewTest {
 
     LevelXing xing;
     
-    @Before
+    @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
@@ -37,7 +34,7 @@ public class LevelXingViewTest extends LayoutTrackViewTest {
         }
     }
 
-    @After
+    @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         xing = null;

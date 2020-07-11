@@ -7,7 +7,9 @@ import javax.swing.*;
 import jmri.Route;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -138,21 +140,21 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
     }
 
     @Test
-    @Ignore("Route create frame does not have a hardware address")
+    @Disabled("Route create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name")
     @Override
     public void testAddThroughDialog() {
     }
 
     @Test
-    @Ignore("Route create frame does not have a hardware address")
+    @Disabled("Route create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name, or add without dialog")
     @Override
     public void testEditButton() {
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -162,7 +164,7 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         a = new RouteTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

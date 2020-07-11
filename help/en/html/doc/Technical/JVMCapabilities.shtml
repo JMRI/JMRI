@@ -90,7 +90,7 @@
         </tr>
 
         <tr>
-          <td>Multi-version JARs can help with migration, see
+          <td>Multi-version JARs can help with migration from then on, see
           <a href="https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a></td>
 
           <td>9</td>
@@ -124,29 +124,29 @@
         </tr>
         
         <tr>
-          <td><A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
-                More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
-                worse code) of JMRI indepdendent.</td>
-
-          <td>9</td>
-
-          <td>9</td>
-        </tr>
-
-        <tr>
           <td>JLink - improve packaging, faster startup</td>
 
           <td>9</td>
 
-          <td>?</td>
+          <td>9</td>
         </tr>
         
+        <tr>
+          <td><A href="https://docs.oracle.com/javase/9/core/creating-immutable-lists-sets-and-maps.htm#JSCOR-GUID-202D195E-6E18-41F6-90C0-7423B2C9B381">Immutable Lists, Sets and Maps</a>:
+                More useful than it maybe sounds, because it can help keep the separate parts (i.e. better and 
+                worse code) of JMRI independent.</td>
+
+          <td>9</td>
+
+          <td>9</td>
+        </tr>
+
         <tr>
           <td>var syntax - improves readability of code, use of generics</td>
 
           <td>10<br>11</td>
 
-          <td>?</td>
+          <td>10</td>
         </tr>
 
         <tr>
@@ -154,26 +154,51 @@
 
           <td>10</td>
 
-          <td>?</td>
+          <td>10</td>
+        </tr>
+
+        <tr>
+          <td>Improvements in Optional:  or(), ifPresentOrElse()</td>
+
+          <td>9</td>
+
+          <td>9</td>
         </tr>
  
         <tr>
-          <td>It seems that MacOS X (macOS) users will lose the use
-          of the OS X App menu for About, Preferences, and
-          (critically) Quit handling on that platform</td>
+          <td>More improvements in Optional: orElseThrow()</td>
 
-          <td>&gt; 10</td>
+          <td>10</td>
 
-          <td>&gt; 10</td>
+          <td>10</td>
+        </tr>
+ 
+        <tr>
+          <td>Completion of Optional class:  isEmpty()</td>
+
+          <td>11</td>
+
+          <td>11</td>
+        </tr>
+ 
+        <tr>
+          <td>Incompatible change in the MacOS X (macOS) App menu About,
+              Preferences, and (critically) Quit handling on that platform</td>
+
+          <td>&gt; 9</td>
+
+          <td>&gt; 9</td>
         </tr>
 
         <tr>
-          <td>It seems that MacOS X (macOS) users will lose
-          Applescript scripting</td>
+          <td>Applescript support on MacOS X (macOS) removed from the JVM
+              (Note that Java 7 and 8 included Applescript support but disabled
+              it unless an additional JAR file enabling it was added by the
+              user).</td>
 
-          <td>&gt; 10</td>
+          <td>&gt; 9</td>
 
-          <td>&gt; 10</td>
+          <td>&gt; 9</td>
         </tr>
 
         <tr>
@@ -181,7 +206,7 @@
 
           <td>11</td>
 
-          <td>?</td>
+          <td>11</td>
         </tr>
 
         <tr>
@@ -191,9 +216,9 @@
           need to migrate away from these before using a more 
           advanced JRE or JDK.</td>
 
-          <td>&gt; 11</td>
+          <td>&gt; >11</td>
 
-          <td>&gt; 11</td>
+          <td>&gt; >11</td>
 
         </tr>
 
@@ -236,6 +261,7 @@
           Although this is "far from complete", 
           no other project appears to be emerging
           to include Python 3 support in i.e. Jython.
+          Having this available can let JMRI start a gentler migration.
           </td>
 
           <td>11</td>
@@ -320,7 +346,9 @@
         dual-purpose machines that are required to meet various security and update
         standards.  For those, Java 8 is going to increasing become a liability.
 
-      <P>Java 11 only runs on 64-bit Windows versions (no 32-bit).
+      <P>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit).
+          <a href="https://adoptopnjdk.net">AdoptOpenJDK</a> continues to make 32
+          and 64-bit JREs and JDKs available.
 
       <table border="1">
         <tr>
@@ -332,13 +360,13 @@
         <tr>
           <td>Linux</td>
 
-          <td>(depends, but<br>generally current)</td>
+          <td>(depends, but<br>generally 11+)</td>
         </tr>
 
         <tr>
-          <td>Win 10 (64-bit)</td>
+          <td>Win 1!+ (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
@@ -380,25 +408,25 @@
         <tr>
           <td>Win 8 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
           <td>Win Server 2012 R2 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
           <td>Win 7 (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
@@ -422,7 +450,7 @@
         <tr>
           <td>Win Vista (64-bit)</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
@@ -470,11 +498,11 @@
         <tr>
           <td>Mac OS X 10.10 and later</td>
 
-          <td>10</td>
+          <td>11+</td>
         </tr>
 
         <tr>
-          <td>Mac OS X 10.8.3</td>
+          <td>Mac OS X 10.8.3 Mountain Lion</td>
 
           <td>8</td>
         </tr>
@@ -563,7 +591,7 @@
 
             <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
 
-            <td>5.5+</td>
+            <td>5.5+</td><!-- not sure what 5.5 means here, since JMRI 4.x works on CentOS 7, which has Linux kernel 3.10 -->
 
             <td>12.04+</td>
 
@@ -579,7 +607,7 @@
 
             <td>Win7 SP1/8/10, Vista SP2, (XP)</td>
 
-            <td>5.5+</td>
+            <td>5.5+</td><!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
 
             <td>12.04</td>
 
@@ -595,7 +623,7 @@
 
             <td>Win2003, Win2000 (x86)</td>
 
-            <td>5.5</td>
+            <td>5.5</td><!-- not sure what 5.5 means here, since JMRI 3.x works on CentOS 6, which has Linux kernel 2.6.32 -->
 
             <td>10.4</td>
 

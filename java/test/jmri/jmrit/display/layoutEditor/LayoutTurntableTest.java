@@ -4,11 +4,10 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of LayoutTurntable
@@ -36,7 +35,7 @@ public class LayoutTurntableTest extends LayoutTrackTest {
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -50,7 +49,7 @@ public class LayoutTurntableTest extends LayoutTrackTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if(layoutEditor!=null){
            JUnitUtil.dispose(layoutEditor);

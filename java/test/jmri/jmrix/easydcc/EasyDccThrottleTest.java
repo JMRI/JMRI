@@ -2,10 +2,9 @@ package jmri.jmrix.easydcc;
 
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -208,7 +207,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup3() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -219,7 +218,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new EasyDccThrottle(memo, new jmri.DccLocoAddress(100, true));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc.terminateThreads();

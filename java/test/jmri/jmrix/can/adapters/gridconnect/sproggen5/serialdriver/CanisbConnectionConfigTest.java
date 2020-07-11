@@ -1,7 +1,9 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for CanisbConnectionConfig class.
@@ -16,7 +18,7 @@ public class CanisbConnectionConfigTest extends jmri.jmrix.AbstractSerialConnect
         Assert.assertNotNull("exists",c);
     }
     
-   @Before
+   @BeforeEach
    @Override
    public void setUp() {
         JUnitUtil.setUp();
@@ -25,7 +27,7 @@ public class CanisbConnectionConfigTest extends jmri.jmrix.AbstractSerialConnect
         cc = new CanisbConnectionConfig();
    }
 
-   @After
+   @AfterEach
    @Override
    public void tearDown(){
         cc = null;

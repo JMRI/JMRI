@@ -230,8 +230,9 @@
         <li>Stuart Brorson, who provided the decoder definition for the 
             SDD-001 from BNM Hobbies</li>
         
-        <li>Andy Brown, who helped solve a problem with NX
-        entry/exit pairs.</li>
+        <li>Andy Brown,  <!-- andybadshot -->
+        who helped solve a problem with NX
+        entry/exit pairs and fixed a problem with memory icons.</li>
 
         <li>Bill Brown, whose layout was used for the first NCE
         tests</li>
@@ -754,8 +755,10 @@
         <a href="https://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk and Western signal definition</a>, 
         the <a href=
         "https://jmri.org/xml/signals/B&amp;O-1980/index.shtml">B&amp;O
-        1980 signal definition</a>, and the
-        <a href="https://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>.
+        1980 signal definition</a>, the
+        <a href="https://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>,
+        and
+        the <a href="https:/jmri.org/xml/signals/C&O-1980/index.shtml">C&O 1980 system</a>.
         </li>
 
         <li>Bob McCown, who helped with the migration of the jmriusers list to 
@@ -872,6 +875,9 @@
 
         <li>Bob Phillips provided an MRC decoder definition</li>
 
+        <li>Alger Plke, <!-- AlgerP572 -->
+        who provided programmer fixes for the Zimo MX1 and MXULF</li>
+
         <li>Ronnie Pinkerton, who worked on a throttle update</li>
 
         <li>Martin Pischky improved the LocoNet firmware downloader
@@ -879,7 +885,7 @@
 
         <li>Rob Plevier, who provided instructions for running JMRI
         on OpenSUSE GNU/Linux</li>
-
+        
         <li>John Plocher, who make good suggestions on XML DTD
         items, created the infrastructure for this web site, lead
         the construction of the demo layout for the JavaOne show,

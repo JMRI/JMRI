@@ -46,6 +46,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         if (!trk.getBlockName().isEmpty()) {
             element.setAttribute("blockname", trk.getBlockName());
         }
+
         element.setAttribute("connect1name", trk.getConnect1Name());
         element.setAttribute("type1", "" + htpMap.outputFromEnum(trk.getType1()) );
         element.setAttribute("connect2name", trk.getConnect2Name());
@@ -59,7 +60,7 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
             element.setAttribute("arc",         "yes");
             element.setAttribute("flip",        (view.isFlip() ? "yes" : "no"));
             element.setAttribute("circle",      (view.isCircle() ? "yes" : "no"));
-            if ((view.isCircle()) && (view.getAngle() != 0.0D)) {
+            if (view.isCircle()) {
                 element.setAttribute("angle",   "" + (view.getAngle()));
                 element.setAttribute("hideConLines", (view.hideConstructionLines() ? "yes" : "no"));
             }
@@ -226,35 +227,10 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
         String con1Name = element.getAttribute("connect1name").getValue();
         String con2Name = element.getAttribute("connect2name").getValue();
 
-        HitPointType type1 = HitPointType.NONE;
-        try {
-            attribute = element.getAttribute("type1");
-            type1 = HitPointType.valueOf(attribute.getValue());
-        } catch (IllegalArgumentException | NullPointerException e) {
-            try {
-                if (attribute == null) {
-                    throw new NullPointerException();
-                }
-                type1 = htpMap.inputFromAttribute(attribute);
-            } catch (NullPointerException e1) {
-                log.error("failed to convert tracksegment type1 attribute");
-            }
-        }
-
-        HitPointType type2 = HitPointType.NONE;
-        try {
-            attribute = element.getAttribute("type2");
-            type2 = HitPointType.valueOf(attribute.getValue());
-        } catch (IllegalArgumentException | NullPointerException e) {
-            try {
-                if (attribute == null) {
-                    throw new NullPointerException();
-                }
-                type2 = htpMap.inputFromAttribute(attribute);
-            } catch (NullPointerException e1) {
-                log.error("failed to convert tracksegment type2 attribute");
-            }
-        }
+        
+        HitPointType type1 = htpMap.inputFromAttribute(element.getAttribute("type1"));
+        
+        HitPointType type2 = htpMap.inputFromAttribute(element.getAttribute("type2"));
 
         // create the new TrackSegment and view
         TrackSegment lt = new TrackSegment(name,
@@ -272,50 +248,44 @@ public class TrackSegmentViewXml extends AbstractXmlAdapter {
             if (lv.isCircle()) {
                 lv.setAngle( getAttributeDoubleValue(element, "angle", 0.0) );
             }
-
-            if ( getAttributeBooleanValue(element, "hideConLines", false) ) {
-                lv.hideConstructionLines(TrackSegment.HIDECON);
-            }
         }
 
-        try {
-            if (element.getAttribute("bezier").getBooleanValue()) {
-                // load control points
-                Element controlpointsElement = element.getChild("controlpoints");
-                if (controlpointsElement != null) {
-                    List<Element> elementList = controlpointsElement.getChildren("controlpoint");
-                    if (elementList != null) {
-                        if (elementList.size() >= 2) {
-                            for (Element value : elementList) {
-                                double x = 0.0;
-                                double y = 0.0;
-                                int index = 0;
-                                try {
-                                    index = (value.getAttribute("index")).getIntValue();
-                                    x = (value.getAttribute("x")).getFloatValue();
-                                    y = (value.getAttribute("y")).getFloatValue();
-                                } catch (DataConversionException e) {
-                                    log.error("failed to convert controlpoint coordinates or index attributes");
-                                }
-                                lv.setBezierControlPoint(new Point2D.Double(x, y), index);
+        if ( getAttributeBooleanValue(element, "bezier", false)) {
+            // load control points
+            Element controlpointsElement = element.getChild("controlpoints");
+            if (controlpointsElement != null) {
+                List<Element> elementList = controlpointsElement.getChildren("controlpoint");
+                if (elementList != null) {
+                    if (elementList.size() >= 2) {
+                        for (Element value : elementList) {
+                            double x = 0.0;
+                            double y = 0.0;
+                            int index = 0;
+                            try {
+                                index = (value.getAttribute("index")).getIntValue();
+                                x = (value.getAttribute("x")).getFloatValue();
+                                y = (value.getAttribute("y")).getFloatValue();
+                            } catch (DataConversionException e) {
+                                log.error("failed to convert controlpoint coordinates or index attributes");
                             }
-                        } else {
-                            log.error("Track segment Bezier two controlpoint elements not found. (found {})", elementList.size());
+                            lv.setBezierControlPoint(new Point2D.Double(x, y), index);
                         }
                     } else {
-                        log.error("Track segment Bezier controlpoint elements not found.");
+                        log.error("Track segment Bezier two controlpoint elements not found. (found {})", elementList.size());
                     }
                 } else {
-                    log.error("Track segment Bezier controlpoints element not found.");
+                    log.error("Track segment Bezier controlpoint elements not found.");
                 }
-                // NOTE: do this LAST (so reCenter won't be called yet)
-                lv.setBezier(true);
+            } else {
+                log.error("Track segment Bezier controlpoints element not found.");
             }
-        } catch (DataConversionException e) {
-            log.error("failed to convert tracksegment attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+            // NOTE: do this LAST (so reCenter won't be called yet)
+            lv.setBezier(true);
         }
 
+        if ( getAttributeBooleanValue(element, "hideConLines", false) ) {
+            lv.hideConstructionLines(TrackSegment.HIDECON);
+        }
         // load decorations
         Element decorationsElement = element.getChild("decorations");
         if (decorationsElement != null) {

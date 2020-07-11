@@ -15,7 +15,7 @@ public class XNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         this.memo = memo;
     }
 
-    XNetSystemConnectionMemo memo;
+    final XNetSystemConnectionMemo memo;
 
     /**
      * Provide a menu with all items attached to this system connection.

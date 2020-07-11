@@ -1,10 +1,9 @@
 package jmri.web.server;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.web.server.WebServerPreferencesPanel class
@@ -19,7 +18,7 @@ public class WebServerPreferencesPanelTest {
         Assert.assertNotNull(a);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -27,7 +26,7 @@ public class WebServerPreferencesPanelTest {
         JUnitUtil.initStartupActionsManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

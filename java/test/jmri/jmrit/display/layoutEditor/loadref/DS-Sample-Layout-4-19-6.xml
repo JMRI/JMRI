@@ -2145,7 +2145,7 @@
         <controlpoint index="2" x="770.0" y="100.0" />
       </controlpoints>
     </tracksegment>
-    <tracksegment ident="T8" blockname="B-Beta-Xing-Approach" connect1name="A2" type1="POS_POINT" connect2name="X1" type2="LEVEL_XING_D" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="B-Beta-Xing-Approach" connect1name="A2" type1="POS_POINT" connect2name="X1" type2="LEVEL_XING_D" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="0.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <positionablepoint ident="EC1" type="EDGE_CONNECTOR" x="30.0" y="100.0" connect1name="T1" connect2name="T18" eastboundsignalmast="Beta-Left-EC" westboundsignalmast="Alpha-Right-EC" linkedpanel="Left Panel" linkpointid="EC1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="A2" type="ANCHOR" x="590.0" y="70.0" connect1name="T4" connect2name="T8" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <levelxing ident="X1" blocknameac="B-Xing-AC" blocknamebd="B-Xing-BD" connectaname="T5" connectbname="T6" connectcname="T6" connectdname="T8" xcen="600.0" ycen="100.0" xa="580.0" ya="100.0" xb="600.0" yb="120.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml">

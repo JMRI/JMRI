@@ -1733,7 +1733,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     void setTrackSegmentBlocks() {
         // temporary debug level because its called really often
         log.debug("setTrackSegmentBlocks should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         models.getLayoutTurnoutView(this).setTrackSegmentBlocks();
     }
@@ -1758,7 +1758,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     void setTrackSegmentBlock(HitPointType pointType, boolean isAutomatic) {
         // temporary debug as this happens a LOT
         log.debug("setTrackSegmentBlock should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         models.getLayoutTurnoutView(this).setTrackSegmentBlock(pointType, isAutomatic);
     }

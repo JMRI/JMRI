@@ -1,8 +1,6 @@
 package jmri.jmrit.whereused;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +35,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
     JPanel _scrolltext = new JPanel();
     JTextArea _textArea;
     JButton _createButton;
+    JLabel itemNameLabel;
 
     public WhereUsedFrame() {
         super(true, true);
@@ -73,15 +72,19 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
 
     void buildTopPanel() {
         _topPanel = new JPanel();
-        _topPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType"))));  // NOI18N
+        JLabel itemTypeLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType")));  // NOI18N
+        _topPanel.add(itemTypeLabel);
         _itemTypeBox = new JComboBox<>();
+        itemTypeLabel.setLabelFor(_itemTypeBox);
         for (ItemType itemType : ItemType.values()) {
             _itemTypeBox.addItem(itemType);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_itemTypeBox);
         _topPanel.add(_itemTypeBox);
 
-        _topPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemName"))));  // NOI18N
+        itemNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemName")));  // NOI18N
+        _topPanel.add(itemNameLabel);
+        itemNameLabel.setLabelFor(_itemNameBox);
         _topPanel.add(_itemNameBox);
         _itemTypeBox.addActionListener((e) -> {
             _itemType = _itemTypeBox.getItemAt(_itemTypeBox.getSelectedIndex());
@@ -122,6 +125,7 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             return;
         }
         _itemNameBox = newNameBox;
+        itemNameLabel.setLabelFor(newNameBox);
         _itemNameBox.setSelectedIndex(-1);
         _topPanel.remove(3);
         _topPanel.add(_itemNameBox, 3);

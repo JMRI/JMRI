@@ -7,6 +7,7 @@ import jmri.JmriException;
 import jmri.util.*;
 import org.junit.*;
 
+
 /**
  * Test simple functioning of PositionablePointView
  *

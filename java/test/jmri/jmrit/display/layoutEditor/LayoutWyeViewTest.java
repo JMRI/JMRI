@@ -1,14 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
+import java.awt.GraphicsEnvironment;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutWyeView
@@ -28,7 +25,7 @@ public class LayoutWyeViewTest extends LayoutTurnoutViewTest {
 
     LayoutWye wye;
     
-    @Before
+    @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
@@ -39,7 +36,7 @@ public class LayoutWyeViewTest extends LayoutTurnoutViewTest {
         }
     }
 
-    @After
+    @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         wye = null;

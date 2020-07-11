@@ -1,18 +1,19 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.gui.GuiLafPreferencesManager;
+
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -734,7 +735,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         Assert.assertEquals("Message did not appear", toTest, lblFeedback.getText());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -751,7 +752,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JFrame f = a.getFrame();

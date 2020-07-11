@@ -6,7 +6,9 @@ import java.awt.geom.*;
 import jmri.*;
 import jmri.util.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutTurnoutView
@@ -215,7 +217,7 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
 
 
     // from here down is testing infrastructure
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -227,13 +229,13 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
         }
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
-    @Before
+    @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
@@ -273,7 +275,7 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
         }
     }
 
-    @After
+    @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         if (ltRH != null) {

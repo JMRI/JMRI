@@ -12,7 +12,7 @@ import javax.annotation.CheckForNull;
 import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,7 +177,7 @@ public class StartupActionModelUtil extends Bean implements Disposable {
             ServiceLoader<apps.startup.StartupActionFactory> asLoader = ServiceLoader.load(apps.startup.StartupActionFactory.class);
             asLoader.forEach(factory -> {
                 addActions(factory);
-                jmri.util.Log4JUtil.deprecationWarning(log, factory.getClass().getName());
+                jmri.util.LoggingUtil.deprecationWarning(log, factory.getClass().getName());
             });
             asLoader.reload(); // allow factories to be garbage collected
             

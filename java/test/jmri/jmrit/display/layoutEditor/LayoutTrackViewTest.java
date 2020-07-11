@@ -1,14 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
-
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import java.awt.GraphicsEnvironment;
+
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutTrackView
@@ -24,7 +22,7 @@ public class LayoutTrackViewTest {
     
     public LayoutEditor layoutEditor;
 
-    @Before
+    @BeforeAll
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         JUnitUtil.setUp();
@@ -35,7 +33,7 @@ public class LayoutTrackViewTest {
         }
     }
 
-    @After
+    @AfterAll
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         if (layoutEditor != null) {

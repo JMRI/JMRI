@@ -2,10 +2,9 @@ package jmri.jmrix.rfid;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import javax.annotation.Nonnull;
 
@@ -35,13 +34,13 @@ public class RfidSensorManagerTest {
         Assert.assertNotNull(c);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new RfidSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

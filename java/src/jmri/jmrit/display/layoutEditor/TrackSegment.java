@@ -224,7 +224,7 @@ public class TrackSegment extends LayoutTrack {
      */
     public boolean isArc() {
         log.error("isArc should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         return models.getTrackSegmentView(this).isArc();
     }
@@ -234,14 +234,14 @@ public class TrackSegment extends LayoutTrack {
      */
     public boolean isCircle() {
         log.error("isCircle should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         return models.getTrackSegmentView(this).isCircle();
     }
 
     public void setCircle(boolean boo) {
         log.error("setCircle should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         models.getTrackSegmentView(this).setCircle(boo);
     }
@@ -252,7 +252,7 @@ public class TrackSegment extends LayoutTrack {
      */
     public boolean isBezier() {
         log.error("isBezier should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         return models.getTrackSegmentView(this).isBezier();
     }
@@ -267,7 +267,7 @@ public class TrackSegment extends LayoutTrack {
      */
     public double getDirectionRAD() {
         log.error("getDirectionRAD should have called View instead of TrackSegment (temporary)",
-                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
+                jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback")));
         return models.getTrackSegmentView(this).getDirectionRAD();
     }
 
@@ -281,7 +281,7 @@ public class TrackSegment extends LayoutTrack {
      */
     public double getDirectionDEG() {
         log.error("getDirectionDEG should have called View instead of TrackSegment (temporary)",
-                jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback")));
+                jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback")));
         return models.getTrackSegmentView(this).getDirectionDEG();
     }
 
@@ -635,7 +635,7 @@ public class TrackSegment extends LayoutTrack {
      */
     public void dispose() {
         log.error("dispose should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         models.getTrackSegmentView(this).dispose();
     }
@@ -714,14 +714,14 @@ public class TrackSegment extends LayoutTrack {
     // this is the center of the track segment (it is "on" the track segment)
     public double getCentreSegX() {
         log.error("getCentreSegX should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         return models.getTrackSegmentView(this).getCentreSegX();
     }
 
     public double getCentreSegY() {
         log.error("getCentreSegY should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         return models.getTrackSegmentView(this).getCentreSegY();
     }
@@ -736,7 +736,7 @@ public class TrackSegment extends LayoutTrack {
      */
     protected void reCalculateTrackSegmentAngle(double x, double y) {
         log.error("reCalculateTrackSegmentAngle should have called View instead of TrackSegment (temporary)"
-                , jmri.util.Log4JUtil.shortenStacktrace(new Exception("temporary traceback"))
+                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
             );
         models.getTrackSegmentView(this).reCalculateTrackSegmentAngle(x, y);
     }

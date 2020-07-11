@@ -4,7 +4,10 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutTurntableView
@@ -24,7 +27,7 @@ public class LayoutTurntableViewTest extends LayoutTrackViewTest {
 
     LayoutTurntable turntable;
     
-    @Before
+    @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
@@ -34,7 +37,7 @@ public class LayoutTurntableViewTest extends LayoutTrackViewTest {
         }
     }
 
-    @After
+    @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         super.tearDown();

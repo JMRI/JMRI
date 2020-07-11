@@ -5,7 +5,9 @@ import java.awt.geom.*;
 
 import jmri.util.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of TrackSegmentView
@@ -163,6 +165,34 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         }
     }
 
+    @Test
+    public void testSetCircleDefault() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            segmentView.setCircle(true);
+            Assert.assertEquals("segmentView.setCircle(Default)", 90.0D, segmentView.getAngle(), 0.01D);
+        }
+    }
+
+    @Test
+    public void testSetCircleZeroAngle() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            segmentView.setAngle(0.0D);
+            segmentView.setCircle(true);
+            Assert.assertEquals("segmentView.setCircle(Zero Angle)", 90.0D, segmentView.getAngle(), 0.01D);
+        }
+    }
+    
+    @Test
+    public void testSetCirclePositiveAngle() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (segmentView != null)) {
+            segmentView.setAngle(50.0D);
+            segmentView.setCircle(true);
+            Assert.assertEquals("segmentView.setCircle(Positive Angle)", 50.0D, segmentView.getAngle(), 0.01D);
+        }
+    }
 
 
     /*
@@ -462,7 +492,7 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
     TrackSegment segment;
     TrackSegmentView segmentView;
     
-    @Before
+    @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
@@ -482,7 +512,7 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
         }
     }
 
-    @After
+    @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         segment = null;

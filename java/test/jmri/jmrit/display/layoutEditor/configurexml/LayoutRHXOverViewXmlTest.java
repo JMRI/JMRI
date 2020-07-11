@@ -3,10 +3,8 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -51,12 +49,12 @@ public class LayoutRHXOverViewXmlTest {
         Assert.assertEquals(LayoutTurnout.TurnoutType.WYE_TURNOUT, tTypeEnumMap.inputFromString("3"));
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,8 +1,8 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,7 +10,7 @@ import org.junit.Before;
  */
 public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -20,7 +20,7 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
         helpTarget = "package.jmri.jmrix.openlcb.swing.downloader.LoaderFrame";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();
