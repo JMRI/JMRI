@@ -1181,7 +1181,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     /**
      * Perhaps confusingly, this returns an actual Turnout reference
      * or null for the turnout associated with this is LayoutTurnout.
-     * This is different from {@link setTurnout()}, which 
+     * This is different from {@link #setTurnout(String)}, which 
      * takes a name (system or user) or an empty string.
      * @return Null if no Turnout set
      */
@@ -1212,7 +1212,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     /**
      * Perhaps confusingly, this takes a Turnout name (system or user) 
      * to locate and set the turnout associated with this is LayoutTurnout.
-     * This is different from {@link getTurnout()}, which returns an 
+     * This is different from {@link #getTurnout()}, which returns an 
      * actual Turnout reference or null.
      * @parm tName provide empty string for none; never null
      */

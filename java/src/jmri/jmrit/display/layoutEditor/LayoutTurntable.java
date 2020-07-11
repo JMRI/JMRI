@@ -802,7 +802,7 @@ public class LayoutTurntable extends LayoutTrack {
             if (namedTurnout != null && namedTurnout.getBean() != turnout) {
                 namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
             }
-            if (turnout != null && (namedTurnout == null || namedTurnout.getBean() != turnout)) {
+            if (turnout != null && (namedTurnout == null || namedTurnout.getBean() != turnout) && turnoutName != null) {
                 if (!turnoutName.isEmpty()) {
                     namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
                     turnout.addPropertyChangeListener(mTurnoutListener, turnoutName, "Layout Editor Turntable");
