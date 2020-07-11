@@ -905,7 +905,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    @CheckForNull
+    // @CheckForNull temporary until we get central error check
     public SignalMast getSignalAMast() {
         if (signalAMastNamed != null) {
             return signalAMastNamed.getBean();
@@ -936,7 +936,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    @CheckForNull
+    // @CheckForNull temporary until we get central error check
     public SignalMast getSignalBMast() {
         if (signalBMastNamed != null) {
             return signalBMastNamed.getBean();
@@ -967,7 +967,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    @CheckForNull
+    // @CheckForNull temporary until we get central error check
     public SignalMast getSignalCMast() {
         if (signalCMastNamed != null) {
             return signalCMastNamed.getBean();
@@ -998,7 +998,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return "";
     }
 
-    @CheckForNull
+    // @CheckForNull temporary until we get central error check
     public SignalMast getSignalDMast() {
         if (signalDMastNamed != null) {
             return signalDMastNamed.getBean();
@@ -1185,7 +1185,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * takes a name (system or user) or an empty string.
      * @return Null if no Turnout set
      */
-    @CheckForNull
+    // @CheckForNull temporary - want to restore once better handled
     public Turnout getTurnout() {
         if (namedTurnout == null) {
             // set physical turnout if possible and needed
@@ -1240,7 +1240,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    @CheckForNull
+    // @CheckForNull temporary until we have central paradigm for null
     public Turnout getSecondTurnout() {
         Turnout result = null;
         if (secondNamedTurnout == null) {
@@ -1445,22 +1445,22 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    @CheckForNull
+    // @CheckForNull - temporary, until we can centralize protection for this
     public LayoutBlock getLayoutBlock() {
         return (namedLayoutBlockA != null) ? namedLayoutBlockA.getBean() : null;
     }
 
-    @CheckForNull
+    // @CheckForNull - temporary, until we can centralize protection for this
     public LayoutBlock getLayoutBlockB() {
         return (namedLayoutBlockB != null) ? namedLayoutBlockB.getBean() : getLayoutBlock();
     }
 
-    @CheckForNull
+    // @CheckForNull - temporary, until we can centralize protection for this
     public LayoutBlock getLayoutBlockC() {
         return (namedLayoutBlockC != null) ? namedLayoutBlockC.getBean() : getLayoutBlock();
     }
 
-    @CheckForNull
+    // @CheckForNull - temporary, until we can centralize protection for this
     public LayoutBlock getLayoutBlockD() {
         return (namedLayoutBlockD != null) ? namedLayoutBlockD.getBean() : getLayoutBlock();
     }
@@ -1608,7 +1608,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 }
                 blockB = newLayoutBlock;
                 if (newLayoutBlock != null) {
-                    namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+                    String userName = newLayoutBlock.getUserName();
+                    if (userName != null) {
+                        namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, newLayoutBlock);
+                    }
                 } else {
                     namedLayoutBlockB = null;
                 }
@@ -1644,7 +1647,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 }
                 blockC = newLayoutBlock;
                 if (newLayoutBlock != null) {
-                    namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+                    String userName = newLayoutBlock.getUserName();
+                    if (userName != null) {
+                        namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, newLayoutBlock);
+                    }
                 } else {
                     namedLayoutBlockC = null;
                 }
@@ -1680,7 +1686,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 }
                 blockD = newLayoutBlock;
                 if (newLayoutBlock != null) {
-                    namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+                    String userName = newLayoutBlock.getUserName();
+                    if (userName != null) {
+                        namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(userName, newLayoutBlock);
+                    }
                 } else {
                     namedLayoutBlockD = null;
                 }

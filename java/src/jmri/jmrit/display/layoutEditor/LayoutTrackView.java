@@ -74,7 +74,7 @@ abstract public class LayoutTrackView {
     }
     
     // temporary accessor?  Or is this a long term thing?
-    @Nonnull
+    // @Nonnull temporary until we gigure out if can be null or not
     public LayoutTrack getLayoutTrack() { return layoutTrack; }
     
     /**

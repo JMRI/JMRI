@@ -296,12 +296,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return useBlockSpeed;
     }
 
-    @CheckForNull
+    // @CheckForNull - can this be null? or ""?
     public String getTurnoutName() {
         return turnout.getTurnoutName();
     }
 
-    @CheckForNull
+   // @CheckForNull - can this be null? or ""?
     public String getSecondTurnoutName() {
         return turnout.getSecondTurnoutName();
     }
@@ -633,7 +633,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
     /**
      * @return null if no turnout set // temporary?  Might want to run all calls through this class; but this is getModel equiv
      */
-    @CheckForNull  
+    // @CheckForNull  temporary
     public Turnout getTurnout() {
         return turnout.getTurnout();
     }
@@ -654,7 +654,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setTurnout(tName);
     }
 
-    @CheckForNull
+    // @CheckForNull - need to have a better way to handle null case
     public Turnout getSecondTurnout() {
         return turnout.getSecondTurnout();
     }
@@ -726,22 +726,22 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setConnectD(o, type);
     }
 
-    @CheckForNull
+    // @CheckForNull - temporary while we work on centralized protection
     public LayoutBlock getLayoutBlock() {
         return turnout.getLayoutBlock();
     }
 
-    @CheckForNull
+    // @CheckForNull - temporary while we work on centralized protection
     public LayoutBlock getLayoutBlockB() {
         return turnout.getLayoutBlockB();
     }
 
-    @CheckForNull
+    // @CheckForNull - temporary while we work on centralized protection
     public LayoutBlock getLayoutBlockC() {
         return turnout.getLayoutBlockC();
     }
 
-    @CheckForNull
+    // @CheckForNull - temporary while we work on centralized protection
     public LayoutBlock getLayoutBlockD() {
         return turnout.getLayoutBlockD();
     }

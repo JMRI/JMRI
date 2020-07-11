@@ -713,7 +713,7 @@ public class LayoutTurntable extends LayoutTrack {
          *
          * @return the track segment connected to this ray
          */
-        @CheckForNull
+        // @CheckForNull termporary until we know whether this really can be null or not
         public TrackSegment getConnect() {
             return connect;
         }
@@ -835,7 +835,7 @@ public class LayoutTurntable extends LayoutTrack {
          *
          * @return the turnout or null
          */
-        @CheckForNull
+       // @CheckForNull temporary until we have central paradigm for null
         public Turnout getTurnout() {
             if (namedTurnout == null) {
                 return null;
