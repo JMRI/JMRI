@@ -12,12 +12,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -580,7 +578,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         addHelpMenu("package.jmri.jmrit.display.ItemPalette", true);
     }
 
-    public void closePanels(java.awt.event.WindowEvent e) {
+    private void closePanels(java.awt.event.WindowEvent e) {
         java.awt.Component[] comps = _tabPane.getComponents();
         if (log.isDebugEnabled()) {
             log.debug("closePanels: tab count= {}", _tabPane.getTabCount());
@@ -598,7 +596,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     /*
      * Look for duplicate name of family in the iterated set.
      */
-    static protected boolean familyNameOK(String type, String family, Iterator<String> it) {
+    static private boolean familyNameOK(String type, String family, Iterator<String> it) {
         if (family == null || family.length() == 0) {
             JOptionPane.showMessageDialog(null,
                     Bundle.getMessage("EnterFamilyName"),
@@ -761,28 +759,10 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         try {
             // NOI18N
             cName = Bundle.getMessage(name);
-        } catch (java.util.MissingResourceException mre) {
+        } catch (Exception e) {
             cName = name;
         }
         return cName;
-    }
-
-    static protected JPanel makeBannerPanel(String labelText, Component field) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.CENTER;
-        panel.add(new JLabel(Bundle.getMessage(labelText)), c);
-        c.gridx = 1;
-        c.anchor = java.awt.GridBagConstraints.CENTER;
-        c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL; // text field will expand
-        panel.add(field, c);
-        return panel;
     }
 
     private final static Logger log = LoggerFactory.getLogger(ItemPalette.class);

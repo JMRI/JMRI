@@ -45,7 +45,6 @@ public class ClockItemPanel extends IconItemPanel {
         if (!_initialized) {
             add(instructions());
             initIconFamiliesPanel();
-//            addPreviewPanel(true);
             initLinkPanel();
             add(Box.createVerticalGlue());
         }
@@ -78,24 +77,6 @@ public class ClockItemPanel extends IconItemPanel {
         wrapIconImage(icon, label, panel, key);
         return panel;
     }
-/*    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
-        if (_iconPanel == null) {
-            _iconPanel = new ImagePanel();            
-            _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        } else {
-            _iconPanel.removeAll();
-        }
-
-        for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
-            NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
-            JPanel panel = new JPanel();
-            panel.setOpaque(false);
-            String borderName = ItemPalette.convertText(entry.getKey());
-            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), borderName));
-            _iconPanel.add(panel);
-        }
-        _iconPanel.setImage(_frame.getPreviewBackground()); // pick up shared setting
-    }*/
 
     public class ClockDragJLabel extends DragJLabel {
 

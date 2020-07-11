@@ -69,14 +69,11 @@ public class IconItemPanel extends ItemPanel {
         if (!_initialized) {
             initIconFamiliesPanel();
             initLinkPanel();
-            makeDataFlavors();
             add(makeBottomPanel(null));
             _catalog = makeCatalog();
             add(_catalog);
             super.init();
         }
-        _catalog.invalidate();
-        _previewPanel.invalidate();
     }
 
     /**
@@ -89,7 +86,6 @@ public class IconItemPanel extends ItemPanel {
         _update = true;
         _suppressDragging = true; // no dragging when updating
         initIconFamiliesPanel();
-        makeDataFlavors();
         add(_iconPanel);
         add(makeBottomPanel(doneAction));
         _catalog = makeCatalog();
@@ -101,7 +97,7 @@ public class IconItemPanel extends ItemPanel {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
-        blurb.add(new JLabel(Bundle.getMessage("DragIconCatalog", Bundle.getMessage("ButtonShowCatalog"))));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconCatalog")));
         JPanel panel = new JPanel();
         panel.add(blurb);
         return panel;
@@ -138,6 +134,7 @@ public class IconItemPanel extends ItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
+        makeDataFlavors();
         super.initIconFamiliesPanel();
         if (!_update) {
             _iconPanel.addMouseListener(new IconListener());
@@ -171,6 +168,7 @@ public class IconItemPanel extends ItemPanel {
         addIconsToPanel(_currentIconMap, _iconPanel, !_update);
     }
 
+    @Override
     protected void makeDataFlavors() {
         try {
             _positionableDataFlavor = new DataFlavor(Editor.POSITIONABLE_FLAVOR);
@@ -249,12 +247,7 @@ public class IconItemPanel extends ItemPanel {
     protected void hideCatalog() {
         Dimension oldDim = getSize();
         boolean isPalette = (_frame instanceof ItemPalette); 
-        Dimension totalDim;
-        if (isPalette) {
-            totalDim = ItemPalette._tabPane.getSize();
-        } else {
-            totalDim = _frame.getSize();            
-        }
+        Dimension totalDim = _frame.getSize();
         _catalog.setVisible(false);
         _catalog.invalidate();
         reSizeDisplay(isPalette, oldDim, totalDim);
@@ -264,12 +257,7 @@ public class IconItemPanel extends ItemPanel {
     protected void showCatalog() {
         Dimension oldDim = getSize();
         boolean isPalette = (_frame instanceof ItemPalette); 
-        Dimension totalDim;
-        if (isPalette) {
-            totalDim = ItemPalette._tabPane.getSize();
-        } else {
-            totalDim = _frame.getSize();            
-        }
+        Dimension totalDim = _frame.getSize();
         _catalog.setVisible(true);
         _catalog.invalidate();
         reSizeDisplay(isPalette, oldDim, totalDim);
@@ -302,19 +290,16 @@ public class IconItemPanel extends ItemPanel {
      */
     @Override
     protected void hideIcons() {
+        _previewPanel.setVisible(false);    // necessary to guarantee _iconPanel gets refreshed
+        addIconsToPanel();
         Dimension oldDim = getSize();
         boolean isPalette = (_frame instanceof ItemPalette); 
-        Dimension totalDim;
-        if (isPalette) {
-            totalDim = ItemPalette._tabPane.getSize();
-        } else {
-            totalDim = _frame.getSize();            
-        }
+        Dimension totalDim = _frame.getSize();
+        _previewPanel.setVisible(true);
         if (!_update) {
             ItemPalette.removeIconMap(_itemType, "set");
             ItemPalette.addFamily(_itemType, "set", _currentIconMap);
         }
-        addIconsToPanel();
         _iconPanel.invalidate();
         reSizeDisplay(isPalette, oldDim, totalDim);
     }
@@ -355,6 +340,7 @@ public class IconItemPanel extends ItemPanel {
                     BorderFactory.createLineBorder(Color.black, 1), borderName));
             _selectedIcon = null;
         }
+        setDeleteIconButton(false);
     }
 
     private void setDeleteIconButton(boolean set) {
@@ -380,6 +366,25 @@ public class IconItemPanel extends ItemPanel {
             }
         }
         return name;
+    }
+
+    protected void initLinkPanel() {
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Text")));
+        blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("enterURL")));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        blurb.add(new JLabel(Bundle.getMessage("LinkName")));
+        blurb.add(_linkName);
+        _linkName.setToolTipText(Bundle.getMessage("ToolTipLink"));
+        blurb.setToolTipText(Bundle.getMessage("ToolTipLink"));
+        JPanel panel = new JPanel();
+        panel.add(blurb);
+        JPanel linkPanel = new JPanel();
+        linkPanel.add(panel);
+        add(linkPanel);
     }
 
     public void setUpdateIcon(NamedIcon icon) {
@@ -411,39 +416,45 @@ public class IconItemPanel extends ItemPanel {
 
         @Override
         public void drop(DropTargetDropEvent e) {
+            boolean accepted = false;
             try {
                 Transferable tr = e.getTransferable();
                 if (e.isDataFlavorSupported(_positionableDataFlavor)) {
                     PositionableLabel label = (PositionableLabel)tr.getTransferData(_positionableDataFlavor);
                     NamedIcon newIcon = new NamedIcon((NamedIcon)label.getIcon());
-                    accept(e, label.getName(), newIcon);
+                    accepted = accept(label.getName(), newIcon);
                 } else if (e.isDataFlavorSupported(_namedIconDataFlavor)) {
                     NamedIcon icon = (NamedIcon) tr.getTransferData(_namedIconDataFlavor);
                     NamedIcon newIcon = new NamedIcon(icon);
-                    accept(e, icon.getName(), newIcon);
+                    accepted = accept(icon.getName(), newIcon);
                 } else if (e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     String text = (String) tr.getTransferData(DataFlavor.stringFlavor);
                     log.debug("drop for stringFlavor {}", text);
                     NamedIcon newIcon = new NamedIcon(text, text);
-                    accept(e, Bundle.getMessage("unNamed"), newIcon);
+                    accepted = accept(Bundle.getMessage("unNamed"), newIcon);
                  } else {
                     log.debug("IconDragJLabel.drop REJECTED!");
                     e.rejectDrop();
                 }
             } catch (IOException | UnsupportedFlavorException ioe) {
-                log.debug("IconDragJLabel.drop REJECTED!");
+            }
+            if (!accepted) {
                 e.rejectDrop();
+                log.debug("IconDragJLabel.drop REJECTED!");
+            } else {
+                e.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
             }
         }
 
-        private void accept(DropTargetDropEvent e, String name, NamedIcon newIcon) {
-            e.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
-            putIcon(name, newIcon);
-            e.dropComplete(true);
-            if (log.isDebugEnabled()) {
-                log.debug("IconDragJLabel.drop COMPLETED for {}, {}", name,
-                        (newIcon != null ? newIcon.getURL() : " newIcon==null "));
+        private boolean accept(String name, NamedIcon newIcon) {
+            if (name == null || newIcon == null) {
+                return false;
             }
+            putIcon(name, newIcon);
+            if (log.isDebugEnabled()) {
+                log.debug("IconDragJLabel.drop COMPLETED for {}, {}", name, newIcon.getURL());
+            }
+            return true;
         }
         
     }
@@ -553,9 +564,9 @@ public class IconItemPanel extends ItemPanel {
             if (event.getSource() instanceof IconDisplayPanel) {
                 IconDisplayPanel panel = (IconDisplayPanel)event.getSource();
                 setSelection(panel);
-            } else if(event.getSource() instanceof ImagePanel) {
+            } else {
                 deselectIcon();
-           }
+            }
         }
     }
 

@@ -5,7 +5,11 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashMap;
+
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
@@ -18,6 +22,16 @@ public class RPSItemPanel extends FamilyItemPanel {
 
     public RPSItemPanel(DisplayFrame parentFrame, String type, String family) {
         super(parentFrame, type, family);
+    }
+
+    @Override
+    protected JPanel instructions() {
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
+        JPanel panel = new JPanel();
+        panel.add(blurb);
+        return panel;
     }
 
     @Override

@@ -136,6 +136,8 @@ public class TextItemPanel extends ItemPanel {
     protected void hideIcons() {}
     @Override
     protected void makeFamiliesPanel() {}
+    @Override
+    protected void makeDataFlavors() {}
 
 
     /**

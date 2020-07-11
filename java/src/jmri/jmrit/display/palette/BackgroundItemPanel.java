@@ -40,16 +40,10 @@ public class BackgroundItemPanel extends IconItemPanel {
     @Override
     public void init() {
         if (!_initialized) {
-            add(moreInstructions());
-            initIconFamiliesPanel();
-            makeColorButtonPanel();
+            makeColorButton();
+            super.init();
             _colorPanel = makeColorPanel();
             add(_colorPanel);
-            add(makeBottomPanel(null));
-//            checkForIcons();
-            _catalog = makeCatalog();
-            add(_catalog);
-            _initialized = true;
         }
     }
 
@@ -65,79 +59,97 @@ public class BackgroundItemPanel extends IconItemPanel {
         return panel;
     }
 
-    /**
-     * Use method to hide/show _colorPanel of 
-     */
     @Override
-    protected void hideIcons() {
-        _iconPanel.setImage(_frame.getBackground(0));
-        Dimension oldDim = getSize();
-        boolean isPalette = (_frame instanceof ItemPalette); 
-        Dimension totalDim;
-        if (isPalette) {
-            totalDim = ItemPalette._tabPane.getSize();
-        } else {
-            totalDim = _frame.getSize();            
-        }
+    protected void makeItemButtonPanel() {
+        super.makeItemButtonPanel();
+        _bottom1Panel.add(_colorButton);
+    }
+
+    @Override
+    protected void makeSpecialBottomPanel(boolean update) {
+        super.makeSpecialBottomPanel(update);
+        _bottom2Panel.add(_colorButton, 1);
+    }
+
+    @Override
+    protected void initLinkPanel() {
+    }
+
+    @Override
+    protected void showCatalog() {
         _colorPanel.setVisible(false);
         _colorPanel.invalidate();
-        reSizeDisplay(isPalette, oldDim, totalDim);
-        _colorButton.setText(Bundle.getMessage("ButtonShowColorPanel"));
+        super.showCatalog();
+        
     }
-    
-    protected void showColorPanel() {
+    private void showColorPanel() {
         deselectIcon();
-        hideCatalog();
         _chooser.setColor(_frame.getCurrentColor());
+        Dimension totalDim = _frame.getSize();
         Dimension oldDim = getSize();
         boolean isPalette = (_frame instanceof ItemPalette); 
-        Dimension totalDim;
-        if (isPalette) {
-            totalDim = ItemPalette._tabPane.getSize();
-        } else {
-            totalDim = _frame.getSize();            
-        }
+        _catalog.setVisible(false);
+        _catalog.invalidate();
         _colorPanel.setVisible(true);
         _colorPanel.invalidate();
+        _bottom1Panel.setVisible(false);
+        _bottom1Panel.invalidate();
         reSizeDisplay(isPalette, oldDim, totalDim);
         _colorButton.setText(Bundle.getMessage("HideColorPanel"));
     }
 
-    protected void makeColorButtonPanel() {
-        JPanel panel = new JPanel();
-        JButton backgroundButton = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
-        backgroundButton.addActionListener(a -> {
-            if (!_colorPanel.isVisible()) {
-                showColorPanel();
-            } else {
-                setColor();
-            }
-        });
-        backgroundButton.setToolTipText(Bundle.getMessage("ToColorBackground"));
-        panel.add(backgroundButton);
+    private void hideColorPanel() {
+        _chooser.setColor(_frame.getCurrentColor());
+        Dimension totalDim = _frame.getSize();
+        Dimension oldDim = getSize();
+        boolean isPalette = (_frame instanceof ItemPalette); 
+        _colorPanel.setVisible(false);
+        _colorPanel.invalidate();
+        _bottom1Panel.setVisible(true);
+        _bottom1Panel.invalidate();
+        reSizeDisplay(isPalette, oldDim, totalDim);
+        _colorButton.setText(Bundle.getMessage("ShowColorPanel"));
+    }
 
+    private void makeColorButton() {
         _colorButton = new JButton(Bundle.getMessage("ButtonShowColorPanel"));
         _colorButton.addActionListener(a -> {
             if (_colorPanel.isVisible()) {
-                hideIcons();
+                hideColorPanel();
             } else {
                 showColorPanel();
             }
         });
-        _colorButton.setToolTipText(Bundle.getMessage("ToolTipCatalog"));
-        panel.add(_colorButton);
+        _colorButton.setToolTipText(Bundle.getMessage("ToolTipColor"));
+    }
 
-        add(panel);
+    protected JPanel makeColorButtonPanel() {
+        JPanel panel = new JPanel();
+        JButton button = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
+        button.addActionListener(a -> setColor());
+        button.setToolTipText(Bundle.getMessage("ToColorBackground"));
+        panel.add(button);
+
+        button = new JButton(Bundle.getMessage("ButtonCancel"));
+        button.addActionListener(a -> hideColorPanel());
+        button.setToolTipText(Bundle.getMessage("ToColorBackground"));
+        panel.add(button);
+        panel.setToolTipText(Bundle.getMessage("ToColorBackground"));
+        return panel;
     }
  
     private JPanel makeColorPanel() {
         JPanel panel =new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         _chooser = new JColorChooser(_frame.getCurrentColor());
         _chooser.setPreviewPanel(new JPanel());
         _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> colorChange());
         _chooser.setColor(_frame.getCurrentColor());
         _chooser = JmriColorChooser.extendColorChooser(_chooser);
         panel.add(_chooser);
+
+        panel.add(makeColorButtonPanel());
+        panel.setToolTipText(Bundle.getMessage("ToColorBackground"));
         panel.setVisible(false);
         return panel;
     }
@@ -157,6 +169,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         }
         _frame.getEditor().setBackgroundColor(_color);
         _frame.updateBackground(_frame.getEditor());
+        hideColorPanel();
     }
 
     @Override

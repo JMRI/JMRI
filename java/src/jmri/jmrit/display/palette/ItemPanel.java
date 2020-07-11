@@ -8,7 +8,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
@@ -100,23 +99,6 @@ public abstract class ItemPanel extends JPanel  {
 
     public boolean oktoUpdate() {
         return true;
-    }
-
-    protected void initLinkPanel() {
-//        Font font = new Font("SansSerif", Font.BOLD, 12);
-        JPanel blurb = new JPanel();
-        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Text")));
-        blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
-        blurb.add(new JLabel(Bundle.getMessage("enterURL")));
-        JPanel panel = new JPanel();
-        panel.add(new JLabel(Bundle.getMessage("LinkName")));
-        panel.add(_linkName);
-        _linkName.setToolTipText(Bundle.getMessage("ToolTipLink"));
-        panel.setToolTipText(Bundle.getMessage("ToolTipLink"));
-        blurb.add(panel);
-        add(blurb);
     }
 
     public void closeDialogs() {
@@ -267,6 +249,7 @@ public abstract class ItemPanel extends JPanel  {
             _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
             _iconPanel.setImage(_frame.getPreviewBackground());
             _iconPanel.setOpaque(false);
+            makeDataFlavors();
         }
         if (_iconFamilyPanel == null) {
             _iconFamilyPanel = new JPanel();
@@ -295,6 +278,8 @@ public abstract class ItemPanel extends JPanel  {
             _previewPanel.setVisible(true);
         }
     }
+
+    abstract protected void makeDataFlavors();
 
     /**
      * Add the current set of icons to a Show Icons pane. Used in several

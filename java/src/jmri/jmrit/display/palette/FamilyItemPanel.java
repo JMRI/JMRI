@@ -16,7 +16,6 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -131,6 +130,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
         add(bottomPanel);
         _initialized = true;
     }
+
+    @Override
+    protected void makeDataFlavors() {}
 
     /**
      * Needed by CPE ConvertDialog.java
