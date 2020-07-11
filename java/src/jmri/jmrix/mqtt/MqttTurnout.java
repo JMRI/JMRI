@@ -34,6 +34,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
         private final static String closedText = "CLOSED";
         private final static String thrownText = "THROWN";
+        private final static String unknownText = "UNKNOWN";
         @Override
         public void beanFromPayload(@Nonnull Turnout bean, @Nonnull String payload, @Nonnull String topic) {
             switch (payload) {
@@ -42,6 +43,9 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
                     break;
                 case thrownText:
                     newKnownState(THROWN);
+                    break;
+                case unknownText:
+                    newKnownState(UNKNOWN);
                     break;
                 default:
                     log.warn("Unknown state : {}", payload);
