@@ -83,8 +83,8 @@
           support on the latest Java release (14 as of July 2020). Support in
           this context means that problems found will be fixed or addressed in
           other means; "best effort" means that fixes to run on the latest Java
-          release that do not break compatibility with the oldest LTS release will
-          be considered.</p>
+          release that do not break compatibility with the oldest supported LTS
+          release will be considered.</p>
 
       <p>The JMRI project recommends Java from <a href="https://adoptopenjdk.net">AdoptOpenJDK</a>
           or the operating system vendor unless using Windows 8 or older, in which case
