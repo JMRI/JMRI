@@ -68,13 +68,13 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(tlef.addRoadButton);
         JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
 
-        Assert.assertTrue(track.acceptsRoadName("AA"));
+        Assert.assertTrue(track.isRoadNameAccepted("AA"));
 
         for (String roadName : InstanceManager.getDefault(CarRoads.class).getNames()) {
             if (roadName.equals("AA")) {
                 continue; // the only road name accepted by this track
             }
-            Assert.assertFalse("confirm road name not accepted", track.acceptsRoadName(roadName));
+            Assert.assertFalse("confirm road name not accepted", track.isRoadNameAccepted(roadName));
         }
 
         JUnitUtil.dispose(tlef);
