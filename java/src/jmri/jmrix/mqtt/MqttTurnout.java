@@ -25,6 +25,9 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         this.topic = topic;
         mqttAdapter = ma;
         mqttAdapter.subscribe(this.topic, this);
+        _validFeedbackNames = new String[] {"DIRECT", "ONESENSOR", "TWOSENSOR", "DELAYED", "MONITORING"};
+        _validFeedbackModes = new int[] {DIRECT, ONESENSOR, TWOSENSOR, DELAYED, MONITORING};
+        _validFeedbackTypes = DIRECT | ONESENSOR | TWOSENSOR | DELAYED | MONITORING;
     }
 
     public void setParser(MqttContentParser<Turnout> parser) {
@@ -46,10 +49,18 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
                     newKnownState(THROWN);
                     break;
                 case unknownText:
-                    newKnownState(UNKNOWN);
+                    if (getFeedbackMode() == MONITORING) {
+                        newKnownState(UNKNOWN);
+                    } else {
+                        log.warn("Received state is not valid in current operating mode: {}", payload);
+                    }
                     break;
                 case inconsistentText:
-                    newKnownState(INCONSISTENT);
+                    if (getFeedbackMode() == MONITORING) {
+                        newKnownState(INCONSISTENT);
+                    } else {
+                        log.warn("Received state is not valid in current operating mode: {}", payload);
+                    }
                     break;
                 default:
                     log.warn("Unknown state : {}", payload);
