@@ -446,7 +446,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>compile-java-8</id>
+                        <id>default-compile</id>
                         <goals>
                             <goal>compile</goal>
                         </goals>
