@@ -460,7 +460,7 @@ public final class LogixNGEditor {
     /**
      * Create or edit action/expression dialog.
      */
-    boolean showAddLogixNGFrame() {
+    private boolean showAddLogixNGFrame() {
         
         AtomicBoolean result = new AtomicBoolean(false);
         
