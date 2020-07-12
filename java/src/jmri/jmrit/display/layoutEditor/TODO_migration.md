@@ -9,7 +9,7 @@ It's in no particular order, items are removed as done, so please don't consider
  - LE-MVC-4 Introduce LayoutModels interface; tests, Javadoc, warnings clean
  
  Next:
- - LE-MVC-5 Load/Store via *ViewXml, have LayoutTrack clean of geometry (i.e. no View referrals)
+ - LE-MVC-5 [X] Load/Store via *ViewXml; [ ] get LayoutTrack clean of geometry (i.e. no *View referrals in model classes)
 
 ## Development Branches
  - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
@@ -64,6 +64,9 @@ Go through and confirm individually:
 
  - [ ] Remove view variables from Model classes   
         LayoutTurnout 
+            setTrackSegmentBlocks
+            setTrackSegmentBlock
+            dispose
         
  - [ ] Remove swing code from Model classes
         LayoutTurntable  PositionablePoint  
