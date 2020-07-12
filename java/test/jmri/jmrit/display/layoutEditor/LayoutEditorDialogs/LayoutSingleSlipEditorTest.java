@@ -125,7 +125,6 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
     public void tearDown() {
         if (singleLayoutSlip != null) {
             singleLayoutSlip.remove();
-            singleLayoutSlip.dispose();
         }
 
         if (layoutEditor != null) {

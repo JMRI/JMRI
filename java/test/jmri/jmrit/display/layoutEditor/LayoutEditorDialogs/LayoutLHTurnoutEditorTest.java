@@ -68,7 +68,6 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
     
         if (leftHandLayoutTurnout != null) {
             leftHandLayoutTurnout.remove();
-            leftHandLayoutTurnout.dispose();
         }
 
         if (layoutEditor != null) {

@@ -66,7 +66,6 @@ public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
     
         if (layoutWye != null) {
             layoutWye.remove();
-            layoutWye.dispose();
         }
 
         if (layoutEditor != null) {

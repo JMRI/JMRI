@@ -280,34 +280,64 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     public void tearDown() {
         if (ltRH != null) {
             ltRH.remove();
-            ltRH.dispose();
             ltRH = null;
         }
+        if (ltRHv != null) {
+            ltRHv.remove();
+            ltRHv.dispose();
+            ltRHv = null;
+        }
+
         if (ltLH != null) {
             ltLH.remove();
-            ltLH.dispose();
             ltLH = null;
         }
+        if (ltLHv != null) {
+            ltLHv.remove();
+            ltLHv.dispose();
+            ltLHv = null;
+        }
+
         if (ltWY != null) {
             ltWY.remove();
-            ltWY.dispose();
             ltWY = null;
         }
+        if (ltWYv != null) {
+            ltWYv.remove();
+            ltWYv.dispose();
+            ltWYv = null;
+        }
+
         if (ltDX != null) {
             ltDX.remove();
-            ltDX.dispose();
             ltDX = null;
         }
+        if (ltDXv != null) {
+            ltDXv.remove();
+            ltDXv.dispose();
+            ltDXv = null;
+        }
+
         if (ltRX != null) {
             ltRX.remove();
-            ltRX.dispose();
             ltRX = null;
         }
+        if (ltRXv != null) {
+            ltRXv.remove();
+            ltRXv.dispose();
+            ltRXv = null;
+        }
+
         if (ltLX != null) {
             ltLX.remove();
-            ltLX.dispose();
             ltLX = null;
         }
+        if (ltLXv != null) {
+            ltLXv.remove();
+            ltLXv.dispose();
+            ltLXv = null;
+        }
+
         super.tearDown();
     }
 

@@ -55,18 +55,22 @@ It's in no particular order, items are removed as done, so please don't consider
 - [ ] Turnout state in connectivity
 - [ ] Block and connectivity checks to, well, connectivity
 
-- [ ] The ``*View` classes load a reference to a new `*Editor` in ctor; this needs to be shared or deferred
+- [ ] The ``*View` classes load a reference to a new `*Editor` in ctor; this needs to be shared or deferred as very big
          editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleSlipEditor(layoutEditor);
 - [ ] LayoutEditor.setTurnoutName(@Nonnull), .setSecondTurnout(@Nonnull): Very inconsistent use with "" or null, need to clean up 100%
     - [ ] who uses it through View? Should it be through view?
 
 Go through and confirm individually:
 
- - [ ] Remove view variables from Model classes   
+ - [ ] Remove view variables from Model classes, rm commented code   
         LayoutTurnout 
             setTrackSegmentBlocks
             setTrackSegmentBlock
-            dispose
+        Recheck all 16, rm commented code
+            LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+            LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+            LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+            LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
         
  - [ ] Remove swing code from Model classes
         LayoutTurntable  PositionablePoint  
@@ -74,7 +78,7 @@ Go through and confirm individually:
         
  - [ ] Load & Store: TrackSegmentViewXml et al storing as  class="TrackSegmentView" to ease file comparison & for compatibility; change back after figuring out compatibility
  - load with specific view
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint *TrackSegment 
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
         LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
@@ -148,6 +152,8 @@ Started to switch to LayoutModels from LayoutEditor
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 ---
+
+ [ ]No dispose() in Model classes; should there be remove() in View classes?
 
 Concerned over e.g.  `getConnect2() == myTrk` as code transitions LayoutTrack -> LayoutTrackView. 
  = [ ] Change to .equals()

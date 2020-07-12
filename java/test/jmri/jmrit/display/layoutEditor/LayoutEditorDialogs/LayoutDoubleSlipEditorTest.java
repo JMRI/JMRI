@@ -163,7 +163,6 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
     public void tearDown() {
         if (doubleLayoutSlip != null) {
             doubleLayoutSlip.remove();
-            doubleLayoutSlip.dispose();
         }
 
         if (layoutEditor != null) {

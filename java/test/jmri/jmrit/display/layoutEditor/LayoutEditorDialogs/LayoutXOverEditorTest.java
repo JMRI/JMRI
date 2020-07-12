@@ -221,7 +221,6 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
     public void tearDown() {
         if (doubleXoverLayoutTurnout != null) {
             doubleXoverLayoutTurnout.remove();
-            doubleXoverLayoutTurnout.dispose();
         }
 
         if (layoutEditor != null) {
