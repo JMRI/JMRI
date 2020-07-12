@@ -26,6 +26,15 @@ public class ReporterItemPanelTest {
         JUnitUtil.dispose(df);
     }
 
+
+    @Test
+    public void testShow() {
+        ItemPaletteTest.getItemPalette();
+        ItemPanel panel = ItemPalette._tabIndex.get("Reporter");
+        Assert.assertNotNull("exists", panel);
+        panel.init();
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

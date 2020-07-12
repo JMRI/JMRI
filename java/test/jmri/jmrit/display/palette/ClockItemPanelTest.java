@@ -24,6 +24,14 @@ public class ClockItemPanelTest {
         JUnitUtil.dispose(df);
     }
 
+    @Test
+    public void testShow() {
+        ItemPaletteTest.getItemPalette();
+        ItemPanel panel = ItemPalette._tabIndex.get("FastClock");
+        Assert.assertNotNull("exists", panel);
+        panel.init();
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

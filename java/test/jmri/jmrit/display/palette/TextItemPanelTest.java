@@ -32,6 +32,14 @@ public class TextItemPanelTest {
         JUnitUtil.dispose(es);
    }
 
+    @Test
+    public void testShowText() {
+        ItemPaletteTest.getItemPalette();
+        ItemPanel panel = ItemPalette._tabIndex.get("Text");
+        Assert.assertNotNull("exists", panel);
+        panel.init();
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

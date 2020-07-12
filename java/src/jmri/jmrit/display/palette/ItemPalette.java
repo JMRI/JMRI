@@ -144,7 +144,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static final String RED_X = "resources/icons/misc/X-red.gif";
 
     protected static JTabbedPane _tabPane;
-    private static HashMap<String, ItemPanel> _tabIndex;
+    protected static HashMap<String, ItemPanel> _tabIndex;
 
     private static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.

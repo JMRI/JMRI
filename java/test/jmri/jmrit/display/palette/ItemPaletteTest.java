@@ -30,6 +30,11 @@ public class ItemPaletteTest {
         JUnitUtil.dispose(editor);
     }
 
+    protected static ItemPalette getItemPalette() {
+        ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
+        return ItemPalette.getDefault("ItemPalette", editor);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

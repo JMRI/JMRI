@@ -24,6 +24,14 @@ public class BackgroundItemPanelTest {
         JUnitUtil.dispose(df);
     }
 
+    @Test
+    public void testShow() {
+        ItemPaletteTest.getItemPalette();
+        ItemPanel panel = ItemPalette._tabIndex.get("Background");
+        Assert.assertNotNull("exists", panel);
+        panel.init();
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

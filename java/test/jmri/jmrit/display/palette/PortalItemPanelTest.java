@@ -24,6 +24,15 @@ public class PortalItemPanelTest {
         JUnitUtil.dispose(df);
     }
 
+    @Test
+    public void testShow() {
+        ItemPaletteTest.getItemPalette();
+        ItemPanel panel = ItemPalette._tabIndex.get("Portal");
+        Assert.assertNotNull("exists", panel);
+        panel.init();
+    }
+
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

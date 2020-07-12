@@ -34,6 +34,14 @@ public class MemoryItemPanelTest {
         JUnitUtil.dispose(editor);
     }
 
+    @Test
+    public void testShow() {
+        ItemPalette palette = ItemPaletteTest.getItemPalette();
+        ItemPanel panel = palette._tabIndex.get("Memory");
+        Assert.assertNotNull("exists", panel);
+        panel.init();
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
