@@ -374,6 +374,8 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         
         // First, we get a dialog that lets us select which action to add
         JDialogOperator addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
+        new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.COMMON);
+        new JComboBoxOperator(addItemDialog, 1).selectItem("If then else");
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
         // Then we get a dialog that lets us set the system name, user name
@@ -382,6 +384,8 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
+        Assert.assertEquals("Action is correct", "If E then A1 else A2",
+                conditionalNG.getChild(0).getConnectedSocket().getLongDescription());
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
         
         
@@ -476,6 +480,8 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initLogixNGManager();
         
+//        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
+        
         InstanceManager.getDefault(UserPreferencesManager.class)
                 .setSimplePreferenceState(ConditionalNGEditor.class.getName()+".AutoSystemName", true);
         
@@ -497,6 +503,6 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableActionTest.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableActionTest.class);
 
 }
