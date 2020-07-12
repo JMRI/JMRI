@@ -135,7 +135,7 @@ public class LoadAndStoreTestBase {
                 // If here, we either have a line that ends with --> or we have reached endf of file
                 if (fileStream1.readLine() == null) break;
                 
-                // If here, we have a line that ends with --> or we have reached endf of file
+                // If here, we have a line that ends with --> or we have reached end of file
                 continue;
             }
             
