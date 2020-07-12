@@ -3054,16 +3054,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _printed;
     }
 
-    /**
-     * Deprecated, kept for user scripts. Use isPrinted()
-     *
-     * @return true if the train manifest was printed.
-     */
-    @Deprecated
-    public boolean getPrinted() {
-        return isPrinted();
-    }
-
     protected RouteLocation _trainIconRl = null; // saves the icon current route
                                                  // location
 
