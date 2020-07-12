@@ -785,6 +785,8 @@ public class LayoutTurntable extends LayoutTrack {
          * @param turnoutName the turnout name
          * @param state       its state
          */
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", 
+                justification="2nd check of turnoutName is considered redundant by SpotBugs, but required by ecj") // temporary
         public void setTurnout(@Nonnull String turnoutName, int state) {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
@@ -803,7 +805,7 @@ public class LayoutTurntable extends LayoutTrack {
                 namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
             }
             if (turnout != null && (namedTurnout == null || namedTurnout.getBean() != turnout)) {
-                if (!turnoutName.isEmpty()) {
+                if (turnoutName != null && !turnoutName.isEmpty()) {
                     namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
                     turnout.addPropertyChangeListener(mTurnoutListener, turnoutName, "Layout Editor Turntable");
                 }
