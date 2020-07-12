@@ -2431,12 +2431,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see {@link #remove()} - temporary, as should be in view
-     */
-    // public void dispose() {}
-
-    /**
      * Remove this object from display and persistance.
      */
     public void remove() {
