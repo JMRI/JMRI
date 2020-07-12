@@ -368,9 +368,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     private final boolean useBlockSpeed = false;
     
-    // temporary reference to the Editor that will eventually be part of View
-    // private final jmri.jmrit.display.models.LayoutEditorDialogs.LayoutTurnoutEditor editor;
-
     /**
      * {@inheritDoc}
      */
@@ -1876,27 +1873,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
     public boolean isMainline() {
         return (isMainlineA() || isMainlineB() || isMainlineC() || isMainlineD());
     }
-
-//     public void setCoordsA(@Nonnull Point2D p) {
-//         log.debug("temporary setCoordsA should have been called through View");
-//         models.getLayoutTurnoutView(this).setCoordsA(p);    
-//     }
-// 
-//     public void setCoordsB(Point2D p) {
-//         log.debug("temporary setCoordsB should have been called through View");
-//         models.getLayoutTurnoutView(this).setCoordsB(p);    
-//     }
-// 
-//     public void setCoordsC(Point2D p) {
-//         log.debug("temporary setCoordsC should have been called through View");
-//         models.getLayoutTurnoutView(this).setCoordsC(p);    
-//     }
-// 
-//     public void setCoordsD(Point2D p) {
-//         log.debug("temporary setCoordsD should have been called through View");
-//         models.getLayoutTurnoutView(this).setCoordsD(p);    
-//     }
-
 
     /**
      * Activate/Deactivate turnout to redraw when turnout state changes
