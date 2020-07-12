@@ -9,16 +9,12 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
 
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.*;
 import jmri.util.JmriJFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Show the action/expression tree.
@@ -259,6 +255,6 @@ public class TreeViewer extends JmriJFrame {
     }
     
     
-//    private final static Logger log = LoggerFactory.getLogger(TreeViewer.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreeViewer.class);
 
 }

@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
-import javax.swing.BorderFactory;
+import javax.swing.*;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -117,7 +117,8 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
             @Override
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
-                    return "";  // no heading on "Edit"
+                    return Bundle.getMessage("ColumnHeadMenu");     // This makes it easier to test the table
+//                    return "";  // no heading on "Edit"
                 }
                 if (col == ENABLECOL) {
                     return enabledString;
@@ -1033,29 +1034,31 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
         if (_editMode == EditMode.TREEEDIT) {
             _logixNGEdit = new LogixNGEditor(f, m, sName);
             _inEditMode = true;
-            _logixNGEdit.addLogixNGEventListener(new LogixNGEditor.LogixNGEventListener() {
-                @Override
-                public void logixNGEventOccurred() {
-                    String lgxName = sName;
-                    _logixNGEdit.logixData.forEach((key, value) -> {
-                        if (key.equals("Finish")) {                  // NOI18N
-                            _logixNGEdit = null;
-                            _inEditMode = false;
-                            _curLogixNG.activateLogixNG();
-                            f.setVisible(true);
-                        } else if (key.equals("Delete")) {           // NOI18N
-                            deletePressed(value);
-                        } else if (key.equals("chgUname")) {         // NOI18N
-                            LogixNG x = _logixNG_Manager.getBySystemName(lgxName);
-                            if (x == null) {
-                                log.error("Found no logixNG for name {} when changing user name (2)", lgxName);
-                                return;
-                            }
-                            x.setUserName(value);
-                            m.fireTableDataChanged();
+            
+            _logixNGEdit.addLogixNGEventListener(() -> {
+                String lgxName = sName;
+                _logixNGEdit.logixData.forEach((key, value) -> {
+                    if (key.equals("Finish")) {                  // NOI18N
+                        _logixNGEdit = null;
+                        _inEditMode = false;
+                        
+//                        _curLogixNG.setEnabled(true);
+//                        _curLogixNG.getConditionalNG(0).setEnabled(true);
+//                        log.warn("zxc Enable LogixNG: {}", _curLogixNG.getSystemName());
+//                        _curLogixNG.activateLogixNG();
+                        f.setVisible(true);
+                    } else if (key.equals("Delete")) {           // NOI18N
+                        deletePressed(value);
+                    } else if (key.equals("chgUname")) {         // NOI18N
+                        LogixNG x = _logixNG_Manager.getBySystemName(lgxName);
+                        if (x == null) {
+                            log.error("Found no logixNG for name {} when changing user name (2)", lgxName);
+                            return;
                         }
-                    });
-                }
+                        x.setUserName(value);
+                        m.fireTableDataChanged();
+                    }
+                });
             });
 /*
             ConditionalNG conditionalNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName(sName);

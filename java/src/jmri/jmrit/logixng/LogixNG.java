@@ -110,12 +110,6 @@ public interface LogixNG extends Base, NamedBean {
     public void execute();
 
     /**
-     * Is this LogixNG active?
-     */
-    @Override
-    public boolean isActive();
-
-    /**
      * Activate the LogixNG, starts LogixNG processing by connecting all inputs that
      * are included the ConditionalNGs in this LogixNG.
      * <p>

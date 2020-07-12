@@ -11,6 +11,7 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -28,9 +29,6 @@ import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Editor for LogixNG
@@ -434,42 +432,45 @@ public final class LogixNGEditor {
         }
         
         // make an Add Item Frame
-        showAddLogixNGFrame();  // NOI18N
-        
-        if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
-            _systemName.setText(InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
+        if (showAddLogixNGFrame()) {
+            if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
+                _systemName.setText(InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
+            }
+
+            // Create ConditionalNG
+            _curConditionalNG =
+                    InstanceManager.getDefault(ConditionalNG_Manager.class)
+                            .createConditionalNG(_systemName.getText(), _addUserName.getText());
+
+            if (_curConditionalNG == null) {
+                // should never get here unless there is an assignment conflict
+                log.error("Failure to create ConditionalNG"); // NOI18N
+                return;
+            }
+            // add to LogixNG at the end of the calculate order
+            _curLogixNG.addConditionalNG(_curConditionalNG);
+            conditionalNGTableModel.fireTableRowsInserted(_numConditionalNGs, _numConditionalNGs);
+            _conditionalRowNumber = _numConditionalNGs;
+            _numConditionalNGs++;
+            _showReminder = true;
+            makeEditConditionalNGWindow();
         }
-        
-        // Create ConditionalNG
-        _curConditionalNG =
-                InstanceManager.getDefault(ConditionalNG_Manager.class)
-                        .createConditionalNG(_systemName.getText(), _addUserName.getText());
-        
-        if (_curConditionalNG == null) {
-            // should never get here unless there is an assignment conflict
-            log.error("Failure to create ConditionalNG"); // NOI18N
-            return;
-        }
-        // add to LogixNG at the end of the calculate order
-        _curLogixNG.addConditionalNG(_curConditionalNG);
-        conditionalNGTableModel.fireTableRowsInserted(_numConditionalNGs, _numConditionalNGs);
-        _conditionalRowNumber = _numConditionalNGs;
-        _numConditionalNGs++;
-        _showReminder = true;
-        makeEditConditionalNGWindow();
     }
 
     /**
      * Create or edit action/expression dialog.
      */
-    void showAddLogixNGFrame() {
-        JDialog frame  = new JDialog(
+    boolean showAddLogixNGFrame() {
+        
+        AtomicBoolean result = new AtomicBoolean(false);
+        
+        JDialog dialog  = new JDialog(
                 _editLogixNGFrame,
-                Bundle.getMessage("AddLogixNGDialogTitle"),
+                Bundle.getMessage("AddConditionalNGDialogTitle"),
                 true);
 //        frame.addHelpMenu(
 //                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
-        Container contentPanel = frame.getContentPane();
+        Container contentPanel = dialog.getContentPane();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         JPanel p;
@@ -534,7 +535,7 @@ public final class LogixNGEditor {
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);
         cancel.addActionListener((ActionEvent e) -> {
-            frame.dispose();
+            dialog.dispose();
         });
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
         cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
@@ -544,16 +545,17 @@ public final class LogixNGEditor {
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
                 prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
             });
-            frame.dispose();
+            result.set(true);
+            dialog.dispose();
         });
         create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
         
         panel5.add(create);
 
-        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                frame.dispose();
+                dialog.dispose();
             }
         });
 
@@ -563,15 +565,17 @@ public final class LogixNGEditor {
             autoSystemName();
         });
 //        addLogixNGFrame.setLocationRelativeTo(component);
-        frame.setLocationRelativeTo(null);
-        frame.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.pack();
         
         _autoSystemName.setSelected(true);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
         });
         
-        frame.setVisible(true);
+        dialog.setVisible(true);
+        
+        return result.get();
     }
     
     /**
@@ -610,30 +614,7 @@ public final class LogixNGEditor {
             _inEditMode = true;
             
             final LogixNGEditor logixNGEditor = this;
-            _treeEdit.addLogixNGEventListener(new ConditionalNGEditor.LogixNGEventListener() {
-                @Override
-                public void logixNGEventOccurred() {
-                    String lgxName = _curLogixNG.getSystemName();
-                    _treeEdit.logixNGData.forEach((key, value) -> {
-                        if (key.equals("Finish")) {                  // NOI18N
-                            _treeEdit = null;
-                            _inEditMode = false;
-                            _curLogixNG.setEnabled(true);
-                            logixNGEditor.bringToFront();
-                        } else if (key.equals("Delete")) {           // NOI18N
-                            deletePressed();
-                        } else if (key.equals("chgUname")) {         // NOI18N
-                            LogixNG x = _logixNG_Manager.getBySystemName(lgxName);
-                            if (x == null) {
-                                log.error("Found no logixNG for name {} when changing user name (2)", lgxName);
-                                return;
-                            }
-                            x.setUserName(value);
-                            beanTableDataModel.fireTableDataChanged();
-                        }
-                    });
-                }
-            });
+            _treeEdit.addLogixNGEventListener(new LogixNGEventListenerImpl(logixNGEditor));
 //        }
     }
     
@@ -1013,6 +994,39 @@ public final class LogixNGEditor {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(LogixNGEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGEditor.class);
+
+    private class LogixNGEventListenerImpl implements ConditionalNGEditor.LogixNGEventListener {
+
+        private final LogixNGEditor _logixNGEditor;
+        
+        public LogixNGEventListenerImpl(LogixNGEditor logixNGEditor) {
+            this._logixNGEditor = logixNGEditor;
+        }
+        
+        @Override
+        public void logixNGEventOccurred() {
+            String lgxName = _curLogixNG.getSystemName();
+            _treeEdit.logixNGData.forEach((key, value) -> {
+                if (key.equals("Finish")) {                  // NOI18N
+                    _treeEdit = null;
+                    _inEditMode = false;
+                    _curLogixNG.setEnabled(true);
+                    _logixNGEditor.bringToFront();
+                    if (_curLogixNG.isEnabled()) _curLogixNG.activateLogixNG();
+                } else if (key.equals("Delete")) {           // NOI18N
+                    deletePressed();
+                } else if (key.equals("chgUname")) {         // NOI18N
+                    LogixNG x = _logixNG_Manager.getBySystemName(lgxName);
+                    if (x == null) {
+                        log.error("Found no logixNG for name {} when changing user name (2)", lgxName);
+                        return;
+                    }
+                    x.setUserName(value);
+                    beanTableDataModel.fireTableDataChanged();
+                }
+            });
+        }
+    }
 
 }

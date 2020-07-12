@@ -2,9 +2,15 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import jmri.InstanceManager;
+
+import javax.swing.*;
+import javax.swing.tree.TreePath;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.digital.actions.ActionTurnout;
+import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;
 import jmri.util.junit.rules.*;
@@ -15,15 +21,8 @@ import org.junit.Rule;
 import org.junit.jupiter.api.*;
 import org.junit.rules.Timeout;
 
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JMenuBarOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.operators.*;
+import org.openide.util.Exceptions;
 
 
 /*
@@ -148,8 +147,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         jmri.util.swing.JemmyUtil.pressButton(jf,"New ConditionalNG");
         
         
-//        frame = JFrameOperator.waitJFrame("Add LogixNG", true, true);  // NOI18N
-        JDialogOperator addDialog = new JDialogOperator("Add LogixNG");  // NOI18N
+        JDialogOperator addDialog = new JDialogOperator("Add ConditionalNG");  // NOI18N
         new JCheckBoxOperator(addDialog, 0).clickMouse();
         new JButtonOperator(addDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
@@ -271,11 +269,6 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JUnitUtil.dispose(logixNGFrame);
     }
     
-//    @Test
-//    public void testLogixNGEditor() {
-//        
-//    }
-
     Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
@@ -287,7 +280,193 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         t.start();
         return t;
     }
-
+    
+    
+    // Test that it's possible to
+    // * Add a LogixNG
+    // * Enable the LogixNG
+    // * Add a ConditionalNG
+    // * Add a IfThenElse
+    // * Add a ExpressionSensor
+    // * Add a ActionTurnout
+    // After that, test that the LogixNG is executed properly
+    @Test
+    public void testAddAndRun() throws JmriException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
+        
+        // * Add a LogixNG
+        LogixNGTableAction logixNGTable = (LogixNGTableAction) a;
+        
+        logixNGTable.actionPerformed(null); // show table
+        JFrameOperator logixNGFrameOperator = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
+        
+        logixNGTable.addPressed(null);
+        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNG"));  // NOI18N
+        Assert.assertNotNull("Found Add LogixNG Frame", addFrame);  // NOI18N
+        
+        new JTextFieldOperator(addFrame, 0).setText("IQ105");  // NOI18N
+        new JTextFieldOperator(addFrame, 1).setText("LogixNG 105");  // NOI18N
+        new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        
+        LogixNG logixNG = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getLogixNG("LogixNG 105");  // NOI18N
+        Assert.assertNotNull("Verify IQ105 Added", logixNG);  // NOI18N
+        
+        
+        // Close Edit LogixNG frame by click on button "Done" on the EditLogixNG frame
+        String title = String.format("Edit LogixNG %s - %s", logixNG.getSystemName(), logixNG.getUserName());
+        JFrame editLogixNGframe = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
+        JFrameOperator jf2 = new JFrameOperator(editLogixNGframe);
+        jmri.util.swing.JemmyUtil.pressButton(jf2,Bundle.getMessage("ButtonDone"));
+        
+        // Operate on the table
+        JTableOperator tableOperator = new JTableOperator(logixNGFrameOperator);
+        int columnSystemName = tableOperator.findColumn("System name");
+        int columnEnabled = tableOperator.findColumn("Enabled");
+        int columnMenu = tableOperator.findColumn("Menu");
+        int row = tableOperator.findCellRow("IQ105", columnSystemName, 0);
+        
+        Assert.assertFalse("LogixNG is disabled on creation", logixNG.isEnabled());
+        
+        // Enable the LogixNG
+        tableOperator.setValueAt(true, row, columnEnabled);
+        
+        Assert.assertTrue("LogixNG has been enabled", logixNG.isEnabled());
+        
+        
+        // Edit the LogixNG
+        tableOperator.setValueAt("Edit", row, columnMenu);
+        
+        // Open Edit ConditionalNG  frame
+        title = String.format("Edit LogixNG %s - %s", logixNG.getSystemName(), logixNG.getUserName());
+        editLogixNGframe = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
+        
+        
+        // Click button "New ConditionalNG" on the EditLogixNG frame
+        JFrameOperator jf = new JFrameOperator(editLogixNGframe);
+        jmri.util.swing.JemmyUtil.pressButton(jf,"New ConditionalNG");
+        
+        JDialogOperator addDialog = new JDialogOperator("Add ConditionalNG");  // NOI18N
+        new JTextFieldOperator(addDialog, 0).setText("IQC105");  // NOI18N
+        new JTextFieldOperator(addDialog, 1).setText("ConditionalNG 105");  // NOI18N
+        new JButtonOperator(addDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        
+        ConditionalNG conditionalNG = jmri.InstanceManager.getDefault(ConditionalNG_Manager.class).getConditionalNG("ConditionalNG 105");  // NOI18N
+        Assert.assertNotNull("Verify IQC105 Added", conditionalNG);  // NOI18N
+        
+        
+        // https://www.javatips.net/api/org.netbeans.jemmy.operators.jtreeoperator
+        
+        // Get tree edit window
+        title = String.format("Edit ConditionalNG %s - %s", conditionalNG.getSystemName(), conditionalNG.getUserName());
+        JFrameOperator treeFrame = new JFrameOperator(title);
+        JTreeOperator jto = new JTreeOperator(treeFrame);
+        Assert.assertEquals("Initial number of rows in the tree", 1, jto.getRowCount());
+        
+        
+        // We click on the root female socket to open the popup menu
+        TreePath tp = jto.getPathForRow(0);
+        
+        JPopupMenu jpm = jto.callPopupOnPath(tp);
+        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add");
+        
+        // First, we get a dialog that lets us select which action to add
+        JDialogOperator addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
+        new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        
+        // Then we get a dialog that lets us set the system name, user name
+        // and configure the action
+        addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
+        new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        
+        Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
+        Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
+        
+        
+        // We click on the IfThenElse if-expression female socket to open the popup menu
+        tp = jto.getPathForRow(1);
+        
+        jpm = jto.callPopupOnPath(tp);
+        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add");
+        
+        // First, we get a dialog that lets us select which action to add
+        addItemDialog = new JDialogOperator("Add ? ");  // NOI18N
+        // Select ExpressionSensor
+        new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.ITEM);
+        new JComboBoxOperator(addItemDialog, 1).selectItem("Get sensor");
+        new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        
+        // Then we get a dialog that lets us set the system name, user name
+        // and configure the expression
+        addItemDialog = new JDialogOperator("Add ? ");  // NOI18N
+        
+        // Select to use sensor IS1
+        new JComboBoxOperator(addItemDialog, 0).setSelectedIndex(1);
+        new JComboBoxOperator(addItemDialog, 1).setSelectedItem(Is_IsNot_Enum.IS);
+        new JComboBoxOperator(addItemDialog, 2).setSelectedItem(ExpressionSensor.SensorState.ACTIVE);
+        new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        
+        Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
+        Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
+        Assert.assertEquals("Expression is correct", "Sensor IS1 is Active",
+                conditionalNG.getChild(0).getConnectedSocket().getChild(0).getConnectedSocket().getLongDescription());
+        
+        
+        // We click on the IfThenElse then-action female socket to open the popup menu
+        tp = jto.getPathForRow(2);
+        
+        jpm = jto.callPopupOnPath(tp);
+        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add");
+        
+        // First, we get a dialog that lets us select which action to add
+        addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
+        // Select ExpressionSensor
+        new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.ITEM);
+        new JComboBoxOperator(addItemDialog, 1).selectItem("Set turnout");
+        new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        
+        // Then we get a dialog that lets us set the system name, user name
+        // and configure the action
+        addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
+        
+        // Select to use sensor IS1
+        new JComboBoxOperator(addItemDialog, 0).setSelectedIndex(1);
+        new JComboBoxOperator(addItemDialog, 1).setSelectedItem(ActionTurnout.TurnoutState.THROWN);
+        new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
+        
+        Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
+        Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
+        Assert.assertEquals("Expression is correct", "Set turnout IT1 to Thrown",
+                conditionalNG.getChild(0).getConnectedSocket().getChild(1).getConnectedSocket().getLongDescription());
+        
+        
+        // Close EditConditionalNG window
+        JFrameOperator editConditionalNGFrameOperator = new JFrameOperator("Edit ConditionalNG " + logixNG.getConditionalNG(0));
+        new JMenuBarOperator(editConditionalNGFrameOperator).pushMenu("File|Close Window", "|");
+        
+        
+        logixNG.getConditionalNG(0).setRunOnGUIDelayed(false);
+        
+        // Test that the LogixNG is running
+        sensor1.setState(Sensor.INACTIVE);
+        turnout1.setState(Turnout.CLOSED);
+        Assert.assertTrue("Sensor is inactive", sensor1.getState() == Sensor.INACTIVE);
+        Assert.assertTrue("Turnout is closed", turnout1.getState() == Turnout.CLOSED);
+        
+        // Activate sensor. This should throw the turnout
+        sensor1.setState(Sensor.ACTIVE);
+        Assert.assertTrue("Sensor is active", sensor1.getState() == Sensor.ACTIVE);
+        Assert.assertTrue("Turnout is thrown", turnout1.getState() == Turnout.THROWN);
+        
+        // Close Edit LogixNG frame
+        JUnitUtil.dispose(editLogixNGframe);
+        
+        // Close LogixNG frame
+        logixNGFrameOperator.dispose();
+    }
+    
     @BeforeEach
     @Override
     public void setUp() {
@@ -295,7 +474,11 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-
+        jmri.util.JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(UserPreferencesManager.class)
+                .setSimplePreferenceState(ConditionalNGEditor.class.getName()+".AutoSystemName", true);
+        
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ101", "LogixNG 101");
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ102", "LogixNG 102");
         InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ103", "LogixNG 103");
@@ -312,4 +495,8 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
+    
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableActionTest.class);
+
 }

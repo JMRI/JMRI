@@ -20,9 +20,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Editor of ConditionalNG
  * 
@@ -241,12 +238,9 @@ public class ConditionalNGEditor extends TreeViewer {
                 femaleSocket.getConnectableClasses();
         
         _categoryComboBox.removeAllItems();
-//        for (Category item : Category.values()) {
-//        for (Category item : connectableClasses.keySet()) {
         List<Category> list = new ArrayList<>(connectableClasses.keySet());
         Collections.sort(list);
         for (Category item : list) {
-//            log.error("addPressed: item: {}", item.name());
             _categoryComboBox.addItem(item);
         }
         
@@ -344,7 +338,7 @@ public class ConditionalNGEditor extends TreeViewer {
         panel5.add(create);
         create.addActionListener((ActionEvent e) -> {
             cancelAddPressed(null);
-           
+            
             SwingConfiguratorInterface swingConfiguratorInterface =
                     _swingConfiguratorComboBox.getItemAt(_swingConfiguratorComboBox.getSelectedIndex());
 //            System.err.format("swingConfiguratorInterface: %s%n", swingConfiguratorInterface.getClass().getName());
@@ -360,13 +354,6 @@ public class ConditionalNGEditor extends TreeViewer {
         selectItemTypeDialog.setLocationRelativeTo(null);
         selectItemTypeDialog.pack();
         selectItemTypeDialog.setVisible(true);
-/*        
-        if (!femaleSocket.isConnected()) {
-            addItemFrame = selectItemTypeFrame;
-        } else {
-            editLogixNGFrame = selectItemTypeFrame;
-        }
-*/        
     }
     
     /**
@@ -414,6 +401,7 @@ public class ConditionalNGEditor extends TreeViewer {
                     );
                     l.treeNodesChanged(tme);
                 }
+                tree.expandPath(path);
                 tree.updateUI();
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
                     prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
@@ -800,11 +788,26 @@ public class ConditionalNGEditor extends TreeViewer {
             setOpaque(true);
             setLightWeightPopupEnabled(true);
             
+            final PopupMenu popupMenu = this;
+            
             _tree.addMouseListener(
                     new MouseAdapter() {
+                        
+                        // On Windows, the popup is opened on mousePressed,
+                        // on some other OS, the popup is opened on mouseReleased
+                        
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            openPopupMenu(e);
+                        }
+                        
                         @Override
                         public void mouseReleased(MouseEvent e) {
-                            if (e.isPopupTrigger()) {
+                            openPopupMenu(e);
+                        }
+                        
+                        private void openPopupMenu(MouseEvent e) {
+                            if (e.isPopupTrigger() && !popupMenu.isVisible()) {
                                 // Get the row the user has clicked on
                                 TreePath path = _tree.getClosestPathForLocation(e.getX(), e.getY());
                                 if (path != null) {
@@ -862,11 +865,6 @@ public class ConditionalNGEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_EDIT:
                     editPressed(_currentFemaleSocket, _currentPath);
-//                    EditMaleSocketDialog editDialog =
-//                            new EditMaleSocketDialog(_currentFemaleSocket);
-//                    editDialog.init(((Component)e.getSource()).getX()+_x, ((Component)e.getSource()).getY()+_y, (Component)e.getSource());
-//                    dialog.init(_x, _y);
-//                    dialog.setVisible(true);
                     break;
                     
                 case ACTION_COMMAND_REMOVE:
@@ -923,10 +921,9 @@ public class ConditionalNGEditor extends TreeViewer {
             }
             tree.updateUI();
         }
-        
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ConditionalNGEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalNGEditor.class);
 
 }
