@@ -13,7 +13,7 @@ It's in no particular order, items are removed as done, so please don't consider
  - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
  - LE-move-content-MVC-working-on-3 (tagged as LE-MVC-3)
  - LE-move-content-MVC-working-on-4 (tagged as LE-MVC-4)
- - LE-move-content-MVC-working-on-5 - #8584, #8591, #8609 merged
+ - LE-move-content-MVC-working-on-5 - merged to July 10, 2020
  
  - LE-MVC-head - built from the working development branches for [Jenkins build](https://builds.jmri.org/jenkins/job/testreleases/job/layouteditor/)
 ----
