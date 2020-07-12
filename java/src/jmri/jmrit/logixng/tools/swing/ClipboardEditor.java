@@ -4,9 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -14,11 +12,7 @@ import javax.swing.tree.*;
 
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.UserPreferencesManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.swing.SwingTools;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
