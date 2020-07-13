@@ -1,6 +1,6 @@
-# (Proposed) JMRI Release Methodology
+# JMRI Release Methodology
 
-On the jmri-developers list, it's been proposed to move toward a release process aligned with [semantic versioning](https://semver.org) in which an I.J.K release number indicates the kinds of included changes:
+Starting in July 2020, JRMI has moved toward a release process aligned with [semantic versioning](https://semver.org) in which an I.J.K release number indicates the kinds of included changes:
 
  - Changes that can _break_ outside code cause the first number (I) to be incremented and the other to reset to zero.
  - Other changes that appear in the visible API will increment the 2nd number (J) and reset the third
@@ -15,15 +15,15 @@ JMRI installers can be built in four different scenarios:
 * Release build distributed as installers on the JMRI website
 * _Recommended_ installer builds distributed on the JMRI website and promoted as the main supported version until the next _recommended_ release
 
-Developer builds will identify themselves with versions strings like `JMRI-dev-major+private+jake+20200625T1452Z+Rbab33d0f33` where `dev-major` denotes the branch, `private` denotes a developers own private build, `jake` the local username of the specific developer, and `+R` is followed by the first eight digits of the SHA of HEAD as built.
+Jenkins 'nightly' builds will be made from each of three branches (see below). They will identify themselves with version strings like `JMRI-5.4.3plus+CI+Jenkins+20200625T1452Z+Rbab33d0f33` where `5.4.3` is the most recent release on the branch, `plus` denotes that there's been extension past the release, `CI+Jenkins` that this was built by the Jenkins CI environment, `20200625T1452Z` is the build date and time, and `+R` is followed by the first eight digits of the SHA of HEAD as built.
 
-Jenkins 'nightly' builds will identify themselves with version strings like `JMRI-dev-minor+CI+Jenkins+20200625T1452Z+Rbab33d0f33` where `dev-major` denotes the branch, `Jenkins` that this was built by the Jenkins CI environment, and `+R` is followed by the first eight digits of the SHA of HEAD as built.
+Private builds by developers will follow a similar pattern, with `CI` replaced by `private` and `Jenkins` replaced by the developers local ID.
 
 A released version is denoted as a `vI.J.K` (i.e. `v21.4.2`) tag in our common repository.
 
-Distributed installers built from a released version will identify themselves with version strings like `JMRI.21.4.2+Rbab3d0f33` where the `+R` indicates 8 digits of the tag SHA.  
+Distributed installers built from a released version will identify themselves with version strings like `21.4.2+Rbab3d0f33` and file names like `JMRI-21.4.2+Rbab3d0f33`.  
 
-Periodically, a release version is flagging as a default for new/novice users to install by default.  It will be referred to by year and month: YYYY-MM, i.e 2020-07. Its contents will be identical to an already-released version.  This will be denoted as a `rYYYY-MM` (i.e. `r2020-07`) tag in our common repository. Distributed installers will identify themselves using first the date, then the underlying release, i.e. `JMRI.2020-07-21.4.2`
+Periodically, a release version is flagging as a default for new/novice users to install by default.  It will be referred to by year and month: `YYYY-MM`, i.e `2020-07`. Its contents will be identical to an already-released version.  This will be denoted as a `rYYYY-MM` (i.e. `r2020-07`) tag in our common repository. Distributed installers will identify themselves using first the date, then the underlying release, i.e. `JMRI.2020-07-21.4.2`.  Note there is no date or SHA term on these.
 
 ## Identifying Change Types
 
@@ -76,6 +76,7 @@ The periodic upward merges are meant to find conflicts where a major change turn
 |           |   `dev-update` |   `dev-minor`  |  `dev-update` |
 | :-----:   |   :----------: |   :----------: |  :----------: |
 | Numbered: |  pre-4.23.2    |   pre-4.25.0   |   pre-6.0.0   |
+|           |                |                |               | 
 |   Fix     |       A        |        A       |      A        |
 |   Fix     |       B        |        B       |      B        |
 |   Feat    |                |        C       |      C        |
@@ -92,8 +93,9 @@ The periodic upward merges are meant to find conflicts where a major change turn
 |           |   `dev-update` |   `dev-minor`  |  `dev-update` |
 | :-----:   |   :----------: |   :----------: |  :----------: |
 | Numbered: |  pre-4.23.3    |   pre-4.25.0   |   pre-6.0.0   |
+|           |                |                |               | 
 |   Pub     |                |     4.25.0     |               | 
-|           |      \|-<       |       <--<     |               |
+|           |      \|-<      |       <--<     |               |
 |           |  pre-4.25.1    |   pre-4.26.0   |               |
 |   Feat    |                |        G       |      G        |
 |  Fix  F   |       H        |        H       |      H        |
@@ -105,6 +107,7 @@ The periodic upward merges are meant to find conflicts where a major change turn
 |           |   `dev-update` |   `dev-minor`  |  `dev-update` |
 | :-----:   |   :----------: |   :----------: |  :----------: |
 | Numbered: |  pre-4.23.3    |   pre-4.25.0   |   pre-6.0.0   |
+|           |                |                |               | 
 |   Pub     |                |     4.25.0     |               | 
 |           |                |   pre-4.25.1   |               |
 |   Feat    |                |        G       |      G        |
@@ -178,52 +181,7 @@ This entire system is well suited to "point" releases to fix things.  For exampl
  - It's a _bug_, so it can be released as 4.23.2 so that people using that as a long-term thing get the fix with minor disruption.
  - But it will also be included in a 4.25.0 and 6.0.0 when those get released, so we can decide when to release them and make them available.
 
-It's even possible to make e.g. 4.23.1.1 with _just_ one specific change, and not the other updates that have accumulated toward 4.23.2 since it was created.
+It's even possible to make e.g. 4.23.1.1 with _just_ one specific change, and not the other updates that have accumulated toward 4.23.2 since it was created. (We expect this to be very rare, as it in some sense breaks the naming pattern and is likely to cause some confusion)
 
 There is no longer an explicit [deprecation cycle](https://www.jmri.org/help/en/html/doc/Technical/RP.shtml#deprecating). One should certain mark parts of the API as deprecated in a update or minor change; that's polite.  But when the change gets into the major branch, the deprecations will have been removed:  That's part of why the changes are considered "breaking changes". Because we're separately releasing versions that have and don't have breaking changes, users can decide when they want to move forward; effectively managing their own deprecation cycles.
-
-## Migration
-
-(This is a temporary section to hold a migration plan.  If/Once we decide to execute, this should be removed from here and made into a JMRI/JMRI Issue to track the work)
-
- - [ ] Get agreement on private/development build naming, at least for the first few
-
-Once we have agreement
- - [ ] update documentation, which adds this to the main web server
- 
-The assumption is that we will start with the new process directly after JMRI 4.20.0 is released. That number makes it serve as both the last production release of the old numbering scheme, while also fitting within the new schema.  This would then be followed by 4.21.1 (the .1 isn't quite right, but we've already seen comments for that name) as the first minor feature release of the new process.
-
- - [ ] Create the new labels
-    - [ ] Check if any of the old labels need to be updated/ superceded
-    - [ ] Update the [documentation](https://www.jmri.org/help/en/html/doc/Technical/gitdeveloper.shtml)
-    
- - [ ] Set Github protections so `master` cannot accidentally be updated by PRs
- 
- - [ ] Create the new branches: (we are temporarily leaving `master` as-is just this one time)
-    - [ ] `dev-major`, `dev-minor` from the current `master` as a HEAD of current development, freezing `master` at that point
-    - [ ] `dev-update` from v4.20 (in case a v4.20.1 is needed quickly)
-    
- - [ ] Figure out how numberings will work in practice for Version.java et al and commit changes as needed to number the three branches as 5.0.0, 4.22.0 and 4.21.1 respectively
- - [ ] Figure out and document how release notes will work across these branches, put that mechanism in place
- - [ ] Update the Jenkins webserver tasks to load the three branches
- - [ ] Update Jenkins to build installers from the head of each branch
- - [ ] Update scripts/HOWTO-Distribution.md
- - [ ] Create a GitHub action CI to check the ability to merge `dev-update` -> `dev-minor`, `dev-update` -> `dev-major` and/or `dev-minor` -> `dev-major` as appropriate
-
- - [ ] (Once it's decided it's ready, based on whatever criteria is chosen) Create and tag release 4.21.1 as the first under this system from the `dev-minor` branch.
-    - [ ] Update `master` and `dev-update` to the released 4.21.1
- 
-What we're trying to avoid is moving the `master` branch pointer backwards in time. This is likely to cause consistency problems for naive Git users. If we need a 4.20.1 (i.e. bug fixes on production), the PR will have to be manually created _on__ the `dev-update` branch this one time, instead of automatically getting it right from the `master`.  After 4.22.0 is created, this system will get `master` into its long-term configuration.
-
-The endpoint of the migration is then:
- - The `dev-update` will have `v4.20` as its head and be marked as pre-4.20.1
- - `dev-minor` will be marked as pre-4.21.1 and will be at the then-current `master`
- - `dev-major` will be marked as pre-5.0.0 and will be at the then-current `master` 
- 
-When eventually there's a decision to create/publish 4.22.0:
- - `master` will be 4.22.0
- - `dev-update` will be `master` (4.22.0) marked as pre-4.22.1
- - `dev-minor` will be `master` (4.22.0) marked as pre-4.23.0
- - `dev-major` will have changes-to-date merged in, but doesn't change label (pre-5.0.0) at this point
- 
  
