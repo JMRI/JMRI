@@ -64,7 +64,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
             return jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
         });
         if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
-            System.err.println("not stabilized after check");
+            log.debug("not stabilized after check");
         }
         
         // and wait yet another 2 sec before writing out
@@ -75,7 +75,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         jmri.util.JUnitUtil.waitFor(()->{return done;});
 
         if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
-            System.err.println("still not stabilized");
+            log.debug(" still not stabilized");
         }
 
         done = false;
@@ -85,7 +85,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         jmri.util.JUnitUtil.waitFor(()->{return done;});
 
         if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
-            System.err.println("nor now");
+            log.debug(" nor now");
         }
     }
      
