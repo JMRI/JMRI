@@ -384,7 +384,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         }
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
+            layoutSlipView.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutSlipNeedsRedraw = true;
             editLayoutSlipNeedsBlockUpdate = true;
         }
@@ -433,7 +433,7 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
         }
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
+            layoutSlipView.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutSlipNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLayoutSlipNeedsBlockUpdate = true;

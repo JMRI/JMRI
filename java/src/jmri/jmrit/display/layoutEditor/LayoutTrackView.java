@@ -386,7 +386,9 @@ abstract public class LayoutTrackView {
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
-    abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected);
+    abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, 
+                                                    boolean useRectangles, 
+                                                    boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
     final protected HitPointType findHitPointType(@Nonnull Point2D p) {

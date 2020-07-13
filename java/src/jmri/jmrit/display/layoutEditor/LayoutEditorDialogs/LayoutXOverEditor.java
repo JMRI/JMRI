@@ -134,7 +134,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         }
         if (!layoutTurnout.getBlockBName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -145,7 +145,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         }
         if (!layoutTurnout.getBlockCName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -156,7 +156,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         }
         if (!layoutTurnout.getBlockDName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }

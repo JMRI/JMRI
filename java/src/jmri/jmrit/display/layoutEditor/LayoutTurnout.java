@@ -1552,7 +1552,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * Set up Layout Block(s) for this Turnout.
      * @param newLayoutBlock the new layout block.
      */
-    public void setLayoutBlock(LayoutBlock newLayoutBlock) {
+    protected void setLayoutBlock(LayoutBlock newLayoutBlock) {
         LayoutBlock blockA = getLayoutBlock();
         LayoutBlock blockB = getLayoutBlockB();
         LayoutBlock blockC = getLayoutBlockC();
@@ -1581,12 +1581,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     && ((blockA == blockB) || (blockA == blockC) || (blockA == blockD))) {
                 blockA.decrementUse();
             }
-            setTrackSegmentBlocks();
         }
     }
 
-    // @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
-    public void setLayoutBlockB(LayoutBlock newLayoutBlock) {
+    protected void setLayoutBlockB(LayoutBlock newLayoutBlock) {
         if (getLayoutBlock() == null) {
             setLayoutBlock(newLayoutBlock);
         }
@@ -1617,15 +1615,13 @@ abstract public class LayoutTurnout extends LayoutTrack {
                         && ((blockB == blockA) || (blockB == blockC) || (blockB == blockD))) {
                     blockB.decrementUse();
                 }
-                setTrackSegmentBlocks();
             }
         } else {
             log.error("{}.setLayoutBlockB({}); not a crossover/slip", getName(), newLayoutBlock.getUserName());
         }
     }
 
-    // @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
-    public void setLayoutBlockC(@CheckForNull LayoutBlock newLayoutBlock) {
+    protected void setLayoutBlockC(@CheckForNull LayoutBlock newLayoutBlock) {
         if (getLayoutBlock() == null) {
             setLayoutBlock(newLayoutBlock);
         }
@@ -1656,15 +1652,13 @@ abstract public class LayoutTurnout extends LayoutTrack {
                         && ((blockC == blockA) || (blockC == blockB) || (blockC == blockD))) {
                     blockC.decrementUse();
                 }
-                setTrackSegmentBlocks();
             }
         } else {
             log.error("{}.setLayoutBlockC({}); not a crossover/slip", getName(), newLayoutBlock.getUserName());
         }
     }
 
-    // @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
-    public void setLayoutBlockD(LayoutBlock newLayoutBlock) {
+    protected void setLayoutBlockD(LayoutBlock newLayoutBlock) {
         if (getLayoutBlock() == null) {
             setLayoutBlock(newLayoutBlock);
         }
@@ -1695,7 +1689,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
                         && ((blockD == blockA) || (blockD == blockB) || (blockD == blockC))) {
                     blockD.decrementUse();
                 }
-                setTrackSegmentBlocks();
             }
         } else {
             log.error("{}.setLayoutBlockD({}); not a crossover/slip", getName(), newLayoutBlock.getUserName());
@@ -1736,13 +1729,13 @@ abstract public class LayoutTurnout extends LayoutTrack {
      *
      * @since 4.11.6
      */
-    void setTrackSegmentBlocks() {
-        // temporary debug level because its called really often
-        log.debug("setTrackSegmentBlocks should have called View instead of TrackSegment (temporary)"
-                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        models.getLayoutTurnoutView(this).setTrackSegmentBlocks();
-    }
+    //void setTrackSegmentBlocks() {
+    //    // temporary debug level because its called really often
+    //    log.debug("setTrackSegmentBlocks should have called View instead of TrackSegment (temporary)"
+    //            , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
+    //        );
+    //    models.getLayoutTurnoutView(this).setTrackSegmentBlocks();
+    //}
 
     /**
      * Update the block for a track segment that provides a short connection
@@ -1761,13 +1754,13 @@ abstract public class LayoutTurnout extends LayoutTrack {
      *                    connections which require a track segment length
      *                    calculation.
      */
-    void setTrackSegmentBlock(HitPointType pointType, boolean isAutomatic) {
-        // temporary debug as this happens a LOT
-        log.debug("setTrackSegmentBlock should have called View instead of TrackSegment (temporary)"
-                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        models.getLayoutTurnoutView(this).setTrackSegmentBlock(pointType, isAutomatic);
-    }
+    //void setTrackSegmentBlock(HitPointType pointType, boolean isAutomatic) {
+    //    // temporary debug as this happens a LOT
+    //    log.debug("setTrackSegmentBlock should have called View instead of TrackSegment (temporary)"
+    //            , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
+    //        );
+    //    models.getLayoutTurnoutView(this).setTrackSegmentBlock(pointType, isAutomatic);
+    //}
 
     /**
      * Test if turnout legs are mainline track or not.
@@ -2423,10 +2416,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
             return;
 
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class
-            ).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class
-            ).isSignalMastUsed(signalMast)) {
-                SignallingGuiTools.removeSignalMastLogic(null, signalMast);
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() 
+                && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
+                
+            SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
 

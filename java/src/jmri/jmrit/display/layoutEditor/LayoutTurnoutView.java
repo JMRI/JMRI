@@ -930,18 +930,26 @@ public class LayoutTurnoutView extends LayoutTrackView {
      */
     public void setLayoutBlock(LayoutBlock newLayoutBlock) {
         turnout.setLayoutBlock(newLayoutBlock);
+        // correct any graphical artifacts
+        setTrackSegmentBlocks();
     }
 
     public void setLayoutBlockB(LayoutBlock newLayoutBlock) {
         turnout.setLayoutBlockB(newLayoutBlock);
+        // correct any graphical artifacts
+        setTrackSegmentBlocks();
     }
 
     public void setLayoutBlockC(LayoutBlock newLayoutBlock) {
         turnout.setLayoutBlockC(newLayoutBlock);
+        // correct any graphical artifacts
+        setTrackSegmentBlocks();
     }
 
     public void setLayoutBlockD(LayoutBlock newLayoutBlock) {
         turnout.setLayoutBlockD(newLayoutBlock);
+        // correct any graphical artifacts
+        setTrackSegmentBlocks();
     }
 
     public void setLayoutBlockByName(@Nonnull String name) {
@@ -976,7 +984,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
     }
 
     /**
-     * Update the block for a track segment that provides a short connection
+     * Update the block for a track segment that provides a (graphically) short connection
      * between a turnout and another object, normally another turnout. These are
      * hard to see and are frequently missed.
      * <p>
