@@ -168,4 +168,36 @@ public interface LayoutModels {
     
     public int computeDirectionFromCenter( @Nonnull PositionablePoint p, @Nonnull LayoutTrack trk1, @Nonnull HitPointType h1);
 
+    default public int computeDirectionAB( @Nonnull LayoutTurnout track) {
+        LayoutTurnoutView tv = getLayoutTurnoutView(track);
+        return jmri.Path.computeDirection(tv.getCoordsA(), tv.getCoordsB());
+    }
+
+    default public int computeDirectionAC( @Nonnull LayoutTurnout track) {
+        LayoutTurnoutView tv = getLayoutTurnoutView(track);
+        return jmri.Path.computeDirection(tv.getCoordsA(), tv.getCoordsC());
+    }
+
+    default public int computeDirectionAD( @Nonnull LayoutTurnout track) {
+        LayoutTurnoutView tv = getLayoutTurnoutView(track);
+        return jmri.Path.computeDirection(tv.getCoordsA(), tv.getCoordsD());
+    }
+
+    default public int computeDirectionBC( @Nonnull LayoutTurnout track) {
+        LayoutTurnoutView tv = getLayoutTurnoutView(track);
+        return jmri.Path.computeDirection(tv.getCoordsB(), tv.getCoordsC());
+    }
+
+    default public int computeDirectionBD( @Nonnull LayoutTurnout track) {
+        LayoutTurnoutView tv = getLayoutTurnoutView(track);
+        return jmri.Path.computeDirection(tv.getCoordsB(), tv.getCoordsD());
+    }
+
+    default public int computeDirectionCD( @Nonnull LayoutTurnout track) {
+        LayoutTurnoutView tv = getLayoutTurnoutView(track);
+        return jmri.Path.computeDirection(tv.getCoordsC(), tv.getCoordsD());
+    }
+
+
+
 }

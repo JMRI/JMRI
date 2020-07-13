@@ -1,6 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
+//import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -1349,7 +1349,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     @CheckForNull
-    public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(HitPointType connectionType) {
         LayoutTrack result = null;
         switch (connectionType) {
             case TURNOUT_A: {
@@ -1372,7 +1372,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
                         getName(), connectionType); // I18IN
                 log.error("will throw {}", errString);
-                throw new jmri.JmriException(errString);
+                throw new IllegalArgumentException(errString);
             }
         }
         return result;
@@ -1462,25 +1462,25 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return (namedLayoutBlockD != null) ? namedLayoutBlockD.getBean() : getLayoutBlock();
     }
 
-    public Point2D getCoordsA() {
-        log.debug("temporary getCoordsA should have been called through View");
-        return models.getLayoutTurnoutView(this).getCoordsA();    
-    }
+    //private Point2D getCoordsA() {
+    //    log.debug("temporary getCoordsA should have been called through View");
+    //    return models.getLayoutTurnoutView(this).getCoordsA();    
+    //}
 
-    public Point2D getCoordsB() {
-        log.debug("temporary getCoordsB should have been called through View");
-        return models.getLayoutTurnoutView(this).getCoordsB();    
-    }
+    //private Point2D getCoordsB() {
+    //    log.debug("temporary getCoordsB should have been called through View");
+    //    return models.getLayoutTurnoutView(this).getCoordsB();    
+    //}
 
-    public Point2D getCoordsC() {
-        log.debug("temporary getCoordsC should have been called through View");
-        return models.getLayoutTurnoutView(this).getCoordsC();    
-    }
+    //private Point2D getCoordsC() {
+    //    log.debug("temporary getCoordsC should have been called through View");
+    //    return models.getLayoutTurnoutView(this).getCoordsC();    
+    //}
 
-    public Point2D getCoordsD() {
-        log.debug("temporary getCoordsD should have been called through View");
-        return models.getLayoutTurnoutView(this).getCoordsD();    
-    }
+    //private Point2D getCoordsD() {
+    //    log.debug("temporary getCoordsD should have been called through View");
+    //    return models.getLayoutTurnoutView(this).getCoordsD();    
+    //}
 
 
     // updates connectivity for blocks assigned to this turnout and connected track segments
@@ -2704,10 +2704,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
         log.trace("     lbB: {}", lbB);
         log.trace("     lbC: {}", lbC);
         log.trace("     lbD: {}", lbD);
-        log.trace("     coordsA: {}", getCoordsA());
-        log.trace("     coordsB: {}", getCoordsB());
-        log.trace("     coordsC: {}", getCoordsC());
-        log.trace("     coordsD: {}", getCoordsD());
 
         if (hasEnteringDoubleTrack() && (lbA != null)) {
             // have a crossover turnout with at least one block, check for multiple blocks
@@ -2718,11 +2714,15 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbB, this);
                     lc = new LayoutConnectivity(lbA, lbB);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AB);
-                    lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsB()));
 
-                    log.trace("getLayoutConnectivity lbA != lbB {}, {}, {}",getCoordsA(), getCoordsB(), 
-                                    Path.computeDirection(getCoordsA(), getCoordsB()));
-                    log.trace("Block boundary  ('{}'<->'{}') found at {}", lbA, lbB, this);
+                    // The following line needed to change, because it uses location of 
+                    // the points on the TurnoutView itself. Change to 
+                    // direction from connections.
+                    //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsB()));
+                    lc.setDirection( models.computeDirectionAB(this) );
+
+                    log.trace("getLayoutConnectivity lbA != lbB");
+                    log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbA, lbB, this);
 
                     results.add(lc);
                 }
@@ -2731,11 +2731,15 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
                     lc = new LayoutConnectivity(lbA, lbC);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
-                    lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
 
-                    log.trace("getLayoutConnectivity lbA != lbC {}, {}, {}",getCoordsA(), getCoordsC(), 
-                                    Path.computeDirection(getCoordsA(), getCoordsC()));
-                    log.trace("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
+                    // The following line needed to change, because it uses location of 
+                    // the points on the TurnoutView itself. Change to 
+                    // direction from connections.
+                    //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
+                    lc.setDirection( models.computeDirectionAC(this) );
+
+                    log.trace("getLayoutConnectivity lbA != lbC");
+                    log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
 
                     results.add(lc);
                 }
@@ -2744,11 +2748,15 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbC, lbD, this);
                     lc = new LayoutConnectivity(lbC, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_CD);
-                    lc.setDirection(Path.computeDirection(getCoordsC(), getCoordsD()));
 
-                    log.trace("getLayoutConnectivity lbC != lbD {}, {}, {}",getCoordsC(), getCoordsD(), 
-                                    Path.computeDirection(getCoordsC(), getCoordsD()));
-                    log.trace("Block boundary  ('{}'<->'{}') found at {}", lbC, lbD, this);
+                    // The following line needed to change, because it uses location of 
+                    // the points on the TurnoutView itself. Change to 
+                    // direction from connections.
+                    //lc.setDirection(Path.computeDirection(getCoordsC(), getCoordsD()));
+                    lc.setDirection( models.computeDirectionCD(this) );
+
+                    log.trace("getLayoutConnectivity lbC != lbD");
+                    log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbC, lbD, this);
 
                     results.add(lc);
                 }
@@ -2757,11 +2765,15 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
                     lc = new LayoutConnectivity(lbB, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
-                    lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
 
-                    log.trace("getLayoutConnectivity lbB != lbD {}, {}, {}",getCoordsB(), getCoordsD(), 
-                                    Path.computeDirection(getCoordsB(), getCoordsD()));
-                    log.trace("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
+                    // The following line needed to change, because it uses location of 
+                    // the points on the TurnoutView itself. Change to 
+                    // direction from connections.
+                    //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
+                    lc.setDirection( models.computeDirectionBD(this) );
+
+                    log.trace("getLayoutConnectivity lbB != lbD");
+                    log.trace("   Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
 
                     results.add(lc);
                 }
@@ -2932,24 +2944,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
             setLayoutBlockD(layoutBlock);
         }
     }
-
-//     private static class AbstractActionImpl extends AbstractAction {
-// 
-//         private final String blockName;
-//         private final LayoutBlock layoutBlock;
-// 
-//         public AbstractActionImpl(String name, String blockName, LayoutBlock layoutBlock) {
-//             super(name);
-//             this.blockName = blockName;
-//             this.layoutBlock = layoutBlock;
-//         }
-// 
-//         @Override
-//         public void actionPerformed(ActionEvent e) {
-//             AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
-//             routeTableAction.actionPerformed(e);
-//         }
-//     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnout.class);
 }

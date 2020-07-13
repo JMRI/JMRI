@@ -117,14 +117,14 @@ public class LayoutSlipTest {
             // this should throw up (NONE is not a valid connection type)
             Assert.assertNull("lts.getConnectionType(NONE) is null", lts.getConnection(HitPointType.NONE));
             Assert.fail("lts.getConnectionType(NONE): No exception thrown");
-        } catch (jmri.JmriException e) {
+        } catch (IllegalArgumentException e) {
             JUnitAppender.assertErrorMessage("will throw single.getConnection(NONE); Invalid Connection Type");
         }
         try {
             // this should throw up (NONE is not a valid connection type)
             Assert.assertNull("ltd.getConnectionType(NONE) is null", ltd.getConnection(HitPointType.NONE));
             Assert.fail("ltd.getConnectionType(NONE): No exception thrown");
-        } catch (jmri.JmriException e) {
+        } catch (IllegalArgumentException e) {
             JUnitAppender.assertErrorMessage("will throw double.getConnection(NONE); Invalid Connection Type");
         } // OK
     }
@@ -216,7 +216,7 @@ public class LayoutSlipTest {
             Assert.assertNull("lts.getConnection(invalid type) is null",
                     lts.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on lts.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw single.getConnection(NONE); Invalid Connection Type");
 
@@ -225,7 +225,7 @@ public class LayoutSlipTest {
             Assert.assertNull("ltd.getConnection(invalid type) is null",
                     ltd.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltd.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw double.getConnection(NONE); Invalid Connection Type");
     }
@@ -241,28 +241,28 @@ public class LayoutSlipTest {
             // test valid connection type (null value)
             Assert.assertNull("lts.getConnection(valid type) is null",
                     lts.getConnection(HitPointType.SLIP_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on lts.getConnection(valid type)");
         }
         try {
             // test valid connection type (null value)
             Assert.assertNull("ltd.getConnection(valid type) is null",
                     ltd.getConnection(HitPointType.SLIP_B));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltd.getConnection(valid type)");
         }
         try {
             // test valid connection type (null value)
             Assert.assertNull("lts.getConnection(valid type) is null",
                     lts.getConnection(HitPointType.SLIP_C));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on lts.getConnection(valid type)");
         }
         try {
             // test valid connection type (null value)
             Assert.assertNull("ltd.getConnection(valid type) is null",
                     ltd.getConnection(HitPointType.SLIP_D));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltd.getConnection(valid type)");
         }
     }

@@ -423,7 +423,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltRH.getConnection(invalid type) is null",
                     ltRH.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltRH.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Right Hand.getConnection(NONE); Invalid Connection Type");
 
@@ -431,7 +431,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltLH.getConnection(invalid type) is null",
                     ltLH.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltLH.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Left Hand.getConnection(NONE); Invalid Connection Type");
 
@@ -439,7 +439,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltWY.getConnection(invalid type) is null",
                     ltWY.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltWY.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Wye.getConnection(NONE); Invalid Connection Type");
 
@@ -447,7 +447,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltDX.getConnection(invalid type) is null",
                     ltDX.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltDX.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Double XOver.getConnection(NONE); Invalid Connection Type");
 
@@ -455,7 +455,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltRX.getConnection(invalid type) is null",
                     ltRX.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltRX.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Right Hand XOver.getConnection(NONE); Invalid Connection Type");
 
@@ -463,7 +463,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             Assert.assertNull("ltLX.getConnection(invalid type) is null",
                     ltLX.getConnection(HitPointType.NONE));
             Assert.fail("No exception thrown on ltLX.getConnection(invalid type)");
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
         }
         JUnitAppender.assertErrorMessage("will throw Left Hand XOver.getConnection(NONE); Invalid Connection Type");
     }
@@ -476,42 +476,42 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         try {
             Assert.assertNull("ltRH.getConnection(valid type) is null",
                     ltRH.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltRH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLH.getConnection(valid type) is null",
                     ltLH.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltLH.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltWY.getConnection(valid type) is null",
                     ltWY.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltWY.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltDX.getConnection(valid type) is null",
                     ltDX.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltDX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltRX.getConnection(valid type) is null",
                     ltRX.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltRX.getConnection(valid type)");
         }
 
         try {
             Assert.assertNull("ltLX.getConnection(valid type) is null",
                     ltLX.getConnection(HitPointType.TURNOUT_A));
-        } catch (JmriException ex) {
+        } catch (IllegalArgumentException ex) {
             Assert.fail("Exception thrown on ltLX.getConnection(valid type)");
         }
     }
