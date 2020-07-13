@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-//import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -670,22 +669,6 @@ public class LevelXing extends LayoutTrack {
         return (namedLayoutBlockBD != null) ? namedLayoutBlockBD.getBean() : getLayoutBlockAC();
     }
 
-//     public Point2D getCoordsA() {
-//         return models.getLevelXingView(this).getCoordsA();
-//     }
-// 
-//     public Point2D getCoordsB() {
-//         return models.getLevelXingView(this).getCoordsB();
-//     }
-// 
-//     public Point2D getCoordsC() {
-//         return models.getLevelXingView(this).getCoordsC();
-//     }
-// 
-//     public Point2D getCoordsD() {
-//         return models.getLevelXingView(this).getCoordsD();
-//     }
-
     /**
      * Add Layout Blocks.
      * @param newLayoutBlock the layout block to add.
@@ -811,25 +794,6 @@ public class LevelXing extends LayoutTrack {
     public boolean isMainline() {
         return (isMainlineAC() || isMainlineBD());
     }
-
-    /*
-    * Modify coordinates methods.
-     */
-//     public void setCoordsA(Point2D p) {
-//         models.getLevelXingView(this).setCoordsA(p); // temporary
-//     }
-// 
-//     public void setCoordsB(Point2D p) {
-//         models.getLevelXingView(this).setCoordsB(p); // temporary
-//     }
-// 
-//     public void setCoordsC(Point2D p) {
-//         models.getLevelXingView(this).setCoordsC(p); // temporary
-//     }
-// 
-//     public void setCoordsD(Point2D p) {
-//         models.getLevelXingView(this).setCoordsD(p); // temporary
-//     }
 
     // initialization instance variables (used when loading a LayoutEditor)
     public String connectAName = "";
@@ -1002,17 +966,6 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove().
-     */
-//     public void dispose() {
-//         if (popup != null) {
-//             popup.removeAll();
-//         }
-//         popup = null;
-//     }
-// 
-    /**
      * Remove this object from display and persistance.
      */
     public void remove() {
@@ -1067,68 +1020,6 @@ public class LevelXing extends LayoutTrack {
             }
         }
     }
-
-//     ArrayList<JMenuItem> editAdditionalMenu = new ArrayList<>(0);
-//     ArrayList<JMenuItem> viewAdditionalMenu = new ArrayList<>(0);
-// 
-//     public void addEditPopUpMenu(JMenuItem menu) {
-//         if (!editAdditionalMenu.contains(menu)) {
-//             editAdditionalMenu.add(menu);
-//         }
-//     }
-// 
-//     public void addViewPopUpMenu(JMenuItem menu) {
-//         if (!viewAdditionalMenu.contains(menu)) {
-//             viewAdditionalMenu.add(menu);
-//         }
-//     }
-// 
-//     public void setAdditionalEditPopUpMenu(JPopupMenu popup) {
-//         if (editAdditionalMenu.isEmpty()) {
-//             return;
-//         }
-//         popup.addSeparator();
-//         for (JMenuItem mi : editAdditionalMenu) {
-//             popup.add(mi);
-//         }
-//     }
-// 
-//     public void setAdditionalViewPopUpMenu(JPopupMenu popup) {
-//         if (viewAdditionalMenu.isEmpty()) {
-//             return;
-//         }
-//         popup.addSeparator();
-//         for (JMenuItem mi : viewAdditionalMenu) {
-//             popup.add(mi);
-//         }
-//     }
-// 
-
-    /**
-     * Draw this level crossing.
-     *
-     * @param g2 the graphics port to draw to
-     */
-//     @Override
-//     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//     }
-
-    /**
-     * {@inheritDoc}
-     */
-//     @Override
-//     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//     }
-// 
-    /**
-     * {@inheritDoc}
-     */
-//     @Override
-//     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-//         throw new IllegalArgumentException("should have called View instead of temporary");
-//     }
 
     /*
     * {@inheritDoc}

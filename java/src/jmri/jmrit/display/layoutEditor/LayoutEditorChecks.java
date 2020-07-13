@@ -485,25 +485,25 @@ final public class LayoutEditorChecks {
             if (pp.getType() == PositionablePoint.PointType.ANCHOR) {
                 // adjacent track segments must be defined...
                 TrackSegment ts1 = pp.getConnect1();
+                TrackSegmentView ts1v = layoutEditor.getTrackSegmentView(ts1);
                 TrackSegment ts2 = pp.getConnect2();
+                TrackSegmentView ts2v = layoutEditor.getTrackSegmentView(ts2);
                 if ((ts1 != null) && (ts2 != null)) {
                     // can't be an arc, circle or bezier...
-                    if (!ts1.isArc() && !ts1.isCircle() && !ts1.isBezier()
-                            && !ts2.isArc() && !ts2.isCircle() && !ts2.isBezier()) {
+                    if (!ts1v.isArc() && !ts1v.isCircle() && !ts1v.isBezier()
+                            && !ts2v.isArc() && !ts2v.isCircle() && !ts2v.isBezier()) {
                         // must be in same block...
                         String blockName1 = ts1.getBlockName();
                         String blockName2 = ts2.getBlockName();
                         if (blockName1.equals(blockName2)) {
-                            // if length of ts1 is zero...
-                            LayoutTrackView ts1v = layoutEditor.getLayoutTrackView(ts1);
+                            // if length of ts1v is zero...
                             Rectangle2D bounds1 = ts1v.getBounds();
                             double length1 = Math.hypot(bounds1.getWidth(), bounds1.getHeight());
                             if (length1 < 1.0) {
                                 aatzlts.add(pp);
                                 continue;   // so we don't get added again
                             }
-                            // if length of ts2 is zero...
-                            LayoutTrackView ts2v = layoutEditor.getLayoutTrackView(ts2);
+                            // if length of ts2v is zero...
                             Rectangle2D bounds = ts2v.getBounds();
                             double length = Math.hypot(bounds.getWidth(), bounds.getHeight());
                             if (length < 1.0) {

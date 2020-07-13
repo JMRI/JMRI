@@ -63,14 +63,13 @@ It's in no particular order, items are removed as done, so please don't consider
 Go through and confirm individually:
 
  - [ ] Remove view variables from Model classes, rm commented code   
-        LayoutTurnout 
-            setTrackSegmentBlocks
-            setTrackSegmentBlock
         Recheck all 16, rm commented code
-            LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-            LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-            LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-            LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
+            LayoutTrack
+            PositionablePoint
+                swing, awt
+                mouse and popup
+                dispose, which invokes removeLinkedPoint
+            TrackSegment 
         
  - [ ] Remove swing code from Model classes
         LayoutTurntable  PositionablePoint  

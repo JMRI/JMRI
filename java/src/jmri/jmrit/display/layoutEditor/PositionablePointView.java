@@ -1225,7 +1225,6 @@ public class PositionablePointView extends LayoutTrackView {
                                 block.updatePaths();
                             }
                             getConnect2().remove();
-                            getConnect2().dispose();
                             positionablePoint.connect2 = null;
 
                             //remove pp_this from selection information

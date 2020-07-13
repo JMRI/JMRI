@@ -32,7 +32,7 @@ import jmri.Turnout;
 abstract public class LayoutTrack {
 
     // final protected LayoutModels models;  // preferred
-    final protected LayoutEditor models; // temporarily
+    final protected LayoutEditor models; // temporary type
 
     /**
      * Constructor method.

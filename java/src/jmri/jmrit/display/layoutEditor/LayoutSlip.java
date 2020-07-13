@@ -306,7 +306,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-    void setSlipState(int newSlipState) { // package for View forward
+    void setSlipState(int newSlipState) {
         if (disableWhenOccupied && isOccupied()) {
             log.debug("Turnout not changed as Block is Occupied");
         } else if (!disabled) {
@@ -327,7 +327,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      * @return true if occupied
      */
     @Override
-    boolean isOccupied() {  // package for View forward
+    boolean isOccupied() {
         Boolean result = false; // assume failure (pessimist!)
         switch (getSlipState()) {
             case STATE_AC: {
@@ -368,7 +368,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
     /**
      * Activate/Deactivate turnout to redraw when turnout state changes
      */
-    void activateTurnout() { // for View access
+    void activateTurnout() {
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
                     = (java.beans.PropertyChangeEvent e) -> {
@@ -384,7 +384,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         updateState();
     }
 
-    void deactivateTurnout() { // for View access
+    void deactivateTurnout() {
         if (mTurnoutListener != null) {
             if (namedTurnout != null) {
                 namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
@@ -449,9 +449,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-
-//    JPopupMenu popup = null;
-
     @Override
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -494,18 +491,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove()
-     */
-//     @Override
-//     public void dispose() {
-//         if (popup != null) {
-//             popup.removeAll();
-//         }
-//         popup = null;
-//     }
-
-    /**
      * Removes this object from display and persistance
      */
     @Override
@@ -520,7 +505,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         removeSML(getSignalDMast());
     }
 
-    void disableSML(SignalMast signalMast) {  //  package for View
+    void disableSML(SignalMast signalMast) {
         if (signalMast == null) {
             return;
         }
@@ -559,7 +544,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
     }
 
     // Internal call to update the state of the slip depending upon the turnout states.
-    void updateState() { //  package for View
+    void updateState() {
         if ((getTurnout() != null) && (getTurnoutB() != null)) {
             int state_a = getTurnout().getKnownState();
             int state_b = getTurnoutB().getKnownState();
@@ -581,7 +566,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      *
      * @return true if either turnout is inconsistent.
      */
-    boolean isTurnoutInconsistent() { //  package for View
+    boolean isTurnoutInconsistent() {
         Turnout tA = getTurnout();
         if (tA != null && tA.getKnownState() == INCONSISTENT) {
             return true;

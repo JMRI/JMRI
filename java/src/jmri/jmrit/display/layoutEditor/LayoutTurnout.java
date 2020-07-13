@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-//import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -1462,27 +1461,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return (namedLayoutBlockD != null) ? namedLayoutBlockD.getBean() : getLayoutBlock();
     }
 
-    //private Point2D getCoordsA() {
-    //    log.debug("temporary getCoordsA should have been called through View");
-    //    return models.getLayoutTurnoutView(this).getCoordsA();    
-    //}
-
-    //private Point2D getCoordsB() {
-    //    log.debug("temporary getCoordsB should have been called through View");
-    //    return models.getLayoutTurnoutView(this).getCoordsB();    
-    //}
-
-    //private Point2D getCoordsC() {
-    //    log.debug("temporary getCoordsC should have been called through View");
-    //    return models.getLayoutTurnoutView(this).getCoordsC();    
-    //}
-
-    //private Point2D getCoordsD() {
-    //    log.debug("temporary getCoordsD should have been called through View");
-    //    return models.getLayoutTurnoutView(this).getCoordsD();    
-    //}
-
-
     // updates connectivity for blocks assigned to this turnout and connected track segments
     public void updateBlockInfo() {
         LayoutBlock bA = null;
@@ -1724,45 +1702,6 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Check each connection point and update the block value for very short
-     * track segments.
-     *
-     * @since 4.11.6
-     */
-    //void setTrackSegmentBlocks() {
-    //    // temporary debug level because its called really often
-    //    log.debug("setTrackSegmentBlocks should have called View instead of TrackSegment (temporary)"
-    //            , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-    //        );
-    //    models.getLayoutTurnoutView(this).setTrackSegmentBlocks();
-    //}
-
-    /**
-     * Update the block for a track segment that provides a short connection
-     * between a turnout and another object, normally another turnout. These are
-     * hard to see and are frequently missed.
-     * <p>
-     * Skip block changes if signal heads, masts or sensors have been assigned.
-     * Only track segments with a length less than the turnout circle radius
-     * will be changed.
-     *
-     * @since 4.11.6
-     * @param pointType   The point type which indicates which turnout
-     *                    connection.
-     * @param isAutomatic True for the automatically generated track segment
-     *                    created by the drag-n-drop process. False for existing
-     *                    connections which require a track segment length
-     *                    calculation.
-     */
-    //void setTrackSegmentBlock(HitPointType pointType, boolean isAutomatic) {
-    //    // temporary debug as this happens a LOT
-    //    log.debug("setTrackSegmentBlock should have called View instead of TrackSegment (temporary)"
-    //            , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-    //        );
-    //    models.getLayoutTurnoutView(this).setTrackSegmentBlock(pointType, isAutomatic);
-    //}
-
-    /**
      * Test if turnout legs are mainline track or not.
      *
      * @return true if connecting track segment is mainline; Defaults to not
@@ -1995,7 +1934,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      *
      * @return true if occupied
      */
-    boolean isOccupied() {  // package for View forward
+    boolean isOccupied() {
         if (isTurnoutTypeTurnout()) {
             if (getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED) {
                 log.debug("Block {} is Occupied", getBlockName());
