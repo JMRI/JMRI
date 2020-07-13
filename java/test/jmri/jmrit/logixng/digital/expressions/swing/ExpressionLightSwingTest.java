@@ -66,13 +66,6 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IS_NOT);
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionLight.LightState.OFF);
         
-        if (1==0)
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex) {
-//                Exceptions.printStackTrace(ex);
-            }
-        
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IL1", expression.getLight().getBean().getSystemName());
@@ -102,13 +95,6 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         new JTextFieldOperator(jdo, 2).enterText("IL99");
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IS);
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionLight.LightState.ON);
-        
-        if (1==0)
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex) {
-//                Exceptions.printStackTrace(ex);
-            }
         
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
