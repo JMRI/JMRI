@@ -1,5 +1,10 @@
 
     <!-- contains new warnings for the release under development -->
+
+    <!-- contents intended for the next update release -->
+    
+    <!-- contents intended for the next minor release -->
+    
     <li>
         The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
         interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
@@ -9,3 +14,6 @@
         (it's easier to have you just try the two than to explain which 
         one will work in which case)
     </li>
+
+    <!-- contents intended for the next major release -->
+    
