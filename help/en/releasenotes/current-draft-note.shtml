@@ -75,7 +75,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
+                <li>When status UNKNOWN or INCONSISTENT is received from MQTT and the turnout operating mode is MONITORING or EXACT, the layout is now updated with this status</li>
+                <li>When EXACT feedback mode is selected, two different MQTT topics will be used - one for commands and one for state</li>
             </ul>
 
         <h4>MRC</h4>
