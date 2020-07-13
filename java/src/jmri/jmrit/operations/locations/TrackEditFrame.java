@@ -1099,7 +1099,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 checkBox.setText(type);
                 addCheckBoxAction(checkBox);
                 addItemLeft(panelCheckBoxes, checkBox, x++, y);
-                if (_track != null && _track.acceptsTypeName(type)) {
+                if (_track != null && _track.isTypeNameAccepted(type)) {
                     checkBox.setSelected(true);
                 }
             }

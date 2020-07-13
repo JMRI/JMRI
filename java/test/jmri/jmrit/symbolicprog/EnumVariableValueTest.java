@@ -147,6 +147,25 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("one", "Reserved value 2", val.getTextValue());
     }
 
+    @Test
+    public void testGetValueString() {
+        EnumVariableValue val = createOutOfSequence();
+        val.setIntValue(0);
+        Assert.assertEquals("setIntValue zero", "0", val.getValueString());
+        val.setIntValue(5);
+        Assert.assertEquals("setIntValue five", "5", val.getValueString());
+        val.setIntValue(7);
+        Assert.assertEquals("setIntValue seven", "7", val.getValueString());
+        val.setIntValue(9);
+        Assert.assertEquals("setIntValue nine", "9", val.getValueString());
+        val.setIntValue(12);
+        Assert.assertEquals("setIntValue twelve", "12", val.getValueString());
+        val.setIntValue(1);
+        Assert.assertEquals("setIntValue one", "1", val.getValueString());
+        val.setIntValue(2);
+        Assert.assertEquals("setIntValue two", "2", val.getValueString());
+    }
+
     public EnumVariableValue createOutOfSequence() {
         // prepare
         HashMap<String, CvValue> v = createCvMap();

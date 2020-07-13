@@ -284,25 +284,25 @@ public class TrackTest extends OperationsTestCase {
         Assert.assertEquals("Location", l, t.getLocation());
 
         /* Test Type Name */
-        Assert.assertEquals("Location Track Accepts Type Name undefined", false, t.acceptsTypeName("TestTypeName"));
+        Assert.assertEquals("Location Track Accepts Type Name undefined", false, t.isTypeNameAccepted("TestTypeName"));
 
         t.addTypeName("TestTypeName");
-        Assert.assertEquals("Location Track Accepts Type Name defined", false, t.acceptsTypeName("TestTypeName"));
+        Assert.assertEquals("Location Track Accepts Type Name defined", false, t.isTypeNameAccepted("TestTypeName"));
 
         // now add to car types
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("TestTypeName");
         t.addTypeName("TestTypeName");
         Assert.assertEquals("Location Track Accepts Type Name defined after ct", false, t
-                .acceptsTypeName("TestTypeName"));
+                .isTypeNameAccepted("TestTypeName"));
 
         // location must also accept the same type
         l.addTypeName("TestTypeName");
         Assert.assertEquals("Location Track Accepts Type Name defined after location", true, t
-                .acceptsTypeName("TestTypeName"));
+                .isTypeNameAccepted("TestTypeName"));
 
         t.deleteTypeName("TestTypeName");
-        Assert.assertEquals("Location Track Accepts Type Name deleted", false, t.acceptsTypeName("TestTypeName"));
+        Assert.assertEquals("Location Track Accepts Type Name deleted", false, t.isTypeNameAccepted("TestTypeName"));
 
         /* Needed so later tests will behave correctly */
         ct.deleteName("TestTypeName");
@@ -311,33 +311,33 @@ public class TrackTest extends OperationsTestCase {
         t.addTypeName("Baggager");
         l.addTypeName("Baggager");
 
-        Assert.assertEquals("Location Track Accepts Type Name Baggager", true, t.acceptsTypeName("Baggager"));
+        Assert.assertEquals("Location Track Accepts Type Name Baggager", true, t.isTypeNameAccepted("Baggager"));
 
         /* Test Road Name */
         t.setRoadOption(Track.INCLUDE_ROADS);
         Assert.assertEquals("Location Track set Road Option INCLUDEROADS", "Include", t.getRoadOption());
 
-        Assert.assertEquals("Location Track Accepts Road Name undefined", false, t.acceptsRoadName("TestRoadName"));
+        Assert.assertEquals("Location Track Accepts Road Name undefined", false, t.isRoadNameAccepted("TestRoadName"));
 
         t.addRoadName("TestRoadName");
-        Assert.assertEquals("Location Track Accepts Road Name defined", true, t.acceptsRoadName("TestRoadName"));
+        Assert.assertEquals("Location Track Accepts Road Name defined", true, t.isRoadNameAccepted("TestRoadName"));
 
         t.addRoadName("TestOtherRoadName");
-        Assert.assertEquals("Location Track Accepts Road Name other defined", true, t.acceptsRoadName("TestRoadName"));
+        Assert.assertEquals("Location Track Accepts Road Name other defined", true, t.isRoadNameAccepted("TestRoadName"));
 
         t.deleteRoadName("TestRoadName");
-        Assert.assertEquals("Location Track Accepts Road Name deleted", false, t.acceptsRoadName("TestRoadName"));
+        Assert.assertEquals("Location Track Accepts Road Name deleted", false, t.isRoadNameAccepted("TestRoadName"));
 
         t.setRoadOption(Track.ALL_ROADS);
         Assert.assertEquals("Location Track set Road Option AllROADS", "All", t.getRoadOption());
-        Assert.assertEquals("Location Track Accepts All Road Names", true, t.acceptsRoadName("TestRoadName"));
+        Assert.assertEquals("Location Track Accepts All Road Names", true, t.isRoadNameAccepted("TestRoadName"));
 
         t.setRoadOption(Track.EXCLUDE_ROADS);
         Assert.assertEquals("Location Track set Road Option EXCLUDEROADS", "Exclude", t.getRoadOption());
-        Assert.assertEquals("Location Track Excludes Road Names", true, t.acceptsRoadName("TestRoadName"));
+        Assert.assertEquals("Location Track Excludes Road Names", true, t.isRoadNameAccepted("TestRoadName"));
 
         t.addRoadName("TestRoadName");
-        Assert.assertEquals("Location Track Excludes Road Names 2", false, t.acceptsRoadName("TestRoadName"));
+        Assert.assertEquals("Location Track Excludes Road Names 2", false, t.isRoadNameAccepted("TestRoadName"));
 
         /* Test Drop IDs */
         Assert.assertEquals("Location Track Accepts Drop ID undefined", false, t.containsDropId("TestDropId"));

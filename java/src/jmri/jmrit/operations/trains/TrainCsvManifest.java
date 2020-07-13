@@ -178,7 +178,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 for (Car car : cList) {
                     // list cars on tracks that only this train can service
                     if (!car.getTrack().getLocation().isStaging()
-                            && car.getTrack().acceptsPickupTrain(train) && car.getTrack().getPickupIds().length == 1
+                            && car.getTrack().isPickupTrainAccepted(train) && car.getTrack().getPickupIds().length == 1
                             && car.getTrack().getPickupOption().equals(Track.TRAINS)) {
                         int count = 0;
                         if (car.isUtility()) {
