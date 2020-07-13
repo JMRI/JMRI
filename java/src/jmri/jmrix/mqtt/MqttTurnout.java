@@ -60,6 +60,15 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         private final static String unknownText = "UNKNOWN";
         private final static String inconsistentText = "INCONSISTENT";
         private final static String movingText = "MOVING";
+
+        private void setExtraWithCheck(int newMode, String payload) {
+            if (getFeedbackMode() == MONITORING || getFeedbackMode() == EXACT) {
+                newKnownState(newMode);
+            } else {
+                log.warn("Received state is not valid in current operating mode: {}", payload);
+            }
+        }
+
         @Override
         public void beanFromPayload(@Nonnull Turnout bean, @Nonnull String payload, @Nonnull String topic) {
             switch (payload) {
@@ -70,19 +79,11 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
                     newKnownState(THROWN);
                     break;
                 case unknownText:
-                    if (getFeedbackMode() == MONITORING || getFeedbackMode() == EXACT) {
-                        newKnownState(UNKNOWN);
-                    } else {
-                        log.warn("Received state is not valid in current operating mode: {}", payload);
-                    }
+                    setExtraWithCheck(UNKNOWN, payload);
                     break;
                 case movingText:
                 case inconsistentText:
-                    if (getFeedbackMode() == MONITORING || getFeedbackMode() == EXACT) {
-                        newKnownState(INCONSISTENT);
-                    } else {
-                        log.warn("Received state is not valid in current operating mode: {}", payload);
-                    }
+                    setExtraWithCheck(INCONSISTENT, payload);
                     break;
                 default:
                     log.warn("Unknown state : {}", payload);
