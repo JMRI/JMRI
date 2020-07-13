@@ -184,7 +184,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @param location the location to copy the tracks to.
      */
     public void copyTracksLocation(Location location) {
-        for (Track track : getTrackList()) {
+        for (Track track : getTracksList()) {
             if (location.getTrackByName(track.getName(), null) != null) {
                 continue;
             }
@@ -834,7 +834,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      *
      * @return Sorted list of tracks by id for this location.
      */
-    public List<Track> getTrackByIdList() {
+    public List<Track> getTracksByIdList() {
         List<Track> out = new ArrayList<>();
         List<String> trackIds = getTrackIdsByIdList();
         for (String id : trackIds) {
@@ -848,7 +848,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      *
      * @return tracks at this location.
      */
-    public List<Track> getTrackList() {
+    public List<Track> getTracksList() {
         List<Track> out = new ArrayList<>();
         Enumeration<Track> en = _trackHashTable.elements();
         while (en.hasMoreElements()) {
@@ -865,11 +865,11 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      *            Track.STAGING
      * @return list of tracks ordered by name for this location
      */
-    public List<Track> getTrackByNameList(String type) {
+    public List<Track> getTracksByNameList(String type) {
 
         List<Track> out = new ArrayList<>();
 
-        for (Track track : getTrackByIdList()) {
+        for (Track track : getTracksByIdList()) {
             boolean locAdded = false;
             for (int j = 0; j < out.size(); j++) {
                 if (track.getName().compareToIgnoreCase(out.get(j).getName()) < 0 &&
@@ -896,11 +896,11 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      *            Track.STAGING
      * @return list of tracks at this location ordered by moves
      */
-    public List<Track> getTrackByMovesList(String type) {
+    public List<Track> getTracksByMovesList(String type) {
 
         List<Track> moveList = new ArrayList<>();
 
-        for (Track track : getTrackByIdList()) {
+        for (Track track : getTracksByIdList()) {
             boolean locAdded = false;
             for (int j = 0; j < moveList.size(); j++) {
                 if (track.getMoves() < moveList.get(j).getMoves() &&
@@ -942,7 +942,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      */
     public List<Track> getTracksByBlockingOrderList(String type) {
         List<Track> orderList = new ArrayList<>();
-        for (Track track : getTrackByNameList(type)) {
+        for (Track track : getTracksByNameList(type)) {
             boolean trackAdded = false;
             for (int j = 0; j < orderList.size(); j++) {
                 if (track.getBlockingOrder() < orderList.get(j).getBlockingOrder()) {
@@ -959,7 +959,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     public void resetTracksByBlockingOrder() {
-        for (Track track : getTrackList()) {
+        for (Track track : getTracksList()) {
             track.setBlockingOrder(0);
         }
         setDirtyAndFirePropertyChange(TRACK_BLOCKING_ORDER_CHANGED_PROPERTY, true, false);
@@ -1006,7 +1006,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     private Track getTrackByBlockingOrder(int order) {
-        for (Track track : getTrackList()) {
+        for (Track track : getTracksList()) {
             if (track.getBlockingOrder() == order)
                 return track;
         }
@@ -1024,7 +1024,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * Reset the move count for all tracks at this location
      */
     public void resetMoves() {
-        List<Track> tracks = getTrackList();
+        List<Track> tracks = getTracksList();
         for (Track track : tracks) {
             track.setMoves(0);
         }
@@ -1038,7 +1038,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public void updateComboBox(JComboBox<Track> box) {
         box.removeAllItems();
         box.addItem(null);
-        List<Track> tracks = getTrackByNameList(null);
+        List<Track> tracks = getTracksByNameList(null);
         for (Track track : tracks) {
             box.addItem(track);
         }
@@ -1057,7 +1057,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         if (!filter || rs == null) {
             return;
         }
-        List<Track> tracks = getTrackByNameList(null);
+        List<Track> tracks = getTracksByNameList(null);
         for (Track track : tracks) {
             String status = "";
             if (isDestination) {
@@ -1180,7 +1180,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @return True if there are planned pickups
      */
     public boolean hasPlannedPickups() {
-        List<Track> tracks = getTrackList();
+        List<Track> tracks = getTracksList();
         for (Track track : tracks) {
             if (track.getIgnoreUsedLengthPercentage() > 0) {
                 return true;
@@ -1195,7 +1195,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @return True if there are load restrictions
      */
     public boolean hasLoadRestrictions() {
-        List<Track> tracks = getTrackList();
+        List<Track> tracks = getTracksList();
         for (Track track : tracks) {
             if (!track.getLoadOption().equals(Track.ALL_LOADS)) {
                 return true;
@@ -1211,7 +1211,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @return True if there are load ship restrictions
      */
     public boolean hasShipLoadRestrictions() {
-        List<Track> tracks = getTrackList();
+        List<Track> tracks = getTracksList();
         for (Track track : tracks) {
             if (!track.getShipLoadOption().equals(Track.ALL_LOADS)) {
                 return true;
@@ -1226,7 +1226,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @return True if there are road restrictions
      */
     public boolean hasRoadRestrictions() {
-        List<Track> tracks = getTrackList();
+        List<Track> tracks = getTracksList();
         for (Track track : tracks) {
             if (!track.getRoadOption().equals(Track.ALL_ROADS)) {
                 return true;
@@ -1242,7 +1242,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      * @return True if there are road restrictions
      */
     public boolean hasDestinationRestrictions() {
-        List<Track> tracks = getTrackList();
+        List<Track> tracks = getTracksList();
         for (Track track : tracks) {
             if (!track.getDestinationOption().equals(Track.ALL_DESTINATIONS)) {
                 return true;
@@ -1252,7 +1252,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     public boolean hasAlternateTracks() {
-        for (Track track : getTrackList()) {
+        for (Track track : getTracksList()) {
             if (track.getAlternateTrack() != null) {
                 return true;
             }
@@ -1261,7 +1261,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     public boolean hasOrderRestrictions() {
-        for (Track track : getTrackList()) {
+        for (Track track : getTracksList()) {
             if (!track.getServiceOrder().equals(Track.NORMAL)) {
                 return true;
             }
@@ -1270,7 +1270,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
     
     public boolean hasSchedules() {
-        for (Track track : getTrackList()) {
+        for (Track track : getTracksList()) {
             if (track.isSpur() && track.getSchedule() != null) {
                 return true;
             }
@@ -1301,7 +1301,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     }
 
     public void dispose() {
-        List<Track> tracks = getTrackList();
+        List<Track> tracks = getTracksList();
         for (Track track : tracks) {
             deleteTrack(track);
         }
@@ -1534,7 +1534,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         e.setAttribute(Xml.COMMENT, getComment());
         e.setAttribute(Xml.SWITCH_LIST_COMMENT, getSwitchListComment());
 
-        List<Track> tracks = getTrackByIdList();
+        List<Track> tracks = getTracksByIdList();
         for (Track track : tracks) {
             e.addContent(track.store());
         }
@@ -1548,9 +1548,9 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
                 addTypeName(newType);
             }
             // now adjust tracks
-            List<Track> tracks = getTrackList();
+            List<Track> tracks = getTracksList();
             for (Track track : tracks) {
-                if (track.acceptsTypeName(oldType)) {
+                if (track.isTypeNameAccepted(oldType)) {
                     track.deleteTypeName(oldType);
                     if (newType != null) {
                         track.addTypeName(newType);
@@ -1590,7 +1590,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
 
     private void replaceRoad(String oldRoad, String newRoad) {
         // now adjust any track locations
-        List<Track> tracks = getTrackList();
+        List<Track> tracks = getTracksList();
         for (Track track : tracks) {
             if (track.containsRoadName(oldRoad)) {
                 track.deleteRoadName(oldRoad);
