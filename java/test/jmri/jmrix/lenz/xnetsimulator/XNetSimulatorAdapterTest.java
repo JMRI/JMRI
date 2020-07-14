@@ -3,10 +3,9 @@ package jmri.jmrix.lenz.xnetsimulator;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XNetSimulatorAdapterTest.java
@@ -411,13 +410,13 @@ public class XNetSimulatorAdapterTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         a = new XNetSimulatorAdapter();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         a.dispose();
         a = null;

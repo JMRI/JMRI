@@ -1,10 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -66,14 +65,14 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
         Assert.assertEquals("Set Turnout Closed Monitor String", Bundle.getMessage("Z21LAN_X_SET_TURNOUT", 1, "activate", 0, true), m.toMonitorString());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new Z21XNetMessage(3);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         m = msg = null;

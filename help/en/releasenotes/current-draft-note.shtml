@@ -55,6 +55,7 @@
                     Instructions</a> detailing how to change the Board ID (Board 
                     Address) of certain Digitrax LocoNet-based devices using 
                     JMRI have been added to the Digitrax hardware page.</li>
+                <li>Fixed a problem in the PM4Announce script</li>
             </ul>
 
         <h4>Maple</h4>
@@ -74,7 +75,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
+                <li>When status UNKNOWN or INCONSISTENT is received from MQTT and the turnout operating mode is MONITORING or EXACT, the layout is now updated with this status</li>
+                <li>When EXACT feedback mode is selected, two different MQTT topics will be used - one for commands and one for state</li>
             </ul>
 
         <h4>MRC</h4>
@@ -424,7 +427,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Some internal refactoring that should help with the long term
+            maintenance of JMRI has been done. This may cause some scripts to
+            fail until classes or methods are renamed in those scripts.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -519,7 +524,10 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>VSD now supports the "Location Following" (sound follows loco) with occupancy
+                sensors and JMRI Blocks. See the 
+				<a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#VSDLocations">
+                documentation</a> for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
@@ -532,5 +540,12 @@
                 jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
                 (it's easier to have you just try the two than to explain which 
                 one will work in which case)</li>
+            <li>Added PR automation to check for a comment in the release note when a PR
+                is opened, and to ensure that somebody has been assigned to the PR.</li>
+            <li>The jmri.JmriPlugin class is deprecated without a replacement. If you depend on
+	              on this class, please <a href="https://github.com/JMRI/JMRI/issues/new">raise an issue on GitHub</a>
+		            so we can discuss how to meet your requirements through other means.</li>
+            <li>"Display Message Log" has been removed from the Debug Menu. Use the
+                "System Console" from the Help Menu to view log messages.</li>
         </ul>
 

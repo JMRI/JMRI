@@ -25,7 +25,9 @@ import jmri.util.SystemType;
  * @author Randall Wood (c) 2011, 2016
  * @see EawtApplication
  * @see Jdk9Application
+ * @deprecated since 4.21.1; use {@link apps.plaf.macosx.Application} instead
  */
+@Deprecated
 abstract public class Application {
 
     private static volatile Application sharedApplication = null;

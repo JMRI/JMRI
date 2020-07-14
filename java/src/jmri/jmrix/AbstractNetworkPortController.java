@@ -7,9 +7,6 @@ import java.net.Socket;
 
 import jmri.SystemConnectionMemo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Enables basic setup of a network client interface for a jmrix implementation.
  *
@@ -31,8 +28,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     protected AbstractNetworkPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        setHostName(""); // give the host name a default value of
-        // the empty string.
+        setHostName(""); // give the host name a default value of the empty string.
     }
 
     @Override
@@ -44,6 +40,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     @Override
     public void connect() throws IOException {
+        log.debug("connect() starts to {}:{}", getHostName(), getPort());
         opened = false;
         if (getHostAddress() == null || m_port == 0) {
             log.error("No host name or port set: {}:{}", m_HostName, m_port);
@@ -72,6 +69,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             ConnectionStatus.instance().setConnectionState(
                     getUserName(), m_HostName, ConnectionStatus.CONNECTION_UP);
         }
+        log.trace("connect ends");
     }
 
     /**
@@ -81,6 +79,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     @Override
     public void setHostName(String s) {
+        log.trace("setHostName({})", s, new Exception("traceback only"));
         m_HostName = s;
         if ((s == null || s.equals("")) && !getMdnsConfigure()) {
             m_HostName = JmrixConfigPane.NONE;
@@ -100,6 +99,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * @param s the address; if empty, will use the host name
      */
     protected void setHostAddress(String s) {
+        log.trace("setHostAddress({})", s);
         m_HostAddress = s;
         if (s == null || s.equals("")) {
             m_HostAddress = m_HostName;
@@ -120,11 +120,13 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     @Override
     public void setPort(int p) {
+        log.trace("setPort(int {})", p);
         m_port = p;
     }
 
     @Override
     public void setPort(String p) {
+        log.trace("setPort(String {})", p);
         m_port = Integer.parseInt(p);
     }
 
@@ -221,6 +223,10 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     @Override
     public DataInputStream getInputStream() {
+        log.trace("getInputStream() starts");
+        if (socketConn == null) {
+            log.error("getInputStream invoked with null socketConn");
+        }
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
             if (m_port != 0) {
@@ -232,6 +238,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             }
         }
         try {
+            log.trace("getInputStream() returns normally");
             return new DataInputStream(socketConn.getInputStream());
         } catch (java.io.IOException ex1) {
             log.error("Exception getting input stream:", ex1);
@@ -329,6 +336,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         return connTimeout;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkPortController.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractNetworkPortController.class);
 
 }

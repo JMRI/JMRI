@@ -3,10 +3,9 @@ package jmri.jmrix.sprog;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogSystemConnectionMemo.
@@ -54,7 +53,7 @@ public class SprogSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS);
@@ -63,7 +62,7 @@ public class SprogSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getSprogTrafficController().dispose();
         JUnitUtil.tearDown();

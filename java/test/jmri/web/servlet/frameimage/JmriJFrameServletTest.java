@@ -10,13 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import jmri.util.JUnitUtil;
 
-import org.assertj.core.api.*;
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.Test;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Invokes complete set of tests for the jmri.web.servlet.frameimage.JmriJFrameServlet class
@@ -123,12 +120,12 @@ public class JmriJFrameServletTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

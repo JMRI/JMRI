@@ -2,7 +2,8 @@ package jmri.util;
 
 import java.util.Locale;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.IntlUtilities class.

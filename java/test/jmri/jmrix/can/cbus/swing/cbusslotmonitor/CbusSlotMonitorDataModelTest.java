@@ -4,10 +4,9 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CbusSlotMonitorDataModel
@@ -527,7 +526,7 @@ public class CbusSlotMonitorDataModelTest {
     
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new jmri.jmrix.can.TrafficControllerScaffold();
@@ -536,7 +535,7 @@ public class CbusSlotMonitorDataModelTest {
         t = new CbusSlotMonitorDataModel(memo,5,5);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         t = null;

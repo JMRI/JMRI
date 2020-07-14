@@ -192,28 +192,6 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     * Sets the selected schedule id
-     *
-     * @param id Selected schedule id
-     * Moved to TrainScheduleManager.java
-     * @deprecated at or before 4.13.7
-     */
-    @Deprecated  // at or before 4.13.7
-    public void setTrainSecheduleActiveId(String id) {
-        InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
-    }
-
-    /**
-     * @deprecated at or before 4.13.7
-     * Moved to TrainScheduleManager.java
-     * @return active schedule id
-     */
-    @Deprecated // at or before 4.13.7
-    public String getTrainScheduleActiveId() {
-        return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
-    }
-
-    /**
      * Add a script to run after trains have been loaded
      *
      * @param pathname The script's pathname
@@ -291,7 +269,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         }
     }
     
-    public boolean hasRoadRestrictions() {
+    public boolean isRoadRestricted() {
         for (Train train : getList()) {
             if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
                 return true;
@@ -300,7 +278,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         return false;
     }
     
-    public boolean hasLoadRestrictions() {
+    public boolean isLoadRestricted() {
         for (Train train : getList()) {
             if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
                 return true;
@@ -732,11 +710,10 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     *
-     * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
+     * JColorChooser is not a replacement for getRowColorComboBox as it doesn't support no color as a selection.
+     * 
+     * @return the available colors used highlighting table rows including no color.
      */
-    @Deprecated
     public JComboBox<String> getRowColorComboBox() {
         JComboBox<String> box = new JComboBox<>();
         box.addItem(NONE);

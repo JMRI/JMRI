@@ -732,7 +732,7 @@ public abstract class AbstractMRTrafficController {
     protected boolean connectionError = false;
 
     protected void portWarnTCP(Exception e) {
-        log.warn("Exception java net: {}", e);
+        log.warn("Exception java net: ", e);
         connectionError = true;
     }
     // methods to connect/disconnect to a source of data in an AbstractPortController
@@ -811,7 +811,7 @@ public abstract class AbstractMRTrafficController {
             rcvThread.start();
             
         } catch (RuntimeException e) {
-            log.error("Failed to start up communications. Error was {}", e.toString());
+            log.error("Failed to start up communications. Error was: ", e);
             log.debug("Full trace:", e);
         }
     }

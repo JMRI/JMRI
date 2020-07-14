@@ -3,8 +3,8 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -66,7 +66,7 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", track);
         
         // confirm default load
-        Assert.assertTrue(track.acceptsLoad("E", "Flat"));
+        Assert.assertTrue(track.isLoadNameAndCarTypeAccepted("E", "Flat"));
 
         LocationsByCarLoadFrame lclf = new LocationsByCarLoadFrame();
         Assert.assertNotNull("exists", lclf);
@@ -78,7 +78,7 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(lclf.saveButton);
         
         // confirm change
-        Assert.assertFalse(track.acceptsLoad("E", "Flat"));
+        Assert.assertFalse(track.isLoadNameAndCarTypeAccepted("E", "Flat"));
         
         JUnitUtil.dispose(lclf);
 

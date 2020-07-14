@@ -1,10 +1,9 @@
 package jmri.jmrix.qsi;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the QsiReplyclass
@@ -65,7 +64,7 @@ public class QsiReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new QsiSystemConnectionMemo();
@@ -79,7 +78,7 @@ public class QsiReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new QsiReply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         tc = null;

@@ -6,13 +6,15 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import jmri.JmriException;
 import jmri.util.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.Operator;
 
 /**
  * Test simple functioning of TrackSegment.
  * <p>
- * Note this uses <code>@BeforeClass</code> and <code>@AfterClass</code> to do
+ * Note this uses <code>@BeforeAll</code> and <code>@AfterAll</code> to do
  * static setup.
  *
  * @author Paul Bender Copyright (C) 2016
@@ -694,6 +696,36 @@ public class TrackSegmentTest extends LayoutTrackTest {
         }
     }
 
+    @Test
+    public void testSetCircleDefault() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            trackSegment.setCircle(true);
+            Assert.assertEquals("trackSegment.setCircle(Default)", 90.0D, trackSegment.getAngle(), 0.01D);
+        }
+    }
+
+    @Test
+    public void testSetCircleZeroAngle() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            trackSegment.setAngle(0.0D);
+            trackSegment.setCircle(true);
+            Assert.assertEquals("trackSegment.setCircle(Zero Angle)", 90.0D, trackSegment.getAngle(), 0.01D);
+        }
+    }
+    
+    @Test
+    public void testSetCirclePositiveAngle() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            trackSegment.setAngle(50.0D);
+            trackSegment.setCircle(true);
+            Assert.assertEquals("trackSegment.setCircle(Positive Angle)", 50.0D, trackSegment.getAngle(), 0.01D);
+        }
+    }
+
+    
     //
     // from here down is testing infrastructure
     //
@@ -702,7 +734,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
 
@@ -720,7 +752,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             if (layoutEditor != null) {
@@ -739,7 +771,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @Before
+    @BeforeEach
     public void setUpEach() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -757,7 +789,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
      *
      * @throws Exception
      */
-    @After
+    @AfterEach
     public void tearDownEach() throws Exception {
         // release refereces to track segment
         trackSegment = null;

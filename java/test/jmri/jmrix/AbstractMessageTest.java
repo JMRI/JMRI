@@ -1,8 +1,8 @@
 package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,7 +10,7 @@ import org.junit.Before;
  */
 public class AbstractMessageTest extends AbstractMessageTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -22,7 +22,7 @@ public class AbstractMessageTest extends AbstractMessageTestBase {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

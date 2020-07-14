@@ -1,14 +1,18 @@
 package jmri;
 
+
 import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
+
 import java.beans.*;
 import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
 import jmri.NamedBean.BadSystemNameException;
 import jmri.NamedBean.DuplicateSystemNameException;
-import jmri.beans.PropertyChangeProvider;
+import jmri.beans.SilenceablePropertyChangeProvider;
 import jmri.beans.VetoableChangeProvider;
 
 /**
@@ -47,7 +51,7 @@ import jmri.beans.VetoableChangeProvider;
  * @param <E> the type of NamedBean supported by this manager
  * @author Bob Jacobsen Copyright (C) 2003
  */
-public interface Manager<E extends NamedBean> extends PropertyChangeProvider, VetoableChangeProvider {
+public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeProvider, VetoableChangeProvider {
 
     /**
      * Get the system connection for this manager.
@@ -480,7 +484,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @CheckForNull
     @Deprecated // 4.19.1
     public default E getBeanBySystemName(@Nonnull String systemName) {
-        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
+        jmri.util.LoggingUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
         return getBySystemName(systemName);
     }
 
@@ -495,7 +499,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @CheckForNull
     @Deprecated // 4.19.1
     public default E getBeanByUserName(@Nonnull String userName) {
-        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
+        jmri.util.LoggingUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
         return getByUserName(userName);
     }
 
@@ -755,7 +759,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *
      * @param muted true if notifications should be suppressed; false otherwise
      * @deprecated since 4.19.7 without direct replacement;
-     *             {@link #setPropertyChangesMuted(java.lang.String, boolean)}
+     *             {@link #setPropertyChangesSilenced(java.lang.String, boolean)}
      *             can be used to similar effect
      */
     @Deprecated
@@ -767,8 +771,13 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      *
      * @param propertyName the name of the property to mute
      * @param muted        true if events are to be suppressed; false otherwise
+     * @deprecated since 4.21.1; use
+     * {@link #setPropertyChangesSilenced(String, boolean)} instead
      */
-    public void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted);
+    @Deprecated
+    public default void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted) {
+        setPropertyChangesSilenced(propertyName, muted);
+    }
 
     /**
      * Intended to be equivalent to {@link javax.swing.event.ListDataListener}

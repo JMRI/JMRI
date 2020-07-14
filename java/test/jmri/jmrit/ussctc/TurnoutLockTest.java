@@ -2,7 +2,9 @@ package jmri.jmrit.ussctc;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -60,7 +62,7 @@ public class TurnoutLockTest {
         Assert.assertTrue(! lock.isLockClear());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -68,7 +70,7 @@ public class TurnoutLockTest {
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

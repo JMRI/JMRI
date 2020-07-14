@@ -1,8 +1,9 @@
 package jmri.jmrix.lenz.xntcp.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.lenz.xntcp.ConnectionConfig;
 
 /**
@@ -14,7 +15,7 @@ import jmri.jmrix.lenz.xntcp.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXmlTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -22,7 +23,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
         cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         xmlAdapter = null;

@@ -47,7 +47,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * VetoableChangeListeners.
      */
     private final List<String> vetoablePropertyNames = new ArrayList<>();
-    protected final Map<String, Boolean> mutedProperties = new HashMap<>();
+    protected final Map<String, Boolean> silencedProperties = new HashMap<>();
+    protected final Set<String> silenceableProperties = new HashSet<>();
 
     /**
      * {@inheritDoc}
@@ -513,7 +514,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
             recomputeNamedBeanSet();
         }
         event.setPropagationId(this);
-        if (!mutedProperties.getOrDefault(event.getPropertyName(), false)) {
+        if (!silencedProperties.getOrDefault(event.getPropertyName(), false)) {
             firePropertyChange(event);
         }
     }
@@ -577,7 +578,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
-        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
+        // jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
         List<E> list = getNamedBeanList();
         ArrayList<String> retval = new ArrayList<>(list.size());
         list.forEach(e -> retval.add(e.getSystemName()));
@@ -589,7 +590,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @Nonnull
     public List<E> getNamedBeanList() {
-        // jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
+        // jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
         // by doing this in order by manager and from each managers ordered sets, its finally in order
         ArrayList<E> tl = new ArrayList<>();
         mgrs.forEach(m -> tl.addAll(m.getNamedBeanSet()));
@@ -620,9 +621,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setPropertyChangesMuted(String propertyName, boolean muted) {
-        mutedProperties.put(propertyName, muted);
-        if (propertyName.equals("beans") && !muted) {
+    public void setPropertyChangesSilenced(String propertyName, boolean silenced) {
+        // since AbstractProxyManager has no explicit constructors, acccept
+        // "beans" as well as anything needed to be accepted by subclasses
+        if (!"beans".equals(propertyName) && !silenceableProperties.contains(propertyName)) {
+            throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
+        }
+        silencedProperties.put(propertyName, silenced);
+        if (propertyName.equals("beans") && !silenced) {
             fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);
         }
     }

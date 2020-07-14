@@ -120,7 +120,7 @@ public class ExportLocations extends XmlFile {
 
             List<Location> locations = locationManager.getLocationsByNameList();
             for (Location location : locations) {
-                for (Track track : location.getTrackByNameList(null)) {
+                for (Track track : location.getTracksByNameList(null)) {
 
                     StringBuilder trainDirections = new StringBuilder();
                     String[] directions = Setup.getDirectionStrings(

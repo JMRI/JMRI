@@ -1,7 +1,9 @@
 package jmri.implementation;
 
 import jmri.Reporter;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Reporter class
@@ -85,12 +87,7 @@ abstract public class AbstractReporterTestBase {
         r.addPropertyChangeListener(new TestReporterListener());
         Assert.assertEquals("controller listener added", 1, r.getNumPropertyChangeListeners());
         r.dispose();
-        try {
-            Assert.assertTrue("controller listeners remaining < 1", r.getNumPropertyChangeListeners() < 1);
-        }
-        catch ( RuntimeException e){
-            Assert.assertTrue("Either <1 listeners or exception expected", true);
-        }
+        Assert.assertTrue("controller listeners remaining < 1", r.getNumPropertyChangeListeners() < 1);
     }
 
     protected boolean currentReportSeen = false;
@@ -107,10 +104,10 @@ abstract public class AbstractReporterTestBase {
         }
     }
 
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

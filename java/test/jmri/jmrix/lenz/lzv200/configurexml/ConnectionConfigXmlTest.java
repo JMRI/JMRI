@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.lzv200.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import jmri.jmrix.lenz.lzv200.ConnectionConfig;
 
 /**
@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.lzv200.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXmlTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();

@@ -920,7 +920,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             // Assume a LocoNet-style report.  This is (nascent) support for handling of Faller cars
             // for Dave Merrill's project.
             log.debug("report string: {}", rep);
-            // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+            // NOTE: This pattern is based on the one defined in LocoNet-specific LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
             if (m.find()) {
@@ -954,7 +954,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             return (((PhysicalLocationReporter) this.getReporter()).getDirection(rep));
         } else {
             log.debug("report string: {}", rep);
-            // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+            // NOTE: This pattern is based on the one defined in LocoNet-specific LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
             if (m.find()) {

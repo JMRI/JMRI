@@ -6,21 +6,25 @@ import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
+
 import jmri.InstanceManager;
 import jmri.Version;
 import jmri.profile.ProfileManager;
+
 import org.springframework.mock.web.MockHttpSession;
+
 import jmri.util.JUnitUtil;
 import jmri.util.prefs.InitializationException;
 import jmri.web.servlet.ServletUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -36,7 +40,7 @@ public class WebAppServletTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws InitializationException {
         JUnitUtil.setUp();
         JUnitUtil.initConnectionConfigManager();
@@ -46,7 +50,7 @@ public class WebAppServletTest {
         InstanceManager.setDefault(WebAppManager.class, wam);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -2,7 +2,9 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -159,7 +161,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
 
@@ -174,7 +176,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
 

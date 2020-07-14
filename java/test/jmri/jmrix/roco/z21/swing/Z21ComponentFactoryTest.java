@@ -3,10 +3,9 @@ package jmri.jmrix.roco.z21.swing;
 import jmri.jmrix.roco.z21.Z21InterfaceScaffold;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Z21ComponentFactory class.
@@ -37,7 +36,7 @@ public class Z21ComponentFactoryTest {
       Assert.assertNull("Disabled Component Factory getMenu method",zcf.getMenu());
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -47,7 +46,7 @@ public class Z21ComponentFactoryTest {
         memo.setTrafficController(tc);
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         memo=null;
         tc.terminateThreads();

@@ -2,16 +2,15 @@ package jmri.managers;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import jmri.InstanceManager;
 import jmri.SignalSystem;
 import jmri.implementation.SignalSystemTestUtil;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.managers.DefaultSignalSystemManager class.
@@ -107,13 +106,13 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         l = new DefaultSignalSystemManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
         JUnitUtil.tearDown();

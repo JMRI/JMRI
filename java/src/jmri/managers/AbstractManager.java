@@ -49,7 +49,8 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     protected final TreeSet<E> _beans;
     protected final Hashtable<String, E> _tsys = new Hashtable<>();   // stores known E (NamedBean, i.e. Turnout) instances by system name
     protected final Hashtable<String, E> _tuser = new Hashtable<>();  // stores known E (NamedBean, i.e. Turnout) instances by user name
-    protected final Map<String, Boolean> mutedProperties = new HashMap<>();
+    protected final Map<String, Boolean> silencedProperties = new HashMap<>();
+    protected final Set<String> silenceableProperties = new HashSet<>();
 
     // caches
     private ArrayList<String> cachedSystemNameList = null;
@@ -63,9 +64,15 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     public AbstractManager(SystemConnectionMemo memo) {
         this.memo = memo;
         this._beans = new TreeSet<>(memo.getNamedBeanComparator(getNamedBeanClass()));
+        silenceableProperties.add("beans");
         registerSelf();
     }
 
+    public AbstractManager() {
+        // create and use a reference to an internal connection
+        this(InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
+    }
+    
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
@@ -241,7 +248,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         // notifications
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
-        if (!mutedProperties.getOrDefault("beans", false)) {
+        if (!silencedProperties.getOrDefault("beans", false)) {
             fireIndexedPropertyChange("beans", position, null, s);
         }
         firePropertyChange("length", null, _beans.size());
@@ -316,7 +323,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         
         // notifications
         fireDataListenersRemoved(position, position, s);
-        if (!mutedProperties.getOrDefault("beans", false)) {
+        if (!silencedProperties.getOrDefault("beans", false)) {
             fireIndexedPropertyChange("beans", position, s, null);
         }
         firePropertyChange("length", null, _beans.size());
@@ -380,7 +387,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
-        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList");
+        // jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
         if (cachedSystemNameList == null) {
             cachedSystemNameList = new ArrayList<>();
             _beans.forEach(b -> cachedSystemNameList.add(b.getSystemName()));
@@ -393,7 +400,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<E> getNamedBeanList() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList");
+        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList");
         if (cachedNamedBeanList == null) {
             cachedNamedBeanList = new ArrayList<>(_beans);
         }
@@ -522,9 +529,12 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setPropertyChangesMuted(@Nonnull String propertyName, boolean muted) {
-        mutedProperties.put(propertyName, muted);
-        if (propertyName.equals("beans") && !muted) {
+    public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean silenced) {
+        if (!silenceableProperties.contains(propertyName)) {
+            throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
+        }
+        silencedProperties.put(propertyName, silenced);
+        if (propertyName.equals("beans") && !silenced) {
             fireIndexedPropertyChange("beans", _beans.size(), null, null);
         }
     }

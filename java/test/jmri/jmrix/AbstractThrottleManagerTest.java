@@ -1,13 +1,11 @@
 package jmri.jmrix;
 
+import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.DccLocoAddress;
-import jmri.NamedBean;
 
-import java.util.Comparator;
-
-import org.junit.After;
-import org.junit.Before;
+import org.mockito.Mockito;
+import org.junit.jupiter.api.*;
 
 /**
  * @author Paul Bender Copyright (C) 2017
@@ -16,21 +14,14 @@ public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleM
 
     AbstractThrottleManager t = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tm = t = new AbstractThrottleManager(new DefaultSystemConnectionMemo("T", "Test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-
-            @Override
-            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
-                return null;
-            }
-        }) {
+        SystemConnectionMemo memo = Mockito.mock(SystemConnectionMemo.class);
+        Mockito.when(memo.getUserName()).thenReturn("Test");
+        Mockito.when(memo.getSystemPrefix()).thenReturn("T");
+        tm = t = new AbstractThrottleManager(memo) {
             @Override
             public void requestThrottleSetup(jmri.LocoAddress a, boolean control) {
                 notifyThrottleKnown(new jmri.jmrix.debugthrottle.DebugThrottle((DccLocoAddress) a, adapterMemo), a);
@@ -53,7 +44,7 @@ public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleM
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tm = t = null;
         JUnitUtil.tearDown();

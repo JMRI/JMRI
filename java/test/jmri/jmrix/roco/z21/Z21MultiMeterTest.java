@@ -1,7 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -18,7 +20,7 @@ public class Z21MultiMeterTest extends jmri.implementation.AbstractMultiMeterTes
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -30,7 +32,7 @@ public class Z21MultiMeterTest extends jmri.implementation.AbstractMultiMeterTes
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
         tc.terminateThreads();
         memo = null;

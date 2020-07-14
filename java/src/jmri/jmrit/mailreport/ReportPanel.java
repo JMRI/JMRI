@@ -30,6 +30,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.MultipartMessage;
 import jmri.util.javaworld.GridLayout2;
+import jmri.util.problemreport.LogProblemReportProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -237,21 +238,13 @@ public class ReportPanel extends JPanel {
             // add the log if OK
             if (checkLog.isSelected()) {
                 log.debug("prepare log attachments");
-                // search for an appender that stores a file
-                for (java.util.Enumeration<org.apache.log4j.Appender> en = org.apache.log4j.Logger.getRootLogger().getAllAppenders(); en.hasMoreElements();) {
-                    // does this have a file?
-                    org.apache.log4j.Appender a = en.nextElement();
-                    // see if it's one of the ones we know
-                    if (log.isDebugEnabled()) {
-                        log.debug("check appender {}", a);
-                    }
-                    try {
-                        org.apache.log4j.FileAppender f = (org.apache.log4j.FileAppender) a;
-                        log.debug("find file: {}", f.getFile());
-                        msg.addFilePart("logfileupload[]", new File(f.getFile()), "application/octet-stream");
-                    } catch (ClassCastException ex) {
+                ServiceLoader<LogProblemReportProvider> loggers = ServiceLoader.load(LogProblemReportProvider.class);
+                for(LogProblemReportProvider provider : loggers) {
+                    for(File file : provider.getFiles()) {
+                        msg.addFilePart("logfileupload[]", file, "application/octet-stream");
                     }
                 }
+                loggers.reload(); // allow garbage collection of loaders
             }
             log.debug("done adding attachments");
 

@@ -6,11 +6,10 @@ import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of SwitchboardEditor
@@ -78,7 +77,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assert.assertEquals("Default Text Color after Set", ColorUtil.ColorPink, e.getDefaultTextColor());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -88,7 +87,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (e != null) {
