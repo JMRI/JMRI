@@ -665,7 +665,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     protected void handleFunction(String inPackage) {
         // get the function # sent from device
         String receivedFunction = inPackage.substring(2);
-        int receivedFunctionNum = Integer.valueOf(receivedFunction);
+        int receivedFunctionNum = Integer.parseInt(inPackage.substring(1));
         if (inPackage.charAt(1) == '1') { // Function Button down
             log.debug("Trying to set function {}", receivedFunction);
             // Toggle button state:
@@ -689,7 +689,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     protected void forceFunction(String inPackage) {
-        int receivedFunction = Integer.valueOf(inPackage.substring(1));
+        int receivedFunction = Integer.parseInt(inPackage.substring(1));
         boolean newVal = inPackage.charAt(0) == '1';
         log.debug("Trying to set function {} to {}", receivedFunction,newVal);
         throttle.setFunction(receivedFunction, newVal);
@@ -700,7 +700,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     protected void handleMomentary(String inPackage) {
-        int receivedFunction = Integer.valueOf(inPackage.substring(1));
+        int receivedFunction = Integer.parseInt(inPackage.substring(1));
         boolean newVal = inPackage.charAt(0) == '1';
         log.debug("Trying to set function {} to {}", receivedFunction,newVal ? "Momentary":"Locking");
         throttle.setFunctionMomentary(receivedFunction, newVal);
