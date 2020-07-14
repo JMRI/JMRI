@@ -92,15 +92,15 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         Track t = l.getTrackByName("2nd interchange track", Track.INTERCHANGE);
 
         // check track accepts Boxcars
-        Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("2nd interchange track accepts Boxcars", t.isTypeNameAccepted("Boxcar"));
         // test clear car types button
         JemmyUtil.enterClickAndLeave(f.clearButton);
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-        Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
+        Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.isTypeNameAccepted("Boxcar"));
 
         JemmyUtil.enterClickAndLeave(f.setButton);
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
-        Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("2nd interchange track accepts Boxcars again", t.isTypeNameAccepted("Boxcar"));
 
         JUnitUtil.dispose(f);
     }
