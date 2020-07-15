@@ -726,27 +726,15 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * items from the list of NamedBeans.
      *
      * @param e the data listener to add
-     * @deprecated since 4.19.7; use
-     *             {@link #addPropertyChangeListener(String, PropertyChangeListener)}
-     *             or {@link #addPropertyChangeListener(PropertyChangeListener)}
-     *             instead, listening for changes to the
-     *             {@code beans} property
      */
-    @Deprecated
     public void addDataListener(ManagerDataListener<E> e);
 
     /**
      * Unregister a previously-added {@link ManagerDataListener}.
      *
      * @param e the data listener to remove
-     * @deprecated since 4.19.7; use
-     *             {@link #removePropertyChangeListener(String, PropertyChangeListener)}
-     *             or
-     *             {@link #removePropertyChangeListener(PropertyChangeListener)}
-     *             instead
      * @see #addDataListener(ManagerDataListener)
      */
-    @Deprecated
     public void removeDataListener(ManagerDataListener<E> e);
 
     /**
@@ -758,11 +746,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * the sense that the manager must do a cumulative notification when done.
      *
      * @param muted true if notifications should be suppressed; false otherwise
-     * @deprecated since 4.19.7 without direct replacement;
-     *             {@link #setPropertyChangesSilenced(java.lang.String, boolean)}
-     *             can be used to similar effect
      */
-    @Deprecated
     public default void setDataListenerMute(boolean muted) {
     }
 
@@ -784,10 +768,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * without introducing a Swing dependency into core JMRI.
      *
      * @param <E> the type to support listening for
-     * @since JMRI 4.11.4
-     * @deprecated since 4.19.7 without direct replacement
+     * @since JMRI 4.11.4 - for use in DataModel code
      */
-    @Deprecated
     interface ManagerDataListener<E extends NamedBean> {
 
         /**
@@ -822,10 +804,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * without introducing a Swing dependency into core JMRI.
      *
      * @param <E> the type to support in the event
-     * @since JMRI 4.11.4
-     * @deprecated since 4.19.7 without direct replacement
+     * @since JMRI 4.11.4 - for use in DataModel code
      */
-    @Deprecated
     @javax.annotation.concurrent.Immutable
     public final class ManagerDataEvent<E extends NamedBean> extends java.util.EventObject {
 
