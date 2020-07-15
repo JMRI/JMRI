@@ -198,7 +198,7 @@ public class NamedBeanComboBoxTest {
         countContents = countAdded = countRemoved = 0;
         lastEvent = null;
 
-        Sensor s2 = GuiActionRunner.execute(() -> m.provideSensor("IS2"));
+        GuiActionRunner.execute(() -> m.provideSensor("IS2"));
         
         assertThat(countContents).isEqualTo(0);
         assertThat(countAdded).isEqualTo(1);
@@ -210,7 +210,7 @@ public class NamedBeanComboBoxTest {
         countContents = countAdded = countRemoved = 0;
         lastEvent = null;
 
-        Sensor s3 = GuiActionRunner.execute(() -> m.provideSensor("IS3"));
+        GuiActionRunner.execute(() -> m.provideSensor("IS3"));
         
         assertThat(countContents).isEqualTo(0);
         assertThat(countAdded).isEqualTo(1);
@@ -222,7 +222,7 @@ public class NamedBeanComboBoxTest {
         countContents = countAdded = countRemoved = 0;
         lastEvent = null;
 
-        Sensor s1 = GuiActionRunner.execute(() -> m.provideSensor("IS1"));
+        GuiActionRunner.execute(() -> m.provideSensor("IS1"));
         
         assertThat(countContents).isEqualTo(0);
         assertThat(countAdded).isEqualTo(1);
