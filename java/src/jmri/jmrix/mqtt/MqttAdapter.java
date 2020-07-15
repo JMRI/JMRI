@@ -98,6 +98,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             mels.add(mel);
             mqttEventListeners.put(fullTopic, mels);
             mqttClient.subscribe(fullTopic);
+            log.debug("Subscribed : \"{}\"", fullTopic);
         } catch (MqttException ex) {
             log.error("Can't subscribe : ", ex);
         }
@@ -105,11 +106,16 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     public void unsubscribe(String topic, MqttEventListener mel) {
         String fullTopic = baseTopic + topic;
+        if (mqttEventListeners == null || mqttClient == null) {
+            jmri.util.LoggingUtil.warnOnce(log, "Trying to unsubscribe before connect/configure is done");
+            return;
+        }
         mqttEventListeners.get(fullTopic).remove(mel);
         if (mqttEventListeners.get(fullTopic).isEmpty()) {
             try {
                 mqttClient.unsubscribe(fullTopic);
                 mqttEventListeners.remove(fullTopic);
+                log.debug("Unsubscribed : \"{}\"", fullTopic);
             } catch (MqttException ex) {
                 log.error("Can't unsubscribe : ", ex);
             }
