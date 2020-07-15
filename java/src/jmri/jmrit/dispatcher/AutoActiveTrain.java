@@ -348,16 +348,6 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
-    }
-
-    /**
      * No steal or share decisions made locally
      * <p>
      * {@inheritDoc}

@@ -49,16 +49,6 @@ public abstract class AbstractThrottleManagerTestBase {
         public void notifyFailedThrottleRequest(LocoAddress address, String reason){
             throttleNotFoundResult = true;
         }
-        
-        /**
-         * {@inheritDoc}
-         * @Deprecated since 4.15.7; use #notifyDecisionRequired
-         */
-        @Deprecated
-        @Override
-        public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-            notifyDecisionRequired(address,DecisionType.STEAL);
-        }
 
         @Override
         public void notifyDecisionRequired(LocoAddress address, DecisionType question) {

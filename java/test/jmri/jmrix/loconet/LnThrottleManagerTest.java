@@ -54,15 +54,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -128,15 +119,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -225,15 +207,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -318,15 +291,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for {} because {}", address, reason);
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -373,15 +337,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for {} because {}", address, reason);
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -426,15 +381,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 failedThrottleRequest = true;
                 log.error("Throttle request failed for {} because {}", address, reason);
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -481,15 +427,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -539,15 +476,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -592,15 +520,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -656,15 +575,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -687,15 +597,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -780,15 +681,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -811,15 +703,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -924,15 +807,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -956,15 +830,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -987,15 +852,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle3 request failed for {} because {}", address, reason);
                 failedThrottleRequest3 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -1110,15 +966,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
-            }
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
@@ -1142,15 +989,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle2 request failed for {} because {}", address, reason);
                 failedThrottleRequest2 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override
@@ -1251,15 +1089,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle4 request failed for {} because {}", address, reason);
                 failedThrottleRequest4 = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(jmri.LocoAddress address){
-                notifyDecisionRequired(address, DecisionType.STEAL);
             }
 
             @Override

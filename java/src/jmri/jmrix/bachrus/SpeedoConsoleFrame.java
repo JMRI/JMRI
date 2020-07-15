@@ -1782,18 +1782,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     @Override
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
     }
-          
-    /**
-     * Called when a throttle must be stolen for the requested address. Since this is a 
-     * an automatically stealing implementation, the throttle will be automatically stolen.
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
-    }
 
     /**
      * Called when we must decide to steal the throttle for the requested address. Since this is a 
