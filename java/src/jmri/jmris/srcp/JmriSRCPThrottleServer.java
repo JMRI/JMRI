@@ -331,14 +331,8 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
                 log.debug("Throttle in throttle list");
                 Throttle t = throttleList.get(addressList.indexOf(addr));
                 for (int i = 0; i < fList.size(); i++) {
-                    try {
-                        java.lang.reflect.Method setter = t.getClass()
-                                .getMethod("setF" + i, boolean.class);
-                        setter.invoke(t, fList.get(i));
-                    } catch (java.lang.NoSuchMethodException
-                            | java.lang.IllegalAccessException
-                            | java.lang.reflect.InvocationTargetException ex1) {
-                        log.error("", ex1);
+                    t.setFunction(i, fList.get(i));
+                    if ( i > t.getFunctions().length-1) {
                         try {
                             sendErrorStatus();
                         } catch (IOException ioe) {
