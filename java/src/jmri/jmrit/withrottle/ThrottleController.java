@@ -664,25 +664,24 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 // Function methods
     protected void handleFunction(String inPackage) {
         // get the function # sent from device
-        String receivedFunction = inPackage.substring(2);
-        int receivedFunctionNum = Integer.parseInt(inPackage.substring(1));
+        int receivedFunction = Integer.parseInt(inPackage.substring(2));
         if (inPackage.charAt(1) == '1') { // Function Button down
             log.debug("Trying to set function {}", receivedFunction);
             // Toggle button state:
-            boolean state = functionThrottle.getFunction(receivedFunctionNum);
-            functionThrottle.setFunction(receivedFunctionNum, !state);
+            boolean state = functionThrottle.getFunction(receivedFunction);
+            functionThrottle.setFunction(receivedFunction, !state);
             log.debug("Throttle: {}, Function: {}, set state: {}", functionThrottle.getLocoAddress(), receivedFunction, !state);
         } else { // Function Button up
 
             //  F2 is momentary for horn, unless prefs are set to follow roster entry
-            if ((isMomF2) && (receivedFunction.equals("2"))) {
+            if ((isMomF2) && (receivedFunction==2)) {
                 functionThrottle.setF2(false);
                 return;
             }
 
             // Do nothing if lockable, turn off if momentary
-            if (functionThrottle.getFunctionMomentary(receivedFunctionNum)) {
-                functionThrottle.setFunction(receivedFunctionNum, false);
+            if (functionThrottle.getFunctionMomentary(receivedFunction)) {
+                functionThrottle.setFunction(receivedFunction, false);
                 log.debug("Throttle: {}, Momentary Function: {}, set false", functionThrottle.getLocoAddress(), receivedFunction);
             }
         }
