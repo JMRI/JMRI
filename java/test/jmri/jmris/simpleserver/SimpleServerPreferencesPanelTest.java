@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class SimpleServerPreferencesPanelTest extends PreferencesPanelTestBase {
+public class SimpleServerPreferencesPanelTest extends PreferencesPanelTestBase<SimpleServerPreferencesPanel> {
 
     @Override
     @BeforeEach
@@ -22,13 +22,6 @@ public class SimpleServerPreferencesPanelTest extends PreferencesPanelTestBase {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         prefsPanel = new SimpleServerPreferencesPanel();
-    }
-
-    @Override
-    @Test
-    public void getLabelKey(){
-        // This class returns null for label key, but should it?
-        assertThat(prefsPanel.getLabelKey()).isNull();
     }
 
 }

@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase {
+public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase<ManagerDefaultsConfigPane> {
 
     @BeforeEach
     public void setUp() {
@@ -28,12 +28,6 @@ public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase {
         assertThat(prefsPanel.isPersistant()).isTrue();
     }
 
-    @Override
-    @Test
-    public void getPreferencesTooltip() {
-        // should this actually return null?
-        assertThat(prefsPanel.getPreferencesTooltip()).isNull();
-    }
     // private final static Logger log = LoggerFactory.getLogger(ManagerDefaultsConfigPaneTest.class);
 
 }

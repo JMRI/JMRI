@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class UserMessagePreferencesPaneTest extends PreferencesPanelTestBase {
+public class UserMessagePreferencesPaneTest extends PreferencesPanelTestBase<UserMessagePreferencesPane> {
 
     @Override
     @BeforeEach
@@ -36,27 +36,6 @@ public class UserMessagePreferencesPaneTest extends PreferencesPanelTestBase {
     @Test
     public void isPersistant() {
         assertThat(prefsPanel.isPersistant()).isFalse();
-    }
-
-    @Override
-    @Test
-    public void getPreferencesTooltip() {
-        // should this actually return null?
-        assertThat(prefsPanel.getPreferencesTooltip()).isNull();
-    }
-
-    @Override
-    @Test
-    public void getLabelKey(){
-        //should this actually return null?
-        assertThat(prefsPanel.getLabelKey()).isNull();
-    }
-
-    @Override
-    @Test
-    public void getTabbedPreferencesTitle() {
-        // should this actually return null?
-        assertThat(prefsPanel.getTabbedPreferencesTitle()).isNull();
     }
 
 }

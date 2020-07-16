@@ -1,6 +1,5 @@
 package apps;
 
-import apps.gui3.tabbedpreferences.TabbedPreferences;
 import jmri.swing.PreferencesPanel;
 import jmri.util.JUnitUtil;
 import jmri.swing.PreferencesPanelTestBase;
@@ -13,7 +12,7 @@ import org.mockito.Mockito;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class GuiLocalePreferencesPanelTest extends PreferencesPanelTestBase {
+public class GuiLocalePreferencesPanelTest extends PreferencesPanelTestBase<GuiLocalePreferencesPanel> {
 
     @BeforeEach
     @Override
@@ -21,7 +20,7 @@ public class GuiLocalePreferencesPanelTest extends PreferencesPanelTestBase {
         JUnitUtil.setUp();
         prefsPanel = new GuiLocalePreferencesPanel();
         PreferencesPanel parent = Mockito.mock(PreferencesPanel.class);
-        ((GuiLocalePreferencesPanel)prefsPanel).setParent(parent);
+        prefsPanel.setParent(parent);
     }
 
     @Disabled

@@ -8,12 +8,14 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Test simple functioning of ConsistToolPrefsPanel 
  *
  * @author Paul Bender Copyright (C) 2019
  */
-public class ConsistToolPrefsPanelTest extends PreferencesPanelTestBase {
+public class ConsistToolPrefsPanelTest extends PreferencesPanelTestBase<ConsistToolPrefsPanel> {
 
     @BeforeEach
     @Override

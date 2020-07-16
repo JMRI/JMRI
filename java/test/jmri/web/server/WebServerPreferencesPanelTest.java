@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender Copyright (C) 2012, 2016
  */
-public class WebServerPreferencesPanelTest extends PreferencesPanelTestBase {
+public class WebServerPreferencesPanelTest extends PreferencesPanelTestBase<WebServerPreferencesPanel> {
 
     @BeforeEach
     public void setUp() {
@@ -23,17 +23,5 @@ public class WebServerPreferencesPanelTest extends PreferencesPanelTestBase {
         JUnitUtil.initStartupActionsManager();
         prefsPanel = new WebServerPreferencesPanel();
     }
-    @Override
-    @Test
-    public void getLabelKey(){
-        // This class returns null for label key, but should it?
-        assertThat(prefsPanel.getLabelKey()).isNull();
-    }
 
-    @Override
-    @Test
-    public void getPreferencesTooltip(){
-        // This class returns null for preferences tool tip, but should it?
-        assertThat(prefsPanel.getPreferencesTooltip()).isNull();
-    }
 }

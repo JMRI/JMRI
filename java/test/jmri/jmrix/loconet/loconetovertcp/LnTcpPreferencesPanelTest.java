@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Paul Bender Copyright (C) 2017
  */
-public class LnTcpPreferencesPanelTest extends PreferencesPanelTestBase {
+public class LnTcpPreferencesPanelTest extends PreferencesPanelTestBase<LnTcpPreferencesPanel> {
 
     @Override
     @BeforeEach
@@ -20,19 +20,6 @@ public class LnTcpPreferencesPanelTest extends PreferencesPanelTestBase {
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initStartupActionsManager();
         prefsPanel = new LnTcpPreferencesPanel();
-    }
-    @Override
-    @Test
-    public void getLabelKey(){
-        // This class returns null for label key, but should it?
-        assertThat(prefsPanel.getLabelKey()).isNull();
-    }
-
-    @Override
-    @Test
-    public void getPreferencesTooltip(){
-        // This class returns null for preferences tool tip, but should it?
-        assertThat(prefsPanel.getPreferencesTooltip()).isNull();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LnTcpPreferencesPanelTest.class);

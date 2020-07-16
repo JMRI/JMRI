@@ -66,7 +66,7 @@ public class ConsistToolPrefsPanel extends JPanel implements PreferencesPanel {
      */
     @Override
     public String getLabelKey() {
-        return getPreferencesItemText();
+        return null;
     }
 
     /**
@@ -90,7 +90,7 @@ public class ConsistToolPrefsPanel extends JPanel implements PreferencesPanel {
      */
     @Override
     public String getPreferencesTooltip() {
-        return Bundle.getMessage("ConsistPreferencesToolTip");
+        return null;
     }
 
     /**

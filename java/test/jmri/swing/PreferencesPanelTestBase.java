@@ -1,5 +1,6 @@
 package jmri.swing;
 
+import cucumber.api.java8.Th;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +14,9 @@ import static org.assertj.core.api.Java6Assertions.catchThrowable;
  *
  * @author Paul Bender Colyright (C) 2020
  */
-abstract public class PreferencesPanelTestBase {
+abstract public class PreferencesPanelTestBase<P extends PreferencesPanel> {
 
-    protected PreferencesPanel prefsPanel;
+    protected P prefsPanel;
 
     /**
      * Implementing classes should set the value of prefsPanel in setUp.
@@ -46,12 +47,14 @@ abstract public class PreferencesPanelTestBase {
 
     @Test
     public void getTabbedPreferencesTitle() {
-        assertThat(prefsPanel.getTabbedPreferencesTitle()).isNotNull();
+        Throwable thrown = catchThrowable( () -> prefsPanel.getTabbedPreferencesTitle());
+        assertThat(thrown).isNull();
     }
 
     @Test
     public void getLabelKey() {
-        assertThat(prefsPanel.getLabelKey()).isNotNull();
+        Throwable thrown = catchThrowable(() -> prefsPanel.getLabelKey());
+        assertThat(thrown).isNull();
     }
 
     @Test

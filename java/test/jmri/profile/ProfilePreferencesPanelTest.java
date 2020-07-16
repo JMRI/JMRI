@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ProfilePreferencesPanelTest extends PreferencesPanelTestBase {
+public class ProfilePreferencesPanelTest extends PreferencesPanelTestBase<ProfilePreferencesPanel> {
 
     @Override
     @BeforeEach
@@ -22,26 +22,6 @@ public class ProfilePreferencesPanelTest extends PreferencesPanelTestBase {
         prefsPanel = new ProfilePreferencesPanel();
     }
 
-    @Override
-    @Test
-    public void getLabelKey(){
-        // This class returns null for label key, but should it?
-        assertThat(prefsPanel.getLabelKey()).isNull();
-    }
-
-    @Override
-    @Test
-    public void getPreferencesTooltip(){
-        // This class returns null for preferences tool tip, but should it?
-        assertThat(prefsPanel.getPreferencesTooltip()).isNull();
-    }
-
-    @Override
-    @Test
-    public void getTabbedPreferencesTitle(){
-        // This class returns null for preferences tool tip, but should it?
-        assertThat(prefsPanel.getTabbedPreferencesTitle()).isNull();
-    }
     // private final static Logger log = LoggerFactory.getLogger(ProfilePreferencesPanelTest.class);
 
 }

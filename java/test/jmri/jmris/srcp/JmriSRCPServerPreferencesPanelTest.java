@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class JmriSRCPServerPreferencesPanelTest extends PreferencesPanelTestBase {
+public class JmriSRCPServerPreferencesPanelTest extends PreferencesPanelTestBase<JmriSRCPServerPreferencesPanel> {
 
     @Override
     @BeforeEach
@@ -21,13 +21,6 @@ public class JmriSRCPServerPreferencesPanelTest extends PreferencesPanelTestBase
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         prefsPanel = new JmriSRCPServerPreferencesPanel();
-    }
-
-    @Override
-    @Test
-    public void getLabelKey(){
-        // This class returns null for label key, but should it?
-        assertThat(prefsPanel.getLabelKey()).isNull();
     }
 
 }

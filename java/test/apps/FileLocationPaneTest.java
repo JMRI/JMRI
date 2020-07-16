@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class FileLocationPaneTest extends PreferencesPanelTestBase {
+public class FileLocationPaneTest extends PreferencesPanelTestBase<FileLocationPane> {
 
     @BeforeEach
     public void setUp() {
@@ -29,13 +29,6 @@ public class FileLocationPaneTest extends PreferencesPanelTestBase {
     @Test
     public void isPersistant() {
         assertThat(prefsPanel.isPersistant()).isTrue();
-    }
-
-    @Override
-    @Test
-    public void getPreferencesTooltip() {
-        // should this actually return null?
-        assertThat(prefsPanel.getPreferencesTooltip()).isNull();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(FileLocationPaneTest.class);
