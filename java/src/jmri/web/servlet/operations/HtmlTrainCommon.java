@@ -296,7 +296,7 @@ public class HtmlTrainCommon extends TrainCommon {
     protected String getTrackComments(RouteLocation location, List<Car> cars) {
         StringBuilder builder = new StringBuilder();
         if (location.getLocation() != null) {
-            List<Track> tracks = location.getLocation().getTrackByNameList(null);
+            List<Track> tracks = location.getLocation().getTracksByNameList(null);
             for (Track track : tracks) {
                 // any pick ups or set outs to this track?
                 boolean pickup = false;
