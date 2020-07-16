@@ -69,7 +69,8 @@ abstract public class PreferencesPanelTestBase<P extends PreferencesPanel> {
 
     @Test
     public void getPreferencesTooltip() {
-        assertThat(prefsPanel.getPreferencesTooltip()).isNotNull();
+        Throwable thrown = catchThrowable( () -> prefsPanel.getPreferencesTooltip());
+        assertThat(thrown).isNull();
     }
 
     @Test
