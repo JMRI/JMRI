@@ -1,18 +1,16 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.BorderLayout;
-import java.awt.event.*;
+// import java.awt.event.*; // temporary
 import java.text.MessageFormat;
 import java.util.*;
 
 import javax.annotation.*;
-import javax.swing.*;
+import javax.swing.*;  // temporary
 
 import jmri.*;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.Bundle;
-import jmri.jmrit.signalling.SignallingGuiTools;
-import jmri.util.swing.JCBHandle;
+import jmri.jmrit.signalling.SignallingGuiTools;  // temporary
 
 
 /**
@@ -739,7 +737,7 @@ public class PositionablePoint extends LayoutTrack {
             result = false;
         }
         return result;
-    }   // replaceTrackConnection
+    } 
 
     void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
@@ -750,41 +748,34 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    protected int maxWidth() {
-        return 5;
-    }
+    // protected int maxWidth() {
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "maxWidth");
+    //    return models.getPositionablePointView(this).maxWidth();
+    //}
 
-    protected int maxHeight() {
-        return 5;
-    }
+    // protected int maxHeight() {
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "maxHeight");
+    //    return models.getPositionablePointView(this).maxHeight();
+    //}
+    
     // cursor location reference for this move (relative to object)
-    int xClick = 0;
-    int yClick = 0;
+    //int xClick = 0;
+    //int yClick = 0;
 
-    public void mousePressed(MouseEvent e) {
-        // remember where we are
-        xClick = e.getX();
-        yClick = e.getY();
-        // if (debug) log.debug("Pressed: "+where(e));
-        if (e.isPopupTrigger()) {
-            models.getLayoutTrackView(this).showPopup(e);
-        }
-    }
+    //public void mousePressed(MouseEvent e) {
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "mousePressed");
+    //    models.getPositionablePointView(this).mousePressed(e);
+    //}
 
-    public void mouseReleased(MouseEvent e) {
-        // if (debug) log.debug("Release: "+where(e));
-        if (e.isPopupTrigger()) {
-            models.getLayoutTrackView(this).showPopup(e);
-        }
-    }
+    //public void mouseReleased(MouseEvent e) {
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "mouseReleased");
+    //    models.getPositionablePointView(this).mouseReleased(e);
+    //}
 
-    public void mouseClicked(MouseEvent e) {
-        if (e.isPopupTrigger()) {
-            models.getLayoutTrackView(this).showPopup(e);
-        }
-    }
-
-    private JPopupMenu popup = null;
+    //public void mouseClicked(MouseEvent e) {
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "mouseClicked");
+    //    models.getPositionablePointView(this).mouseClicked(e);
+    //}
 
     /**
      * {@inheritDoc}
@@ -856,11 +847,8 @@ public class PositionablePoint extends LayoutTrack {
      * the object is still displayed; see remove()
      */
     void dispose() {
-        if (popup != null) {
-            popup.removeAll();
-        }
-        popup = null;
-        removeLinkedPoint();
+        jmri.util.LoggingUtil.deprecationWarning(log, "dispose");
+        models.getPositionablePointView(this).dispose();
     }
 
     void removeLinkedPoint() {
@@ -913,135 +901,26 @@ public class PositionablePoint extends LayoutTrack {
         return result;
     }
 
-    JDialog editLink = null;
-    JComboBox<String> linkPointsBox;
-    JComboBox<JCBHandle<LayoutEditor>> editorCombo; // Stores with LayoutEditor or "None"
-
     void setLink() {
-        if (getConnect1() == null || getConnect1().getLayoutBlock() == null) {
-            log.error("{}.setLink(); Can not set link until we have a connecting track with a block assigned", getName());
-            return;
-        }
-        editLink = new JDialog();
-        editLink.setTitle(Bundle.getMessage("EdgeEditLinkFrom", getConnect1().getLayoutBlock().getDisplayName()));
-
-        JPanel container = new JPanel();
-        container.setLayout(new BorderLayout());
-
-        JButton done = new JButton(Bundle.getMessage("ButtonDone"));
-        done.addActionListener((ActionEvent a) -> updateLink());
-
-        container.add(getLinkPanel(), BorderLayout.NORTH);
-        container.add(done, BorderLayout.SOUTH);
-        container.revalidate();
-
-        editLink.add(container);
-
-        // make this button the default button (return or enter activates)
-        JRootPane rootPane = SwingUtilities.getRootPane(done);
-        rootPane.setDefaultButton(done);
-
-        editLink.pack();
-        editLink.setModal(false);
-        editLink.setVisible(true);
+        jmri.util.LoggingUtil.deprecationWarning(log, "setLink");
+        models.getPositionablePointView(this).setLink();
     }
 
     private ArrayList<PositionablePoint> pointList;
 
-    public JPanel getLinkPanel() {
-        editorCombo = new JComboBox<>();
-        Set<LayoutEditor> panels
-                = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
-        editorCombo.addItem(new JCBHandle<>("None"));
-        if (panels.contains(models)) {
-            panels.remove(models);
-        }
-        for (LayoutEditor p : panels) {
-            JCBHandle<LayoutEditor> h = new JCBHandle<>(p);
-            editorCombo.addItem(h);
-            if (p == getLinkedEditor()) {
-                editorCombo.setSelectedItem(h);
-            }
-        }
-
-        ActionListener selectPanelListener = (ActionEvent a) -> updatePointBox();
-
-        editorCombo.addActionListener(selectPanelListener);
-        JPanel selectorPanel = new JPanel();
-        selectorPanel.add(new JLabel(Bundle.getMessage("SelectPanel")));
-        selectorPanel.add(editorCombo);
-        linkPointsBox = new JComboBox<>();
-        updatePointBox();
-        selectorPanel.add(new JLabel(Bundle.getMessage("ConnectingTo")));
-        selectorPanel.add(linkPointsBox);
-        return selectorPanel;
+    public JPanel getLinkPanel() { // temporary
+        jmri.util.LoggingUtil.deprecationWarning(log, "getLinkPanel");
+        return models.getPositionablePointView(this).getLinkPanel();
     }
 
     void updatePointBox() {
-        linkPointsBox.removeAllItems();
-        pointList = new ArrayList<>();
-        if (editorCombo.getSelectedIndex() == 0) {
-            linkPointsBox.setEnabled(false);
-            return;
-        }
-
-        linkPointsBox.setEnabled(true);
-        LayoutEditor le = editorCombo.getItemAt(editorCombo.getSelectedIndex()).item();
-        for (PositionablePoint p : le.getPositionablePoints()) {
-            if (p.getType() == PointType.EDGE_CONNECTOR) {
-                if (p.getLinkedPoint() == this) {
-                    pointList.add(p);
-                    linkPointsBox.addItem(p.getName());
-                    linkPointsBox.setSelectedItem(p.getName());
-                } else if (p.getLinkedPoint() == null) {
-                    if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
-                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
-                            pointList.add(p);
-                            linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
-                        }
-                    }
-                }
-            }
-        }
-        editLink.pack();
-    } // updatePointBox
+        jmri.util.LoggingUtil.deprecationWarning(log, "updatePointBox");
+        models.getPositionablePointView(this).updatePointBox();
+    }
 
     public void updateLink() {
-        if (editorCombo.getSelectedIndex() == 0 || linkPointsBox.getSelectedIndex() == -1) {
-            if (getLinkedPoint() != null && getConnect2() != null) {
-                String removeremote = null;
-                String removelocal = null;
-                if (getConnect1Dir() == Path.EAST || getConnect1Dir() == Path.SOUTH) {
-                    removeremote = getLinkedPoint().getEastBoundSignal();
-                    removelocal = getWestBoundSignal();
-                    getLinkedPoint().setEastBoundSignal("");
-                } else {
-                    removeremote = getLinkedPoint().getWestBoundSignal();
-                    removelocal = getEastBoundSignal();
-                    getLinkedPoint().setWestBoundSignal("");
-
-                }
-                // removelocal and removeremote have been set here.
-                if (!removeremote.isEmpty()) {
-                    jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class
-                    ).getSignalHead(removeremote);
-                    getLinkedEditor().removeSignalHead(sh);
-                    jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removeremote);
-
-                }
-                if (!removelocal.isEmpty()) {
-                    jmri.SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class
-                    ).getSignalHead(removelocal);
-                    models.removeSignalHead(sh);
-                    jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removelocal);
-                }
-            }
-            setLinkedPoint(null);
-        } else {
-            setLinkedPoint(pointList.get(linkPointsBox.getSelectedIndex()));
-        }
-        editLink.setVisible(false);
-
+        jmri.util.LoggingUtil.deprecationWarning(log, "updateLink");
+        models.getPositionablePointView(this).updateLink();
     }
 
     /**

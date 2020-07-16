@@ -64,11 +64,11 @@ Go through and confirm individually:
 
  - [ ] Remove view variables from Model classes, rm commented code   
         Recheck all 16, rm commented code
-            LayoutTrack
             PositionablePoint
                 swing, awt
                 mouse and popup
                 dispose, which invokes removeLinkedPoint
+            LayoutTrack
             TrackSegment 
         
  - [ ] Remove swing code from Model classes

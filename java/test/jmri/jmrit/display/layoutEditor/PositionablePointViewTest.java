@@ -113,9 +113,6 @@ public class PositionablePointViewTest extends LayoutTrackViewTest {
         PositionablePointView ppv = new PositionablePointView(pp, point, layoutEditor);
         layoutEditor.addLayoutTrack(pp, ppv);
         Assert.assertNotNull("exists", pp);
-
-        Assert.assertTrue("maxWidth == 5", pp.maxWidth() == 5);
-        Assert.assertTrue("maxHeight == 5", pp.maxHeight() == 5);
     }
 
     @Test
