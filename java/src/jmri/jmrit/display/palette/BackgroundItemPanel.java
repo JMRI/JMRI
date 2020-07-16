@@ -40,35 +40,39 @@ public class BackgroundItemPanel extends IconItemPanel {
     @Override
     public void init() {
         if (!_initialized) {
-            makeColorButton();
             super.init();
             _colorPanel = makeColorPanel();
             add(_colorPanel);
         }
     }
 
-    protected JPanel moreInstructions() {
+    @Override
+    protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
-        blurb.add(new JLabel(Bundle.getMessage("BackgroundIcons")));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconCatalog")));
         blurb.add(javax.swing.Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("ToColorBackground", Bundle.getMessage("ButtonBackgroundColor"))));
-        blurb.add(javax.swing.Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        JLabel label = new JLabel(Bundle.getMessage("BackgroundIcons"));
+        label.setForeground(Color.RED);
+        blurb.add(label);
         JPanel panel = new JPanel();
         panel.add(blurb);
         return panel;
     }
 
     @Override
-    protected void makeItemButtonPanel() {
-        super.makeItemButtonPanel();
-        _bottom1Panel.add(_colorButton);
+    protected JPanel makeItemButtonPanel() {
+        JPanel panel = super.makeItemButtonPanel();
+        panel.add(makeColorButton());
+        return panel;
     }
 
     @Override
-    protected void makeSpecialBottomPanel(boolean update) {
-        super.makeSpecialBottomPanel(update);
-        _bottom2Panel.add(_colorButton, 1);
+    protected JPanel makeSpecialBottomPanel(boolean update) {
+        JPanel _bottom2Panel = super.makeSpecialBottomPanel(update);
+        _bottom2Panel.add(makeColorButton(), 1);
+        return _bottom2Panel;
     }
 
     @Override
@@ -92,8 +96,8 @@ public class BackgroundItemPanel extends IconItemPanel {
         _catalog.invalidate();
         _colorPanel.setVisible(true);
         _colorPanel.invalidate();
-        _bottom1Panel.setVisible(false);
-        _bottom1Panel.invalidate();
+        _bottomPanel.setVisible(false);
+        _bottomPanel.invalidate();
         reSizeDisplay(isPalette, oldDim, totalDim);
         _colorButton.setText(Bundle.getMessage("HideColorPanel"));
     }
@@ -105,13 +109,13 @@ public class BackgroundItemPanel extends IconItemPanel {
         boolean isPalette = (_frame instanceof ItemPalette); 
         _colorPanel.setVisible(false);
         _colorPanel.invalidate();
-        _bottom1Panel.setVisible(true);
-        _bottom1Panel.invalidate();
+        _bottomPanel.setVisible(true);
+        _bottomPanel.invalidate();
         reSizeDisplay(isPalette, oldDim, totalDim);
         _colorButton.setText(Bundle.getMessage("ShowColorPanel"));
     }
 
-    private void makeColorButton() {
+    private JButton makeColorButton() {
         _colorButton = new JButton(Bundle.getMessage("ButtonShowColorPanel"));
         _colorButton.addActionListener(a -> {
             if (_colorPanel.isVisible()) {
@@ -121,6 +125,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             }
         });
         _colorButton.setToolTipText(Bundle.getMessage("ToolTipColor"));
+        return _colorButton;
     }
 
     protected JPanel makeColorButtonPanel() {

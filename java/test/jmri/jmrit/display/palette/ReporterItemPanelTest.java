@@ -27,14 +27,6 @@ public class ReporterItemPanelTest {
     }
 
 
-    @Test
-    public void testShow() {
-        ItemPaletteTest.getItemPalette();
-        ItemPanel panel = ItemPalette._tabIndex.get("Reporter");
-        Assert.assertNotNull("exists", panel);
-        panel.init();
-    }
-
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -43,6 +35,7 @@ public class ReporterItemPanelTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

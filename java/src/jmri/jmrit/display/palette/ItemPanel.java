@@ -2,7 +2,6 @@ package jmri.jmrit.display.palette;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,7 +14,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -62,47 +60,10 @@ public abstract class ItemPanel extends JPanel  {
     protected HashMap<String, NamedIcon> _currentIconMap;
     protected ImagePanel _iconPanel;   // a panel on _iconFamilyPanel - all icons in family, shown upon [Show Icons]
     protected JPanel _iconFamilyPanel; // Holds _previewPanel, _familyButtonPanel.
-    protected JPanel _bottom1Panel; // typically displays the _showIconsButton and _editIconsButton
-    protected JPanel _bottom2Panel; // createIconFamilyButton - when all families have been deleted
+    protected JPanel _bottomPanel; // contains function buttons for panel
+    protected ActionListener _doneAction;   // update done action return
+    protected boolean _wasEmpty;
     protected JPanel _instructions;
-    /**
-     * Constructor for all item types.
-     *
-     * @param parentFrame ItemPalette instance
-     * @param type        identifier of the ItemPanel type
-     */
-    public ItemPanel(DisplayFrame parentFrame, @Nonnull String type) {
-        _frame = parentFrame;
-        _itemType = type;
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    }
-
-    /**
-     * Initialize panel for selecting a new Control Panel item or for updating
-     * an existing item. Adds table if item is a bean. i.e. customizes for the
-     * item type.
-     * Called by enclosing TabbedPanel on change of displayed tab Pane.
-     */
-    public void init() {
-        if (!_initialized) {
-            add(Box.createVerticalGlue());
-            _initialized = true;
-        }
-    }
-
-    protected void previewColorChange() {
-        if (_previewPanel != null) {
-            _previewPanel.setBackgroundSelection(_frame.getPreviewBg());
-            _previewPanel.invalidate();
-        }
-    }
-
-    public boolean oktoUpdate() {
-        return true;
-    }
-
-    public void closeDialogs() {
-    }
 
     /*
      * ****** Default family icon names *******
@@ -123,50 +84,82 @@ public abstract class ItemPanel extends JPanel  {
             "BeanStateInconsistent", "BeanStateUnknown"};
     static final String[] MULTISENSOR = {"SensorStateInactive", "BeanStateInconsistent",
             "BeanStateUnknown", "first", "second", "third"};
-    // SIGNALMAST family is empty for now
+    // SIGNALMAST family is empty is signal system
     static final String[] RPSREPORTER = {"active", "error"};
-    static final String[] ICON = {"Icon"};
-    static final String[] BACKGROUND = {"Background"};
+//    static final String[] ICON = {"Icon"};
+//    static final String[] BACKGROUND = {"Background"};
     final static String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "PositionTrack",
             "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
     static final String[] PORTAL = {PortalIcon.HIDDEN, PortalIcon.VISIBLE, PortalIcon.PATH,
             PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
 
-    @Nonnull
-    static private String[] getNames(String type) {
-        if (type.equals("Turnout")) {
-            return TURNOUT;
-        } else if (type.equals("Sensor")) {
-            return SENSOR;
-        } else if (type.equals("SignalHead")) {
-            return SIGNALHEAD;
-        } else if (type.equals("Light")) {
-            return LIGHT;
-        } else if (type.equals("MultiSensor")) {
-            return MULTISENSOR;
-        } else if (type.equals("Icon")) {
-            return ICON;
-        } else if (type.equals("Background")) {
-            return BACKGROUND;
-        } else if (type.equals("RPSReporter")) {
-            return RPSREPORTER;
-        } else if (type.equals("IndicatorTrack")) {
-            return INDICATOR_TRACK;
-        } else if (type.equals("IndicatorTO")) {
-            return INDICATOR_TRACK;
-        } else if (type.equals("Portal")) {
-            return PORTAL;
-        } else {
-            log.error("Item type \"{}\" cannot create icon sets!", type);
-            return new String[]{};
+    protected static HashMap<String, String[]> STATE_MAP = new HashMap<>();
+    {
+        STATE_MAP.put("Turnout", TURNOUT);
+        STATE_MAP.put("Sensor", SENSOR);
+        STATE_MAP.put("SignalHead", SIGNALHEAD);
+        STATE_MAP.put("Light", LIGHT);
+        STATE_MAP.put("MultiSensor", MULTISENSOR);
+//        STATE_MAP.put("Icon", ICON);
+//        STATE_MAP.put("Background", BACKGROUND);
+        STATE_MAP.put("RPSReporter", RPSREPORTER);
+        STATE_MAP.put("IndicatorTrack", INDICATOR_TRACK);
+        STATE_MAP.put("IndicatorTO", INDICATOR_TRACK);
+        STATE_MAP.put("Portal", PORTAL);
+    }
+
+    protected static HashMap<String, String> NAME_MAP = new HashMap<>();
+    {
+        NAME_MAP.put("Turnout", "BeanNameTurnout");
+        NAME_MAP.put("Sensor", "BeanNameSensor");
+        NAME_MAP.put("SignalHead", "BeanNameSignalHead");
+        NAME_MAP.put("Light", "BeanNameLight");
+        NAME_MAP.put("SignalMast", "BeanNameSignalMast");
+        NAME_MAP.put("MultiSensor", "MultiSensor");
+        NAME_MAP.put("Memory", "BeanNameMemory");
+        NAME_MAP.put("Reporter", "BeanNameReporter");
+        NAME_MAP.put("RPSReporter", "RPSreporter");
+        NAME_MAP.put("IndicatorTrack", "IndicatorTrack");
+        NAME_MAP.put("IndicatorTO", "IndicatorTO");
+        NAME_MAP.put("Portal", "BeanNamePortal");
+        NAME_MAP.put("Icon", "Icon");
+        NAME_MAP.put("Background", "Background");
+        NAME_MAP.put("Text", "Text");
+        NAME_MAP.put("FastClock", "FastClock");
+    }
+
+    /**
+     * Constructor for all item types.
+     *
+     * @param parentFrame ItemPalette instance
+     * @param type        identifier of the ItemPanel type
+     */
+    public ItemPanel(DisplayFrame parentFrame, @Nonnull String type) {
+        _frame = parentFrame;
+        _itemType = type;
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(Box.createVerticalGlue());
+    }
+
+    /**
+     * Initialize panel for selecting a new Control Panel item or for updating
+     * an existing item. Adds table if item is a bean. i.e. customizes for the
+     * item type.
+     * Called by enclosing TabbedPanel on change of displayed tab Pane.
+     */
+    public void init() {
+        if (!_initialized) {
+            _update = false;
+            _suppressDragging = false;
+            initIconFamiliesPanel();
+            _initialized = true;
         }
     }
 
     @Nonnull
     static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
         HashMap<String, NamedIcon> newMap = new HashMap<>();
-        String[] names = getNames(type);
-        for (String name : names) {
+        for (String name : STATE_MAP.get(type)) {
             NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
             newMap.put(name, icon);
         }
@@ -174,8 +167,7 @@ public abstract class ItemPanel extends JPanel  {
     }
 
     static protected void checkIconMap(String type, HashMap<String, NamedIcon> map) {
-        String[] names = getNames(type);
-        for (String name : names) {
+        for (String name : STATE_MAP.get(type)) {
             if (map.get(name) == null) {
                 NamedIcon icon = new NamedIcon(ItemPalette.RED_X, ItemPalette.RED_X);
                 // store RedX as default icon if icon not set
@@ -184,60 +176,52 @@ public abstract class ItemPanel extends JPanel  {
         }
     }
 
-    protected DisplayFrame getParentFrame() {
-        return _frame;
+    protected void previewColorChange() {
+        if (_previewPanel != null) {
+            _previewPanel.setBackgroundSelection(_frame.getPreviewBg());
+            _previewPanel.invalidate();
+        }
+    }
+
+    public void closeDialogs() {
     }
 
     /**
      * Make a button panel that can populate an empty ItemPanel
      * @param update edit icons on a panel
+     * @return the panel
      */
-    abstract protected void makeSpecialBottomPanel(boolean update);
+    abstract protected JPanel makeSpecialBottomPanel(boolean update);
 
     /**
      * Make a button panel to populate editing an ItemPanel
+     * @return the panel
      */
-    abstract protected void makeItemButtonPanel();
+    abstract protected JPanel makeItemButtonPanel();
 
     /**
      * Add [Update] button to _bottom1Panel.
      * @param doneAction Action for button
      * @return button with doneAction Action
      */
-    abstract protected JButton makeUpdateButton(ActionListener doneAction);
+    protected JButton makeUpdateButton(ActionListener doneAction) {
+        JButton updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
+        updateButton.addActionListener(doneAction);
+        updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
+        return updateButton;
+    }
 
-    /**
-     * _bottom1Panel and _bottom2Panel alternate visibility in bottomPanel
-     * depending on whether icon families exist. _bottom1Panel typically
-     * has button for further editing of a chosen icon family. _bottom2Panel
-     * is for the exceptional case where there are no families at all.
-     * <p>
-     * Subclasses will insert other panels.
-     *
-     * @param doneAction the calling action
-     * @return the panel
-     */
-    protected JPanel makeBottomPanel(ActionListener doneAction) {
-        makeSpecialBottomPanel(_update); // special case for when no families exist for a given itemType
-        makeItemButtonPanel();
-        if (_bottom1Panel == null || _bottom2Panel == null) {
-            log.error("Item panel for {} made null bottom panels!", _itemType);
-        }
-        JPanel bottomPanel = new JPanel(new FlowLayout());
-        bottomPanel.add(_bottom1Panel);
-        bottomPanel.add(_bottom2Panel);
-        if (doneAction != null) {
-            bottomPanel.add(makeUpdateButton(doneAction));
-        }
-        // If families are missing _bottom2Panel will be made visible.
-        if (_iconPanel == null) {
-            _bottom1Panel.setVisible(false);
-            _bottom2Panel.setVisible(true);
+
+    protected void makeBottomPanel(boolean isEmpty) {
+        if (isEmpty) {
+            _bottomPanel = makeSpecialBottomPanel(_update);
         } else {
-            _bottom1Panel.setVisible(true);
-            _bottom2Panel.setVisible(false);
+            _bottomPanel = makeItemButtonPanel();
         }
-        return bottomPanel;
+        if (_doneAction != null) {
+            _bottomPanel.add(makeUpdateButton(_doneAction));
+        }
+        add(_bottomPanel);
     }
 
     /**
@@ -268,15 +252,13 @@ public abstract class ItemPanel extends JPanel  {
                 _previewPanel = new PreviewPanel(_frame, _iconPanel, dragIconPanel, true);
                 _instructions = instructions();
                 _previewPanel.add(_instructions, 0);
-                _previewPanel.setVisible(hasMaps);
             } else {
                 _previewPanel = new PreviewPanel(_frame, _iconPanel, null, false);
                 _previewPanel.setVisible(false);
             }
             _iconFamilyPanel.add(_previewPanel);
-        } else {
-            _previewPanel.setVisible(true);
         }
+        _previewPanel.setVisible(true);
     }
 
     abstract protected void makeDataFlavors();
@@ -308,6 +290,9 @@ public abstract class ItemPanel extends JPanel  {
         int numCol = 4;
         GridBagConstraints c = ItemPanel.itemGridBagConstraint();
 
+        if (iconMap.isEmpty()) {
+            iconPanel.add(Box.createRigidArea(new Dimension(60,60)));
+        }
         int cnt = 0;
         for (String key : iconMap.keySet()) {
             JPanel panel = makeIconDisplayPanel(key, iconMap, dropIcon);
@@ -378,37 +363,11 @@ public abstract class ItemPanel extends JPanel  {
 
     /**
      * Part of the initialization and reseting of an ItemPanel.
-     * Overrides allows divergence for different panel needs.
+     * Allows divergence for different panel needs.
      */
     abstract protected void makeFamiliesPanel();
 
     abstract protected void hideIcons();
-
-    protected boolean familiesMissing() {
-        if (_bottom1Panel != null) {
-            _bottom1Panel.setVisible(false);
-        }
-        boolean restore;
-        if (_askOnce) {
-            restore = false;
-        } else {
-            int result = JOptionPane.showConfirmDialog(_frame.getEditor(),
-                    Bundle.getMessage("AllFamiliesDeleted", _itemType), Bundle.getMessage("QuestionTitle"),
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            restore = (result == JOptionPane.YES_OPTION);
-            _askOnce = true;
-        }
-        if (restore) {
-            loadDefaultType();
-            return true;
-        } else {
-            if (_initialized && !_update) {
-                _bottom2Panel.setVisible(true);
-                _bottom2Panel.invalidate();
-            }
-            return false;
-        }
-    }
     
     protected void loadDefaultType() {
         ItemPalette.loadMissingItemType(_itemType);
@@ -441,14 +400,11 @@ public abstract class ItemPanel extends JPanel  {
 
     public Dimension shellDimension(ItemPanel panel) {
         if (panel instanceof FamilyItemPanel) {
-            if (panel._itemType.equals("SignalMast")/* || panel._itemType.equals("Reporter")*/) {
-                return new Dimension(23, 136);
-            }
             return new Dimension(23, 122);
         } else if (panel instanceof IconItemPanel) {
-            return new Dimension(20, 70);
+            return new Dimension(15, 65);
         }
-        return new Dimension(8, 0);
+        return new Dimension(7, 48);
     }
 
     static public GridBagConstraints itemGridBagConstraint() {

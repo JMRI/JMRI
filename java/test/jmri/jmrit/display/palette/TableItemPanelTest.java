@@ -2,13 +2,20 @@ package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.swing.JScrollPane;
+
 import jmri.Turnout;
 import jmri.jmrit.display.DisplayFrame;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 import org.junit.Assume;
 
 /**
@@ -27,31 +34,62 @@ public class TableItemPanelTest {
         JUnitUtil.dispose(df);
     }
 
-
     @Test
-    public void testShowTurnout() {
-        ItemPaletteTest.getItemPalette();
-        ItemPanel panel = ItemPalette._tabIndex.get("Turnout");
-        Assert.assertNotNull("exists", panel);
-        panel.init();
+    public void testShowTurnoutIcons() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
+        Assert.assertNotNull("exists", editor);
+        JFrameOperator fo = new JFrameOperator(ItemPalette.getDefault("ItemPalette", editor));
+
+        ItemPalette._tabPane.setSelectedIndex(0);
+        JScrollPane sp = (JScrollPane)ItemPalette._tabPane.getComponentAt(0);
+        ItemPanel panel = (ItemPanel)sp.getViewport().getView();
+        Assert.assertNotNull("ItemPanel exists", panel);
+        Assert.assertEquals("ItemPanel._itemType", "Turnout", panel._itemType);
+
+        JButtonOperator bo = new JButtonOperator(fo, Bundle.getMessage("ShowIcons"));
+        bo.doClick();
+
+        bo = new JButtonOperator(fo, Bundle.getMessage("HideIcons"));
+        bo.doClick();
+
+        bo = new JButtonOperator(fo, Bundle.getMessage("ButtonEditIcons"));
+        bo.doClick();
+
+        editor.dispose();
     }
 
-
     @Test
-    public void testShowSensor() {
-        ItemPaletteTest.getItemPalette();
-        ItemPanel panel = ItemPalette._tabIndex.get("Sensor");
-        Assert.assertNotNull("exists", panel);
-        panel.init();
-    }
+    public void testNewSensorFamilt() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
+        Assert.assertNotNull("exists", editor);
+        JFrameOperator fo = new JFrameOperator(ItemPalette.getDefault("ItemPalette", editor));
 
+        ItemPalette._tabPane.setSelectedIndex(1);
+        JScrollPane sp = (JScrollPane)ItemPalette._tabPane.getComponentAt(1);
+        ItemPanel panel = (ItemPanel)sp.getViewport().getView();
+        Assert.assertNotNull("ItemPanel exists", panel);
+        Assert.assertEquals("ItemPanel._itemType", "Sensor", panel._itemType);
 
-    @Test
-    public void testShowLight() {
-        ItemPaletteTest.getItemPalette();
-        ItemPanel panel = ItemPalette._tabIndex.get("Light");
-        Assert.assertNotNull("exists", panel);
-        panel.init();
+        JButtonOperator bo = new JButtonOperator(fo, Bundle.getMessage("ShowIcons"));
+        bo.doClick();
+
+        /* Cannot locate the JOptionPane with "createNewFamily" title
+        String labelNewFamily = Bundle.getMessage("createNewFamily");
+        bo = new JButtonOperator(fo, labelNewFamily);
+        bo.doClick();
+//        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        new Thread(() -> {
+//            JFrameOperator edo = new JFrameOperator(editor);
+            JDialogOperator jdo = new JDialogOperator(fo, labelNewFamily);
+            String label = Bundle.getMessage("ButtonCancel");
+            JButtonOperator but = new JButtonOperator(jdo, label);
+            but.doClick();
+        }).start();*/
+        
+        editor.dispose();
     }
 
     @BeforeEach
@@ -62,9 +100,9 @@ public class TableItemPanelTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TableItemPanelTest.class);
-
 }

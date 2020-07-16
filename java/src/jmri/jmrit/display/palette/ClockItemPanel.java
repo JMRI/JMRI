@@ -43,7 +43,6 @@ public class ClockItemPanel extends IconItemPanel {
     @Override
     public void init() {
         if (!_initialized) {
-            add(instructions());
             initIconFamiliesPanel();
             initLinkPanel();
             add(Box.createVerticalGlue());

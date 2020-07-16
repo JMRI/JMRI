@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
@@ -42,12 +40,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         if (!_initialized) {
             super.init();
             _detectPanel = new DetectionPanel(this);
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.add(Box.createVerticalGlue());
-            panel.add(_detectPanel);
-            add(panel, 0);
-            hideIcons();
+            add(_detectPanel, 1);
         }
     }
 
@@ -94,15 +87,6 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     public void setShowTrainName(boolean show) {
         _detectPanel.setShowTrainName(show);
     }
-    /*
-     public String getErrSensor() {
-     return _detectPanel.getErrSensor();
-     }
-
-     public void setErrSensor(String name) {
-     _detectPanel.setErrSensor(name);
-     }
-     */
 
     public String getOccSensor() {
         return _detectPanel.getOccSensor();

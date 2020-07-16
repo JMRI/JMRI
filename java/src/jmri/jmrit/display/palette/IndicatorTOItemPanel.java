@@ -58,16 +58,10 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     @Override
     public void init() {
         if (!_initialized) {
-            _update = false;
-            _suppressDragging = false;
-            add(initTablePanel(_model)); // top of Panel
+            super.init();
             _detectPanel = new DetectionPanel(this);
-            add(_detectPanel);
-            initIconFamiliesPanel();
-            add(_iconFamilyPanel);
-            add(makeBottomPanel(null));
+            add(_detectPanel, 1);
             makeControlKeyBinder(_editButton);
-           _initialized = true;
         }
         hideIcons();
     }
@@ -254,19 +248,27 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     protected void makeFamiliesPanel() {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
                     families = ItemPalette.getLevel4FamilyMaps(_itemType);
-        if (families == null || families.values().isEmpty()) {
-            if (!familiesMissing()) {   // still no families
-                _iconGroupsMap = _unstoredMaps;
-                addIcons2Panel(_iconGroupsMap, _iconPanel, false);
-                if (!_suppressDragging) {
-                    makeDragIconPanel();
-                    makeDndIcon();
-                }
-                addFamilyPanels(false);
-            }
+        boolean isEmpty = families.values().isEmpty();
+        if (_bottomPanel == null) {
+            makeBottomPanel(isEmpty);
         } else {
-            makeFamiliesPanel(families);        
+           if (isEmpty ^ _wasEmpty) {
+               remove(_bottomPanel);
+               makeBottomPanel(isEmpty);
+           }
         }
+        _wasEmpty = isEmpty;
+        if (isEmpty) {
+            _iconGroupsMap = _unstoredMaps;
+            addIcons2Panel(_iconGroupsMap, _iconPanel, false);
+            if (!_suppressDragging) {
+                makeDragIconPanel();
+                makeDndIcon();
+            }
+            addFamilyPanels(false);
+         } else {
+             makeFamiliesPanel(families);        
+         }
     }
     private void makeFamiliesPanel(@Nonnull HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families) {
 
@@ -462,7 +464,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             }
         }
         _family = family;
-        makeFamilyButtons(ItemPalette.getLevel4FamilyMaps(_itemType).keySet());
+        makeFamiliesPanel();
+//        makeFamilyButtons(ItemPalette.getLevel4FamilyMaps(_itemType).keySet());
         setFamily(family);
         showIcons();
         if (log.isDebugEnabled()) {

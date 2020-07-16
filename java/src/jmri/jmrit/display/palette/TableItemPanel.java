@@ -87,7 +87,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
             super.init();
             add(initTablePanel(_model), 0); // top of Panel
         }
-        hideIcons();
+//        hideIcons();
     }
 
     /**
@@ -96,8 +96,8 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
      */
     @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
-        add(initTablePanel(_model), 0);
         super.init(doneAction, iconMap);
+        add(initTablePanel(_model), 0);
     }
 
     private AbstractTableAction<?> getTableAction(String type) {
@@ -123,7 +123,6 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
      */
     protected JPanel initTablePanel(PickListModel<E> model) {
         _table = model.makePickTable();
-        _table.getSelectionModel().addListSelectionListener(this);
         ROW_HEIGHT = _table.getRowHeight();
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -147,6 +146,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
         clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
+        _table.getSelectionModel().addListSelectionListener(this);
         _table.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         _scrollPane.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));

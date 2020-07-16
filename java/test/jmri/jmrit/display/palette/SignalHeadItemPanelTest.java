@@ -26,15 +26,6 @@ public class SignalHeadItemPanelTest {
         JUnitUtil.dispose(df);
     }
 
-
-    @Test
-    public void testShow() {
-        ItemPaletteTest.getItemPalette();
-        ItemPanel panel = ItemPalette._tabIndex.get("SignalHead");
-        Assert.assertNotNull("exists", panel);
-        panel.init();
-    }
-
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -44,6 +35,7 @@ public class SignalHeadItemPanelTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

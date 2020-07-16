@@ -377,9 +377,6 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     void updateItem() {
-        if (!_itemPanel.oktoUpdate()) {
-            return;
-        }
         HashMap<Integer, NamedIcon> oldMap = cloneMap(_iconStateMap, this);
         setTurnout(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();

@@ -123,11 +123,9 @@ public class TextItemPanel extends ItemPanel {
     }
 
     @Override
-    protected void makeSpecialBottomPanel(boolean update) {}
+    protected JPanel makeSpecialBottomPanel(boolean update) {return null;}
     @Override
-    protected void makeItemButtonPanel() {}
-    @Override
-    protected JButton makeUpdateButton(ActionListener doneAction) {return null;}
+    protected JPanel makeItemButtonPanel() {return null;}
     @Override
     protected JPanel makeIconDisplayPanel(String k, HashMap<String, NamedIcon> m, boolean d) {return null;}
     @Override

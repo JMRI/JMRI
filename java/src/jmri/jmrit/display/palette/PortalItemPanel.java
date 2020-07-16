@@ -9,19 +9,10 @@ import jmri.jmrit.display.DisplayFrame;
  */
 public class PortalItemPanel extends FamilyItemPanel {
 
-    /*
-     * Constructor types with multiple families and multiple icon families.
-     */
     public PortalItemPanel(DisplayFrame parentFrame, String type, String family) {
         super(parentFrame, type, family);
     }
 
-    /**
-     * Init for creation _bottom1Panel and _bottom2Panel alternate visibility in
-     * bottomPanel depending on whether icon families exist. They are made first
-     * because they are referenced in initIconFamiliesPanel(). Subclasses will
-     * insert other panels.
-     */
     @Override
     public void init() {
         if (!_initialized) {

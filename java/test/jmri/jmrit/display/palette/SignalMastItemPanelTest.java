@@ -26,15 +26,6 @@ public class SignalMastItemPanelTest {
         JUnitUtil.dispose(df);
     }
 
-
-    @Test
-    public void testShow() {
-        ItemPaletteTest.getItemPalette();
-        ItemPanel panel = ItemPalette._tabIndex.get("SignalMast");
-        Assert.assertNotNull("exists", panel);
-        panel.init();
-    }
-
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -43,6 +34,7 @@ public class SignalMastItemPanelTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

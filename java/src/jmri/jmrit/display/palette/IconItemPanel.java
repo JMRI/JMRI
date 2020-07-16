@@ -67,27 +67,24 @@ public class IconItemPanel extends ItemPanel {
     @Override
     public void init() {
         if (!_initialized) {
-            initIconFamiliesPanel();
+            super.init();
             initLinkPanel();
-            add(makeBottomPanel(null));
             _catalog = makeCatalog();
             add(_catalog);
-            super.init();
         }
     }
 
     /**
      * Init for update of existing palette item type.
-     * _bottom3Panel has an [Update Panel] button put onto _bottom1Panel.
      *
      * @param doneAction doneAction
      */
     public void init(ActionListener doneAction) {
         _update = true;
+        _doneAction = doneAction;
         _suppressDragging = true; // no dragging when updating
         initIconFamiliesPanel();
         add(_iconPanel);
-        add(makeBottomPanel(doneAction));
         _catalog = makeCatalog();
         add(_catalog);
     }
@@ -146,16 +143,11 @@ public class IconItemPanel extends ItemPanel {
         if (!_update) {
             HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
             log.debug("makeFamiliesPanel Num families= {}", families.size());
-            if (families.values().isEmpty()) {
-                if (familiesMissing()) {   // still no families
-                    families = ItemPalette.getFamilyMaps(_itemType);
-                }
-            }
             _currentIconMap = families.get("set");
             if (_currentIconMap == null) {
                 _currentIconMap = new HashMap<>();
                 if (families.size() != 0) {
-                    log.error("Unknown familyies found for {}", _itemType);
+                    log.error("{} Unknown families found for {}", families.size(), _itemType);
                 }
             }
         } else {
@@ -165,6 +157,16 @@ public class IconItemPanel extends ItemPanel {
         makePreviewPanel(true, null);
     }
     private void addIconsToPanel() {
+        boolean isEmpty = _currentIconMap.isEmpty();
+        if (_bottomPanel == null) {
+            makeBottomPanel(isEmpty);
+        } else {
+           if (isEmpty ^ _wasEmpty) {
+               remove(_bottomPanel);
+               makeBottomPanel(isEmpty);
+           }
+        }
+        _wasEmpty = isEmpty;
         addIconsToPanel(_currentIconMap, _iconPanel, !_update);
     }
 
@@ -188,21 +190,21 @@ public class IconItemPanel extends ItemPanel {
     }
 
     @Override
-    protected void makeItemButtonPanel() {
-        _bottom1Panel = new JPanel();
-        _bottom1Panel.add(makeCatalogButton());
+    protected JPanel makeItemButtonPanel() {
+        JPanel panel = new JPanel();
+        panel.add(makeCatalogButton());
         if (_update) {
-            return;
+            return panel;
         }
         JButton renameButton = new JButton(Bundle.getMessage("RenameIcon"));
         renameButton.addActionListener(a -> renameIcon());
-        _bottom1Panel.add(renameButton);
+        panel.add(renameButton);
 
         _deleteIconButton = new JButton(Bundle.getMessage("deleteIcon"));
         _deleteIconButton.addActionListener(a -> deleteIcon());
         _deleteIconButton.setToolTipText(Bundle.getMessage("ToolTipDeleteIcon"));
-        _bottom1Panel.add(_deleteIconButton);
-        _deleteIconButton.setEnabled(false);
+        panel.add(_deleteIconButton);
+        return panel;
     }
 
     private JButton makeCatalogButton() {
@@ -221,12 +223,12 @@ public class IconItemPanel extends ItemPanel {
     }
 
     /**
-     * Replacement panel for _bottom1Panel when no icon families exist for
+     * Replacement panel for _bottomPanel when no icon families exist for
      * _itemType.
      */
     @Override
-    protected void makeSpecialBottomPanel(boolean update) {
-        _bottom2Panel = new JPanel();
+    protected JPanel makeSpecialBottomPanel(boolean update) {
+        JPanel _bottom2Panel = new JPanel();
         _bottom2Panel.add(makeCatalogButton());
 
         if(!update) {
@@ -234,14 +236,7 @@ public class IconItemPanel extends ItemPanel {
             button.addActionListener(a -> loadDefaultType());
             _bottom2Panel.add(button);
         }
-    }
-
-    @Override
-    protected JButton makeUpdateButton(ActionListener doneAction) {
-        JButton updateButton = new JButton(Bundle.getMessage("updateButton")); // custom update label
-        updateButton.addActionListener(doneAction);
-        updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
-        return updateButton;
+        return _bottom2Panel;
     }
 
     protected void hideCatalog() {
@@ -280,7 +275,6 @@ public class IconItemPanel extends ItemPanel {
             return;
         }
         log.debug("deleteIcon {}", _selectedIcon._key);
-        setDeleteIconButton(false);
         _currentIconMap.remove(_selectedIcon._key);
         hideIcons();
     }
@@ -312,7 +306,6 @@ public class IconItemPanel extends ItemPanel {
                 _currentIconMap.remove(_selectedIcon._key);
                 putIcon(name, _selectedIcon._icon);
                 _selectedIcon._key = name;
-                setDeleteIconButton(false);
                 deselectIcon();
             }
         } else {
@@ -324,13 +317,11 @@ public class IconItemPanel extends ItemPanel {
     protected void setSelection(@Nonnull IconDisplayPanel panel) {
         if (_selectedIcon != null && !panel.equals(_selectedIcon)) {
             deselectIcon();
-            setDeleteIconButton(false);
         }
         String borderName = ItemPalette.convertText(panel._key);
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.red, 2), borderName));
         _selectedIcon = panel;
         _catalog.deselectIcon();
-        setDeleteIconButton(true);
     }
 
     public void deselectIcon() {
@@ -339,13 +330,6 @@ public class IconItemPanel extends ItemPanel {
             _selectedIcon.setBorder(BorderFactory.createTitledBorder(
                     BorderFactory.createLineBorder(Color.black, 1), borderName));
             _selectedIcon = null;
-        }
-        setDeleteIconButton(false);
-    }
-
-    private void setDeleteIconButton(boolean set) {
-        if (!_update) {
-            _deleteIconButton.setEnabled(set);
         }
     }
 

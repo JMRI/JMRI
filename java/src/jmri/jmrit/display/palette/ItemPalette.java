@@ -397,11 +397,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             instance.updateBackground(ed);
             InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(ed, null, instance);
         }
-        String name = ed.getName();
-        if (name == null || name.equals("")) {
-            name = Bundle.getMessage("untitled");
-        }
-        instance.setTitle(Bundle.getMessage("MenuItemItemPalette") + " - " + name);
         // pack before setLocation
         instance.pack();
         InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(ed, null, instance);
@@ -416,11 +411,11 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     public ItemPalette(String title, Editor ed) {
         super(title, ed);
-        init(title);
+        init();
+        setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get("Turnout"))));
     }
 
-    private void init(String title) {
-        this.setTitle(title);
+    private void init() {
         loadIcons();
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -508,7 +503,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     static void addItemTab(ItemPanel itemPanel, String key, String tabTitle) {
         JScrollPane scrollPane = new JScrollPane(itemPanel);
-        _tabPane.add(scrollPane, Bundle.getMessage(tabTitle));
+        _tabPane.add(Bundle.getMessage(tabTitle), scrollPane);
         _tabIndex.put(key, itemPanel);
     }
 
@@ -524,7 +519,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        // long t = System.currentTimeMillis();
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
         ItemPanel p = (ItemPanel) sp.getViewport().getView();
@@ -539,6 +533,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         } else {
             oldTabDim = newTabDim;
         }
+        setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get(p._itemType))));
         Dimension totalDim = _tabPane.getSize();
         Dimension deltaDim;
         if (log.isDebugEnabled()) {
@@ -754,6 +749,16 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         return clone;
     }
 
+    /**
+     * Default key names as listed in defaultPanelIcons.xml are Bundle keys and
+     * nodes in the CatalogTree. However users also define icon sets and store
+     * them in the CatalogTree. The names the user has defined for these sets
+     * (i.e.family" name) are also nodes in the CatalogTree. So it is expected
+     * that such names will fall through as an Exception.  Thus these names are
+     * returned as the user has entered them.  There is no failure of I18N here.
+     * @param name key name
+     * @return usable UI display name
+     */
     static public String convertText(String name) {
         String cName = null;
         try {

@@ -54,12 +54,6 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
     protected String getDisplayKey() {
         return "SignalHeadStateGreen";
     }
-/*
-    @Override
-    protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
-        closeDialogs();
-        _dialog = new SignalHeadIconDialog(type, family, this, iconMap);
-    }
 
     /**
      * ListSelectionListener action.

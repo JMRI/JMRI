@@ -3,11 +3,9 @@ package jmri.jmrit.display.palette;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,16 +25,7 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
     public ReporterItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Reporter> model) {
         super(parentFrame, type, family, model);
         _dragPanel = makeDraggerPanel(parentFrame);
-    }
-
-    @Override
-    protected void makeFamiliesPanel() {
-        addIconsToPanel(_currentIconMap, _iconPanel, false);
-        if (!_suppressDragging) {
-            makeDragIconPanel();
-            makeDndIcon(_currentIconMap);
-        }
-        addFamilyPanels(false);
+        _currentIconMap = new HashMap<>();
     }
 
     private JPanel makeDraggerPanel(DisplayFrame frame) {
@@ -66,19 +55,18 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
     }
 
     @Override
-    protected JPanel makeBottomPanel(ActionListener doneAction) {
-        // ReporterItem does not have icon buttons.
-        // ReporterItem extends FamilyItemPanel and needs a non-null _showIconsButton for setEditor call
-        _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
-        return null;
-   }
-
+    protected JPanel makeItemButtonPanel() {
+        JPanel panel = new JPanel();
+        panel.add(makeShowIconsButton());
+        return panel;
+    }
 
     @Override
-    protected void makeItemButtonPanel() {}
-
-    @Override
-    protected void makeSpecialBottomPanel(boolean update) {}
+    protected JPanel makeSpecialBottomPanel(boolean update) {
+        JPanel panel = new JPanel();
+        panel.add(makeShowIconsButton());
+        return panel;
+    }
 
     protected class IconDragJComponent extends DragJComponent {
 
