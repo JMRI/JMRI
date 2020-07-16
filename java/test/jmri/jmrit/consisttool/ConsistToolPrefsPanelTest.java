@@ -2,6 +2,7 @@ package jmri.jmrit.consisttool;
 
 import jmri.InstanceManager;
 import jmri.ConsistManager;
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -12,16 +13,11 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2019
  */
-public class ConsistToolPrefsPanelTest {
-
-    @Test
-    public void testCtor() {
-        ConsistToolPrefsPanel panel = new ConsistToolPrefsPanel();
-        Assert.assertNotNull("exists", panel );
-    }
+public class ConsistToolPrefsPanelTest extends PreferencesPanelTestBase {
 
     @BeforeEach
-    public void setUp() throws Exception {
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -31,10 +27,7 @@ public class ConsistToolPrefsPanelTest {
         JUnitUtil.initStartupActionsManager();
         InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
+        prefsPanel = new ConsistToolPrefsPanel();
     }
-    
-    @AfterEach
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
-    }
+
 }
