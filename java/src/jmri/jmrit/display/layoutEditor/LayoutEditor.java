@@ -4711,8 +4711,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
 
                         case TRACK_CIRCLE_CENTRE: {
-                            TrackSegment t = (TrackSegment) selectedObject;
-                            t.reCalculateTrackSegmentAngle(currentPoint.getX(), currentPoint.getY());
+                            TrackSegmentView tv = getTrackSegmentView( (TrackSegment) selectedObject);
+                            tv.reCalculateTrackSegmentAngle(currentPoint.getX(), currentPoint.getY());
                             break;
                         }
 
@@ -8503,9 +8503,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     String getUsageData(LayoutTrack track) {
         LayoutTrackView trackView = getLayoutTrackView(track);
         Point2D point = trackView.getCoordsCenter();
-        if (track instanceof TrackSegment) {
-            TrackSegment segment = (TrackSegment) track;
-            point = new Point2D.Double(segment.getCentreSegX(), segment.getCentreSegY());
+        if (trackView instanceof TrackSegmentView) {
+            TrackSegmentView segmentView = (TrackSegmentView) trackView;
+            point = new Point2D.Double(segmentView.getCentreSegX(), segmentView.getCentreSegY());
         }
         return String.format("%s :: x=%d, y=%d",
                 track.getClass().getSimpleName(),

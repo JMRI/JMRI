@@ -64,9 +64,7 @@ It's in no particular order, items are removed as done, so please don't consider
 Go through and confirm individually:
 
  - [ ] Remove view variables from Model classes, rm commented code   
-        Recheck all 16, rm commented code
             LayoutTrack
-            TrackSegment 
         
  - [ ] Remove swing code from Model classes
         LayoutTurntable  PositionablePoint  
@@ -91,6 +89,12 @@ Go through and confirm individually:
         TrackSegment 
         LayoutTurnout LayoutWye 
         LayoutXOver
+
+ - [ ] There should be no duplicate code between model and view; only one place or the other (referring V -> M OK in some cases)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
  - [x] Check all ctors handling arguments, storage properly (paired objects for now)
 

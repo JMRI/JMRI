@@ -218,72 +218,6 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
-    /**
-     * @return true if track segment is an arc
-     */
-    //public boolean isArc() {
-    //    log.error("isArc should have called View instead of TrackSegment (temporary)"
-    //            , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-    //        );
-    //    return models.getTrackSegmentView(this).isArc();
-    //}
-
-    /**
-     * @return true if track segment is circle
-     */
-    //public boolean isCircle() {
-    //    log.error("isCircle should have called View instead of TrackSegment (temporary)"
-    //            , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-    //        );
-    //    return models.getTrackSegmentView(this).isCircle();
-    //}
-
-    //public void setCircle(boolean boo) {
-    //    log.error("setCircle should have called View instead of TrackSegment (temporary)"
-    //            , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-    //        );
-    //    models.getTrackSegmentView(this).setCircle(boo);
-    //}
-
-
-    /**
-     * @return true if track segment is a bezier curve
-     */
-    //public boolean isBezier() {
-    //    log.error("isBezier should have called View instead of TrackSegment (temporary)"
-    //            , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-    //        );
-    //    return models.getTrackSegmentView(this).isBezier();
-    //}
-
-    /**
-     * Get the direction from end point 1 to 2
-     * <p>
-     * Note: Goes CW from east (0) to south (PI/2) to west (PI) to north
-     * (PI*3/2), etc.
-     *
-     * @return the direction (in radians)
-     */
-    //public double getDirectionRAD() {
-    //    log.error("getDirectionRAD should have called View instead of TrackSegment (temporary)",
-    //            jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback")));
-    //    return models.getTrackSegmentView(this).getDirectionRAD();
-    //}
-
-    /**
-     * Get the direction from end point 1 to 2
-     * <p>
-     * Note: Goes CW from east (0) to south (90) to west (180) to north (270),
-     * etc.
-     *
-     * @return the direction (in degrees)
-     */
-    //public double getDirectionDEG() {
-    //    log.error("getDirectionDEG should have called View instead of TrackSegment (temporary)",
-    //            jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback")));
-    //    return models.getTrackSegmentView(this).getDirectionDEG();
-    //}
-
     public LayoutBlock getLayoutBlock() {
         return (namedLayoutBlock != null) ? namedLayoutBlock.getBean() : null;
     }
@@ -452,18 +386,6 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Maximum length of the bumper decoration.
-     */
-//     public static final int MAX_BUMPER_LENGTH = 40;
-//     public static final int MAX_BUMPER_WIDTH = 10;
-
-//     private static final int MAX_ARROW_LINE_WIDTH = 5;
-//     private static final int MAX_ARROW_LENGTH = 60;
-//     private static final int MAX_ARROW_GAP = 40;
-    
-//     private static final int MAX_BUMPER_LINE_WIDTH = 9;
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -591,27 +513,6 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * split track segment into two track segments with an anchor between
-     */
-    //public void splitTrackSegment() {
-    //    throw new IllegalArgumentException("splitTrackSegment should be called in View");
-    //}
-
-    /**
-     * Clean up when this object is no longer needed.
-     * <p>
-     * Should not be called while the object is still displayed.
-     *
-     * @see #remove()
-     */
-    //public void dispose() {
-    //    log.error("dispose should have called View instead of TrackSegment (temporary)"
-    //            , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-    //        );
-    //    models.getTrackSegmentView(this).dispose();
-    //}
-
-    /**
      * Remove this object from display and persistance.
      */
     public void remove() {
@@ -680,38 +581,6 @@ public class TrackSegment extends LayoutTrack {
     public boolean hideConstructionLines() {
         return ((showConstructionLine & SHOWCON) != SHOWCON);
     }
-
-
-    // this is the center of the track segment (it is "on" the track segment)
-    public double getCentreSegX() {
-        log.error("getCentreSegX should have called View instead of TrackSegment (temporary)"
-                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        return models.getTrackSegmentView(this).getCentreSegX();
-    }
-
-    public double getCentreSegY() {
-        log.error("getCentreSegY should have called View instead of TrackSegment (temporary)"
-                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        return models.getTrackSegmentView(this).getCentreSegY();
-    }
-
-
-    /**
-     * Called when the user changes the angle dynamically in edit mode by
-     * dragging the centre of the circle.
-     *
-     * @param x new width.
-     * @param y new height.
-     */
-    protected void reCalculateTrackSegmentAngle(double x, double y) {
-        log.error("reCalculateTrackSegmentAngle should have called View instead of TrackSegment (temporary)"
-                , jmri.util.LoggingUtil.shortenStacktrace(new Exception("temporary traceback"))
-            );
-        models.getTrackSegmentView(this).reCalculateTrackSegmentAngle(x, y);
-    }
-
 
     /**
      * temporary fill of abstract from above
