@@ -47,6 +47,7 @@ It's in no particular order, items are removed as done, so please don't consider
         - [ ] make sure being consistently called
     - [ ] arrowstyle only in View
         =========>  arrows include connectivity, will need additional work
+        - [ ]  see commented out areas in PositionablePoint; need to be handled in View? Via view accessor?
     - [X] bridge only in View
     - [X] tunnel only in View
     - [ ] bumpers only in View
@@ -55,7 +56,7 @@ It's in no particular order, items are removed as done, so please don't consider
 - [ ] Turnout state in connectivity
 - [ ] Block and connectivity checks to, well, connectivity
 
-- [ ] The ``*View` classes load a reference to a new `*Editor` in ctor; this needs to be shared or deferred as very big
+- [ ] The `*View` classes load a reference to a new `*Editor` in ctor; this needs to be shared or deferred as very big
          editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleSlipEditor(layoutEditor);
 - [ ] LayoutEditor.setTurnoutName(@Nonnull), .setSecondTurnout(@Nonnull): Very inconsistent use with "" or null, need to clean up 100%
     - [ ] who uses it through View? Should it be through view?
@@ -64,10 +65,6 @@ Go through and confirm individually:
 
  - [ ] Remove view variables from Model classes, rm commented code   
         Recheck all 16, rm commented code
-            PositionablePoint
-                swing, awt
-                mouse and popup
-                dispose, which invokes removeLinkedPoint
             LayoutTrack
             TrackSegment 
         

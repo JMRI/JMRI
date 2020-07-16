@@ -81,26 +81,6 @@ public class PositionablePointView extends LayoutTrackView {
     }
 
  
-    /**
-     * Set center coordinates (temporary reflect to underlying PPoint, normally in LayoutTrackView base)
-     *
-     * @return the center coordinates
-     */
-//     final public Point2D getCoordsCenter() { // final for efficiency
-//         return positionablePoint.getCoordsCenter() ;
-//     }
-
-    /**
-     * Set center coordinates  (temporary reflect to underlying PPoint, normally in LayoutTrackView base)
-     * <p>
-     * Some subtypes may reimplement this is "center" is a more complicated
-     * idea, i.e. for Bezier curves
-     * @param p the coordinates to set
-     */
-//     public void setCoordsCenter(@Nonnull Point2D p) {
-//          positionablePoint.setCoordsCenter(p);
-//     }
-
    /**
      * Accessor methods
      * @return Type enum for this Positionable Point
@@ -706,13 +686,13 @@ public class PositionablePointView extends LayoutTrackView {
             if (oldTrack != null) {
                 result = true;  // assume success (optimist!)
                 if (getConnect1() == oldTrack) {
-                    positionablePoint.connect1 = null;        // disconnect getConnect1()
+                    positionablePoint.setConnect1(null);        // disconnect getConnect1()
                     reCheckBlockBoundary();
                     removeLinkedPoint();
-                    positionablePoint.connect1 = getConnect2();    // Move getConnect2() to getConnect1()
-                    positionablePoint.connect2 = null;        // disconnect getConnect2()
+                    positionablePoint.setConnect1(getConnect2());    // Move getConnect2() to getConnect1()
+                    positionablePoint.setConnect2Actual(null);        // disconnect getConnect2()
                 } else if (getConnect2() == oldTrack) {
-                    positionablePoint.connect2 = null;
+                    positionablePoint.setConnect2Actual(null);
                     reCheckBlockBoundary();
                 } else {
                     result = false; // didn't find old connection
@@ -729,9 +709,9 @@ public class PositionablePointView extends LayoutTrackView {
             // (no) find a connection we can connect to
             result = true;  // assume success (optimist!)
             if (getConnect1() == oldTrack) {
-                positionablePoint.connect1 = newTrack;
+                positionablePoint.setConnect1(newTrack);
             } else if ((getType() == PointType.ANCHOR) && (getConnect2() == oldTrack)) {
-                positionablePoint.connect2 = newTrack;
+                positionablePoint.setConnect2Actual(newTrack);
                 if (getConnect1().getLayoutBlock() == getConnect2().getLayoutBlock()) {
                     westBoundSignalMastNamed = null;
                     eastBoundSignalMastNamed = null;
@@ -1225,7 +1205,7 @@ public class PositionablePointView extends LayoutTrackView {
                                 block.updatePaths();
                             }
                             getConnect2().remove();
-                            positionablePoint.connect2 = null;
+                            positionablePoint.setConnect2Actual(null);
 
                             //remove this PositionablePoint from selection information
                             if (layoutEditor.selectedObject == pp_this) {
@@ -1867,69 +1847,6 @@ public class PositionablePointView extends LayoutTrackView {
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         return positionablePoint.getLayoutConnectivity();
     }
-//         List<LayoutConnectivity> results = new ArrayList<>();
-//         LayoutConnectivity lc = null;
-//         LayoutBlock blk1 = null, blk2 = null;
-//         TrackSegment ts1 = getConnect1();
-//         Point2D p1, p2;
-// 
-//         if (getType() == PointType.ANCHOR) {
-//             TrackSegment ts2 = getConnect2();
-//             if ((ts1 != null) && (ts2 != null)) {
-//                 blk1 = ts1.getLayoutBlock();
-//                 blk2 = ts2.getLayoutBlock();
-//                 if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
-//                     // this is a block boundary, create a LayoutConnectivity
-//                     log.debug("Block boundary (''{}''<->''{}'') found at {}", blk1, blk2, this);
-//                     lc = new LayoutConnectivity(blk1, blk2);
-//                     // determine direction from block 1 to block 2
-//                     if (ts1.getConnect1() == positionablePoint) {
-//                         p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
-//                     } else {
-//                         p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
-//                     }
-//                     if (ts2.getConnect1() == positionablePoint) {
-//                         p2 = layoutEditor.getCoords(ts2.getConnect2(), ts2.getType2());
-//                     } else {
-//                         p2 = layoutEditor.getCoords(ts2.getConnect1(), ts2.getType1());
-//                     }
-//                     lc.setDirection(Path.computeDirection(p1, p2));
-//                     // save Connections
-//                     lc.setConnections(ts1, ts2, HitPointType.TRACK, positionablePoint);
-//                     results.add(lc);
-//                 }
-//             }
-//         } else if (getType() == PointType.EDGE_CONNECTOR) {
-//             TrackSegment ts2 = null;
-//             if (getLinkedPoint() != null) {
-//                 ts2 = getLinkedPoint().getConnect1();
-//             }
-//             if ((ts1 != null) && (ts2 != null)) {
-//                 blk1 = ts1.getLayoutBlock();
-//                 blk2 = ts2.getLayoutBlock();
-//                 if ((blk1 != null) && (blk2 != null) && (blk1 != blk2)) {
-//                     // this is a block boundary, create a LayoutConnectivity
-//                     log.debug("Block boundary (''{}''<->''{}'') found at {}", blk1, blk2, this);
-//                     lc = new LayoutConnectivity(blk1, blk2);
-// 
-//                     // determine direction from block 1 to block 2
-//                     if (ts1.getConnect1() == positionablePoint) {
-//                         p1 = layoutEditor.getCoords(ts1.getConnect2(), ts1.getType2());
-//                     } else {
-//                         p1 = layoutEditor.getCoords(ts1.getConnect1(), ts1.getType1());
-//                     }
-// 
-//                     //Need to find a way to compute the direction for this for a split over the panel
-//                     //In this instance work out the direction of the first track relative to the positionable poin.
-//                     lc.setDirection(Path.computeDirection(p1, getCoordsCenter()));
-//                     // save Connections
-//                     lc.setConnections(ts1, ts2, HitPointType.TRACK, positionablePoint);
-//                     results.add(lc);
-//                 }
-//             }
-//         }
-//         return results;
-//     }   // getLayoutConnectivity()
 
     /**
      * {@inheritDoc}

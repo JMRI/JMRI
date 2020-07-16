@@ -3028,18 +3028,18 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     /**
      * Internal (private) method to find the track closest to a point, 
      * with some modifiers to the search.
-     * The {@link foundTrack} and {@link foundHitPointType}
+     * The {@link #foundTrack} and {@link #foundHitPointType}
      * members are set from the search.
      * <p>
      * This is a geometric search, and should be done with views.
      * Hence this form is inevitably temporary.
      *
      * @param loc Point to search from
-     * @param requireUnconnected forwarded to {@link getLayoutTrackView}; 
+     * @param requireUnconnected forwarded to {@link #getLayoutTrackView}; 
      *                                  if true, return only free connections
-     * @param avoid Don't return this track, keep searching. Note that {@Link selectedObject} is
+     * @param avoid Don't return this track, keep searching. Note that {@Link #selectedObject} is
      *                  also always avoided automatically
-     * @returns true if values of {@link foundTrack} and {@link foundHitPointType} correct;
+     * @returns true if values of {@link #foundTrack} and {@link #foundHitPointType} correct;
      *                  note they may have changed even if false is returned.
      */
     private boolean findLayoutTracksHitPoint(@Nonnull Point2D loc,

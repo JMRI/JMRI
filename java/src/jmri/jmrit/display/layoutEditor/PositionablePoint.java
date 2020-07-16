@@ -1,11 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
-// import java.awt.event.*; // temporary
 import java.text.MessageFormat;
 import java.util.*;
 
 import javax.annotation.*;
-// import javax.swing.*;  // temporary
 
 import jmri.*;
 import jmri.jmrit.display.EditorManager;
@@ -28,14 +26,18 @@ import jmri.jmrit.signalling.SignallingGuiTools;  // temporary
  * to the same block or to different blocks. Since each Track Segment may only
  * belong to one block, a PositionablePoint may function as a Block Boundary.
  * <p>
+ * As an Edge Connector, this is a semi-transparent connection to a remote
+ * TrackSeqment via another Edge Connector object.
+ * See the {@Link getConnection2()} method for how this works.
+ * <p>
  * Signal names are saved here at a Block Boundary anchor point by the tool Set
  * Signals at Block Boundary. PositionablePoint does nothing with these signal
  * head names; it only serves as a place to store them.
  * <p>
- * Arrows and bumpers are visual, presentation aspects handled in the View.
+ * Arrows and bumpers are visual presentation aspects handled in the View.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @author Bob Jacobsen Copyright (2) 2014
+ * @author Bob Jacobsen Copyright (2) 2014, 2020
  * @author George Warner Copyright (c) 2017-2019
  */
 public class PositionablePoint extends LayoutTrack {
@@ -51,8 +53,8 @@ public class PositionablePoint extends LayoutTrack {
     // operational instance variables (not saved between sessions)
     // persistent instances variables (saved between sessions)
     private PointType type = PointType.NONE;
-    TrackSegment connect1 = null;  // temporary: make private once decoupled
-    TrackSegment connect2 = null;  // temporary: make private once decoupled
+    private TrackSegment connect1 = null;
+    private TrackSegment connect2 = null;
 
     protected NamedBeanHandle<SignalHead> signalEastHeadNamed = null; // signal head for east (south) bound trains
     protected NamedBeanHandle<SignalHead> signalWestHeadNamed = null; // signal head for west (north) bound trains
@@ -193,16 +195,37 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
+    /**
+     * Provide the destination TrackSegment of the 1st connection.
+     */
     public TrackSegment getConnect1() {
         return connect1;
     }
 
+    public void setConnect1(TrackSegment trk) { connect1 = trk; }
+    
+    /**
+     * Provide the destination TrackSegment of the 2nd connection.
+     * When this is an EDGE CONNECTOR, it looks through the linked point (if any)
+     * to the far-end track connection.
+     */
     public TrackSegment getConnect2() {
         if (type == PointType.EDGE_CONNECTOR && getLinkedPoint() != null) {
             return getLinkedPoint().getConnect1();
         }
         return connect2;
     }
+
+    /**
+     * Provide the destination TrackSegment of the 2nd connection
+     * without doing the look-through present in {@link #getConnect2()}
+     */
+    public TrackSegment getConnect2Actual() {
+        return connect2;
+    }
+    
+    public void setConnect2Actual(TrackSegment trk) { connect2 = trk; }
+
 
     private PositionablePoint linkedPoint;
 
@@ -748,35 +771,6 @@ public class PositionablePoint extends LayoutTrack {
         }
     }
 
-    // protected int maxWidth() {
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "maxWidth");
-    //    return models.getPositionablePointView(this).maxWidth();
-    //}
-
-    // protected int maxHeight() {
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "maxHeight");
-    //    return models.getPositionablePointView(this).maxHeight();
-    //}
-    
-    // cursor location reference for this move (relative to object)
-    //int xClick = 0;
-    //int yClick = 0;
-
-    //public void mousePressed(MouseEvent e) {
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "mousePressed");
-    //    models.getPositionablePointView(this).mousePressed(e);
-    //}
-
-    //public void mouseReleased(MouseEvent e) {
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "mouseReleased");
-    //    models.getPositionablePointView(this).mouseReleased(e);
-    //}
-
-    //public void mouseClicked(MouseEvent e) {
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "mouseClicked");
-    //    models.getPositionablePointView(this).mouseClicked(e);
-    //}
-
     /**
      * {@inheritDoc}
      */
@@ -842,15 +836,6 @@ public class PositionablePoint extends LayoutTrack {
         return items;
     }
 
-    /**
-     * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove()
-     */
-    //void dispose() {
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "dispose");
-    //    models.getPositionablePointView(this).dispose();
-    //}
-
     void removeLinkedPoint() {
         if (type == PointType.EDGE_CONNECTOR && getLinkedPoint() != null) {
             if (getConnect2() != null && getLinkedEditor() != null) {
@@ -900,28 +885,6 @@ public class PositionablePoint extends LayoutTrack {
         }
         return result;
     }
-
-    //void setLink() {
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "setLink");
-    //    models.getPositionablePointView(this).setLink();
-    //}
-
-    private ArrayList<PositionablePoint> pointList;
-
-    //public JPanel getLinkPanel() { // temporary
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "getLinkPanel");
-    //    return models.getPositionablePointView(this).getLinkPanel();
-    //}
-
-    //void updatePointBox() {
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "updatePointBox");
-    //    models.getPositionablePointView(this).updatePointBox();
-    //}
-
-    //public void updateLink() {
-    //    jmri.util.LoggingUtil.deprecationWarning(log, "updateLink");
-    //    models.getPositionablePointView(this).updateLink();
-    //}
 
     /**
      * {@inheritDoc}
