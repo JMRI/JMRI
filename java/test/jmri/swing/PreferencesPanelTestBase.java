@@ -96,3 +96,4 @@ abstract public class PreferencesPanelTestBase {
     }
 
 }
+
