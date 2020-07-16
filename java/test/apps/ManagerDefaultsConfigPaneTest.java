@@ -23,11 +23,13 @@ public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase {
     }
 
     @Override
+    @Test
     public void isPersistant() {
         assertThat(prefsPanel.isPersistant()).isFalse();
     }
 
     @Override
+    @Test
     public void getPreferencesTooltip() {
         // should this actually return null?
         assertThat(prefsPanel.getPreferencesTooltip()).isNull();

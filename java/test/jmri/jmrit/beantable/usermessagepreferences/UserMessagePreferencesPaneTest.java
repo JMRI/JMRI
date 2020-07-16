@@ -31,27 +31,32 @@ public class UserMessagePreferencesPaneTest extends PreferencesPanelTestBase {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
+
     @Override
+    @Test
     public void isPersistant() {
         assertThat(prefsPanel.isPersistant()).isFalse();
     }
 
     @Override
+    @Test
     public void getPreferencesTooltip() {
         // should this actually return null?
         assertThat(prefsPanel.getPreferencesTooltip()).isNull();
     }
 
     @Override
+    @Test
     public void getLabelKey(){
         //should this actually return null?
         assertThat(prefsPanel.getLabelKey()).isNotNull();
     }
 
     @Override
-    public void getPreferencesTitle() {
+    @Test
+    public void getTabbedPreferencesTitle() {
         // should this actually return null?
-        assertThat(prefsPanel.getPreferencesTitle()).isNull();
+        assertThat(prefsPanel.getTabbedPreferencesTitle()).isNull();
     }
 
 }

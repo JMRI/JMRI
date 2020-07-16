@@ -29,28 +29,33 @@ public class JmrixConfigPaneTest extends PreferencesPanelTestBase {
     }
 
     @Override
+    @Test
     public void getLabelKey() {
         // should this return null?
         assertThat(prefsPanel.getLabelKey()).isNull();
     }
 
     @Override
+    @Test
     public void isPersistant() {
         assertThat(prefsPanel.isPersistant()).isFalse();
     }
 
     @Override
+    @Test
     public void getPreferencesTooltip() {
         // should this return null?
         assertThat(prefsPanel.getPreferencesTooltip()).isNull();
     }
 
     @Override
+    @Test
     public void isDirty() {
         assertThat(prefsPanel.isDirty()).isFalse();
     }
 
     @Override
+    @Test
     public void isRestartRequired() {
         assertThat(prefsPanel.isRestartRequired()).isFalse();
     }

@@ -26,48 +26,56 @@ public class GuiLocalePreferencesPanelTest extends PreferencesPanelTestBase {
 
     @Disabled
     @ToDo("fix setup so the parent class test can run")
+    @Test
     @Override
     public void getPreferencesItem() {
     }
 
     @Disabled
     @ToDo("fix setup so the parent class test can run")
+    @Test
     @Override
     public void getPreferencesItemText() {
     }
 
     @Disabled
     @ToDo("fix setup so the parent class test can run")
+    @Test
     @Override
     public void getPreferencesComponent() {
     }
 
     @Disabled
     @ToDo("fix setup so the parent class test can run")
+    @Test
     @Override
     public void getPreferencesTooltip() {
     }
 
     @Disabled
     @ToDo("fix setup so the parent class test can run")
+    @Test
     @Override
     public void savePreferences() {
     }
 
     @Disabled
     @ToDo("fix setup so the parent class test can run")
+    @Test
     @Override
     public void isDirty() {
     }
 
     @Disabled
     @ToDo("fix setup so the parent class test can run")
+    @Test
     @Override
     public void isRestartRequired() {
     }
 
     @Disabled
     @ToDo("fix setup so the parent class test can run")
+    @Test
     @Override
     public void isPreferencesValid() {
     }
