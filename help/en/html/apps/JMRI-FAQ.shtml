@@ -54,7 +54,7 @@
           <li><strong>Can I use JMRI to operate my DCC trains?</strong>
           Yes. JMRI PanelPro provides the functions of a <a href="../tools/throttle/ThrottleMain.shtml">throttle (or many throttles)</a>
           to your DCC command station. 
-          <strong>Can I use JMRI to program the decoders in my locomotives?</strong>
+          <li><strong>Can I use JMRI to program the decoders in my locomotives?</strong>
           Yes.  JMRI <a href="DecoderPro/index.shtml">DecoderPro </a>greatly simplifies programming decoders through your DCC command station.
           <li><strong>Can I use JMRI to control accessories on my layout?</strong>
           Yes, <a href="../tools/">of all kinds </a>including turnouts, lights, signals, room lighting, automations - anything that
