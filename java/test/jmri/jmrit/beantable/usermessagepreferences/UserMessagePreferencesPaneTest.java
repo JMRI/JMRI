@@ -47,4 +47,12 @@ public class UserMessagePreferencesPaneTest extends PreferencesPanelTestBase {
         //should this actually return null?
         assertThat(prefsPanel.getLabelKey()).isNotNull();
     }
+
+    @Override
+    public void getPreferencesTitle() {
+        // should this actually return null?
+        assertThat(prefsPanel.getPreferencesTitle()).isNull();
+    }
+
 }
+
