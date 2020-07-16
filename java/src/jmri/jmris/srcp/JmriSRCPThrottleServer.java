@@ -330,16 +330,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             if (addressList.contains(addr)) {
                 log.debug("Throttle in throttle list");
                 Throttle t = throttleList.get(addressList.indexOf(addr));
-                for (int i = 0; i < fList.size(); i++) {
-                    t.setFunction(i, fList.get(i));
-                    if ( i > t.getFunctions().length-1) {
-                        try {
-                            sendErrorStatus();
-                        } catch (IOException ioe) {
-                            log.error("Error writing to network port");
-                        }
-                    }
-                }
+                setFunctionsByThrottle(t,fList);
 
             }
         }

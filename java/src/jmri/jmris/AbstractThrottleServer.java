@@ -54,8 +54,8 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         });
     }
 
-    /*
-     * Set Throttle Functions on/off
+    /**
+     * Set Throttle Functions on/off.
      *
      * @param l LocoAddress of the locomotive to change speed of.
      * @param fList an ArrayList of boolean values indicating whether the
@@ -65,20 +65,32 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         // get the throttle for the address.
         throttleList.forEach(t -> {
             if (t.getLocoAddress() == l) {
-                for (int i = 0; i < fList.size(); i++) {
-                    t.setFunction(i, fList.get(i));
-                    if ( i > t.getFunctions().length-1) {
-                        try {
-                            sendErrorStatus();
-                        } catch (IOException ioe) {
-                            log.error("Error writing to network port");
-                        }
-                    }
-                }
+                setFunctionsByThrottle(t,fList);
             }
         });
     }
-
+    
+    /**
+     * Set Throttle Functions on/off.
+     *
+     * @param t Throttle to change speed of.
+     * @param fList an ArrayList of boolean values indicating whether the
+     *         function is active or not.
+     */
+    protected void setFunctionsByThrottle(Throttle t, ArrayList<Boolean> fList){
+        for (int i = 0; i < fList.size(); i++) {
+            if ( i > t.getFunctions().length-1) {
+                log.error("Unable to set Function {} on Throttle {}",i,t.getLocoAddress());
+                try {
+                    sendErrorStatus();
+                } catch (IOException ioe) {
+                    log.error("Error writing to network port");
+                }
+            } else {
+                t.setFunction(i, fList.get(i));
+            }
+        }
+    }
 
     /*
      * Request a throttle for the specified address from the default
