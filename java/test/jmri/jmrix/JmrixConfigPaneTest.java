@@ -38,7 +38,7 @@ public class JmrixConfigPaneTest extends PreferencesPanelTestBase {
     @Override
     @Test
     public void isPersistant() {
-        assertThat(prefsPanel.isPersistant()).isFalse();
+        assertThat(prefsPanel.isPersistant()).isTrue();
     }
 
     @Override
@@ -51,13 +51,13 @@ public class JmrixConfigPaneTest extends PreferencesPanelTestBase {
     @Override
     @Test
     public void isDirty() {
-        assertThat(prefsPanel.isDirty()).isFalse();
+        assertThat(prefsPanel.isDirty()).isTrue();
     }
 
     @Override
     @Test
     public void isRestartRequired() {
-        assertThat(prefsPanel.isRestartRequired()).isFalse();
+        assertThat(prefsPanel.isRestartRequired()).isTrue();
     }
     // private final static Logger log = LoggerFactory.getLogger(JmrixConfigPaneTest.class);
 }

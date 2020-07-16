@@ -25,7 +25,7 @@ public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase {
     @Override
     @Test
     public void isPersistant() {
-        assertThat(prefsPanel.isPersistant()).isFalse();
+        assertThat(prefsPanel.isPersistant()).isTrue();
     }
 
     @Override

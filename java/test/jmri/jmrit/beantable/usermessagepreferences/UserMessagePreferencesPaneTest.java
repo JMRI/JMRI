@@ -49,7 +49,7 @@ public class UserMessagePreferencesPaneTest extends PreferencesPanelTestBase {
     @Test
     public void getLabelKey(){
         //should this actually return null?
-        assertThat(prefsPanel.getLabelKey()).isNotNull();
+        assertThat(prefsPanel.getLabelKey()).isNull();
     }
 
     @Override
