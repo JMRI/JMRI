@@ -361,7 +361,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         return true;
     }
 
-    protected boolean NamesStoredMap(String family) {
+    protected boolean namesStoredMap(String family) {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families.keySet().contains(family)) {
             return true;
@@ -729,7 +729,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             ItemPalette.addFamily(_itemType, family, iconMap);
         } else {
             _currentIconMap = iconMap;
-            if (!NamesStoredMap(family)) {
+            if (!namesStoredMap(family)) {
                 _isUnstoredMap = true;
             }
             if (_isUnstoredMap) {

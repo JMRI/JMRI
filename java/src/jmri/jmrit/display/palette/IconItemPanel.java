@@ -485,11 +485,11 @@ public class IconItemPanel extends ItemPanel {
         }
     }
 
-    class aDropJLabel extends DropJLabel {
-        aDropJLabel(Icon icon) {
+    class ADropJLabel extends DropJLabel {
+        ADropJLabel(Icon icon) {
             super(icon);
         }
-        aDropJLabel(Icon icon, HashMap<String, NamedIcon> iconMap) {
+        ADropJLabel(Icon icon, HashMap<String, NamedIcon> iconMap) {
             super(icon, iconMap);
         }
 
@@ -512,7 +512,7 @@ public class IconItemPanel extends ItemPanel {
             if (dropIcon) {
                 image = new IconDragJLabel(_positionableDataFlavor, icon, _level);
             } else {
-                image = new aDropJLabel(icon);
+                image = new ADropJLabel(icon);
             }
             image.addMouseListener(this);
             wrapIconImage(icon, image, this, key);

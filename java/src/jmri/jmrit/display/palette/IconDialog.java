@@ -231,7 +231,7 @@ public class IconDialog extends ItemDialog {
         String oldFamily = _parent.getFamilyName();
         if (_parent._update) {
             if (nameUsed) {    // name is a key to stored map
-                log.debug("{} keys a stored map. name {} used", editFamily, (nameUsed?"is":"NOT")); 
+                log.debug("{} keys a stored map. name is used", editFamily); 
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("NeedDifferentName", editFamily),
                         Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                 return false;

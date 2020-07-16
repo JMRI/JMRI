@@ -1,6 +1,6 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.Component;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.datatransfer.DataFlavor;
@@ -218,7 +218,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     }
 
     @Override
-    protected boolean NamesStoredMap(String family) {
+    protected boolean namesStoredMap(String family) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families =
                 ItemPalette.getLevel4FamilyMaps(_itemType);
         if (families.keySet().contains(family)) {
@@ -437,6 +437,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     }
 
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Cast follows specific Constuctor") 
     protected void openDialog(String type, String family) {
         closeDialogs();
         hideIcons();
@@ -456,7 +457,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             ItemPalette.addLevel4Family(_itemType, family, iconMap);
         } else {
             _iconGroupsMap = iconMap;
-            if (!NamesStoredMap(family)) {
+            if (!namesStoredMap(family)) {
                 _isUnstoredMap = true;
             }
             if (_isUnstoredMap) {
@@ -559,10 +560,6 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             }
 
             HashMap<String, HashMap<String, NamedIcon>> iconMap = getIconMaps();
-            if (iconMap == null) {
-                log.error("IconDragJLabel.getTransferData: iconMap is null!");
-                return null;
-            }
 
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_frame.getEditor());
