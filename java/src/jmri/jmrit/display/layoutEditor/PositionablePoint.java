@@ -5,7 +5,7 @@ import java.text.MessageFormat;
 import java.util.*;
 
 import javax.annotation.*;
-import javax.swing.*;  // temporary
+// import javax.swing.*;  // temporary
 
 import jmri.*;
 import jmri.jmrit.display.EditorManager;
@@ -846,10 +846,10 @@ public class PositionablePoint extends LayoutTrack {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove()
      */
-    void dispose() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "dispose");
-        models.getPositionablePointView(this).dispose();
-    }
+    //void dispose() {
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "dispose");
+    //    models.getPositionablePointView(this).dispose();
+    //}
 
     void removeLinkedPoint() {
         if (type == PointType.EDGE_CONNECTOR && getLinkedPoint() != null) {
@@ -901,27 +901,27 @@ public class PositionablePoint extends LayoutTrack {
         return result;
     }
 
-    void setLink() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "setLink");
-        models.getPositionablePointView(this).setLink();
-    }
+    //void setLink() {
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "setLink");
+    //    models.getPositionablePointView(this).setLink();
+    //}
 
     private ArrayList<PositionablePoint> pointList;
 
-    public JPanel getLinkPanel() { // temporary
-        jmri.util.LoggingUtil.deprecationWarning(log, "getLinkPanel");
-        return models.getPositionablePointView(this).getLinkPanel();
-    }
+    //public JPanel getLinkPanel() { // temporary
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "getLinkPanel");
+    //    return models.getPositionablePointView(this).getLinkPanel();
+    //}
 
-    void updatePointBox() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "updatePointBox");
-        models.getPositionablePointView(this).updatePointBox();
-    }
+    //void updatePointBox() {
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "updatePointBox");
+    //    models.getPositionablePointView(this).updatePointBox();
+    //}
 
-    public void updateLink() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "updateLink");
-        models.getPositionablePointView(this).updateLink();
-    }
+    //public void updateLink() {
+    //    jmri.util.LoggingUtil.deprecationWarning(log, "updateLink");
+    //    models.getPositionablePointView(this).updateLink();
+    //}
 
     /**
      * {@inheritDoc}

@@ -88,7 +88,10 @@ Go through and confirm individually:
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
  - [ ] Remove topology variables from View (decide which are references via forwarding, and which require getTrack-style access; be consistent, document decisions!)
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTrack LayoutTurntable LevelXing  
+        PositionablePoint
+            reCheckBlockBoundary, removeSML et al
+        TrackSegment 
         LayoutTurnout LayoutWye 
         LayoutXOver
 

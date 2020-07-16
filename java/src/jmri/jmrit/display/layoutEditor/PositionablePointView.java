@@ -1216,7 +1216,7 @@ public class PositionablePointView extends LayoutTrackView {
                             // remove connection 2 from the layoutEditor's list of layout tracks
                             layoutEditor.removeLayoutTrackAndRedraw(getConnect2());
 
-                            //update affected block
+                            // update affected block
                             LayoutBlock block = getConnect2().getLayoutBlock();
                             if (block != null) {
                                 //decrement Block use count
@@ -1227,7 +1227,7 @@ public class PositionablePointView extends LayoutTrackView {
                             getConnect2().remove();
                             positionablePoint.connect2 = null;
 
-                            //remove pp_this from selection information
+                            //remove this PositionablePoint from selection information
                             if (layoutEditor.selectedObject == pp_this) {
                                 layoutEditor.selectedObject = null;
                             }
@@ -1235,21 +1235,21 @@ public class PositionablePointView extends LayoutTrackView {
                                 layoutEditor.prevSelectedObject = null;
                             }
 
-                            // remove pp_this from the layoutEditor's list of layout tracks
+                            // remove this PositionablePoint and PositionablePointView from the layoutEditor's list of layout tracks
                             layoutEditor.removeLayoutTrackAndRedraw(pp_this);
                             pp_this.remove();
-                            pp_this.dispose();
+                            dispose();
 
                             layoutEditor.setDirty();
                             layoutEditor.redrawPanel();
                         } else {
                             // (this should NEVER happen... however...)
                             log.error("Merge: missing connection(s).");
-                        }   // if ((getConnect1() != null) && (getConnect2() != null))
-                    }   // actionPerformed
-                }); // jmi = popup.add(new AbstractAction(...) {
-            }   // if (blockBoundary) {} else if ((getConnect1() != null) && (getConnect2() != null))
-        }   // if (getType() == ANCHOR)
+                        } 
+                    }
+                });
+            } 
+        }
 
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
