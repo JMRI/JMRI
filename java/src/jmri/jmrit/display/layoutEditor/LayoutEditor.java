@@ -5356,6 +5356,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * <p>
      * If the block name is a system name, then the user will have to supply a
      * user name for the block.
+     * <p>
+     * Some, but not all, errors pop a Swing error dialog in addition to logging.
      *
      * @param inBlockName the entered name
      * @return the provided LayoutBlock
@@ -5369,8 +5371,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (autoAssignBlocks) {
                 newBlk = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock();
                 if (null == newBlk) {
-                    log.error("provideLayoutBlock: Failure to auto-assign LayoutBlock '{}'.", inBlockName);
+                    log.error("provideLayoutBlock: Failure to auto-assign for empty LayoutBlock name");
                 }
+            } else {
+                log.error("provideLayoutBlock: no name given and not assigning auto block names");
             }
         } else {
             // check if this Layout Block already exists
@@ -6197,15 +6201,29 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
     }
-
-    public LayoutBlock getAffectedBlock(@Nonnull LayoutTrack o, HitPointType type) {
+    
+    /**
+     * Depending on the given type, 
+     * and the real class of the given LayoutTrack,
+     * determine the connected LayoutTrack.  This provides a 
+     * variable-indirect form of e.g. trk.getLayoutBlockC() for example.
+     * Perhaps "Connected Block" captures the idea better, but that 
+     * method name is being used for something else.
+     *
+     *
+     * @param track  The track who's connected blocks are being examined
+     * @param type   This point to check for connected blocks, i.e. TURNOUT_B
+     * @return       The block at a particular point on the track object, or null if none.
+     */
+     // Temporary - this should certainly be a LayoutTrack method.
+    public LayoutBlock getAffectedBlock(@Nonnull LayoutTrack track, HitPointType type) {
         LayoutBlock result = null;
 
         switch (type) {
             case TURNOUT_A:
             case SLIP_A: {
-                if (o instanceof LayoutTurnout) {
-                    LayoutTurnout lt = (LayoutTurnout) o;
+                if (track instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) track;
                     result = lt.getLayoutBlock();
                 }
                 break;
@@ -6213,8 +6231,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             case TURNOUT_B:
             case SLIP_B: {
-                if (o instanceof LayoutTurnout) {
-                    LayoutTurnout lt = (LayoutTurnout) o;
+                if (track instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) track;
                     result = lt.getLayoutBlockB();
                 }
                 break;
@@ -6222,8 +6240,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             case TURNOUT_C:
             case SLIP_C: {
-                if (o instanceof LayoutTurnout) {
-                    LayoutTurnout lt = (LayoutTurnout) o;
+                if (track instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) track;
                     result = lt.getLayoutBlockC();
                 }
                 break;
@@ -6231,8 +6249,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             case TURNOUT_D:
             case SLIP_D: {
-                if (o instanceof LayoutTurnout) {
-                    LayoutTurnout lt = (LayoutTurnout) o;
+                if (track instanceof LayoutTurnout) {
+                    LayoutTurnout lt = (LayoutTurnout) track;
                     result = lt.getLayoutBlockD();
                 }
                 break;
@@ -6240,8 +6258,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             case LEVEL_XING_A:
             case LEVEL_XING_C: {
-                if (o instanceof LevelXing) {
-                    LevelXing lx = (LevelXing) o;
+                if (track instanceof LevelXing) {
+                    LevelXing lx = (LevelXing) track;
                     result = lx.getLayoutBlockAC();
                 }
                 break;
@@ -6249,16 +6267,16 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             case LEVEL_XING_B:
             case LEVEL_XING_D: {
-                if (o instanceof LevelXing) {
-                    LevelXing lx = (LevelXing) o;
+                if (track instanceof LevelXing) {
+                    LevelXing lx = (LevelXing) track;
                     result = lx.getLayoutBlockBD();
                 }
                 break;
             }
 
             case TRACK: {
-                if (o instanceof TrackSegment) {
-                    TrackSegment ts = (TrackSegment) o;
+                if (track instanceof TrackSegment) {
+                    TrackSegment ts = (TrackSegment) track;
                     result = ts.getLayoutBlock();
                 }
                 break;
