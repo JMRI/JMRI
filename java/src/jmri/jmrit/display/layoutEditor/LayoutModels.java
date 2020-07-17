@@ -198,6 +198,18 @@ public interface LayoutModels {
         return jmri.Path.computeDirection(tv.getCoordsC(), tv.getCoordsD());
     }
 
+    /**
+     * Invoked to display a warning about removal.
+     * Lists the attached items that prevent removing the layout track item.
+     * <p>
+     * The default implementation refers this to a View object for displaying a Dialog.
+     *
+     * @param itemList A list of the attached heads, masts and/or sensors.
+     * @param typeKey  The object type such as Turnout, Level Crossing, etc.
+     */
+    default public void displayRemoveWarning(LayoutTrack track, List<String> itemList, String typeKey) {
+        getLayoutTrackView(track).displayRemoveWarningDialog(itemList, typeKey);
+    }
 
 
 }

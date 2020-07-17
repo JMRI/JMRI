@@ -401,7 +401,7 @@ public class TrackSegment extends LayoutTrack {
         itemList.addAll(getPointReferences(type2, conn2));
 
         if (!itemList.isEmpty()) {
-            displayRemoveWarningDialog(itemList, "TrackSegment");  // NOI18N
+            models.displayRemoveWarning(this, itemList, "TrackSegment");  // NOI18N
         }
         return itemList.isEmpty();
     }

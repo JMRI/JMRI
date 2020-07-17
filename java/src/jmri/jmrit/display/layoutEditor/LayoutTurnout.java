@@ -816,7 +816,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     public boolean canRemove() {
         ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
         if (!beanReferences.isEmpty()) {
-            displayRemoveWarningDialog(beanReferences, "BeanNameTurnout");  // NOI18N
+            models.displayRemoveWarning(this, beanReferences, "BeanNameTurnout");  // NOI18N
         }
         return beanReferences.isEmpty();
     }

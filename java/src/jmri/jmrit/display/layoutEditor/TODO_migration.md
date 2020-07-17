@@ -63,13 +63,17 @@ It's in no particular order, items are removed as done, so please don't consider
 
 Go through and confirm individually:
 
- - [ ] Remove view variables from Model classes, rm commented code   
-            LayoutTrack
+ - [X] Remove view variables from Model classes 
         
  - [ ] Remove swing code from Model classes
-        LayoutTurntable  PositionablePoint  
+        LayoutTurntable
         LayoutTurnout 
         
+ - [ ] LayoutTrack holds LayoutModels ref, not LayoutEditor
+            models.provideLayoutBlock(name) should be in LayoutModels (Blocks are eventually a model type, not a view type)
+            LayoutEditor.getAffectedBlock should be methods in the LayoutTrack tree
+            LayouEditor.getFinder().uniqueName("EB", 1)   should be directly in LayoutModels
+            
  - [ ] Load & Store: TrackSegmentViewXml et al storing as  class="TrackSegmentView" to ease file comparison & for compatibility; change back after figuring out compatibility
  - load with specific view
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 

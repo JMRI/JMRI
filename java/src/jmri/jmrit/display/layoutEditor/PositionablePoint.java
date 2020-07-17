@@ -810,7 +810,7 @@ public class PositionablePoint extends LayoutTrack {
                     typeName = "Unknown type (" + type + ")";  // NOI18N
                     break;
             }
-            displayRemoveWarningDialog(itemList, typeName);
+            models.displayRemoveWarning(this, itemList, typeName);
         }
         return itemList.isEmpty();
     }

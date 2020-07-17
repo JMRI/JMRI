@@ -855,7 +855,7 @@ public class LevelXing extends LayoutTrack {
     public boolean canRemove() {
         ArrayList<String> beanReferences = getBeanReferences("All");  // NOI18N
         if (!beanReferences.isEmpty()) {
-            displayRemoveWarningDialog(beanReferences, "LevelCrossing");  // NOI18N
+            models.displayRemoveWarning(this, beanReferences, "LevelCrossing");  // NOI18N
         }
         return beanReferences.isEmpty();
     }

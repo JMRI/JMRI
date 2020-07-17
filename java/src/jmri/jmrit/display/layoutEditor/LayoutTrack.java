@@ -65,8 +65,6 @@ abstract public class LayoutTrack {
         this.ident = ident;
     }
     
-    protected static final int NUM_ARROW_TYPES = 6;  // temporary: why here? not view?
-
     abstract public boolean isMainline();
  
     /*
@@ -100,17 +98,6 @@ abstract public class LayoutTrack {
      * @return true if the layout track object can be deleted.
      */
     abstract public boolean canRemove();
-
-    /**
-     * Display the attached items that prevent removing the layout track item.
-     *
-     * @param itemList A list of the attached heads, masts and/or sensors.
-     * @param typeKey  The object type such as Turnout, Level Crossing, etc.
-     */
-    final public void displayRemoveWarningDialog(List<String> itemList, String typeKey) {
-        log.error("displayRemoveWarningDialog should have been called in view instead of object (temporary)");
-        models.getLayoutTrackView(this).displayRemoveWarningDialog(itemList, typeKey);
-    }
 
     /**
      * Initialization method for LayoutTrack sub-classes. The following method
