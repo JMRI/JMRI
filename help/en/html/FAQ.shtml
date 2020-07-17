@@ -67,7 +67,7 @@
           <dd>Yes, according to many different <a href="tools/signaling/index.shtml">signaling </a>protocols.</dd>
           <dt><strong>Can I use JMRI to automate train operation?</strong></dt>
           <dd>Yes, in <a href="tools/automation/">many different ways.</a></dd>
-          <dt><strong>Can I use JMRI to more than one of these things at the same time?</strong></dt>
+          <dt><strong>Can I use JMRI to do more than one of these things at the same time?</strong></dt>
           <dd>YES!  You can use JMRI for as little or as much as you want.  Start small with one function and keep
           adding more as you and your layout grow and learn.</dd>
         </dl>
