@@ -1,6 +1,5 @@
 package jmri.swing;
 
-import cucumber.api.java8.Th;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
