@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
@@ -3330,8 +3331,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             _trainIcon.remove();
         }
         // if there's a panel specified, get it and place icon
-        if (!Setup.getPanelName().equals(Setup.NONE)) {
-            Editor editor = InstanceManager.getDefault(EditorManager.class).get(Setup.getPanelName());
+        if (!Setup.getPanelName().isEmpty()) {
+            Editor editor = null;
+            Set<Editor> panelList = InstanceManager.getDefault(EditorManager.class).getAll();
+            for (Editor panelEditor : panelList) {
+                if (panelEditor.getTitle().equals(Setup.getPanelName()) ||
+                        panelEditor.getTargetFrame().getTitle().equals(Setup.getPanelName())) {
+                    editor = panelEditor;
+                    break;
+                }
+            }
             if (editor != null) {
                 _trainIcon = editor.addTrainIcon(getIconName());
                 _trainIcon.setTrain(this);
