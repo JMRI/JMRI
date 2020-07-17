@@ -1,16 +1,21 @@
 package jmri.jmrit.ctc.editor.gui;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
-import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
+import jmri.jmrit.ctc.topology.Topology;
+import jmri.jmrit.ctc.topology.TopologyInfo;
 
 /**
  *
@@ -23,7 +28,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
      * Creates new form DlgTRL_Rules
      */
     private static final String FORM_PROPERTIES = "DlgTRL_Rules";   // NOI18N
-//  private static final String PREFIX = "_mTRL_";                  // NOI18N
     private final AwtWindowProperties _mAwtWindowProperties;
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
@@ -34,6 +38,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
     private final ArrayList<Integer> _mArrayListOfSelectableOSSectionUniqueIDs;
     private final DefaultListModel<String> _mDefaultListModel;
     private boolean _mAddNewPressed;
+    private final Topology _mTopology = new Topology();
 
     private final ArrayList<String> _mDefaultListModelOrig = new ArrayList<> ();
     private void initOrig() {
@@ -113,6 +118,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mEditBelow.setEnabled(false);
         _mDelete.setEnabled(false);
         _mDupToEnd.setEnabled(false);
+        _mAutoGenerate.setEnabled(_mTopology.isTopologyAvailable(_mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor));
     }
 
     /**
@@ -164,6 +170,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mOptionalExternalSensor1 = new javax.swing.JComboBox<>();
         _mOptionalExternalSensor2 = new javax.swing.JComboBox<>();
         _mDupToEnd = new javax.swing.JButton();
+        _mAutoGenerate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTRLRules"));
@@ -176,7 +183,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
         _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
@@ -185,7 +191,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         jLabel2.setText(Bundle.getMessage("LabelDlgTRLRulesRules"));
 
         _mTRL_TrafficLockingRulesSSVList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 _mTRL_TrafficLockingRulesSSVListValueChanged(evt);
             }
@@ -194,7 +199,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
         _mAddNew.setText(Bundle.getMessage("ButtonAddNew"));
         _mAddNew.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mAddNewActionPerformed(evt);
             }
@@ -202,7 +206,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
         _mEditBelow.setText(Bundle.getMessage("ButtonEditBelow"));
         _mEditBelow.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEditBelowActionPerformed(evt);
             }
@@ -210,7 +213,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
         _mDelete.setText(Bundle.getMessage("ButtonDelete"));
         _mDelete.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDeleteActionPerformed(evt);
             }
@@ -219,7 +221,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mGroupingListAddReplace.setText(Bundle.getMessage("ButtonDlgTRLRulesUpdate"));
         _mGroupingListAddReplace.setEnabled(false);
         _mGroupingListAddReplace.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mGroupingListAddReplaceActionPerformed(evt);
             }
@@ -235,7 +236,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
         _mCancel.setText(Bundle.getMessage("ButtonCancel"));
         _mCancel.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCancelActionPerformed(evt);
             }
@@ -249,7 +249,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
         _mEnableALLRules.setText(Bundle.getMessage("ButtonDlgTRLRulesEnable"));
         _mEnableALLRules.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEnableALLRulesActionPerformed(evt);
             }
@@ -257,7 +256,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
         _mDisableALLRules.setText(Bundle.getMessage("ButtonDlgTRLRulesDisable"));
         _mDisableALLRules.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDisableALLRulesActionPerformed(evt);
             }
@@ -267,9 +265,15 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
         _mDupToEnd.setText(Bundle.getMessage("ButtonDlgTRLRules"));
         _mDupToEnd.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDupToEndActionPerformed(evt);
+            }
+        });
+
+        _mAutoGenerate.setText("AutoGenerate");
+        _mAutoGenerate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mAutoGenerateActionPerformed(evt);
             }
         });
 
@@ -283,7 +287,62 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(_mOS_NumberEntry1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mOS_NumberEntry2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mOS_NumberEntry3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mOS_NumberEntry4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mOS_NumberEntry5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel5)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(_mSwitchAlignment1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mSwitchAlignment2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mSwitchAlignment3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mSwitchAlignment4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mSwitchAlignment5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(_mOccupancyExternalSensor1, 0, 280, Short.MAX_VALUE)
+                                    .addComponent(_mOccupancyExternalSensor4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(_mOccupancyExternalSensor7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(_mOccupancyExternalSensor2, 0, 280, Short.MAX_VALUE)
+                                    .addComponent(_mOccupancyExternalSensor5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(_mOccupancyExternalSensor8, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(_mOccupancyExternalSensor3, 0, 280, Short.MAX_VALUE)
+                                    .addComponent(_mOccupancyExternalSensor6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(_mOccupancyExternalSensor9, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(_mOptionalExternalSensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mOptionalExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(_mSaveAndClose)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(_mGroupingListAddReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(_mCancel))))))
+                    .addComponent(jLabel10)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(_mRuleEnabled)
                                 .addGap(18, 18, 18)
@@ -294,72 +353,15 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                                 .addComponent(_mRulesInfo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel4)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(_mEditBelow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(_mAddNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(_mDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(_mDupToEnd)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(_mOS_NumberEntry1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOS_NumberEntry2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOS_NumberEntry3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOS_NumberEntry4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOS_NumberEntry5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel5)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(_mSwitchAlignment1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mSwitchAlignment2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mSwitchAlignment3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mSwitchAlignment4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mSwitchAlignment5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(_mOccupancyExternalSensor1, 0, 280, Short.MAX_VALUE)
-                                            .addComponent(_mOccupancyExternalSensor4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(_mOccupancyExternalSensor7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(_mOccupancyExternalSensor2, 0, 280, Short.MAX_VALUE)
-                                            .addComponent(_mOccupancyExternalSensor5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(_mOccupancyExternalSensor8, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(_mOccupancyExternalSensor3, 0, 280, Short.MAX_VALUE)
-                                            .addComponent(_mOccupancyExternalSensor6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(_mOccupancyExternalSensor9, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(_mOptionalExternalSensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOptionalExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(36, 36, 36)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(_mSaveAndClose)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(_mGroupingListAddReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(_mCancel))))))
-                            .addComponent(jLabel10))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(_mAutoGenerate)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(_mEditBelow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(_mAddNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(_mDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(_mDupToEnd)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,7 +388,8 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mRuleEnabled)
                     .addComponent(_mEnableALLRules)
-                    .addComponent(_mDisableALLRules))
+                    .addComponent(_mDisableALLRules)
+                    .addComponent(_mAutoGenerate))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -673,6 +676,11 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mDefaultListModel.addElement(newValue);
     }//GEN-LAST:event__mDupToEndActionPerformed
 
+    private void _mAutoGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mAutoGenerateActionPerformed
+        TopologyInfo topologyInfo = _mTopology.getTrafficLockingRules(_mIsLeftTraffic);
+                int anint = 7;//??????
+    }//GEN-LAST:event__mAutoGenerateActionPerformed
+
     private String renumberCSVString(String aString, int ruleNumber) {
             TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(aString);
             trafficLockingEntry._mUserRuleNumber = getRuleNumberString(ruleNumber);
@@ -725,6 +733,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton _mAddNew;
+    private javax.swing.JButton _mAutoGenerate;
     private javax.swing.JButton _mCancel;
     private javax.swing.JButton _mDelete;
     private javax.swing.JButton _mDisableALLRules;
