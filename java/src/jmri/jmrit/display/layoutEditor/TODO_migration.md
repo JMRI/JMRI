@@ -65,9 +65,25 @@ Go through and confirm individually:
 
  - [X] Remove view variables from Model classes 
         
- - [ ] Remove swing code from Model classes
-        LayoutTurntable
-        LayoutTurnout 
+ - [ ] Remove swing/AWT code from Model classes
+        LayoutSlip - TurnoutState internal class uses JComboBox, is present in both LayoutSlip and LayoutSlipView
+
+ - [ ] LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implementation, needs to be redone into parts
+
+ - [ ] Remove topology variables from View (decide which are references via forwarding, and which require getTrack-style access; be consistent, document decisions!)
+        LayoutTrack LayoutTurntable LevelXing  
+        PositionablePoint
+            reCheckBlockBoundary, removeSML et al
+        TrackSegment 
+        LayoutTurnout - Ray class (see below)
+        LayoutWye 
+        LayoutXOver
+
+ - [ ] There should be no duplicate code between model and view; only one place or the other (referring V -> M OK in some cases)
+        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
+        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
+        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
+        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
         
  - [ ] LayoutTrack holds LayoutModels ref, not LayoutEditor
             models.provideLayoutBlock(name) should be in LayoutModels (Blocks are eventually a model type, not a view type)
@@ -81,20 +97,6 @@ Go through and confirm individually:
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
  - [ ] store from specific view
-        LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
-        LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
-        LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
-        LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
-
- - [ ] Remove topology variables from View (decide which are references via forwarding, and which require getTrack-style access; be consistent, document decisions!)
-        LayoutTrack LayoutTurntable LevelXing  
-        PositionablePoint
-            reCheckBlockBoundary, removeSML et al
-        TrackSegment 
-        LayoutTurnout LayoutWye 
-        LayoutXOver
-
- - [ ] There should be no duplicate code between model and view; only one place or the other (referring V -> M OK in some cases)
         LayoutTrack LayoutTurntable LevelXing  PositionablePoint TrackSegment 
         LayoutTurnout LayoutWye LayoutLHTurnout LayoutRHTurnout 
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
@@ -116,7 +118,6 @@ Go through and confirm individually:
         LayoutSlip LayoutSingleSlip LayoutDoubleSlip 
         LayoutXOver LayoutDoubleXOver LayoutLHXOver LayoutRHXOver
 
-LayoutTurnout & LayoutTurnoutView setTrackSegmentBlock(..) is a bad split implementation, needs to be redone into parts
  
 Does getLayoutConnectivity() in LayoutTurnout, LayoutSlip do what the original code did?
     Need some real test cases.
@@ -141,11 +142,9 @@ Tests slow because LayoutEditor ctor creates Catalog, doing a lot of I/O; migrat
 	at jmri.jmrit.display.layoutEditor.MultiIconEditor.setIcon(MultiIconEditor.java:42)
 	at jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.setupComponents(LayoutEditorToolBarPanel.java:455)
 ```
----
-
-LayoutSlip has JComboboxen tangled up the LayoutState subclass
 
 - [ ] SignallingGuiTools is invoked from LayoutTurnout and subclasses
+
 ---
 
 Started to switch to LayoutModels from LayoutEditor
@@ -176,6 +175,7 @@ Added 'LayoutEditorAuxTools getLEAuxTools()' (which has state) to LayoutModels -
 Direct access to LayoutEditorFindItems(LayoutModels) by constructing one where needed. The LayoutModels arg is for access to tracks et al; create via InstanceManager? Put in calls?
 
 This (from TrackSegment) shows that LayoutConnectivity has a "direction" from the screen coordinates; is that a real thing? How used?
+
 ```
     lc = new LayoutConnectivity(lb1, lb2);
     lc.setConnections(this, lt, type1, null);
@@ -183,10 +183,6 @@ This (from TrackSegment) shows that LayoutConnectivity has a "direction" from th
             layoutEditor.getCoords(getConnect2(), type2),
             layoutEditor.getCoords(getConnect1(), type1)));
 ```
-
----
-
-- [ ] Getting "not stabilized after check" - what does that mean for tests?
 
 ---
 
@@ -229,15 +225,6 @@ Where do the PositionablePoint editors for End Bumper, etc live? they're not rea
 > 
 > Making them subclasses would simplify the showPopup method but makes the type change more difficult since it 
 > requires an object swap (unless there is a Java trick that I don't know).
-
----
-
-Migration removal sequence:
- - set base-class abstract method to 
-   - non-abstract and final (which flushes out overrides) and
-   - throws IllegalArgumentException (or log error and forward if still needed for a case)
- - Comment out the implementations
- - Set private name to flush out uses at compile time
 
 ---
 
@@ -301,7 +288,7 @@ Xa wants the coordinates of that far end, which it needs to get from Yv
 
 Right now, that goes through the Map<LayoutTrack, LayoutTrackView> in a LayoutEditor
 object held by Xv from it's construction time. 
- - That forces a 1-1 model-view connection within a LayoutEditor object; is that OK?
+ - That forces a 1-1 model-view connection within a LayoutEditor object; not OK in long term
 
 Because navigation is _really_ spread around, this adds more requirements to pass around and 
 hold a LayoutEditor reference, which is hard.  And the LayoutEditor class has a _lot_ of duties.
