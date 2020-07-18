@@ -84,7 +84,7 @@ public class LearnWarrantTest {
         Sensor sensor = block0.getSensor();
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block0);
 
-        JUnitUtil.waitFor(() -> (block0.getState() & (OBlock.ALLOCATED | OBlock.OCCUPIED)) != 0, "Train occupies block ");
+        JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block0), "Train occupies block ");
         pressButton(jfo, Bundle.getMessage("Start"));
 
         JUnitUtil.waitFor(() -> (frame._learnThrottle != null), "Found throttle");
@@ -112,7 +112,7 @@ public class LearnWarrantTest {
         assertThat(address.getNumber()).withFailMessage("address=111").isEqualTo(111);
 
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block0);
-        JUnitUtil.waitFor(() -> (block0.getState() & OBlock.ALLOCATED | OBlock.OCCUPIED) != 0, "Train 111 occupies first block ");
+        JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block0), "Train 111 occupies first block ");
 
         pressButton(jfo, Bundle.getMessage("ARun"));    // start play back
 
@@ -123,7 +123,7 @@ public class LearnWarrantTest {
         sensor = block4.getSensor();
         NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.ACTIVE, block4);
         
-        JUnitUtil.waitFor(() -> (block4.getState() & OBlock.ALLOCATED | OBlock.OCCUPIED) != 0, "Train 111 occupies last block ");
+        JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block4), "Train 111 occupies last block ");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for script to complete
 
         pressButton(jfo, Bundle.getMessage("ButtonSave"));
@@ -141,6 +141,10 @@ public class LearnWarrantTest {
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
 //        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length."); 
+    }
+
+    private boolean oBlockOccupiedOrAllocated(OBlock b){
+        return (b.getState() & (OBlock.ALLOCATED | OBlock.OCCUPIED)) != 0;
     }
 
     private void pressButton(WindowOperator frame, String text) {
