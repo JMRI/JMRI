@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 
 import jmri.*;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperties;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -351,7 +349,7 @@ public class LinkedWarrantTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -369,7 +367,7 @@ public class LinkedWarrantTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         _warrantMgr.dispose();
         _warrantMgr = null;
         _OBlockMgr.dispose();

@@ -196,6 +196,24 @@ public class LoadAndStoreTestBase {
                 }
             }
 
+            // window y positions will sometimes differ based on window decorations.
+            if (!match) {
+                if (line1.contains("  <LayoutEditor") ||
+                    line1.contains(" <switchboardeditor")) {
+                    // if either line contains a y position attribute
+                    String yposition_regexe = "( y=\"[^\"]*\")";
+                    String[] splits1 = line1.split(yposition_regexe);
+                    if (splits1.length == 2) {  // (yes) remove it
+                        line1 = splits1[0] + splits1[1];
+                    }
+                    String[] splits2 = line2.split(yposition_regexe);
+                    if (splits2.length == 2) {  // (yes) remove it
+                        line2 = splits2[0] + splits2[1];
+                    }
+
+                }
+            }
+
             // Time will vary when written out
             if (!match) {
                 String memory_value = "<memory value";
