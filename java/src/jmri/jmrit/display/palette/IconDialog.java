@@ -91,7 +91,7 @@ public class IconDialog extends ItemDialog {
         if (iconMap != null) {
             _iconMap = IconDialog.clone(iconMap);
         } else {
-            _iconMap = ItemPanel.makeNewIconMap(_type);
+            _iconMap = _parent.makeNewIconMap(_type);
         }        
         if (!(_type.equals("MultiSensor") || _type.equals("SignalHead"))) {
             ItemPanel.checkIconMap(_type, _iconMap);

@@ -179,7 +179,7 @@ public class IconItemPanel extends ItemPanel {
             log.error("Unable to find class supporting {}", ImageIndexEditor.IconDataFlavorMime, cnfe);
         }
         if (!_update) {
-            new DropTarget(_iconPanel, DnDConstants.ACTION_COPY_OR_MOVE, new aDropTargetListener());
+            new DropTarget(_iconPanel, DnDConstants.ACTION_COPY_OR_MOVE, new ADropTargetListener());
         }
     }
 
@@ -393,8 +393,8 @@ public class IconItemPanel extends ItemPanel {
         return _updateIcon;
     }
 
-    class aDropTargetListener extends DropTargetAdapter {
-        aDropTargetListener() {
+    class ADropTargetListener extends DropTargetAdapter {
+        ADropTargetListener() {
             super();
         }
 

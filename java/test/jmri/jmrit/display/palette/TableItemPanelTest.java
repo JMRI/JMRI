@@ -60,7 +60,32 @@ public class TableItemPanelTest {
     }
 
     @Test
-    public void testNewSensorFamilt() {
+    public void testShowIndicatorTurnoutIcons() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
+        Assert.assertNotNull("exists", editor);
+        JFrameOperator fo = new JFrameOperator(ItemPalette.getDefault("ItemPalette", editor));
+
+        ItemPalette._tabPane.setSelectedIndex(14);
+        JScrollPane sp = (JScrollPane)ItemPalette._tabPane.getComponentAt(14);
+        ItemPanel panel = (ItemPanel)sp.getViewport().getView();
+        Assert.assertNotNull("ItemPanel exists", panel);
+        Assert.assertEquals("ItemPanel._itemType", "IndicatorTO", panel._itemType);
+
+        JButtonOperator bo = new JButtonOperator(fo, Bundle.getMessage("ShowIcons"));
+        bo.doClick();
+
+        bo = new JButtonOperator(fo, Bundle.getMessage("HideIcons"));
+        bo.doClick();
+
+        bo = new JButtonOperator(fo, Bundle.getMessage("ButtonEditIcons"));
+        bo.doClick();
+
+        editor.dispose();
+    }
+
+    @Test
+    public void testNewSensorFamily() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor editor = new ControlPanelEditor("EdItemPalette");
         Assert.assertNotNull("exists", editor);
@@ -74,21 +99,22 @@ public class TableItemPanelTest {
 
         JButtonOperator bo = new JButtonOperator(fo, Bundle.getMessage("ShowIcons"));
         bo.doClick();
-
-        /* Cannot locate the JOptionPane with "createNewFamily" title
+/*
+        //Cannot locate the JOptionPane with "createNewFamily" title
         String labelNewFamily = Bundle.getMessage("createNewFamily");
         bo = new JButtonOperator(fo, labelNewFamily);
         bo.doClick();
 //        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         new Thread(() -> {
-//            JFrameOperator edo = new JFrameOperator(editor);
-            JDialogOperator jdo = new JDialogOperator(fo, labelNewFamily);
+            String title = Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get(panel._itemType)));
+            JFrameOperator pfo = new JFrameOperator(title);
+            JDialogOperator jdo = new JDialogOperator(pfo, labelNewFamily);
             String label = Bundle.getMessage("ButtonCancel");
             JButtonOperator but = new JButtonOperator(jdo, label);
             but.doClick();
-        }).start();*/
-        
+        }).start();
+ */       
         editor.dispose();
     }
 

@@ -1,6 +1,10 @@
 package jmri.jmrit.display.palette;
 
+import java.util.HashMap;
+
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
+import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 
 /**
  * ItemPanel for for PortalIcons.
@@ -26,6 +30,13 @@ public class PortalItemPanel extends FamilyItemPanel {
     @Override
     protected String getDisplayKey() {
         return "toArrow";
+    }
+
+    @Override
+    protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
+        HashMap<String, NamedIcon> map = super.makeNewIconMap(type);
+        map.put(PortalIcon.HIDDEN, new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
+        return map;
     }
 
 }

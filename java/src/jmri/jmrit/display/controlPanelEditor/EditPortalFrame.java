@@ -479,8 +479,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
     protected JPanel makeDndIconPanel() {
         JPanel _dndPanel = new JPanel();
 
-        String fileName = "resources/icons/throttles/RoundRedCircle20.png";
-        NamedIcon icon = new NamedIcon(fileName, fileName);
+        NamedIcon icon = _parent._editor.getPortalIconMap().get(PortalIcon.VISIBLE);
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 Bundle.getMessage("BeanNamePortal")));

@@ -200,7 +200,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     private void addStatus(String status) {
-        HashMap<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
+        HashMap<String, NamedIcon> iconMap = _parent.makeNewIconMap("Turnout");
         _iconGroupsMap.put(status, iconMap);
         IndicatorTOItemPanel p = (IndicatorTOItemPanel)_parent;
         p.addIcons2Panel(_iconGroupsMap, _iconEditPanel, true);

@@ -74,7 +74,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
             _updateButton.setToolTipText(null);
             if (_family != null) {
                 // get raw map of all appearances for row's head type.
-                HashMap<String, NamedIcon> fullmap = getFilteredIconMap(ItemPanel.makeNewIconMap(_itemType));
+                HashMap<String, NamedIcon> fullmap = getFilteredIconMap(makeNewIconMap(_itemType));
                 // icon map of appearances for type of current bean.
                 HashMap<String, NamedIcon> currentmap = (getIconMap());
                 log.debug("currentmap keys = {}", currentmap.keySet().toString());

@@ -667,7 +667,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     /*
      * Get a clone of the Family of icons for a given device type and family.
      */
-    static protected HashMap<String, NamedIcon> getIconMap(String type, String family) {
+    static public HashMap<String, NamedIcon> getIconMap(String type, String family) {
         HashMap<String, HashMap<String, NamedIcon>> itemMap = _iconMaps.get(type);
         if (itemMap == null) {
             log.error("getIconMap failed. item type \"{}\" not found.", type);

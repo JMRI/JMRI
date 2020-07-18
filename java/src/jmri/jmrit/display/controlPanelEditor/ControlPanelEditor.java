@@ -28,9 +28,11 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -120,6 +122,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
     private boolean _disablePortalSelection = true;  // only select PortalIcon in CircuitBuilder
+    private String _portalIconFamily;
+    private HashMap<String, NamedIcon> _portalIconMap;
 
     private final JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
 //    private final JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
@@ -227,6 +231,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     protected void makeCircuitMenu(boolean edit) {
         if (edit) {
             if (_circuitMenu == null) {
+                ItemPalette.loadIcons();
                 _circuitMenu = _circuitBuilder.makeMenu();
                 int idx = _menuBar.getComponentIndex(_warrantMenu);
                 _menuBar.add(_circuitMenu, ++idx);
@@ -254,6 +259,44 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void setShapeSelect(boolean set) {
         _disableShapeSelection = !set;
         disableShapeSelect.setSelected(_disableShapeSelection);
+    }
+
+    public String getPortalIconFamily() {
+        return _portalIconFamily;
+    }
+
+    public void setPortalIconFamily(String family) {
+        if (family != null && !family.equals(_portalIconFamily)) {
+            _portalIconMap = null;
+        }
+        _portalIconFamily = family;
+    }
+
+    @Nonnull
+    public HashMap<String, NamedIcon> getPortalIconMap() {
+        if (_portalIconMap == null) {
+            ItemPalette.loadIcons();
+            _portalIconMap = ItemPalette.getIconMap("Portal", _portalIconFamily);
+            if (_portalIconMap == null) {
+                HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps("Portal");
+                _portalIconMap = familyMap.get("Standard");
+                if (_portalIconMap == null) {
+                    _portalIconMap = new HashMap<>();
+                    _portalIconMap.put(PortalIcon.HIDDEN, 
+                            new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
+                    _portalIconMap.put(PortalIcon.PATH, 
+                            new NamedIcon("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
+                    _portalIconMap.put(PortalIcon.VISIBLE, 
+                            new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
+                    _portalIconMap.put(PortalIcon.TO_ARROW, 
+                            new NamedIcon("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
+                    _portalIconMap.put(PortalIcon.FROM_ARROW, 
+                            new NamedIcon("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
+                }
+            }
+        }
+        // Don't return ItemPalette's map!
+        return PositionableIcon.cloneMap(_portalIconMap, null);
     }
 
     public ShapeDrawer getShapeDrawer() {
@@ -296,10 +339,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 makeCircuitMenu(true);
 //                openCircuitWindow();
             });
-        } else {
-            makeCircuitMenu(edit);
         }
         if (edit) {
+            makeCircuitMenu(edit);
             JMenuItem item = new JMenuItem(Bundle.getMessage("OpenCircuitMenu"));
             _warrantMenu.add(item);
             item.addActionListener((ActionEvent event) -> _circuitBuilder.openCBWindow());

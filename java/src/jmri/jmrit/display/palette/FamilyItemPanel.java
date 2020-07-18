@@ -849,7 +849,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
         if (map == null) {
             log.warn("Family \"{}\" for type \"{}\" not found.", _family, _itemType);
-            map = ItemPanel.makeNewIconMap(_itemType);
+            map = makeNewIconMap(_itemType);
         }
         return map;
     }

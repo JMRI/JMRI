@@ -466,7 +466,6 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         }
         _family = family;
         makeFamiliesPanel();
-//        makeFamilyButtons(ItemPalette.getLevel4FamilyMaps(_itemType).keySet());
         setFamily(family);
         showIcons();
         if (log.isDebugEnabled()) {

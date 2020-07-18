@@ -42,7 +42,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 
     public PortalIcon(Editor editor) {
         super(editor);
-        _iconMap = new HashMap<>();
+        makeIconMap();
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -72,10 +72,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
     
     public void makeIconMap() {
-        _iconMap = ItemPalette.getFamilyMaps("Portal").get(getFamily());
-        if (_iconMap == null) {
-            _iconMap = getPaletteMap();
-        }
+        _iconMap = ((ControlPanelEditor)_editor).getPortalIconMap();
         int deg = getDegrees();
         if (!_regular) {
             NamedIcon a = _iconMap.get(TO_ARROW);
@@ -86,6 +83,10 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         setScale(getScale());
         rotate(deg);
         setIcon(_iconMap.get(HIDDEN));
+    }
+
+    protected void setMap(HashMap<String, NamedIcon> map) {
+        _iconMap = map;
     }
 
     @Override

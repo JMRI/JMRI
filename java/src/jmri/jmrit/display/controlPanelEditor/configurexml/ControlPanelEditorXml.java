@@ -66,15 +66,8 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("state", "" + p.getExtendedState());
         panel.setAttribute("shapeSelect", "" + (p.getShapeSelect() ? "yes" : "no"));
 
- /*       Element elem = new Element("icons");
-        HashMap<String, NamedIcon> map = p.getPortalIconMap();
-        elem.addContent(storeIcon("visible", map.get(PortalIcon.VISIBLE)));
-        elem.addContent(storeIcon("path_edit", map.get(PortalIcon.PATH)));
-        elem.addContent(storeIcon("hidden", map.get(PortalIcon.HIDDEN)));
-        elem.addContent(storeIcon("to_arrow", map.get(PortalIcon.TO_ARROW)));
-        elem.addContent(storeIcon("from_arrow", map.get(PortalIcon.FROM_ARROW)));
-        panel.addContent(elem);
-*/
+        panel.setAttribute("portalFamily", "" + p.getPortalIconFamily());
+
         // include contents
         List<Positionable> contents = p.getContents();
         log.debug("N elements: {}", contents.size());
@@ -219,6 +212,10 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             value = false;
         }
         panel.setShapeSelect(value);
+
+        if ((a = shared.getAttribute("portalFamily")) != null) {
+            panel.setPortalIconFamily(a.getValue());
+        }
 
         if ((a = shared.getAttribute("state")) != null) {
             try {
