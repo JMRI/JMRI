@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LoggingTestUtil {
 
-    private static boolean log4JSetUp = false;
     private static final String LOG_HEADER = "****** JMRI log *******";
     private static final Logger log = LoggerFactory.getLogger(LoggingTestUtil.class);
 
@@ -60,12 +59,10 @@ public class LoggingTestUtil {
      * @see jmri.util.FileUtil#getProgramPath()
      */
     static void initLog4J(@Nonnull String logFile) {
-        if (log4JSetUp) {
+        if (LogManager.getRootLogger().getAllAppenders().hasMoreElements()) {
             log.debug("initLog4J already initialized!");
             return;
         }
-
-        log4JSetUp = true;
 
         // initialize the java.util.logging to log4j bridge
         initializeJavaUtilLogging();

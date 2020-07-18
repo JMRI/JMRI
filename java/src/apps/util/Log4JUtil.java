@@ -39,7 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Log4JUtil {
 
-    private static boolean log4JSetUp = false;
     private static final String LOG_HEADER = "****** JMRI log *******";
     private static final Logger log = LoggerFactory.getLogger(Log4JUtil.class);
 
@@ -83,7 +82,7 @@ public class Log4JUtil {
      * @see jmri.util.FileUtil#getProgramPath()
      */
     static void initLog4J(@Nonnull String logFile) {
-        if (log4JSetUp) {
+        if (LogManager.getRootLogger().getAllAppenders().hasMoreElements()) {
             log.debug("initLog4J already initialized!");
             return;
         }
@@ -93,7 +92,6 @@ public class Log4JUtil {
         if (!GraphicsEnvironment.isHeadless()) {
             SystemConsole.create();
         }
-        log4JSetUp = true;
 
         // initialize the java.util.logging to log4j bridge
         initializeJavaUtilLogging();
