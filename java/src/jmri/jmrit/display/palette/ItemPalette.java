@@ -670,12 +670,12 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static public HashMap<String, NamedIcon> getIconMap(String type, String family) {
         HashMap<String, HashMap<String, NamedIcon>> itemMap = _iconMaps.get(type);
         if (itemMap == null) {
-            log.error("getIconMap failed. item type \"{}\" not found.", type);
+//            log.error("getIconMap failed. item type \"{}\" not found.", type);
             return null;
         }
         HashMap<String, NamedIcon> iconMap = itemMap.get(family);
         if (iconMap == null) {
-            log.error("getIconMap failed. family \"{}\" not found in item type \"{}\"", family, type);
+//            log.error("getIconMap failed. family \"{}\" not found in item type \"{}\"", family, type);
             return null;
         }
         return cloneMap(iconMap);
