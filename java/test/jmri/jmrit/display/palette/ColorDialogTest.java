@@ -24,8 +24,7 @@ public class ColorDialogTest {
 
     private ControlPanelEditor _cpe;
     private PositionableLabel _pos;
-    private boolean _done;
-    
+
     @Test
     public void testCTor1() {
         _cpe.setBackgroundColor(Color.GREEN);
@@ -162,7 +161,6 @@ public class ColorDialogTest {
             }
             assertThat(c).withFailMessage(_dialogTitle + " set color").isEqualTo(_color);
             jbo.pushNoBlock();
-            _done = true;
         }
 
     }
@@ -173,7 +171,6 @@ public class ColorDialogTest {
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.resetProfileManager();
         startEditor();
-        _done = false;
     }
 
     @AfterEach
