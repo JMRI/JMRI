@@ -334,13 +334,13 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     /**
-     * See if the signal head map is supported by the family map. "Equals" in
+     * See if the map is supported by the family map. "Equals" in
      * this context means that each map is the same size, the keys are equal and
      * the urls for the icons are equal. Note that icons with different urls may
      * be or appear to be the same.
      * 
-     * @param mapOne a HashMap<String, NamedIcon>
-     * @param mapTwo another HashMap<String, NamedIcon>
+     * @param mapOne an icon HashMap
+     * @param mapTwo another icon HashMap
      * @return true if all of signal head entries have matching entries in the
      *         family map.
      */
