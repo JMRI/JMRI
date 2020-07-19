@@ -165,7 +165,7 @@ public class JUnitUtil {
             // init logging if needed
             isLoggingInitialized = true;
             String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
-            LoggingTestUtil.initLogging(filename);
+            TestingLoggerConfiguration.initLogging(filename);
         }
 
         // need to do this each time

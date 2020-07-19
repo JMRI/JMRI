@@ -32,10 +32,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2009, 2010
  * @author Randall Wood Copyright 2014, 2020
  */
-public class LoggingTestUtil {
+public class TestingLoggerConfiguration {
 
     private static final String LOG_HEADER = "****** JMRI log *******";
-    private static final Logger log = LoggerFactory.getLogger(LoggingTestUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(TestingLoggerConfiguration.class);
 
     /**
      * Initialize logging, specifying a control file.
