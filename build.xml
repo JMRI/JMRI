@@ -139,6 +139,7 @@
         <pathelement location="${libdir}/jna-4.4.0.jar"/>
         <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
+        <pathelement location="${libdir}/commons-net-3.6.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
         <pathelement location="${libdir}/jackson-core-2.10.0.jar"/>
@@ -376,14 +377,12 @@
         <mkdir dir="${maventarget}/testreport"/>
         </quiet>
 
-        <filterset id="release-information"
-                   begintoken="@@"
-                   endtoken="@@">
+        <filterset id="release-information" begintoken="${" endtoken="}">
             <filter token="release.major"          value="${release.major}"/>
             <filter token="release.minor"          value="${release.minor}"/>
             <filter token="release.build"          value="${release.build}"/>
             <filter token="release.modifier"       value="${release.modifier}"/>
-            <filter token="release.revision_id"    value="${release.revision_id}"/>
+            <filter token="revision"               value="${release.revision_id}"/>
             <filter token="release.build_user"     value="${release.build_user}"/>
             <filter token="release.official"       value="${release.official}"/>
             <filter token="release.build_date"     value="${release.build_date}"/>

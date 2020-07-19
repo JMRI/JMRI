@@ -9,12 +9,13 @@ import apps.*;
 import apps.plaf.macosx.Application;
 
 import jmri.jmrit.XmlFileLocationAction;
-import jmri.jmrit.mailreport.ReportAction;
 import jmri.util.*;
 
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import apps.util.issuereporter.swing.IssueReporterAction;
 
 /**
  * Common utility methods for working with Java Help.
@@ -60,7 +61,7 @@ public class HelpMenuProvider implements HelpUtil.MenuProvider {
         items.add(console);
         console.addActionListener(new SystemConsoleAction());
 
-        items.add(new JMenuItem(new ReportAction()));
+        items.add(new JMenuItem(new IssueReporterAction()));
 
         // Put about dialog in Apple's prefered area on Mac OS X
         if (SystemType.isMacOSX()) {
