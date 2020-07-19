@@ -865,7 +865,7 @@ do, then define the missing object(s) in JMRI.
         switch in the proper place.
         </p>
         <p>
-        However, <strong>do not</strong> check and features except the Turnout Locking check box for this fake O.S.
+        However, <strong>do not</strong> check any features except the Turnout Locking check box for this fake O.S.
         section.  This is how this is differentiated from the above true O.S. Section lock.
         </p>
         <p>
@@ -1015,6 +1015,10 @@ do, then define the missing object(s) in JMRI.
     </p>
     <p>
     These are convenience functions, and can be removed at any time.
+    </p>
+    <p>
+    For support of conditional preconditioning, there is sensor "IS:PRECONDITIONING_ENABLED" that is
+    automatically created.  If set to ACTIVE, it allows preconditioning on all O.S. sections.
     </p>
     <h3>Debug</h3>
     When this toggle switch is turned on (not off), it will dump out all of the
@@ -1265,6 +1269,24 @@ do, then define the missing object(s) in JMRI.
           See "Running time" definition.
         </p>
       </dd>
+      
+      <dt>Preconditioning (A.K.A. Stacking)</dt>
+      <dd>
+        <p style="margin: 10px 0">
+          When enable: <strong>Only</strong> while a O.S. section is occupied,
+          a dispatcher can "code ahead" by setting the signal direction lever
+          and / or switch direction lever to the next move thru the O.S. section,
+          and when the O.S. section becomes unoccupied, the CTC machine will
+          automatically code the new arrangement <strong>if valid</strong>.
+          No "code ahead" for locking or call on is supported at this time,
+          nor is it considered (possibly due to the prototype CTC machine
+          not supporting it).
+        </p>
+      </dd>
+      <dt>Interlocking</dt>
+      
+      
+      
     </dl>
 
       <!--#include virtual="/Footer.shtml" -->
