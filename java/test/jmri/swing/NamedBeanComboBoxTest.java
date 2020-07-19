@@ -165,6 +165,73 @@ public class NamedBeanComboBoxTest {
 
     }
 
+    static int countContents;
+    static int countAdded;
+    static int countRemoved;
+    static Manager.ManagerDataEvent<Sensor> lastEvent;
+    
+    @Test
+    public void testDataUpdatesForNewDataModel() {
+        assumeThat(GraphicsEnvironment.isHeadless()).isFalse();
+        SensorManager m = InstanceManager.getDefault(jmri.SensorManager.class);
+        
+        Manager.ManagerDataListener<Sensor> listener = new Manager.ManagerDataListener<Sensor>() {
+            @Override
+            public void contentsChanged(Manager.ManagerDataEvent<Sensor> e) {
+                countContents++;
+                lastEvent = e;
+            }
+
+            @Override
+            public void intervalAdded(Manager.ManagerDataEvent<Sensor> e) {
+                countAdded++;
+                lastEvent = e;
+            }
+
+            @Override
+            public void intervalRemoved(Manager.ManagerDataEvent<Sensor> e) {
+                countRemoved++;
+                lastEvent = e;
+            }
+        };
+        m.addDataListener(listener);
+        countContents = countAdded = countRemoved = 0;
+        lastEvent = null;
+
+        GuiActionRunner.execute(() -> m.provideSensor("IS2"));
+        
+        assertThat(countContents).isEqualTo(0);
+        assertThat(countAdded).isEqualTo(1);
+        assertThat(countRemoved).isEqualTo(0);
+        
+        assertThat(lastEvent.getIndex0()).isEqualTo(0);  // new element 0
+        assertThat(lastEvent.getIndex1()).isEqualTo(0);
+
+        countContents = countAdded = countRemoved = 0;
+        lastEvent = null;
+
+        GuiActionRunner.execute(() -> m.provideSensor("IS3"));
+        
+        assertThat(countContents).isEqualTo(0);
+        assertThat(countAdded).isEqualTo(1);
+        assertThat(countRemoved).isEqualTo(0);
+
+        assertThat(lastEvent.getIndex0()).isEqualTo(1);  // new element 1
+        assertThat(lastEvent.getIndex1()).isEqualTo(1);
+
+        countContents = countAdded = countRemoved = 0;
+        lastEvent = null;
+
+        GuiActionRunner.execute(() -> m.provideSensor("IS1"));
+        
+        assertThat(countContents).isEqualTo(0);
+        assertThat(countAdded).isEqualTo(1);
+        assertThat(countRemoved).isEqualTo(0);
+
+        assertThat(lastEvent.getIndex0()).isEqualTo(0);  // new element 0
+        assertThat(lastEvent.getIndex1()).isEqualTo(0);
+    }
+        
     @Test
     public void testSensorAllowEdit() {
         assumeThat(GraphicsEnvironment.isHeadless()).isFalse();

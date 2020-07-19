@@ -397,13 +397,18 @@
         debugging</li>
 
         <li>Michael Dunn, who provided a decoder definition for the
-        MRC 1645 decoder <a name="E" id="E"></a></li>
+        MRC 1645 decoder</li>
 
         <li>Mike Dunston, <!-- atanisoft -->
             who provided 
             <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aatanisoft+">several updates</a> 
-            for the DCC++ code</li>
+            for the DCC++ code
+        <a name="E" id="E"></a></li>
 
+        
+        <li>Frederik Elestedt, <!--elestedt -->
+            who improved the MQTT support.</li>
+            
         <li>Joe Ellis provided the DecoderPro configuration files
         for the Lenz LE077XF decoder and has done a fantastic job
         on the manual</li>
