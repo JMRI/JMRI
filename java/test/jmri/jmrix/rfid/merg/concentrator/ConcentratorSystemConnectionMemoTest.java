@@ -12,7 +12,9 @@ import org.junit.jupiter.api.*;
  * Test for the ConcentratorSystemConnectionMemo class
  *
  * @author Paul Bender Copyright(C) 2016
+ * @deprecated since 4.21.1 test of deprecated {@link ConcentratorSystemConnectionMemo}
  */
+@Deprecated
 public class ConcentratorSystemConnectionMemoTest extends SystemConnectionMemoTestBase<ConcentratorSystemConnectionMemo> {
 
     @Override
@@ -40,7 +42,8 @@ public class ConcentratorSystemConnectionMemoTest extends SystemConnectionMemoTe
             }
         };
         scm.setRfidTrafficController(tc);
-        scm.configureManagers(null, null);
+        scm.setSystemPrefix("F");
+        scm.configureManagers(new ConcentratorSensorManager(scm),new ConcentratorReporterManager(scm));
     }
 
     @Override

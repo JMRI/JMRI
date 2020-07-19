@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -17,7 +18,7 @@ public class ConcentratorTrafficControllerTest extends jmri.jmrix.rfid.RfidTraff
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new ConcentratorTrafficController(new ConcentratorSystemConnectionMemo(),"A-H"){
+        tc = new ConcentratorTrafficController(new RfidSystemConnectionMemo(),"A-H"){
            @Override
            public void sendInitString(){
            }

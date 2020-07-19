@@ -4123,7 +4123,8 @@
     of the route that allows you to directly edit the selected route. If you haven't created a route
     for your train, select a blank route and then press the "Edit" button to create a new route.
     Once a route is selected a list of locations that the train will visit should appear. You can
-    deselect any location that you don't want the train to work.</p>
+    deselect any location that you don't want the train to work. The build report and train tools
+    will refer to unselected locations as being skipped.</p>
 
    <h4>Train Departure Time</h4>
    <p>

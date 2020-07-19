@@ -53,8 +53,6 @@ public class Mx1Adapter extends Mx1PortController {
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            // set timeout
-            // activeSerialPort.enableReceiveTimeout(1000);
             log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
@@ -108,7 +106,6 @@ public class Mx1Adapter extends Mx1PortController {
     @Override
     public void configure() {
         Mx1CommandStation cs = new Mx1CommandStation(getSystemConnectionMemo().getSystemPrefix(), getSystemConnectionMemo().getUserName());
-        getSystemConnectionMemo().setCommandStation(cs);
         // connect to a packetizing traffic controller
         Mx1Packetizer packets = new Mx1Packetizer(cs, Mx1Packetizer.ASCII);
         packets.connectPort(this);

@@ -2,16 +2,8 @@ package jmri.jmrix.lenz;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
-import jmri.AddressedProgrammerManager;
-import jmri.CommandStation;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.LightManager;
-import jmri.NamedBean;
-import jmri.PowerManager;
-import jmri.SensorManager;
-import jmri.ThrottleManager;
-import jmri.TurnoutManager;
+
+import jmri.*;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
@@ -81,40 +73,40 @@ public class XNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
      * @return programmer manager.
      */
     public XNetProgrammerManager getProgrammerManager() {
-        return programmerManager;
+        return get(XNetProgrammerManager.class);
     }
 
     public void setProgrammerManager(XNetProgrammerManager p) {
-        programmerManager = p;
+        store(p,XNetProgrammerManager.class);
+        if(p.isGlobalProgrammerAvailable()) {
+            store(p,GlobalProgrammerManager.class);
+        }
+        if(p.isAddressedModePossible()){
+            store(p,AddressedProgrammerManager.class);
+        }
     }
-
-    private XNetProgrammerManager programmerManager = null;
 
     /*
      * Provide access to the Throttle Manager for this particular connection.
      */
     public ThrottleManager getThrottleManager() {
-        return throttleManager;
+        return get(ThrottleManager.class);
     }
 
     public void setThrottleManager(ThrottleManager t) {
-        throttleManager = t;
+        store(t,ThrottleManager.class);
     }
-
-    private ThrottleManager throttleManager;
 
     /*
      * Provide access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
-        return powerManager;
+        return get(PowerManager.class);
     }
 
     public void setPowerManager(PowerManager p) {
-        powerManager = p;
+        store(p,PowerManager.class);
     }
-
-    private PowerManager powerManager;
 
     /**
      * Provide access to the SensorManager for this particular connection.
@@ -123,15 +115,12 @@ public class XNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
      * @return sensor manager.
      */
     public SensorManager getSensorManager() {
-        return sensorManager;
-
+        return get(SensorManager.class);
     }
 
     public void setSensorManager(SensorManager s) {
-        sensorManager = s;
+        store(s, SensorManager.class);
     }
-
-    private SensorManager sensorManager = null;
 
     /**
      * Provide access to the TurnoutManager for this particular connection.
@@ -140,15 +129,13 @@ public class XNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
      * @return turnout manager.
      */
     public TurnoutManager getTurnoutManager() {
-        return turnoutManager;
+        return get(TurnoutManager.class);
 
     }
 
     public void setTurnoutManager(TurnoutManager t) {
-        turnoutManager = t;
+        store(t,TurnoutManager.class);
     }
-
-    private TurnoutManager turnoutManager = null;
 
     /**
      * Provide access to the LightManager for this particular connection.
@@ -157,15 +144,13 @@ public class XNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
      * @return light manager.
      */
     public LightManager getLightManager() {
-        return lightManager;
+        return get(LightManager.class);
 
     }
 
     public void setLightManager(LightManager l) {
-        lightManager = l;
+        store(l,LightManager.class);
     }
-
-    private LightManager lightManager = null;
 
     /**
      * Provide access to the Command Station for this particular connection.
@@ -174,17 +159,22 @@ public class XNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
      * @return command station.
      */
     public CommandStation getCommandStation() {
-        return commandStation;
+        return get(CommandStation.class);
     }
 
     public void setCommandStation(CommandStation c) {
-        commandStation = c;
-        if (c instanceof LenzCommandStation && lenzCommandStation == null) {
+
+        if (c instanceof LenzCommandStation ) {
             setLenzCommandStation((LenzCommandStation) c);
+            // don't set as command station object if instruction
+            // not supported (Lenz Compact)
+            if(((LenzCommandStation)c).getCommandStationType()!=0x02) {
+                store(c, CommandStation.class);
+            }
+        } else {
+            store(c,CommandStation.class);
         }
     }
-
-    private CommandStation commandStation = null;
 
     /**
      * Provide access to the Lenz Command Station for this particular connection.
@@ -193,93 +183,13 @@ public class XNetSystemConnectionMemo extends DefaultSystemConnectionMemo {
      * @return Lenz command station.
      */
     public LenzCommandStation getLenzCommandStation() {
-        return lenzCommandStation;
+        return get(LenzCommandStation.class);
     }
 
     public void setLenzCommandStation(LenzCommandStation c) {
-        lenzCommandStation = c;
-        lenzCommandStation.setTrafficController(xt);
-        lenzCommandStation.setSystemConnectionMemo(this);
-    }
-
-    private LenzCommandStation lenzCommandStation = null;
-
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        } else if (type.equals(GlobalProgrammerManager.class)) {
-            GlobalProgrammerManager p = getProgrammerManager();
-            return ( p!=null && p.isGlobalProgrammerAvailable());
-        } else if (type.equals(AddressedProgrammerManager.class)) {
-            AddressedProgrammerManager p = getProgrammerManager();
-            return ( p!=null && p.isAddressedModePossible());
-        } else if (type.equals(jmri.ThrottleManager.class)) {
-            return true;
-        } else if (type.equals(jmri.PowerManager.class)) {
-            return true;
-        } else if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else if (type.equals(jmri.LightManager.class)) {
-            return true;
-        } else if (type.equals(jmri.ConsistManager.class)) {
-            try {
-               // multimouse doesn't support consists.
-               return (getLenzCommandStation().getCommandStationType()!=0x10 );
-            } catch (java.lang.NullPointerException npe) {
-                // initialization may not be complete.  Assume true.
-                return true;
-            }
-        } else if (type.equals(jmri.CommandStation.class)) {
-            try {
-                // compact/commander do not support the instructions required 
-                // for command station interface.
-                return (getLenzCommandStation().getCommandStationType() != 0x02  && getCommandStation()!=null );
-            } catch (java.lang.NullPointerException npe) {
-                // initialization may not be complete, return false if no 
-                // command station object.
-                return (getCommandStation()!=null);
-            }
-        }
-        return super.provides(type);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.ThrottleManager.class)) {
-            return (T) getThrottleManager();
-        }
-        if (T.equals(jmri.PowerManager.class)) {
-            return (T) getPowerManager();
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        if (T.equals(jmri.LightManager.class)) {
-            return (T) getLightManager();
-        }
-        if (T.equals(jmri.ConsistManager.class)) {
-            return (T) getConsistManager();
-        }
-        if (T.equals(jmri.CommandStation.class)) {
-            return (T) getCommandStation();
-        }
-        return super.get(T);
+        store(c,LenzCommandStation.class);
+        c.setTrafficController(xt);
+        c.setSystemConnectionMemo(this);
     }
 
     @Override

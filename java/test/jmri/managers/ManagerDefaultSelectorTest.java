@@ -73,6 +73,7 @@ public class ManagerDefaultSelectorTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        memo.configureManagers();
         return memo;
     }
 

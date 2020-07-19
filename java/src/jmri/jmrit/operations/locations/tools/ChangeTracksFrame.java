@@ -106,7 +106,7 @@ class ChangeTracksFrame extends OperationsFrame {
 
     private void changeTracks(String type) {
         log.debug("change tracks to {}", type);
-        List<Track> tracks = _location.getTrackByNameList(null);
+        List<Track> tracks = _location.getTracksByNameList(null);
         for (Track track : tracks) {
             track.setTrackType(type);
         }

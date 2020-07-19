@@ -59,8 +59,10 @@ public class SRCPSystemConnectionMemoTest extends SystemConnectionMemoTestBase<S
     @Override
     @AfterEach
     public void tearDown() {
-        scm.getTrafficController().terminateThreads();
+        SRCPTrafficController trafficController = scm.getTrafficController();
         scm.dispose();
+        trafficController.terminateThreads();
+        scm = null;
         JUnitUtil.tearDown();
     }
 }

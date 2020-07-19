@@ -2909,16 +2909,16 @@ public class TrainTest extends OperationsTestCase {
 
         Assert.assertFalse("loc1 should not accept Boxcar", loc1.acceptsTypeName("Boxcar"));
         Assert.assertFalse("loc2 should not accept Boxcar", loc2.acceptsTypeName("Boxcar"));
-        Assert.assertFalse("track loc1trk1 should not accept Boxcar", loc1trk1.acceptsTypeName("Boxcar"));
-        Assert.assertFalse("track loc2trk1 should not accept Boxcar", loc2trk1.acceptsTypeName("Boxcar"));
+        Assert.assertFalse("track loc1trk1 should not accept Boxcar", loc1trk1.isTypeNameAccepted("Boxcar"));
+        Assert.assertFalse("track loc2trk1 should not accept Boxcar", loc2trk1.isTypeNameAccepted("Boxcar"));
         Assert.assertFalse("train 1 should not accept Boxcar", train1.isTypeNameAccepted("Boxcar"));
         Assert.assertFalse("train 2 should not accept Boxcar", train2.isTypeNameAccepted("Boxcar"));
         Assert.assertFalse("train 3 should not accept Boxcar", train3.isTypeNameAccepted("Boxcar"));
 
         Assert.assertTrue("loc1 should accept boxcar", loc1.acceptsTypeName("boxcar"));
         Assert.assertTrue("loc2 should accept boxcar", loc2.acceptsTypeName("boxcar"));
-        Assert.assertTrue("track loc1trk1 should accept boxcar", loc1trk1.acceptsTypeName("boxcar"));
-        Assert.assertTrue("track loc2trk1 should accept boxcar", loc2trk1.acceptsTypeName("boxcar"));
+        Assert.assertTrue("track loc1trk1 should accept boxcar", loc1trk1.isTypeNameAccepted("boxcar"));
+        Assert.assertTrue("track loc2trk1 should accept boxcar", loc2trk1.isTypeNameAccepted("boxcar"));
         Assert.assertTrue("train 1 should accept boxcar", train1.isTypeNameAccepted("boxcar"));
         Assert.assertTrue("train 2 should accept boxcar", train2.isTypeNameAccepted("boxcar"));
         Assert.assertTrue("train 3 should accept boxcar", train3.isTypeNameAccepted("boxcar"));
@@ -2927,8 +2927,8 @@ public class TrainTest extends OperationsTestCase {
 
         Assert.assertTrue("loc1 should accept Boxcar", loc1.acceptsTypeName("Boxcar"));
         Assert.assertTrue("loc2 should accept Boxcar", loc2.acceptsTypeName("Boxcar"));
-        Assert.assertTrue("track loc1trk1 should accept Boxcar", loc1trk1.acceptsTypeName("Boxcar"));
-        Assert.assertTrue("track loc2trk1 should accept Boxcar", loc2trk1.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("track loc1trk1 should accept Boxcar", loc1trk1.isTypeNameAccepted("Boxcar"));
+        Assert.assertTrue("track loc2trk1 should accept Boxcar", loc2trk1.isTypeNameAccepted("Boxcar"));
         Assert.assertTrue("train 1 should accept Boxcar", train1.isTypeNameAccepted("Boxcar"));
         Assert.assertTrue("train 2 should accept Boxcar", train2.isTypeNameAccepted("Boxcar"));
         Assert.assertTrue("train 3 should accept Boxcar", train3.isTypeNameAccepted("Boxcar"));
@@ -2946,9 +2946,9 @@ public class TrainTest extends OperationsTestCase {
         train1.setCabooseRoad("CP");
         train1.setEngineRoad("CP");
 
-        Assert.assertTrue("track loc1trk1 should accept road CP", loc1trk1.acceptsRoadName("CP"));
-        Assert.assertTrue("track loc1trk1 should accept road PC", loc1trk1.acceptsRoadName("PC"));
-        Assert.assertFalse("track loc1trk1 should Not accept road PC", loc1trk1.acceptsRoadName("UP"));
+        Assert.assertTrue("track loc1trk1 should accept road CP", loc1trk1.isRoadNameAccepted("CP"));
+        Assert.assertTrue("track loc1trk1 should accept road PC", loc1trk1.isRoadNameAccepted("PC"));
+        Assert.assertFalse("track loc1trk1 should Not accept road PC", loc1trk1.isRoadNameAccepted("UP"));
         Assert.assertTrue("Train 1 should accept road CP", train1.isRoadNameAccepted("CP"));
         Assert.assertTrue("Train 1 should accept road PC", train1.isRoadNameAccepted("PC"));
         Assert.assertFalse("Train 1 should Not accept road UP", train1.isRoadNameAccepted("UP"));
@@ -2958,11 +2958,11 @@ public class TrainTest extends OperationsTestCase {
         cr.replaceName("CP", "UP");
 
         Assert.assertFalse("after replace track loc1trk1 should Not accept road CP", loc1trk1
-                .acceptsRoadName("CP"));
+                .isRoadNameAccepted("CP"));
         Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1
-                .acceptsRoadName("PC"));
+                .isRoadNameAccepted("PC"));
         Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1
-                .acceptsRoadName("UP"));
+                .isRoadNameAccepted("UP"));
         Assert.assertFalse("after replace Train 1 should Not accept road CP", train1.isRoadNameAccepted("CP"));
         Assert.assertTrue("after replace Train 1 should accept road PC", train1.isRoadNameAccepted("PC"));
         Assert.assertTrue("after replace Train 1 should accept road UP", train1.isRoadNameAccepted("UP"));
