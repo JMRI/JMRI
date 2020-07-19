@@ -18,7 +18,6 @@ import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 
 import jmri.*;
-import jmri.implementation.JmriConfigurationManager;
 
 import apps.jmrit.DebugMenu;
 
@@ -38,6 +37,7 @@ import jmri.profile.*;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.*;
 import jmri.util.iharder.dnd.URIDrop;
+import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
 import jmri.util.usb.RailDriverMenuItem;
@@ -143,9 +143,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
 
+        // install a Preferences Action Factory.
+        InstanceManager.store(new AppsPreferencesActionFactory(), JmriPreferencesActionFactory.class);
+
         // Install configuration manager and Swing error handler
-        // Constructing the JmriConfigurationManager also loads various configuration services
-        ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
+        // Constructing the AppsConfigurationManager also loads various configuration services
+        ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new AppsConfigurationManager());
 
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);

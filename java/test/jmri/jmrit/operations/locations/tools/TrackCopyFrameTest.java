@@ -162,7 +162,7 @@ public class TrackCopyFrameTest extends OperationsTestCase {
                 .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
         
         // enter the same name
-        tcf.trackNameTextField.setText(acton.getTrackList().get(2).getName());
+        tcf.trackNameTextField.setText(acton.getTracksList().get(2).getName());
         
         JemmyUtil.enterClickAndLeave(tcf.copyButton);
         
