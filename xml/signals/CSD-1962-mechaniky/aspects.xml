@@ -40,6 +40,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Test set</revremark>
     </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2020-07-15</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Image types</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -204,6 +210,17 @@
 
   <imagetypes>
 	<imagetype type="prototype"/>
+	<imagetype type="prototype-night"/>
+        
+	<imagetype type="hlavni-1R"/>
+	<imagetype type="hlavni-2R"/>
+	<imagetype type="hlavni-2RP"/>
+	<imagetype type="predvest"/>
+	<imagetype type="predvest-P"/>
+	<imagetype type="seradovaci"/>
+	<imagetype type="vlozena"/>
+	<imagetype type="uzavery"/>
+	<imagetype type="vyckavaci"/>
 	
         <imagetype type="AŽD b"/>
 	
