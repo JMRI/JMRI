@@ -34,6 +34,11 @@ which checks the dates of the control files to make sure they've benen updated w
 
 ### Specific components:
 
+##### apiguardian-api-1.1.0.jar
+- version 1.1.0
+- provides Javadoc markers of API stability
+- from https://github.org/apiguardian-team/apiguardian
+
 ##### jetty-*.jar
 - version 9.4.28.v20200408
 - provides the HTTP and WebSocket servers
@@ -290,8 +295,8 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - plantuml.jar
     was from plantuml.org, now from https://github.com/plantuml/plantuml.git
 - umldoclet.jar
-    downloaded umldoclet-2.0.10-20200614.124810-9.jar 
-    from https://oss.sonatype.org/content/repositories/snapshots/nl/talsmasoftware/umldoclet/2.0.10-SNAPSHOT/
+    downloaded as umldoclet-2.0.10-javadoc.jar
+    from https://github.com/talsma-ict/umldoclet/releases
     see https://github.com/talsma-ict/umldoclet
     
 ##### rscbundlecheck.jar
@@ -326,12 +331,12 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Only needed at compile/build time, not runtime
 - http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.7/
 
-##### UmlGraph-5.7
-- from http://www.umlgraph.org/download.html
-- only used for ant javadoc-uml
-
 
 ## Older, no longer present:
+
+##### UmlGraph-5.7
+- from http://www.umlgraph.org/download.html
+- only used for ant javadoc-uml with earlier Java
 
 ##### javacsv.jar
 - version 2.0

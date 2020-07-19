@@ -352,7 +352,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 // normal, drop through
                 break;
             default:
-                jmri.util.Log4JUtil.warnOnce(log, "Unexpected displaySlider = {}", displaySlider);
+                jmri.util.LoggingUtil.warnOnce(log, "Unexpected displaySlider = {}", displaySlider);
                 break;    
         }
         sliderPanel.setVisible(true);

@@ -1,4 +1,6 @@
-package jmri.jmrit.decoderdefn;
+package apps.jmrit.decoderdefn;
+
+import jmri.jmrit.decoderdefn.DecoderIndexCreateAction;
 
 /**
  * Update the decoder index and store as a command-line action.

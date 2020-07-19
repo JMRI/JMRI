@@ -836,7 +836,7 @@ public class Track extends PropertyChangeSupport {
         setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
     }
 
-    public boolean acceptsTypeName(String type) {
+    public boolean isTypeNameAccepted(String type) {
         if (!_location.acceptsTypeName(type)) {
             return false;
         }
@@ -927,7 +927,7 @@ public class Track extends PropertyChangeSupport {
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() + 1, _roadList.size());
     }
 
-    public boolean acceptsRoadName(String road) {
+    public boolean isRoadNameAccepted(String road) {
         if (_roadOption.equals(ALL_ROADS)) {
             return true;
         }
@@ -1043,7 +1043,7 @@ public class Track extends PropertyChangeSupport {
      * @param load the load name to check.
      * @return true if track will service this load.
      */
-    public boolean acceptsLoadName(String load) {
+    public boolean isLoadNameAccepted(String load) {
         if (_loadOption.equals(ALL_LOADS)) {
             return true;
         }
@@ -1061,7 +1061,7 @@ public class Track extends PropertyChangeSupport {
      * @param type the type of car used to carry the load.
      * @return true if track will service this load.
      */
-    public boolean acceptsLoad(String load, String type) {
+    public boolean isLoadNameAndCarTypeAccepted(String load, String type) {
         if (_loadOption.equals(ALL_LOADS)) {
             return true;
         }
@@ -1173,7 +1173,7 @@ public class Track extends PropertyChangeSupport {
      * @param load the load name to check.
      * @return true if track will service this load.
      */
-    public boolean shipsLoadName(String load) {
+    public boolean isLoadNameShipped(String load) {
         if (_shipLoadOption.equals(ALL_LOADS)) {
             return true;
         }
@@ -1191,7 +1191,7 @@ public class Track extends PropertyChangeSupport {
      * @param type the type of car used to carry the load.
      * @return true if track will service this load.
      */
-    public boolean shipsLoad(String load, String type) {
+    public boolean isLoadNameAndCarTypeShipped(String load, String type) {
         if (_shipLoadOption.equals(ALL_LOADS)) {
             return true;
         }
@@ -1289,7 +1289,7 @@ public class Track extends PropertyChangeSupport {
      *
      * @return true if the train can set out cars to this track.
      */
-    public boolean acceptsDropTrain(Train train) {
+    public boolean isDropTrainAccepted(Train train) {
         if (getDropOption().equals(ANY)) {
             return true;
         }
@@ -1305,10 +1305,10 @@ public class Track extends PropertyChangeSupport {
         } else if (train.getRoute() == null) {
             return false;
         }
-        return acceptsDropRoute(train.getRoute());
+        return isDropRouteAccepted(train.getRoute());
     }
 
-    public boolean acceptsDropRoute(Route route) {
+    public boolean isDropRouteAccepted(Route route) {
         if (getDropOption().equals(ANY) || getDropOption().equals(TRAINS) || getDropOption().equals(EXCLUDE_TRAINS)) {
             return true;
         }
@@ -1371,7 +1371,7 @@ public class Track extends PropertyChangeSupport {
      *
      * @return true if the train can pick up cars from this track.
      */
-    public boolean acceptsPickupTrain(Train train) {
+    public boolean isPickupTrainAccepted(Train train) {
         if (_pickupOption.equals(ANY)) {
             return true;
         }
@@ -1387,10 +1387,10 @@ public class Track extends PropertyChangeSupport {
         } else if (train.getRoute() == null) {
             return false;
         }
-        return acceptsPickupRoute(train.getRoute());
+        return isPickupRouteAccepted(train.getRoute());
     }
 
-    public boolean acceptsPickupRoute(Route route) {
+    public boolean isPickupRouteAccepted(Route route) {
         if (_pickupOption.equals(ANY) || _pickupOption.equals(TRAINS) || _pickupOption.equals(EXCLUDE_TRAINS)) {
             return true;
         }
@@ -1416,11 +1416,11 @@ public class Track extends PropertyChangeSupport {
     public String checkPickups() {
         String status = PICKUP_OKAY;
         S1: for (String carType : InstanceManager.getDefault(CarTypes.class).getNames()) {
-            if (!acceptsTypeName(carType)) {
+            if (!isTypeNameAccepted(carType)) {
                 continue;
             }
             for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
-                if (!train.isTypeNameAccepted(carType) || !acceptsPickupTrain(train)) {
+                if (!train.isTypeNameAccepted(carType) || !isPickupTrainAccepted(train)) {
                     continue;
                 }
                 // does the train services this location and track?
@@ -1454,16 +1454,16 @@ public class Track extends PropertyChangeSupport {
      * @return Error string starting with TYPE, ROAD, CAPACITY, LENGTH, DESTINATION or LOAD if there's an issue. OKAY if
      *         track can service Rolling Stock.
      */
-    public String accepts(RollingStock rs) {
+    public String isRollingStockAccepted(RollingStock rs) {
         // first determine if rolling stock can be move to the new location
         // note that there's code that checks for certain issues by checking the first word of the status string
         // returned
-        if (!acceptsTypeName(rs.getTypeName())) {
+        if (!isTypeNameAccepted(rs.getTypeName())) {
             log.debug("Rolling stock ({}) type ({}) not accepted at location ({}, {}) wrong type", rs.toString(),
                     rs.getTypeName(), getLocation().getName(), getName()); // NOI18N
             return TYPE + " (" + rs.getTypeName() + ")";
         }
-        if (!acceptsRoadName(rs.getRoadName())) {
+        if (!isRoadNameAccepted(rs.getRoadName())) {
             log.debug("Rolling stock ({}) road ({}) not accepted at location ({}, {}) wrong road", rs.toString(),
                     rs.getRoadName(), getLocation().getName(), getName()); // NOI18N
             return ROAD + " (" + rs.getRoadName() + ")";
@@ -1480,7 +1480,7 @@ public class Track extends PropertyChangeSupport {
         if (Car.class.isInstance(rs)) {
             Car car = (Car) rs;
             // does this track service the car's final destination?
-            if (!acceptsDestination(car.getFinalDestination())) {
+            if (!isDestinationAccepted(car.getFinalDestination())) {
                 // && getLocation() != car.getFinalDestination()) { // 4/14/2014 I can't remember why this was needed
                 return DESTINATION +
                         " (" +
@@ -1496,7 +1496,7 @@ public class Track extends PropertyChangeSupport {
             if (car.isLead()) {
                 length = car.getKernel().getTotalLength();
             }
-            if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
+            if (!isLoadNameAndCarTypeAccepted(car.getLoadName(), car.getTypeName())) {
                 log.debug("Car ({}) load ({}) not accepted at location ({}, {})", rs.toString(), car.getLoadName(),
                         getLocation(), getName()); // NOI18N
                 return LOAD + " (" + car.getLoadName() + ")";
@@ -1826,13 +1826,13 @@ public class Track extends PropertyChangeSupport {
                 status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
                 break;
             }
-            if (!acceptsTypeName(si.getTypeName())) {
+            if (!isTypeNameAccepted(si.getTypeName())) {
                 status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
                 break;
             }
             // check roads, accepted by track, valid road, and there's at least one car with that road
             if (!si.getRoadName().equals(ScheduleItem.NONE) &&
-                    (!acceptsRoadName(si.getRoadName()) ||
+                    (!isRoadNameAccepted(si.getRoadName()) ||
                             !InstanceManager.getDefault(CarRoads.class).containsName(si.getRoadName()) ||
                             InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(),
                                     si.getRoadName()) == null)) {
@@ -1842,7 +1842,7 @@ public class Track extends PropertyChangeSupport {
             // check loads
             List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(si.getTypeName());
             if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
-                    (!acceptsLoad(si.getReceiveLoadName(), si.getTypeName()) ||
+                    (!isLoadNameAndCarTypeAccepted(si.getReceiveLoadName(), si.getTypeName()) ||
                             !loads.contains(si.getReceiveLoadName()))) {
                 status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getReceiveLoadName() });
                 break;
@@ -1866,19 +1866,19 @@ public class Track extends PropertyChangeSupport {
                             new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Track") + ")" });
                     break;
                 }
-                if (!si.getDestinationTrack().acceptsTypeName(si.getTypeName())) {
+                if (!si.getDestinationTrack().isTypeNameAccepted(si.getTypeName())) {
                     status = MessageFormat.format(Bundle.getMessage("NotValid"),
                             new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Type") + ")" });
                     break;
                 }
                 if (!si.getRoadName().equals(ScheduleItem.NONE) &&
-                        !si.getDestinationTrack().acceptsRoadName(si.getRoadName())) {
+                        !si.getDestinationTrack().isRoadNameAccepted(si.getRoadName())) {
                     status = MessageFormat.format(Bundle.getMessage("NotValid"),
                             new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Road") + ")" });
                     break;
                 }
                 if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
-                        !si.getDestinationTrack().acceptsLoad(si.getShipLoadName(), si.getTypeName())) {
+                        !si.getDestinationTrack().isLoadNameAndCarTypeAccepted(si.getShipLoadName(), si.getTypeName())) {
                     status = MessageFormat.format(Bundle.getMessage("NotValid"),
                             new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Load") + ")" });
                     break;
@@ -2367,7 +2367,7 @@ public class Track extends PropertyChangeSupport {
      *
      * @return true if track services the destination
      */
-    public boolean acceptsDestination(Location destination) {
+    public boolean isDestinationAccepted(Location destination) {
         if (getDestinationOption().equals(ALL_DESTINATIONS) || destination == null) {
             return true;
         }
@@ -2438,7 +2438,7 @@ public class Track extends PropertyChangeSupport {
      * @return true if track is an alternate
      */
     public boolean isAlternate() {
-        for (Track track : getLocation().getTrackList()) {
+        for (Track track : getLocation().getTracksList()) {
             if (track.getAlternateTrack() == this) {
                 return true;
             }

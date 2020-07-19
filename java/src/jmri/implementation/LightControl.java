@@ -133,7 +133,7 @@ public class LightControl {
                 break;
             default:
                 // unexpected _controlType value
-                jmri.util.Log4JUtil.warnOnce(log, "Unexpected _controlType = {}", _controlType);
+                jmri.util.LoggingUtil.warnOnce(log, "Unexpected _controlType = {}", _controlType);
         }
         return _shouldReturn;
     }
