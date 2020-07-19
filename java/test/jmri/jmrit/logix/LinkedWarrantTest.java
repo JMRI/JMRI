@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * todo - test error conditions
  */
 @Timeout(60)
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LinkedWarrantTest {
 
     private OBlockManager _OBlockMgr;
@@ -31,8 +32,6 @@ public class LinkedWarrantTest {
 
     // tests a warrant launching itself. (origin, destination the same to make continuous loop)
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testLoopedWarrant() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
@@ -101,8 +100,6 @@ public class LinkedWarrantTest {
 
     // Tests warrant launching a different warrant with different address. Origin location cannot be destination of the other)
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testLinkedWarrant() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
@@ -173,8 +170,6 @@ public class LinkedWarrantTest {
     // tests a warrant running a train out and launching a return train 
     // Both warrants have the same address and origin of each is destination of the other
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testBackAndForth() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
@@ -259,8 +254,6 @@ public class LinkedWarrantTest {
 
     // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance (1910 Chicago Cubs)
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testLinkedMidScript() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
