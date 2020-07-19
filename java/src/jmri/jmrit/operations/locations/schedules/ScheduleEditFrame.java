@@ -330,7 +330,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     private void loadTypeComboBox() {
         typeBox.removeAllItems();
         for (String typeName : InstanceManager.getDefault(CarTypes.class).getNames()) {
-            if (_track.acceptsTypeName(typeName)) {
+            if (_track.isTypeNameAccepted(typeName)) {
                 typeBox.addItem(typeName);
             }
         }

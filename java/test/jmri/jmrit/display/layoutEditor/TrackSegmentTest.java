@@ -696,6 +696,36 @@ public class TrackSegmentTest extends LayoutTrackTest {
         }
     }
 
+    @Test
+    public void testSetCircleDefault() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            trackSegment.setCircle(true);
+            Assert.assertEquals("trackSegment.setCircle(Default)", 90.0D, trackSegment.getAngle(), 0.01D);
+        }
+    }
+
+    @Test
+    public void testSetCircleZeroAngle() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            trackSegment.setAngle(0.0D);
+            trackSegment.setCircle(true);
+            Assert.assertEquals("trackSegment.setCircle(Zero Angle)", 90.0D, trackSegment.getAngle(), 0.01D);
+        }
+    }
+    
+    @Test
+    public void testSetCirclePositiveAngle() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        if ((layoutEditor != null) && (trackSegment != null)) {
+            trackSegment.setAngle(50.0D);
+            trackSegment.setCircle(true);
+            Assert.assertEquals("trackSegment.setCircle(Positive Angle)", 50.0D, trackSegment.getAngle(), 0.01D);
+        }
+    }
+
+    
     //
     // from here down is testing infrastructure
     //
