@@ -194,8 +194,8 @@ public class LoadAndStoreTestBase {
                     line2 = filterLineUsingRegEx(line2, yposition_regexe);
                     // if either line contains an x position attribute
                     String xposition_regexe = "( x=\"[^\"]*\")";
-                    line1 = filterLineUsingRegEx(line1, yposition_regexe);
-                    line2 = filterLineUsingRegEx(line2, yposition_regexe);
+                    line1 = filterLineUsingRegEx(line1, xposition_regexe);
+                    line2 = filterLineUsingRegEx(line2, xposition_regexe);
                 }
             }
 
