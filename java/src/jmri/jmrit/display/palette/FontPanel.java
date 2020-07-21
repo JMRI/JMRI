@@ -9,8 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 import jmri.jmrit.display.PositionablePopupUtil;
 
 public class FontPanel extends JPanel implements ItemListener {

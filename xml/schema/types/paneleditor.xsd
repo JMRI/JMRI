@@ -89,7 +89,6 @@
       <xs:attribute name="blueBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="state" type="xs:int"></xs:attribute>
       <xs:attribute name="shapeSelect" type="yesNoType" default="no"></xs:attribute>
-      <xs:attribute name="portalFamily" type="xs:string"></xs:attribute>
 
     </xs:complexType>
 

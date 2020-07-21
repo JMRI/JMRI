@@ -308,6 +308,7 @@ public class IconDialog extends ItemDialog {
 
     protected void cancel() {
         _parent.setFamily();
+        _parent._cntlDown = false;
         super.dispose();
     }
     static protected HashMap<String, NamedIcon> clone(HashMap<String, NamedIcon> map) {

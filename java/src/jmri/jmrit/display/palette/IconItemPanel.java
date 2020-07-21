@@ -131,7 +131,6 @@ public class IconItemPanel extends ItemPanel {
      */
     @Override
     protected void initIconFamiliesPanel() {
-        makeDataFlavors();
         super.initIconFamiliesPanel();
         if (!_update) {
             _iconPanel.addMouseListener(new IconListener());
@@ -153,6 +152,7 @@ public class IconItemPanel extends ItemPanel {
         } else {
             _currentIconMap = new HashMap<>();
         }
+        makeDataFlavors();
         addIconsToPanel();
         makePreviewPanel(true, null);
     }
@@ -170,8 +170,7 @@ public class IconItemPanel extends ItemPanel {
         addIconsToPanel(_currentIconMap, _iconPanel, !_update);
     }
 
-    @Override
-    protected void makeDataFlavors() {
+    private void makeDataFlavors() {
         try {
             _positionableDataFlavor = new DataFlavor(Editor.POSITIONABLE_FLAVOR);
             _namedIconDataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);

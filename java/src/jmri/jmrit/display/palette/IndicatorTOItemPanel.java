@@ -1,11 +1,11 @@
 package jmri.jmrit.display.palette;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,13 +14,10 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
-import javax.swing.Action;
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
+import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.jmrit.catalog.DragJLabel;
@@ -44,26 +41,18 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     private HashMap<String, HashMap<String, NamedIcon>> _unstoredMaps;
     private DetectionPanel _detectPanel;
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
-    protected boolean _cntlDown;    // when true, edit dialog will add buttons for status adds/deletes
     
     public IndicatorTOItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Turnout> model) {
         super(parentFrame, type, family, model);
     }
 
-    /**
-     * Init for creation _bottom1Panel and _bottom2Panel alternate visibility in
-     * bottomPanel depending on whether icon families exist. They are made first
-     * because they are referenced in initIconFamiliesPanel().
-     */
     @Override
     public void init() {
         if (!_initialized) {
             super.init();
             _detectPanel = new DetectionPanel(this);
             add(_detectPanel, 1);
-            makeControlKeyBinder(_editButton);
         }
-        hideIcons();
     }
 
     /**
@@ -314,6 +303,10 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
 
         GridBagConstraints c = ItemPanel.itemGridBagConstraint();
 
+        if (iconMaps.isEmpty()) {
+            iconPanel.add(Box.createRigidArea(new Dimension(70,70)));
+        }
+
         for (Entry<String, HashMap<String, NamedIcon>> stringHashMapEntry : iconMaps.entrySet()) {
             c.gridx = 0;
             c.gridy++;
@@ -336,29 +329,6 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 c.gridx++;
             }
         }
-    }
-
-    protected void setControlDown(boolean b) {
-        _cntlDown = b;
-    }
-    Action pressed = new AbstractAction() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            setControlDown(true);
-        }
-    };
-    Action released = new AbstractAction() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            setControlDown(false);
-        }
-    };
-
-    private void makeControlKeyBinder(JComponent comp) {
-        comp.getInputMap().put(KeyStroke.getKeyStroke("control A"), "pressed");
-        comp.getActionMap().put("pressed", pressed);
-        comp.getInputMap().put(KeyStroke.getKeyStroke("control released A"), "released");
-        comp.getActionMap().put("released", released);
     }
 
     @Override
@@ -452,7 +422,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     }
 
     protected void dialogDone(String family, HashMap<String, HashMap<String, NamedIcon>> iconMap) {
-        if (!_update) {
+        if (!_update && !(family.equals(_family) && familiesAreEqual(iconMap, _iconGroupsMap))) {
             ItemPalette.removeLevel4IconMap(_itemType, _family, null);
             ItemPalette.addLevel4Family(_itemType, family, iconMap);
         } else {
@@ -467,7 +437,8 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         _family = family;
         makeFamiliesPanel();
         setFamily(family);
-        showIcons();
+        _cntlDown = false;
+        hideIcons();
         if (log.isDebugEnabled()) {
             log.debug("dialogDoneAction done for {} {}. unStored={}",
                     _itemType, _family, (_update?"update":""), _isUnstoredMap);

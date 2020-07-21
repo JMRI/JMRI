@@ -51,9 +51,6 @@ public class ClockItemPanel extends IconItemPanel {
     }
 
     @Override
-    protected void makeDataFlavors() {}
-
-    @Override
     protected JPanel makeIconDisplayPanel(String key, HashMap<String, NamedIcon> iconMap, boolean dropIcon) {
         NamedIcon icon = iconMap.get(key);
         JPanel panel = new JPanel();

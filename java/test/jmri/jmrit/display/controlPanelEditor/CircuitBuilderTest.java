@@ -202,6 +202,7 @@ public class CircuitBuilderTest {
 
     @AfterEach
     public void tearDown() {
+        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         if (cpe != null) {
             cpe.dispose();
         }

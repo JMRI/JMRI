@@ -66,16 +66,11 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("state", "" + p.getExtendedState());
         panel.setAttribute("shapeSelect", "" + (p.getShapeSelect() ? "yes" : "no"));
 
-/* Either way, both make backward compatibility fail 
         String family = p.getPortalIconFamily();
         if (family != null) {
-        Element elem = new Element("portalIcons");
-            elem.setAttribute("family", family);
+        Element elem = new Element("icons");
+            elem.setAttribute("portalFamily", family);
             panel.addContent(elem);
-        }*/
-        String family = p.getPortalIconFamily();
-        if (family != null) {
-            panel.setAttribute("portalFamily", "" + p.getPortalIconFamily());
         }
 
         // include contents
@@ -233,19 +228,14 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             }
         }
 
-// Either way, both make backward compatibility fail 
-        if ((a = shared.getAttribute("portalFamily")) != null) {
-            panel.setPortalIconFamily(a.getValue());
-        }
-/*
-        Element elem = shared.getChild("portalIcons");
+        Element elem = shared.getChild("icons");
         if (elem != null) {
-            Attribute attr = elem.getAttribute("family");
+            Attribute attr = elem.getAttribute("portalFamily");
             if (attr != null) {
                 panel.setPortalIconFamily(attr.getValue());
             }
         }
-*/
+
         String state = "both";
         if ((a = shared.getAttribute("scrollable")) != null) {
             state = a.getValue();

@@ -18,13 +18,10 @@ public class PortalItemPanel extends FamilyItemPanel {
     }
 
     @Override
-    public void init() {
-        if (!_initialized) {
-            super.init();
-            _suppressDragging = true;
-            _previewPanel.setVisible(false);
-            _previewPanel.invalidate();
-        }
+    protected void makeFamiliesPanel() {
+        _suppressDragging = true;
+        super.makeFamiliesPanel();
+        _previewPanel.setVisible(false);
     }
 
     @Override

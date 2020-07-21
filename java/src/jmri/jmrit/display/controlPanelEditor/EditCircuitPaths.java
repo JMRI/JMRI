@@ -633,6 +633,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             for (BeanSetting beanSetting : newPath.getSettings()) {
                 _currentPath.addSetting(beanSetting);
             }
+            _savePathGroup = _pathGroup;
             log.debug("update _currentPath");
         } else {
             newPath.setLength(_lengthPanel.getLength());

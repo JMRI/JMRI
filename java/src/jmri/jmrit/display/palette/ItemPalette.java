@@ -313,37 +313,53 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         // not very elegant (i.e. extensible), but maybe all that's needed.
         if (typeName.equals("IndicatorTO")) {
             HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
-                    = loadDefaultIndicatorTOMap(families);
+                    = loadDefaultIndicatorTOMap(families, null);
             _indicatorTOMaps.put(typeName, familyTOMap);
             log.debug("Add {} indicatorTO families to item type {} to _indicatorTOMaps.",
                     familyTOMap.size(), typeName);
         } else {
-            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families);
+            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families, null);
             _iconMaps.put(typeName, familyMap);
             log.debug("Add {} families to item type \"{}\" to _iconMaps.",
                     familyMap.size(), typeName);
         }
     }
 
-    static void loadMissingItemType(String itemType) {
+    static public void loadMissingItemType(String itemType) {
         try {
+            Element thisType = null;
             List<Element> typeList = getDefaultIconItemTypes();
             for (Element type : typeList) {
                 String typeName = type.getName();
-                if (!typeName.equals(itemType)) {
-                    continue;
+                if (typeName.equals(itemType)) {
+                    thisType = type;
+                    break;
                 }
-                List<Element> families = type.getChildren();
-                loadFamilies(itemType, families);
-                InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
             }
+            if (thisType == null) {
+                log.error("No type \"{}\" in file \"defaultPanelIcons.xml\"", itemType);
+                return;
+            }
+            List<Element> families = thisType.getChildren();
+            if (itemType.equals("IndicatorTO")) {
+                HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMaps = _indicatorTOMaps.get(itemType);
+                familyMaps = loadDefaultIndicatorTOMap(families, familyMaps);
+//                _indicatorTOMaps.put(itemType, loadDefaultIndicatorTOMap(families));
+            } else {
+                HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps(itemType);
+                familyMap = loadDefaultFamilyMap(families, familyMap);
+            }
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         } catch (org.jdom2.JDOMException | java.io.IOException ex) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: ", ex);
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: {}", ex);
         }
     }
 
-    static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families) {
-        HashMap<String, HashMap<String, NamedIcon>> familyMap = new HashMap<>();
+    static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(
+            List<Element> families, HashMap<String, HashMap<String, NamedIcon>> familyMap) {
+        if (familyMap == null) {
+            familyMap = new HashMap<>();
+        }
         for (Element family : families) {
             String familyName = family.getName();
             HashMap<String, NamedIcon> iconMap = new HashMap<>();
@@ -373,13 +389,16 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
-            loadDefaultIndicatorTOMap(List<Element> typeList) {
-        HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap = new HashMap<>();
+            loadDefaultIndicatorTOMap(List<Element> typeList,  HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap) {
+        if (familyTOMap == null) {
+            familyTOMap = new HashMap<>();
+        }
+      //  HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap = new HashMap<>();
         // Map of all families of type, typeName
         for (Element element : typeList) {
             String familyName = element.getName();
             List<Element> types = element.getChildren();
-            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types);
+            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types, null);
             familyTOMap.put(familyName, familyMap);
             if (log.isDebugEnabled()) {
                 log.debug("Add {} IndicatorTO sub-families to item type {}  to IndicatorTO families.", familyMap.size(), familyName);
@@ -431,6 +450,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         add(_tabPane, BorderLayout.CENTER);
         JScrollPane sp = (JScrollPane) _tabPane.getSelectedComponent();
         _currentItemPanel = (ItemPanel) sp.getViewport().getView();
+        _currentItemPanel.hideIcons();
     }
 
     /*
@@ -670,12 +690,12 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static public HashMap<String, NamedIcon> getIconMap(String type, String family) {
         HashMap<String, HashMap<String, NamedIcon>> itemMap = _iconMaps.get(type);
         if (itemMap == null) {
-//            log.error("getIconMap failed. item type \"{}\" not found.", type);
+            log.error("getIconMap failed. item type \"{}\" not found.", type);
             return null;
         }
         HashMap<String, NamedIcon> iconMap = itemMap.get(family);
         if (iconMap == null) {
-//            log.error("getIconMap failed. family \"{}\" not found in item type \"{}\"", family, type);
+            log.warn("getIconMap failed. family \"{}\" not found in item type \"{}\"", family, type);
             return null;
         }
         return cloneMap(iconMap);

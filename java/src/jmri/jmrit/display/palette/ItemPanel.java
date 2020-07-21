@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
@@ -14,6 +15,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -24,6 +26,7 @@ import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.util.swing.ImagePanel;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,8 +89,6 @@ public abstract class ItemPanel extends JPanel  {
             "BeanStateUnknown", "first", "second", "third"};
     // SIGNALMAST family is empty is signal system
     static final String[] RPSREPORTER = {"active", "error"};
-//    static final String[] ICON = {"Icon"};
-//    static final String[] BACKGROUND = {"Background"};
     final static String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "PositionTrack",
             "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
     static final String[] PORTAL = {PortalIcon.HIDDEN, PortalIcon.VISIBLE, PortalIcon.PATH,
@@ -100,8 +101,6 @@ public abstract class ItemPanel extends JPanel  {
         STATE_MAP.put("SignalHead", SIGNALHEAD);
         STATE_MAP.put("Light", LIGHT);
         STATE_MAP.put("MultiSensor", MULTISENSOR);
-//        STATE_MAP.put("Icon", ICON);
-//        STATE_MAP.put("Background", BACKGROUND);
         STATE_MAP.put("RPSReporter", RPSREPORTER);
         STATE_MAP.put("IndicatorTrack", INDICATOR_TRACK);
         STATE_MAP.put("IndicatorTO", INDICATOR_TRACK);
@@ -221,6 +220,7 @@ public abstract class ItemPanel extends JPanel  {
         if (_doneAction != null) {
             _bottomPanel.add(makeUpdateButton(_doneAction));
         }
+        _bottomPanel.invalidate();
         add(_bottomPanel);
     }
 
@@ -233,7 +233,6 @@ public abstract class ItemPanel extends JPanel  {
             _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
             _iconPanel.setImage(_frame.getPreviewBackground());
             _iconPanel.setOpaque(false);
-            makeDataFlavors();
         }
         if (_iconFamilyPanel == null) {
             _iconFamilyPanel = new JPanel();
@@ -259,9 +258,8 @@ public abstract class ItemPanel extends JPanel  {
             _iconFamilyPanel.add(_previewPanel);
         }
         _previewPanel.setVisible(true);
+        _previewPanel.invalidate();
     }
-
-    abstract protected void makeDataFlavors();
 
     /**
      * Add the current set of icons to a Show Icons pane. Used in several
@@ -291,7 +289,7 @@ public abstract class ItemPanel extends JPanel  {
         GridBagConstraints c = ItemPanel.itemGridBagConstraint();
 
         if (iconMap.isEmpty()) {
-            iconPanel.add(Box.createRigidArea(new Dimension(60,60)));
+            iconPanel.add(Box.createRigidArea(new Dimension(70,70)));
         }
         int cnt = 0;
         for (String key : iconMap.keySet()) {
@@ -323,6 +321,13 @@ public abstract class ItemPanel extends JPanel  {
      */
     abstract protected JPanel makeIconDisplayPanel(String key, HashMap<String, NamedIcon> iconMap, boolean dropIcon);
 
+    /**
+     * Utility used by implementations of above 'makeIconDisplayPanel' method to wrap its panel
+     * @param icon icon held by a JLabel
+     * @param image background image for panel
+     * @param panel holds image and JLable
+     * @param key key of icon in its set - name for the icon can be extracted from it
+     */
     protected void wrapIconImage(NamedIcon icon, JLabel image, JPanel panel, String key) {
         String borderName = ItemPalette.convertText(key);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -369,16 +374,104 @@ public abstract class ItemPanel extends JPanel  {
 
     abstract protected void hideIcons();
     
+    /**
+     * See if the map is supported by the family map. "Equals" in
+     * this context means that each map is the same size, the keys are equal and
+     * the urls for the icons are equal. Note that icons with different urls may
+     * be or appear to be the same.
+     * 
+     * @param mapOne an icon HashMap
+     * @param mapTwo another icon HashMap
+     * @return true if all of signal head entries have matching entries in the
+     *         family map.
+     */
+    protected boolean mapsAreEqual(HashMap<String, NamedIcon> mapOne, HashMap<String, NamedIcon> mapTwo) {
+        if (mapOne.size() != mapTwo.size()) {
+            return false;
+        }
+        for (Entry<String, NamedIcon> mapTwoEntry : mapTwo.entrySet()) {
+            NamedIcon mapOneIcon = mapOne.get(mapTwoEntry.getKey());
+            if (mapOneIcon == null) {
+                return false;
+            }
+            String url = mapOneIcon.getURL();
+            if (url == null || !url.equals(mapTwoEntry.getValue().getURL())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     protected void loadDefaultType() {
         ItemPalette.loadMissingItemType(_itemType);
+        // Check for duplicate names or duplicate icon sets
+        java.util.ArrayList<String> deletes = new java.util.ArrayList<>();
+        if (!_itemType.equals("IndicatorTO")) {
+            HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
+            java.util.Set<String> keys = families.keySet();
+            String[] key = new String[keys.size()];
+            key = keys.toArray(key);
+            for (int i=0; i<key.length; i++) {
+                for (int j=i+1; j<key.length; j++) {
+                    HashMap<String, NamedIcon> mapK = families.get(key[i]);
+                    if (mapsAreEqual(mapK, families.get(key[j]))) {
+                        deletes.add(queryWhichToDelete(key[i], key[j]));
+                        break;
+                    }
+                }
+            }
+            for (String k : deletes) {
+                ItemPalette.removeIconMap(_itemType, k);
+            }
+            ((FamilyItemPanel)this)._family = null;
+
+        } else {
+            IndicatorTOItemPanel p = (IndicatorTOItemPanel)this;
+            HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> 
+                                families = ItemPalette.getLevel4FamilyMaps(_itemType);
+            java.util.Set<String> keys = families.keySet();
+            String[] key = new String[keys.size()];
+            key = keys.toArray(key);
+            for (int i=0; i<key.length; i++) {
+                for (int j=i+1; j<key.length; j++) {
+                    HashMap<String, HashMap<String, NamedIcon>> mapK = families.get(key[i]);
+                    if (p.familiesAreEqual(mapK, families.get(key[j]))) {
+                        deletes.add(queryWhichToDelete(key[i], key[j]));
+                        break;
+                    }
+                }
+            }
+            for (String k : deletes) {
+                ItemPalette.removeLevel4IconMap(_itemType, k, null);
+            }
+            p._family = null;
+        }
         if (!_initialized) {
             makeFamiliesPanel();
-       } else {
+        } else {
             initIconFamiliesPanel();
             hideIcons();
         }
     }
 
+    /**
+     * Different names for the same map
+     * @param key1
+     * @param key2
+     * @return the name and map to discard
+     */
+    private String queryWhichToDelete(String key1, String key2) {
+        int result = JOptionPane.showOptionDialog(this, Bundle.getMessage("DuplicateMap", key1, key2),
+                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE, null,
+                new Object[] {key1, key2}, key1);
+        if (result == JOptionPane.YES_OPTION) {
+            return key2;
+        } else if (result == JOptionPane.NO_OPTION) {
+            return key1;
+        }
+        return key2;
+    }
     // oldDim old panel size,
     // totalDim old frame size
     protected void reSizeDisplay(boolean isPalette, Dimension oldDim, Dimension totalDim) {

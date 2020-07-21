@@ -15,7 +15,6 @@ import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 
-import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;

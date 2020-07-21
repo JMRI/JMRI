@@ -51,21 +51,17 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
 
     static public HashMap<String, NamedIcon> getPaletteMap() {
-        HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps("Portal");
-        HashMap<String, NamedIcon> iconMap = familyMap.get("Standard");
+        HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps("Portal");
+        if (families.keySet().isEmpty()) {
+            ItemPalette.loadMissingItemType("Portal");
+            families = ItemPalette.getFamilyMaps("Portal");
+        }
+        HashMap<String, NamedIcon> iconMap = families.get("Standard");
         if (iconMap == null) {
-            for (HashMap<String, NamedIcon> map : familyMap.values()) {
+            for (HashMap<String, NamedIcon> map : families.values()) {
                 iconMap = map;
                 break;
             }
-        }
-        if (iconMap == null) {
-            iconMap = new HashMap<>();
-            iconMap.put(HIDDEN, new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
-            iconMap.put(PATH, new NamedIcon("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
-            iconMap.put(VISIBLE, new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
-            iconMap.put(TO_ARROW, new NamedIcon("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
-            iconMap.put(FROM_ARROW, new NamedIcon("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
         }
         // Don't return ItemPalette's map!
         return cloneMap(iconMap, null);

@@ -202,6 +202,7 @@
           <xs:complexType><xs:sequence><xs:element name="url" type="urlType" minOccurs="1" maxOccurs="1"></xs:element></xs:sequence></xs:complexType>
         </xs:element>
       </xs:sequence>
+      <xs:attribute name="portalFamily" type="xs:string"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorLayoutTrackDrawingOptionsType">
