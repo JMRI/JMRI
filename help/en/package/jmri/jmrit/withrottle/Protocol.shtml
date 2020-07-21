@@ -349,7 +349,7 @@ PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
       <pre class="code">
 PRL]\[IR:AUTO:0001}|{Rico Main}|{
 </pre>
-  <p>
+
       <table class="data">
         <tr>
           <th>Segment</th>
@@ -488,7 +488,7 @@ M0AL341&lt;;&gt;R1
 M0AL341&lt;;&gt;s1
 </pre>
 
-    <a name="OtherServertoClientMessages" id="Other Server to Client Messages"></a>
+    <a name="OtherServertoClientMessages" id="OtherServertoClientMessages"></a>
     <h2>Other Server to Client Messages
 	    <a class="to-top" href="#top">^Top</a>
     </h2>

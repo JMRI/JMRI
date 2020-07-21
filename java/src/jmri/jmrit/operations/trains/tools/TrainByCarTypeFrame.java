@@ -191,7 +191,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             if (location == null) {
                 continue;
             }
-            if (_car != null && _car.getTrack() != null && !_car.getTrack().acceptsDestination(location)) {
+            if (_car != null && _car.getTrack() != null && !_car.getTrack().isDestinationAccepted(location)) {
                 JLabel locText = new JLabel();
                 locText.setText(MessageFormat.format(Bundle.getMessage("CarOnTrackDestinationRestriction"),
                         new Object[]{_car.toString(), _car.getTrackName(), locationName}));
@@ -199,13 +199,13 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 if (_car.getLocation() != location)
                     continue;
             }
-            List<Track> tracks = location.getTrackByNameList(null);
+            List<Track> tracks = location.getTracksByNameList(null);
             for (Track track : tracks) {
                 // show the car's track if there's a track destination
                 // restriction
                 if (_car != null &&
                         _car.getTrack() != null &&
-                        !_car.getTrack().acceptsDestination(location) &&
+                        !_car.getTrack().isDestinationAccepted(location) &&
                         _car.getTrack() != track) {
                     continue;
                 }
@@ -262,20 +262,20 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(LocationType)"));
                 } // check route before checking train, check train calls check
                   // route
-                else if (!track.acceptsPickupRoute(route) && !track.acceptsDropRoute(route)) {
+                else if (!track.isPickupRouteAccepted(route) && !track.isDropRouteAccepted(route)) {
                     op.setText(Bundle.getMessage("X(TrackRoute)"));
-                } else if (!track.acceptsPickupTrain(_train) && !track.acceptsDropTrain(_train)) {
+                } else if (!track.isPickupTrainAccepted(_train) && !track.isDropTrainAccepted(_train)) {
                     op.setText(Bundle.getMessage("X(TrackTrain)"));
-                } else if (!track.acceptsTypeName(carType)) {
+                } else if (!track.isTypeNameAccepted(carType)) {
                     op.setText(Bundle.getMessage("X(TrackType)"));
-                } else if (_car != null && !track.acceptsRoadName(_car.getRoadName())) {
+                } else if (_car != null && !track.isRoadNameAccepted(_car.getRoadName())) {
                     op.setText(Bundle.getMessage("X(TrackRoad)"));
                 } else if (_car != null &&
                         _car.getTrack() != track &&
-                        !track.acceptsLoad(_car.getLoadName(), _car.getTypeName())) {
+                        !track.isLoadNameAndCarTypeAccepted(_car.getLoadName(), _car.getTypeName())) {
                     op.setText(Bundle.getMessage("X(TrackLoad)"));
                 } else if (_car != null &&
-                        !track.acceptsDestination(_car.getFinalDestination()) &&
+                        !track.isDestinationAccepted(_car.getFinalDestination()) &&
                         _car.getDestination() == null) {
                     op.setText(Bundle.getMessage("X(TrackDestination)"));
                 } else if ((rl.getTrainDirection() & location.getTrainDirections()) == 0) {
@@ -292,16 +292,16 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(ScheduleTrain)"));
                 } else if (!checkScheduleAttribute(ALL, carType, _car, track)) {
                     op.setText(Bundle.getMessage("X(Schedule)"));
-                } else if (!track.acceptsPickupTrain(_train)) {
+                } else if (!track.isPickupTrainAccepted(_train)) {
                     // can the train drop off car?
-                    if (rl.isDropAllowed() && track.acceptsDropTrain(_train)) {
+                    if (rl.isDropAllowed() && track.isDropTrainAccepted(_train)) {
                         op.setText(Bundle.getMessage("DropOnly"));
                     } else {
                         op.setText(Bundle.getMessage("X(TrainPickup)"));
                     }
-                } else if (!track.acceptsDropTrain(_train)) {
+                } else if (!track.isDropTrainAccepted(_train)) {
                     // can the train pick up car?
-                    if (rl.isPickUpAllowed() && track.acceptsPickupTrain(_train)) {
+                    if (rl.isPickUpAllowed() && track.isPickupTrainAccepted(_train)) {
                         op.setText(Bundle.getMessage("PickupOnly"));
                     } else {
                         op.setText(Bundle.getMessage("X(TrainDrop)"));
@@ -452,7 +452,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
     private void addLocationAndTrackPropertyChange() {
         for (Location loc : locationManager.getList()) {
             loc.addPropertyChangeListener(this);
-            for (Track track : loc.getTrackList()) {
+            for (Track track : loc.getTracksList()) {
                 track.addPropertyChangeListener(this);
                 Schedule schedule = track.getSchedule();
                 if (schedule != null) {
@@ -468,7 +468,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
     private void removeLocationAndTrackPropertyChange() {
         for (Location loc : locationManager.getList()) {
             loc.removePropertyChangeListener(this);
-            for (Track track : loc.getTrackList()) {
+            for (Track track : loc.getTracksList()) {
                 track.removePropertyChangeListener(this);
                 Schedule schedule = track.getSchedule();
                 if (schedule != null) {
