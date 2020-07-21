@@ -37,6 +37,8 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Container for adding items to Control Panels. Starting point for palette package.
  * <p>
@@ -325,6 +327,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         }
     }
 
+    @SuppressFBWarnings(value="DLS_DEAD_LOCAL_STORE",justification="Stores are not dead. Both statements APPEND additional items into their maps")
     static public void loadMissingItemType(String itemType) {
         try {
             Element thisType = null;
@@ -344,7 +347,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             if (itemType.equals("IndicatorTO")) {
                 HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMaps = _indicatorTOMaps.get(itemType);
                 familyMaps = loadDefaultIndicatorTOMap(families, familyMaps);
-//                _indicatorTOMaps.put(itemType, loadDefaultIndicatorTOMap(families));
             } else {
                 HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps(itemType);
                 familyMap = loadDefaultFamilyMap(families, familyMap);
