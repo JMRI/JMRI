@@ -359,7 +359,7 @@ public abstract class ItemPanel extends JPanel  {
 
         FontMetrics fm = getFontMetrics(panel.getFont());
         int width = fm.stringWidth(borderName) + 5;
-        width = Math.max(Math.max(width, CatalogPanel.ICON_WIDTH), icon.getIconWidth()+ 12);
+        width = Math.max(Math.max(width, CatalogPanel.ICON_WIDTH), icon.getIconWidth() + 5);
         int height = panel.getPreferredSize().height;
         panel.setPreferredSize(new Dimension(width, height));
     }

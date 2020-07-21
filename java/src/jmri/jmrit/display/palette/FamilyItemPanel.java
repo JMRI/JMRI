@@ -19,6 +19,7 @@ import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -561,6 +562,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
         JLabel label = null;
         NamedIcon icon = null;
+        String scaleText;
         if (!iconMap.isEmpty()) {
             String displayKey = getDisplayKey();
             if (iconMap.get(displayKey) == null) {
@@ -571,19 +573,26 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 log.debug("makeDndIcon for {}, {}. displayKey \"{}\" has icon {}",
                         _itemType, _family, displayKey, (icon != null));
             }
-            if (icon != null) {
+             if (icon != null) {
                 icon = new NamedIcon(icon);
+                double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH, 
+                        CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
+                scaleText = java.text.MessageFormat.format(Bundle.getMessage("scale"),
+                        new Object[]{CatalogPanel.printDbl(scale, 2)});
+            } else {
+                scaleText = Bundle.getMessage("noIcon");
             }
             try {
                 label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), iconMap, icon);
             } catch (java.lang.ClassNotFoundException cnfe) {
                 log.warn("no DndIconPanel for {}, {} created. {}", _itemType, displayKey, cnfe);
-                label = new JLabel("NO ICON");
+                label = new JLabel(scaleText);
             }
         } else {
             label = new JLabel("- - - - - -");
+            scaleText = Bundle.getMessage("noIcon");
         }
-        JPanel panel = makeDragIconPanel(label);
+        JPanel panel = makeDragIconPanel(label, scaleText);
         _dragIconPanel.add(panel);
     }
 
@@ -594,20 +603,29 @@ public abstract class FamilyItemPanel extends ItemPanel {
      */
     abstract protected String getDisplayKey();
 
-    private JPanel makeDragIconPanel(JLabel label) {
-        JPanel panel = new JPanel(new FlowLayout());
+    private JPanel makeDragIconPanel(JLabel label, String scaleText) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         String borderName = Bundle.getMessage("dragToPanel");
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 borderName));
         panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         panel.setOpaque(false);
+        panel.add(Box.createVerticalGlue());
         if (label != null) {
             label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
             // label.setIcon(icon);
             label.setName(borderName);
             label.setOpaque(false);
-            panel.add(label);
+            JPanel p = new JPanel();
+            p.add(label);
+            p.setOpaque(false);
+            panel.add(p);
         }
+        JPanel p = new JPanel();
+        p.setOpaque(false);
+        p.add(new JLabel(scaleText));
+        panel.add(p);
         Dimension dim = panel.getPreferredSize();
         dim.width = Math.max(CatalogPanel.ICON_WIDTH, dim.width) + 10;
         panel.setPreferredSize(dim);

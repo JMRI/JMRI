@@ -190,7 +190,7 @@ public class CircuitBuilderTest {
         Assert.assertNotNull("exists", cpe );
         cb = cpe.getCircuitBuilder();
         Assert.assertNotNull("exists", cb );
-//        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
+        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
     }
 
     @BeforeEach
