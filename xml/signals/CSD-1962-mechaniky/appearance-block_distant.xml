@@ -42,14 +42,14 @@
       <aspectname>Volno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_ph.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_ph_n.gif</imagelink>
-      <imagelink type="predvest">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_ph.gif</imagelink>
+      <imagelink type="předvěst">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_ph.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Výstraha</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_ph.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_ph_n.gif</imagelink>
-      <imagelink type="predvest">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_ph.gif</imagelink>
+      <imagelink type="předvěst">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_ph.gif</imagelink>
     </appearance>
 
   </appearances>

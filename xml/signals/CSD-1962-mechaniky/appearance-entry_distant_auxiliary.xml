@@ -42,21 +42,21 @@
       <aspectname>Volno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_pp.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_pp_n.gif</imagelink>
-      <imagelink type="predvest-P">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_pp.gif</imagelink>
+      <imagelink type="předvěst-P">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_pp.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Výstraha</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_pp.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_pp_n.gif</imagelink>
-      <imagelink type="predvest-P">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_pp.gif</imagelink>
+      <imagelink type="předvěst-P">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_pp.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Pomalu</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/403_pomalu_pp.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/403_pomalu_pp_n.gif</imagelink>
-      <imagelink type="predvest-P">../../../resources/icons/largeschematics/aspects/CSD-1962/403_pomalu_pp.gif</imagelink>
+      <imagelink type="předvěst-P">../../../resources/icons/largeschematics/aspects/CSD-1962/403_pomalu_pp.gif</imagelink>
     </appearance>
 
   </appearances>

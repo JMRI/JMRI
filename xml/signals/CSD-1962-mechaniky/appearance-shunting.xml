@@ -42,14 +42,14 @@
       <aspectname>Posun zakázán</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_sn.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_sn_n.gif</imagelink>
-      <imagelink type="seradovaci">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_sn.gif</imagelink>
+      <imagelink type="seřaďovací">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_sn.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Posun dovolen</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_sn.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_sn_n.gif</imagelink>
-      <imagelink type="seradovaci">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_sn.gif</imagelink>
+      <imagelink type="seřaďovací">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_sn.gif</imagelink>
     </appearance>
 
   </appearances>
