@@ -2777,10 +2777,9 @@ public class TrainBuilder extends TrainCommon {
         }
 
         // Only track direction can cause the following message. Location direction has already been checked
-        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildRsCanNotPickupUsingTrain"),
-                new Object[]{rs.toString(), rl.getTrainDirectionString(), rs.getTrackName()}));
-        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildRsCanNotPickupUsingTrain2"),
-                new Object[]{rs.getLocationName()}));
+        addLine(_buildReport, SEVEN,
+                MessageFormat.format(Bundle.getMessage("buildRsCanNotPickupUsingTrain"), new Object[] { rs.toString(),
+                        rl.getTrainDirectionString(), rs.getTrackName(), rs.getLocationName(), rl.getId() }));
         return false;
     }
 

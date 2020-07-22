@@ -271,7 +271,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editRoadButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.ROAD, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.ROAD, f.engineAttributeEditFrame._attribute);
         
         // test that the attribute edit frame gets disposed
         f.buttonEditActionPerformed(new ActionEvent("null", 0, null));
@@ -290,7 +290,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editModelButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.MODEL, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.MODEL, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -305,7 +305,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editTypeButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.TYPE, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.TYPE, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -320,7 +320,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editLengthButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.LENGTH, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.LENGTH, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -335,7 +335,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editOwnerButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.OWNER, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.OWNER, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -350,7 +350,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editGroupButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.CONSIST, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.CONSIST, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
