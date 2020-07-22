@@ -16,8 +16,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame
-        implements java.beans.PropertyChangeListener {
+public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
 
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
