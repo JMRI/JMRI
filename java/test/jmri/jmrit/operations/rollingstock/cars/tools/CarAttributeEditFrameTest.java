@@ -5,11 +5,12 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
@@ -157,7 +158,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeave(f.addButton);
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorCarLength"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }
@@ -183,7 +184,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeave(f.addButton);
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorCarLength"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }
@@ -238,7 +239,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarAttributeEditFrame.TYPE);
-        // confirm that the right number of default lengths were loaded
+        // confirm that the right number of default types were loaded
         Assert.assertEquals(33, f.comboBox.getItemCount());
         Assert.assertEquals("1st type", "Baggage", f.comboBox.getItemAt(0));
 
@@ -295,6 +296,80 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
+    
+    @Test
+    public void testCarAttributeEditFrameTypeError() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        CarAttributeEditFrame f = new CarAttributeEditFrame();
+        f.initComponents(CarAttributeEditFrame.TYPE);
+        Assert.assertEquals(33, f.comboBox.getItemCount());
+        
+        // can't enter a type name with only spaces
+        f.addTextBox.setText("  ");
+        Thread add = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JemmyUtil.enterClickAndLeave(f.addButton);
+            }
+        });
+        add.setName("Add type attribute"); // NOI18N
+        add.start();
+
+        try {
+            add.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
+        
+        Assert.assertEquals(33, f.comboBox.getItemCount());
+
+        // now try to add a new type name with the reserved characters
+        f.addTextBox.setText("Test & Test");
+        add = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JemmyUtil.enterClickAndLeave(f.addButton);
+            }
+        });
+        add.setName("Add type attribute"); // NOI18N
+        add.start();
+
+        try {
+            add.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
+
+        JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Type")}),
+                Bundle.getMessage("ButtonOK"));
+        
+        // again try a new type name with the reserved characters
+        f.addTextBox.setText("TEST" + CarLoad.SPLIT_CHAR + "TEST");
+        // the following should cause two dialog windows to appear
+        add = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JemmyUtil.enterClickAndLeave(f.addButton);
+            }
+        });
+        add.setName("Add type attribute"); // NOI18N
+        add.start();
+
+        try {
+            add.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
+
+        JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Type")}),
+                Bundle.getMessage("ButtonOK"));
+
+        Assert.assertEquals(33, f.comboBox.getItemCount());
+        JUnitUtil.dispose(f);
+    }
+
 
     @Test
     public void testCarAttributeEditFrameRoad() {
@@ -342,6 +417,36 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
                 Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testCarAttributeEditFrameOwner() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
+        CarAttributeEditFrame f = new CarAttributeEditFrame();
+        f.initComponents(CarAttributeEditFrame.OWNER);
+        f.toggleShowQuanity();
+        f.addTextBox.setText("John");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+        // new color should appear at start of list
+        Assert.assertEquals("new owner", "John", f.comboBox.getItemAt(0));
+
+        // test replace
+        f.comboBox.setSelectedItem("John");
+        f.addTextBox.setText("Bob");
+        // push replace button
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        // need to also push the "Yes" button in the dialog window
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        // did the replace work?
+        Assert.assertEquals("replaced John with Bob", "Bob", f.comboBox.getItemAt(0));
+
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        Assert.assertEquals("old owner", "DAB", f.comboBox.getItemAt(0));
+
+        JUnitUtil.dispose(f);
+
     }
 
     @Test
