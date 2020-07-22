@@ -448,7 +448,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
         switch (getOpCodeChar()) {
             case DCCppConstants.THROTTLE_CMD:
-                text = "Throttle Cmd:  ";
+                text = "Throttle Cmd: ";
                 text += "Register: " + getRegisterString();
                 text += ", Address: " + getAddressString();
                 text += ", Speed: " + getSpeedString();
@@ -525,7 +525,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 text += "Value: " + getOpsWriteValueString();
                 break;
             case DCCppConstants.OPS_WRITE_CV_BIT: // <b cab cv bit val>
-                text = "Ops Write Bit Cmd: \n";
+                text = "Ops Write Bit Cmd: ";
                 text += "Address: " + getOpsWriteAddrString() + ", ";
                 text += "CV: " + getOpsWriteCVString() + ", ";
                 text += "Bit: " + getOpsWriteBitString() + ", ";
