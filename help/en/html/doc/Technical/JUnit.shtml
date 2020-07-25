@@ -1043,12 +1043,10 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
 
       <p>Because we run tests in "headless" mode during the
       <a href="ContinuousIntegration.shtml">continuous integration
-      builds</a>, it's important that tests needing access to the screen start
-      with:</p>
-      <pre><code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code></pre>
+      builds</a>, it's important that tests needing access to the screen are annotated with:</p>
+      <pre><code>@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")</code></pre>
 
-      <p>This will run the test only when a
-      display is available.</p>
+      <p>This will run the test only when a display is available.</p>
 
       <p>GUI tests should close windows when they're done, and in
       general clean up after themselves. If you want to keep
@@ -1082,7 +1080,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       <p>
       For more information on Jemmy, please see the
       <a href="http://wiki.netbeans.org/Jemmy_Tutorial">tutorial Wiki page</a> and the
-      <a href="http://atetric.com/atetric/javadoc/org.netbeans/jemmy/2.2.7.5/overview-summary.html">Jemmy Javadoc</a>.
+      <a href="https://javadoc.io/doc/org.netbeans/jemmy/latest/index.html">Jemmy Javadoc</a>.
       There are
       <a href="http://wiki.netbeans.org/Jemmy_Samples">samples on the NetBeans pages</a>.
 
@@ -1172,7 +1170,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       defaults of 60000L (a minute) can speed work when you're trying to debug the cause of a timeout.
       <p>
       If you change a timeout, you <u>must</u> set it back to the <u>original</u>
-      value (which you had earlier saved) in your @After routine.  If you leave it
+          value (which you had earlier saved) in your <code>@AfterEach</code> routine.  If you leave it
       changed, you're likely to cause problems for other test routines.
 
       <a id="jemmyhints" name="jemmyhints"></a>
@@ -1219,12 +1217,6 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
             the queue doesn't stay idle forever once the primary work is done.
             A long wait-for-empty value may never occur.
       </ul>
-
-      <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
-
-      <p><a href="http://jfcunit.sourceforge.net/">JFCUnit</a> is
-      no longer used by JMRI. If you need it for non-JMRI code,
-      download it and any dependencies it may have separately.</p>
 
       <h2><a id="testScriptCode" name="testScriptCode"></a>Testing
       Script Code</h2>JMRI ships with sample scripts. This section
