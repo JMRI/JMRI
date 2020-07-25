@@ -547,6 +547,7 @@
     <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/susiMapPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/>
 </decoder-config>

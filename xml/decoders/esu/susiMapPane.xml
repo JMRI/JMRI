@@ -6,7 +6,8 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:docbook="http://docbook.org/ns/docbook"
       xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"
-      exclude="Essential Sound Unit">
+      include="ESU LokSound V4.0,LokSound Select direct / micro,ESU LokSound 5,ESU LokPilot 5"
+      exclude="LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC">
     <name>SUSI Map</name>
     <column>
         <label>
