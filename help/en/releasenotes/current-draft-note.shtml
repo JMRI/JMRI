@@ -396,8 +396,35 @@
             </ul>
         <h4>Palette</h4>
             <a id="CPE-P" name="CPE-P"></a>
+            Some minor changes are made to the user interface.
             <ul>
-                <li></li>
+                <li>
+                  For the tabs having icon sets, i.e. turnouts, sensors, etc., should all icon sets be deleted,
+                  a 'Restore Default' button is displayed to reinstall the default icons.
+                </li><li>
+                  The above restoration feature can be done at any time by holding keys CNTL A down while 
+                  clicking the 'New Icons' button.  All customized icon sets defined by the user are retained
+                  and any missing default icons are added.
+                </li><li>
+                  The unused functions to create, delete, or restore the status states of Indicator Turnouts 
+                  are now only displayable by holding keys CNTL A down while clicking the 'Edit Icons' button.
+                </li><li>
+                  Several new checks and alerts will inform users when duplicate names are used for 
+                  icon sets or when duplicate icon sets are found with different names.
+                </li><li>
+                  The fixed set of Portal icons may be redefined by the user under the 'Portal' tab.
+                  Portal icon sets created by the user may be selected for panels by a new menu item, 
+                  'Change Portal Icon Set' in Circuit Builder. The new set is then used for Warrant displays.
+                </li><li>
+                  The drag and drop of icons under the 'Icon' and 'Background' tabs no longer requires naming 
+                  the icon first. The drop from the Icon catalog can be done directly into the panel.
+                </li><li>
+				  The tabs having tables now display the element's actual table editing window when the 
+				  'Add New Table Item' button is pressed.
+                </li><li>
+                  Editing an icon set for an Indicator Turnout now follows the same paradigm as the rest of 
+                  the tabs having icon sets.
+                </li>
             </ul>
    
     <h3>Preferences</h3>
