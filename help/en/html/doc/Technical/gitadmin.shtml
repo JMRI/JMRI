@@ -46,19 +46,39 @@
       </ul>
       
       <h2>Merging a PR</h2>
-      
-      Except in exceptional circumstances (which should probably be discussed in the PR itself),
-      PRs should only be merged when:
+
+      JMRI's Github is configured to require the following before merging a Pull Request:
       <ul>
-        <li>They have passed all the CI tests</li>
-        <li>They have no outstanding reviews</li>
-        <li>If in a new area, large or from a new contributor, 
-            they have been in-queue for at least a day or so to allow people to take a look at them</li>
-        <li>Don't appear to have any un-resolved controversies in the comments</li>
+        <li>All CI tests have passed for the Pull Request</li>
+        <li>There has been at least one review from a JMRI developer that accepts the Pull Request</li>
+        <li>There are no reviews requesting changes</li>
+        <li>The Pull Request has been in-queue for at least a day to allow people to take a look at them</li>
+        <li>These rules apply to all members of the development team, including administrators</li>
       </ul>
-      
+
+      <p>
       If you want a bit more time before somebody merges a PR, either start a review saying that
       or set "WIP" in the title while explaining why in a comment.
+
+      <p>
+      When reviewing a pull request, the focus should be on function and not style.  The following should be
+      considered when reviewing a pull request.
+      <ul>
+         <li>Does the Pull Request add something positive to JMRI.  This may include, but is not limited to:
+            <ul>
+              <li>New features</li>
+              <li>Fixing issues in existing code</li>
+              <li>Improve some the development or CI process</li>
+            </ul>
+         </li>
+      <li>Does the Pull Request function as described by the author.</li>
+      <li>Except in rare circumstances, which must be discussed in the PR, the PR does not
+           remove existing features from JMRI</li>
+      </ul>
+
+      <p>
+      If there are any concerns about any of the above, the reviewer should either ask a question about the pull
+      request or request changes.
 
       <p>
       When restarting CI after a failure, please copy at least a few lines around the
