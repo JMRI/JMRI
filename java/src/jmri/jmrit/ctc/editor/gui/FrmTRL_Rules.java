@@ -14,8 +14,6 @@ import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
-import jmri.jmrit.ctc.topology.Topology;
-import jmri.jmrit.ctc.topology.TopologyInfo;
 
 /**
  *
@@ -38,7 +36,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
     private final ArrayList<Integer> _mArrayListOfSelectableOSSectionUniqueIDs;
     private final DefaultListModel<String> _mDefaultListModel;
     private boolean _mAddNewPressed;
-    private final Topology _mTopology = new Topology();
 
     private final ArrayList<String> _mDefaultListModelOrig = new ArrayList<> ();
     private void initOrig() {
@@ -118,7 +115,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mEditBelow.setEnabled(false);
         _mDelete.setEnabled(false);
         _mDupToEnd.setEnabled(false);
-        _mAutoGenerate.setEnabled(_mTopology.isTopologyAvailable(_mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor));
     }
 
     /**
@@ -170,12 +166,10 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mOptionalExternalSensor1 = new javax.swing.JComboBox<>();
         _mOptionalExternalSensor2 = new javax.swing.JComboBox<>();
         _mDupToEnd = new javax.swing.JButton();
-        _mAutoGenerate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTRLRules"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -270,13 +264,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
             }
         });
 
-        _mAutoGenerate.setText("AutoGenerate");
-        _mAutoGenerate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mAutoGenerateActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -354,13 +341,11 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel4)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(_mAutoGenerate)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(_mEditBelow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(_mAddNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(_mDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(_mDupToEnd)))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(_mEditBelow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(_mAddNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(_mDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(_mDupToEnd))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -388,8 +373,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mRuleEnabled)
                     .addComponent(_mEnableALLRules)
-                    .addComponent(_mDisableALLRules)
-                    .addComponent(_mAutoGenerate))
+                    .addComponent(_mDisableALLRules))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -480,17 +464,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         enableTopPart(false);
         _mTRL_TrafficLockingRulesSSVList.setEnabled(false);
         _mTRL_TrafficLockingRulesSSVList.clearSelection();
-//        _mOptionalExternalSensor1.setText("");
-//        _mOptionalExternalSensor2.setText("");
-//        _mOccupancyExternalSensor1.setText("");
-//        _mOccupancyExternalSensor2.setText("");
-//        _mOccupancyExternalSensor3.setText("");
-//        _mOccupancyExternalSensor4.setText("");
-//        _mOccupancyExternalSensor5.setText("");
-//        _mOccupancyExternalSensor6.setText("");
-//        _mOccupancyExternalSensor7.setText("");
-//        _mOccupancyExternalSensor8.setText("");
-//        _mOccupancyExternalSensor9.setText("");
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor1, "Sensor", null, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor2, "Sensor", null, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor3, "Sensor", null, true);
@@ -525,17 +498,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mTRL_TrafficLockingRulesSSVList.setEnabled(false);
 
         TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(_mDefaultListModel.get(selectedIndex));
-//        _mOccupancyExternalSensor1.setText(trafficLockingEntry._mOccupancyExternalSensor1);
-//        _mOccupancyExternalSensor2.setText(trafficLockingEntry._mOccupancyExternalSensor2);
-//        _mOccupancyExternalSensor3.setText(trafficLockingEntry._mOccupancyExternalSensor3);
-//        _mOccupancyExternalSensor4.setText(trafficLockingEntry._mOccupancyExternalSensor4);
-//        _mOccupancyExternalSensor5.setText(trafficLockingEntry._mOccupancyExternalSensor5);
-//        _mOccupancyExternalSensor6.setText(trafficLockingEntry._mOccupancyExternalSensor6);
-//        _mOccupancyExternalSensor7.setText(trafficLockingEntry._mOccupancyExternalSensor7);
-//        _mOccupancyExternalSensor8.setText(trafficLockingEntry._mOccupancyExternalSensor8);
-//        _mOccupancyExternalSensor9.setText(trafficLockingEntry._mOccupancyExternalSensor9);
-//        _mOptionalExternalSensor1.setText(trafficLockingEntry._mOptionalExternalSensor1);
-//        _mOptionalExternalSensor2.setText(trafficLockingEntry._mOptionalExternalSensor2);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor1, "Sensor", trafficLockingEntry._mOccupancyExternalSensor1, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor2, "Sensor", trafficLockingEntry._mOccupancyExternalSensor2, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor3, "Sensor", trafficLockingEntry._mOccupancyExternalSensor3, true);
@@ -676,11 +638,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mDefaultListModel.addElement(newValue);
     }//GEN-LAST:event__mDupToEndActionPerformed
 
-    private void _mAutoGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mAutoGenerateActionPerformed
-        TopologyInfo topologyInfo = _mTopology.getTrafficLockingRules(_mIsLeftTraffic);
-                int anint = 7;//??????
-    }//GEN-LAST:event__mAutoGenerateActionPerformed
-
     private String renumberCSVString(String aString, int ruleNumber) {
             TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(aString);
             trafficLockingEntry._mUserRuleNumber = getRuleNumberString(ruleNumber);
@@ -733,7 +690,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton _mAddNew;
-    private javax.swing.JButton _mAutoGenerate;
     private javax.swing.JButton _mCancel;
     private javax.swing.JButton _mDelete;
     private javax.swing.JButton _mDisableALLRules;

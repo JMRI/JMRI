@@ -1,9 +1,8 @@
 package jmri.jmrit.ctc.topology;
 
 import java.util.*;
-
 import jmri.*;
-import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.display.layoutEditor.*;
 
 /**
@@ -11,8 +10,8 @@ import jmri.jmrit.display.layoutEditor.*;
  * IF AND ONLY IF LayoutDesign is available:
  * 
  * This object creates a list of objects that describe the path
- * from the passed O.S. section to ALL other adjacent O.S. sections
- * with defined and enabled Traffic Direction Levers.
+ * from the passed O.S. section to ALL other adjacent O.S. sections in a 
+ * specified direction.  It finds all sensors and turnouts (and their alignments).
  * 
  * Ultimately, this will provide information to fill in completely
  * (for the direction indicated: left / right traffic) the table
@@ -24,7 +23,10 @@ import jmri.jmrit.display.layoutEditor.*;
  * failure to "auto-generate" properly Signal Mast Logic for specific
  * signal masts.  I wanted to avoid this.
  * 
- * Therefore, I decided to do my own simple topology here.  I did one in C++ in
+ * By this time the user SHOULD HAVE been done with all ABS (or APB, etc) rules
+ * for signals.  We rely on this to generate our information.
+ * 
+ * I decided to do my own simple topology here.  I did one in C++ in
  * the early 1990's: a system whereby a layout drawn is analyzed (topology) so
  * that the C++ code could act as engineer and dispatcher, and FULLY automate
  * a layout (which I believe is a design goal of JMRI, which I believe
@@ -35,85 +37,142 @@ import jmri.jmrit.display.layoutEditor.*;
  * ONLY thing needed, no blocks, transits, etc.!)  I ran my "N" scale layout
  * with it for many years.  Off of a "simple" drawing.
  * 
+ * Also, NEVER allocate the terminating O.S. section, otherwise the dispatcher
+ * cannot clear the terminating O.S. section IN THE SAME DIRECTION as the
+ * originating O.S. section!
+ * 
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
 
-/*
-Basic idea:
-    For ALL the paths OUT OF our O.S. section:
-        For each path out of our O.S. section IN A GIVEN DIRECTION:
-            Find ALL paths to O.S. sections in that direction.
-*/
-
 public class Topology {
+    private final CTCSerialData _mCTCSerialData;
+    private final String _mNormal;
+    private final String _mReverse;
+    private final SignalMastLogicManager _mSignalMastLogicManager = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
     private final LayoutBlockManager _mLayoutBlockManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-    private Sensor _mStartingOSSectionSensor = null;
-    private LayoutBlock _mStartingLayoutBlock = null;
+    private Block _mStartingBlock = null;
     
-    /**
-     * 
-     * @param OSSectionOccupiedExternalSensor String (text) name of starting O.S. block sensor.
-     * @return boolean - true if available, else false.
-     */
-    public boolean isTopologyAvailable(String OSSectionOccupiedExternalSensor) {
-        _mStartingOSSectionSensor = InstanceManager.getDefault(SensorManager.class).getSensor(OSSectionOccupiedExternalSensor);
-        if (null != _mStartingOSSectionSensor) { // Available:
-            _mStartingLayoutBlock = _mLayoutBlockManager.getBlockWithSensorAssigned(_mStartingOSSectionSensor);
-            return _mStartingLayoutBlock != null;
+    public Topology(CTCSerialData CTCSerialData, String OSSectionOccupiedExternalSensor, String normal, String reverse) {
+        _mCTCSerialData = CTCSerialData;
+        _mNormal = normal;
+        _mReverse = reverse;
+        Sensor startingOSSectionSensor = InstanceManager.getDefault(SensorManager.class).getSensor(OSSectionOccupiedExternalSensor);
+        if (null != startingOSSectionSensor) { // Available:
+            LayoutBlock startingLayoutBlock = _mLayoutBlockManager.getBlockWithSensorAssigned(startingOSSectionSensor);
+            if (null != startingLayoutBlock) { // Available:
+                _mStartingBlock = startingLayoutBlock.getBlock();
+            }
         }
-        return false;
     }
     
+    
+    /**
+     * @return boolean - true if available, else false.
+     */
+    public boolean isTopologyAvailable() { return _mStartingBlock != null; }
+    
     /**
      * 
-     * "isTopologyAvailable" left "_mStartingLayoutBlock" set to a LayoutBlock
-     * where we trace the topology from in all directions.  We use that as a
-     * starting point.
+     * @param leftTraffic Traffic direction ON THE CTC PANEL that we are generating the rules for.
+     * @return LinkedList of TopologyInfo.  All of the possible paths from this O.S. section to all
+     * destination(s) in the direction indicated.
      * 
-     * @return LinkedList<TopologyInfo> All of the possible paths from this O.S. section to all O.S. sections in every
-     * direction from here.  If there is NO terminating O.S. section in a direction from here, that entry
-     * is NOT put in the return value, as it is ALWAYS valid to "go there" since
-     * there is no controlling (dispatcher) agency.
-     * 
+     * WE HAVE TO GO in the opposite direction to get the mast for the O.S. section we are in!
+     * There can ONLY be one signal in that direction, so upon encountering it, PROCESS ONLY IT!
+     * (we could check if there is another, and issue an error, but I believe that the Panel Editor
+     * would prevent this!)
      * 
      * JMRI: West is left, East is right.
      */
-    /**
-     * 
-     * @param leftTraffic - True if for left traffic, else false for right traffic.
-     * @return  null - No useful topology information in that direction (probably goes to dead end?) otherwise TopologyInfo object.
-     */
-    public TopologyInfo getTrafficLockingRules(boolean leftTraffic) {
-        ArrayList<Integer> directions = getDirectionArrayListFrom(leftTraffic ? Path.WEST : Path.EAST);
-        if (null != _mStartingLayoutBlock) { // Safety
-            Block block = _mStartingLayoutBlock.getBlock();
-            return followTopology(block, directions);
-        }
-        return null;
-    }
-
-    /**
-     * 
-     * @param block
-     * @param directions
-     * @return Returns null if no topology (goes to dead end?), otherwise topology info for all possible
-     *         routes from passed block in passed directions.
-     */    
-//  Watch for same sensor in a row! (due to multiple switches in same O.S. section?)
-//SAV-PDC-OS-MAIN (7,8) Right Traffic (JMRI:east, my panel: west)
-    private TopologyInfo followTopology(Block block, ArrayList<Integer> directions) {
-        TopologyInfo topologyInfo = new TopologyInfo();
-        for (Path path : block.getPaths()) { // For all paths:
-            if (inSameDirectionGenerally(directions, path.getToBlockDirection())) { // In generally same direction:
-                ArrayList<Integer> newDirections = getDirectionArrayListFrom(path.getToBlockDirection());   // Follow it's twists and turns for next recursion
-                
+    
+    public ArrayList<TopologyInfo> getTrafficLockingRules(boolean leftTraffic) {
+        ArrayList<TopologyInfo> returnValue = new ArrayList<>();
+        for (Path path : _mStartingBlock.getPaths()) {
+            Block neighborBlock = path.getBlock();
+            if (inSameDirectionGenerally(getDirectionArrayListFrom(leftTraffic ? Path.EAST : Path.WEST), path.getToBlockDirection())) {
+                SignalMast facingSignalMast = _mLayoutBlockManager.getFacingSignalMast(neighborBlock, _mStartingBlock);
+                if (null != facingSignalMast) { // Safety
+                    SignalMastLogic facingSignalMastLogic = _mSignalMastLogicManager.getSignalMastLogic(facingSignalMast);
+                    if (null != facingSignalMastLogic) { // Safety
+                        processDestinations(returnValue, facingSignalMastLogic);
+                        break;      // The first one that matches in the proper direction MUST BE CORRECT!
+                    }
+                }
             }
         }
-        return topologyInfo;
+        return returnValue;
     }
     
+    
     /**
+     * Once we've "backed up" to look forward from the starting O.S. section and gotten a facingSignalMastLogic, this
+     * routine fills in "topologyInfo" with everything it finds from that point on.  Handles intermediate blocks also
+     * (ABS, APB, etc.).  Goes until there is no more.
      * 
+     * @param topologyInfos             Entry(s) added to this ArrayList as they are encountered.
+     * @param facingSignalMastLogic     Facing signal mast logic from O.S. section code.
+     */
+    
+    private void processDestinations(ArrayList<TopologyInfo> topologyInfos, SignalMastLogic facingSignalMastLogic) {
+        for (SignalMast destinationSignalMast : facingSignalMastLogic.getDestinationList()) {
+            TopologyInfo topologyInfo = new TopologyInfo(_mCTCSerialData, _mNormal, _mReverse);
+            createRules(topologyInfo, facingSignalMastLogic, destinationSignalMast);
+            for (SignalMast tempSignalMast = destinationSignalMast; isIntermediateSignalMast(tempSignalMast); ) {
+                SignalMastLogic tempSignalMastLogic = _mSignalMastLogicManager.getSignalMastLogic(tempSignalMast);
+                if (null != tempSignalMastLogic) { // Safety:
+ // No safety check needed here, "isIntermediateSignalMast" GUARANTEES that there is EXACTLY one entry in "getDestinationList" list:                    
+                    SignalMast onlyTerminatingSignalMast = tempSignalMastLogic.getDestinationList().get(0);
+                    createRules(topologyInfo, tempSignalMastLogic, onlyTerminatingSignalMast);
+                    tempSignalMast = onlyTerminatingSignalMast;       // Next iteration, start where we left off.
+                } else {
+                    break;  // Stop immediately, got an issue.
+                }
+            }
+            if (topologyInfo.nonEmpty()) {
+                topologyInfos.add(topologyInfo);
+            }
+        }
+    }
+
+    
+    /**
+     * Simple routine to create all of the rules from the past information in "topologyInfo".
+     * @param topologyInfo     What to fill in.
+     * @param signalMastLogic  From this
+     * @param signalMast       And this.
+     */
+
+    private void createRules(TopologyInfo topologyInfo, SignalMastLogic signalMastLogic, SignalMast signalMast) {
+        topologyInfo.addBlocks(signalMastLogic.getBlocks(signalMast));
+        topologyInfo.addBlocks(signalMastLogic.getAutoBlocks(signalMast));
+        topologyInfo.addTurnouts(signalMastLogic, signalMast);
+    }
+    
+    
+    /**
+     * Is the past Signal Mast a intermediate signal?  (ABS / APB or some such)?
+     * If there are no turnouts, and there is ONLY ONE destination signal, then true, else false.
+     * 
+     * @param signalMast
+     * @return true if so, else false.  False also returned if invalid parameter in some way.
+     */    
+    
+//  Plagerization of DefaultSignalMastLogicManager/discoverSignallingDest "intermediateSignal" property code.
+    private boolean isIntermediateSignalMast(SignalMast signalMast) {
+        if (null != signalMast) { // Safety
+            SignalMastLogic signalMastLogic = _mSignalMastLogicManager.getSignalMastLogic(signalMast);
+            if (null != signalMastLogic) { // Safety:
+                return signalMastLogic.getDestinationList().size() == 1
+                        && signalMastLogic.getAutoTurnouts(signalMastLogic.getDestinationList().get(0)).isEmpty()
+                        && signalMastLogic.getTurnouts(signalMastLogic.getDestinationList().get(0)).isEmpty();
+            }
+        }
+        return false;   // OOPPSS invalid, can't determine, assume NOT a intermediate signal.
+    }
+    
+    
+    /**
+     *
      * @param direction Direction to generate list from.
      * @return IF passed a valid direction, a 3 element set of "generally in the same direction" directions, else an EMPTY set (NOT null!)
      */
@@ -139,30 +198,18 @@ public class Topology {
         return new ArrayList<>();    // Huh?
     }
     
+    
     /**
      * 
-     * @param possibleDirections The set of possible directions to check.  IF this
-     *                           array has no entries, then this routine returns true.
-     *                           This implies that the prior section was a "joiner"
-     *                           block (only two adjacent blocks).
+     * @param possibleDirections The set of possible directions to check.  Caveat Emptor: IF this
+     *                           array has no entries, then this routine returns false.
      * 
      * @param direction Direction to check.
-     * @return True if direction in "possibleDirections" with the above caveat.
-     *         emptor else false.
+     * @return True if direction in "possibleDirections", else false.
      */    
     
     private boolean inSameDirectionGenerally(ArrayList<Integer> possibleDirections, int direction) {
-        if (possibleDirections.isEmpty()) return true;  // If nothing passed in this, then probably a "straight section" between sections.....
+        if (possibleDirections.isEmpty()) return false;
         return possibleDirections.contains(direction);
     }
 }
-
-/*
-for blk in blocks.getNamedBeanSet():
-    print 'block = {}'.format(blk.getDisplayName())
-    for path in blk.getPaths():
-        print '    neighbor = {}: {}'.format(path.getBlock().getDisplayName(), jmri.Path.decodeDirection(path.getToBlockDirection()))
-        for setting in path.getSettings():
-            print '        bean = {}, state = {}'.format(setting.getBeanName(), setting.getBean().describeState(setting.getSetting()))
-*/
-//  https://www.jmri.org/JavaDoc/doc/constant-values.html#jmri.Path.EAST    

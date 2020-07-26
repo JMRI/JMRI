@@ -116,14 +116,11 @@
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="_mAutoGenerate" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="_mEditBelow" max="32767" attributes="0"/>
-                              <Component id="_mAddNew" alignment="0" max="32767" attributes="0"/>
-                              <Component id="_mDelete" alignment="0" max="32767" attributes="0"/>
-                              <Component id="_mDupToEnd" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="_mEditBelow" max="32767" attributes="0"/>
+                          <Component id="_mAddNew" alignment="0" max="32767" attributes="0"/>
+                          <Component id="_mDelete" alignment="0" max="32767" attributes="0"/>
+                          <Component id="_mDupToEnd" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -160,7 +157,6 @@
                   <Component id="_mRuleEnabled" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mEnableALLRules" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mDisableALLRules" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="_mAutoGenerate" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -603,14 +599,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mDupToEndActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="_mAutoGenerate">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="AutoGenerate"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mAutoGenerateActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

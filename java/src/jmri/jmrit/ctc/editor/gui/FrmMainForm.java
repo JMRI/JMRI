@@ -755,11 +755,12 @@ public class FrmMainForm extends JFrame {
     private void _mPresentlyDefinedColumnsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event__mPresentlyDefinedColumnsValueChanged
         if (!evt.getValueIsAdjusting()) { // returns false is FINAL in chain.
             int selectedIndex = _mPresentlyDefinedColumns.getSelectedIndex();
-//  Who designed this steaming pile of XXXX called Swing?  I guess at some level this makes sense:
+//  I guess at some level this makes sense:
 //  It seems that "_mDefaultListModel.clear();" and "_mDefaultListModel.addElement..." BOTH
 //  causes this routine to be called repeatedly with a -1 each time for selectedIndex.  In fact, for EACH
 //  "_mDefaultListModel.addElement..." it calls us with -1.  Go figure!  Why -1 in that case?
 //  Isn't one being added that makes sense at a value >= 0?  Then why call us at all?  Sigh......
+//  I'm used to other languages (C, C++, C#) that don't do this.
             _mColumns.setEntrySelected(selectedIndex);
         }
     }//GEN-LAST:event__mPresentlyDefinedColumnsValueChanged

@@ -3,6 +3,8 @@ package jmri.jmrit.ctc.editor.gui;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
@@ -10,6 +12,8 @@ import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
+import jmri.jmrit.ctc.topology.Topology;
+import jmri.jmrit.ctc.topology.TopologyInfo;
 
 /**
  *
@@ -28,6 +32,7 @@ public class FrmTRL extends javax.swing.JFrame {
     private final CTCSerialData _mCTCSerialData;
     private final CheckJMRIObject _mCheckJMRIObject;
     private final FrmMainForm _mMainForm;
+    private Topology _mTopology;
 
     private void initOrig() {
     }
@@ -50,6 +55,10 @@ public class FrmTRL extends javax.swing.JFrame {
         this.getRootPane().setDefaultButton(_mOK);
         updateRuleCounts();
         this.setTitle(Bundle.getMessage("TitleDlgTRL") + " " + codeButtonHandlerData.myShortStringNoComma());   // NOI18N
+        _mTopology = new Topology(_mCTCSerialData, codeButtonHandlerData._mOSSectionOccupiedExternalSensor, Bundle.getMessage("TLE_Normal"), Bundle.getMessage("TLE_Reverse"));  // NOI18N
+        boolean topologyAvailable = _mTopology.isTopologyAvailable();
+        _mAutoGenerate.setVisible(topologyAvailable);
+        _mReverseLeftRight.setVisible(topologyAvailable);
     }
 
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
@@ -90,24 +99,25 @@ public class FrmTRL extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        _mAutoGenerate = new javax.swing.JButton();
+        _mReverseLeftRight = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTRL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mEditLeftTrafficLockingRules.setText("Edit");
+        _mEditLeftTrafficLockingRules.setText(Bundle.getMessage("LabelDlgTRLEdit"));
         _mEditLeftTrafficLockingRules.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEditLeftTrafficLockingRulesActionPerformed(evt);
             }
         });
 
-        _mEditRightTrafficLockingRules.setText("Edit");
+        _mEditRightTrafficLockingRules.setText(Bundle.getMessage("LabelDlgTRLEdit"));
         _mEditRightTrafficLockingRules.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEditRightTrafficLockingRulesActionPerformed(evt);
@@ -135,6 +145,20 @@ public class FrmTRL extends javax.swing.JFrame {
 
         jLabel11.setText(Bundle.getMessage("InfoDlgTRLNote3"));
 
+        _mAutoGenerate.setText(Bundle.getMessage("LabelDlgTRLAutoGenerate"));
+        _mAutoGenerate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mAutoGenerateActionPerformed(evt);
+            }
+        });
+
+        _mReverseLeftRight.setText(Bundle.getMessage("LabelDlgTRLReverseLeftRight"));
+        _mReverseLeftRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mReverseLeftRightActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,11 +175,15 @@ public class FrmTRL extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(_mEditRightTrafficLockingRules)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(_mRightNumberOfRules, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(_mRightNumberOfRules, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(_mReverseLeftRight))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(_mEditLeftTrafficLockingRules)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(_mLeftNumberOfRules, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(_mLeftNumberOfRules, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(_mAutoGenerate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel4))
@@ -168,7 +196,7 @@ public class FrmTRL extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(164, 164, 164)
                         .addComponent(_mOK)))
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,12 +205,14 @@ public class FrmTRL extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mLeftNumberOfRulesPrompt)
                     .addComponent(_mEditLeftTrafficLockingRules)
-                    .addComponent(_mLeftNumberOfRules))
+                    .addComponent(_mLeftNumberOfRules)
+                    .addComponent(_mAutoGenerate))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mEditRightTrafficLockingRules)
                     .addComponent(_mRightNumberOfRulesPrompt)
-                    .addComponent(_mRightNumberOfRules))
+                    .addComponent(_mRightNumberOfRules)
+                    .addComponent(_mReverseLeftRight))
                 .addGap(13, 13, 13)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -242,12 +272,26 @@ public class FrmTRL extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event__mOKActionPerformed
 
+    private void _mReverseLeftRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mReverseLeftRightActionPerformed
+        String blah = _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList;
+        _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList = _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList;
+        _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList = blah;  
+        updateRuleCounts();
+    }//GEN-LAST:event__mReverseLeftRightActionPerformed
+
+    private void _mAutoGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mAutoGenerateActionPerformed
+//????
+        ArrayList<TopologyInfo> blah = _mTopology.getTrafficLockingRules(false);
+    }//GEN-LAST:event__mAutoGenerateActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton _mAutoGenerate;
     private javax.swing.JButton _mEditLeftTrafficLockingRules;
     private javax.swing.JButton _mEditRightTrafficLockingRules;
     private javax.swing.JLabel _mLeftNumberOfRules;
     private javax.swing.JLabel _mLeftNumberOfRulesPrompt;
     private javax.swing.JButton _mOK;
+    private javax.swing.JButton _mReverseLeftRight;
     private javax.swing.JLabel _mRightNumberOfRules;
     private javax.swing.JLabel _mRightNumberOfRulesPrompt;
     private javax.swing.JLabel jLabel10;

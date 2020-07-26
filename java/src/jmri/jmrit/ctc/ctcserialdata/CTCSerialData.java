@@ -1,6 +1,7 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
@@ -12,7 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+
+import jmri.Turnout;
 import jmri.jmrit.ctc.CTCFiles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -201,6 +205,25 @@ public class CTCSerialData {
             returnValue.addAll(codeButtonHandlerData.getAllInternalSensors());
         }
         return returnValue;
+    }
+    
+    /**
+     * Routine to search our _mCodeButtonHandlerDataArrayList for the O.S. section
+     * that contains the passed turnout.
+     * 
+     * @param turnout   The turnout to search for in our table.
+     * @return The string representation of the O.S. section, else if turnout not found, null.
+     */
+    public String convertTurnoutToOSSectionDesignation(Turnout turnout) {
+        String turnoutUserName = turnout.getDisplayName();  // Same routime as called in CommonSubs/populateJComboBoxWithBeans
+        for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
+            if (codeButtonHandlerData._mSWDI_Enabled) { // Only if it has one:
+                if (codeButtonHandlerData._mSWDI_ExternalTurnout.equals(turnoutUserName)) { // Ah match, this is us:
+                    return codeButtonHandlerData.myShortStringNoComma();
+                }
+            }
+        }
+        return null;
     }
 
     @SuppressWarnings("unchecked") // See below comments:
