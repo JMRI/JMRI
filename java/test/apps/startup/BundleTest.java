@@ -1,7 +1,7 @@
 package apps.startup;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Bundle class
@@ -19,12 +19,7 @@ public class BundleTest {
 
     @Test
     public void testBadKeyMessage() {
-        try {
-            Bundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
     @Test
@@ -33,9 +28,9 @@ public class BundleTest {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
     }
 
-    @Test(expected = java.util.MissingResourceException.class)
+    @Test
     public void testBadKeyMessageArg() {
-        Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
 }

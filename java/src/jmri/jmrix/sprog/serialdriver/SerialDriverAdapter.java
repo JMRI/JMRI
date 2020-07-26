@@ -32,7 +32,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SprogPortController {
 
     public SerialDriverAdapter() {
         super(new SprogSystemConnectionMemo(SprogMode.SERVICE));
@@ -83,7 +83,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(baudRate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
@@ -94,13 +94,13 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             // set RTS high, DTR high
             boolean doNotlog = false; // if using socat to forward serial port though network, following
             try {                     // commands will fail, as well as bellow logging
-                activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-                activeSerialPort.setDTR(true);	
+                activeSerialPort.setRTS(true); // not connected in some serial ports and adapters
+                activeSerialPort.setDTR(true);
             } catch (PureJavaIllegalStateException e) {
                 log.info("Cannot setRTS/DTR will continue anyway");
                 doNotlog = true;
             }
-            	// pin 1 in DIN8; on main connector, this is DTR
+            // pin 1 in DIN8; on main connector, this is DTR
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             //AJB: Removed Jan 2010 -
             //Setting flow control mode to zero kills comms - SPROG doesn't send data
@@ -121,17 +121,9 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             // report status?
             if (log.isInfoEnabled()) {
                 if (doNotlog) {
-                    log.info(portName + " port opened at "
-                            + activeSerialPort.getBaudRate() + " baud");
+                    log.info("{} port opened at {} baud", portName, activeSerialPort.getBaudRate());
                 } else {
-                    log.info(portName + " port opened at "
-                            + activeSerialPort.getBaudRate() + " baud, sees "
-                            + " DTR: " + activeSerialPort.isDTR()
-                            + " RTS: " + activeSerialPort.isRTS()
-                            + " DSR: " + activeSerialPort.isDSR()
-                            + " CTS: " + activeSerialPort.isCTS()
-                            + "  CD: " + activeSerialPort.isCD()
-                    );
+                    log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
                     }
             }
 
@@ -183,28 +175,34 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: {}", e);
         }
         return null;
     }
 
     /**
-     * Get an array of valid baud rates. This is currently only 9,600 bps
+     * {@inheritDoc}
+     * Currently only 9,600 bps
      */
     @Override
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
     }
 
-    InputStream serialStream = null;
-
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * {@inheritDoc}
      */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        return null;
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{9600};
     }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
+    InputStream serialStream = null;
 
     /**
      * Set up all of the other objects to operate with an Sprog command station

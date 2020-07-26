@@ -1,11 +1,12 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.Turnout;
 import jmri.TurnoutManager;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Base for TurnoutManager tests in specific jmrix.* packages
@@ -24,7 +25,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     /**
      * Overload to load l with actual object; create scaffolds as needed
      */
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
     static protected boolean listenerResult = false;
@@ -50,14 +51,10 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         }
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testProvideFailure() {
-        try {
-            l.provideTurnout("");
-        } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter()+"followed by a suffix");
-          throw ex;
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -129,14 +126,19 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
 
     @Test
     public void testThrownText(){
-         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+         Assert.assertEquals("thrown text", Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
     }
 
     @Test
     public void testClosedText(){
-         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+         Assert.assertEquals("closed text", Bundle.getMessage("TurnoutStateClosed"), l.getClosedText());
     }
 
+    @Disabled("Turnout managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+    }
 
     /**
      * Number of turnout to test. Made a separate method so it can be overridden
@@ -149,4 +151,5 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     protected int getNumToTest2() {
         return 7;
     }
+
 }

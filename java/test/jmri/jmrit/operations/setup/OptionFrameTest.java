@@ -1,18 +1,20 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.Assume;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  * Tests for the OptionFrame class
  *
  * @author Dan Boudreau Copyright (C) 2009
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OptionFrameTest extends OperationsTestCase {
 
@@ -87,6 +89,27 @@ public class OptionFrameTest extends OperationsTestCase {
         Assert.assertTrue("car logger", p.carLoggerCheckBox.isSelected());
         Assert.assertTrue("engine logger", p.engineLoggerCheckBox.isSelected());
         Assert.assertFalse("router", p.routerCheckBox.isSelected());
+
+        // done
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testIsDirty() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OptionFrame f = new OptionFrame();
+        f.initComponents();
+        OptionPanel p = (OptionPanel) f.getContentPane();
+
+        // confirm defaults
+        Assert.assertTrue("build normal", p.buildNormal.isSelected());
+        Assert.assertFalse("not dirty 1", p.isDirty());
+        
+        JemmyUtil.enterClickAndLeave(p.buildAggressive);
+        Assert.assertTrue("now dirty 1", p.isDirty());
+        
+        JemmyUtil.enterClickAndLeave(p.buildNormal);
+        Assert.assertFalse("not dirty 2", p.isDirty());
 
         // done
         JUnitUtil.dispose(f);

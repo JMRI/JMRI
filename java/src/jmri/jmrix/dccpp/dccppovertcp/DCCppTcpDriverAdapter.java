@@ -3,13 +3,12 @@ package jmri.jmrix.dccpp.dccppovertcp;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
-import jmri.jmrix.dccpp.DCCppPortController;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the DCCppOverTcp system network
+ * Implements DCCppPortController for the DCCppOverTcp system network
  * connection.
  * <p>
  * This connects a DCC++ via a telnet connection. Normally controlled by the
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Alex Shepherd Copyright (C) 2003, 2006
  * @author Mark Underwood Copyright (C) 2015
  */
-public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements DCCppPortController {
+public class DCCppTcpDriverAdapter extends DCCppNetworkPortController {
     
     public DCCppTcpDriverAdapter() {
         super(new DCCppSystemConnectionMemo());

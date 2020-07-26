@@ -1,19 +1,35 @@
 package jmri.jmrix.ecos;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.Assert;
+
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.SpeedStepMode;
+import jmri.ThrottleManager;
+import jmri.jmrix.AbstractThrottleTest;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
-import org.junit.*;
+import jmri.util.junit.annotations.ToDo;
+
+import org.junit.jupiter.api.io.TempDir;
+import org.picocontainer.behaviors.Stored;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
+public class EcosDccThrottleTest extends AbstractThrottleTest {
+        
+    private EcosSystemConnectionMemo memo = null;
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",instance);
+        Assert.assertNotNull("exists", instance);
     }
 
     /**
@@ -33,21 +49,41 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getSpeedIncrement method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testGetSpeedIncrement() {
+        float expResult = SpeedStepMode.NMRA_DCC_128.increment;
+        float result = instance.getSpeedIncrement();
+        Assert.assertEquals(expResult, result, 0.0);
     }
 
     /**
      * Test of setSpeedSetting method, of class AbstractThrottle.
      */
     @Test
-    @Ignore("needs response to see change?")
+    @Disabled("needs response to see change?")
     @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")
+    @Override
     public void testSetSpeedSetting() {
         float speed = 1.0F;
         instance.setSpeedSetting(speed);
-        Assert.assertEquals(speed, instance.getSpeedSetting(),0.0);
+        Assert.assertEquals(speed, instance.getSpeedSetting(), 0.0);
+    }
+    
+    @Test
+    @Disabled("_haveControl boolean not true?")
+    @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")
+    @Override
+    public void testLogsSpeedToBasicRosterEntry (@TempDir File folder) throws java.io.IOException {
+        super.testLogsSpeedToBasicRosterEntry(folder);
     }
 
     /**
@@ -339,7 +375,154 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean f28 = false;
         instance.setF28(f28);
     }
+    
+    @Test
+    public void testSetGetF29(){
+        instance.setFunction(29, true);
+        Assert.assertTrue(instance.getFunction(29));
+        instance.setFunction(29, false);
+        Assert.assertFalse(instance.getFunction(29));
+    }
+    
+    @Test
+    public void testSetGetF30(){
+        instance.setFunction(30, true);
+        Assert.assertTrue(instance.getFunction(30));
+        instance.setFunction(30, false);
+        Assert.assertFalse(instance.getFunction(30));
+    }
+    
+    @Test
+    public void testSetGetF31(){
+        instance.setFunction(31, true);
+        Assert.assertTrue(instance.getFunction(31));
+        instance.setFunction(31, false);
+        Assert.assertFalse(instance.getFunction(31));
+    }
+    
+    @Test
+    public void testUpdateFunction0(){
+        instance.updateFunction(0, true);
+        Assert.assertTrue(instance.getFunction(0));
+        instance.updateFunction(0, false);
+        Assert.assertFalse(instance.getFunction(0));
+    }
+    
+    @Test
+    public void testUpdateFunction1(){
+        instance.updateFunction(1, true);
+        Assert.assertTrue(instance.getFunction(1));
+        instance.updateFunction(1, false);
+        Assert.assertFalse(instance.getFunction(1));
+    }
+    
+    @Test
+    public void testUpdateFunction29(){
+        instance.updateFunction(29, true);
+        Assert.assertTrue(instance.getFunction(29));
+        instance.updateFunction(29, false);
+        Assert.assertFalse(instance.getFunction(29));
+    }
+    
+    @Test
+    public void testUpdateFunction30(){
+        instance.updateFunction(30, true);
+        Assert.assertTrue(instance.getFunction(30));
+        instance.updateFunction(30, false);
+        Assert.assertFalse(instance.getFunction(30));
+    }
+    
+    @Test
+    public void testUpdateFunction31(){
+        instance.updateFunction(31, true);
+        Assert.assertTrue(instance.getFunction(31));
+        instance.updateFunction(31, false);
+        Assert.assertFalse(instance.getFunction(31));
+    }
+    
+    @Test
+    @Override
+    public void testTotalFunctions() {
+        Assert.assertEquals("Total Functions", 32, instance.getFunctions().length);
+    }
+    
+    @Test
+    @Override
+    public void testTotalFunctionsMomentary() {
+        Assert.assertEquals("Total Momentary Functions", 32, instance.getFunctionsMomentary().length);
+    }
 
+    @Test
+    @Override
+    public void testOutOfRangeUpdateFunction(){
+        
+        instance.updateFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        
+        instance.updateFunction(32, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 32");
+        
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeSetFunction(){
+        
+        instance.setFunction(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        
+        instance.setFunction(32, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 32");
+        
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeGetFunction(){
+        
+        instance.getFunction(-1);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: -1");
+        
+        instance.getFunction(32);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: 32");
+        
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeUpdateFunctionMomentary(){
+        
+        instance.updateFunctionMomentary(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: -1");
+        
+        instance.updateFunctionMomentary(32, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: 32");
+        
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeSetFunctionMomentary(){
+        
+        instance.setFunctionMomentary(-1, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: -1");
+        
+        instance.setFunctionMomentary(32, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: 32");
+        
+    }
+    
+    @Test
+    @Override
+    public void testOutOfRangeGetFunctionMomentary(){
+        instance.getFunctionMomentary(-1);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: -1");
+        
+        instance.getFunctionMomentary(32);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: 32");
+    }
+    
+    
     /**
      * Test of sendFunctionGroup1 method, of class AbstractThrottle.
      */
@@ -379,96 +562,109 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testSendFunctionGroup5() {
     }
-        
+
     private static EcosTrafficController tc = null;
 
-    @BeforeClass
-    public static void earlySetup(){
+    @BeforeAll
+    public static void earlySetup() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo();
         tc = new EcosInterfaceScaffold();
+        memo.setEcosTrafficController(tc);
+        tc.setAdapterMemo(memo);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
-        EcosSystemConnectionMemo memo = null; 
-        if(!GraphicsEnvironment.isHeadless()) { 
-           memo = new EcosSystemConnectionMemo(tc){
-              @Override
-              public EcosLocoAddressManager getLocoAddressManager(){
-                 return new EcosLocoAddressManager(this);
-              }
+        if (!GraphicsEnvironment.isHeadless()) {
+            memo = new EcosSystemConnectionMemo(tc) {
+                @Override
+                public EcosLocoAddressManager getLocoAddressManager() {
+                    return new EcosLocoAddressManager(this);
+                }
 
-              @Override
-              public EcosPreferences getPreferenceManager(){ 
-                 return new EcosPreferences(this){
-                     @Override
-                     public boolean getPreferencesLoaded(){
-                        return true;
-                     }
-                 };
-              }
-           };
-       } else {
-           // GraphicsEnvironment.isHeadless()
-           memo = new EcosSystemConnectionMemo(tc){
-              @Override
-              public EcosLocoAddressManager getLocoAddressManager(){
-                 return new EcosLocoAddressManager(this);
-              }
+                @Override
+                public EcosPreferences getPreferenceManager() {
+                    return new EcosPreferences(this) {
+                        @Override
+                        public boolean getPreferencesLoaded() {
+                            return true;
+                        }
+                    };
+                }
+            };
+        } else {
+            // GraphicsEnvironment.isHeadless()
+            memo = new EcosSystemConnectionMemo(tc) {
+                @Override
+                public EcosLocoAddressManager getLocoAddressManager() {
+                    store(new EcosLocoAddressManager(this),EcosLocoAddressManager.class);
+                    return get(EcosLocoAddressManager.class);
+                }
 
-              @Override
-              public EcosPreferences getPreferenceManager(){ 
-                 return new EcosPreferences(this){
-                     @Override
-                     public boolean getPreferencesLoaded(){
-                        return true;
-                     }
-                     // don't ask any questions related to locos.
-                     @Override
-                     public int getAddLocoToEcos(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getAddLocoToJMRI(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getAdhocLocoFromEcos(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getForceControlFromEcos(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getRemoveLocoFromEcos(){
-                        return EcosPreferences.NO;
-                     }
-                     @Override
-                     public int getRemoveLocoFromJMRI(){
-                        return EcosPreferences.NO;
-                     }
-                 };
-              }
-           };
-       }
-       jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new EcosDccThrottleManager(new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc)));
-       instance = new EcosDccThrottle(new jmri.DccLocoAddress(100,true),memo,true);
+                @Override
+                public EcosPreferences getPreferenceManager() {
+                    return new EcosPreferences(this) {
+                        @Override
+                        public boolean getPreferencesLoaded() {
+                            return true;
+                        }
+                        // don't ask any questions related to locos.
+
+                        @Override
+                        public int getAddLocoToEcos() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getAddLocoToJMRI() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getAdhocLocoFromEcos() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getForceControlFromEcos() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getRemoveLocoFromEcos() {
+                            return EcosPreferences.NO;
+                        }
+
+                        @Override
+                        public int getRemoveLocoFromJMRI() {
+                            return EcosPreferences.NO;
+                        }
+                    };
+                }
+            };
+        }
+        InstanceManager.setDefault(ThrottleManager.class, new EcosDccThrottleManager(new EcosSystemConnectionMemo(tc)));
+        instance = new EcosDccThrottle(new DccLocoAddress(100, true), memo, true);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
+        memo.getTrafficController().terminateThreads();
+        memo.dispose();
+        memo = null;
+        JUnitUtil.clearShutDownManager(); // shutdown task left running
     }
 
-    @AfterClass
+    @AfterAll
     public static void finalTearDown() {
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(EcosDccThrottleTest.class);
-
 }

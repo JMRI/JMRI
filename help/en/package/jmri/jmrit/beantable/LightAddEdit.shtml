@@ -10,19 +10,20 @@
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <meta name="author"content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Light Add Edit lights control timed variable slow fade scenic automated
-  fastclock fast clock timer times">
+  fastclock fast clock timer times controller dim follower">
   <!--#include virtual="/Style" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-    <h1>Adding / Editing Lights and Light Controls</h1>
+
+    <h1>Adding / Editing Lights and Light Controllers</h1>
       <ul class="snav">
+        <li><a href="#addLight">Adding a Light</a></li>
         <li><a href="#editLight">Editing a Light</a></li>
-        <li><a href="#lightcontrol">Light Controls</a></li>
+        <li><a href="#lightcontrol">Light Controllers</a></li>
         <li><a href="#varLight">Variable Intensity Lights</a></li>
       </ul>
 
@@ -36,7 +37,7 @@
           "LightTable.shtml">Light Table</a></b>, and click the
           <b>Add...</b> button at the bottom of the <b>Light
           Table</b> to bring up the <b>Add Light</b> window.</p><img src=
-          "images/LightAddFrame.png" alt="Add Light Window" height="398" width="577">
+          "images/Light-Add-Frame-662x371.png" alt="Add Light Window" height="371" width="662">
         </li>
 
         <li>
@@ -87,10 +88,11 @@
         definition in the fields that appear. If you need to enter
         a Sensor name or a Turnout name, you must enter the name
         (System Name or User Name) of an existing Sensor or
-        Turnout. <b>Caution</b>: if you choose to enter a User
+        Turnout.
+        <br><b>Caution</b>: if you choose to enter a User
         Name, be careful about changing the User Name of your
         Sensor or Turnout afterwards. A simple change of User Name
-        could break your Light control definition.</li>
+        could break your Light controller definition.</li>
 
         <li>Next is the notes area of the Add/Edit Light window.
         This is where instructions and error messages will appear
@@ -106,24 +108,24 @@
 
 
         <li>
-          <p>If you wish to enter a Control for your new Light,
-          click the <b>Add Control</b> button, and enter your
-          choices into the <b>Add Light Control</b> window which
-          appears. You may enter as many Light Controls as desired.
-          More information on Light Controls <a href=
+          <p>If you wish to enter a Controller for your new Light,
+          click the <b>Add Controller</b> button, and enter your
+          choices into the <b>Add Light Controller</b> window which
+          appears. You may enter as many Light Controllers as desired.
+          More information on Light Controllers <a href=
           "#lightcontrol">below</a>.</p>
         </li>
 
         <li>
-          <p>Each Light Control is displayed in the Light Control
+          <p>Each Light Controller is displayed in the Light Controller
           table on the Add Light and Edit Light window.
-          The <b>Control Type</b> is shown on the left,
-          followed by a <b>Description</b> of the Control
+          The <b>Controller Type</b> is shown on the left,
+          followed by a <b>Description</b> of the Controller
           mechanism. These are followed by <b>Edit</b> and
           <b>Delete</b> buttons. Click <b>Edit</b> to bring up
           the <b>Edit Light Control</b> window allowing changes
           to the control specification as described above.
-          Click a <b>Delete</b> button to remove a Light Control.</p>
+          Click a <b>Delete</b> button to remove a Light Controller.</p>
         </li>
 
         <li>
@@ -149,6 +151,8 @@
           without creating any more Lights.</p>
         </li>
       </ol><a name="addManyLight" id="addManyLight"></a>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2>Adding several new Lights at Once</h2>
       If the selected
@@ -205,12 +209,14 @@
         </li>
 
         <li>
-          <p>Entered Light Control items and Variable Intensity
+          <p>Entered Light Controller items and Variable Intensity
           items will be assigned to the first Light created, and
           not to subsequent Lights. These items may be added by
           manual Editing (see next paragraph).</p>
         </li>
       </ul>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2><a name="editLight" id="editLight">Editing an existing Light</a></h2>
       To edit an existing Light,
@@ -220,7 +226,7 @@
           <p>Click on a Light's <b>Edit</b> button in the
           <a href="LightTable.shtml">Light Table</a> to bring up
           the <b>Edit Light</b> window:</p>
-          <img src="images/LightEditFrame.png" height="351" width="578" alt="Edit Light Window">
+          <img src="images/Light-Edit-Frame-662x370.png" height="370" width="662" alt="Edit Light Window">
         </li>
 
         <li>
@@ -229,7 +235,7 @@
           <br>
           The <b>User Name</b> may be changed either here or by double
           clicking on it in the Light Table.<br>
-          The Light Control and notes areas are the same as above.</p>
+          The Light Controller and notes areas are the same as above.</p>
         </li>
         
         <li>
@@ -267,29 +273,31 @@
           
       </ol>
       
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
     <h2><a name="lightcontrol" id="lightcontrol">Automated Control Options for Lights</a></h2>
       
-      <p>On startup, the status of Light Control inputs will be checked,
+      <p>On startup, the status of Light Controller inputs will be checked,
       and the light will be set to the appropriate state.
-      <br>The Fast Clock Light Control uses the previous whole minute.</p>
+      <br>The Fast Clock Follower Light Controller uses the previous whole minute.</p>
       
 
-      <p>The Light Table contains an 'Enabled' column. For a Light Control
+      <p>The Light Table contains an 'Enabled' column. For a Light Controller
       to be triggered it must be enabled, the default option on startup and Light creation.</p>
       
       <p>You can uncheck this
       box to temporarily disable a Light from being triggered, i.e.
       prevent it switching when its control mechanism fires.</p>
-          <p>The Light Control will not update status if the Light is disabled in the Light Table.</p>
+          <p>The Light Controller will not update status if the Light is disabled in the Light Table.</p>
       
-      <p>While adding or editing a Light, click on the Add Control button.</p>
+      <p>While adding or editing a Light, click on the Add Controller button.</p>
       
-      <img src="images/LightAddFrameNone.png" height="138" width="273" alt="No Light Control selected">
+      <img src="images/Light-Add-Controller-Frame-None-310x203.png" 
+        height="203" width="310" alt="No Light Controller selected">
 
 
-      <p>The <b>Add/Edit Light Control</b> window is used to
-      specify a Light control. Automated operation of a Light can be
+      <p>The <b>Add/Edit Light Controller</b> window is used to
+      specify a Light controller. Automated operation of a Light can be
       controlled in one or more of the following ways:</p>
 
       <h4><a name="lightcontrolturnout" id="lightcontrolturnout">Light Controlled by Turnout</a></h4>
@@ -306,8 +314,8 @@
           
           
           
-          <img src="images/LightAddFrameTurnout.png"
-          height="177" width="273" alt="Add or Edit Light Controlled by Turnout">
+          <img src="images/Light-Add-Controller-Frame-Turnout-310x237.png"
+          height="237" width="310" alt="Add or Edit Light Controlled by Turnout">
 
     <h4><a name="lightcontrolonesensor" id="lightcontrolonesensor">Light Controlled by Sensor</a></h4>
 
@@ -323,7 +331,7 @@
           position in a hidden staging area.</p>
           
           <img alt ="Add or Edit Light controlled by a Sensor" src=
-          "images/LightAddFrameSensor.png" height="177" width="280">
+          "images/Light-Add-Controller-Frame-Sensor-310x237.png" height="237" width="310">
 
 
     <h4><a name="lightcontroltwosensor" id="lightcontroltwosensor">Light Controlled by Two Sensors</a></h4>
@@ -343,12 +351,12 @@
           layout sound for a bridge rumble may be played while the
           train is traversing the bridge.</p>
           <img alt="Add or Edit Light controlled by two sensors." src=
-          "images/LightFrameTwoSensor.png" height="176" width="474">
+          "images/Light-Add-Controller-Frame-Two-Sensors-310x272.png" height="272" width="310">
 
-    <h4><a name="lightcontrolfastclock" id="lightcontrolfastclock">Light Controlled by Fast Clock</a></h4>
+    <h4><a name="lightcontrolfastclock" id="lightcontrolfastclock">Light Controlled by Fast Clock Follower</a></h4>
 
           <p>Each time the minute is updated, the 
-          Light Control will check if the Light should be On or Off,
+          Light Controller will check if the Light should be On or Off,
           and set the Light accordingly.</p>
           
           
@@ -359,30 +367,47 @@
           <b>Time On</b> and will be turned <b>OFF</b> when the
           Fast Clock reaches the time entered in <b>Time Off</b>.</p>
           
-
-          <p>The times are entered in "hh:mm" format, where "hh" is
-          hours and "mm" is minutes for a 24-hour clock. One use of
+          <p>Hours are entered in "hh" format between 00 and 23.
+          <br>Minutes are entered in "mm" format between 00 and 59.
+          <p>One use of
           this option is to turn on and off scenery lighting,
           street lights, house lights, etc. to simulate night time
           on the layout.</p>
           
+          <img src="images/Light-Add-Controller-Frame-Fast-Clock-Follower-310x227.png" 
+          alt="Add or Edit Light controlled by Fast Clock Follower" height="227" width="310">
           
           <p>If the light status is changed between minutes, it will be 
           reset on the next minute update. eg.</p>
           <ul>
-          <li>A Fast Clock Light Control is ON between 01:00 and 02:00</li>
+          <li>A Fast Clock Following Light Controller is ON between 01:00 and 02:00</li>
           <li>At 01:36:21 something sets the Light OFF</li>
           <li>At 01:37:00 on the next minute update, the Light will be set back ON.</li>
           </ul>
+          <p>This could be useful for the night-time random bathroom light scenarios,
+          or even star shimmers. You'd only need 1 Sensor or Turnout Controller action 
+          to trigger the Light On, 
+          knowing that the FastClock Follower will reset it back to OFF pretty soon.</p>
           
           <p>On startup, the Fast Clock will be checked, and the light will be set to
           correspond with the current time setting.</p>
           
           <p>If no Fast Clock is present on your system, the current local time will be used.</p>
           
-          
-          <img src="images/LightAddFrameClock.png" alt="Add or Edit Light controlled by FastClock"
-          height="175" width="273">
+          <p>To stop one Light Controller turning the Light ON, and the other turning the Light OFF,
+         only the most recent action time is used as the Light value, eg the following controls:</p>
+
+        <img src="images/Light-Controller-multiple-fast-clock-followers-662x401.png" height="401"
+          width="662" alt="Multiple Fast Clock Follower Light Controllers">
+
+        <ul>
+        <li><strong>00:00 .. 00:59</strong> The latest action time is 04:00 from the previous day so Light OFF</li>
+        <li><strong>01:00 .. 01:59</strong> The latest action time is 01:00 so Light ON</li>
+        <li><strong>02:00 .. 02:59</strong> The latest action time is 02:00 so Light ON</li>
+        <li><strong>03:00 .. 03:59</strong> The latest action time is 03:00 so Light OFF</li>
+        <li><strong>04:00 .. 23:59</strong> The latest action time is 04:00 so Light OFF</li>
+        </ul>
+        
 
     <h4><a name="lightcontroltimedon" id="lightcontroltimedon">Light Controlled by Timed ON</a></h4>
 
@@ -391,9 +416,9 @@
           it will be turned <b>OFF</b>, when the specified time has
           elapsed.</p> 
           
-          <p>Specify the trigger Sensor by entering its name
-          (System Name or User Name) in the <b>Trigger Sensor
-          Name</b> field. Enter the time the Light is to remain on
+          <p>Specify the trigger Sensor by selecting its User Name
+          (System Name if no User Name set) in the <b>Trigger Sensor
+          Name</b> dropdown. Enter the time the Light is to remain on
           (in milliseconds) in the <b>Duration ON</b> field.</p>
           
           <p>This option has a number of uses, it was originally designed
@@ -403,30 +428,31 @@
           ringing of a crossing bell when a train enters a
           block.</p>
           
-          <img src="images/LightAddFrameTimed.png" height="176"
-          width="281" alt="Add or Edit Light controlled by Timed On">
+          <img src="images/Light-Add-Controller-Frame-Timed-On-310x232.png" height="232"
+          width="310" alt="Add or Edit Light controlled by Timed On">
           
       <h3>Multiple Light Controls</h3>
       
-        <p>Light Controls act independently, no matter what order they are placed in the list.</p>
-        <p>Each Light Control may set the Light at any time, no matter the status of any other
-         Light Controls.</p>
-
+        <p>Multiple Fast Clock Follower Controllers on a single Light will act as a group.</p>
+        <p>All other Light Controllers act independently, no matter what order they are placed in the list
+         and may set the Light at any time, no matter the status of any other Light Controllers.</p>
+        
       
-      <h3><a name="cautions" id="cautions">Light Control Cautions</a></h3>
+      <h3><a name="cautions" id="cautions">Light Controller Cautions</a></h3>
 
           <p>After setting a Sensor or a Turnout as part of
-          a Light Control, be very careful about changing the User
+          a Light Controller, be very careful about changing the User
           Name of your Sensor or Turnout. A simple change of User
           Name could break your Light Control definitions.</p>
 
-          <p>If you enter multiple Light Controls for the same
-          Light, it is possible that the Light Controls might
+          <p>If you enter multiple Light Controllers for the same
+          Light, it is possible that the Light Controllers might
           conflict or overlap with each other, producing strange
           results. <b>The user is responsible for ensuring that
-          Light Controls do not conflict.</b></p>
-        
+          Light Controllers do not conflict.</b></p>
 
+        
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       
       <h2><a name="varLight" id="varLight">Working with Variable Intensity Lights</a></h2>
       If the selected <b>System Connection</b> supports Lights
@@ -460,11 +486,18 @@
       Intensity</b> outside the <b>Minimum Intensity to Maximum
       Intensity</b> range will result in the <b>Target
       Intensity</b> being set to the relevant limit.</p>
-      
-      <h4>Further JMRI Support</h4>
 
-      <p>JMRI <a href="LightTable.shtml" title="Light Table">Light Table help page</a>.</p>
-      <!--#include virtual="/Footer" -->
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+      
+      <h2>Other Light Reading</h2>
+      
+      <p><a href="LightTable.shtml" title="Light Table">Light Table Help</a></p>
+      
+      <p><a href="../../../../html/tools/Lights.shtml" >Lights General Documentation</a></p>
+
+      <p><a href="../simplelightctrl/SimpleLightCtrl.shtml"> Light Control Tool</a> (for manual Light operation)</p>
+                   
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

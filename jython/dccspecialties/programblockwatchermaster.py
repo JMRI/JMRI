@@ -29,7 +29,7 @@
 # 2. Move the Program Jumper J3 from either [J3-2 J3-3] or [J3-3 J3-4] To [J3-1 J3-2](Program Mode)
 # 3. Turn On Track Power - Again, Use a Throttle or JMRI.
 # 4. VERY IMPORTANT - Wait 30 to 45 Seconds.
-# 5. In JMRI Decoder Pro, Go to Panels > Run Script.  Select the file that corresponds
+# 5. In JMRI DecoderPro, Go to Panels > Run Script.  Select the file that corresponds
 #    to the BlockWatcher you are programming.  Note - Do not have the file open in an editor.
 #
 # Important - This script can take 2 to 6 seconds to run. This depends on the number of 

@@ -41,7 +41,7 @@ abstract public class AbstractUsbConnectionConfigXml extends AbstractConnectionC
      * @return the usb port adapter
      */
     protected UsbPortAdapter getAdapter() {
-        log.debug("getAdapter({})");
+        log.debug("getAdapter()");
         return adapter;
     }
 

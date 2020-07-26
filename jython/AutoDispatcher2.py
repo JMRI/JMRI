@@ -144,6 +144,7 @@ from jmri.jmrit import XmlFile
 
 from jmri.jmrit.consisttool import ConsistToolFrame
 
+# is this next import necessary?
 from jmri.implementation import AbstractShutDownTask
 
 # from jmri.jmrit.operations.locations import LocationManager
@@ -182,7 +183,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     # Retrieve DOUBLE_XOVER constant, depending on JMRI Version
     # (LayoutTurnout class was moved to a new package, starting with JMRI 2.9.3)
     try :
-        DOUBLE_XOVER = jmri.jmrit.display.layoutEditor.LayoutTurnout.DOUBLE_XOVER
+        DOUBLE_XOVER = jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType.DOUBLE_XOVER
     except :
         DOUBLE_XOVER = jmri.jmrit.display.LayoutTurnout.DOUBLE_XOVER
 
@@ -4955,11 +4956,11 @@ class ADlocomotive :
                   + self.name + " (" + str(self.address) + ")")
                 self.leadThrottle = self.throttle
             speedStepMode = self.throttle.getSpeedStepMode()
-            if speedStepMode == DccThrottle.SpeedStepMode128 :
+            if speedStepMode == SpeedStepMode.NMRA_DCC_128 :
                 self.stepsNumber = 126.
-            elif speedStepMode == DccThrottle.SpeedStepMode28 :
+            elif speedStepMode == SpeedStepMode.NMRA_DCC_28 :
                 self.stepsNumber = 28.
-            elif speedStepMode == DccThrottle.SpeedStepMode27 :
+            elif speedStepMode == SpeedStepMode.NMRA_DCC_27 :
                 self.stepsNumber = 27.
             else :
                 self.stepsNumber = 14.

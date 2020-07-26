@@ -9,7 +9,7 @@ import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccPortController; // no special xSimulatorController
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
-public class SimulatorAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends EasyDccPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -53,12 +53,12 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     @Override
     public String openPort(String portName, String appName) {
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             log.debug("inpipe created {}", inpipe != null);
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
@@ -88,7 +88,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      */
     public boolean okToSend() {
         if (checkBuffer) {
-            log.debug("Buffer Empty: " + outputBufferEmpty);
+            log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty);
         } else {
             log.debug("No Flow Control or Buffer Check");
@@ -161,14 +161,22 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      *
      * @return null
      */
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
-        return null;
+        return new String[]{};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[]{};
     }
 
     @Override
@@ -255,7 +263,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         EasyDccReply reply = new EasyDccReply();
         int i = 0;
         char command = msg.toString().charAt(0);
-        log.debug("Message type = " + command);
+        log.debug("Message type = {}", command);
         switch (command) {
 
             case 'X': // eXit programming

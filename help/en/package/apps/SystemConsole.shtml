@@ -16,14 +16,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: System Console</h1>
       <p>The JMRI System Console panel is where you
         get system output from JMRI.</p>
@@ -33,7 +34,7 @@
 
       <p>JMRI provides connection information via the system console.
         You can find the system console under the main menu header "Help"
-        then "System console...". Below is an image of the console window
+        then "System Console...". Below is an image of the console window
         when the program is operating normally. Note that the window size
         has been adjusted so we can read it a bit more easily.</p>
 
@@ -82,7 +83,7 @@
         connection, or a powered down or failed command station.</p>
 
       <p>This is the apps.SystemConsole.shtml help page.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

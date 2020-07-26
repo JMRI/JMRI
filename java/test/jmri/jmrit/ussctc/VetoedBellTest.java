@@ -2,12 +2,14 @@ package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
 import jmri.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for VetoedBell class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class VetoedBellTest {
 
@@ -20,6 +22,7 @@ public class VetoedBellTest {
     public void testBellStrokeAllowed() throws JmriException {
         rung = false;
         Bell bell = new Bell(){
+            @Override
             public void ring() {
                 rung = true;
             }
@@ -36,6 +39,7 @@ public class VetoedBellTest {
     public void testBellStrokeNotAllowed() throws JmriException  {
         rung = false;
         Bell bell = new Bell(){
+            @Override
             public void ring() {
                 rung = true;
             }
@@ -52,20 +56,18 @@ public class VetoedBellTest {
     Sensor veto;
     Turnout bellTurnout;
     
-    // The minimal setup for log4J
-    @org.junit.Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initShutDownManager();
         
         veto = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1"); veto.setUserName("veto Sensor");
         bellTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); bellTurnout.setUserName("Bell output");
     }
 
-    @org.junit.After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

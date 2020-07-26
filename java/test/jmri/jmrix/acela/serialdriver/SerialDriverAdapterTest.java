@@ -1,32 +1,30 @@
 package jmri.jmrix.acela.serialdriver;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SerialDriverAdapter class.
  *
  * @author Paul Bender Copyright (C) 2016
- **/
-
+ */
 public class SerialDriverAdapterTest {
 
    @Test
    public void ConstructorTest(){
-      Assert.assertNotNull("SerialDriverAdapter constructor",new SerialDriverAdapter());
+      Assert.assertNotNull("SerialDriverAdapter constructor", new SerialDriverAdapter());
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         JUnitUtil.tearDown();
    }

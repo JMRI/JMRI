@@ -4,7 +4,6 @@ import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottleManager;
-import jmri.jmrix.direct.DirectSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,19 +24,12 @@ public class ThrottleManager extends AbstractThrottleManager {
     private CommandStation tc = null;
     /**
      * Constructor for a Direct ThrottleManager.
+     * @param memo system connection.
      */
     public ThrottleManager(DirectSystemConnectionMemo memo) {
         super(memo);
         tc = memo.getTrafficController();
         jmri.InstanceManager.setDefault(jmri.jmrix.direct.ThrottleManager.class, this);
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public ThrottleManager instance() {
-        return jmri.InstanceManager.getDefault(jmri.jmrix.direct.ThrottleManager.class);
     }
 
     Throttle currentThrottle = null;
@@ -48,12 +40,18 @@ public class ThrottleManager extends AbstractThrottleManager {
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         if (currentThrottle != null) {
-            log.error("DCC Direct cannot handle more than one throttle");
-            failedThrottleRequest(address, "DCC direct cannot handle more than one throttle " + address);
+            log.error("DCC Direct cannot handle more than one throttle {}",address);
+            failedThrottleRequest(address, "DCC direct cannot handle more than one throttle "+ address);
             return;
         }
-        currentThrottle = new Throttle(((DccLocoAddress) address), tc); // uses address object
-        notifyThrottleKnown(currentThrottle, currentThrottle.getLocoAddress());
+        if (address instanceof DccLocoAddress) {
+            currentThrottle = new Throttle(((DccLocoAddress) address), tc); // uses address object
+            notifyThrottleKnown(currentThrottle, currentThrottle.getLocoAddress());
+        }
+        else {
+            log.error("LocoAddress {} is not a DccLocoAddress",address);
+            failedThrottleRequest(address, "LocoAddress is not a DccLocoAddress " +address);
+        }
     }
 
     @Override

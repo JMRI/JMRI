@@ -1,15 +1,14 @@
 package jmri.jmrix.qsi;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the QsiReplyclass
  *
- * @author	Bob Jacobsen Copyright 2006, 2007
+ * @author Bob Jacobsen Copyright 2006, 2007
  *
  */
 public class QsiReplyTest extends jmri.jmrix.AbstractMessageTestBase {
@@ -65,13 +64,13 @@ public class QsiReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new QsiSystemConnectionMemo();
-        tc = new QsiTrafficControlScaffold(){
+        tc = new QsiTrafficControlScaffold() {
             @Override
-            public boolean isSIIBootMode(){
+            public boolean isSIIBootMode() {
                 return true;
             }
         };
@@ -79,11 +78,11 @@ public class QsiReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         m = msg = new QsiReply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	memo = null;
-	tc = null;
-	m = msg = null;
+        memo = null;
+        tc = null;
+        m = msg = null;
         JUnitUtil.tearDown();
     }
 

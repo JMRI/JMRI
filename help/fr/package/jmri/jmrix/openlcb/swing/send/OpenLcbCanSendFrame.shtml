@@ -11,8 +11,6 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help send loconet packets">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -23,13 +21,13 @@
 
 <body>
   --&gt; <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
+  <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
   <!-- Style -->
    <!-- /Style -->
-   <!--#include virtual="/Header" -->
-
+   <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Envoi Trame OpenLCB</h1><a href="SendFrame.jpg"><img src=
       "SendFrame.jpg" width="221" height="176" alt=
       "Send Frame Tool image" align="right"></a><br>
@@ -141,7 +139,8 @@
 
       <p>"Envoyer Confirmation" envoie la confirmation de tous les
       datagrammes que vous recevez en r&eacute;ponse.</p>
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

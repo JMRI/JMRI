@@ -3,15 +3,15 @@ package jmri.jmrit.symbolicprog;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * Test LongAddrVariableValue class.
  *
  * @todo need a check of the MIXED state model for long address
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * @author Bob Jacobsen Copyright 2001, 2002
  */
 public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -94,7 +94,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueRead() {
-    }	// due to multi-cv nature of LongAddr
+    } // due to multi-cv nature of LongAddr
 
     @Override
     @Test
@@ -235,12 +235,14 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         // how do you check separation of the two writes?  State model?
     }
 
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         super.setUp();
     }
     
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         super.tearDown();
     }

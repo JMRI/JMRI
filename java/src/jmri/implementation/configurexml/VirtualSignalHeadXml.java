@@ -54,7 +54,7 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
 
         SignalHead existingBean =
                 InstanceManager.getDefault(jmri.SignalHeadManager.class)
-                        .getBeanBySystemName(sys);
+                        .getBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
             log.error("systemName is already registered: {}", sys);
@@ -65,10 +65,6 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class);
+
 }

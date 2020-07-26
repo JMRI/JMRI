@@ -1,6 +1,5 @@
 package jmri.jmrit.conditional;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -12,11 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -40,6 +38,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.Audio;
 import jmri.Conditional;
 import jmri.Conditional.Operator;
@@ -60,10 +65,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.*;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * A tree based editor for maintaining Logix Conditionals, State Variables and
@@ -330,8 +332,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _leftButtonBar.add(_labelPanel);
 
         // ------------ Add Button ------------
-        JButton addButton = new JButton(Bundle.getMessage("AddButtonText"));    // NOI18N
-        addButton.setToolTipText(Bundle.getMessage("HintAddButton"));       // NOI18N
+        JButton addButton = new JButton(Bundle.getMessage("ButtonAddText")); // NOI18N
+        addButton.setToolTipText(Bundle.getMessage("HintAddButton"));        // NOI18N
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -737,7 +739,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Create a new variable Can be invoked by a Variables or Variable node.
      */
     void newVariable() {
-        if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+        if (LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())) {
             JOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("Error49"), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
@@ -932,6 +934,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             if (refList != null) {
                 for (String ref : refList) {
                     Conditional cRef = _conditionalManager.getBySystemName(ref);
+                    if (cRef==null){
+                        log.error("Conditional :{}: not found while updating username",ref);
+                        continue;
+                    }
                     List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                     int idx = 0;
                     for (ConditionalVariable var : varList) {
@@ -1120,6 +1126,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 cdlNode.setText(buildNodeText("Conditional", cdl, i));  // NOI18N
                 _cdlModel.nodeChanged(cdlNode);
             }
+            return;
         }
 
         if (_curNodeType.equals("Variables")) {  // NOI18N
@@ -2372,16 +2379,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case SENSOR:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
             case TURNOUT:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
             case LIGHT:
+            case CONDITIONAL:
+            case WARRANT:
                 _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 break;
@@ -2414,16 +2415,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 _variableCompareOpBox.setSelectedIndex(num1);
                 _variableData1Field.setText(_curVariable.getDataString());
-                break;
-
-            case CONDITIONAL:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
-            case WARRANT:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
                 break;
 
             case CLOCK:
@@ -2631,7 +2622,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             return;
         }
         // Select the current entry, add the listener
-        _comboNameBox.setSelectedBeanByName(_curVariable.getName());
+        _comboNameBox.setSelectedItemByName(_curVariable.getName());
         _comboNameBox.addActionListener(new NameBoxListener(_variableNameField));
         _comboNameBox.addFocusListener(detailFocusEvent);
     }
@@ -2804,7 +2795,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     }
 
     /**
-     * Fetch valid appearances for a given Signal Head.
+     * Fetch valid localized appearances for a given Signal Head.
      * <p>
      * Warn if head is not found.
      *
@@ -2875,37 +2866,23 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case SENSOR:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case TURNOUT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case LIGHT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case SIGNALHEAD:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case SIGNALMAST:
+            case CONDITIONAL:
+            case WARRANT:
+            case ENTRYEXIT:
                 testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case MEMORY:
                 testType = _variableCompareTypeBox.getItemAt(_variableCompareTypeBox.getSelectedIndex());
-                break;
-            case CONDITIONAL:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
-            case WARRANT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case CLOCK:
                 testType = Conditional.Type.FAST_CLOCK_RANGE;
                 break;
             case OBLOCK:
                 testType = Conditional.Type.BLOCK_STATUS_EQUALS;
-                break;
-            case ENTRYEXIT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             default:
                 JOptionPane.showMessageDialog(_editLogixFrame,
@@ -2989,17 +2966,19 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 if (testType == Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS) {
                     String appStr = (String) _variableSignalBox.getSelectedItem();
-                    Conditional.Type type = ConditionalVariable.stringToVariableTest(appStr);
-                    if (type == Conditional.Type.ERROR) {
-                        JOptionPane.showMessageDialog(_editLogixFrame,
-                                Bundle.getMessage("ErrorAppearance"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                                JOptionPane.ERROR_MESSAGE);
-                        return false;
+                    if (appStr != null) {
+                        Conditional.Type type = ConditionalVariable.stringToVariableTest(appStr);
+                        if (type == Conditional.Type.ERROR) {
+                            JOptionPane.showMessageDialog(_editLogixFrame, Bundle.getMessage("ErrorAppearance"), Bundle.getMessage("ErrorTitle"), // NOI18N
+                                    JOptionPane.ERROR_MESSAGE);
+                            return false;
+                        }
+                        _curVariable.setType(type);
+                        _curVariable.setDataString(appStr);
+                        log.debug("SignalHead \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}", name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
+                    } else {
+                        log.warn("null selection in _variableSignalBox");
                     }
-                    _curVariable.setType(type);
-                    _curVariable.setDataString(appStr);
-                    log.debug("SignalHead \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}",
-                            name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
                 }
                 break;
             case SIGNALMAST:
@@ -3030,10 +3009,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (name == null) {
                     return false;
                 }
-                String stri18n = _variableStateBox.getSelectedItem().toString();
-                _curVariable.setDataString(OBlock.getSystemStatusName(stri18n));
-                log.debug("OBlock \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}",
-                        name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
+                String stri18n = (String) _variableStateBox.getSelectedItem();
+                if (stri18n != null) {
+                    _curVariable.setDataString(OBlock.getSystemStatusName(stri18n));
+                    log.debug("OBlock \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}", name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
+                }
                 break;
             case ENTRYEXIT:
                 name = validateEntryExitReference(name);
@@ -3572,10 +3552,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case SIGNALMAST:
-                _actionTypeBox.setSelectedItem(actionType);
-                break;
-
             case CLOCK:
                 _actionTypeBox.setSelectedItem(actionType);
                 if (actionType == Conditional.Action.SET_FAST_CLOCK_TIME) {
@@ -3588,10 +3564,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case MEMORY:
                 _actionTypeBox.setSelectedItem(actionType);
                 _shortActionString.setText(_curAction.getActionString());
-                break;
-
-            case LOGIX:
-                _actionTypeBox.setSelectedItem(actionType);
                 break;
 
             case WARRANT:
@@ -3675,9 +3647,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case OTHER:
+            case SIGNALMAST:
+            case LOGIX:
+            case OTHER: // ACTION_TRIGGER_ROUTE
                 _actionTypeBox.setSelectedItem(actionType);
-                // ACTION_TRIGGER_ROUTE
                 break;
 
             default:
@@ -4088,7 +4061,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             return;
         }
         // Select the current entry
-        _comboNameBox.setSelectedBeanByName(_curAction.getDeviceName());
+        _comboNameBox.setSelectedItemByName(_curAction.getDeviceName());
         _comboNameBox.addActionListener(new NameBoxListener(_actionNameField));
         _comboNameBox.addFocusListener(detailFocusEvent);
     }
@@ -4204,17 +4177,13 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 sndFileChooser = new JFileChooser(System.getProperty("user.dir") // NOI18N
                         + java.io.File.separator + "resources" // NOI18N
                         + java.io.File.separator + "sounds");  // NOI18N
-                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("wav sound files");  // NOI18N
-                filt.addExtension("wav");  // NOI18N
-                sndFileChooser.setFileFilter(filt);
+                sndFileChooser.setFileFilter(new FileNameExtensionFilter("wav sound files", "wav")); // NOI18N
             }
             currentChooser = sndFileChooser;
         } else if (actionType == Conditional.Action.RUN_SCRIPT) {
             if (scriptFileChooser == null) {
                 scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");  // NOI18N
-                filt.addExtension("py");
-                scriptFileChooser.setFileFilter(filt);
+                scriptFileChooser.setFileFilter(new FileNameExtensionFilter("Python script file", "py")); // NOI18N
             }
             currentChooser = scriptFileChooser;
         } else {

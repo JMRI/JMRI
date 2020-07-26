@@ -19,7 +19,6 @@ import javax.swing.table.TableRowSorter;
 import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
-import jmri.util.ConnectionNameFromSystemName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,18 +42,18 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             // build the list, with default at start and internal at end (if present)
             jmri.managers.AbstractProxyManager<E> proxy = (jmri.managers.AbstractProxyManager<E>) getManager();
 
-            tabbedTableArray.add(new TabbedTableItem<E>(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
+            tabbedTableArray.add(new TabbedTableItem<>(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
 
             List<jmri.Manager<E>> managerList = proxy.getDisplayOrderManagerList();
             for (Manager<E> manager : managerList) {
-                String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
-                TabbedTableItem<E> itemModel = new TabbedTableItem<E>(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
+                String manuName = manager.getMemo().getUserName();
+                TabbedTableItem<E> itemModel = new TabbedTableItem<>(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
                 tabbedTableArray.add(itemModel);
             }
             
         } else {
-            String manuName = ConnectionNameFromSystemName.getConnectionName(getManager().getSystemPrefix());
-            tabbedTableArray.add(new TabbedTableItem<E>(manuName, true, getManager(), getNewTableAction(manuName)));
+            String manuName = getManager().getMemo().getUserName();
+            tabbedTableArray.add(new TabbedTableItem<>(manuName, true, getManager(), getNewTableAction(manuName)));
         }
         for (int x = 0; x < tabbedTableArray.size(); x++) {
             AbstractTableAction<E> table = tabbedTableArray.get(x).getAAClass();
@@ -83,7 +82,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         return dataPanel;
     }
 
-    protected ArrayList<TabbedTableItem<E>> tabbedTableArray = new ArrayList<TabbedTableItem<E>>();
+    protected ArrayList<TabbedTableItem<E>> tabbedTableArray = new ArrayList<>();
 
     @Override
     protected void setTitle() {
@@ -101,9 +100,12 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
     @Override
     public void addToFrame(BeanTableFrame<E> f) {
         try {
-            tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().addToFrame(f);
+            TabbedTableItem<E> table = tabbedTableArray.get(dataTabs.getSelectedIndex());
+            if (table != null) {
+                table.getAAClass().addToFrame(f);
+            }
         } catch (ArrayIndexOutOfBoundsException ex) {
-            log.error(ex.toString() + " in add to Frame " + dataTabs.getSelectedIndex() + " " + dataTabs.getSelectedComponent());
+            log.error("{} in add to Frame {} {}", ex.toString(), dataTabs.getSelectedIndex(), dataTabs.getSelectedComponent());
         }
     }
 
@@ -112,16 +114,17 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().setMenuBar(f);
         } catch (ArrayIndexOutOfBoundsException ex) {
-            log.error(ex.toString() + " in add to Menu " + dataTabs.getSelectedIndex() + " " + dataTabs.getSelectedComponent());
+            log.error("{} in add to Menu {} {}", ex.toString(), dataTabs.getSelectedIndex(), dataTabs.getSelectedComponent());
         }
     }
 
     public void addToBottomBox(JComponent c, String str) {
-        for (int x = 0; x < tabbedTableArray.size(); x++) {
-            if (tabbedTableArray.get(x).getItemString().equals(str)) {
-                tabbedTableArray.get(x).addToBottomBox(c);
+        tabbedTableArray.forEach((table) -> {
+            String item = table.getItemString();
+            if (item != null && item.equals(str)) {
+                table.addToBottomBox(c);
             }
-        }
+        });
     }
 
     @Override
@@ -129,7 +132,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getDataTable().print(mode, headerFormat, footerFormat);
         } catch (java.awt.print.PrinterException e1) {
-            log.warn("error printing: " + e1, e1);
+            log.warn("error printing: {}", e1, e1);
         } catch (NullPointerException ex) {
             log.error("Trying to print returned a NPE error");
         }

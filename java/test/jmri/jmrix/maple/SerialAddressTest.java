@@ -3,20 +3,19 @@ package jmri.jmrix.maple;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialAddress utility class.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  */
 public class SerialAddressTest {
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         Assert.assertTrue("valid format - KL2", NameValidity.VALID == SerialAddress.validSystemNameFormat("KL2", 'L', "K"));
 
         Assert.assertTrue("invalid format - KL", NameValidity.VALID != SerialAddress.validSystemNameFormat("KL", 'L', "K"));
@@ -192,7 +191,7 @@ public class SerialAddressTest {
 
     // from here down is testing infrastructure
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager objects
@@ -230,11 +229,12 @@ public class SerialAddressTest {
 
     private MapleSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

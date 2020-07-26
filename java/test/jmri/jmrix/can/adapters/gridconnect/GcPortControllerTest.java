@@ -2,19 +2,18 @@ package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
- * JUnit tests for the GcPortController class
- * <p>
+ * JUnit tests for the GcPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
 public class GcPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
@@ -35,16 +34,14 @@ public class GcPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
                 return null;
             }
 
-            /**
-             * Get an array of valid baud rates; used to display valid options.
-             */
             @Override
             public String[] validBaudRates(){
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override
@@ -56,7 +53,7 @@ public class GcPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

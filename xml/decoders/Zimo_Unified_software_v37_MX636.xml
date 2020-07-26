@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -22,10 +21,11 @@
   <!--                                                                                       -->
   <!--   File is not tested cause no decoder of this type is in my collection.               -->
   <!--   If you find any errors please contact me by mail.                                   -->
+  <!-- v1.1,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020 -->
   <!--                                                                                       -->
   <decoder>
     <family name="Zimo Unified software (version 37+)" mfg="Zimo">
-      <model model="MX636C version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636C version 37+" replacementModel="MX636C version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -60,7 +60,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX636D version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636D version 37+" replacementModel="MX636D version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -95,7 +95,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX636VC version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636VC version 37+" replacementModel="MX636VC version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -130,7 +130,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
-      <model model="MX636VD version 37+" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
+      <model model="MX636VD version 37+" replacementModel="MX636VD version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>

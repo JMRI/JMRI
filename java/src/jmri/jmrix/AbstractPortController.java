@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -179,6 +180,8 @@ abstract public class AbstractPortController implements PortAdapter {
      * @return the option value
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "availability was checked before, should never get here")
     public String getOptionState(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getCurrent();
@@ -187,12 +190,14 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     /**
-     * Get a list of the various choices allowed with an given option.
+     * Get a list of the various choices allowed with a given option.
      *
      * @param option the name of the option to query
-     * @return list of valid values for the option
+     * @return list of valid values for the option, null if none are available
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "availability was checked before, should never get here")
     public String[] getOptionChoices(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getOptions();
@@ -201,6 +206,8 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "availability was checked before, should never get here")
     public String getOptionDisplayName(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getDisplayText();
@@ -294,7 +301,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * enabled.
      *
      * If the implementing class does not use a
-     * {@link jmri.jmrix.SystemConnectionMemo}, this method must be overridden.
+     * {@link SystemConnectionMemo}, this method must be overridden.
      * Overriding methods must call <code>super.setDisabled(boolean)</code> to
      * ensure the configuration change state is correctly set.
      *
@@ -341,7 +348,7 @@ abstract public class AbstractPortController implements PortAdapter {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
-            log.error("Sleep Exception raised during reconnection attempt" + s);
+            log.error("Sleep Exception raised during reconnection attempt{}", s);
         }
     }
 
@@ -369,11 +376,13 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Service method to purge a stream of initial contents
      * while opening the connection.
+     * @param serialStream input data
+     * @throws java.io.IOException from underlying operations
      */
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
      protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {
         int count = serialStream.available();
-        log.debug("input stream shows " + count + " bytes available");
+         log.debug("input stream shows {} bytes available", count);
         while (count > 0) {
             serialStream.skip(count);
             count = serialStream.available();
@@ -381,7 +390,7 @@ abstract public class AbstractPortController implements PortAdapter {
     }
     
     /**
-     * Get the {@link jmri.jmrix.SystemConnectionMemo} associated with this
+     * Get the {@link SystemConnectionMemo} associated with this
      * object.
      * <p>
      * This method should only be overridden to ensure that a specific subclass
@@ -399,7 +408,7 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     /**
-     * Set the {@link jmri.jmrix.SystemConnectionMemo} associated with this
+     * Set the {@link SystemConnectionMemo} associated with this
      * object.
      * <p>
      * Overriding implementations must call

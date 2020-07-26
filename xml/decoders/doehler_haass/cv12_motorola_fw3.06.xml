@@ -29,8 +29,20 @@
         <surname>Billon</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>4</revnumber>
+      <date>2019-07-28</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Simplified productID for PD05 and PD12: no more version indicated</revremark>
+    </revision>
     <revision>
       <revnumber>3</revnumber>
       <date>2016-12-14</date>
@@ -50,7 +62,7 @@
       <revremark>Creation. Motorola support added on May 31st 2014 with firmware 3.04.</revremark>
     </revision>
   </revhistory>
-  <variable item="Motorola" CV="12" mask="XXXXXVVV" tooltip="CV12 Bits 0-2" default="1" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Motorola" CV="12" mask="XXXXXVVV" tooltip="CV12 Bits 0-2" default="1" exclude="PD05A,PD12A">
     <enumVal>
       <enumChoice choice="Deactivated" value="0">
         <choice>Deactivated</choice>
@@ -111,7 +123,7 @@
     </enumVal>
     <label>Motorola</label>
   </variable>
-  <variable item="Reverse Motorola direction" CV="12" mask="XXXXVXXX" tooltip="CV12 Bit 3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable item="Reverse Motorola direction" CV="12" mask="XXXXVXXX" tooltip="CV12 Bit 3" default="0" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Reverse Motorola direction</label>
     <label xml:lang="it">Direzione invertita in MM1</label>

@@ -2,10 +2,9 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.lawicell.Message class
@@ -73,13 +72,12 @@ public class MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("standard format 2 byte", "T0000F00D87878787878787878\r", g.toString());
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
-	CanMessage msg = new CanMessage(0x123);
+        CanMessage msg = new CanMessage(0x123);
         msg.setExtended(false);
         msg.setRtr(false);
         msg.setNumDataElements(4);
@@ -91,9 +89,9 @@ public class MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = g = new Message(msg);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	m = g = null;
+        m = g = null;
         JUnitUtil.tearDown();
     }
 }

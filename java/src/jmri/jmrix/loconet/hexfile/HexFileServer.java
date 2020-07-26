@@ -75,22 +75,30 @@ public class HexFileServer {
 
             @Override
             public void requestThrottleSetup(LocoAddress a, boolean control) {
-                connectedAddresses++;
+                if (!(a instanceof DccLocoAddress)) {
+                    log.error("{} is not a DccLocoAddress",a);
+                    failedThrottleRequest(a, "LocoAddress " + a + " is not a DccLocoAddress");
+                    return;
+                }
                 DccLocoAddress address = (DccLocoAddress) a;
                 //create some testing situations
-                if (connectedAddresses > 5) {
-                    log.warn("SLOT MAX of 5 exceeded");
-                    failedThrottleRequest(address, "SLOT MAX of 5 exceeded");
+                if (connectedAddresses >= 5) {
+                    log.warn("SLOT MAX of 5 reached, Current={}", connectedAddresses);
+                    failedThrottleRequest(address, "SLOT MAX of 5 reached");
                     return;
                 }
                 // otherwise, continue with setup
                 super.requestThrottleSetup(a, control);
+                connectedAddresses++;
             }
 
             @Override
             public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-                connectedAddresses--;
-                return super.disposeThrottle(t, l);
+                if (super.disposeThrottle(t, l)) {
+                    connectedAddresses--;
+                    return true;
+                }
+                return false;
             }    
         };
 

@@ -1,5 +1,6 @@
 package jmri.jmrix.jmriclient;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 
 /**
@@ -12,26 +13,26 @@ import jmri.Reporter;
  */
 public class JMRIClientReporterManager extends jmri.managers.AbstractReporterManager {
 
-    private JMRIClientSystemConnectionMemo memo = null;
-    private String prefix = null;
-
     public JMRIClientReporterManager(JMRIClientSystemConnectionMemo memo) {
-        this.memo = memo;
-        this.prefix = memo.getSystemPrefix();
+        super(memo);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public JMRIClientSystemConnectionMemo getMemo() {
+        return (JMRIClientSystemConnectionMemo) memo;
     }
 
     @Override
-    public String getSystemPrefix() {
-        return prefix;
-    }
-
-    @Override
-    public Reporter createNewReporter(String systemName, String userName) {
-        Reporter t;
-        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        t = new JMRIClientReporter(addr, memo);
-        t.setUserName(userName);
-        return t;
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
+        Reporter r;
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        r = new JMRIClientReporter(addr, getMemo());
+        r.setUserName(userName);
+        return r;
     }
 
 }

@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.CommandStation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +48,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lisby Copyright (C) 2014
  */
-public class UhlenbrockSlotManager extends SlotManager implements LocoNetListener, CommandStation {
+public class UhlenbrockSlotManager extends SlotManager {
 
     public UhlenbrockSlotManager(LnTrafficController tc) {
         super(tc);
@@ -179,6 +178,11 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * equals bit 7 in CV value. Element 11: Bit 8-11 of CV number. Element 12:
      * Bit 0-6 in CV value. Element 15: Always 10 Element 30: Checksum
      *
+     * @param hopsa high status byte for message
+     * @param lopsa low status byte for message
+     * @param val Value for programming operation
+     * @param cvnum CV number for programming operation
+     * @return formatted message
      */
     protected LocoNetMessage progOnMainMessage(int hopsa, int lopsa, int val, int cvnum) {
         LocoNetMessage m = new LocoNetMessage(0x1F);
@@ -238,6 +242,10 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * 9: Bit 0-6 of CV value. Element 10: Always 70. Element 15: Always 10
      * Element 30: Checksum
      *
+     * @param element6 Byte from message
+     * @param val Value for programming operation
+     * @param cvnum CV number for programming operation
+     * @return formatted message
      */
     protected LocoNetMessage progOnProgrammingTrackMessage(int element6, int val, int cvnum) {
         //       log.error("About to create read/write CV command for IB-COM.", new Excception());
@@ -260,6 +268,11 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
 
     /*
      * Internal method to create the LocoNetMessage for programmer task start
+     * @param pcmd command byte values
+     * @param val Value to write if writing
+     * @parma cvnum CV number to access
+     * @param write is this a write?
+     * @return Message to send to do this function
      */
     @Override
     protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) {
@@ -292,6 +305,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
      * Internal method to create the LocoNetMessage for enabling programming
      * track in IB-COM / Intellibox II Note: This method is specific to
      * Uhlenbrock
+     * @return Message to send to do this function
      */
     protected LocoNetMessage startIBComPT() {
         //       log.error("About to initiate programming track for IB-COM.", new Exception());
@@ -310,6 +324,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     /**
      * Internal method to create the LocoNetMessage for disabling programming
      * track in IB-COM / Intellibox II Note: This method is currently not used
+     * @return Message to send to do this function
      */
     protected LocoNetMessage stopIBComPT() {
         //       log.error("About to stop using programming track for IB-COM.", new Exception());

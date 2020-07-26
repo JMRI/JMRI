@@ -1,11 +1,11 @@
 package jmri.profile;
 
 import javax.swing.JList;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -13,13 +13,13 @@ import org.junit.Test;
  */
 public class ProfileListCellRendererTest {
     
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
         JUnitUtil.resetProfileManager();
@@ -34,6 +34,7 @@ public class ProfileListCellRendererTest {
         list.setToolTipText(null);
         ProfileListCellRenderer instance = new ProfileListCellRenderer();
         Profile activeProfile = ProfileManager.getDefault().getActiveProfile();
+        Assert.assertNotNull(activeProfile); // this tests a non-null active profile
         String noProfileMessage = Bundle.getMessage("ProfileManagerDialog.profiles.toolTipText");
         String activeProfileMessage = Bundle.getMessage("ProfileTableModel.toolTip", activeProfile.getName(), activeProfile.getPath(), activeProfile.getId(), "");
         // null profile, selected index

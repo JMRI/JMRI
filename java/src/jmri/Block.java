@@ -110,11 +110,11 @@ import org.slf4j.LoggerFactory;
 public class Block extends AbstractNamedBean implements PhysicalLocationReporter {
 
     public Block(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public Block(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     static final public int OCCUPIED = Sensor.ACTIVE;
@@ -130,7 +130,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     // this should only be used for debugging...
     public String toDebugString() {
-        String result = getFullyFormattedDisplayName() + " ";
+        String result = getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME) + " ";
         switch (getState()) {
             case UNDETECTED: {
                 result += "UNDETECTED";
@@ -228,7 +228,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             _reporter.addPropertyChangeListener(_reporterListener = (PropertyChangeEvent e) -> {
                 handleReporterChange(e);
             });
-
         }
     }
 
@@ -300,7 +299,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Get a copy of the list of Paths
+     * Get a copy of the list of Paths.
      *
      * @return the paths or an empty list
      */
@@ -323,8 +322,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         try {
             firePropertyChange("state", old, _current);
         } catch (Exception e) {
-            log.error(getDisplayName()+" got exception during fireProperTyChange("+old+","+_current+") in thread "+
-                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
+            log.error("{} got exception during firePropertyChange({},{}) in thread {} {}: {}", getDisplayName(), old, _current,
+                    Thread.currentThread().getName(), Thread.currentThread().getId(), e);
         }
     }
 
@@ -461,7 +460,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
         try {
             return InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
-        } catch (Exception ex) {
+        } catch (IllegalArgumentException ex) {
             return -1;
         }
     }
@@ -496,7 +495,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             } catch (NumberFormatException nx) {
                 try {
                     InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
-                } catch (Exception ex) {
+                } catch (IllegalArgumentException ex) {
                     throw new JmriException("Value of requested block speed is not valid");
                 }
             }
@@ -514,16 +513,18 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return _curvature;
     }
 
-    /*
-     * Set length.  length must be in millimeters.
-     * Paths will inherit this length, if their length is not
-     * specifically set.  This length is the maximum length of
-     * any Path in the block. Path lengths will be modified to
-     * not exceed this length.
+    /**
+     * Set length in millimeters.
+     * <p>
+     * Paths will inherit this length, if their length is not specifically set.
+     * This length is the maximum length of any Path in the block. Path lengths
+     * exceeding this will be set to the default length.
+     *
+     * @param l length in millimeters
      */
     public void setLength(float l) {
         _length = l;
-        getPaths().stream().forEach((p) -> {
+        getPaths().stream().forEach(p -> {
             if (p.getLength() > l) {
                 p.setLength(0); // set to default
             }
@@ -560,12 +561,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             return false;
         } else {
             Block b = (Block) obj;
-
-            if (!b.getSystemName().equals(this.getSystemName())) {
-                return false;
-            }
+            return b.getSystemName().equals(this.getSystemName());
         }
-        return true;
     }
 
     @Override
@@ -588,7 +585,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     private PropertyChangeListener _reporterListener = null;
     private boolean _reportingCurrent = false;
 
-    private Path pListOfPossibleEntrancePaths[] = null;
+    private Path[] pListOfPossibleEntrancePaths = null;
     private int cntOfPossibleEntrancePaths = 0;
 
     void resetCandidateEntrancePaths() {
@@ -665,9 +662,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      */
     public void goingInactive() {
         log.debug("Block {} goes UNOCCUPIED", getDisplayName());
-        int currPathCnt = paths.size();
-        for (int i = 0; i < currPathCnt; i++) {
-            Block b = paths.get(i).getBlock();
+        for (Path path : paths) {
+            Block b = path.getBlock();
             if (b != null) {
                 b.setAsEntryBlockIfPossible(this);
             }
@@ -696,11 +692,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         Path next = null;
         // get statuses of everything once
         int currPathCnt = paths.size();
-        Path pList[] = new Path[currPathCnt];
-        boolean isSet[] = new boolean[currPathCnt];
-        boolean isActive[] = new boolean[currPathCnt];
-        int pDir[] = new int[currPathCnt];
-        int pFromDir[] = new int[currPathCnt];
+        Path[] pList = new Path[currPathCnt];
+        boolean[] isSet = new boolean[currPathCnt];
+        boolean[] isActive = new boolean[currPathCnt];
+        int[] pDir = new int[currPathCnt];
+        int[] pFromDir = new int[currPathCnt];
         for (int i = 0; i < currPathCnt; i++) {
             pList[i] = paths.get(i);
             isSet[i] = pList[i].checkPathSet();
@@ -735,13 +731,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                         }
                     } else if (log.isDebugEnabled()) {
                         if (null != _timeLastInactive) {
-                            log.debug("not restoring previous value, block {} has been inactive for too long ("
-                                    + (tn.toEpochMilli() - _timeLastInactive.toEpochMilli()) + "ms) and layout power has not just been restored ("
-                                    + bm.timeSinceLastLayoutPowerOn() + "ms ago)", getDisplayName());
+                            log.debug("not restoring previous value, block {} has been inactive for too long ({}ms) and layout power has not just been restored ({}ms ago)", getDisplayName(), tn.toEpochMilli() - _timeLastInactive.toEpochMilli(), bm.timeSinceLastLayoutPowerOn());
                         } else {
-                            log.debug("not restoring previous value, block {} has been inactive since the start " +
-                                    "of this session and layout power has not just been restored ("
-                                    + bm.timeSinceLastLayoutPowerOn() + "ms ago)", getDisplayName());
+                            log.debug("not restoring previous value, block {} has been inactive since the start of this session and layout power has not just been restored ({}ms ago)", getDisplayName(), bm.timeSinceLastLayoutPowerOn());
                         }
                     }
                 } else {
@@ -764,7 +756,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                             Path.decodeDirection(getDirection()));
                 } else if (next == null) {
                     log.error("unexpected next==null processing block {}", getDisplayName());
-                } else if (next.getBlock() == null) {
+                } else {
                     log.error("unexpected next.getBlock()=null processing block {}", getDisplayName());
                 }
                 break;
@@ -832,11 +824,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         Path next = null;
         // get statuses of everything once
         int currPathCnt = paths.size();
-        Path pList[] = new Path[currPathCnt];
-        boolean isSet[] = new boolean[currPathCnt];
-        boolean isActive[] = new boolean[currPathCnt];
-        int pDir[] = new int[currPathCnt];
-        int pFromDir[] = new int[currPathCnt];
+        Path[] pList = new Path[currPathCnt];
+        boolean[] isSet = new boolean[currPathCnt];
+        boolean[] isActive = new boolean[currPathCnt];
+        int[] pDir = new int[currPathCnt];
+        int[] pFromDir = new int[currPathCnt];
         for (int i = 0; i < currPathCnt; i++) {
             pList[i] = paths.get(i);
             isSet[i] = pList[i].checkPathSet();
@@ -928,7 +920,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             // Assume a LocoNet-style report.  This is (nascent) support for handling of Faller cars
             // for Dave Merrill's project.
             log.debug("report string: {}", rep);
-            // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+            // NOTE: This pattern is based on the one defined in LocoNet-specific LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
             if (m.find()) {
@@ -962,7 +954,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             return (((PhysicalLocationReporter) this.getReporter()).getDirection(rep));
         } else {
             log.debug("report string: {}", rep);
-            // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+            // NOTE: This pattern is based on the one defined in LocoNet-specific LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
             if (m.find()) {
@@ -1035,6 +1027,31 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 }
             }
         }
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getSensor())) {
+                report.add(new NamedBeanUsageReport("BlockSensor"));  // NOI18N
+            }
+            if (bean.equals(getReporter())) {
+                report.add(new NamedBeanUsageReport("BlockReporter"));  // NOI18N
+            }
+            // Block paths
+            getPaths().forEach((path) -> {
+                if (bean.equals(path.getBlock())) {
+                    report.add(new NamedBeanUsageReport("BlockPathNeighbor"));  // NOI18N
+                }
+                path.getSettings().forEach((setting) -> {
+                    if (bean.equals(setting.getBean())) {
+                        report.add(new NamedBeanUsageReport("BlockPathTurnout"));  // NOI18N
+                    }
+                });
+            });
+        }
+        return report;
     }
 
     @Override

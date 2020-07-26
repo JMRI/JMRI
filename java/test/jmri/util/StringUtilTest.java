@@ -1,12 +1,14 @@
 package jmri.util;
 
 import java.util.Arrays;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.StringUtil class.
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class StringUtilTest {
 
@@ -141,7 +143,7 @@ public class StringUtilTest {
         Assert.assertEquals("80", StringUtil.appendTwoHexFromInt((byte) 0x80, ""));
         Assert.assertEquals("FF", StringUtil.appendTwoHexFromInt((byte) 0xFF, ""));
     }
-
+    
     @Test
     public void testParseStringNull() {
         byte[] b = StringUtil.bytesFromHexString("");
@@ -453,14 +455,34 @@ public class StringUtilTest {
         Assert.assertEquals("010F03 3", 15, StringUtil.getHexDigit(3,"010F03") );
         
     }
-
-    // The minimal setup for log4J
-    @Before
+    
+    @Test
+    public void testHexStringFromBytes(){
+        Assert.assertEquals("Zero Length Array", "", StringUtil.hexStringFromBytes(new byte[] {}) );
+        Assert.assertEquals("00010203", "00 01 02 03 ", StringUtil.hexStringFromBytes(new byte[]{0,1,2,3}) );
+        Assert.assertEquals("0", "00 ", StringUtil.hexStringFromBytes(new byte[]{0}) );
+        Assert.assertEquals("-1", "FF ", StringUtil.hexStringFromBytes(new byte[]{-1}) );
+        Assert.assertEquals("-1", "AB CD ", StringUtil.hexStringFromBytes(new byte[]{(byte) 0xab,(byte) 0xcd}) );
+        Assert.assertEquals("45,123,129,217", "2D 7B 81 D9 ", StringUtil.hexStringFromBytes(new byte[] {45,123,(byte)129,(byte)217}) );
+        Assert.assertEquals("255,256,257", "FF 00 01 ", StringUtil.hexStringFromBytes(new byte[] {(byte)255,(byte)256,(byte)257}) );
+    }
+    
+    @Test
+    public void testHexStringFromInts(){
+        Assert.assertEquals("Zero Length Array", "", StringUtil.hexStringFromInts(new int[] {}) );
+        Assert.assertEquals("-1", "FF ", StringUtil.hexStringFromInts(new int[] {-1}) );
+        Assert.assertEquals("0", "00 ", StringUtil.hexStringFromInts(new int[] {0}) );
+        Assert.assertEquals("0,1", "00 01 ", StringUtil.hexStringFromInts(new int[] {0,1}) );
+        Assert.assertEquals("45,123,129,217", "2D 7B 81 D9 ", StringUtil.hexStringFromInts(new int[] {45,123,129,217}) );
+        Assert.assertEquals("255,256,257", "FF 00 01 ", StringUtil.hexStringFromInts(new int[] {255,256,257}) );
+    }
+    
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

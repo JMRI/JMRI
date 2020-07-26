@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import jmri.DccLocoAddress;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -32,12 +31,12 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
     private int currentState = 0x00;
 
     public DefaultRailCom(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
         setWhereLastSeen(null);
     }
 
     public DefaultRailCom(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
         setWhereLastSeen(null);
     }
 

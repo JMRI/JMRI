@@ -1,5 +1,6 @@
 package jmri.jmrit.jython;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileReader;
 import javax.script.ScriptEngine;
@@ -19,6 +20,7 @@ public class JynstrumentFactory {
 
     private static final String instanceName = "jynstrumentObjectInstance";
 
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Should crash if missing ScriptEngine dependencies are not present")
     public static Jynstrument createInstrument(String path, Object context) {
         String className = validate(path);
         if (className == null) {
@@ -45,13 +47,13 @@ public class JynstrumentFactory {
                 fr.close();
             }
         } catch (java.io.IOException | javax.script.ScriptException ex) {
-            log.error("Exception while creating Jynstrument: " + ex);
+            log.error("Exception while creating Jynstrument: {}", ex);
             return null;
         }
         jyns.setClassName(className);
         jyns.setContext(context);
         if (!jyns.validateContext()) {  // check validity of this Jynstrument for that extended context
-            log.error("Invalid context for Jynstrument, host is " + context.getClass() + " and " + jyns.getExpectedContextClassName() + " kind of host is expected");
+            log.error("Invalid context for Jynstrument, host is {} and {} kind of host is expected", context.getClass(), jyns.getExpectedContextClassName());
             return null;
         }
         jyns.setJythonFile(jyFile);

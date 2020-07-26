@@ -1,6 +1,14 @@
 package jmri.jmrit.timetable;
 
-import org.junit.*;
+import java.io.File;
+import java.io.IOException;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for the Station Class
@@ -55,13 +63,14 @@ public class StationTest {
         Assert.assertEquals("New Station", station.toString());  // NOI18N
     }
 
-    @Before
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

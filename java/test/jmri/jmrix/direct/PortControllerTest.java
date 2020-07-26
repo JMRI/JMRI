@@ -1,8 +1,8 @@
 package jmri.jmrix.direct;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the PortController class.
@@ -12,7 +12,7 @@ import org.junit.Before;
 public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        apc = new PortController(){
@@ -40,6 +40,7 @@ public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerT
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
              * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc.
@@ -53,7 +54,7 @@ public class PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerT
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

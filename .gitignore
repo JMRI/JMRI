@@ -19,6 +19,7 @@ coveragereport
 tests.log
 cucumber-results.xml
 cucumber-results.json
+failed_files.txt
 
 # runtime artifacts
 messages.log*
@@ -35,6 +36,7 @@ session.log
 /temp
 .pydevproject
 *.swp
+*.swo
 /lib/cachedir
 /xml/XSLT/DTD
 /xml/XSLT/properties
@@ -45,7 +47,7 @@ hs_err_pid*.log
 nohup.out
 
 # private / per-user configuration files
-/nbproject/private
+/nbproject
 /web/app/nbproject/private
 /scripts/config-portable/nbproject/private
 /.idea/workspace.xml
@@ -55,6 +57,8 @@ local.properties
 *.original~
 .metadata
 RemoteSystemsTempFiles
+.idea/libraries/**
+.idea/sonarlint/issuestore
 
 # user-installed components
 /web/TrainCrew

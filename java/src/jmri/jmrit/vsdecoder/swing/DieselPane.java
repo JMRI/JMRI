@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import javax.swing.ButtonModel;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
+import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
@@ -20,12 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * class DieselPane
+ * Sound control buttons for the new GUI.
  *
- * Diesel sound control buttons for the new GUI
- */
-
-/**
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -40,19 +38,24 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018
+ * @author Klaus Killinger Copyright (C) 2018-2020
  */
 public class DieselPane extends EnginePane {
 
     static final int THROTTLE_MIN = 1;
-    static final int THROTTLE_MAX = 8;
+    static final int THROTTLE_MAX = 18;
     static final int THROTTLE_INIT = 1;
 
+    public static final String THROTTLE = "VSDDP:Throttle"; // NOI18N
+    public static final String START = "VSDDP:Start"; // NOI18N
+    public static final String VOLUME = "VSDDP:Volume"; // NOI18N
+
     JSpinner throttle_spinner;
+    public JSlider volume_slider;
     JToggleButton start_button;
 
-    Integer throttle_setting;
-    Boolean engine_started;
+    int throttle_setting;
+    private boolean engine_is_started;
 
     private Timer timer;
     int dtime = 1;
@@ -67,7 +70,7 @@ public class DieselPane extends EnginePane {
         super(n);
         initComponents();
         throttle_setting = THROTTLE_INIT;
-        engine_started = start_button.isSelected();
+        engine_is_started = start_button.isSelected();
     }
 
     /**
@@ -79,6 +82,7 @@ public class DieselPane extends EnginePane {
 
     /**
      * Init Context.
+     * @param context unused.
      */
     @Override
     public void initContext(Object context) {
@@ -92,10 +96,12 @@ public class DieselPane extends EnginePane {
     }
 
     // Lock the start/stop-button until the start/stop-sound has finished
+    // Skip the timer if there is no start/stop-sound
     void startDelayTimer() {
         if (dtime > 1) {
             start_button.setEnabled(false);
             timer = newTimer(dtime, false, new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     start_button.setEnabled(true);
                 }
@@ -119,12 +125,9 @@ public class DieselPane extends EnginePane {
      */
     @Override
     public void initComponents() {
-        listenerList = new javax.swing.event.EventListenerList();
-
-        this.setLayout(new GridLayout(0, 2));
-
         //Set up the throttle spinner
         throttle_spinner = new JSpinner(new SpinnerNumberModel(THROTTLE_INIT, THROTTLE_MIN, THROTTLE_MAX, 1));
+        throttle_spinner.setPreferredSize(new Dimension(40, 30));
         throttle_spinner.setToolTipText(Bundle.getMessage("ToolTipDP_ThrottleSpinner"));
         throttle_spinner.setEnabled(false);
 
@@ -133,6 +136,7 @@ public class DieselPane extends EnginePane {
         // Setup the start button
         start_button = new JToggleButton();
         start_button.setText(Bundle.getMessage("ButtonEngineStart"));
+        start_button.setPreferredSize(new Dimension(150, 30));
         start_button.setToolTipText(Bundle.getMessage("ToolTipDP_StartButton"));
         start_button.addActionListener(new ActionListener() {
             @Override
@@ -149,6 +153,21 @@ public class DieselPane extends EnginePane {
         });
 
         this.add(start_button);
+
+        //Set up the volume slider
+        volume_slider = new JSlider(0, 100);
+        volume_slider.setMinorTickSpacing(10);
+        volume_slider.setPaintTicks(true);
+        volume_slider.setPreferredSize(new Dimension(160, 30));
+        volume_slider.setToolTipText(Bundle.getMessage("DecoderVolumeToolTip"));
+        volume_slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                volumeChange(e); // slider in real time
+            }
+        });
+        this.add(volume_slider);
+
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.setVisible(true);
     }
@@ -160,7 +179,7 @@ public class DieselPane extends EnginePane {
         boolean armed = buttonModel.isArmed();
         boolean pressed = buttonModel.isPressed();
         boolean selected = buttonModel.isSelected();
-        if (armed && pressed && selected && (lastSpeed > 0.0f) && (!engine_started)) {
+        if (armed && pressed && selected && (lastSpeed > 0.0f) && (!engine_is_started)) {
             buttonModel.setArmed(false);
             buttonModel.setPressed(false);
             buttonModel.setSelected(false);
@@ -170,31 +189,47 @@ public class DieselPane extends EnginePane {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStartSpeedMessage"));
             }
         }
+
+        if (armed && pressed && selected && (lastSpeed > 0.0f) && (engine_is_started) && (getStopOption())) {
+            buttonModel.setArmed(false);
+            buttonModel.setPressed(false);
+            if (GraphicsEnvironment.isHeadless()) {
+                log.info(Bundle.getMessage("EngineStopSpeedMessage"));
+            } else {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStopSpeedMessage"));
+            }
+        }
     }
 
     /**
-     * Respond to a throttle change. Basically, doesn't do anything
+     * Respond to a throttle change.
+     * Basically, doesn't do anything.
+     * @param e unused.
      */
     public void throttleChange(ChangeEvent e) {
-        firePropertyChangeEvent(new PropertyChangeEvent(this, "throttle", throttle_setting, // NOI18N
-                throttle_spinner.getModel().getValue()));
-        throttle_setting = (Integer) throttle_spinner.getModel().getValue();
+        firePropertyChangeEvent(new PropertyChangeEvent(this, THROTTLE, throttle_setting, throttle_spinner.getModel().getValue()));
+        throttle_setting = throttleNotch();
     }
 
     /**
-     * Respond to a start button press
+     * Respond to a start button press.
+     * @param e unused.
      */
     public void startButtonChange(ActionEvent e) {
-        firePropertyChangeEvent(new PropertyChangeEvent(this, "start", // NOI18N
-                engine_started,
-                start_button.isSelected()));
-        engine_started = start_button.isSelected();
-        if (engine_started) { // switch button name to make the panel more responsive
+        firePropertyChangeEvent(new PropertyChangeEvent(this, START, engine_is_started, start_button.isSelected()));
+        engine_is_started = start_button.isSelected();
+        if (engine_is_started) { // switch button name to make the panel more responsive
             start_button.setText(Bundle.getMessage("ButtonEngineStop"));
         } else {
             start_button.setText(Bundle.getMessage("ButtonEngineStart"));
         }
         startDelayTimer();
+    }
+
+    protected void volumeChange(ChangeEvent e) {
+        JSlider v = (JSlider) e.getSource();
+        log.debug("Decoder Volume slider set to value: {}", v.getValue());
+        firePropertyChangeEvent(new PropertyChangeEvent(this, VOLUME, v.getValue(), null));
     }
 
     @Override
@@ -203,21 +238,24 @@ public class DieselPane extends EnginePane {
     }
 
     /**
-     * Return true if the start button is "on"
+     * Get if Engine is On.
+     * @return true if the start button is "on".
      */
     public boolean engineIsOn() {
         return start_button.isSelected();
     }
 
     /**
-     * Return current notch setting of the throttle slider
+     * Get Throttle notch.
+     * @return current notch setting of the throttle slider.
      */
     public int throttleNotch() {
         return (Integer) throttle_spinner.getModel().getValue();
     }
 
     /**
-     * set the throttle spinner value
+     * Set the Throttle spinner value.
+     * @param t new value.
      */
     @Override
     public void setThrottle(int t) {

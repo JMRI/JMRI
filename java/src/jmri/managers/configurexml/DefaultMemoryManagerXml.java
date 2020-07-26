@@ -42,4 +42,5 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
         loadMemories(sharedMemories);
         return true;
     }
+
 }

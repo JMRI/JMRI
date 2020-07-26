@@ -36,8 +36,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         if (s.equals("")) {
             return null; // message cannot be empty
         }
-        XNetMessage m = new XNetMessage(s);
-        return m;
+        return new XNetMessage(s);
     }
 
     // connect to the TrafficController

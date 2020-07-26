@@ -16,11 +16,11 @@ import jmri.managers.DefaultProgrammerManager;
  */
 public class MrcProgrammerManager extends DefaultProgrammerManager {
 
-    MrcTrafficController tc;
+    MrcSystemConnectionMemo memo;
 
     public MrcProgrammerManager(Programmer serviceModeProgrammer, MrcSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
-        this.tc = memo.getMrcTrafficController();
+        this.memo = memo;
     }
 
     /**
@@ -43,7 +43,7 @@ public class MrcProgrammerManager extends DefaultProgrammerManager {
 
     @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new MrcOpsModeProgrammer(tc, pAddress, pLongAddress);
+        return new MrcOpsModeProgrammer(memo, pAddress, pLongAddress);
     }
 
     @Override

@@ -1,15 +1,14 @@
 package jmri.jmrix.xpa;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * XpaMessageTest.java
  *
- * Description: tests for the jmri.jmrix.xpa.XpaMessage class
+ * Test for the jmri.jmrix.xpa.XpaMessage class
  *
  * @author Paul Bender
  */
@@ -179,12 +178,12 @@ public class XpaMessageTest {
         Assert.assertTrue("content", s.equals(m.toString()));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

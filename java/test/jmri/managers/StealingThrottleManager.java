@@ -3,7 +3,6 @@ package jmri.managers;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.debugthrottle.DebugThrottle;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.ThrottleListener;
 import jmri.LocoAddress;
 
@@ -23,7 +22,7 @@ public class StealingThrottleManager extends DebugThrottleManager {
     /**
      * Constructor.
      */
-    public StealingThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
+    public StealingThrottleManager(jmri.SystemConnectionMemo memo) {
         super(memo);
     }
 

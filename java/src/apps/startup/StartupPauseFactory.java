@@ -1,6 +1,8 @@
 package apps.startup;
 
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupModelFactory;
+import jmri.util.startup.StartupModel;
+import jmri.util.startup.StartupActionsManager;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

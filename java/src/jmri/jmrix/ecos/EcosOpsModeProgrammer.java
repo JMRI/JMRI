@@ -5,8 +5,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import jmri.AddressedProgrammer;
-import jmri.ProgListener;
-import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer Based on work by Bob Jacobsen
- * @author	Karl Johan Lisby Copyright (C) 2018
+ * @author Karl Johan Lisby Copyright (C) 2018
  */
 public class EcosOpsModeProgrammer extends EcosProgrammer implements AddressedProgrammer {
 
@@ -27,7 +25,7 @@ public class EcosOpsModeProgrammer extends EcosProgrammer implements AddressedPr
 
     public EcosOpsModeProgrammer(EcosTrafficController tc, int pAddress, boolean pLongAddr) {
         super(tc);
-        log.debug("ECoS ops mode programmer " + pAddress + " " + pLongAddr);
+        log.debug("ECoS ops mode programmer {} {}", pAddress, pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
         ecosObject = 7;

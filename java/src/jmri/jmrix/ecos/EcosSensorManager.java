@@ -1,6 +1,7 @@
 package jmri.jmrix.ecos;
 
 import java.util.Hashtable;
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         implements EcosListener {
 
     public EcosSensorManager(EcosSystemConnectionMemo memo) {
-        this.memo = memo;
+        super(memo);
         tc = memo.getTrafficController();
         // listen for sensor creation
         // connect to the TrafficManager
@@ -33,24 +34,28 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         tc.sendEcosMessage(m, this);
     }
 
-    EcosSystemConnectionMemo memo;
-    EcosTrafficController tc;
+    private EcosTrafficController tc;
     //The hash table simply holds the object number against the EcosSensor ref.
     private Hashtable<Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
     private Hashtable<Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    @Nonnull
+    public EcosSystemConnectionMemo getMemo() {
+        return (EcosSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         //int ports = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        Sensor s = new EcosSensor(systemName, userName);
-        //s.setUserName(userName);
-
-        return s;
+        return new EcosSensor(systemName, userName);
     }
 
     // to listen for status changes from Ecos system
@@ -94,7 +99,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                             }
                             sb.append(j);
                             try {
-                                EcosReporter rp = (EcosReporter) memo.getReporterManager().provideReporter(sb.toString());
+                                EcosReporter rp = (EcosReporter) getMemo().getReporterManager().provideReporter(sb.toString());
                                 rp.decodeDetails(lines[i]);
                             } catch (IllegalArgumentException ex) {
                                 log.warn("Failed to provide Reporter \"{}\" in reply", sb.toString());
@@ -117,7 +122,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 start = lines[i].indexOf('[') + 1;
                                 end = lines[i].indexOf(']');
                                 int ports = Integer.parseInt(lines[i].substring(start, end));
-                                log.debug("Found sensor object " + object + " ports " + ports);
+                                log.debug("Found sensor object {} ports {}", object, ports);
 
                                 if ((ports == 8) || (ports == 16)) {
                                     Sensor s;
@@ -149,7 +154,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                                 }
                                                 sb.append(j);
                                                 try {
-                                                    EcosReporter rp = (EcosReporter) memo.getReporterManager().provideReporter(sb.toString());
+                                                    EcosReporter rp = (EcosReporter) getMemo().getReporterManager().provideReporter(sb.toString());
                                                     rp.setObjectPort(object, (j - 1));
                                                     es.setReporter(rp);
                                                     EcosMessage em = new EcosMessage("get(" + object + ", railcom[" + (j - 1) + "])");
@@ -166,7 +171,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                     em = new EcosMessage("get(" + object + ",state)");
                                     tc.sendEcosMessage(em, this);
                                 } else {
-                                    log.debug("Invalid number of ports returned for Module " + object);
+                                    log.debug("Invalid number of ports returned for Module {}", object);
                                 }
                             }
                         }

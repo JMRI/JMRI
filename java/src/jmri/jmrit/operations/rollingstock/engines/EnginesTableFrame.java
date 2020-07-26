@@ -4,21 +4,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
 import javax.swing.table.TableColumnModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -26,8 +18,6 @@ import jmri.jmrit.operations.rollingstock.engines.tools.NceConsistEngineAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing the engine roster for operations.
@@ -37,7 +27,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-    EnginesTableModel enginesModel;
+    public EnginesTableModel enginesModel;
     javax.swing.JTable enginesTable;
     JScrollPane enginesPane;
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
@@ -60,6 +50,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     JRadioButton sortByOwner = new JRadioButton(Bundle.getMessage("Owner"));
     public JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
     public JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
+    JRadioButton sortByDcc = new JRadioButton(Bundle.getMessage("DccAddress"));
     JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
     ButtonGroup group = new ButtonGroup();
 
@@ -111,6 +102,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         if (Setup.isRfidEnabled()) {
             movep.add(sortByRfid);
         }
+        movep.add(sortByDcc);
         movep.add(sortByLast);
         cp1.add(movep);
 
@@ -171,6 +163,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         addRadioButtonAction(sortByOwner);
         addRadioButtonAction(sortByValue);
         addRadioButtonAction(sortByRfid);
+        addRadioButtonAction(sortByDcc);
         addRadioButtonAction(sortByLast);
 
         group.add(sortByNumber);
@@ -185,13 +178,16 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         group.add(sortByOwner);
         group.add(sortByValue);
         group.add(sortByRfid);
+        group.add(sortByDcc);
         group.add(sortByLast);
+        
+        sortByDcc.setToolTipText(Bundle.getMessage("TipDccAddressFromRoster"));
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new EngineRosterMenu(Bundle.getMessage("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
-        toolMenu.add(new NceConsistEngineAction(Bundle.getMessage("MenuItemNceSync"), this));
+        toolMenu.add(new NceConsistEngineAction());
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());
         setJMenuBar(menuBar);
@@ -248,6 +244,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
         if (ae.getSource() == sortByLast) {
             enginesModel.setSort(enginesModel.SORTBY_LAST);
+        }
+        if (ae.getSource() == sortByDcc) {
+            enginesModel.setSort(enginesModel.SORTBY_DCC_ADDRESS);
         }
     }
 

@@ -7,23 +7,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract class providing the basic logic of the Sensor interface
- * <p>
- * Sensor system names are always upper case.
+ * Abstract class providing the basic logic of the Sensor interface.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor {
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSensor.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractSensor(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override
@@ -94,18 +92,6 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public boolean getUseDefaultTimerSettings() {
         return useDefaultTimerSettings;
     }
-    
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public void useDefaultTimerSettings(boolean boo) {
-        setUseDefaultTimerSettings(boo);
-    }
-    
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public boolean useDefaultTimerSettings() {
-        return getUseDefaultTimerSettings();
-    }
 
     protected Thread thr;
     protected Runnable r;
@@ -116,32 +102,27 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      */
     protected void sensorDebounce() {
         final int lastKnownState = _knownState;
-        r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    long sensorDebounceTimer = sensorDebounceGoingInActive;
-                    if (_rawState == ACTIVE) {
-                        sensorDebounceTimer = sensorDebounceGoingActive;
-                    }
-                    Thread.sleep(sensorDebounceTimer);
-                    restartcount = 0;
-                    _knownState = _rawState;
-
-                    javax.swing.SwingUtilities.invokeAndWait(
-                            () -> {
-                                firePropertyChange("KnownState", lastKnownState, _knownState);
-                            }
-                    );
-                } catch (InterruptedException ex) {
-                    restartcount++;
-                } catch (java.lang.reflect.InvocationTargetException ex) {
-                    log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause());
+        r = () -> {
+            try {
+                long sensorDebounceTimer = sensorDebounceGoingInActive;
+                if (_rawState == ACTIVE) {
+                    sensorDebounceTimer = sensorDebounceGoingActive;
                 }
+                Thread.sleep(sensorDebounceTimer);
+                restartcount = 0;
+                _knownState = _rawState;
+
+                javax.swing.SwingUtilities.invokeAndWait(
+                        () -> firePropertyChange("KnownState", lastKnownState, _knownState)
+                );
+            } catch (InterruptedException ex) {
+                restartcount++;
+            } catch (java.lang.reflect.InvocationTargetException ex) {
+                log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause());
             }
         };
 
-        thr = new Thread(r);
+        thr = jmri.util.ThreadingUtil.newThread(r);
         thr.start();
     }
 
@@ -262,7 +243,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * optimization.
      */
     @Override
-    final public boolean getInverted() {
+    public final boolean getInverted() {
         return _inverted;
     }
 
@@ -319,6 +300,5 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public PullResistance getPullResistance(){
        return PullResistance.PULL_OFF;
     }
-
 
 }

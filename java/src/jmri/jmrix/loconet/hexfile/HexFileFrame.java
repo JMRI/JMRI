@@ -32,7 +32,8 @@ public class HexFileFrame extends JmriJFrame {
     javax.swing.JTextField delayField = new javax.swing.JTextField(5);
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     
-    private int connectedAddresses = 0;
+    private int maxSlots = 10;  //maximum addresses that can be acquired at once, this default will be overridden by config
+    private int slotsInUse = 0;
 
     // to find and remember the log file
     final javax.swing.JFileChooser inputFileChooser;
@@ -175,11 +176,19 @@ public class HexFileFrame extends JmriJFrame {
         port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // full featured by default
                 false, false, false);
         port.getSystemConnectionMemo().configureManagers();
-        if (port.getSystemConnectionMemo().getSensorManager() instanceof LnSensorManager) {
-            LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
-            LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
-        } else {
-            log.info("SensorManager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+        jmri.SensorManager sm = port.getSystemConnectionMemo().getSensorManager();
+        if (sm != null) {
+            if ( sm instanceof LnSensorManager) {
+                ((LnSensorManager) sm).setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
+            } else {
+                log.info("SensorManager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+            }
+        }
+        //get the maxSlots value from the connection options
+        try {
+            maxSlots = Integer.parseInt(port.getOptionState("MaxSlots"));
+        } catch (NumberFormatException e) {
+            //ignore missing or invalid option and leave at the default value
         }
 
         // Install a debug programmer, replacing the existing LocoNet one
@@ -207,22 +216,33 @@ public class HexFileFrame extends JmriJFrame {
 
             @Override
             public void requestThrottleSetup(LocoAddress a, boolean control) {
-                connectedAddresses++;
-                DccLocoAddress address = (DccLocoAddress) a;
-                //create some testing situations
-                if (connectedAddresses > 5) {
-                    log.warn("SLOT MAX of 5 exceeded");
-                    failedThrottleRequest(address, "SLOT MAX of 5 exceeded");
+                if (!(a instanceof DccLocoAddress)) {
+                    log.error("{} is not a DccLocoAddress",a);
+                    failedThrottleRequest(a, "LocoAddress " + a + " is not a DccLocoAddress");
                     return;
                 }
-                // otherwise, continue with setup
+                DccLocoAddress address = (DccLocoAddress) a;
+
+                //check for slot limit exceeded
+                if (slotsInUse >= maxSlots) {
+                    log.warn("SLOT MAX of {} reached. Throttle {} not added. Current slotsInUse={}", maxSlots, a, slotsInUse);
+                    failedThrottleRequest(address, "SLOT MAX of " + maxSlots + " reached");
+                    return;
+                }
+
+                slotsInUse++;
+                log.debug("Throttle {} requested. slotsInUse={}, maxSlots={}", a, slotsInUse, maxSlots);
                 super.requestThrottleSetup(a, control);
             }
 
             @Override
-            public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-                connectedAddresses--;
-                return super.disposeThrottle(t, l);
+            public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {                
+                if (slotsInUse > 0) slotsInUse--;
+                log.debug("Throttle {} disposed. slotsInUse={}, maxSlots={}", t, slotsInUse, maxSlots);
+                if (super.disposeThrottle(t, l)) {
+                    return true;
+                }
+                return false;
             }    
         };
 

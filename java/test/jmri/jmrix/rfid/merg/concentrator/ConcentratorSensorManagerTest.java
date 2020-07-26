@@ -1,18 +1,17 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
-import jmri.Sensor;
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * ConcentratorSensorManagerTest.java
+ * <p>
+ * Test for the ConcentratorSensorManager class
  *
- * Description:	tests for the ConcentratorSensorManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -23,35 +22,41 @@ public class ConcentratorSensorManagerTest extends jmri.managers.AbstractSensorM
         return "RS" + i;
     }
 
-
     @Test
     public void testCtor() {
         Assert.assertNotNull(l);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new ConcentratorTrafficController(new ConcentratorSystemConnectionMemo(),"A-H"){
-           @Override
-           public void sendInitString(){
-           }
-        };
-        l = new ConcentratorSensorManager(tc,"R"){
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
+        tc = new ConcentratorTrafficController(memo, "A-H") {
             @Override
-            public void message(jmri.jmrix.rfid.RfidMessage m){}
+            public void sendInitString() {
+            }
+        };
+        memo.setRfidTrafficController(tc);
+        memo.setSystemPrefix("R");
+        l = new ConcentratorSensorManager(tc.getAdapterMemo()) {
+            @Override
+            public void message(jmri.jmrix.rfid.RfidMessage m) {
+            }
 
             @Override
-            public void reply(jmri.jmrix.rfid.RfidReply m){}
+            public void reply(jmri.jmrix.rfid.RfidReply m) {
+            }
 
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

@@ -10,14 +10,15 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml usage">
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
 
-    <div id="mainContent">
-      <h1>JMRI: Viewing XML Files</h1>
+  <h1>JMRI: Viewing XML Files</h1>
       <p>JMRI stores various information in XML files. Although
       they're a text format that is basically human-readable,
       it's a complicated, structured format.</p>
@@ -26,7 +27,7 @@
       JMRI XML files can be displayed in a web browser. A technique
       called "XSLT stylesheets" is used to format them within the
       web browser. For an example of how this looks, please see the
-      <a href="http://jmri.org/xml/samples/NicksClinic.xml">sample
+      <a href="https://jmri.org/xml/samples/NicksClinic.xml">sample
       panel XML file</a> on the main JMRI web site. (May take a few
       seconds to load)</p>
 
@@ -47,7 +48,7 @@
       right, while Firefox seems to work properly on some platforms
       and not on others. (There might also be options that affect
       whether it works. Here's some
-      <a href="http://jmri.org/xml/XSLT/README">technical
+      <a href="https://jmri.org/xml/XSLT/README">technical
       background</a>)</p>
 
       <p>If none of the browsers available to you can display the

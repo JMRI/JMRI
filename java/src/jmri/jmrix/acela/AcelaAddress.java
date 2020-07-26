@@ -1,5 +1,7 @@
 package jmri.jmrix.acela;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nonnull;
 import jmri.Manager.NameValidity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * One address format is supported: Atxxxx where: t is the type code, 'T' for
  * turnouts, 'S' for sensors, and 'L' for lights xxxx is a bit number of the
- * input or output bit (0-1023) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
+ * input or output bit (0-16383) examples: AT2 (bit 2), AS1003 (bit 1003), AL134
  * (bit134).<p>
  * Note: Not fully supporting long system connection prefix yet
  *
@@ -23,16 +25,20 @@ public class AcelaAddress {
     }
     
     static final int MINSENSORADDRESS = 0;
-    static final int MAXSENSORADDRESS = 1023;   //  Artifical limit but OK until someone has
-    //  more than 64 sensor modules (at 16 sensors each).
+    static final int MAXSENSORADDRESS = AcelaNode.MAXSENSORBITS * AcelaNode.MAXNODE -1;
     static final int MINOUTPUTADDRESS = 0;
-    static final int MAXOUTPUTADDRESS = 1023;   //  Artifical limit but OK until someone has
-    //  more than 64 output modules (at 16 outputs each).
+    static final int MAXOUTPUTADDRESS = AcelaNode.MAXOUTPUTBITS * AcelaNode.MAXNODE -1;
 
     /**
      * Public static method to parse an Acela system name and return the Acela
-     * Node Address Note: Returns '-1' if illegal systemName format or if the
-     * node is not found. Nodes are numbered from 0 - 127.
+     * Node Address.
+     * <p>
+     * Note: Returns '-1' if illegal systemName format or if the
+     * node is not found.
+     * Nodes are numbered from 0 - {@value AcelaNode#MAXNODE}.
+     * @param systemName system name.
+     * @param memo system connection.
+     * @return node address number.
      */
     public static int getNodeAddressFromSystemName(String systemName, AcelaSystemConnectionMemo memo) {
         // validate the system Name leader characters
@@ -60,6 +66,8 @@ public class AcelaAddress {
     /**
      * Public static method to parse an Acela system name.
      *
+     * @param systemName system name to parse.
+     * @param memo system connection.
      * @return the Acela Node number, return 'null' if illegal systemName format or if the node is
      * not found
      */
@@ -83,6 +91,8 @@ public class AcelaAddress {
      * Public static method to parse an Acela system name and return the bit number.
      * Note: Bits are numbered from 1.
      *
+     * @param systemName system name.
+     * @param prefix bean type, S, T, L or H.
      * @return the bit number, return -1 if an error is found (0 is a valid bit?)
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
@@ -113,9 +123,12 @@ public class AcelaAddress {
      * Public static method to validate system name format.
      * Logging of handled cases no higher than WARN.
      *
+     * @param systemName system name to validate.
+     * @param type bean type, S, T or L.
+     * @param prefix system prefix.
      * @return 'true' if system name has a valid format, else return 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!systemName.startsWith(prefix + type )) {
             // here if an illegal format 
@@ -130,7 +143,7 @@ public class AcelaAddress {
             return NameValidity.INVALID;
         }
         if (num >= 0) {
-            // This is a ALnnxxx address
+            // This is an ALnnxxx address
             return NameValidity.VALID;
         } else {
             log.debug("invalid Acela system name: {}", systemName);
@@ -141,9 +154,13 @@ public class AcelaAddress {
     /**
      * Public static method to validate Acela system name for configuration.
      *
+     * @param systemName system name to validate.
+     * @param type bean type, S, T or L.
+     * @param memo system connection.
      * @return 'true' if system name has a valid meaning in current
      * configuration, else return 'false'
      */
+    @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", justification="additional check for valid bit value")
     public static boolean validSystemNameConfig(String systemName, char type, AcelaSystemConnectionMemo memo) {
         if (validSystemNameFormat(systemName, type, memo.getSystemPrefix()) != NameValidity.VALID) {
             // No point in trying if a valid system name format is not present
@@ -187,6 +204,8 @@ public class AcelaAddress {
      * Public static method to convert one format Acela system name for the
      * alternate format.
      *
+     * @param systemName system name to convert.
+     * @param prefix system prefix.
      * @return name (string) in alternate format, or empty string if the supplied
      * system name does not have a valid format, or if there is no representation
      * in the alternate naming scheme.
@@ -208,6 +227,8 @@ public class AcelaAddress {
      * This routine is used to ensure that each system name is uniquely linked
      * to one Acela bit, by removing extra zeros inserted by the user.
      *
+     * @param systemName system name to normalize.
+     * @param prefix system prefix.
      * @return a normalized name is returned in the same format as the input name,
      * or an empty string if the supplied system name does not have a valid format.
      */
@@ -231,8 +252,12 @@ public class AcelaAddress {
 
     /**
      * Public static method to construct an Acela system name from type
-     * character, node address, and bit number
+     * character, node address, and bit number.
      *
+     * @param type bean type letter, S, T or L.
+     * @param nAddress node address.
+     * @param bitNum bit number.
+     * @param memo system connection.
      * @return a system name in the ALxxxx, ATxxxx, or ASxxxx
      * format. The returned name is normalized.
      * Return the null string "" if the supplied character is not valid,
@@ -272,6 +297,8 @@ public class AcelaAddress {
     /**
      * Public static method to check the user name for a valid system name.
      *
+     * @param systemName system name to check.
+     * @param prefix bean prefix, S, T or L.
      * @return "" (null string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName, String prefix) {

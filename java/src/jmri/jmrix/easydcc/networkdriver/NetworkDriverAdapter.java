@@ -1,10 +1,8 @@
 package jmri.jmrix.easydcc.networkdriver;
 
 import java.net.Socket;
-import java.util.Vector;
 import jmri.jmrix.easydcc.EasyDccNetworkPortController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,21 +44,6 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
     private boolean opened = false;
 
     Socket socket;
-
-    public Vector<String> getPortNames() {
-        log.error("Unexpected call to getPortNames");
-        return null;
-    }
-
-    public String openPort(String portName, String appName) {
-        log.error("Unexpected call to openPort");
-        return null;
-    }
-
-    public String[] validBaudRates() {
-        log.error("Unexpected call to validBaudRates");
-        return null;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 

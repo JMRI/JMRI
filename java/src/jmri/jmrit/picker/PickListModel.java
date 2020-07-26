@@ -1,6 +1,5 @@
 package jmri.jmrit.picker;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,6 +10,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
@@ -18,6 +18,7 @@ import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.entryexit.*;
 import jmri.jmrit.logix.*;
+import jmri.swing.RowSorterUtil;
 import jmri.util.*;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * @param <E> the supported type of NamedBean
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
-public abstract class PickListModel<E extends NamedBean> extends BeanTableDataModel<E> implements PropertyChangeListener {
+public abstract class PickListModel<E extends NamedBean> extends BeanTableDataModel<E> {
 
     protected ArrayList<E> _pickList;
     protected String _name;
@@ -149,7 +150,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             _pickList.get(i).addPropertyChangeListener(this);
         }
         if (log.isDebugEnabled()) {
-            log.debug("_pickList has " + _pickList.size() + " beans");
+            log.debug("_pickList has {} beans", _pickList.size());
         }
     }
 
@@ -157,14 +158,14 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     @Override
     @CheckForNull
     public E getBySystemName(@Nonnull String name) {
-        return getManager().getBeanBySystemName(name);
+        return getManager().getBySystemName(name);
     }
 
     /** {@inheritDoc} */
     @Override
     @CheckForNull
     protected E getByUserName(@Nonnull String name) {
-        return getManager().getBeanByUserName(name);
+        return getManager().getByUserName(name);
     }
 
     /** {@inheritDoc} */
@@ -299,8 +300,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("propertyChange of \"" + e.getPropertyName()
-                    + "\" for " + e.getSource().toString());
+            log.debug("propertyChange of \"{}\" for {}", e.getPropertyName(), e.getSource().toString());
         }
     }
 
@@ -321,6 +321,9 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
                 }
             }
         };
+        _sorter.setComparator(SNAME_COLUMN, new jmri.util.AlphanumComparator());
+        _sorter.setComparator(UNAME_COLUMN, new jmri.util.AlphanumComparator());
+        RowSorterUtil.setSortOrder(_sorter, SNAME_COLUMN, SortOrder.ASCENDING);
         _table.setRowSorter(_sorter);
 
         _table.setRowSelectionAllowed(true);
@@ -352,6 +355,9 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     public void makeSorter(@Nonnull JTable table) {
         _sorter = new TableRowSorter<>(this);
+        _sorter.setComparator(SNAME_COLUMN, new jmri.util.AlphanumComparator());
+        _sorter.setComparator(UNAME_COLUMN, new jmri.util.AlphanumComparator());
+        RowSorterUtil.setSortOrder(_sorter, SNAME_COLUMN, SortOrder.ASCENDING);
         table.setRowSorter(_sorter);
     }
 

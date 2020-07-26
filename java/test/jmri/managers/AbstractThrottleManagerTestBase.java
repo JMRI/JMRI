@@ -7,10 +7,9 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ public abstract class AbstractThrottleManagerTestBase {
     /**
      * Overload to load l with actual object; create scaffolds as needed
      */
-    @Before
+    @BeforeEach
     abstract public void setUp(); 
 
     protected ThrottleManager tm = null; // holds objects under test
@@ -69,7 +68,7 @@ public abstract class AbstractThrottleManagerTestBase {
         }
     }
 
-    @After
+    @AfterEach
     public void postTestReset(){
        throttleFoundResult = false;
        throttleNotFoundResult = false;
@@ -157,17 +156,17 @@ public abstract class AbstractThrottleManagerTestBase {
     @Test
     public void testGetThrottleInfo() {
         DccLocoAddress addr = new DccLocoAddress(42,false);
-		Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(addr));
+        Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(addr));
         Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(42,false));
-		Assert.assertNull("NULL",tm.getThrottleInfo(addr,Throttle.F28));
+        Assert.assertNull("NULL", tm.getThrottleInfo(addr, Throttle.F28));
         ThrottleListener throtListen = new ThrottleListen();
         tm.requestThrottle(addr,throtListen, true);
-        JUnitUtil.waitFor(()->{ return(tm.getThrottleInfo(addr,"IsForward")!=null); }, "reply didn't arrive");
+        JUnitUtil.waitFor(()->{ return(tm.getThrottleInfo(addr,Throttle.ISFORWARD)!=null); }, "reply didn't arrive");
         
-        Assert.assertNotNull("is forward",tm.getThrottleInfo(addr,"IsForward"));
-        Assert.assertNotNull("speed setting",tm.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertNotNull("speed increment",tm.getThrottleInfo(addr,"SpeedIncrement"));
-        Assert.assertNotNull("speed step mode",tm.getThrottleInfo(addr,"SpeedStepMode"));
+        Assert.assertNotNull("is forward",tm.getThrottleInfo(addr,Throttle.ISFORWARD));
+        Assert.assertNotNull("speed setting",tm.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertNotNull("speed increment",tm.getThrottleInfo(addr,Throttle.SPEEDINCREMENT));
+        Assert.assertNotNull("speed step mode",tm.getThrottleInfo(addr,Throttle.SPEEDSTEPMODE));
         Assert.assertNotNull("F0",tm.getThrottleInfo(addr,Throttle.F0));
         Assert.assertNotNull("F1",tm.getThrottleInfo(addr,Throttle.F1));
         Assert.assertNotNull("F2",tm.getThrottleInfo(addr,Throttle.F2));
@@ -200,7 +199,7 @@ public abstract class AbstractThrottleManagerTestBase {
         Assert.assertNull("NULL",tm.getThrottleInfo(addr,"NOT A VARIABLE"));
         Assert.assertEquals("throttle use 1 addr", 1, tm.getThrottleUsageCount(addr));
         Assert.assertEquals("throttle use 1 int b", 1, tm.getThrottleUsageCount(42,false));
-		Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(77,true));
+        Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(77, true));
 
     }
     // private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManagerTestBase.class);

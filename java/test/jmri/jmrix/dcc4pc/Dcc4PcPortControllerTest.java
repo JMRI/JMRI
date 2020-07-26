@@ -1,19 +1,18 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
- * JUnit tests for the Dcc4PcPortController class
- * <p>
+ * JUnit tests for the Dcc4PcPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
 public class Dcc4PcPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        Dcc4PcTrafficController tc = new Dcc4PcTrafficController(){
@@ -39,14 +38,12 @@ public class Dcc4PcPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
                 return null;
             }
 
-            /**
-             * Get an array of valid baud rates; used to display valid options.
-             */
             @Override
             public String[] validBaudRates(){
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
              * Open a specified port. The appname argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
@@ -60,9 +57,10 @@ public class Dcc4PcPortControllerTest extends jmri.jmrix.AbstractSerialPortContr
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
-       JUnitUtil.tearDown();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
 }

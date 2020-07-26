@@ -1,7 +1,9 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of MemoryComboIcon
@@ -16,7 +18,8 @@ public class MemoryComboIconTest extends PositionableJPanelTest {
         Assert.assertNotNull("MemoryComboIcon Constructor", p);
     }
 
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);

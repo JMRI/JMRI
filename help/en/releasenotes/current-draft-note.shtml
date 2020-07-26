@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -39,6 +39,11 @@
                 <li></li>
             </ul>
 
+        <h4>Hornby</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>JMRI Simple Server/JMRI Client</h4>
             <ul>
                 <li></li>
@@ -46,15 +51,11 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>
-                    Track Current support for the DCS240,DCS210 and DCS52 has been added.
-                </li>
-                <li>
-                    Turnouts can now be configured to send only a single LTnnn command (ON)
-                    instead of an ON followed by OFF, and turnouts can also be configured
-                    to bypass a command station "Bushby" feature as described in <a href="/help/en/html/hardware/loconet/Digitrax.shtml#alternatives"
-                    target="_blank">Command Station Turnout Command Rejection Avoidance Strategies</a>
-                </li>
+                <li><a href="https://www.jmri.org/help/en/html/hardware/loconet/Digitrax.shtml#deviceBoardId">
+                    Instructions</a> detailing how to change the Board ID (Board 
+                    Address) of certain Digitrax LocoNet-based devices using 
+                    JMRI have been added to the Digitrax hardware page.</li>
+                <li>Fixed a problem in the PM4Announce script</li>
             </ul>
 
         <h4>Maple</h4>
@@ -69,13 +70,14 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Increased support for stealing / sharing command station sessions, see
-                    <a href="http://jmri.org/help/en/html/hardware/can/cbus/index.shtml#dcc">CBUS Hardware Support</a></li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
+                <li>When status UNKNOWN or INCONSISTENT is received from MQTT and the turnout operating mode is MONITORING or EXACT, the layout is now updated with this status</li>
+                <li>When EXACT feedback mode is selected, two different MQTT topics will be used - one for commands and one for state</li>
             </ul>
 
         <h4>MRC</h4>
@@ -115,7 +117,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li>Added fixes for SPROG bootloader client</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -160,7 +162,8 @@
 
         <h4>BLI</h4>
             <ul>
-                <li></li>
+                <li>
+                </li>
             </ul>
 
         <h4>BNM Hobbies</h4>
@@ -170,8 +173,7 @@
 
         <h4>CT Elektronik</h4>
             <ul>
-                <li>Nigel Cliffe added a decoder definition for the
-                    NGS custom CT decoder</li>
+                <li></li>
             </ul>
 
         <h4>Digikeijs (Digirails)</h4>
@@ -181,7 +183,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Fixed an issue in CV11 of SFX Series 6 decoders</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -216,7 +218,7 @@
 
         <h4>Lenz</h4>
             <ul>
-                <li>Added connection option for the Lenz LZV200</li>
+                <li></li>
             </ul>
 
         <h4>MGP</h4>
@@ -249,6 +251,11 @@
                 <li></li>
             </ul>
 
+        <h4>Public Domain and DIY decoders</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>QSI</h4>
             <ul>
                 <li></li>
@@ -266,6 +273,12 @@
 
         <h4>SoundTraxx</h4>
             <ul>
+                <li>
+                </li>
+            </ul>
+
+        <h4>TAMS</h4>
+            <ul>
                 <li></li>
             </ul>
 
@@ -273,7 +286,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -340,11 +353,13 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Color for new tracks is now consistent within a single Layout Editor.</li>
-            <li>Turnouts, level crossings, track segments and positional points (A/EB/EC) cannot
-            be deleted if signal heads, signal masts or sensors have been assigned to the item.
-            Also, an edge connector cannot be deleted if the link is defined.</li>
+	        <li></li>
         </ul>
+
+        <h4>NX - Entry/Exit Tool</h4>
+            <ul>
+                <li></li>
+            </ul>
 
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
@@ -355,10 +370,12 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Due to underlying changes in the Operations web access, train manifests will need to rebuilt before web access works.</li>
+            <li>Fixed problem where operations database was always saved when exiting JMRI.</li>
+            <li>Fixed problem with Panel name for train icons.</li>
+            <li>Fixed problem with track move count when track has an alternate track.</li>
         </ul>
 
-   <h3>Panel Editors</h3>
+   <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
@@ -369,6 +386,22 @@
                 <li></li>
             </ul>
 
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
+        <ul>
+            <li></li>
+        </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li></li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+                <li></li>
+            </ul>
+   
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -390,22 +423,15 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>The table and manager containing the element are no longer listed as items using the element when deleting the
-                element in the delete confirmation dialog. The count of items using the element shown in the delete confirmation
-                dialog now match the number of items shown to be using the element.</li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li><strong>2 lines in scripts that use the
-            <a href="https://github.com/JMRI/JMRI/blob/master/jython/Jynstruments/ThrottleWindowToolBar/DCCThrottle.jyn/DCCThrottle.py"
-            >DCCThrottle.py</a> Jynstrument may need to be added,</strong><br>
-            Insert after line 141<br>
-            New line 142 : <code>def notifyDecisionRequired(LocoAddress, decision):</code><br>
-            New line 143 : <code>pass #</code><br>
-            These changes were made to enhance the JMRI Steal / Share mechanism for hardware types that support this.<br>
-            </li>
+            <li>Some internal refactoring that should help with the long term
+            maintenance of JMRI has been done. This may cause some scripts to
+            fail until classes or methods are renamed in those scripts.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -415,7 +441,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>
+                </li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -425,22 +452,20 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>Output Matrix Signal Masts now allow to set a mast-specific delay interval between the individual
-                commands sent to the connected Turnout outputs.</li>
-                <li>A bug was fixed that wrote the wrong mast system name as Comment in the Turnout outputs.</li>
+                <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
             </ul>
 
-    	<h4>Simple Signal Logic</h4>
+	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
-	    <h4>NX Entry/Exit Logic</h4>
+    	<h4>Simple Signal Logic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -456,8 +481,20 @@
             <li></li>
         </ul>
 
+    <h3>Throttle</h3>
+        <a id="throttle" name="throttle"></a>
+        <ul>
+            <li></li>
+        </ul>
+
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Tracker</h3>
+        <a id="Tr" name="Tr"></a>
         <ul>
             <li></li>
         </ul>
@@ -471,17 +508,13 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>JSON clients can now add, edit, or remove Blocks, IdTags, LayoutBlocks, Operations Locations, Operations Cars,
-                Operations Engines, Operations Tracks, Reporters, and Sensors.</li>
-            <li>JSON clients using WebSockets can now include an <code>id</code> property in the message to match a direct response
-                to a message to the original message.</li>
-            <li><strong>Warning</strong> the JSON protocol version has been bumped to version 5.0 due to backwards incompatible
-                changes to make different JSON objects more internally consistent and to accomodate the ability to remove some
-                objects. See the <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#history">JSON Version
-                    History</a> for more details.</li>
-            <li>JSON schema are, with the exception of consists, usable, even when JMRI is running on a computer not connected to
-                the internet. See the <a href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#schema">JSON
-                    Schema</a> for more details.</li>
+            <li></li>
+        </ul>
+
+    <h3>Where Used</h3>
+        <a id="WhereUsed" name="WhereUsed"></a>
+        <ul>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -489,22 +522,32 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>VSD now supports the "Location Following" (sound follows loco) with occupancy
+                sensors and JMRI Blocks. See the 
+				<a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#VSDLocations">
+                documentation</a> for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The <code>jmri.util.ColorUtil.stringToColor()</code> method now throws an
-                <code>IllegalArgumentException</code> if unable to turn a String into a Color instead of returning the Color Black.
-            </li>
-            <li>The Help Index and Table Of Contents were updated and expanded to include the current Hardware
-                systems.<br>
-                In the process we discovered that additional instructions for many of the new tools are welcome.
-            </li>
+            <li>The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
+                interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
+                require changes to scripts.  If you have a script that references
+                jmri.jmrix.SystemConnectionMemo, please change it to either
+                jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
+                (it's easier to have you just try the two than to explain which 
+                one will work in which case)</li>
+            <li>Added PR automation to check for a comment in the release note when a PR
+                is opened, and to ensure that somebody has been assigned to the PR.</li>
+            <li>The jmri.JmriPlugin class is deprecated without a replacement. If you depend on
+	              on this class, please <a href="https://github.com/JMRI/JMRI/issues/new">raise an issue on GitHub</a>
+		            so we can discuss how to meet your requirements through other means.</li>
+            <li>"Display Message Log" has been removed from the Debug Menu. Use the
+                "System Console" from the Help Menu to view log messages.</li>
         </ul>
 

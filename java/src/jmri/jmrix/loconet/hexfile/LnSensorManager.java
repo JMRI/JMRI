@@ -1,15 +1,14 @@
 package jmri.jmrix.loconet.hexfile;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.loconet.LnSensor;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
 /**
  * Manage the LocoNet-specific Sensor implementation via a LocoNet
  * hexfile emulator.
@@ -19,27 +18,33 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2001
  */
-public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager implements LocoNetListener {
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is in effect the same as its super class")
+public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager {
 
-    public LnSensorManager(LnTrafficController tc, String prefix) {
-        super(tc, prefix);
+    public LnSensorManager(LocoNetSystemConnectionMemo memo) {
+        super(memo);
     }
 
     // LocoNet-specific methods
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
-        Sensor s = new LnSensor(systemName, userName, tc, prefix);
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+        Sensor s = new LnSensor(systemName, userName, tc, getSystemPrefix());
         if (defaultSensorState != Sensor.UNKNOWN) {
             try {
                 s.setKnownState(defaultSensorState);
             } catch (JmriException e) {
-                log.warn("Error setting state: " + e);
+                log.warn("Error setting state: ", e);
             }
         }
         return s;
     }
 
-    int defaultSensorState = Sensor.UNKNOWN;
+    private int defaultSensorState = Sensor.UNKNOWN;
 
     public void setDefaultSensorState(String state) {
         if (state.equals(Bundle.getMessage("SensorStateInactive"))) {

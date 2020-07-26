@@ -1,9 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id: Lenz_Silver.xml,v 1.10 2009/10/19 04:59:05 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it an<B></B>d/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
 	<version author="LDH"
 				version="1" lastUpdated="20110906" />
 
@@ -138,15 +137,7 @@
 			<longAddressVal/>
 		</variable>
 
-			<variable label="Direccion de Consist" CV="19" mask="XVVVVVVV" item="Consist Address">
-			<decVal/></variable>
-		
-		<variable label="Direccion de Consist" CV="19"  mask="VXXXXXXX" item="Consist Address">
-			<enumVal>
-				<enumChoice choice="Normal"></enumChoice>
-				<enumChoice choice="Reversa"></enumChoice>
-				</enumVal></variable>
-			
+        <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
 
 		<variable label="F1 Activa en Consist" CV="21" mask="XXXXXXXV" minFn="1" item="Consist Address Active For F1">
 			<enumVal>

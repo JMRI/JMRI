@@ -1,19 +1,21 @@
 package jmri;
 
 import jmri.implementation.AbstractNamedBean;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Light class
  *
- * @author	Daniel Bergqvist Copyright (C) 2018
+ * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class AnalogIOTest {
 
     @Test
     public void testAnalogIO() throws JmriException {
-        float min = (float) -1.0;
-        float max = (float) 1.0;
+        double min = -1.0;
+        double max = 1.0;
         AnalogIO analogIO = new MyAnalogIO("Analog");
         analogIO.setCommandedAnalogValue(min);
         Assert.assertTrue("AnalogIO has value -1.0", analogIO.getCommandedAnalogValue() == min);
@@ -30,12 +32,12 @@ public class AnalogIOTest {
                 "Relative".equals(AnalogIO.AbsoluteOrRelative.RELATIVE.toString()));
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
           jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
           jmri.util.JUnitUtil.tearDown();
     }
@@ -43,7 +45,7 @@ public class AnalogIOTest {
     
     private class MyAnalogIO extends AbstractNamedBean implements AnalogIO {
 
-        float _value = (float) 0.0;
+        double _value = 0.0;
         
         public MyAnalogIO(String sys) {
             super(sys);
@@ -65,28 +67,28 @@ public class AnalogIOTest {
         }
 
         @Override
-        public void setCommandedAnalogValue(float value) throws JmriException {
+        public void setCommandedAnalogValue(double value) throws JmriException {
             _value = value;
         }
 
         @Override
-        public float getCommandedAnalogValue() {
+        public double getCommandedAnalogValue() {
             return _value;
         }
 
         @Override
-        public float getMin() {
+        public double getMin() {
             return Float.MIN_VALUE;
         }
 
         @Override
-        public float getMax() {
+        public double getMax() {
             return Float.MAX_VALUE;
         }
 
         @Override
-        public float getResolution() {
-            return (float) 0.1;
+        public double getResolution() {
+            return 0.1;
         }
 
         @Override

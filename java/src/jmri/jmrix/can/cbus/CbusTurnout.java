@@ -5,9 +5,6 @@ import jmri.Turnout;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +15,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class CbusTurnout extends jmri.implementation.AbstractTurnout
-        implements CanListener {
+        implements CanListener, CbusEventInterface {
 
-    CbusAddress addrThrown;   // go to thrown state
-    CbusAddress addrClosed;   // go to closed state
+    private CbusAddress addrThrown;   // go to thrown state
+    private CbusAddress addrClosed;   // go to closed state
 
     protected CbusTurnout(String prefix, String address, TrafficController tc) {
         super(prefix + "T" + address);
@@ -30,7 +27,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
 
     }
 
-    TrafficController tc;
+    private final TrafficController tc;
 
     /**
      * Common initialization for both constructors.
@@ -51,7 +48,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 } else if (address.startsWith("-")) {
                     addrClosed = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.error("can't make 2nd event from systemname " + address);
+                    log.error("can't make 2nd event from systemname {}", address);
                     return;
                 }
                 break;
@@ -60,11 +57,11 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 addrClosed = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: " + address);
+                log.error("Can't parse CbusTurnout system name: {}", address);
                 return;
         }
         // connect
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     /**
@@ -74,8 +71,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     public void requestUpdateFromLayout() {
         CanMessage m;
         m = addrThrown.makeMessage(tc.getCanid());
-        int opc = CbusMessage.getOpcode(m);
-        if (CbusOpCodes.isShortEvent(opc)) {
+        if (CbusOpCodes.isShortEvent(CbusMessage.getOpcode(m))) {
             m.setOpCode(CbusConstants.CBUS_ASRQ);
         }
         else {
@@ -103,21 +99,12 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     protected void forwardCommandChangeToLayout(int s) {
         CanMessage m;
         if (s == Turnout.THROWN) {
-            if (getInverted()){
-                m = addrClosed.makeMessage(tc.getCanid());
-            } else {
-                m = addrThrown.makeMessage(tc.getCanid());
-            }
+            m = getAddrThrown();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } 
         if (s == Turnout.CLOSED) {
-            if (getInverted()){
-                m = addrThrown.makeMessage(tc.getCanid());
-            }
-            else {
-                m = addrClosed.makeMessage(tc.getCanid());
-            }
+            m = getAddrClosed();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         }
@@ -125,6 +112,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     
     /**
      * Package method returning CanMessage for the Thrown Turnout Address
+     * @return CanMessage with the Thrown Address
      */    
     public CanMessage getAddrThrown(){
         CanMessage m;
@@ -138,6 +126,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     
     /**
      * Package method returning CanMessage for the Closed Turnout Address
+     * @return CanReply with the Closed Address
      */    
     public CanMessage getAddrClosed(){
         CanMessage m;
@@ -147,6 +136,52 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             m = addrClosed.makeMessage(tc.getCanid());
         }
         return m;
+    }
+    
+    // note we only respond to addrThrown matches, 
+    // ie the left hand side of split of address "+5;+7"
+    // there's a response expected from 5
+    private void sendResponseToQuery(){
+        CanMessage m = null;
+        if (getCommandedState() == Turnout.THROWN) {
+            m=getAddrThrown(); // has already had inverted status considered
+            if (CbusMessage.isShort(m)) {
+                if (CbusMessage.getEventType(m)==CbusConstants.EVENT_ON) {
+                    m.setOpCode(CbusConstants.CBUS_ARSON);
+                }
+                else {
+                    m.setOpCode(CbusConstants.CBUS_ARSOF);
+                }
+            } else {
+                if (CbusMessage.getEventType(m)==CbusConstants.EVENT_ON) {
+                    m.setOpCode(CbusConstants.CBUS_ARON);
+                }
+                else {
+                    m.setOpCode(CbusConstants.CBUS_AROF);
+                }
+            }
+        } else if (getCommandedState() == Turnout.CLOSED){
+            m=getAddrThrown(); // has already had inverted status considered
+            if (CbusMessage.isShort(m)) {
+                if (CbusMessage.getEventType(m)==CbusConstants.EVENT_ON) {
+                    m.setOpCode(CbusConstants.CBUS_ARSOF);
+                }
+                else {
+                    m.setOpCode(CbusConstants.CBUS_ARSON);
+                }
+            } else {
+                if (CbusMessage.getEventType(m)==CbusConstants.EVENT_ON) {
+                    m.setOpCode(CbusConstants.CBUS_AROF);
+                }
+                else {
+                    m.setOpCode(CbusConstants.CBUS_ARON);
+                }
+            }
+        }
+        if (m!=null) {
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+            tc.sendCanMessage(m, this);
+        }
     }
     
     /**
@@ -210,6 +245,8 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 newKnownState(INCONSISTENT);
                 jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
             }
+        } else if (addrThrown.matchRequest(f)) {
+            sendResponseToQuery();
         }
     }
     
@@ -226,6 +263,22 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     @Override
     public boolean canInvert() {
         return true;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOnMessage(){
+        return checkEvent(getAddrClosed());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CanMessage getBeanOffMessage(){
+        return checkEvent(getAddrThrown());
     }
 
     /**

@@ -1,19 +1,18 @@
 package jmri.jmrix.zimo;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
- * JUnit tests for the Mx1PortController class
- * <p>
+ * JUnit tests for the Mx1PortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
 public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        Mx1TrafficController tc = new Mx1TrafficController(){
@@ -55,8 +54,9 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override
@@ -68,7 +68,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

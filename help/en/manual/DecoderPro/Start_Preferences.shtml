@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Decoder Pro Manual: Getting Started</title>
+  <title>DecoderPro Manual: Getting Started</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -18,10 +18,9 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-<div id="mBody">
-  <!--#include virtual="Sidebar" -->
+<!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
 
   <div id="mainContent">
     <h1>Getting Started with DecoderPro&reg;</h1>
@@ -260,7 +259,7 @@
     "images/Preferences_Console.png" alt="console" height="296"
     width="755"></p>
 
-    <p>Display settings for the JMRI system console.</p>
+    <p>Display settings for the JMRI System Console.</p>
 
     <p><strong><a href="#Top">Top</a></strong></p>
 
@@ -354,7 +353,7 @@
       <p><a href="index.shtml#GettingStarted">Back to Index</a></p>
     </div>
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

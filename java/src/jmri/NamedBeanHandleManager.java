@@ -44,9 +44,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class NamedBeanHandleManager extends AbstractManager implements InstanceManagerAutoDefault {
+public class NamedBeanHandleManager extends AbstractManager<NamedBean> implements InstanceManagerAutoDefault {
 
     public NamedBeanHandleManager() {
+        // use Internal memo as connection for this manager
         super();
     }
 
@@ -84,8 +85,8 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     public <T extends NamedBean> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
 
         /*Gather a list of the beans in the system with the oldName ref.
-         Although when we get a new bean we always return the first one that exists
-         when a rename is performed it doesn't delete the bean with the old name
+         Although when we get a new bean we always return the first one that exists,
+         when a rename is performed it doesn't delete the bean with the old name;
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */
@@ -201,59 +202,32 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
 
     @Override
     @CheckReturnValue
-    public String getSystemPrefix() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    @CheckReturnValue
     public char typeLetter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
+    @Nonnull
     @CheckReturnValue
-    public String makeSystemName(String s) {
+    public String makeSystemName(@Nonnull String s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
+    @Nonnull
     @CheckReturnValue
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
     @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    @Override
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
-    @Override
-    public void register(NamedBean n) {
+    public void register(@Nonnull NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void deregister(NamedBean n) {
+    public void deregister(@Nonnull NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -264,10 +238,20 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     }
 
     @Override
+    @Nonnull
     @CheckReturnValue
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanName");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNames" : "BeanName");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<NamedBean> getNamedBeanClass() {
+        return NamedBean.class;
     }
 
     private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
+
 }

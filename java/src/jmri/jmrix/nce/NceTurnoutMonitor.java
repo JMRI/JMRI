@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
  * Polls NCE Command Station for turnout discrepancies
  * <p>
  * This implementation reads the NCE Command Station (CS) memory that stores the
- * state of all accessories thrown by cabs or though the comm port using the new
- * binary switch command. The accessory states are storied in 256 byte array
+ * state of all accessories thrown by cabs or through the com port using the new
+ * binary switch command. The accessory states are stored in 256 byte array
  * starting at address 0xEC00.
  * <p>
  * byte 0, bit 0 = ACCY 1, bit 1 = ACCY 2 byte 1, bit 0 = ACCY 9, bit 1 = ACCY
@@ -149,7 +149,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
             }
 
             if (activeBlock[currentBlock]) {
-                log.trace("found turnouts block " + currentBlock);
+                log.trace("found turnouts block {}", currentBlock);
 
                 // Read NCE CS memory
                 int nceAccAddress = CS_ACCY_MEMORY + currentBlock * BLOCK_LEN;
@@ -326,7 +326,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
                 rControlTurnout.getFeedbackMode());
 
         // Show the byte read from NCE CS
-        log.trace("memory byte: " + Integer.toHexString(recMemByte & 0xFF));
+        log.trace("memory byte: {}", Integer.toHexString(recMemByte & 0xFF));
 
         // test for closed or thrown, normally 0 = closed, 1 = thrown
         int nceAccState = (recMemByte >> bit) & 0x01;
@@ -407,7 +407,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
 
             } else {
 
-                log.debug("turnout discrepancy, NT" + NTnum + " KnownState is now CLOSED");
+                log.debug("turnout discrepancy, NT{} KnownState is now CLOSED", NTnum);
                 // change JMRI's knowledge of the turnout state to match observed
                 rControlTurnout.setKnownStateFromCS(Turnout.CLOSED);
             }

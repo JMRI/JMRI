@@ -1,12 +1,12 @@
 package jmri.util.usb;
 
 import javax.usb.UsbDevice;
+
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -14,17 +14,13 @@ import org.mockito.junit.MockitoRule;
  */
 public class UsbBrowserFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Rule
-    public MockitoRule rule = MockitoJUnit.rule();
-
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         if(!GraphicsEnvironment.isHeadless()){
-           UsbDevice mockDevice = Mockito.mock(UsbDevice.class);
+           UsbDevice mockDevice = new UsbDeviceScaffold("foo","bar");
            UsbBrowserPanel bp = new UsbBrowserPanel(){
               @Override
               protected UsbTreeNode getRootNode() {
@@ -37,7 +33,7 @@ public class UsbBrowserFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

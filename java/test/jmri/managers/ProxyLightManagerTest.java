@@ -1,20 +1,22 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.jmrix.internal.InternalLightManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the ProxyLightManager.
  *
- * @author	Bob Jacobsen 2003, 2006, 2008
+ * @author Bob Jacobsen 2003, 2006, 2008
  */
 public class ProxyLightManagerTest {
 
@@ -22,7 +24,7 @@ public class ProxyLightManagerTest {
         return "JL" + i;
     }
 
-    protected LightManager l = null;	// holds objects under test
+    protected LightManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -59,24 +61,9 @@ public class ProxyLightManagerTest {
     }
 
     @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideLight("" + getNumToTest1()).getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
-    }
-
-    @Test
     public void testProvideFailure() {
-        boolean correct = false;
-        try {
-            l.provideLight("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            correct = true;
-        }
-        Assert.assertTrue("Exception thrown properly", correct);
-
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideLight(""));
+        JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -166,13 +153,7 @@ public class ProxyLightManagerTest {
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
 
-        InternalLightManager m = new InternalLightManager() {
-
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        InternalLightManager m = new InternalLightManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setLightManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("JL1"));
@@ -193,20 +174,15 @@ public class ProxyLightManagerTest {
         return 7;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalLightManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        l = new InternalLightManager(new InternalSystemConnectionMemo("J", "Juliet"));
         jmri.InstanceManager.setLightManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

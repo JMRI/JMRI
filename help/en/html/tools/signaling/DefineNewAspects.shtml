@@ -16,22 +16,22 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: Defining Your Own Signaling System</h1>This page
       describes how to define a new signaling system to JMRI.
 
       <p>We go through creating one from scratch, but it's often
       easier to copy and modify one of the existing ones in the
-      <a href="http://jmri.org/xml/signals/">xml/signals</a>
+      <a href="https://jmri.org/xml/signals/">xml/signals</a>
       directory.</p>
 
       <h2>Creating a New Signaling System</h2>First, you need to
@@ -213,7 +213,7 @@ the user. <a name="appearances" id="appearances"></a>
       <code>&lt;description&gt;</code> elements to provide
       information to future users of this signal system. You can
       see how this is displayed in a <a href=
-      "http://jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.xml">
+      "https://jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.xml">
       sample file</a>.</p>
 
       <p>Next is the <code>&lt;appearances&gt;</code> element,
@@ -258,7 +258,7 @@ followed by zero or more <code>&lt;show&gt;</code> elements.
       of your new signal definition are working on your
       panel/layout and you plan to submit your new signal system as
       a patch to JMRI, use full URL paths like
-      http://jmri.org/resources/icons/etc in the XML files so that
+      https://jmri.org/resources/icons/etc in the XML files so that
       they'll work with both the local JMRI program and for people
       viewing them on the JMRI web site.</p>
 
@@ -377,7 +377,7 @@ For each specific appearance entered, the corresponding <code>
       <p>The advantage of placing new and amended signal mast
       Appearance files here is that when JMRI is updated, then
       these files will not get overwritten and lost!</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

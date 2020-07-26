@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>15</minor>
-    <test>5</test>
+    <minor>19</minor>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
-    <sensor inverted="false">
-      <systemName>ISCLOCKRUNNING</systemName>
-    </sensor>
     <sensor inverted="false">
       <systemName>IS0</systemName>
       <userName>WestSensor</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS1</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS10</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS2</systemName>
@@ -46,6 +40,12 @@
     <sensor inverted="false">
       <systemName>IS9</systemName>
     </sensor>
+    <sensor inverted="false">
+      <systemName>IS10</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
@@ -57,9 +57,6 @@
     <defaultthrownspeed>Restricted</defaultthrownspeed>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT1</systemName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT10</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT2</systemName>
@@ -85,23 +82,24 @@
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT9</systemName>
     </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT10</systemName>
+    </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="7:05 PM">
+    <memory value="3:36 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
     <oblock systemName="OB0" userName="West" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>West</userName>
       <sensor systemName="WestSensor" />
       <path pathName="Main" blockName="OB0" fromPortal="East Meets West" toPortal="Enter" fromDirection="0" toDirection="0" length="1270.0" />
-      <portal systemName="IP1" portalName="Enter">
+      <portal portalName="Enter">
         <fromBlock blockName="OB0">
           <path pathName="Main" blockName="OB0" />
         </fromBlock>
@@ -110,7 +108,7 @@
           <path pathName="WestSiding" blockName="OB1" />
         </toBlock>
       </portal>
-      <portal systemName="IP2" portalName="East Meets West">
+      <portal portalName="East Meets West">
         <fromBlock blockName="OB10">
           <path pathName="Main" blockName="OB10" />
         </fromBlock>
@@ -127,7 +125,7 @@
       <path pathName="WestSiding" blockName="OB1" fromPortal="Enter" toPortal="1-6" fromDirection="0" toDirection="0" length="2540.0">
         <setting turnout="IT1" set="4" />
       </path>
-      <portal systemName="IP1" portalName="Enter">
+      <portal portalName="Enter">
         <fromBlock blockName="OB0">
           <path pathName="Main" blockName="OB0" />
         </fromBlock>
@@ -136,7 +134,7 @@
           <path pathName="WestSiding" blockName="OB1" />
         </toBlock>
       </portal>
-      <portal systemName="IP3" portalName="1-2">
+      <portal portalName="1-2">
         <fromBlock blockName="OB1">
           <path pathName="Main" blockName="OB1" />
         </fromBlock>
@@ -144,7 +142,7 @@
           <path pathName="Main" blockName="OB2" />
         </toBlock>
       </portal>
-      <portal systemName="IP4" portalName="1-6">
+      <portal portalName="1-6">
         <fromBlock blockName="OB1">
           <path pathName="WestSiding" blockName="OB1" />
         </fromBlock>
@@ -156,7 +154,7 @@
     <oblock systemName="OB2" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="IS2" />
       <path pathName="Main" blockName="OB2" fromPortal="2-3" toPortal="1-2" fromDirection="0" toDirection="0" length="1270.0" />
-      <portal systemName="IP3" portalName="1-2">
+      <portal portalName="1-2">
         <fromBlock blockName="OB1">
           <path pathName="Main" blockName="OB1" />
         </fromBlock>
@@ -164,7 +162,7 @@
           <path pathName="Main" blockName="OB2" />
         </toBlock>
       </portal>
-      <portal systemName="IP5" portalName="2-3">
+      <portal portalName="2-3">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
           <path pathName="EastSiding" blockName="OB3" />
@@ -192,7 +190,7 @@
         <setting turnout="IT2" set="2" />
         <setting turnout="IT3" set="4" />
       </path>
-      <portal systemName="IP5" portalName="2-3">
+      <portal portalName="2-3">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
           <path pathName="EastSiding" blockName="OB3" />
@@ -201,7 +199,7 @@
           <path pathName="Main" blockName="OB2" />
         </toBlock>
       </portal>
-      <portal systemName="IP6" portalName="3-4">
+      <portal portalName="3-4">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
           <path pathName="WestSiding" blockName="OB3" />
@@ -210,7 +208,7 @@
           <path pathName="Main" blockName="OB4" />
         </toBlock>
       </portal>
-      <portal systemName="IP7" portalName="3-7">
+      <portal portalName="3-7">
         <fromBlock blockName="OB3">
           <path pathName="SidingToSiding" blockName="OB3" />
           <path pathName="EastSiding" blockName="OB3" />
@@ -219,7 +217,7 @@
           <path pathName="EastSiding" blockName="OB7" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="3-6">
+      <portal portalName="3-6">
         <fromBlock blockName="OB6">
           <path pathName="WestSiding" blockName="OB6" />
         </fromBlock>
@@ -232,7 +230,7 @@
     <oblock systemName="OB4" length="1905.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="IS4" />
       <path pathName="Main" blockName="OB4" fromPortal="4-5" toPortal="3-4" fromDirection="0" toDirection="0" length="1905.0" />
-      <portal systemName="IP6" portalName="3-4">
+      <portal portalName="3-4">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
           <path pathName="WestSiding" blockName="OB3" />
@@ -241,7 +239,7 @@
           <path pathName="Main" blockName="OB4" />
         </toBlock>
       </portal>
-      <portal systemName="IP9" portalName="4-5">
+      <portal portalName="4-5">
         <fromBlock blockName="OB5">
           <path pathName="Main" blockName="OB5" />
         </fromBlock>
@@ -258,7 +256,7 @@
       <path pathName="EastSiding" blockName="OB5" fromPortal="Exit" toPortal="5-7" fromDirection="0" toDirection="0" length="2540.0">
         <setting turnout="IT4" set="4" />
       </path>
-      <portal systemName="IP9" portalName="4-5">
+      <portal portalName="4-5">
         <fromBlock blockName="OB5">
           <path pathName="Main" blockName="OB5" />
         </fromBlock>
@@ -266,7 +264,7 @@
           <path pathName="Main" blockName="OB4" />
         </toBlock>
       </portal>
-      <portal systemName="IP10" portalName="Exit">
+      <portal portalName="Exit">
         <fromBlock blockName="OB10">
           <path pathName="Main" blockName="OB10" />
         </fromBlock>
@@ -275,7 +273,7 @@
           <path pathName="EastSiding" blockName="OB5" />
         </toBlock>
       </portal>
-      <portal systemName="IP11" portalName="5-7">
+      <portal portalName="5-7">
         <fromBlock blockName="OB5">
           <path pathName="EastSiding" blockName="OB5" />
         </fromBlock>
@@ -287,7 +285,7 @@
     <oblock systemName="OB6" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="IS6" />
       <path pathName="WestSiding" blockName="OB6" fromPortal="3-6" toPortal="1-6" fromDirection="0" toDirection="0" length="1270.0" />
-      <portal systemName="IP4" portalName="1-6">
+      <portal portalName="1-6">
         <fromBlock blockName="OB1">
           <path pathName="WestSiding" blockName="OB1" />
         </fromBlock>
@@ -295,7 +293,7 @@
           <path pathName="WestSiding" blockName="OB6" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="3-6">
+      <portal portalName="3-6">
         <fromBlock blockName="OB6">
           <path pathName="WestSiding" blockName="OB6" />
         </fromBlock>
@@ -308,7 +306,7 @@
     <oblock systemName="OB7" length="1905.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="IS7" />
       <path pathName="EastSiding" blockName="OB7" fromPortal="5-7" toPortal="3-7" fromDirection="0" toDirection="0" length="1905.0" />
-      <portal systemName="IP7" portalName="3-7">
+      <portal portalName="3-7">
         <fromBlock blockName="OB3">
           <path pathName="SidingToSiding" blockName="OB3" />
           <path pathName="EastSiding" blockName="OB3" />
@@ -317,7 +315,7 @@
           <path pathName="EastSiding" blockName="OB7" />
         </toBlock>
       </portal>
-      <portal systemName="IP11" portalName="5-7">
+      <portal portalName="5-7">
         <fromBlock blockName="OB5">
           <path pathName="EastSiding" blockName="OB5" />
         </fromBlock>
@@ -330,7 +328,7 @@
       <userName>East</userName>
       <sensor systemName="IS10" />
       <path pathName="Main" blockName="OB10" fromPortal="East Meets West" toPortal="Exit" fromDirection="0" toDirection="0" length="1270.0" />
-      <portal systemName="IP2" portalName="East Meets West">
+      <portal portalName="East Meets West">
         <fromBlock blockName="OB10">
           <path pathName="Main" blockName="OB10" />
         </fromBlock>
@@ -338,7 +336,7 @@
           <path pathName="Main" blockName="OB0" />
         </toBlock>
       </portal>
-      <portal systemName="IP10" portalName="Exit">
+      <portal portalName="Exit">
         <fromBlock blockName="OB10">
           <path pathName="Main" blockName="OB10" />
         </fromBlock>
@@ -447,14 +445,14 @@
       <throttleCommand time="1000" command="Speed" value="0.16550002" block="OB1" />
       <throttleCommand time="1000" command="Speed" value="0.23205002" block="OB1" />
       <throttleCommand time="1000" command="Speed" value="0.30525503" block="OB1" />
-      <throttleCommand time="410" command="NoOp" value="Enter Block" block="OB6" />
-      <throttleCommand time="589" command="Speed" value="0.3857805" block="OB6" />
-      <throttleCommand time="1082" command="NoOp" value="Enter Block" block="OB3" />
-      <throttleCommand time="0" command="Speed" value="0.47435856" block="OB3" />
+      <throttleCommand time="400" command="NoOp" value="Enter Block" block="OB6" />
+      <throttleCommand time="600" command="Speed" value="0.3857805" block="OB6" />
+      <throttleCommand time="800" command="NoOp" value="Enter Block" block="OB3" />
+      <throttleCommand time="200" command="Speed" value="0.47435856" block="OB3" />
       <throttleCommand time="1000" command="Speed" value="0.5" block="OB3" />
-      <throttleCommand time="2683" command="NoOp" value="Enter Block" block="OB7" />
-      <throttleCommand time="2441" command="Speed" value="0.39282054" block="OB7" />
-      <throttleCommand time="646" command="NoOp" value="Enter Block" block="OB5" />
+      <throttleCommand time="1000" command="NoOp" value="Enter Block" block="OB7" />
+      <throttleCommand time="1000" command="Speed" value="0.39282054" block="OB7" />
+      <throttleCommand time="600" command="NoOp" value="Enter Block" block="OB5" />
       <throttleCommand time="353" command="Speed" value="0.29538468" block="OB5" />
       <throttleCommand time="100" command="Speed" value="0.20680663" block="OB5" />
       <throttleCommand time="100" command="Speed" value="0.12628113" block="OB5" />
@@ -477,9 +475,9 @@
       </blockOrder>
       <throttleCommand time="0" command="F0" value="true" block="OB6" />
       <throttleCommand time="100" command="Forward" value="true" block="OB6" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB6" />
-      <throttleCommand time="2500" command="F2" value="false" block="OB6" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB6" />
+      <throttleCommand time="100" command="F2" value="true" block="OB6" />
+      <throttleCommand time="500" command="F2" value="false" block="OB6" />
+      <throttleCommand time="500" command="F2" value="true" block="OB6" />
       <throttleCommand time="2500" command="F2" value="false" block="OB6" />
       <throttleCommand time="0" command="Speed" value="0.008" block="OB6" />
       <throttleCommand time="1000" command="Speed" value="0.016800001" block="OB6" />
@@ -541,10 +539,10 @@
       </blockOrder>
       <throttleCommand time="0" command="F0" value="true" block="OB7" />
       <throttleCommand time="100" command="Forward" value="true" block="OB7" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB7" />
-      <throttleCommand time="2500" command="F2" value="false" block="OB7" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB7" />
-      <throttleCommand time="2500" command="F2" value="false" block="OB7" />
+      <throttleCommand time="200" command="F2" value="true" block="OB7" />
+      <throttleCommand time="500" command="F2" value="false" block="OB7" />
+      <throttleCommand time="500" command="F2" value="true" block="OB7" />
+      <throttleCommand time="500" command="F2" value="false" block="OB7" />
       <throttleCommand time="0" command="Speed" value="0.008" block="OB7" />
       <throttleCommand time="1000" command="Speed" value="0.016800001" block="OB7" />
       <throttleCommand time="1000" command="Speed" value="0.026480002" block="OB7" />
@@ -615,9 +613,9 @@
       </blockOrder>
       <throttleCommand time="0" command="F0" value="true" block="OB0" />
       <throttleCommand time="100" command="Forward" value="true" block="OB0" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB0" />
-      <throttleCommand time="2500" command="F2" value="false" block="OB0" />
-      <throttleCommand time="1000" command="F2" value="true" block="OB0" />
+      <throttleCommand time="100" command="F2" value="true" block="OB0" />
+      <throttleCommand time="500" command="F2" value="false" block="OB0" />
+      <throttleCommand time="500" command="F2" value="true" block="OB0" />
       <throttleCommand time="2500" command="F2" value="false" block="OB0" />
       <throttleCommand time="0" command="Speed" value="0.008" block="OB0" />
       <throttleCommand time="1000" command="Speed" value="0.016800001" block="OB0" />
@@ -679,7 +677,7 @@
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 18 10:30:41 PDT 2015" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="NXWarrantTest" x="798" y="638" height="280" width="691" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="224" blueBackground="12" state="0" shapeSelect="yes">
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="NXWarrantTest" x="669" y="582" height="280" width="691" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="224" blueBackground="12" state="0" shapeSelect="yes">
     <icons>
       <visible>
         <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
@@ -1577,37 +1575,54 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Thu Apr 04 19:03:48 PDT 2019</date>
+      <date>Wed May 20 15:27:06 PDT 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Apr 04 19:03:57 PDT 2019</date>
-      <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
+      <date>Wed May 20 15:28:11 PDT 2020</date>
+      <filename>/C:/JMRI/java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Thu Apr 04 11:10:42 PDT 2019</date>
+          <date>Thu Apr 04 19:03:48 PDT 2019</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Thu Apr 04 11:10:58 PDT 2019</date>
+          <date>Thu Apr 04 19:03:57 PDT 2019</date>
           <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
-          <filehistory />
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Thu Apr 04 11:10:42 PDT 2019</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Thu Apr 04 11:10:58 PDT 2019</date>
+              <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
+              <filehistory />
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Thu Apr 04 11:25:03 PDT 2019</date>
+              <filename />
+            </operation>
+          </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Thu Apr 04 11:25:03 PDT 2019</date>
+          <date>Thu Apr 04 19:05:10 PDT 2019</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Apr 04 19:05:10 PDT 2019</date>
+      <date>Wed May 20 15:36:20 PDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.15.5ish+pete_+2019-04-05T02:03:41Z+R3eabc83dbe on Thu Apr 04 19:05:10 PDT 2019-->
+  <!--Written by JMRI version 4.19.7ish+pete_+2020-05-20T22:26:58Z+R5132235ba8 on Wed May 20 15:36:20 PDT 2020-->
 </layout-config>

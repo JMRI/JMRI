@@ -1,7 +1,9 @@
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig;
 
 /**
@@ -11,8 +13,8 @@ import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
@@ -20,7 +22,8 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         cc.setManufacturer("Lawicell");
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;

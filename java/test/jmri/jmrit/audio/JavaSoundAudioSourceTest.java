@@ -1,15 +1,16 @@
 package jmri.jmrit.audio;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of JavaSoundAudioSource
  *
- * @author	Paul Bender Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JavaSoundAudioSourceTest {
 
@@ -25,15 +26,20 @@ public class JavaSoundAudioSourceTest {
         Assert.assertNotNull("exists", l);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.AudioManager am = new DefaultAudioManager();
+        jmri.AudioManager am = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         jmri.InstanceManager.setDefault(jmri.AudioManager.class,am);
         am.init();
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
     }
 
-    @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    @AfterEach
+    public void tearDown() {
+        // this created an audio manager, clean that up
+        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
+
+        jmri.util.JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
+        JUnitUtil.tearDown();
+    }
 }

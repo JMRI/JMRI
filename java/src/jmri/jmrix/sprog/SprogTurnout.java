@@ -25,6 +25,8 @@ public class SprogTurnout extends AbstractTurnout {
      * <p>
      * Sprog turnouts use the NMRA number (0-511) as their numerical
      * identification.
+     * @param number NMRA number.
+     * @param memo system connection.
      */
     public SprogTurnout(int number, SprogSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "T" + number);
@@ -46,7 +48,7 @@ public class SprogTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -75,10 +77,7 @@ public class SprogTurnout extends AbstractTurnout {
         // get the packet
         byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
         if (log.isDebugEnabled()) {
-            log.debug("packet: "
-                    + Integer.toHexString(0xFF & bl[0])
-                    + " " + Integer.toHexString(0xFF & bl[1])
-                    + " " + Integer.toHexString(0xFF & bl[2]));
+            log.debug("packet: {} {} {}", Integer.toHexString(0xFF & bl[0]), Integer.toHexString(0xFF & bl[1]), Integer.toHexString(0xFF & bl[2]));
         }
 
         SprogMessage m = new SprogMessage(10);

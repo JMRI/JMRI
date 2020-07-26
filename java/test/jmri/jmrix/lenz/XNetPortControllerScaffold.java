@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Implementation of XNetPortController that eases
  * checking whether data was forwarded or not.
  * 
- * @author	Bob Jacobsen Copyright (C) 2006, 2015
+ * @author Bob Jacobsen Copyright (C) 2006, 2015
  */
 public class XNetPortControllerScaffold extends XNetSimulatorPortController {
 
@@ -38,7 +38,12 @@ public class XNetPortControllerScaffold extends XNetSimulatorPortController {
 
     @Override
     public String[] validBaudRates() {
-        return null;
+        return new String[] {};
+    }
+
+    @Override
+    public int[] validBaudNumbers() {
+        return new int[] {};
     }
 
     PipedInputStream otempIPipe;

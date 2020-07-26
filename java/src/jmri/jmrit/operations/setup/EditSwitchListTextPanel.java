@@ -2,12 +2,9 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainSwitchListText;
 
@@ -57,7 +54,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         // the following code sets the frame's initial state
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        // manifest text fields
+        // text fields
         JPanel pSwitchList = new JPanel();
         JScrollPane pSwitchListPane = new JScrollPane(pSwitchList);
         pSwitchListPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchList")));
@@ -289,24 +286,24 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return (TrainSwitchListText.getStringSwitchListFor().equals(switchListForTextField.getText())
-                || TrainSwitchListText.getStringScheduledWork().equals(scheduledWorkTextField.getText())
-                || TrainSwitchListText.getStringDepartsAt().equals(departsAtTextField.getText())
-                || TrainSwitchListText.getStringDepartsAtExpectedArrival().equals(departsAtExpectedArrivalTextField.getText())
-                || TrainSwitchListText.getStringDepartedExpected().equals(departedExpectedTextField.getText())
-                || TrainSwitchListText.getStringVisitNumber().equals(visitNumberTextField.getText())
-                || TrainSwitchListText.getStringVisitNumberDeparted().equals(visitNumberDepartedTextField.getText())
-                || TrainSwitchListText.getStringVisitNumberTerminates().equals(visitNumberTerminatesTextField.getText())
-                || TrainSwitchListText.getStringVisitNumberTerminatesDeparted().equals(visitNumberTerminatesDepartedTextField.getText())
-                || TrainSwitchListText.getStringVisitNumberDone().equals(visitNumberDoneTextField.getText())
-                || TrainSwitchListText.getStringTrainDirectionChange().equals(trainDirectionChangeTextField.getText())
-                || TrainSwitchListText.getStringNoCarPickUps().equals(noCarPickUpsTextField.getText())
-                || TrainSwitchListText.getStringNoCarDrops().equals(noCarDropsTextField.getText())
-                || TrainSwitchListText.getStringTrainDone().equals(trainDoneTextField.getText()))
-                || TrainSwitchListText.getStringTrainDepartsCars().equals(trainDepartsCarsTextField.getText())
-                || TrainSwitchListText.getStringTrainDepartsLoads().equals(trainDepartsLoadsTextField.getText())
-                || TrainSwitchListText.getStringSwitchListByTrack().equals(switchListByTrackTextField.getText())
-                || TrainSwitchListText.getStringHoldCar().equals(holdCarTextField.getText())
+        return !(TrainSwitchListText.getStringSwitchListFor().equals(switchListForTextField.getText())
+                && TrainSwitchListText.getStringScheduledWork().equals(scheduledWorkTextField.getText())
+                && TrainSwitchListText.getStringDepartsAt().equals(departsAtTextField.getText())
+                && TrainSwitchListText.getStringDepartsAtExpectedArrival().equals(departsAtExpectedArrivalTextField.getText())
+                && TrainSwitchListText.getStringDepartedExpected().equals(departedExpectedTextField.getText())
+                && TrainSwitchListText.getStringVisitNumber().equals(visitNumberTextField.getText())
+                && TrainSwitchListText.getStringVisitNumberDeparted().equals(visitNumberDepartedTextField.getText())
+                && TrainSwitchListText.getStringVisitNumberTerminates().equals(visitNumberTerminatesTextField.getText())
+                && TrainSwitchListText.getStringVisitNumberTerminatesDeparted().equals(visitNumberTerminatesDepartedTextField.getText())
+                && TrainSwitchListText.getStringVisitNumberDone().equals(visitNumberDoneTextField.getText())
+                && TrainSwitchListText.getStringTrainDirectionChange().equals(trainDirectionChangeTextField.getText())
+                && TrainSwitchListText.getStringNoCarPickUps().equals(noCarPickUpsTextField.getText())
+                && TrainSwitchListText.getStringNoCarDrops().equals(noCarDropsTextField.getText())
+                && TrainSwitchListText.getStringTrainDone().equals(trainDoneTextField.getText()))
+                && TrainSwitchListText.getStringTrainDepartsCars().equals(trainDepartsCarsTextField.getText())
+                && TrainSwitchListText.getStringTrainDepartsLoads().equals(trainDepartsLoadsTextField.getText())
+                && TrainSwitchListText.getStringSwitchListByTrack().equals(switchListByTrackTextField.getText())
+                && TrainSwitchListText.getStringHoldCar().equals(holdCarTextField.getText())
                 ;
     }
 }

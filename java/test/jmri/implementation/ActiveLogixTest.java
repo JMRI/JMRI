@@ -4,10 +4,11 @@ import jmri.*;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
-import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests Logix in detail by loading a set of 
@@ -22,7 +23,7 @@ import org.junit.*;
  */
 public class ActiveLogixTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -182,8 +183,9 @@ public class ActiveLogixTest {
         
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() throws Exception {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

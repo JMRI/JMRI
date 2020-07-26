@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends GcSerialDriverAdapter {
 
     public SerialDriverAdapter() {
         super();
@@ -35,7 +35,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
         try {
             tc.setCanId(Integer.parseInt(getOptionState(option2Name)));
         } catch (Exception e) {
-            log.error("Cannot parse CAN ID - check your preference settings " + e);
+            log.error("Cannot parse CAN ID - check your preference settings {}", e);
             log.error("Now using default CAN ID");
         }
 

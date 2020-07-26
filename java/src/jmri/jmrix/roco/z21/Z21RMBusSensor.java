@@ -23,7 +23,7 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
 
     private String systemName;
 
-    protected Z21TrafficController tc = null;
+    protected Z21TrafficController tc;
 
     public Z21RMBusSensor(String systemName, String userName, Z21TrafficController controller, String prefix) {
         super(systemName, userName);
@@ -99,6 +99,8 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
      * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
+     *
+     * @param l the feedback message to send
      */
     synchronized void initmessage(Z21Reply l) {
         boolean oldState = statusRequested;
@@ -116,7 +118,6 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
              setOwnState(Sensor.INACTIVE);
            }
         }
-        return;
     }
 
     /**
@@ -134,6 +135,7 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
 
     /**
      * Package protected routine to get the Sensor Number.
+     * @return Sensor number
      */
     int getNumber() {
         return address;
@@ -141,6 +143,7 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
 
     /**
      * Package protected routine to get the Sensor Base Address.
+     * @return address for this module.
      */
     int getModuleAddress() {
         return moduleAddress;

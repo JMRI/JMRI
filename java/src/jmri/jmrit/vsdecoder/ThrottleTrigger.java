@@ -17,12 +17,11 @@ package jmri.jmrit.vsdecoder;
  * @author   Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class ThrottleTrigger extends Trigger implements PropertyChangeListener {
+class ThrottleTrigger extends Trigger {
 
     int current_notch, prev_notch;
 
@@ -50,12 +49,12 @@ class ThrottleTrigger extends Trigger implements PropertyChangeListener {
             //log.debug("Quit.  TriggerType = NONE");
             return;
         }
-        if (this.getTargetAction() == TargetAction.NOTHING) {
+        if (this.getTargetAction() == TargetAction.NOTHING || this.getTargetAction() == TargetAction.STOP_AT_ZERO) {
             //log.debug("Quit.  TargetAction = NOTHING");
             return;
         }
 
-        log.debug("Throttle Trigger old value = " + event.getOldValue() + " new value = " + event.getNewValue());
+        log.debug("Throttle Trigger old value = {} new value = {}", event.getOldValue(), event.getNewValue());
         this.callback.takeAction((Float) event.getNewValue());
     }
 

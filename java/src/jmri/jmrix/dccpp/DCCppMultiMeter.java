@@ -36,7 +36,7 @@ public class DCCppMultiMeter extends jmri.implementation.AbstractMultiMeter impl
     public void message(DCCppReply r) {
         log.debug("DCCppMultiMeter received reply: {}", r.toString());
         if (r.isCurrentReply()) {
-            setCurrent((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f));
+            setCurrent(((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f );  // return as percentage.
         }
 
     }
@@ -69,6 +69,11 @@ public class DCCppMultiMeter extends jmri.implementation.AbstractMultiMeter impl
     @Override
     public boolean hasVoltage() {
         return false;
+    }
+
+    @Override
+    public CurrentUnits getCurrentUnits() {
+        return  CurrentUnits.CURRENT_UNITS_PERCENTAGE;
     }
 
     // Handle a timeout notification

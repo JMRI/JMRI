@@ -1,19 +1,18 @@
 package jmri.jmrix.mrc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
- * JUnit tests for the MrcPortController class
- * <p>
+ * JUnit tests for the MrcPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
 public class MrcPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
@@ -43,8 +42,9 @@ public class MrcPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override
@@ -56,7 +56,7 @@ public class MrcPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

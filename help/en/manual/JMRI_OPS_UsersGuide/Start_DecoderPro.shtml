@@ -15,15 +15,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
@@ -92,7 +91,7 @@
         "Start_Preferences.shtml">| Next</a></p>
 
         <p><a href="index.shtml#startOps">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

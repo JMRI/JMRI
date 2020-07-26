@@ -15,6 +15,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p serial port adapter.
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
@@ -37,7 +38,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     public void loadDetails(JPanel details) {
         setInstance();
 
-        // have to embed the usual one in a new JPanel
         b.addActionListener(new NodeConfigAction((OakTreeSystemConnectionMemo) adapter.getSystemConnectionMemo()));
         // add another button
         if (!additionalItems.contains(b)) {

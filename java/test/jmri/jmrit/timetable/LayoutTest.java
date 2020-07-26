@@ -1,6 +1,9 @@
 package jmri.jmrit.timetable;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
+import jmri.util.JUnitUtil;
 
 /**
  * Tests for the Layout Class
@@ -47,14 +50,15 @@ public class LayoutTest {
         Assert.assertEquals("Test Name", layout.toString());  // NOI18N
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTest.class);
 }

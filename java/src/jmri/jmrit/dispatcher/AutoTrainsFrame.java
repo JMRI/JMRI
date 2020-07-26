@@ -142,19 +142,19 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             }
         }
         else {
-            log.info("No Throttle[{}]",aat.getActiveTrain().getActiveTrainName());
+            log.debug("{}: No Throttle (yet)",aat.getActiveTrain().getTrainName());
         }
     }
 
     private void handleThrottleChange(java.beans.PropertyChangeEvent e) {
-        if (!e.getPropertyName().equals("SpeedSetting") && !e.getPropertyName().equals("IsForward")) {
+        if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
             return; //ignore if not speed or direction
         }
         int index = _throttles.indexOf(e.getSource());
         if (index == -1) {
             jmri.Throttle waThrottle1 =  (Throttle) e.getSource();
             int DDCAddress =  waThrottle1.getLocoAddress().getNumber() ;
-            log.debug("handleThrottleChange - using locoaddress [" + DDCAddress + "]");
+            log.trace("handleThrottleChange - using locoaddress [{}]", DDCAddress);
             for (jmri.Throttle waThrottle  : _throttles ) {
                 if (waThrottle != null) {
                     if ( DDCAddress == waThrottle.getLocoAddress().getNumber()) {
@@ -176,7 +176,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             return;
         }
         jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
-        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
     }
 
     private void updateStatusLabel(JLabel status, Object speed, Object forward) {
@@ -189,13 +189,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         } else {
             sb.append("(rev)");
         }
-        //Only repack if the text size has increased.
-        if (status.getText().length() < sb.toString().length()) {
-            status.setText(sb.toString());
-            autoTrainsFrame.pack();
-        } else {
-            status.setText(sb.toString());
-        }
+        status.setText(sb.toString());
+        autoTrainsFrame.pack();
     }
 
     private void addThrottleListener(AutoActiveTrain aat) {
@@ -207,7 +202,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
             jmri.InstanceManager.throttleManagerInstance().attachListener(addy, _throttleListeners.get(index));
             JLabel status = _throttleStatus.get(index);
-            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
         }
     }
 
@@ -471,7 +466,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             if (at.getMode() == ActiveTrain.MANUAL) {
                 aat.setForward(_forwardButtons.get(index).isSelected());
             } else {
-                log.warn("unexpected direction button change on line " + s);
+                log.warn("unexpected direction button change on line {}", s);
             }
         }
     }
@@ -486,7 +481,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 speedValue = speedValue * 0.01f;
                 aat.getAutoEngineer().setSpeedImmediate(speedValue);
             } else {
-                log.warn("unexpected slider change on line " + s);
+                log.warn("unexpected slider change on line {}", s);
             }
         }
     }
@@ -496,12 +491,12 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         try {
             index = Integer.parseInt(s);
         } catch (Exception e) {
-            log.warn("exception when parsing index from AutoTrains window - " + s);
+            log.warn("exception when parsing index from AutoTrains window - {}", s);
         }
         if ((index >= 0) && (index < _autoTrainsList.size())) {
             return index;
         }
-        log.error("bad train index in auto trains table " + index);
+        log.error("bad train index in auto trains table {}", index);
         return (-1);
     }
 

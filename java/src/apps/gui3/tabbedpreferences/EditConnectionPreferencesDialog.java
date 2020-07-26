@@ -11,7 +11,7 @@ import jmri.ShutDownManager;
 import jmri.swing.PreferencesPanel;
 
 /**
- * Provide a preferences dialog.
+ * Provide a Connection preferences dialog.
  * <p>
  * References the status of an {@link EditConnectionPreferences} object that 
  * is created (via new()) as part of this constructor.
@@ -34,6 +34,7 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
     
     /**
      * Displays a dialog for editing the connections.
+     *
      * @return true if the program should restart, false if the program should quit.
      */
     public static boolean showDialog() {
@@ -62,8 +63,8 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
 
     @Override
     public void windowClosing(WindowEvent e) {
-        ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
-        if (!editConnectionPreferences.isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+        ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+        if (!editConnectionPreferences.isPreferencesValid() && !sdm.isShuttingDown()) {
             for (PreferencesPanel panel : editConnectionPreferences.getPreferencesPanels().values()) {
                 if (!panel.isPreferencesValid()) {
                     switch (JOptionPane.showConfirmDialog(this,

@@ -1,6 +1,8 @@
 package jmri.jmrix.configurexml;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.jdom2.Element;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.AbstractSerialPortController;
@@ -11,7 +13,7 @@ import javax.swing.JPanel;
 /**
  * Base tests for SerialConnectionConfigXml objects.
  *
- * @author Paul Bender Copyright (C) 2018	
+ * @author Paul Bender Copyright (C) 2018
  */
 abstract public class AbstractSerialConnectionConfigXmlTestBase extends AbstractConnectionConfigXmlTestBase {
 
@@ -31,7 +33,8 @@ abstract public class AbstractSerialConnectionConfigXmlTestBase extends Abstract
         validateConnectionDetails(cc, e);
     }
 
-    @Test(timeout=5000)
+    @Test
+    @Timeout(5000)
     @Override
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         Assume.assumeNotNull(cc);
@@ -64,8 +67,9 @@ abstract public class AbstractSerialConnectionConfigXmlTestBase extends Abstract
        } else {
           Assert.assertEquals("port", Bundle.getMessage("noneSelected"), e.getAttribute("port").getValue());
        }
-       if(spc.getCurrentBaudRate()!=null) {
-          Assert.assertEquals("speed", spc.getCurrentBaudRate(), e.getAttribute("speed").getValue());
+       if(spc.getCurrentBaudNumber()!=null) {
+          Assert.assertEquals("speed", spc.getCurrentBaudNumber(), e.getAttribute("speed").getValue());
+          // speed is not stored as I18N formatted string but as int string
        } else {
           Assert.assertEquals("speed", Bundle.getMessage("noneSelected"), e.getAttribute("speed").getValue());
        }

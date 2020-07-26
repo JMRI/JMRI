@@ -1,12 +1,13 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.setup.Setup;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the types of cars a railroad can have.
@@ -24,18 +25,6 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
     public static final String CARTYPES_NAME_CHANGED_PROPERTY = "CarTypes Name"; // NOI18N
 
     public CarTypes() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarTypes instance() {
-        return InstanceManager.getDefault(CarTypes.class);
     }
 
     @Override
@@ -118,26 +107,18 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
 
     /**
      * Get the maximum character length of a car type when printing on a
-     * manifest or switch list. Car subtypes or characters after the "-" are
+     * manifest or switch list. Car "subtypes" or characters after the hyphen are
      * ignored.
      *
      * @return the maximum character length of a car type
      */
     @Override
     public int getMaxNameLength() {
-        if (maxNameLength == 0) {
-            String maxName = "";
-            maxNameLength = MIN_NAME_LENGTH;
-            for (String name : getNames()) {
-                String[] subString = name.split("-");
-                if (subString[0].length() > maxNameLength) {
-                    maxName = name;
-                    maxNameLength = subString[0].length();
-                }
-            }
-            log.info("Max car type name ({}) length {}", maxName, maxNameLength);
+        if (maxNameSubStringLength == 0) {
+            super.getMaxNameSubStringLength();
+            log.info("Max car type name ({}) length {}", maxName, maxNameSubStringLength);
         }
-        return maxNameLength;
+        return maxNameSubStringLength;
     }
 
     /**
@@ -157,7 +138,7 @@ public class CarTypes extends RollingStockAttribute implements InstanceManagerAu
      *
      */
     public void store(Element root) {
-        store(root, Xml.TYPES, Xml.TYPE, Xml.CAR_TYPES);
+        store(root, Xml.TYPES, Xml.TYPE);
     }
 
     public void load(Element root) {

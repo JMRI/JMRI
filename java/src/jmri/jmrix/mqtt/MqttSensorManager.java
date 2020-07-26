@@ -14,18 +14,17 @@ import org.slf4j.LoggerFactory;
  */
 public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
 
-    @Nonnull private final MqttAdapter mqttAdapter;
-
-    public MqttSensorManager(@Nonnull MqttAdapter ma, @Nonnull String p) {
-        super();
-        mqttAdapter = ma;
-        systemPrefix = p;        
+    public MqttSensorManager(@Nonnull SystemConnectionMemo memo ) {
+        super(memo);
     }
 
-    @Nonnull private final String systemPrefix; // for systemName
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return systemPrefix;
+    @Nonnull
+    public MqttSystemConnectionMemo getMemo() {
+        return (MqttSystemConnectionMemo) memo;
     }
 
     public void setTopicPrefix(@Nonnull String topicPrefix) {
@@ -38,6 +37,7 @@ public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
+
 
     /**
      * {@inheritDoc}
@@ -57,10 +57,10 @@ public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     protected Sensor createNewSensor(String systemName, String userName) {
         MqttSensor s;
-        String suffix = systemName.substring(systemPrefix.length() + 1);
+        String suffix = systemName.substring(getSystemPrefix().length() + 1);
         String topic = topicPrefix+suffix;
 
-        s = new MqttSensor(mqttAdapter, systemName, topic);
+        s = new MqttSensor(getMemo().getMqttAdapter(), systemName, topic);
         s.setUserName(userName);
 
         if (parser != null) s.setParser(parser);
@@ -91,20 +91,6 @@ public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces leaves the given name alone.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName;
     }
 
     /** {@inheritDoc} */

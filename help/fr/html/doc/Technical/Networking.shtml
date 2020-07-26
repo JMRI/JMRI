@@ -13,23 +13,23 @@
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
+    <!-- Page Body -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <h1>JMRI: Acc&egrave;s au r&eacute;seau (informatique)</h1>
 
-    <div id="mainContent">
-      <h1>JMRI: Acc&egrave;s au r&eacute;seau
-      (informatique)</h1>Cette page d&eacute;crit les
+    Cette page d&eacute;crit les
       diff&eacute;rentes formes d'acc&egrave;s au r&eacute;seau
       (informatique) disponible dans JMRI. De nouvelles
       capacit&eacute;s sont ajout&eacute;s tous le temps, de
@@ -142,23 +142,22 @@
       )</h2>
 
       <ul>
-        <li>Int&eacute;gr&eacute; <a mini="" href=
-        "../../web/index.shtml">un miniserveur Web</a> (<a href=
-        "http://jmri.org/JavaDoc/doc/jmri/web/miniserver/package-summary.html">code</a>)
+        <li>Int&eacute;gr&eacute; <a href="../../web/index.shtml">un miniserveur Web</a> (<a href=
+        "https://jmri.org/JavaDoc/doc/jmri/web/miniserver/package-summary.html">code</a>)
 
           <p>C'est annonc&eacute; sur Bonjour/Zeroconf comme un
           service &laquo;_http._tcp.local.". En particulier, il
           contient les <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
+          "https://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
           support JMRI XMLIO</a>, qui permet aux navigateurs web
           (avec ou sans AJAX) de surveiller et de contr&ocirc;ler
           un r&eacute;seau ferr&eacute; en acc&eacute;dant &agrave;
           un <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
+          "https://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
           Servlet JMRI XMLIO</a> Il comprend &eacute;galement des
           installations pour l'affichage et en cliquant sur
           n'importe quoi <a href=
-          "http://jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">
+          "https://jmri.org/JavaDoc/doc/jmri/web/servlet/frameimage/package-summary.html">
           d'ouvrir la fen&ecirc;tre JMRI</a>.</p>
         </li>
 
@@ -168,7 +167,7 @@
         "../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
           r&eacute;gulateur &agrave; distance</a> tels que l'iPhone
           ou Android. (<a href=
-          "http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>)
+          "https://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>)
           ( <a href="http://withrottle.com">site web du produit
           WiThrottle</a>) ( <a href=
           "../../../package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">
@@ -216,7 +215,8 @@
 
       <p>Voir aussi "man dns-sd" pour de plus d'informations sur
       l'outil DNS-SD de d&eacute;bogage en ligne de commande.</p>
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

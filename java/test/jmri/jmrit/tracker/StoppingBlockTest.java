@@ -1,13 +1,13 @@
 package jmri.jmrit.tracker;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.Block;
 
 /**
  * Tests for the StoppingBlock class
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class StoppingBlockTest {
 

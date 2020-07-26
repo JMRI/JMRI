@@ -22,6 +22,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     /**
      * Constructor for an object being created during load process; Swing init
      * is deferred.
+     * @param p network port adapter.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
@@ -96,7 +97,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
             _details.getParent().revalidate();
             _details.getParent().repaint();
         }
-
     }
 
     @Override

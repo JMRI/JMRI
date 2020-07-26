@@ -3,15 +3,13 @@ package jmri;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Path class
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class PathTest {
 
@@ -38,6 +36,7 @@ public class PathTest {
 
         Block b = new Block("IB1");
         p.setBlock(b);
+        Assert.assertEquals("block added",b,p.getBlock());
     }
 
     @Test
@@ -101,7 +100,20 @@ public class PathTest {
 
         s.setState(Turnout.CLOSED);
         Assert.assertTrue("check path set", p.checkPathSet());
+    }
 
+    @Test
+    public void testToString() throws JmriException {
+        Path p = new Path();
+
+        Assert.assertEquals("Path: <no block>: ", p.toString());
+
+        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
+        Turnout s = sm.provideTurnout("IT12");
+
+        p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
+
+        Assert.assertEquals("Path: <no block>: IT12 with state Closed", p.toString());
     }
 
     @Test
@@ -136,7 +148,7 @@ public class PathTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         
@@ -144,7 +156,7 @@ public class PathTest {
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

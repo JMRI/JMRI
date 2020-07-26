@@ -1,15 +1,14 @@
 package apps.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * ManagerDefaultsConfigPaneXmlTest.java
  *
- * Description: tests for the ManagerDefaultsConfigPaneXml class
+ * Test for the ManagerDefaultsConfigPaneXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class ManagerDefaultsConfigPaneXmlTest {
       Assert.assertNotNull("ManagerDefaultsConfigPaneXml constructor",new ManagerDefaultsConfigPaneXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

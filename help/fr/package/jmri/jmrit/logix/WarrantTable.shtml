@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.%20css"
   media="print">
   <link rel="icon" href="/images/jmri.%20ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Cr&eacute;ation et &Eacute;dition de Mandat</h1>Un mandat
       contient les informations n&eacute;cessaires pour faire
       fonctionner un train. Cela comprend l'adresse de la

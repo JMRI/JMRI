@@ -1,41 +1,43 @@
 package jmri.jmrix.acela;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the AcelaSystemConnectionMemo class.
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class AcelaSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
-     
+public class AcelaSystemConnectionMemoTest extends SystemConnectionMemoTestBase<AcelaSystemConnectionMemo> {
+
     @Test
-    public void testDefaultCtor(){
-       Assert.assertNotNull("exists", new AcelaSystemConnectionMemo());
+    public void testDefaultCtor() {
+        Assert.assertNotNull("exists", new AcelaSystemConnectionMemo());
     }
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
-    @Before
-    public void setUp(){
-       JUnitUtil.setUp();
-       AcelaTrafficController tc = new AcelaTrafficControlScaffold();
-       scm = new AcelaSystemConnectionMemo(tc);
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        AcelaTrafficController tc = new AcelaTrafficControlScaffold();
+        scm = new AcelaSystemConnectionMemo(tc);
     }
 
     @Override
-    @After
-    public void tearDown(){
-       JUnitUtil.tearDown();
+    @AfterEach
+    public void tearDown() {
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

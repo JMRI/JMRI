@@ -1,17 +1,17 @@
 package jmri.jmrit.roster.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RosterMenuTest {
 
@@ -24,14 +24,13 @@ public class RosterMenuTest {
         JUnitUtil.dispose(jf);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
          JUnitUtil.resetProfileManager();
    }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

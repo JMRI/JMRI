@@ -24,13 +24,13 @@ import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.IdTag;
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -38,7 +38,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-
+import jmri.swing.NamedBeanComboBox;
 /**
  * Frame for edit of rolling stock. The common elements are: road, road number,
  * type, blocking, length, location and track, groups (Kernel or Consist)
@@ -70,7 +70,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     public JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     public JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-    public JButton addButton = new JButton(Bundle.getMessage("ButtonAdd")); // have button state item to add
+    public JButton addButton = new JButton(Bundle.getMessage("ButtonAdd")); // TODO have button state item to add
 
     // check boxes
     public JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
@@ -98,7 +98,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     public JComboBox<Location> locationBox = locationManager.getComboBox();
     public JComboBox<Track> trackLocationBox = new JComboBox<>();
 
-    public JComboBox<IdTag> rfidComboBox = new JComboBox<>();
+    public NamedBeanComboBox<IdTag> rfidComboBox;
 
     // panels
     public JPanel pTypeOptions = new JPanel(); // options dependent on car or engine
@@ -116,6 +116,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     public RollingStockEditFrame(String title) {
         super(title);
+        //InstanceManager = InstanceManger.getInstance();
     }
 
     abstract protected RollingStockAttribute getTypeManager();
@@ -280,15 +281,15 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         }
 
         // row 14
-        if (Setup.isRfidEnabled() && jmri.InstanceManager.getNullableDefault(jmri.IdTagManager.class) != null) {
+        IdTagManager tagManager = InstanceManager.getNullableDefault(IdTagManager.class);
+        if (Setup.isRfidEnabled() && tagManager != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
+            rfidComboBox = new NamedBeanComboBox<IdTag>(tagManager);
+            rfidComboBox.setAllowNull(true);
+            rfidComboBox.setToolTipText(Bundle.getMessage("TipIdTag"));
             addItem(pRfid, rfidComboBox, 1, 0);
-            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanSet()
-                    .forEach((tag) -> rfidComboBox.addItem(tag));
-            rfidComboBox.insertItemAt((jmri.IdTag) null, 0); // must have a blank entry, for no ID tag, and make it the default.
-            rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
         }
 
@@ -392,8 +393,9 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
         commentTextField.setText(rs.getComment());
         valueTextArea.setText(rs.getValue());
-        rfidComboBox.setSelectedItem(rs.getIdTag());
-        
+        if(rfidComboBox != null) {
+           rfidComboBox.setSelectedItem(rs.getIdTag());
+        }
         // enable delete and save buttons
         deleteButton.setEnabled(true);
         saveButton.setEnabled(true);
@@ -470,7 +472,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         if (locationBox.getSelectedItem() == null) {
             trackLocationBox.removeAllItems();
         } else {
-            log.debug("Update tracks for location: " + locationBox.getSelectedItem());
+            log.debug("Update tracks for location: {}", locationBox.getSelectedItem());
             Location loc = ((Location) locationBox.getSelectedItem());
             loc.updateComboBox(trackLocationBox, _rs, autoTrackCheckBox.isSelected(), false);
             if (_rs != null && _rs.getLocation() == loc) {
@@ -508,7 +510,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         return true;
     }
 
-    @SuppressWarnings("unchecked")
     protected <T extends RollingStock> void save(RollingStockManager<T> manager, boolean isSave) {
         // if the rolling stock's road or number changes, it needs a new id
         if (isSave &&
@@ -561,10 +562,9 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         }
         _rs.setComment(commentTextField.getText());
         _rs.setValue(valueTextArea.getText());
-        // save the IdTag for this rolling stock
-        IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
-        if (idTag != null) {
-            _rs.setRfid(idTag.toString());
+        if(rfidComboBox!=null) {
+            // save the IdTag for this rolling stock
+            _rs.setIdTag(rfidComboBox.getSelectedItem());
         }
         autoTrackCheckBox.setEnabled(true);
 
@@ -671,5 +671,5 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarEditFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(RollingStockEditFrame.class);
 }

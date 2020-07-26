@@ -51,7 +51,7 @@ public interface AnalogIO extends NamedBean {
      *                                  Float.NEGATIVE_INFINITY or
      *                                  Float.POSITIVE_INFINITY
      */
-    public void setCommandedAnalogValue(float value) throws JmriException;
+    public void setCommandedAnalogValue(double value) throws JmriException;
 
     /**
      * Query the commanded value. This is a bound parameter, so you can also
@@ -61,7 +61,7 @@ public interface AnalogIO extends NamedBean {
      *
      * @return the analog value
      */
-    public float getCommandedAnalogValue();
+    public double getCommandedAnalogValue();
     
     /**
      * Query the known analog value. This is a bound parameter, so you can also
@@ -73,27 +73,31 @@ public interface AnalogIO extends NamedBean {
      *
      * @return the known analog value
      */
-    default public float getKnownAnalogValue() {
+    default public double getKnownAnalogValue() {
         return getCommandedAnalogValue();
     }
     
     /**
      * Get the minimum value of this AnalogIO.
+     * @return minimum value.
      */
-    public float getMin();
+    public double getMin();
     
     /**
      * Get the maximum value of this AnalogIO.
+     * @return maximum value.
      */
-    public float getMax();
+    public double getMax();
     
     /**
-     * Get the resloution of this AnalogIO.
+     * Get the resolution of this AnalogIO.
+     * @return analog resolution.
      */
-    public float getResolution();
+    public double getResolution();
 
     /**
      * Is this AnalogIO absolute or relative?
+     * @return if absolute or relative.
      */
     public AbsoluteOrRelative getAbsoluteOrRelative();
 

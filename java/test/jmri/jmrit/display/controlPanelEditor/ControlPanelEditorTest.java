@@ -4,11 +4,10 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of the ControlPanelEditor class.
@@ -31,7 +30,8 @@ public class ControlPanelEditorTest extends AbstractEditorTestBase<ControlPanelE
         Assert.assertNotNull("exists", e);
     }
 
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -40,12 +40,14 @@ public class ControlPanelEditorTest extends AbstractEditorTestBase<ControlPanelE
         }
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         if (e != null) {
             JUnitUtil.dispose(e);
             e = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

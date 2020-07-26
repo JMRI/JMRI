@@ -3,15 +3,13 @@ package jmri.managers;
 import jmri.*;
 
 import java.beans.PropertyVetoException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import jmri.util.JUnitAppender;
 import org.apache.log4j.Level;
 
-import org.junit.Assume;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,24 +24,27 @@ import org.slf4j.LoggerFactory;
  * @param <T> the class being tested
  * @param <E> the class of NamedBean handled by T
  */
-public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManager<E>, E extends NamedBean> extends AbstractManagerTestBase<T,E> {
+public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManager<E>, E extends NamedBean> extends AbstractManagerTestBase<T, E> {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testProvideEmpty() throws IllegalArgumentException {
         ProvidingManager<E> m = l;
-        try {
-           m.provide(""); // this should throw an IllegalArgumentException.
-        } catch( IllegalArgumentException iae){
-           JUnitAppender.suppressErrorMessageStartsWith("Invalid system name for");
-           throw iae;  // rethrow the expected exception, after suppressing the error
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () ->  m.provide(""));
+        JUnitAppender.suppressErrorMessageStartsWith("Invalid system name for");
     }
 
     @Test
-    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         ProvidingManager<E> m = l;
         String s1 = l.makeSystemName("1");
         String s2 = l.makeSystemName("2");
+        testRegisterDuplicateSystemName(m, s1, s2);
+    }
+
+    public void testRegisterDuplicateSystemName(ProvidingManager<E> m, String s1, String s2)
+            throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Assert.assertNotNull(s1);
         Assert.assertFalse(s1.isEmpty());
         Assert.assertNotNull(s2);
@@ -53,18 +54,23 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         E e2;
 
         try {
-           e1 = m.provide(s1);
-           e2 = m.provide(s2);
-        } catch (IllegalArgumentException | NullPointerException | ArrayIndexOutOfBoundsException ex) {
-           // jmri.jmrix.openlcb.OlcbLightProvidingManagerTest gives a NullPointerException here.
-           // jmri.jmrix.openlcb.OlcbSensorProvidingManagerTest gives a ArrayIndexOutOfBoundsException here.
-           // Some other tests give an IllegalArgumentException here.
+            e1 = m.provide(s1);
+            e2 = m.provide(s2);
+        } catch (
+                IllegalArgumentException |
+                com.pi4j.io.gpio.exception.GpioPinExistsException |
+                NullPointerException |
+                ArrayIndexOutOfBoundsException ex) {
+            // jmri.jmrix.pi.RaspberryPiTurnout(Providing)ManagerTest gives a GpioPinExistsException here.
+            // jmri.jmrix.openlcb.OlcbLightProvidingManagerTest gives a NullPointerException here.
+            // jmri.jmrix.openlcb.OlcbSensorProvidingManagerTest gives a ArrayIndexOutOfBoundsException here.
+            // Some other tests give an IllegalArgumentException here.
 
-           // If the test is unable to provide a named bean, abort this test.
-           JUnitAppender.clearBacklog(Level.WARN);
-           log.debug("Cannot provide a named bean", ex);
-           Assume.assumeTrue("We got no exception", false);
-           return;
+            // If the test is unable to provide a named bean, abort this test.
+            JUnitAppender.clearBacklog(Level.WARN);
+            log.debug("Cannot provide a named bean", ex);
+            Assume.assumeTrue("We got no exception", false);
+            return;
         }
 
         // Use reflection to change the systemName of e2
@@ -74,12 +80,12 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         f1.set(e2, e1.getSystemName());
 
         // Remove bean if it's already registered
-        if (l.getBeanBySystemName(e1.getSystemName()) != null) {
-           l.deregister(e1);
+        if (l.getBySystemName(e1.getSystemName()) != null) {
+            l.deregister(e1);
         }
         // Remove bean if it's already registered
-        if (l.getBeanBySystemName(e2.getSystemName()) != null) {
-           l.deregister(e2);
+        if (l.getBySystemName(e2.getSystemName()) != null) {
+            l.deregister(e2);
         }
 
         // Register the bean once. This should be OK.
@@ -89,18 +95,15 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         l.register(e1);
 
         String expectedMessage = "systemName is already registered: " + e1.getSystemName();
-        boolean hasException = false;
         try {
-           // Register different bean with existing systemName.
-           // This should fail with an IllegalArgumentException.
-           l.register(e2);
-        } catch (IllegalArgumentException ex) {
-           hasException = true;
-           Assert.assertTrue("exception message is correct",
-           expectedMessage.equals(ex.getMessage()));
-           JUnitAppender.assertErrorMessage(expectedMessage);
+            // Register different bean with existing systemName.
+            // This should fail with an DuplicateSystemNameException.
+            l.register(e2);
+            Assert.fail("Expected exception not thrown");
+        } catch (NamedBean.DuplicateSystemNameException ex) {
+            Assert.assertEquals("exception message is correct", expectedMessage, ex.getMessage());
+            JUnitAppender.assertErrorMessage(expectedMessage);
         }
-        Assert.assertTrue("exception is thrown", hasException);
 
         l.deregister(e1);
     }

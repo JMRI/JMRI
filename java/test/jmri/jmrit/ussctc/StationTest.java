@@ -1,12 +1,14 @@
 package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Station classes in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class StationTest {
 
@@ -23,12 +25,18 @@ public class StationTest {
     public void testSendCode() {
         Station s = new Station("tests", codeline, button);
         s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
+            @Override
             public CodeGroupTwoBits  codeSendStart() { countCodeSend++; return CodeGroupTwoBits.Double00; }
+            @Override
             public void codeValueDelivered(CodeGroupTwoBits value) { }
+            @Override
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
+            @Override
             public void indicationComplete(CodeGroupTwoBits value) {}
             
+            @Override
             public Station getStation() { return null; }
+            @Override
             public String getName() { return ""; }
         });
         
@@ -43,27 +51,39 @@ public class StationTest {
     public void testSendCodeSendAndImplementMultiSection() {
         Station s = new Station("test", codeline, button);
         s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
+            @Override
             public CodeGroupTwoBits  codeSendStart() { countCodeSend++; return CodeGroupTwoBits.Double10; }
+            @Override
             public void codeValueDelivered(CodeGroupTwoBits value) { 
                 Assert.assertEquals("deliver 10", CodeGroupTwoBits.Double10, value);
                 countCodeSend = 0;
             }
+            @Override
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
+            @Override
             public void indicationComplete(CodeGroupTwoBits value) {}
             
+            @Override
             public Station getStation() { return null; }
+            @Override
             public String getName() { return ""; }
         });
         s.add(new Section<CodeGroupTwoBits, CodeGroupTwoBits>(){
+            @Override
             public CodeGroupTwoBits codeSendStart() { countCodeSend2++; return CodeGroupTwoBits.Double01; }
+            @Override
             public void codeValueDelivered(CodeGroupTwoBits value) { 
                 Assert.assertEquals("deliver 01", CodeGroupTwoBits.Double01, value);
                 countCodeSend2 = 0;
             }
+            @Override
             public CodeGroupTwoBits indicationStart() { return CodeGroupTwoBits.Double00; }
+            @Override
             public void indicationComplete(CodeGroupTwoBits value) {}
             
+            @Override
             public Station getStation() { return null; }
+            @Override
             public String getName() { return ""; }
         });
         
@@ -87,8 +107,7 @@ public class StationTest {
     CodeLine codeline;
     CodeButton button;
         
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -97,11 +116,11 @@ public class StationTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         
-        codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
         button = new CodeButton("IS21", "IS22");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import jmri.SystemConnectionMemo;
+
 /**
  * Scaffold for port controller objects.
  *
@@ -64,13 +66,17 @@ public class AbstractSerialPortControllerScaffold extends AbstractSerialPortCont
     public boolean status() {
        return true;
     }
-    /**
-     * Get an array of valid baud rates; used to display valid options.
-     */
+
     @Override
     public String[] validBaudRates(){
        String[] retval = {"9600"};
        return retval;
+    }
+
+    @Override
+    public int[] validBaudNumbers() {
+        int[] retval = {9600};
+        return retval;
     }
 
     /**

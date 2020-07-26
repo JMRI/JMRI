@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 5 - 2019-07-28 - ALM - Moved Railcom BiDi to section with qualifier / Divider as enum -->
+<!-- version 4 - 2016-12-14 - RK - add options for fw 3.06, 3.07  -->
 <!-- version 3 - 2015-03-05 - PB - Now using grid  -->
 <!-- version 2 - 2014-06-03 - PB - improved XML -->
 <!-- version 1 - 2014-02-20 - PB - for common D&H software -->
@@ -10,45 +12,45 @@
       <text> </text>
     </label>
     <grid gridy="NEXT" weightx="1" ipadx="10">
-		<griditem gridx="0" gridy="0" gridwidth="2">
-			<column>
-				<display item="Feedback (RailCom)" format="checkbox"/>
-			</column>
-		</griditem>
-	</grid>
-	<label>
+     <griditem gridx="0" gridy="0" gridwidth="2">
+      <column>
+       <display item="Feedback (RailCom)" format="checkbox"/>
+      </column>
+     </griditem>
+    </grid>
+    <label>
       <text> </text>
     </label>
-	<grid gridy="NEXT" weightx="1" ipadx="10">
-		<qualifier>
-        	<variableref>Feedback (RailCom)</variableref>
-        	<relation>eq</relation>
-        	<value>1</value>
-      	</qualifier>
-		<griditem gridx="0" gridy="2" anchor="LINE_END">
-			<display item="Address broadcast" format="checkbox"/>
-		</griditem>
-		<griditem gridx="0" gridy="3" anchor="LINE_END">
-			<display item="POM enable" format="checkbox"/>
-		</griditem>
-		<griditem gridx="1" gridy="2" anchor="LINE_END">
-			<row>
-			  <display item="Multiplicator for speed fedback"/>
-			  <label>
-				<text> </text>
-			  </label>
-			  <display item="Multiplicator for speed fedback" label="" format="hslider"/>
-			</row>
-		</griditem>
-		<griditem gridx="1" gridy="3" anchor="LINE_END">
-			<row>
-			  <display item="Divider for speed fedback"/>
-			  <label>
-				<text> </text>
-			  </label>
-			  <display item="Divider for speed fedback" label="" format="hslider"/>
-			</row>
-		</griditem>
-	</grid>
+    <grid gridy="NEXT" weightx="1" ipadx="10" ipady="5">
+     <qualifier>
+      <variableref>Feedback (RailCom)</variableref>
+       <relation>eq</relation>
+       <value>1</value>
+      </qualifier>
+      <griditem gridx="0" gridy="2" anchor="LINE_END">
+       <display item="Address broadcast" format="checkbox"/>
+      </griditem>
+      <griditem gridx="0" gridy="3" anchor="LINE_END">
+        <display item="POM enable" format="checkbox"/>
+      </griditem>
+      <griditem gridx="0" gridy="4" anchor="LINE_END">
+        <display item="Railcom Dynamic Channel" format="checkbox"/>
+      </griditem>
+      <griditem gridx="1" gridy="2" anchor="LINE_END">
+       <row>
+        <display item="Multiplicator for speed fedback"/>
+       </row>
+      </griditem>
+      <griditem gridx="1" gridy="3" anchor="LINE_END">
+       <row>
+        <display item="Divider for speed fedback"/>
+       </row>
+      </griditem>
+      <griditem gridx="2" gridy="2" anchor="LINE_END">
+       <row>
+        <display item="Multiplicator for speed fedback" label="" format="hslider"/>
+       </row>
+      </griditem>
+    </grid>
   </column>
 </pane>

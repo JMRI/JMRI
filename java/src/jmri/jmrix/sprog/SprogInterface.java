@@ -4,7 +4,7 @@ package jmri.jmrix.sprog;
  * Define interface for sending and receiving messages to the SPROG command
  * station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface SprogInterface {
 

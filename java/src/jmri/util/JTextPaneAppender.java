@@ -26,7 +26,9 @@ import org.apache.log4j.spi.LoggingEvent;
  * (which did not work properly, not even compile) and adapted for my needs.
  *
  * @author bender heri See 4/15/2009 Log4J email
+ * @deprecated since 4.22.1 without replacement
  */
+@Deprecated
 public class JTextPaneAppender extends AppenderSkeleton {
 
     JTextPane myTextPane;
@@ -126,20 +128,28 @@ public class JTextPaneAppender extends AppenderSkeleton {
         // The following can't be jmri.util.ThreadingUtil.runOnGUI(..) because
         // that's a recursive logging loop
         try {
-            javax.swing.SwingUtilities.invokeAndWait(() -> {
-                try {
-                    StyledDocument myDoc = myTextPane.getStyledDocument();
-                    myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
-                    myTextPane.setCaretPosition(myDoc.getLength());
-                } catch (BadLocationException badex) {
-                    System.err.println(badex);  // can't log this, as it would be recursive error
-                }
-            } ); 
+            if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+                logIt(text, event);
+            } else {
+                javax.swing.SwingUtilities.invokeAndWait(() -> {
+                    logIt(text, event);
+                }); 
+            }
         } catch (InterruptedException e) {
             System.err.println("JTextPaneAppender interrupted while doing logging on GUI thread"); // can't log this, as it would be recursive error
             Thread.currentThread().interrupt();
         } catch (InvocationTargetException e) {
             System.err.println("JTextPaneAppender error while logging on GUI thread: "+e.getCause()); // can't log this, as it would be recursive error
+        }
+    }
+
+    private void logIt(String text, final LoggingEvent event) {
+        try {
+            StyledDocument myDoc = myTextPane.getStyledDocument();
+            myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
+            myTextPane.setCaretPosition(myDoc.getLength());
+        } catch (BadLocationException badex) {
+            System.err.println(badex);  // can't log this, as it would be recursive error
         }
     }
 

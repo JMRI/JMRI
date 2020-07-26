@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
@@ -62,8 +62,9 @@ public class PositionableLabel extends JLabel implements Positionable {
     private int _degrees;
 
     /**
-     *
-     * @param editor where this label is displayed
+     * Create a new Positionable Label.
+     * @param s label string.
+     * @param editor where this label is displayed.
      */
     public PositionableLabel(String s, @Nonnull Editor editor) {
         super(s);
@@ -76,7 +77,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
-    public PositionableLabel(@Nullable NamedIcon s, @Nonnull Editor editor) {
+    public PositionableLabel(@CheckForNull NamedIcon s, @Nonnull Editor editor) {
         super(s);
         _editor = editor;
         _icon = true;
@@ -216,7 +217,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     @Override
-    public @Nonnull String getNameString() {
+    @Nonnull
+    public  String getNameString() {
         if (_icon && _displayLevel > Editor.BKG) {
             return "Icon";
         } else if (_text) {
@@ -241,7 +243,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     @Override
-    public @Nonnull Positionable deepClone() {
+    @Nonnull
+    public Positionable deepClone() {
         PositionableLabel pos;
         if (_icon) {
             NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
@@ -336,7 +339,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         return true;
     }
 
-    /**
+    /*
      * ************** end Positionable methods *********************
      */
     /**
@@ -533,7 +536,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         return setEditIconMenu(popup);
     }*/
 
-    /**
+    /*
      * ********** Methods for Item Popups in Panel editor ************************
      */
     JFrame _iconEditorFrame;
@@ -588,9 +591,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconEditor.setIcon(0, "plainIcon", icon);
         _iconEditor.makeIconPanel(false);
 
-        ActionListener addIconAction = (ActionEvent a) -> {
-            editIcon();
-        };
+        ActionListener addIconAction = (ActionEvent a) -> editIcon();
         _iconEditor.complete(addIconAction, true, false, true);
 
     }
@@ -619,12 +620,9 @@ public class PositionableLabel extends JLabel implements Positionable {
      * @return DisplayFrame for palette item
      */
     public DisplayFrame makePaletteFrame(String title) {
-        jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
+        jmri.jmrit.display.palette.ItemPalette.loadIcons();
 
-        DisplayFrame paletteFrame = new DisplayFrame(title, false, false);
-//        paletteFrame.setLocationRelativeTo(this);
-//        paletteFrame.toFront();
-        return paletteFrame;
+        return new DisplayFrame(title, _editor);
     }
 
     public void initPaletteFrame(DisplayFrame paletteFrame, @Nonnull ItemPanel itemPanel) {
@@ -634,7 +632,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         sp.setPreferredSize(dim);
         paletteFrame.add(sp);
         paletteFrame.pack();
-        paletteFrame.setLocation(jmri.util.PlaceWindow.nextTo(_editor, this, paletteFrame));
+        jmri.InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_editor, this, paletteFrame);
         paletteFrame.setVisible(true);
     }
 
@@ -665,10 +663,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected void editIconItem() {
         _paletteFrame = makePaletteFrame(
                 java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameTurnout")));
-        _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon", _editor); // NOI18N
-        ActionListener updateAction = (ActionEvent a) -> {
-                updateIconItem();
-         };
+        _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon"); // NOI18N
+        ActionListener updateAction = (ActionEvent a) -> updateIconItem();
         _iconItemPanel.init(updateAction);
         initPaletteFrame(_paletteFrame, _iconItemPanel);
     }
@@ -761,9 +757,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disable"));
             disableItem.setSelected(!_controlling);
             popup.add(disableItem);
-            disableItem.addActionListener((java.awt.event.ActionEvent e) -> {
-                setControlling(!disableItem.isSelected());
-            });
+            disableItem.addActionListener((java.awt.event.ActionEvent e) -> setControlling(!disableItem.isSelected()));
             return true;
         }
         return false;
@@ -876,6 +870,9 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     protected NamedIcon makeTextOverlaidIcon(String text, @Nonnull NamedIcon ic) {
         String url = ic.getURL();
+        if (url == null) {
+            return null;
+        }
         NamedIcon icon = new NamedIcon(url, url);
 
         int iconWidth = icon.getIconWidth();
@@ -1109,7 +1106,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 if (_degrees != 0) {
                     rotate(0);
                 }
-                return new Dimension(size.height, size.width);
+                return new Dimension(size.height, size.width); // flip dimension
             default:
                 return super.getSize();
         }
@@ -1159,7 +1156,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                     break;
                 default:
                     // unexpected orientation value
-                    jmri.util.Log4JUtil.warnOnce(log, "Unexpected orientation = {}", _popupUtil.getOrientation());
+                    jmri.util.LoggingUtil.warnOnce(log, "Unexpected orientation = {}", _popupUtil.getOrientation());
                     break;
             }
 
@@ -1202,8 +1199,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     }   // paintComponent
 
     /**
-     * Provides a generic method to return the bean associated with the
-     * Positionable
+     * Provide a generic method to return the bean associated with the
+     * Positionable.
      */
     @Override
     public jmri.NamedBean getNamedBean() {
@@ -1211,4 +1208,5 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);
+
 }

@@ -1,15 +1,14 @@
 package jmri.jmrix.loconet.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SE8cSignalHeadXmlTest.java
  *
- * Description: tests for the SE8cSignalHeadXml class
+ * Test for the SE8cSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class SE8cSignalHeadXmlTest {
       Assert.assertNotNull("SE8cSignalHeadXml constructor",new SE8cSignalHeadXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

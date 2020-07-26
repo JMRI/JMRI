@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.loconet.LocoNetListener;
 
 import java.util.Vector;
 import org.slf4j.Logger;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Test scaffold implementation of LocoNetInterface.
  * Use an object of this type as a LnTrafficController in tests.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class LocoNetInterfaceScaffold extends LnTrafficController {
 

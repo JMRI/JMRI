@@ -51,9 +51,6 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Swing action to create and register groups of Logix Condtionals to perform a
  * railroad control task.
@@ -126,13 +123,13 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             // and add them back in
             for (int i = 0; i < list.size(); i++) {
                 String sysName = list.get(i);
-                if (sysName.startsWith(LOGIX_SYS_NAME)) {
+                if (sysName.startsWith(getLogixSystemPrefix())) {
                     sysNameList.add(sysName);
                     getBySystemName(sysName).addPropertyChangeListener(this);
                 }
             }
             if (log.isDebugEnabled()) {
-                log.debug("updateNameList: sysNameList size= " + sysNameList.size());
+                log.debug("updateNameList: sysNameList size= {}", sysNameList.size());
             }
         }
 
@@ -328,6 +325,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     JTextField _userName = new JTextField(25);
 
     JmriJFrame _addFrame = null;
+    JTabbedPane _tabbedPane = null;
 
     RouteInputModel _inputModel;
     JScrollPane _inputScrollPane;
@@ -402,7 +400,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             outputTS.add(new RouteOutputSensor(systemName, userName));
             alignTS.add(new AlignElement(systemName, userName));
         });
-
         jmri.LightManager lm = InstanceManager.lightManagerInstance();
         lm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
@@ -476,7 +473,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         // Logix was found, initialize for edit
         Logix logix = _logixManager.getBySystemName(sName);
         if (logix == null) {
-            log.error("Logix \"" + sName + "\" not Found.");
+            log.error("Logix \"{}\" not Found.", sName);
             return;
         }
         // deactivate this Logix
@@ -533,7 +530,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         cancelButton.setVisible(true);
         updateButton.setVisible(true);
         _typePanel.setVisible(false);
-        _initialize = LOGIX_INITIALIZER.equals(logixSysName);
+        _initialize = getLogixInitializer().equals(logixSysName);
         if (_initialize) {
             _initializeButton.doClick();
         } else {
@@ -674,7 +671,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         type = SIGNAL_TYPE;
                         break;
                     default:
-                        if (!LOGIX_INITIALIZER.equals(variable.getName())) {
+                        if (!getLogixInitializer().equals(variable.getName())) {
                             JOptionPane.showMessageDialog(
                                     _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                             new Object[]{variable.toString(), c.getSystemName()}),
@@ -697,7 +694,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     elt = _inputMap.get(key);
                 }
                 if (elt == null) {
-                    if (!LOGIX_INITIALIZER.equals(name)) {
+                    if (!getLogixInitializer().equals(name)) {
                         JOptionPane.showMessageDialog(
                                 _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                         new Object[]{variable.toString(), c.getSystemName()}),
@@ -785,7 +782,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         type = SIGNAL_TYPE;
                         break;
                     default:
-                        if (!LOGIX_INITIALIZER.equals(variable.getName())) {
+                        if (!getLogixInitializer().equals(variable.getName())) {
                             JOptionPane.showMessageDialog(
                                     _addFrame, java.text.MessageFormat.format(rbx.getString("TypeWarnVar"),
                                             new Object[]{variable.toString(), c.getSystemName()}),
@@ -873,6 +870,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     @Override
     protected void addPressed(ActionEvent e) {
         makeEditWindow();
+        _tabbedPane.setSelectedIndex(0);
         createButton.setVisible(true);
         cancelButton.setVisible(true);
         _typePanel.setVisible(true);
@@ -886,13 +884,13 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
      * Set up Create/Edit LRoute pane
      */
     void makeEditWindow() {
+        buildLists();
         if (_addFrame == null) {
-            buildLists();
             _addFrame = new JmriJFrame(rbx.getString("LRouteAddTitle"), false, false);
             _addFrame.addHelpMenu("package.jmri.jmrit.beantable.LRouteAddEdit", true);
             _addFrame.setLocation(100, 30);
 
-            JTabbedPane tabbedPane = new JTabbedPane();
+            _tabbedPane = new JTabbedPane();
 
             //////////////////////////////////// Tab 1 /////////////////////////////
             JPanel tab1 = new JPanel();
@@ -941,7 +939,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 _initialize = true;
                 _newRouteType = true;
                 _systemName.setEnabled(false);
-                _systemName.setText(LOGIX_INITIALIZER);
+                _systemName.setText(getLogixInitializer());
             });
             _typePanel = makeShowButtons(_newRouteButton, oldRoute, _initializeButton, rbx.getString("LRouteType") + ":");
             _typePanel.setBorder(BorderFactory.createEtchedBorder());
@@ -981,7 +979,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             tab1.add(pb);
 
             tab1.setVisible(true);
-            tabbedPane.addTab(rbx.getString("BasicTab"), null, tab1, rbx.getString("BasicTabHint"));
+            _tabbedPane.addTab(rbx.getString("BasicTab"), null, tab1, rbx.getString("BasicTabHint"));
 
             //////////////////////////////////// Tab 2 /////////////////////////////
             JPanel tab2 = new JPanel();
@@ -1012,7 +1010,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _outputScrollPane = makeColumns(routeOutputTable, _setStateCombo, true);
             tab2.add(_outputScrollPane, BorderLayout.CENTER);
             tab2.setVisible(true);
-            tabbedPane.addTab(rbx.getString("ActionTab"), null, tab2, rbx.getString("ActionTabHint"));
+            _tabbedPane.addTab(rbx.getString("ActionTab"), null, tab2, rbx.getString("ActionTabHint"));
 
             //////////////////////////////////// Tab 3 /////////////////////////////
             JPanel tab3 = new JPanel();
@@ -1044,7 +1042,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _inputScrollPane = makeColumns(routeInputTable, _testStateCombo, true);
             tab3.add(_inputScrollPane, BorderLayout.CENTER);
             tab3.setVisible(true);
-            tabbedPane.addTab(rbx.getString("TriggerTab"), null, tab3, rbx.getString("TriggerTabHint"));
+            _tabbedPane.addTab(rbx.getString("TriggerTab"), null, tab3, rbx.getString("TriggerTabHint"));
 
             ////////////////////// Tab 4 /////////////////
             JPanel tab4 = new JPanel();
@@ -1117,14 +1115,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
             tab4.add(alignScrollPane, BorderLayout.CENTER);
             tab4.setVisible(true);
-            tabbedPane.addTab(rbx.getString("MiscTab"), null, tab4, rbx.getString("MiscTabHint"));
+            _tabbedPane.addTab(rbx.getString("MiscTab"), null, tab4, rbx.getString("MiscTabHint"));
 
             Container contentPane = _addFrame.getContentPane();
             //tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
             ///////////////////////////////////
             JPanel pt = new JPanel();
-            pt.add(tabbedPane);
+            pt.add(_tabbedPane);
             contentPane.add(pt);
 
             // set listener for window closing
@@ -1133,11 +1131,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
-                        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("BeanNameLRoute")),
-                                        getClassName(),
-                                        "remindSaveRoute"); // NOI18N
-                        routeDirty = false;
+                        showReminderMessage();
                     }
                     clearPage();
                     _addFrame.setVisible(false);
@@ -1158,7 +1152,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         } else {
             _addFrame.setVisible(true);
         }
-    }   // addPressed
+    }
+
+    void showReminderMessage() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("BeanNameLRoute")),
+                    getClassName(),
+                    "remindSaveRoute"); // NOI18N
+    }
 
     /*
      * Utility for addPressed
@@ -1280,12 +1281,12 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     boolean checkNewNamesOK() {
         // Get system name and user name
         String sName = _systemName.getText();
-        if (sName.length() == 0 || sName.equals(LOGIX_SYS_NAME)) {
+        if (sName.length() == 0 || sName.equals(getLogixSystemPrefix())) {
             showMessage("EnterNames");
             return false;
         }
-        if (!sName.startsWith(LOGIX_SYS_NAME)) {
-            sName = LOGIX_SYS_NAME + sName;
+        if (!sName.startsWith(getLogixSystemPrefix())) {
+            sName = getLogixSystemPrefix() + sName;
         }
         // check if a Route with this system name already exists
         if (_logixManager.getBySystemName(sName) != null) {
@@ -1318,8 +1319,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             return null;
         }
         Logix logix = _logixManager.getBySystemName(sName);
-        if (!sName.startsWith(LOGIX_SYS_NAME)) {
-            sName = LOGIX_SYS_NAME + sName;
+        if (!sName.startsWith(getLogixSystemPrefix())) {
+            sName = getLogixSystemPrefix() + sName;
         }
         if (logix != null) {
             return logix;
@@ -1334,7 +1335,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         logix = _logixManager.createNewLogix(sName, uName);
         if (logix == null) {
             // should never get here
-            log.error("Unknown failure to create Route with System Name: " + sName);
+            log.error("Unknown failure to create Route with System Name: {}", sName);
         }
         return logix;
     }
@@ -1356,7 +1357,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             try {
                 soundFile.setText(FileUtil.getPortableFilename(soundChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
-                log.error("exception setting sound file: " + e);
+                log.error("exception setting sound file: {}", e);
             }
         }
     }
@@ -1377,7 +1378,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             try {
                 scriptFile.setText(FileUtil.getPortableFilename(scriptChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException e) {
-                log.error("exception setting script file: " + e);
+                log.error("exception setting script file: {}", e);
             }
         }
     }
@@ -1427,9 +1428,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         initializeIncludedOutputList();
         initializeIncludedAlignList();
         if (log.isDebugEnabled()) {
-            log.debug("updatePressed: _includedInputList.size()= " + _includedInputList.size()
-                    + ", _includedOutputList.size()= " + _includedOutputList.size()
-                    + ", _includedAlignList.size()= " + _includedAlignList.size());
+            log.debug("updatePressed: _includedInputList.size()= {}, _includedOutputList.size()= {}, _includedAlignList.size()= {}", _includedInputList.size(), _includedOutputList.size(), _includedAlignList.size());
         }
         ////// Construct output actions for trigger conditionals ///////////
         ArrayList<ConditionalAction> actionList = new ArrayList<>();
@@ -1459,7 +1458,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     }
                     break;
                 default:
-                    log.debug("updatePressed: Unknown action type " + elt.getType());
+                    log.debug("updatePressed: Unknown action type {}", elt.getType());
             }
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                     actionType, name, state, params));
@@ -1529,7 +1528,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                                 type = Conditional.TYPE_SIGNAL_HEAD_LIT;
                                 break;
                             default:
-                                log.debug("updatePressed: Unknown state variable type " + elt.getType());
+                                log.debug("updatePressed: Unknown state variable type {}", elt.getType());
                         }
                         twoTriggerList.add(new ConditionalVariable(false, opern, Conditional.Type.getOperatorFromIntValue(type), name, true));
                     } else {
@@ -1545,12 +1544,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
         } else {
             oneTriggerList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
-                    Conditional.Type.NONE, LOGIX_INITIALIZER, true));
+                    Conditional.Type.NONE, getLogixInitializer(), true));
         }
         if (log.isDebugEnabled()) {
-            log.debug("actionList.size()= " + actionList.size() + ", oneTriggerList.size()= " + oneTriggerList.size()
-                    + ", twoTriggerList.size()= " + twoTriggerList.size()
-                    + ", onChangeList.size()= " + onChangeList.size() + ", vetoList.size()= " + vetoList.size());
+            log.debug("actionList.size()= {}, oneTriggerList.size()= {}, twoTriggerList.size()= {}, onChangeList.size()= {}, vetoList.size()= {}", actionList.size(), oneTriggerList.size(), twoTriggerList.size(), onChangeList.size(), vetoList.size());
         }
         logix.deActivateLogix();
 
@@ -1560,13 +1557,13 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         for (int i = 0; i < ch.length; i++) {
             hash += ch[i];
         }
-        String cSystemName = CONDITIONAL_SYS_PREFIX + "T" + hash;
+        String cSystemName = getConditionalSystemPrefix() + "T" + hash;
         removeConditionals(cSystemName, logix);
-        cSystemName = CONDITIONAL_SYS_PREFIX + "F" + hash;
+        cSystemName = getConditionalSystemPrefix() + "F" + hash;
         removeConditionals(cSystemName, logix);
-        cSystemName = CONDITIONAL_SYS_PREFIX + "A" + hash;
+        cSystemName = getConditionalSystemPrefix() + "A" + hash;
         removeConditionals(cSystemName, logix);
-        cSystemName = CONDITIONAL_SYS_PREFIX + "L" + hash;
+        cSystemName = getConditionalSystemPrefix() + "L" + hash;
         removeConditionals(cSystemName, logix);
         int n = 0;
         do {
@@ -1693,6 +1690,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             add = true;
                         }
                         switch (elt.getState()) {
+                            case SET_SIGNAL_DARK:
                             case SignalHead.DARK:
                                 varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
@@ -1720,9 +1718,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             case CLEAR_SIGNAL_HELD:
                                 add = false;    // don't know how to test for this
                                 break;
-                            case SET_SIGNAL_DARK:
-                                varType = Conditional.Type.SIGNAL_HEAD_DARK;
-                                break;
                             case SET_SIGNAL_LIT:
                                 varType = Conditional.Type.SIGNAL_HEAD_LIT;
                                 break;
@@ -1732,7 +1727,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                         break;
                     default:
-                        log.debug("updatePressed: Unknown Alignment state variable type " + elt.getType());
+                        log.debug("updatePressed: Unknown Alignment state variable type {}", elt.getType());
                 }
                 if (add && !_initialize) {
                     String eltName = elt.getUserName();
@@ -1777,14 +1772,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             makeRouteConditional(numConds, /*false,*/ aList, oneTriggerList,
                     vetoList, logix, sName, uName, "L");
         }
-        log.debug("Conditionals added= " + logix.getNumConditionals());
+        log.debug("Conditionals added= {}", logix.getNumConditionals());
         for (int i = 0; i < logix.getNumConditionals(); i++) {
-            log.debug("Conditional SysName= \"" + logix.getConditionalByNumberOrder(i) + "\"");
+            log.debug("Conditional SysName= \"{}\"", logix.getConditionalByNumberOrder(i));
         }
         logix.activateLogix();
-        log.debug("Conditionals added= " + logix.getNumConditionals());
+        log.debug("Conditionals added= {}", logix.getNumConditionals());
         for (int i = 0; i < logix.getNumConditionals(); i++) {
-            log.debug("Conditional SysName= \"" + logix.getConditionalByNumberOrder(i) + "\"");
+            log.debug("Conditional SysName= \"{}\"", logix.getConditionalByNumberOrder(i));
         }
         finishUpdate();
     } //updatePressed
@@ -1816,7 +1811,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             ArrayList<ConditionalVariable> triggerList, ArrayList<ConditionalVariable> vetoList,
             Logix logix, String sName, String uName, String type) {
         if (log.isDebugEnabled()) {
-            log.debug("makeRouteConditional: numConds= " + numConds + ", triggerList.size()= " + triggerList.size());
+            log.debug("makeRouteConditional: numConds= {}, triggerList.size()= {}", numConds, triggerList.size());
         }
         if (triggerList.isEmpty() && (vetoList == null || vetoList.isEmpty())) {
             return numConds;
@@ -1829,9 +1824,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             if (tSize > 1) {
                 antecedent.append("(");
             }
-            antecedent.append("R1"); //NOI18N
+            antecedent.append("R1"); // NOI18N
             for (int i = 1; i < tSize; i++) {
-                antecedent.append(" ").append(Bundle.getMessage("LogicOR")).append(" R").append(i + 1); //NOI18N
+                antecedent.append(" ").append(Bundle.getMessage("LogicOR")).append(" R").append(i + 1); // NOI18N
             }
             if (tSize > 1) {
                 antecedent.append(")");
@@ -1850,9 +1845,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             if (vSize > 1) {
                 antecedent.append("(");
             }
-            antecedent.append(Bundle.getMessage("LogicNOT")).append(" R").append(1 + tSize); //NOI18N
+            antecedent.append(Bundle.getMessage("LogicNOT")).append(" R").append(1 + tSize); // NOI18N
             for (int i = 1; i < vSize; i++) {
-                antecedent.append(" ").append(Bundle.getMessage("LogicAND")).append(" ").append(Bundle.getMessage("LogicNOT")).append(" R").append(i + 1 + tSize); //NOI18N
+                antecedent.append(" ").append(Bundle.getMessage("LogicAND")).append(" ").append(Bundle.getMessage("LogicNOT")).append(" R").append(i + 1 + tSize); // NOI18N
             }
             if (vSize > 1) {
                 antecedent.append(")");
@@ -1883,7 +1878,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 : Conditional.AntecedentOperator.ALL_AND;
         c.setLogicType(logicType, antecedent.toString());
         logix.addConditional(cSystemName, 0);
-        log.debug("Conditional added: SysName= \"" + cSystemName + "\"");
+        log.debug("Conditional added: SysName= \"{}\"", cSystemName);
         c.calculate(true, null);
         numConds++;
 
@@ -1931,7 +1926,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         c.setAction(actionList);
         c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
         logix.addConditional(cSystemName, 0);
-        log.debug("Conditional added: SysName= \"" + cSystemName + "\"");
+        log.debug("Conditional added: SysName= \"{}\"", cSystemName);
         c.calculate(true, null);
         numConds++;
         return numConds;
@@ -1981,6 +1976,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         _newRouteType = true;
         _newRouteButton.doClick();
         _lockCheckBox.setSelected(_lock);
+        if (routeDirty) {
+            showReminderMessage();
+            routeDirty = false;
+        }
         _addFrame.setVisible(false);
     }
 
@@ -2013,7 +2012,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 log.warn("Unhandled object type: {}", type);
                 break;
         }
-        return null;
+        return new String[]{};
     }
 
     private String[] getOutputComboBoxItems(int type) {
@@ -2029,7 +2028,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             default:
                 log.warn("Unhandled type: {}", type);
         }
-        return null;
+        return new String[]{};
     }
 
 ////////////////////////////// Internal Utility Classes ////////////////////////////////
@@ -2374,9 +2373,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
     }
 
-    public final static String LOGIX_SYS_NAME = "RTX";
-    public final static String LOGIX_INITIALIZER = LOGIX_SYS_NAME + "INITIALIZER";
-    public final static String CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
     public final static String CONDITIONAL_USER_PREFIX = "Route ";
 
     public final static int SENSOR_TYPE = 1;
@@ -2468,6 +2464,21 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         SET_TO_RED, SET_TO_FLASHRED, SET_TO_YELLOW,
         SET_TO_FLASHYELLOW, SET_TO_GREEN, SET_TO_FLASHGREEN};
 
+    private static String getLogixSystemPrefix() {
+        // Note: RouteExportToLogix uses ":RTX:" which is right?
+        return InstanceManager.getDefault(LogixManager.class).getSystemNamePrefix() + ":RTX";
+    }
+
+    // should be private or package protected, but hey, its Logix! so its public
+    // because Logix is scattered across all of JMRI without rhyme or reason
+    public static String getLogixInitializer() {
+        return getLogixSystemPrefix() + "INITIALIZER";
+    }
+
+    private String getConditionalSystemPrefix() {
+        return getLogixSystemPrefix() + "C";
+    }
+
     /**
      * Sorts RouteElement
      */
@@ -2479,12 +2490,12 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
 
         static jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
-    
+
         @Override
         public int compare(RouteElement e1, RouteElement e2) {
             String s1 = e1.getSysName();
             String s2 = e2.getSysName();
-            
+
             int p1len = Manager.getSystemPrefixLength(s1);
             int p2len = Manager.getSystemPrefixLength(s2);
 
@@ -2493,11 +2504,11 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
             char c1 = s1.charAt(p1len);
             char c2 = s2.charAt(p2len);
-           
+
             if (c1 == c2) return ac.compare(s1.substring(p1len+1), s2.substring(p2len+1));
             else return (c1 > c2) ? +1 : -1 ;
         }
-        
+
     }
 
     /**
@@ -3041,5 +3052,5 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         return Bundle.getMessage("TitleLRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LRouteTableAction.class);
 }

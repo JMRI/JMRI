@@ -27,6 +27,9 @@ public class GcSerialDriverAdapter extends GcPortController {
 
     protected SerialPort activeSerialPort = null;
 
+    /**
+     * Creates a new CAN GridConnect Network Driver Adapter.
+     */
     public GcSerialDriverAdapter() {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol"; // NOI18N
@@ -35,10 +38,25 @@ public class GcSerialDriverAdapter extends GcPortController {
         this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
     }
 
+    /**
+     * Creates a new CAN GridConnect Network Driver Adapter.
+     * <p>
+     * Allows for default systemPrefix other than "M".
+     * @param prefix System Prefix.
+     */
+    public GcSerialDriverAdapter(String prefix) {
+        super(new jmri.jmrix.can.CanSystemConnectionMemo(prefix));
+        option1Name = "Protocol"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionProtocol"),
+                jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
+        this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String openPort(String portName, String appName) {
-        String[] baudRates = validBaudRates();
-        int[] baudValues = validBaudValues();
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -49,15 +67,10 @@ public class GcSerialDriverAdapter extends GcPortController {
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 // find the baud rate value, configure comm options
-                int baud = baudValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i < baudRates.length; i++) {
-                    if (baudRates[i].equals(mBaudRate)) {
-                        baud = baudValues[i];
-                    }
-                }
+                int baud = currentBaudNumber(mBaudRate);
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
@@ -82,14 +95,7 @@ public class GcSerialDriverAdapter extends GcPortController {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             opened = true;
@@ -102,12 +108,12 @@ public class GcSerialDriverAdapter extends GcPortController {
         }
 
         return null; // indicates OK return
-
     }
 
     /**
-     * set up all of the other objects to operate with a CAN RS adapter
-     * connected to this port
+     * Set up all of the other objects to operate with a CAN RS adapter
+     * connected to this port.
+     * {@inheritDoc}
      */
     @Override
     public void configure() {
@@ -125,27 +131,37 @@ public class GcSerialDriverAdapter extends GcPortController {
         // do central protocol-specific configuration
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
-
     }
 
+    /**
+     * Make a new GC Traffic Controller.
+     * @return new GridConnect Traffic Controller.
+     */
     protected GcTrafficController makeGcTrafficController() {
         return new GcTrafficController();
     }
 
     /**
-     * Helper class wrapping the input serial port's InputStream. It starts a
-     * helper thread at high priority that reads the input serial port as fast
-     * as it can, buffering all incoming data in memory in a queue. The queue in
-     * unbounded and readers will get the data from the queue.
+     * Helper class wrapping the input serial port's InputStream.
+     * <p>
+     * It starts a helper thread at high priority that reads the input serial 
+     * port as fast as it can, buffering all incoming data in memory in a queue.
+     * <p>
+     * The queue is unbounded and readers will get the data from the queue.
      * <p>
      * This class is thread-safe.
      */
     private static class AsyncBufferInputStream extends FilterInputStream {
 
+        /**
+         * Create new AsyncBufferInputStream.
+         * @param inputStream Input Stream.
+         * @param portName Port Name.
+         */
         AsyncBufferInputStream(InputStream inputStream, String portName) {
             super(inputStream);
             this.portName = portName;
-            Thread rt = new Thread(this::readThreadBody);
+            Thread rt = jmri.util.ThreadingUtil.newThread(this::readThreadBody);
             rt.setName("GcSerialPort InputBufferThread " + portName);
             rt.setDaemon(true);
             rt.setPriority(Thread.MAX_PRIORITY);
@@ -230,16 +246,25 @@ public class GcSerialDriverAdapter extends GcPortController {
             IOException e = null;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public int read() throws IOException {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public int read(byte[] bytes) throws IOException {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public synchronized int read(byte[] bytes, int skip, int len) throws IOException {
             if (skip != 0) {
@@ -282,7 +307,10 @@ public class GcSerialDriverAdapter extends GcPortController {
         int errorCount = 0;
     }
 
-    // base class methods for the PortController interface
+    /**
+     * Base class methods for the PortController interface.
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -297,6 +325,9 @@ public class GcSerialDriverAdapter extends GcPortController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
@@ -310,19 +341,25 @@ public class GcSerialDriverAdapter extends GcPortController {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
     }
 
     /**
-     * Get an array of valid baud rates in US English locale.
+     * {@inheritDoc}
      *
-     * @return valid baud rates in US English locale
+     * @return array of localized valid baud rates
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800"};
+        return new String[]{Bundle.getMessage("Baud57600"),
+                Bundle.getMessage("Baud115200"), Bundle.getMessage("Baud230400"),
+                Bundle.getMessage("Baud250000"), Bundle.getMessage("Baud333333"),
+                Bundle.getMessage("Baud460800")};
     }
 
     /**
@@ -330,8 +367,27 @@ public class GcSerialDriverAdapter extends GcPortController {
      *
      * @return valid baud rates
      */
-    public int[] validBaudValues() {
+    @Override
+    public int[] validBaudNumbers() {
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800};
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
+    /**
+     * Migration method.
+     * @return array of valid baud numbers.
+     * @deprecated since 4.16
+     */
+    @Deprecated
+    public int[] validBaudValues() {
+        return validBaudNumbers();
     }
 
     // private control members

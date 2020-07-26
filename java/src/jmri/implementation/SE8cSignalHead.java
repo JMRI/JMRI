@@ -122,7 +122,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
      */
     static String makeSystemName(NamedBeanHandle<Turnout> lowTO,
             NamedBeanHandle<Turnout> highTO) {
-        return ("IH:SE8c:\"" + lowTO.getName() + "\";\"" + highTO.getName() + "\"").toUpperCase();
+        return ("IH:SE8c:\"" + lowTO.getName() + "\";\"" + highTO.getName() + "\"");
     }
 
     /**

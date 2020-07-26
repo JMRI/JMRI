@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Hervé Blorec <bzh56420@yahoo.fr> 2013-10-20-->
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-20-->
 
 <html lang="fr">
 <head>
@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Fen&ecirc;tre Activer Nouveau Train</h1>
 
       <h2>Introduction</h2>
@@ -534,7 +535,7 @@
         <li>Cliquez <b>Annuler</b> pour quitter cette
         fen&Atilde;&ordf;tre sans cr&Atilde;&copy;er un nouveau
         Train Actif.</li>
-      </ol><!--#include virtual="/Footer" -->
+      </ol><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

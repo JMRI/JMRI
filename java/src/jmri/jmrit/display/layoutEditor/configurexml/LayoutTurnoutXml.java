@@ -1,11 +1,10 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.geom.Point2D;
+
 import jmri.Turnout;
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutTurnout;
-import jmri.jmrit.display.layoutEditor.TrackSegment;
+import jmri.jmrit.display.layoutEditor.*;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -21,6 +20,9 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
+    static final EnumIO<LayoutTurnout.LinkType> linkEnumMap = new EnumIoNamesNumbers<>(LayoutTurnout.LinkType.class);
+    static final EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutTurnout.TurnoutType.class);
+    
     public LayoutTurnoutXml() {
     }
 
@@ -39,7 +41,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
         // include attributes
         element.setAttribute("ident", p.getName());
-        element.setAttribute("type", "" + p.getTurnoutType());
+        element.setAttribute("type", tTypeEnumMap.outputFromEnum(p.getTurnoutType()));
 
         element.setAttribute("hidden", "" + (p.isHidden() ? "yes" : "no"));
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
@@ -77,7 +79,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
         if (!p.getLinkedTurnoutName().isEmpty()) {
             element.setAttribute("linkedturnoutname", p.getLinkedTurnoutName());
-            element.setAttribute("linktype", "" + p.getLinkType());
+            element.setAttribute("linktype", "" + linkEnumMap.outputFromEnum(p.getLinkType()));
         }
 
         if (!p.getBlockName().isEmpty()) {
@@ -186,27 +188,60 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         String name = element.getAttribute("ident").getValue();
         double x = 0.0;
         double y = 0.0;
-        int tType = LayoutTurnout.RH_TURNOUT;
+        LayoutTurnout.TurnoutType type = LayoutTurnout.TurnoutType.NONE;
         try {
             x = element.getAttribute("xcen").getFloatValue();
             y = element.getAttribute("ycen").getFloatValue();
-            tType = element.getAttribute("type").getIntValue();
+            type = tTypeEnumMap.inputFromAttribute(element.getAttribute("type"));
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutturnout attribute");
         }
 
         int version = 1;
         try {
-            version = element.getAttribute("ver").getIntValue();
+            if (element.getAttribute("ver") != null) {
+                version = element.getAttribute("ver").getIntValue();
+            }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layoutturnout version attribute");
-        } catch (java.lang.NullPointerException e) {
-            //can be ignored as panel file may not support method
         }
 
-        // create the new LayoutTurnout
-        LayoutTurnout l = new LayoutTurnout(name, tType,
-                new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+        // create the new LayoutTurnout of the correct type
+        LayoutTurnout l; 
+        switch(type) {
+
+            case RH_TURNOUT :
+                l = new LayoutRHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                break;
+            case LH_TURNOUT :
+                l = new LayoutLHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                break;
+            case WYE_TURNOUT :
+                l = new LayoutWye(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                break;
+            case DOUBLE_XOVER :
+                l = new LayoutDoubleXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                break;
+            case RH_XOVER :
+                l = new LayoutRHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                break;
+            case LH_XOVER :
+                l = new LayoutLHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
+                break;
+
+            case DOUBLE_SLIP :
+                l = new LayoutDoubleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                log.error("Found DOUBLE_SLIP in LayoutTrack ctor for element {}", name);
+                break;
+            case SINGLE_SLIP :
+                l = new LayoutSingleSlip(name, new Point2D.Double(x, y), 0.0, p);
+                log.error("Found SINGLE_SLIP in LayoutTrack ctor for element {}", name);
+                break;
+
+            default:
+                log.error("can't create LayoutTrack {} with type {}", name, type);
+                return; // without creating
+        }
 
         // get remaining attributes
         Attribute a = element.getAttribute("turnoutname");
@@ -297,11 +332,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         a = element.getAttribute("linkedturnoutname");
         if (a != null) {
             l.linkedTurnoutName = a.getValue();
-            try {
-                l.linkType = element.getAttribute("linktype").getIntValue();
-            } catch (org.jdom2.DataConversionException e) {
-                log.error("failed to convert linked layout turnout type");
-            }
+            l.linkType = linkEnumMap.inputFromAttribute(element.getAttribute("linktype"));
         }
         a = element.getAttribute("continuing");
         if (a != null) {
@@ -379,7 +410,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         l.setSensorC(getElement(element, "sensorC"));
         l.setSensorD(getElement(element, "sensorD"));
 
-        p.getLayoutTracks().add(l);
+        p.addLayoutTrack(l);
     }
 
     String getElement(Element el, String child) {
@@ -389,5 +420,5 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         return "";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurnoutXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutXml.class);
 }

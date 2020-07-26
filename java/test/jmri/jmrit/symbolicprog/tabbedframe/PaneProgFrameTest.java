@@ -1,24 +1,26 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for PaneProgFrame.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class PaneProgFrameTest {
 
@@ -34,12 +36,12 @@ public class PaneProgFrameTest {
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    // dummy implementations
-                    @Override
-                    protected JPanel getModePane() {
-                        return new JPanel();
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return new JPanel();
+            }
+        };
 
         // invoke
         result = null;
@@ -49,7 +51,7 @@ public class PaneProgFrameTest {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        JUnitUtil.dispose(f);
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     // show me the specially-created frame
@@ -60,12 +62,12 @@ public class PaneProgFrameTest {
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    // dummy implementations
-                    @Override
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
 
         // ugly, temporary way to load the decoder info
         jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest();
@@ -79,7 +81,7 @@ public class PaneProgFrameTest {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        JUnitUtil.dispose(f);
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     // static variables for internal classes to report their interpretations
@@ -150,17 +152,16 @@ public class PaneProgFrameTest {
                         )
                 )
         ); // end of adding contents
-
-        return;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

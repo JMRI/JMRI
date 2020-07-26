@@ -3,7 +3,7 @@ package jmri.jmris.json;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -20,10 +20,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
+ * @deprecated for immediate removal when no other classes in package depend on it
  */
+@Deprecated
 public class Bundle extends jmri.jmris.Bundle {
 
-    @Nullable
+    @CheckForNull
     private static final String name = "jmri.jmris.json.Bundle"; // NOI18N
 
     //
@@ -94,7 +96,7 @@ public class Bundle extends jmri.jmris.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

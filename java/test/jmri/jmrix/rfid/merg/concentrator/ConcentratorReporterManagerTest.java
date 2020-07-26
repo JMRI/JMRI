@@ -1,15 +1,17 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * ConcentratorReporterManagerTest.java
+ * <p>
+ * Test for the ConcentratorReporterManager class
  *
- * Description:	tests for the ConcentratorReporterManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class ConcentratorReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -19,12 +21,15 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
     }
 
     @Override
-    protected int maxN() { return 1; }
-    
+    protected int maxN() {
+        return 1;
+    }
+
     @Override
     protected String getNameToTest1() {
         return "A";
     }
+
     @Override
     protected String getNameToTest2() {
         return "C";
@@ -38,30 +43,36 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
 
     ConcentratorTrafficController tc = null;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new ConcentratorTrafficController(new ConcentratorSystemConnectionMemo(),"A-H"){
-           @Override
-           public void sendInitString(){
-           }
-        };
-        l = new ConcentratorReporterManager(tc,"R"){
+        RfidSystemConnectionMemo memo = new RfidSystemConnectionMemo();
+        tc = new ConcentratorTrafficController(memo, "A-H") {
             @Override
-            public void message(jmri.jmrix.rfid.RfidMessage m){}
+            public void sendInitString() {
+            }
+        };
+        memo.setRfidTrafficController(tc);
+        memo.setSystemPrefix("R");
+        l = new ConcentratorReporterManager(tc.getAdapterMemo()) {
+            @Override
+            public void message(jmri.jmrix.rfid.RfidMessage m) {
+            }
 
             @Override
-            public void reply(jmri.jmrix.rfid.RfidReply m){}
+            public void reply(jmri.jmrix.rfid.RfidReply m) {
+            }
 
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        tc.terminateThreads();
         tc = null;
         JUnitUtil.tearDown();
+
     }
 
 }

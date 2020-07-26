@@ -1,16 +1,15 @@
 package jmri.jmrit.ctc.setup;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 import jmri.jmrit.ctc.CTCFiles;
 
 public class CreateTestObjects {
@@ -49,20 +48,20 @@ public class CreateTestObjects {
 
         // Create SSL
         //        signal   mode   to      w1      wa      sp2       sen1    sen2
-        createSSL("Left-U",  2, "IT101", "IH07", null,   false, "IS102", "IS103");
-        createSSL("Left-L",  3, "IT101", "IH08", null,   true,  "IS102", "IS104");
-        createSSL("Left-M",  2, "IT101", null,   null,   false, "IS102", "IS101");
-        createSSL("Left-S",  3, "IT101", null,   null,   true,  "IS102", "IS101");
+        createSSL("Left-U", 2, "IT101", "IH07", null, false, "IS102", "IS103");
+        createSSL("Left-L", 3, "IT101", "IH08", null, true, "IS102", "IS104");
+        createSSL("Left-M", 2, "IT101", null, null, false, "IS102", "IS101");
+        createSSL("Left-S", 3, "IT101", null, null, true, "IS102", "IS101");
 
-        createSSL("Right-U", 2, "IT102", "IH03", null,   false, "IS105", "IS103");
-        createSSL("Right-L", 3, "IT102", "IH04", null,   true,  "IS105", "IS104");
+        createSSL("Right-U", 2, "IT102", "IH03", null, false, "IS105", "IS103");
+        createSSL("Right-L", 3, "IT102", "IH04", null, true, "IS105", "IS104");
         createSSL("Right-M", 2, "IT102", "IH09", "IH10", false, "IS105", "IS106");
-        createSSL("Right-S", 3, "IT102", "IH09", "IH10", true,  "IS105", "IS106");
+        createSSL("Right-S", 3, "IT102", "IH09", "IH10", true, "IS105", "IS106");
 
-        createSSL("Stub-U",  2, "IT103", null,   null,   false, "IS107", "IS108");
-        createSSL("Stub-L",  3, "IT103", null,   null,   true,  "IS107", "IS109");
-        createSSL("Stub-M",  2, "IT103", "IH05", "IH06", false, "IS107", "IS106");
-        createSSL("Stub-S",  3, "IT103", "IH05", "IH06", true,  "IS107", "IS106");
+        createSSL("Stub-U", 2, "IT103", null, null, false, "IS107", "IS108");
+        createSSL("Stub-L", 3, "IT103", null, null, true, "IS107", "IS109");
+        createSSL("Stub-M", 2, "IT103", "IH05", "IH06", false, "IS107", "IS106");
+        createSSL("Stub-S", 3, "IT103", "IH05", "IH06", true, "IS107", "IS106");
 
         // CTC objects
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS:RELOADCTC");
@@ -166,43 +165,29 @@ public class CreateTestObjects {
         bb.setLimitSpeed2(limitspeed2);
         bb.setSensor1(sensor1);
         bb.setSensor2(sensor2);
+        InstanceManager.getDefault(BlockBossLogicProvider.class).register(bb);
         bb.start();
     }
 
     public static void createTestFiles() {
         // Copy ProgramProperties
-        final String SOURCE_PATH = "java/test/jmri/jmrit/ctc/setup/";
-        final String PROP_FILE = "ProgramProperties.xml";
-        final String SYS_FILE = "CTCSystem.xml";
+        final File source = new File("java/test/jmri/jmrit/ctc/setup/");
+        final String props = "ProgramProperties.xml";
+        final String system = "CTCSystem.xml";
 
-        File fromFile;
-        File toFile;
-        Path fromPath;
-        Path toPath;
-
-        toFile = CTCFiles.getFile(PROP_FILE);
-        if (!toFile.exists()) {
-            fromFile = new File(SOURCE_PATH + PROP_FILE);
-            toPath = toFile.toPath();
-            fromPath = fromFile.toPath();
-            try {
-                Files.copy(fromPath, toPath, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException ex) {
-                log.error("Copy CTC Poperties demo file failed", ex);  // NOI18N
-            }
+        File propsFile = new File(source, props);
+        File systemFile = new File(source, system);
+        try {
+            log.debug("Copying from {} to {}", propsFile, CTCFiles.getFile(props));
+            Files.copy(propsFile.toPath(), CTCFiles.getFile(props).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+            log.error("Copy CTC Properties demo file failed", ex);  // NOI18N
         }
-
-        // Copy CTCSystem.xml
-        toFile = CTCFiles.getFile(SYS_FILE);
-        if (!toFile.exists()) {
-            fromFile = new File(SOURCE_PATH + SYS_FILE);
-            toPath = toFile.toPath();
-            fromPath = fromFile.toPath();
-            try {
-                Files.copy(fromPath, toPath, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException ex) {
-                log.error("Copy CTC Poperties demo file failed", ex);  // NOI18N
-            }
+        try {
+            log.debug("Copying from {} to {}", systemFile, CTCFiles.getFile(system));
+            Files.copy(systemFile.toPath(), CTCFiles.getFile(system).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+            log.error("Copy CTC System demo file failed", ex);  // NOI18N
         }
     }
 

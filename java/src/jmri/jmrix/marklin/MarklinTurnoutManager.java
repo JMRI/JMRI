@@ -1,5 +1,6 @@
 package jmri.jmrix.marklin;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,29 +15,28 @@ import org.slf4j.LoggerFactory;
 public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public MarklinTurnoutManager(MarklinSystemConnectionMemo memo) {
-
-        adaptermemo = memo;
-        prefix = adaptermemo.getSystemPrefix();
-        tc = adaptermemo.getTrafficController();
+        super(memo);
+        tc = memo.getTrafficController();
     }
 
     MarklinTrafficController tc;
-    MarklinSystemConnectionMemo adaptermemo;
 
-    String prefix;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public MarklinSystemConnectionMemo getMemo() {
+        return (MarklinSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (java.lang.NumberFormatException e) {
-            log.error("failed to convert systemName " + systemName + " to a turnout address");
+            log.error("failed to convert systemName {} to a turnout address", systemName);
             return null;
         }
         Turnout t = new MarklinTurnout(addr, getSystemPrefix(), tc);
@@ -45,7 +45,7 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

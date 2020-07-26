@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!--  Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-31-->
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-31-->
 
 <html lang="fr">
 <head>
@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Les &eacute;diteurs d'Ic&ocirc;nes</h1>
 
       <h2>Contenu des &eacute;diteurs d'Ic&ocirc;ne</h2><img src=
@@ -334,7 +335,7 @@
             plus tard</li>
           </ul>
         </li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

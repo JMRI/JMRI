@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>11</minor>
-    <test>5</test>
+    <minor>17</minor>
+    <test>4</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -39,11 +39,14 @@
       <comment>Comment on Turnout 1</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT101</systemName>
-      <comment>Input for IR1, don't change</comment>
+      <systemName>IT2</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT2</systemName>
+      <systemName>IT3</systemName>
+      <userName>User 3</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT4</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT21</systemName>
@@ -58,11 +61,8 @@
       <userName>For Signal IH2 G</userName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT3</systemName>
-      <userName>User 3</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Default">
-      <systemName>IT4</systemName>
+      <systemName>IT101</systemName>
+      <comment>Input for IR1, don't change</comment>
     </turnout>
   </turnouts>
   <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
@@ -72,12 +72,6 @@
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="12:01 PM">
-      <systemName>IMCURRENTTIME</systemName>
-    </memory>
-    <memory value="1.0">
-      <systemName>IMRATEFACTOR</systemName>
-    </memory>
     <memory value="Value 1">
       <systemName>IM1</systemName>
       <userName>Memory 1</userName>
@@ -91,6 +85,12 @@
     <memory>
       <systemName>IM3</systemName>
       <userName>Memory 3</userName>
+    </memory>
+    <memory value="12:01 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
@@ -108,7 +108,6 @@
       <turnoutname defines="red">For Signal IH2 R</turnoutname>
     </signalhead>
   </signalheads>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <blocks class="jmri.configurexml.BlockManagerXml">
     <defaultspeed>Normal</defaultspeed>
     <block systemName="IB1">
@@ -122,10 +121,9 @@
       <permissive>no</permissive>
     </block>
   </blocks>
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
     <route userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED">
-      <systemName>IR1</systemName>
+      <systemName>IO1</systemName>
       <userName>random route 1</userName>
       <routeOutputTurnout systemName="IT1" state="THROWN" />
       <routeOutputTurnout systemName="IT2" state="CLOSED" />
@@ -136,7 +134,6 @@
       <routeSensor systemName="IS101" mode="onInactive" />
     </route>
   </routes>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
@@ -155,23 +152,23 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 05 23:42:04 PDT 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Jun 06 08:42:04 CEST 2009" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
-      <type>Load OK</type>
-      <date>Sun Mar 18 20:20:20 PDT 2018</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/PanelFileSchemaTest382.xml</filename>
+      <type>app</type>
+      <date>Sun Sep 08 20:49:38 CEST 2019</date>
+      <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Mar 18 20:20:20 PDT 2018</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/PanelFileSchemaTest382.xml</filename>
+      <date>Sun Sep 08 20:50:01 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/configurexml/load/PanelFileSchemaTest382.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Mar 18 20:20:20 PDT 2018</date>
+      <date>Sun Sep 08 20:50:14 CEST 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.11.5ish+jake+20180319T0318Z+Rfa617b3195 on Sun Mar 18 20:20:20 PDT 2018-->
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190908T1849Z+R59b5cbdf37 on Sun Sep 08 20:50:14 CEST 2019-->
 </layout-config>

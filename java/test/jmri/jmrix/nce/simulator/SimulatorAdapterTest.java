@@ -1,14 +1,13 @@
 package jmri.jmrix.nce.simulator;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SimulatorAdapterTest {
         
@@ -34,18 +33,17 @@ public class SimulatorAdapterTest {
 
     @Test
     public void testBaudRates(){
-       Assert.assertNull("no baud rates for simulator",adapter.validBaudRates());
-       Assert.assertEquals("no currentbaud rate for simulator","",adapter.getCurrentBaudRate());
+       Assert.assertEquals("empty baud rates array for simulator", new String[]{}, adapter.validBaudRates());
+       Assert.assertEquals("no currentbaudrate set for simulator","", adapter.getCurrentBaudRate());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         adapter = new SimulatorAdapter();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         adapter.dispose();

@@ -12,14 +12,17 @@ import static jmri.server.json.light.JsonLight.LIGHTS;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
+import jmri.DigitalIO;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.ProvidingManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  *
@@ -32,21 +35,21 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
     }
 
     @Override
-    public ObjectNode doGet(Light light, String name, String type, Locale locale, int id) throws JsonException {
-        ObjectNode root = this.getNamedBean(light, name, type, locale, id);
+    public ObjectNode doGet(Light light, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = this.getNamedBean(light, name, type, request);
         ObjectNode data = root.with(DATA);
         if (light != null) {
             switch (light.getState()) {
-                case Light.ON:
+                case DigitalIO.ON:
                     data.put(STATE, ON);
                     break;
-                case Light.OFF:
+                case DigitalIO.OFF:
                     data.put(STATE, OFF);
                     break;
-                case Light.INCONSISTENT:
+                case NamedBean.INCONSISTENT:
                     data.put(STATE, INCONSISTENT);
                     break;
-                case Light.UNKNOWN:
+                case NamedBean.UNKNOWN:
                 default:
                     data.put(STATE, UNKNOWN);
                     break;
@@ -56,26 +59,26 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
     }
 
     @Override
-    public ObjectNode doPost(Light light, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public ObjectNode doPost(Light light, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
             case ON:
-                light.setState(Light.ON);
+                light.setState(DigitalIO.ON);
                 break;
             case OFF:
-                light.setState(Light.OFF);
+                light.setState(DigitalIO.OFF);
                 break;
             case UNKNOWN:
                 // leave state alone in this case
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", LIGHT, state), id);
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", LIGHT, state), request.id);
         }
-        return this.doGet(light, name, type, locale, id);
+        return this.doGet(light, name, type, request);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case LIGHT:
             case LIGHTS:
@@ -83,9 +86,9 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
                         server,
                         "jmri/server/json/light/light-server.json",
                         "jmri/server/json/light/light-client.json",
-                        id);
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 
@@ -95,7 +98,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
     }
 
     @Override
-    protected ProvidingManager<Light> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<Light> getManager() {
         return InstanceManager.getDefault(LightManager.class);
     }
 }

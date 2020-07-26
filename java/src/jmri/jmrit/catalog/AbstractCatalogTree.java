@@ -8,6 +8,7 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.tree.DefaultTreeModel;
 import jmri.CatalogTree;
+import jmri.CatalogTreeNode;
 import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     public AbstractCatalogTree(String sysname, String username) {
         super(new CatalogTreeNode(username));
-        mSystemName = sysname.toUpperCase();
+        mSystemName = sysname;
         // use this form to prevent subclass from overriding setUserName
         // during construction
         AbstractCatalogTree.this.setUserName(username);
@@ -107,33 +108,6 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         firePropertyChange("Comment", old, comment);
     }
     private String comment;
-
-    @CheckReturnValue
-    @Override
-    public String getDisplayName() {
-        String name = getUserName();
-        if (name != null && name.length() > 0) {
-            return name;
-        } else {
-            return getSystemName();
-        }
-    }
-
-    @CheckReturnValue
-    @Override
-    public String getFullyFormattedDisplayName(boolean userNameFirst) {
-        String name = getUserName();
-        if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
-            if (userNameFirst) {
-                name = String.format(NamedBean.DISPLAY_NAME_FORMAT, name, getSystemName());
-            } else {
-                name = String.format(NamedBean.DISPLAY_NAME_FORMAT, getSystemName(), name);
-            }
-        } else {
-            name = getSystemName();
-        }
-        return name;
-    }
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call

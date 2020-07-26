@@ -1,0 +1,45 @@
+
+    <!-- contains new warnings for the release under development -->
+    <!-- contents intended for the next update release -->
+
+    <li>
+    </li>
+    
+    <li>
+    </li>
+
+    <!-- contents intended for the next minor release -->
+    
+    <li>
+        The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
+        interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
+        require changes to scripts.  If you have a script that references
+        jmri.jmrix.SystemConnectionMemo, please change it to either
+        jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
+        (it's easier to have you just try the two than to explain which 
+        one will work in which case)
+    </li>
+
+    <li>
+    </li>
+
+    <li>
+    </li>
+
+    <!-- contents intended for the next major release -->
+    
+    <li>
+    </li>
+
+    <li>
+    </li>
+    
+    <li>
+        The way preferences are loaded at startup has been slightly
+        modified.  There is no impact to JMRI applications, but Non-JMRI
+        applications that are not derived from apps.Apps or apps.AppsBase
+        but are using jmri.implementation.JmriConfigurationManager to load
+        preferences will no longer see preferences if an error occurs.  To
+        restore the old behavior, use apps.AppsConfigurationManager instead.
+    </li>
+

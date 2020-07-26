@@ -9,7 +9,9 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2008
+ * @deprecated since 4.17.1; use {@link jmri.jmrix.can.cbus.node.CbusNode} instead
  */
+@Deprecated
 public class CbusProgrammerManager extends DefaultProgrammerManager {
 
     public CbusProgrammerManager(TrafficController tc) {

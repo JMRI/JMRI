@@ -1,22 +1,20 @@
 package jmri.jmrix.bachrus;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SpeedoReplyTest.java
  *
- * Description:	tests for the jmri.jmrix.bachrus.SpeedoReply class
+ * Test for the jmri.jmrix.bachrus.SpeedoReply class
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,9 +32,9 @@ public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("maxsize",32, m.maxSize());
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

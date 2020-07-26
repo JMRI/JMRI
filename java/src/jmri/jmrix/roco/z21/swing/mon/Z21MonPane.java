@@ -4,7 +4,6 @@ import jmri.jmrix.roco.z21.Z21Listener;
 import jmri.jmrix.roco.z21.Z21Message;
 import jmri.jmrix.roco.z21.Z21Reply;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
-import jmri.jmrix.roco.z21.Z21TrafficController;
 
 /**
  * Panel displaying (and logging) Z21 messages derived from Z21MonFrame.
@@ -56,7 +55,7 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
      */
     @Override
     public synchronized void message(Z21Message l) {
-	logMessage(l);
+        logMessage(l);
     }
 
     /**
@@ -65,8 +64,8 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
     static public class Default extends jmri.util.swing.JmriNamedPaneAction {
 
         public Default() {
-            super(Bundle.getMessage("Z21TrafficTitle"), 
-			    Z21MonPane.class.getName());
+            super(Bundle.getMessage("Z21TrafficTitle"),
+                    Z21MonPane.class.getName());
             setContext(jmri.InstanceManager.
                     getDefault(Z21SystemConnectionMemo.class));
         }

@@ -42,7 +42,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         e.setAttribute("class", this.getClass().getName());
         SystemConsolePreferencesManager manager = InstanceManager.getDefault(SystemConsolePreferencesManager.class);
         e.setAttribute("scheme", "" + manager.getScheme());
-        e.setAttribute("fontfamily", "" + manager.getFontFamily());
         e.setAttribute("fontsize", "" + manager.getFontSize());
         e.setAttribute("fontstyle", "" + manager.getFontStyle());
         e.setAttribute("wrapstyle", "" + manager.getWrapStyle());
@@ -73,10 +72,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
                 manager.setScheme(Integer.parseInt(value));
             }
 
-            if ((value = shared.getAttributeValue("fontfamily")) != null) {
-                manager.setFontFamily(value);
-            }
-
             if ((value = shared.getAttributeValue("fontsize")) != null) {
                 manager.setFontSize(Integer.parseInt(value));
             }
@@ -90,7 +85,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
             }
 
         } catch (NumberFormatException ex) {
-            log.error("NumberFormatException while setting System Console parameters: " + ex);
+            log.error("NumberFormatException while setting System Console parameters: {}", ex);
             result = false;
         }
 
@@ -104,16 +99,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         return result;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @param o       ignored
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
-    }
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(SystemConsoleConfigPanelXml.class);
 

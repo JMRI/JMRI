@@ -29,7 +29,7 @@
 # 2. Move the Program Jumper J2 From [J2-2 J2-3] To [J2-1 J2-2](Program Mode) on the Hare
 # 3. Turn On Track Power - Again, Use a Throttle or JMRI.
 # 4. VERY IMPORTANT - Wait 30 to 45 Seconds.
-# 5. In JMRI Decoder Pro, Go to Panels > Run Script.  Select the file that corresponds
+# 5. In JMRI DecoderPro, Go to Panels > Run Script.  Select the file that corresponds
 #    to the Hare you are programming.  Note - Do not have the file open in an editor.
 #
 # Important - This script can take 3 to 60 seconds to run. This depends on the number of

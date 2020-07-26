@@ -5,7 +5,6 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.ThrottleListener;
-import jmri.ThrottleManager;
 import jmri.jmrix.loconet.LnThrottleManager;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.loconet.SlotManager
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class UhlenbrockLnThrottleManager extends LnThrottleManager implements ThrottleManager, SlotListener {
+public class UhlenbrockLnThrottleManager extends LnThrottleManager {
 
     public UhlenbrockLnThrottleManager(UhlenbrockSystemConnectionMemo memo) {
         super(memo);
@@ -40,6 +39,11 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
+        if (!(address instanceof DccLocoAddress)){
+            log.error("{} is not a DCCLocoAddress",address);
+            failedThrottleRequest(address, "Address" + address + " is not a DccLocoAddress");
+            return;
+        }
         slotManager.slotFromLocoAddress(((DccLocoAddress) address).getNumber(), this);
 
         class RetrySetup implements Runnable {

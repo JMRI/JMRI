@@ -12,6 +12,8 @@ import javax.swing.event.ChangeListener;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
+import jmri.NamedBean.DisplayOptions;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -143,7 +145,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         if (namedMemory == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getMemory().getFullyFormattedDisplayName();
+            name = getMemory().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }
@@ -169,12 +171,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     protected void edit() {
         makeIconEditorFrame(this, "Memory", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                editMemory();
-            }
-        };
+        ActionListener addIconAction = a -> editMemory();
         _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(getMemory());
     }

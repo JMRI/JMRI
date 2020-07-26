@@ -4,11 +4,7 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2018
  */
-public class EngineEditFrame extends RollingStockEditFrame implements java.beans.PropertyChangeListener {
+public class EngineEditFrame extends RollingStockEditFrame {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
@@ -66,7 +62,6 @@ public class EngineEditFrame extends RollingStockEditFrame implements java.beans
 
         // load tool tips
         builtTextField.setToolTipText(Bundle.getMessage("buildDateTip"));
-        rfidComboBox.setToolTipText(Bundle.getMessage("TipRfid"));
         editModelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("Model").toLowerCase()}));
         editGroupButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
@@ -147,10 +142,10 @@ public class EngineEditFrame extends RollingStockEditFrame implements java.beans
                 // load the default hp and length for the model selected
                 hpTextField.setText(engineModels.getModelHorsepower(model));
                 weightTonsTextField.setText(engineModels.getModelWeight(model));
-                if (engineModels.getModelLength(model) != null && !engineModels.getModelLength(model).equals("")) {
+                if (engineModels.getModelLength(model) != null && !engineModels.getModelLength(model).isEmpty()) {
                     lengthComboBox.setSelectedItem(engineModels.getModelLength(model));
                 }
-                if (engineModels.getModelType(model) != null && !engineModels.getModelType(model).equals("")) {
+                if (engineModels.getModelType(model) != null && !engineModels.getModelType(model).isEmpty()) {
                     typeComboBox.setSelectedItem(engineModels.getModelType(model));
                 }
             }
@@ -184,10 +179,7 @@ public class EngineEditFrame extends RollingStockEditFrame implements java.beans
         if (groupComboBox.getSelectedItem() != null) {
             if (groupComboBox.getSelectedItem().equals(EngineManager.NONE)) {
                 engine.setConsist(null);
-                if (engine.isBunit())
-                    engine.setBlocking(Engine.B_UNIT_BLOCKING);
-                else
-                    engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
+                engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
             } else if (!engine.getConsistName().equals(groupComboBox.getSelectedItem())) {
                 engine.setConsist(engineManager.getConsistByName((String) groupComboBox.getSelectedItem()));
                 if (engine.getConsist() != null) {
@@ -204,8 +196,8 @@ public class EngineEditFrame extends RollingStockEditFrame implements java.beans
                 Integer.parseInt(hpTextField.getText());
                 engine.setHp(hpTextField.getText());
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("engineHorsepower"), Bundle
-                        .getMessage("engineCanNotHp"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("engineHorsepower"),
+                        Bundle.getMessage("engineCanNotHp"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }

@@ -2,7 +2,7 @@ package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
-import javax.annotation.CheckReturnValue;
+import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Light;
@@ -47,11 +47,11 @@ public abstract class AbstractLight extends AbstractNamedBean
         implements Light {
 
     public AbstractLight(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     public AbstractLight(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     @Override
@@ -92,7 +92,7 @@ public abstract class AbstractLight extends AbstractNamedBean
 
     /**
      * Get enabled status.
-     * 
+     *
      * @return enabled status
      */
     @Override
@@ -102,7 +102,7 @@ public abstract class AbstractLight extends AbstractNamedBean
 
     /**
      * Set enabled status.
-     * 
+     *
      * @param v status to set
      */
     @Override
@@ -177,7 +177,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * minimum.
      * <p>
      * Does not change state.
-     * 
+     *
      * @param intensity low intensity value
      */
     protected void updateIntensityLow(double intensity) {
@@ -190,7 +190,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * max
      * <p>
      * Does not change state.
-     * 
+     *
      * @param intensity intermediate intensity value
      */
     protected void updateIntensityIntermediate(double intensity) {
@@ -203,7 +203,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * maximum
      * <p>
      * Does not change state.
-     * 
+     *
      * @param intensity high intensity value
      */
     protected void updateIntensityHigh(double intensity) {
@@ -217,7 +217,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * <p>
      * A value of 0.0 corresponds to full off, and a value of 1.0 corresponds to
      * full on.
-     * 
+     *
      * @return current intensity
      */
     @Override
@@ -234,7 +234,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * full on.
      * <p>
      * Bound property
-     * 
+     *
      * @return target intensity
      */
     @Override
@@ -271,7 +271,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         mMaxIntensity = intensity;
 
         if (oldValue != intensity) {
-            firePropertyChange("MaxIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
+            firePropertyChange("MaxIntensity", oldValue, intensity);
         }
     }
 
@@ -439,7 +439,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
         if (oldValue != intensity) {
-            firePropertyChange("TargetIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
+            firePropertyChange("TargetIntensity", oldValue, intensity);
         }
     }
 
@@ -531,9 +531,9 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     @Override
-    public void setCommandedAnalogValue(float value) throws JmriException {
-        float middle = (getMax() - getMin()) / 2 + getMin();
-        
+    public void setCommandedAnalogValue(double value) throws JmriException {
+        double middle = (getMax() - getMin()) / 2 + getMin();
+
         if (value > middle) {
             setCommandedState(ON);
         } else {
@@ -542,29 +542,54 @@ public abstract class AbstractLight extends AbstractNamedBean
     }
 
     @Override
-    public float getCommandedAnalogValue() {
-        return (float) getCurrentIntensity();
+    public double getCommandedAnalogValue() {
+        return getCurrentIntensity();
     }
 
     @Override
-    public float getMin() {
-        return (float) getMinIntensity();
+    public double getMin() {
+        return getMinIntensity();
     }
 
     @Override
-    public float getMax() {
-        return (float) getMaxIntensity();
+    public double getMax() {
+        return getMaxIntensity();
     }
 
     @Override
-    public float getResolution() {
+    public double getResolution() {
         // AbstractLight is by default only ON or OFF
-        return (float) (getMaxIntensity() - getMinIntensity());
+        return (getMaxIntensity() - getMinIntensity());
     }
 
     @Override
     public AbsoluteOrRelative getAbsoluteOrRelative() {
         return AbsoluteOrRelative.ABSOLUTE;
+    }
+
+    @Override
+    public List<jmri.NamedBeanUsageReport> getUsageReport(jmri.NamedBean bean) {
+        List<jmri.NamedBeanUsageReport> report = new ArrayList<>();
+        jmri.SensorManager sm = jmri.InstanceManager.getDefault(jmri.SensorManager.class);
+        jmri.TurnoutManager tm = jmri.InstanceManager.getDefault(jmri.TurnoutManager.class);
+        if (bean != null) {
+            getLightControlList().forEach((control) -> {
+                String descText = control.getDescriptionText("");
+                if (bean.equals(sm.getSensor(control.getControlSensorName()))) {
+                    report.add(new jmri.NamedBeanUsageReport("LightControlSensor1", descText));  // NOI18N
+                }
+                if (bean.equals(sm.getSensor(control.getControlSensor2Name()))) {
+                    report.add(new jmri.NamedBeanUsageReport("LightControlSensor2", descText));  // NOI18N
+                }
+                if (bean.equals(sm.getSensor(control.getControlTimedOnSensorName()))) {
+                    report.add(new jmri.NamedBeanUsageReport("LightControlSensorTimed", descText));  // NOI18N
+                }
+                if (bean.equals(tm.getTurnout(control.getControlTurnoutName()))) {
+                    report.add(new jmri.NamedBeanUsageReport("LightControlTurnout", descText));  // NOI18N
+                }
+            });
+        }
+        return report;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLight.class);

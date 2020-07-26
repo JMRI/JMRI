@@ -1,15 +1,16 @@
 package jmri.jmrix.grapevine;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
  * @author Paul Bender Copyright (C) 2016
  */
 public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
@@ -54,12 +55,30 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Assert.assertTrue("4th UA 3", n3.getSensorsActive());
 
         // some equality tests
-        Assert.assertTrue("GS1p7 == GS1007", l.getSensor("GS1p7") == l.getSensor("GS1007"));
-        Assert.assertTrue("GS1B7 == GS1007", l.getSensor("GS1B7") == l.getSensor("GS1007"));
+        // TODO: should these be the same bean, or should different beans point to same physical device?
+        Assert.assertNotEquals("GS1p7 == GS1007", l.getSensor("GS1p7"), l.getSensor("GS1007"));
+        Assert.assertNotEquals("GS1B7 == GS1007", l.getSensor("GS1B7"), l.getSensor("GS1007"));
     }
 
     @Override
-    @Before
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l,
+                l.makeSystemName("1007"),
+                l.makeSystemName("1009"));
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("1007");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
+
+    @Override
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new GrapevineSystemConnectionMemo();
@@ -75,11 +94,12 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         l = new SerialSensorManager(memo);
     }
 
-    // The minimal setup for log4J
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     @Override

@@ -1,5 +1,7 @@
 package jmri.jmris.simpleserver;
 
+import jmri.InstanceManager;
+
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -15,15 +17,12 @@ public class SimpleServerAction extends AbstractAction {
     }
 
     public SimpleServerAction() {
-        this("Start Simple Jmri Server");
+        this("Start JMRI Simple Server");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        // SimpleServerFrame f = new SimpleServerFrame();
-        // f.setVisible(true);
-        SimpleServerManager.getInstance().getServer().start();
+        InstanceManager.getDefault(SimpleServerManager.class).getServer().start();
     }
 }
 

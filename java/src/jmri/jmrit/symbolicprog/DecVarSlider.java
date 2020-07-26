@@ -54,7 +54,7 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 
     void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("VarSlider saw property change: " + e);
+            log.debug("VarSlider saw property change: {}", e);
         }
         // update this color from original state
         if (e.getPropertyName().equals("State")) {

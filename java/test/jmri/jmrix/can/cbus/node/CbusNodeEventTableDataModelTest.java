@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus.node;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -23,8 +23,7 @@ public class CbusNodeEventTableDataModelTest {
         CbusNodeEventTableDataModel t = new CbusNodeEventTableDataModel( null,
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         Assert.assertNotNull("exists",t);
-        
-        t = null;
+
     }
 
     @Test
@@ -48,16 +47,12 @@ public class CbusNodeEventTableDataModelTest {
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusNodeEventTableDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
-        Assert.assertTrue("column has NO width", CbusNodeEventTableDataModel.getPreferredWidth(999) > 0 );
         
         
         myNode.dispose();
-        myNode = null;
-        t = null;
         
     }
     
@@ -75,10 +70,10 @@ public class CbusNodeEventTableDataModelTest {
             memo, 3,CbusNodeEventTableDataModel.MAX_COLUMN);
         
         CbusNode myNode = new CbusNode(memo,12345);        
-        CbusNodeEvent myNodeEvent = new CbusNodeEvent(3011,7,12345,-1,4);
+        CbusNodeEvent myNodeEvent = new CbusNodeEvent(memo,3011,7,12345,-1,4);
         myNodeEvent.setEvArr(new int[]{1,2,3,4});
         
-        myNode.addNewEvent(myNodeEvent);
+        myNode.getNodeEventManager().addNewEvent(myNodeEvent);
         t.setNode(myNode);
         
         Assert.assertTrue( t.getRowCount()== 1 );
@@ -105,11 +100,11 @@ public class CbusNodeEventTableDataModelTest {
         Assert.assertTrue("getValueAt NODE_EDIT_BUTTON_COLUMN number", (String)t.getValueAt(
             0,CbusNodeEventTableDataModel.NODE_EDIT_BUTTON_COLUMN) != null );
             
-        Assert.assertTrue("getValueAt NODE_NAME_COLUMN number", (String)t.getValueAt(
-            0,CbusNodeEventTableDataModel.NODE_NAME_COLUMN) == "" );
+        Assert.assertTrue("getValueAt NODE_NAME_COLUMN number", ((String)t.getValueAt(
+            0,CbusNodeEventTableDataModel.NODE_NAME_COLUMN)).isEmpty());
             
-        Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", (String)t.getValueAt(
-            0,CbusNodeEventTableDataModel.EVENT_NAME_COLUMN) == "" );
+        Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", ((String)t.getValueAt(
+            0,CbusNodeEventTableDataModel.EVENT_NAME_COLUMN)).isEmpty() );
             
         Assert.assertTrue("getValueAt EVENT_NAME_COLUMN number", (Integer)t.getValueAt(
             0,CbusNodeEventTableDataModel.EV_INDEX_COLUMN) == -1 );
@@ -120,11 +115,8 @@ public class CbusNodeEventTableDataModelTest {
         Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );
 
         mainpane.dispose();
-        mainpane = null;
         myNode.dispose();
-        myNode = null;
-        myNodeEvent = null;
-        t = null;
+
         
     }    
     
@@ -132,8 +124,7 @@ public class CbusNodeEventTableDataModelTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -145,16 +136,19 @@ public class CbusNodeEventTableDataModelTest {
         jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.node.CbusNodeTableDataModel.class,nodeModel );
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        
-        memo = null;
-        tcis = null;
         
         nodeModel.dispose();
         nodeModel = null;
         
+        tcis.terminateThreads();
+        memo.dispose();
+        memo = null;
+        tcis = null;
+        
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEventTableDataModelTest.class);

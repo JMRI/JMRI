@@ -1,30 +1,14 @@
 package apps.startup;
 
-import apps.PerformFileModel;
-import javax.swing.JFileChooser;
-import jmri.jmrit.XmlFile;
-import org.openide.util.lookup.ServiceProvider;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  *
  * @author Randall Wood 2016
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.PerformFileModelFactory} instead
  */
-@ServiceProvider(service = StartupModelFactory.class)
-public class PerformFileModelFactory extends AbstractFileModelFactory {
-
-    @Override
-    public Class<? extends StartupModel> getModelClass() {
-        return PerformFileModel.class;
-    }
-
-    @Override
-    public PerformFileModel newModel() {
-        return new PerformFileModel();
-    }
-
-    @Override
-    protected JFileChooser setFileChooser() {
-        return XmlFile.userFileChooser("XML files", "xml");
-    }
+@Deprecated
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
+public class PerformFileModelFactory extends jmri.util.startup.PerformFileModelFactory {
 
 }

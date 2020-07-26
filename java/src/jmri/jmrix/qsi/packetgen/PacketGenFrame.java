@@ -10,7 +10,7 @@ import jmri.jmrix.qsi.QsiSystemConnectionMemo;
  * Frame for user input of QSI messages. Input is a sequence of hex pairs,
  * including the length, but not the lead 'A', checksum or final 'E'.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2007, 2008
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.qsi.QsiListener {
 
@@ -72,7 +72,8 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.q
 
     /**
      * Create a well-formed packet from a String
-     *
+     * 
+     * @param s input contents
      * @return The packet, with contents filled-in
      */
     QsiMessage createPacket(String s) {

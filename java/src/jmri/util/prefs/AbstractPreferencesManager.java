@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
@@ -24,20 +25,30 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
     private final HashMap<Profile, Boolean> initializing = new HashMap<>();
     private final HashMap<Profile, List<Exception>> exceptions = new HashMap<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean isInitialized(@Nonnull Profile profile) {
+    public boolean isInitialized(Profile profile) {
         return this.initialized.getOrDefault(profile, false)
                 && this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean isInitializedWithExceptions(@Nonnull Profile profile) {
+    public boolean isInitializedWithExceptions(Profile profile) {
         return this.initialized.getOrDefault(profile, false)
                 && !this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<Exception> getInitializationExceptions(@Nonnull Profile profile) {
+    @Nonnull
+    public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions.getOrDefault(profile, new ArrayList<>()));
     }
 
@@ -45,26 +56,23 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * Test if the manager is being initialized.
      *
      * @param profile the profile against which the manager is being initialized
+     *                or null if being initialized for this user regardless of
+     *                profile
      * @return true if being initialized; false otherwise
      */
-    protected boolean isInitializing(@Nonnull Profile profile) {
-        return !this.initialized.getOrDefault(profile, false)
-                && this.initializing.getOrDefault(profile, false);
+    protected boolean isInitializing(Profile profile) {
+        return !this.initialized.getOrDefault(profile, false) && this.initializing.getOrDefault(profile, false);
     }
 
     /**
-     * Get the set of PreferencesProviders that must be initialized prior to
-     * initializing this PreferencesManager. It is generally preferable to
-     * require an Interface or an abstract Class instead of a concrete Class,
-     * since that allows all (or any) concrete implementations of the required
-     * class to be initialized to provide required services for the requiring
-     * PreferencesManager instance.
-     *
+     * {@inheritDoc}
+     * <p>
      * This implementation includes a default dependency on the
      * {@link jmri.jmrix.ConnectionConfigManager}.
      *
-     * @return An set of classes. If there are no dependencies, return an empty
-     *         set instead of null.
+     * @return An set of classes; if there are no dependencies, return an empty
+     *         set instead of null; overriding implementations may add to this
+     *         set directly
      */
     @Override
     @Nonnull
@@ -75,15 +83,10 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
     }
 
     /**
-     * Get the set of Classes that this PreferencesManager can be registered as
-     * a provider of in the {@link jmri.InstanceManager}.
-     *
+     * {@inheritDoc}
+     * <p>
      * This implementation returns the class of the object against which this
      * method is called.
-     *
-     * @return An set of classes. If this PreferencesManager provides an
-     *         instance of no other Interfaces or abstract Classes than
-     *         PreferencesManager, return an empty set instead of null.
      */
     @Override
     @Nonnull
@@ -101,7 +104,7 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * @param profile     the profile to set initialized against
      * @param initialized the initialized state to set
      */
-    protected void setInitialized(@Nonnull Profile profile, boolean initialized) {
+    protected void setInitialized(Profile profile, boolean initialized) {
         this.initialized.put(profile, initialized);
         if (initialized) {
             this.setInitializing(profile, false);
@@ -114,7 +117,7 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * @param profile      the profile for which initializing is ongoing
      * @param initializing the initializing state to set
      */
-    protected void setInitializing(@Nonnull Profile profile, boolean initializing) {
+    protected void setInitializing(Profile profile, boolean initializing) {
         this.initializing.put(profile, initializing);
     }
 
@@ -125,7 +128,7 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      *                  initialized
      * @param exception the exception to add
      */
-    protected void addInitializationException(@Nonnull Profile profile, @Nonnull Exception exception) {
+    protected void addInitializationException(Profile profile, @Nonnull Exception exception) {
         if (this.exceptions.get(profile) == null) {
             this.exceptions.put(profile, new ArrayList<>());
         }
@@ -152,9 +155,12 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      *                                  the set of classes returned by
      *                                  {@link #getRequires()}
      */
-    protected void requiresNoInitializedWithExceptions(@Nonnull Profile profile, @Nonnull Set<Class<? extends PreferencesManager>> classes, @Nonnull String message) throws InitializationException {
+    protected void requiresNoInitializedWithExceptions(Profile profile,
+            @Nonnull Set<Class<? extends PreferencesManager>> classes, @Nonnull String message)
+            throws InitializationException {
         classes.stream().filter((clazz) -> (!this.getRequires().contains(clazz))).forEach((clazz) -> {
-            throw new IllegalArgumentException("Class " + clazz.getClass().getName() + " not marked as required by " + this.getClass().getName());
+            throw new IllegalArgumentException(
+                    "Class " + clazz.getClass().getName() + " not marked as required by " + this.getClass().getName());
         });
         for (Class<? extends PreferencesManager> clazz : classes) {
             for (PreferencesManager instance : InstanceManager.getList(clazz)) {
@@ -185,7 +191,28 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * @throws InitializationException if any instance of any class in classes
      *                                 returns false on isIntialized(profile)
      */
-    protected void requiresNoInitializedWithExceptions(@Nonnull Profile profile, @Nonnull String message) throws InitializationException {
+    protected void requiresNoInitializedWithExceptions(Profile profile, @Nonnull String message)
+            throws InitializationException {
         this.requiresNoInitializedWithExceptions(profile, this.getRequires(), message);
+    }
+
+    /**
+     * Convenience method to allow a PreferencesManager to require all other
+     * PreferencesManager in an attempt to be the last PreferencesManager
+     * initialized. Use this method as the body of {@link #getRequires()}.
+     * <p>
+     * <strong>Note</strong> given a set of PreferencesManagers using this
+     * method as the body of {@link #getRequires()}, the order in which those
+     * PreferencesManagers are initialized is non-deterministic.
+     *
+     * @return a set of all PreferencesManagers registered with the
+     *         InstanceManager except this one
+     */
+    @Nonnull
+    protected Set<Class<? extends PreferencesManager>> requireAllOther() {
+        return InstanceManager.getList(PreferencesManager.class).stream()
+                .filter(pm -> !pm.equals(this))
+                .map(pm -> pm.getClass())
+                .collect(Collectors.toSet());
     }
 }

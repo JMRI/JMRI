@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -9,7 +8,8 @@
   <title>JMRI Hardware Support - Digi XBee Network</title>
   <meta name="author" content="Paul Bender">
   <meta name="keywords" content=
-  "XBee Configuration Information for JMRI"><!-- Style -->
+  "XBee Configuration Information for JMRI">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,14 +17,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+    <!-- Page Body -->
+
       <h1>Hardware Support: Digi XBee Network</h1>
 
       <ul class="snav">
@@ -72,8 +75,9 @@
         <li>The CISECO <a href=
         "http://shop.ciseco.co.uk/slice-of-pi-add-on-for-raspberry-pi/">
         Slice of Pi</a> (in conjunction with a Raspberry Pi)</li>
-      </ul><a name="connecting" id="connecting"></a>
+      </ul>
 
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
 
       <h3>Wiring</h3>
@@ -81,7 +85,7 @@
       <p>JMRI can communicate with XBee Series 1 and XBee Series 2
       modules.</p>
 
-      <p>In JMRI versions Prior to 4.5.5, Underlying support for
+      <p>In JMRI versions prior to 4.5.5, underlying support for
       communication is provided by 
       <a href="https://github.com/andrewrapp/xbee-api">Andrew Rapp's
       xbee-api library for Java</a>.</p>
@@ -215,17 +219,27 @@
           <td>int : int</td>
           <td> </td>
           <td>pin: 0</td>
-          <td>pin: 71 (?)</td>
+          <td>pin: 7</td>
         </tr>
         <tr>
           <td>o</td>
+          <td>4:3</td>
+          <td>ModuleAddress:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 7</td>
+        </tr>
+        <tr>
+          <td>o (Turnouts)</td>
           <td>4:3:4</td>
           <td>ModuleAddress:Pin1:Pin2</td>
           <td>ZT4:3:4</td>
           <td>int : int : int</td>
           <td> </td>
           <td>pin: 0</td>
-          <td>pin: 71 (?)</td>
+          <td>pin: 7</td>
         </tr>
         </tbody>
       </table>
@@ -318,7 +332,7 @@
 
       <p><a href="http://www.digi.com/xbee">Digi Intl. XBee</a> web
       site</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

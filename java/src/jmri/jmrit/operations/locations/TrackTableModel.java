@@ -4,20 +4,19 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of tracks used by operations
@@ -78,7 +77,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         // first, remove listeners from the individual objects
         removePropertyChangeTracks();
 
-        tracksList = _location.getTrackByNameList(_trackType);
+        tracksList = _location.getTracksByNameList(_trackType);
         // and add them back in
         for (Track track : tracksList) {
             track.addPropertyChangeListener(this);
@@ -97,7 +96,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         if (_location != null) {
             _location.addPropertyChangeListener(this);
         }
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         initTable();
         table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
@@ -319,18 +318,15 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return getRestrictions(track);
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
-                        track
-                                .getLoadOption().equals(Track.INCLUDE_LOADS)) +
-                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H"
-                                : "");
+                        track.getLoadOption().equals(Track.INCLUDE_LOADS)) +
+                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H" : "");
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,
                         track.getShipLoadOption().equals(Track.ALL_LOADS), track.getShipLoadOption().equals(
                                 Track.INCLUDE_LOADS));
             case ROAD_COLUMN:
                 return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.ALL_ROADS),
-                        track
-                                .getRoadOption().equals(Track.INCLUDE_ROADS));
+                        track.getRoadOption().equals(Track.INCLUDE_ROADS));
             case DESTINATION_COLUMN: {
                 int size = track.getDestinationListSize();
                 if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
@@ -416,14 +412,11 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             tef.dispose();
         }
         // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                tef = new TrackEditFrame();
-                Track track = tracksList.get(row);
-                tef.initComponents(_location, track);
-                tef.setTitle(Bundle.getMessage("EditTrack"));
-            }
+        SwingUtilities.invokeLater(() -> {
+            tef = new TrackEditFrame();
+            Track track = tracksList.get(row);
+            tef.initComponents(_location, track);
+            tef.setTitle(Bundle.getMessage("EditTrack"));
         });
     }
 
@@ -479,7 +472,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         if (tef != null) {
             tef.dispose();
         }
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         tracksList.clear();
         fireTableDataChanged();
     }

@@ -1,7 +1,7 @@
 package jmri.util.exceptionhandler;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Bundle class
@@ -18,12 +18,7 @@ public class BundleTest {
 
     @Test
     public void testBadKeyMessage() {
-        try {
-            Bundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
     @Test
@@ -35,12 +30,7 @@ public class BundleTest {
 
     @Test
     public void testBadKeyMessageArg() {
-        try {
-            Bundle.getMessage("FFFFFTTTTTTT", "foo");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
 }

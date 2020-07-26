@@ -24,7 +24,7 @@ public interface Reportable {
      /**
       * Provide a string representation of the object, possibly including state
       * information, suitable for display in an on-screen reporter. A default 
-      * impelmentation provided here calls toString(), which may not be 
+      * implementation provided here calls toString(), which may not be 
       * appropriate in all cases. 
       *
       * @return a report string representing the Object.

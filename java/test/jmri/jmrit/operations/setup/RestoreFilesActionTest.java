@@ -1,18 +1,19 @@
 package jmri.jmrit.operations.setup;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RestoreFilesActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        RestoreFilesAction t = new RestoreFilesAction("Test");
+        RestoreFilesAction t = new RestoreFilesAction();
         Assert.assertNotNull("exists",t);
     }
 

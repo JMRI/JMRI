@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Note: Car: XML read/write is tested in OperationsEnginesTest and
  * OperationsCarsTest
  *
- * @author	Bob Coleman Copyright (C) 2009
+ * @author Bob Coleman Copyright (C) 2009
  *
  */
 public class OperationsRollingStockTest extends OperationsTestCase {
@@ -87,6 +87,8 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         }
 
         jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 Not Found");
+        
+
     }
 
     // test creation
@@ -127,6 +129,8 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car Comment", "TESTCOMMENT", rs1.getComment());
         Assert.assertEquals("Car Rfid", "TESTRFID", rs1.getRfid());
         Assert.assertEquals("Car Moves", 5, rs1.getMoves());
+        
+
     }
 
     // test Car weight and weighttons

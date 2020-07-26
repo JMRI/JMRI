@@ -1,19 +1,21 @@
 package jmri.jmrix.roco.z21;
 
+import java.util.Locale;
+import jmri.Manager;
 import jmri.Manager.NameValidity;
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.Nonnull;
 
 /**
  * Utility Class supporting parsing and testing of addresses for Z21 RMBus  
  * <p>
- * Two address format are supported: 
+ * One address format are supported:
  * <ul>
  * <li> 
  * ZSxxxx where: 'S' for sensors, 
- * </li>
- * <li>
- * ZSmm:pp where mm is the module address (1-20) and pp is the contact pin number (1-8).
  * </li>
  * </ul>
  *
@@ -23,16 +25,18 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21RMBusAddress {
 
-    public Z21RMBusAddress() {
+    private Z21RMBusAddress() {
+        // class of static functions
     }
 
     static final int MINSENSORADDRESS = 1;
     static final int MAXSENSORADDRESS = 160; // 20 RM bus modules with 8 contacts each.
 
     /**
-     * Public static method to parse a Z21RMBus system name.
-     * Note: Bits are numbered from 1.
+     * Public static method to parse a Z21RMBus system name.Note: Bits are numbered from 1.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return the hardware address number, return -1 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
@@ -42,22 +46,10 @@ public class Z21RMBusAddress {
             log.error("invalid character in header field of Z21 RM Bus system name: {}", systemName);
             return (-1);
         }
-        // name must be in the ZSnnnnn or ZSmm:pp format (Z is user 
-        // configurable)
-        int num = 0;
+        int num;
         try {
             String curAddress = systemName.substring(prefix.length() + 1);
-            if( ( systemName.charAt(prefix.length())=='S' ||
-                  systemName.charAt(prefix.length())=='s' ) && 
-                  curAddress.contains(":")) {
-               //Address format passed is in the form of encoderAddress:input
-               int seperator = curAddress.indexOf(":");
-               int encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
-               int input = Integer.parseInt(curAddress.substring(seperator + 1));
-               num = ((encoderAddress - 1) * 8) + input;
-            } else {
-               num = Integer.parseInt(curAddress);
-            }
+            num = Integer.parseInt(curAddress);
         } catch (NumberFormatException e) {
             log.warn("invalid character in number field of system name: {}", systemName);
             return (-1);
@@ -70,19 +62,43 @@ public class Z21RMBusAddress {
     }
 
     /**
+     * Validate a system name format.
+     *
+     * @param name    the name to validate
+     * @param manager the manager requesting validation
+     * @param locale  the locale for user messages
+     * @return name, unchanged
+     * @see jmri.Manager#validateSystemNameFormat(java.lang.String,
+     * java.util.Locale)
+     */
+    public static String validateSystemNameFormat(String name, Manager manager, Locale locale) {
+        try {
+            return manager.validateIntegerSystemNameFormat(name, 1, 160, locale);
+        } catch (NumberFormatException ex) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidRMAddress", name),
+                    Bundle.getMessage(locale, "SystemNameInvalidRMAddress", name));
+        }
+    }
+
+    /**
      * Public static method to validate system name format.
      * Logging of handled cases no higher than WARN.
      *
+     * @param systemName system name.
+     * @param type bean type, S for Sensor, T for Turnout.
+     * @param prefix system prefix.
      * @return VALID if system name has a valid format, else return INVALID
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
             // here if an illegal format 
             log.error("invalid character in header field of system name: {}", systemName);
             return NameValidity.INVALID;
         }
-        if (getBitFromSystemName(systemName, prefix) > 0) {
+        int address = getBitFromSystemName(systemName,prefix);
+        if (address >= 0 && address <= 160 ) {
             return NameValidity.VALID;
         } else {
             return NameValidity.INVALID;
@@ -92,6 +108,8 @@ public class Z21RMBusAddress {
     /**
      * Public static method to check the user name for a valid system name.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return "" (null string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName, String prefix) {
@@ -102,7 +120,7 @@ public class Z21RMBusAddress {
         }
         // check for a sensor
         if (systemName.charAt(prefix.length() + 1) == 'S') {
-            jmri.Sensor s = null;
+            jmri.Sensor s;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
                 return s.getUserName();
@@ -114,6 +132,6 @@ public class Z21RMBusAddress {
         return ("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21RMBusAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21RMBusAddress.class);
 
 }

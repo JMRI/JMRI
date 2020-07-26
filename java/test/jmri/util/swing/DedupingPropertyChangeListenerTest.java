@@ -1,9 +1,7 @@
 package jmri.util.swing;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import java.beans.PropertyChangeSupport;
 import java.util.concurrent.Semaphore;
@@ -22,13 +20,13 @@ public class DedupingPropertyChangeListenerTest {
 
     Semaphore semaphore = new Semaphore(1);
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         l = new PropertyChangeListenerScaffold();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

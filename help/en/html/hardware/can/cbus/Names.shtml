@@ -15,14 +15,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI Hardware Support: MERG CBUS - Naming</h1>
 
         <ul class="snav">
@@ -624,20 +626,20 @@
         <li>
         <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusOpCodes.java"
         >CbusOpCodes.java</a>
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusOpCodes.html"
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusOpCodes.html"
         >JavaDoc</a>
         </li>
 
         <li>
         <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusConstants.java"
         >CbusConstants.java</a>
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusConstants.html"
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusConstants.html"
         >JavaDoc</a>
         </li>
         
         <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusMessage.java"
         >CbusMessage.java</a>
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusMessage.html"
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusMessage.html"
         >JavaDoc</a>
         </li>
         
@@ -647,7 +649,7 @@
         
         <li><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusProgrammer.java"
         >CbusProgrammer.java</a>
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusProgrammer.html"
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/can/cbus/CbusProgrammer.html"
         >JavaDoc</a>
         Functions for dealing with Node programming ( Node Config Tool functions to be moved here )
         </li>
@@ -830,7 +832,7 @@
       <p><a href="index.shtml#thirdparty">MERG CBUS 3rd Party Links</a> See link for the MERG CBUS Developers Guide</p>
       </div>
       
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

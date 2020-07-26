@@ -1,43 +1,33 @@
 package jmri.jmrix.nce;
 
-import java.beans.PropertyChangeListener;
-
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.managers.AbstractPowerManager;
 
 /**
  * PowerManager implementation for controlling layout power.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class NcePowerManager implements PowerManager, NceListener {
+public class NcePowerManager extends AbstractPowerManager<NceSystemConnectionMemo> implements NceListener {
 
     public NcePowerManager(NceSystemConnectionMemo memo) {
         this(memo.getNceTrafficController(), memo.getSystemPrefix());// connect to the TrafficManager
-        userName = memo.getUserName();
     }
 
     public NcePowerManager(NceTrafficController tc, String p) {
+        super(tc.getAdapterMemo());
         // connect to the TrafficManager
         this.tc = tc;
-        this.prefix = p;
         tc.addNceListener(this);
     }
-
-    String userName = "NCE";
-
-    @Override
-    public String getUserName() {
-        return userName;
-    }
-
-    int power = UNKNOWN;
 
     boolean waiting = false;
     int onReply = UNKNOWN;
 
     @Override
     public void setPower(int v) throws JmriException {
+        int old = power;
         power = UNKNOWN; // while waiting for reply
         checkTC();
         if (v == ON) {
@@ -51,17 +41,12 @@ public class NcePowerManager implements PowerManager, NceListener {
             // configure to wait for reply
             waiting = true;
             onReply = PowerManager.OFF;
-            firePropertyChange("Power", null, null);
+            firePowerPropertyChange(old, power);
             // send "Kill main track"
             NceMessage l = NceMessage.getKillMain(tc);
             tc.sendNceMessage(l, this);
         }
-        firePropertyChange("Power", null, null);
-    }
-
-    @Override
-    public int getPower() {
-        return power;
+        firePowerPropertyChange(old, power);
     }
 
     // to free resources when no longer used
@@ -77,56 +62,15 @@ public class NcePowerManager implements PowerManager, NceListener {
         }
     }
 
-    // to hear of changes
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    @Override
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
-    @Override
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(propertyName, listener);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        return pcs.getPropertyChangeListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return pcs.getPropertyChangeListeners(propertyName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(propertyName, listener);
-    }
-
     NceTrafficController tc = null;
-    String prefix = "";
 
     // to listen for status changes from NCE system
     @Override
     public void reply(NceReply m) {
         if (waiting) {
+            int old = power;
             power = onReply;
-            firePropertyChange("Power", null, null);
+            firePowerPropertyChange(old, power);
         }
         waiting = false;
     }

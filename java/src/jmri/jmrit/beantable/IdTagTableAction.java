@@ -2,6 +2,8 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.util.Date;
 import javax.annotation.Nonnull;
@@ -15,9 +17,7 @@ import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Reporter;
-import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public class IdTagTableAction extends AbstractTableAction<IdTag> {
+public class IdTagTableAction extends AbstractTableAction<IdTag> implements PropertyChangeListener {
 
     /**
      * Create an action with a specific title.
@@ -41,6 +41,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
      */
     public IdTagTableAction(String actionName) {
         super(actionName);
+        tagManager.addPropertyChangeListener(this);
     }
     
     @Nonnull
@@ -51,9 +52,18 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
      */
     @Override
     public void setManager(@Nonnull Manager<IdTag> t) {
-        tagManager = (IdTagManager) t;
-        if (m != null) {
-            m.setManager(tagManager);
+        if(tagManager!=null){
+            tagManager.removePropertyChangeListener(this);
+        }
+        if (t instanceof IdTagManager) {
+            tagManager = (IdTagManager) t;
+            if (m != null) {
+                m.setManager(tagManager);
+            }
+        }
+        // if t is not an instance of IdTagManager, tagManager may not change.
+        if(tagManager!=null){
+            tagManager.addPropertyChangeListener(this);
         }
     }
 
@@ -108,7 +118,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
                 if (col == CLEARCOL) {
                     IdTag t = getBySystemName(sysNameList.get(row));
                     if (log.isDebugEnabled()) {
-                        log.debug("Clear where & when last seen for " + t.getSystemName());
+                        log.debug("Clear where & when last seen for {}", t.getSystemName());
                     }
                     t.setWhereLastSeen(null);
                     fireTableRowsUpdated(row, row);
@@ -173,7 +183,13 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
                     case WHERECOL:
                         Reporter r;
                         t = getBySystemName(sysNameList.get(row));
-                        return (t != null) ? (((r = t.getWhereLastSeen()) != null) ? r.getSystemName() : null) : null;
+                        if ( t !=null ){
+                            r = t.getWhereLastSeen();
+                            if (r!=null){
+                                return r.getDisplayName();                            
+                            }
+                        }
+                        return null;
                     case WHENCOL:
                         Date d;
                         t = getBySystemName(sysNameList.get(row));
@@ -316,23 +332,35 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
 
     @Override
     public void addToPanel(AbstractTableTabAction<IdTag> f) {
-        String systemPrefix = ConnectionNameFromSystemName.getConnectionName(tagManager.getSystemPrefix());
-        if (tagManager instanceof jmri.managers.ProxyIdTagManager ) {
-            systemPrefix = "All";
-        } else if (systemPrefix == null && (tagManager instanceof jmri.managers.DefaultRailComManager )) {
-                systemPrefix = "RailCom"; // NOI18N (proper name).
-       }
-       f.addToBottomBox(isStateStored, systemPrefix );
-       isStateStored.setSelected(tagManager.isStateStored());
-       isStateStored.addActionListener((ActionEvent e) -> {
-           tagManager.setStateStored(isStateStored.isSelected());
-       });
-       f.addToBottomBox(isFastClockUsed, systemPrefix );
-       isFastClockUsed.setSelected(tagManager.isFastClockUsed());
-       isFastClockUsed.addActionListener((ActionEvent e) -> {
-           tagManager.setFastClockUsed(isFastClockUsed.isSelected());
-       });
-       log.debug("Added CheckBox in addToPanel method for system {}",systemPrefix);
+        String connectionName = tagManager.getMemo().getUserName();
+        if (tagManager instanceof jmri.managers.ProxyIdTagManager) {
+            connectionName = "All";
+        } else if (connectionName == null && (tagManager instanceof jmri.managers.DefaultRailComManager)) {
+            connectionName = "RailCom"; // NOI18N (proper name).
+        }
+        f.addToBottomBox(isStateStored, connectionName);
+        isStateStored.setSelected(tagManager.isStateStored());
+        isStateStored.addActionListener((ActionEvent e) -> {
+            tagManager.setStateStored(isStateStored.isSelected());
+        });
+        f.addToBottomBox(isFastClockUsed, connectionName);
+        isFastClockUsed.setSelected(tagManager.isFastClockUsed());
+        isFastClockUsed.addActionListener((ActionEvent e) -> {
+            tagManager.setFastClockUsed(isFastClockUsed.isSelected());
+        });
+        log.debug("Added CheckBox in addToPanel method for system {}", connectionName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("StateStored")) {
+           isStateStored.setSelected(tagManager.isStateStored());
+        } else if (e.getPropertyName().equals("UseFastClock")) {
+           isFastClockUsed.setSelected(tagManager.isFastClockUsed()); 
+        }
     }
 
     @Override

@@ -9,6 +9,10 @@ package jmri.jmrit.operations.locations;
  */
 public class Xml {
 
+    private Xml(){
+        //class of constants
+    }
+
     // Common to operation xml files
     static final String ID = "id"; // NOI18N
     static final String NAME = "name"; // NOI18N
@@ -52,6 +56,7 @@ public class Xml {
 
     // Track.java
     static final String LOC_TYPE = "locType"; // NOI18N
+    static final String TRACK_TYPE = "trackType"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
     static final String MOVES = "moves"; // NOI18N
     static final String BLOCKING_ORDER = "blockingOrder"; // NOI18N
@@ -74,6 +79,8 @@ public class Xml {
     static final String BOTH = "both"; // NOI18N
     static final String PICKUP = "pickup"; // NOI18N
     static final String SETOUT = "setout"; // NOI18N
+    static final String PRINT_MANIFEST = "printManifest"; // NOI18N
+    static final String PRINT_SWITCH_LISTS = "printSwitchLists"; // NOI18N
     static final String TRACK_DESTINATION_OPTION = "trackDestinationOption"; // NOI18N
     static final String DESTINATIONS = "destinations"; // NOI18N
     static final String DESTINATION = "destination"; // NOI18N

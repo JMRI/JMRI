@@ -24,7 +24,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         InstanceManager.store(this, OlcbSystemConnectionMemo.class); // also register as specific type
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    final jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
      * Tells which managers this class provides.
@@ -189,9 +189,12 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
 
     /**
      * See {@link jmri.NamedBean#compareSystemNameSuffix} for background.
-     * 
-     * This is a common implementation for OpenLCB Sensors and Turnouts
+     * This is a common implementation for OpenLCB Sensors and Turnouts 
      * of the comparison method.
+     *
+     * @param suffix1 1st suffix to compare.
+     * @param suffix2 2nd suffix to compare.
+     * @return true if suffixes match, else false.
      */
     @CheckReturnValue
     public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {

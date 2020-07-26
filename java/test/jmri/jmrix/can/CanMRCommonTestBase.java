@@ -1,26 +1,26 @@
 package jmri.jmrix.can;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
- * Common tests for the jmri.jmrix.can.CanMessage and CanReply classes
+ * Common tests for the jmri.jmrix.can.CanMessage and CanReply classes.
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class CanMRCommonTestBase extends jmri.jmrix.AbstractMessageTestBase {
+public abstract class CanMRCommonTestBase extends jmri.jmrix.AbstractMessageTestBase {
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @Override
+    @AfterEach
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -242,7 +241,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * @return true if message m is a Duplex Group Channel Report
      */
     private boolean handleMessageDuplexChannelReport(LocoNetMessage m) {
-        if ((m.getElement(0) != LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() != LnConstants.OPC_PEER_XFER)
                 || (m.getElement(1) != LnConstants.RE_DPLX_OP_LEN)
                 || (m.getElement(2) != LnConstants.RE_DPLX_GP_CHAN_TYPE)
                 || (m.getElement(3) != LnConstants.RE_DPLX_SCAN_REPORT_B3)) {
@@ -264,7 +263,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      *         present, else return false.
      */
     private boolean handleMessageDuplexScanReport(LocoNetMessage m) {
-        if ((m.getElement(0) != LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() != LnConstants.OPC_PEER_XFER)
                 || (m.getElement(1) != LnConstants.RE_DPLX_SCAN_OP_LEN)
                 || (m.getElement(2) != LnConstants.RE_DPLX_SCAN_REPORT_B2)
                 || (m.getElement(3) != LnConstants.RE_DPLX_SCAN_REPORT_B3)) {
@@ -285,7 +284,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
         if (index != -1) {
             if (index == 16) {
-                log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum) + "\n");
+                log.error("{}\n", Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
 
             }
             dci[index].numSamples++;
@@ -302,7 +301,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
             graphicArea.repaint();
 
         } else {
-            log.error(Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum) + "\n");
+            log.error("{}\n", Bundle.getMessage("ErrorLogUnexpectedChannelNumber", channelNum));
         }
     }
 

@@ -2,15 +2,13 @@ package jmri;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the NamedBeanHandleManager class
  *
- * @author	Kevin Dickerson Copyright (C) 2006
+ * @author Kevin Dickerson Copyright (C) 2006
  * 
  */
 public class NamedBeanHandleManagerTest {
@@ -85,12 +83,12 @@ public class NamedBeanHandleManagerTest {
 
         NamedBeanHandle<Sensor> checkRename = nbhm.getNamedBeanHandle("ISno_user_name", sm.provideSensor("ISno_user_name"));
         nbhm.updateBeanFromUserToSystem(checkRename.getBean());
-        jmri.util.JUnitAppender.assertWarnMessage("updateBeanFromUserToSystem requires non-blank user name: \"ISNO_USER_NAME\" not renamed");
+        jmri.util.JUnitAppender.assertWarnMessage("updateBeanFromUserToSystem requires non-blank user name: \"ISno_user_name\" not renamed");
     }
 
     jmri.NamedBeanHandleManager nbhm;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -98,7 +96,7 @@ public class NamedBeanHandleManagerTest {
         nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

@@ -61,7 +61,7 @@
 				<hr />
 				This page was produced by
 				<a href="http://jmri.org">
-					<img src="http://jmri.org/images/logo-jmri.gif"
+					<img src="https://www.jmri.org/images/logo-jmri.gif"
 					height="31" border="0" alt="JMRI project" />
 				</a>
 					Site hosted by: <br/>

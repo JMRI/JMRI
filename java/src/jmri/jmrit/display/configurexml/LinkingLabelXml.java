@@ -121,16 +121,14 @@ public class LinkingLabelXml extends PositionableLabelXml {
             log.error("LinkingLabel is null!");
             if (log.isDebugEnabled()) {
                 java.util.List<Attribute> attrs = element.getAttributes();
-                log.debug("\tElement Has " + attrs.size() + " Attributes:");
-                for (int i = 0; i < attrs.size(); i++) {
-                    Attribute a = attrs.get(i);
-                    log.debug("\t\t" + a.getName() + " = " + a.getValue());
+                log.debug("\tElement Has {} Attributes:", attrs.size());
+                for (Attribute a : attrs) {
+                    log.debug("\t\t{} = {}", a.getName(), a.getValue());
                 }
                 java.util.List<Element> kids = element.getChildren();
-                log.debug("\tElementHas " + kids.size() + " children:");
-                for (int i = 0; i < kids.size(); i++) {
-                    Element e = kids.get(i);
-                    log.debug("\t\t" + e.getName() + " = \"" + e.getValue() + "\"");
+                log.debug("\tElementHas {} children:", kids.size());
+                for (Element e : kids) {
+                    log.debug("\t\t{} = \"{}\"", e.getName(), e.getValue());
                 }
             }
             editor.loadFailed();

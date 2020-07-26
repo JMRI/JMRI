@@ -1,19 +1,22 @@
 package jmri.jmrix.can;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.annotation.Nonnull;
 
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.InstanceManager;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
+import jmri.NamedBean;
+import jmri.jmrix.DefaultSystemConnectionMemo;
+import jmri.jmrix.can.ConfigurationManager.SubProtocol;
+import jmri.util.NamedBeanComparator;
+
+import jmri.util.startup.StartupActionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -26,24 +29,45 @@ import jmri.profile.ProfileManager;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
     // This user name will be overwritten by the adapter and saved to the connection config.
-    public static String DEFAULT_USERNAME = "CAN";
+    public static final String DEFAULT_USERNAME = "CAN";
+
+    private boolean protocolOptionsChanged = false;
 
     public CanSystemConnectionMemo() {
         super("M", DEFAULT_USERNAME);
+    }
+    
+    // Allow for default systemPrefix other than "M"
+    public CanSystemConnectionMemo(String prefix) {
+        super(prefix, DEFAULT_USERNAME);
+    }
+
+    protected final void storeCanMemotoInstance() {
         register(); // registers general type
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
 
+    protected String _protocol = ConfigurationManager.MERGCBUS;
+    protected SubProtocol _subProtocol = SubProtocol.CBUS;
+    
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     protected TrafficController tm;
 
+    /**
+     * Set Connection Traffic Controller
+     * @param tm System Connection Traffic Controller
+     */
     public void setTrafficController(TrafficController tm) {
         this.tm = tm;
     }
-
+    
+    /**
+     * Get Connection Traffic Controller
+     * @return System Connection Traffic Controller
+     */
     public TrafficController getTrafficController() {
         return tm;
     }
@@ -64,12 +88,12 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return false;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            jmri.GlobalProgrammerManager mgr = ((jmri.GlobalProgrammerManager) get(jmri.GlobalProgrammerManager.class));
+            jmri.GlobalProgrammerManager mgr = get(jmri.GlobalProgrammerManager.class);
             if (mgr == null) return false;
             return mgr.isGlobalProgrammerAvailable();
         }
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            jmri.AddressedProgrammerManager mgr =((jmri.AddressedProgrammerManager) get(jmri.AddressedProgrammerManager.class));
+            jmri.AddressedProgrammerManager mgr = get(jmri.AddressedProgrammerManager.class);
             if (mgr == null) return false;
             return mgr.isAddressedModePossible();
         }
@@ -78,12 +102,15 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         boolean result = manager.provides(type);
         if(result) {
-           return result;
+           return true;
         } else {
            return super.provides(type);
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
@@ -93,9 +120,16 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return super.get(T);
     }
 
+    public String getProtocol() {
+        return _protocol;
+    }
+    
     public void setProtocol(String protocol) {
+        StartupActionFactory old = getActionFactory();
         if (null != protocol) {
+            _protocol = protocol;
             switch (protocol) {
+                case ConfigurationManager.SPROGCBUS:
                 case ConfigurationManager.MERGCBUS:
                     manager = new jmri.jmrix.can.cbus.CbusConfigurationManager(this);
                     break;
@@ -112,8 +146,17 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     break;
             }
         }
-        // make sure appropriate actions in preferences
-        addToActionList();
+        firePropertyChange("actionFactory", old, getActionFactory());
+    }
+
+    public SubProtocol getSubProtocol() {
+        return _subProtocol;
+    }
+    
+    public void setSubProtocol(SubProtocol sp) {
+        if (null != sp) {
+            _subProtocol = sp;
+        }
     }
 
     /**
@@ -124,14 +167,26 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (manager != null) {
             manager.configureManagers();
         }
+        storeCanMemotoInstance();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         if (manager == null) {
             return null;
         }
         return manager.getActionModelResourceBundle();
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     /**
@@ -177,17 +232,26 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public synchronized void setProtocolOption(String protocol, String option, String value) {
         log.debug("Setting protocol option {} {} := {}", protocol, option, value);
         if (value == null) return;
-        Map<String, String> m = protocolOptions.get(protocol);
-        if (m == null) {
-            m = new HashMap<>();
-            protocolOptions.put(protocol, m);
-        }
+        Map<String, String> m = protocolOptions.computeIfAbsent(protocol, k -> new HashMap<>());
         String oldValue = m.get(option);
         if (value.equals(oldValue)) return;
         m.put(option, value);
-        // @todo When the connection options are changed, we need to mark the profile as dirty.
+        protocolOptionsChanged = true;
     }
 
+    @Override
+    public boolean isDirty() {
+        return super.isDirty() || protocolOptionsChanged;
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        return super.isRestartRequired() || protocolOptionsChanged;
+    }
+
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void dispose() {
         if (manager != null) {

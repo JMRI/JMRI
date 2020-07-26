@@ -16,19 +16,19 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
-import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Defines a GUI to edit AudioBuffer objects
+ * Defines a GUI to edit AudioBuffer objects.
  *
  * <hr>
  * This file is part of JMRI.
@@ -52,18 +52,20 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     private final Object lock = new Object();
 
     // UI components for Add/Edit Buffer
-    JLabel urlLabel = new JLabel(Bundle.getMessage("LabelURL") + ":");
+    JLabel urlLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelURL")));
     JTextField url = new JTextField(40);
     JButton buttonBrowse = new JButton("...");
     JCheckBox stream = new JCheckBox(Bundle.getMessage("LabelStream"));
-//    JLabel formatLabel = new JLabel(Bundle.getMessage("LabelFormat"));
-//    JTextField format = new JTextField(20);
+    // JLabel formatLabel = new JLabel(Bundle.getMessage("LabelFormat"));
+    // JTextField format = new JTextField(20);
     JLabel loopStartLabel = new JLabel(Bundle.getMessage("LabelLoopStart"));
     JSpinner loopStart = new JSpinner();
     JLabel loopEndLabel = new JLabel(Bundle.getMessage("LabelLoopEnd"));
     JSpinner loopEnd = new JSpinner();
     JFileChooser fileChooser;
-//    AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
+    // AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
+
+    private final static String PREFIX = "IAB";
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioBufferFrame(String title, AudioTableDataModel model) {
@@ -182,17 +184,17 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Buffer frame with default values
+     * Populate the Edit Buffer frame with default values.
      */
     @Override
     @SuppressWarnings("UnnecessaryBoxing")
     public void resetFrame() {
         synchronized (lock) {
-            sysName.setText("IAB" + counter++);
+            sysName.setText(PREFIX + nextCounter()); // NOI18N
         }
         userName.setText(null);
         url.setText(null);
-//        format.setText(null);
+        // format.setText(null);
         stream.setSelected(false);
         stream.setEnabled(false); //(true);
         loopStart.setValue(Long.valueOf(0));
@@ -202,7 +204,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Buffer frame with current values
+     * Populate the Edit Buffer frame with current values.
      */
     @Override
     public void populateFrame(Audio a) {
@@ -212,7 +214,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         super.populateFrame(a);
         AudioBuffer b = (AudioBuffer) a;
         url.setText(b.getURL());
-//        format.setText(b.toString());
+        // format.setText(b.toString());
         stream.setSelected(b.isStreamed());
         stream.setEnabled(false); //(!b.isStreamedForced());
         loopStart.setValue(b.getStartLoopPoint());
@@ -227,10 +229,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     void browsePressed(ActionEvent e) {
         if (fileChooser == null) {
-            fileChooser = new JFileChooser("resources" + File.separator + "sounds" + File.separator);
-            FileChooserFilter audioFileFilter = new FileChooserFilter("Audio Files (*.wav)");
-            audioFileFilter.addExtension("wav");
-            fileChooser.setFileFilter(audioFileFilter);
+            fileChooser = new JFileChooser("resources" + File.separator + "sounds" + File.separator); // NOI18N
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Audio Files (*.wav)", "wav")); // NOI18N
         }
 
         // Show dialog
@@ -254,11 +254,14 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     }
 
     void applyPressed(ActionEvent e) {
+        String sName = sysName.getText();
+        if (entryError(sName, PREFIX, "" + counter)) {
+            return;
+        }
         String user = userName.getText();
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().toUpperCase();
         AudioBuffer b;
         try {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
@@ -270,7 +273,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             if (newBuffer && am.getByUserName(user) != null) {
                 am.deregister(b);
                 synchronized (lock) {
-                    counter--;
+                    prevCounter();
                 }
                 throw new AudioException("Duplicate user name - please modify");
             }
@@ -278,12 +281,12 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             b.setStreamed(stream.isSelected());
             if (newBuffer || !b.getURL().equals(url.getText())) {
                 b.setURL(url.getText());
-                log.debug("After load, end loop point = " + b.getEndLoopPoint());
+                log.debug("After load, end loop point = {}", b.getEndLoopPoint());
                 //b.setStartLoopPoint((Long)loopStart.getValue());
                 //b.setEndLoopPoint((Long)loopEnd.getValue());
             } else {
                 if (!b.getURL().equals(url.getText())) {
-                    log.debug("Sound changed from: " + b.getURL());
+                    log.debug("Sound changed from: {}", b.getURL());
                     b.setURL(url.getText());
                 }
             }
@@ -297,6 +300,14 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         } catch (AudioException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private static int nextCounter() {
+        return counter++;
+    }
+
+    private static void prevCounter() {
+        counter--;
     }
 
     private static final Logger log = LoggerFactory.getLogger(AudioBufferFrame.class);

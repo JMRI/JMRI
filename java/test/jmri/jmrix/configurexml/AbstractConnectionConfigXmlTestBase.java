@@ -1,6 +1,8 @@
 package jmri.jmrix.configurexml;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.jdom2.Element;
 import jmri.jmrix.ConnectionConfig;
 import jmri.util.ThreadingUtil;
@@ -10,7 +12,7 @@ import javax.swing.JPanel;
 /**
  * Base tests for ConnectionConfigXml objects.
  *
- * @author Paul Bender Copyright (C) 2018	
+ * @author Paul Bender Copyright (C) 2018
  */
 abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configurexml.AbstractXmlAdapterTestBase {
 
@@ -34,7 +36,8 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
         validateConnectionDetails(cc, e);
     }
 
-    @Test(timeout=5000)
+    @Test
+    @Timeout(5000)
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         Assume.assumeNotNull(cc);
         // reset the profile manager for this test, so it can run independently.

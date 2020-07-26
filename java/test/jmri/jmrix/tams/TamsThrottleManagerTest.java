@@ -1,14 +1,13 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase{
 
@@ -17,8 +16,8 @@ public class TamsThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();
@@ -26,8 +25,9 @@ public class TamsThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         tm = new TamsThrottleManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

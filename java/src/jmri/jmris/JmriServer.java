@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
@@ -28,21 +29,6 @@ public class JmriServer {
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
     protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<>();
-
-    private static JmriServer _instance = null;
-
-    /**
-     * @return the default instance of a JmriServer
-     * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault(jmri.jmris.JmriServer.class)}
-     * instead.
-     */
-    @Deprecated
-    public synchronized static JmriServer instance() {
-        if (_instance == null) {
-            _instance = new JmriServer();
-        }
-        return _instance;
-    }
 
     // Create a new server using the default port
     public JmriServer() {
@@ -88,11 +74,11 @@ public class JmriServer {
     public void start() {
         /* Start the server thread */
         if (this.listenThread == null) {
-            this.listenThread = new Thread(new NewClientListener(connectSocket));
+            this.listenThread = jmri.util.ThreadingUtil.newThread(new NewClientListener(connectSocket));
             this.listenThread.start();
             this.advertise();
         }
-        if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+        if (this.shutDownTask != null) {
             InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
     }
@@ -119,7 +105,7 @@ public class JmriServer {
         });
         this.listenThread = null;
         this.service.stop();
-        if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+        if (this.shutDownTask != null) {
             InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
@@ -182,7 +168,7 @@ public class JmriServer {
         }
 
         public void start() {
-            clientThread = new Thread(this);
+            clientThread = jmri.util.ThreadingUtil.newThread(this);
             clientThread.start();
         }
 

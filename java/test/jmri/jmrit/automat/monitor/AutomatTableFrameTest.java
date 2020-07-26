@@ -1,8 +1,10 @@
 package jmri.jmrit.automat.monitor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,18 +12,17 @@ import org.junit.*;
  */
 public class AutomatTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new AutomatTableFrame(new AutomatTableDataModel());
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new AutomatTableFrame(new AutomatTableDataModel());
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

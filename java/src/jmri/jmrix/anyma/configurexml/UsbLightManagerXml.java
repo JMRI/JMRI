@@ -22,7 +22,7 @@ public class UsbLightManagerXml extends AbstractLightManagerConfigXML {
      */
     public UsbLightManagerXml() {
         super();
-        log.debug("*	AnymaDMX_LightManagerXml constructor called");
+        log.debug("*   AnymaDMX_LightManagerXml constructor called");
     }
 
     /**
@@ -30,7 +30,7 @@ public class UsbLightManagerXml extends AbstractLightManagerConfigXML {
      */
     @Override
     public void setStoreElementClass(@Nonnull Element lights) {
-        log.debug("*	AnymaDMX_LightManagerXml.setStoreElementClass() called");
+        log.debug("*   AnymaDMX_LightManagerXml.setStoreElementClass() called");
         lights.setAttribute("class", this.getClass().getName());
     }
 
@@ -38,16 +38,8 @@ public class UsbLightManagerXml extends AbstractLightManagerConfigXML {
      * {@inheritDoc}
      */
     @Override
-    public void load(@Nonnull Element element, @Nonnull Object o) {
-        log.error("Invalid AnymaDMX_LightManagerXml.load() method called");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean load(@Nonnull Element shared, @Nonnull Element perNode) {
-        log.debug("*	AnymaDMX_LightManagerXml.load() called");
+        log.debug("*   AnymaDMX_LightManagerXml.load() called");
         // load individual lights
         return loadLights(shared);
     }

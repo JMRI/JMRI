@@ -1,20 +1,22 @@
 package jmri.jmrix.can.adapters.loopback.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.can.adapters.loopback.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
  *
- * Description: tests for the ConnectionConfigXml class
+ * Test for the ConnectionConfigXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
@@ -22,7 +24,8 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
         cc.setManufacturer("MERG");
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;

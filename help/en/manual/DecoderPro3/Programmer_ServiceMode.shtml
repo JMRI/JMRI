@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Using DecoderPro</title><!-- Style -->
+  <title>Using DecoderPro</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,16 +15,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>DecoderPro&reg; Programming Modes</h1>
 
       <h2>Service Mode Programmer</h2>
@@ -145,7 +146,7 @@
         locomotive from the list. An alternative is to be lazy and
         click the <strong>IDENT</strong> button. The program will
         then query the locomotive to get it's address which is
-        linked to the roster entry. The Decoder Pro roster entry
+        linked to the roster entry. The DecoderPro roster entry
         includes the decoder type used when it programmed the
         locomotive. If it gets a valid address, but there is no
         roster entry with that address, then you will get an error
@@ -166,7 +167,7 @@
         number. (Letters are often used to separate the shape
         differences which have no bearing on the electronic
         functions of the decoder.) Just be aware that some
-        functions that Decoder Pro allows you to program may not be
+        functions that DecoderPro allows you to program may not be
         fully operable.</p>
 
         <p>As noted above, these methods will work only with
@@ -183,7 +184,7 @@
 
         <p>If you have a decoder that doesn't appear in the
         listing, you may want to check to be sure that you are
-        using the most up to date version of Decoder Pro, because
+        using the most up to date version of DecoderPro, because
         manufacturers are adding models almost faster than the team
         can enter the new decoder definitions into the files. You
         can choose a manufacturer's version which is as close as
@@ -196,7 +197,7 @@
         entry. It is preset by your Preferences entry, but you can
         select other programmers using the drop down arrow.</p>
 
-        <p>Once you have selected a decoder, or Decoder Pro has
+        <p>Once you have selected a decoder, or DecoderPro has
         done it for you, the <strong>Open Programmer</strong>
         button will become activated and you'll be able to move on
         with Service Mode Programming.</p>
@@ -209,7 +210,7 @@
 
       <div align="right">
         <p><a href="index.shtml">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

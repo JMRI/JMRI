@@ -30,6 +30,9 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
     }
 
     public static ComponentUI createUI(JComponent x) {
+        if (!(x instanceof JHelpContentViewer)){
+            throw new IllegalArgumentException("Not a JHelpContentViewer");
+        }
         return new ExternalLinkContentViewerUI((JHelpContentViewer) x);
     }
 
@@ -51,7 +54,7 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
     public static void activateURL(URL u) throws IOException, URISyntaxException {
         if (u.getProtocol().equalsIgnoreCase("mailto") || u.getProtocol().equalsIgnoreCase("http")
                 || u.getProtocol().equalsIgnoreCase("ftp")) {
-            URI uri = new URI(u.toString());
+            URI uri = u.toURI();
             log.debug("defer protocol {} to browser via {}", u.getProtocol(), uri);
             Desktop.getDesktop().browse(uri);
         } else if (u.getProtocol().equalsIgnoreCase("file") && (u.getFile().endsWith("jpg")
@@ -63,7 +66,7 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
             // ("file:"+System.getProperty("user.dir")+"/"+u.getFile()) 
             // but that duplicated the path information; JavaHelp seems to provide
             // full pathnames here.
-            URI uri = new URI(u.toString());
+            URI uri = u.toURI();
             log.debug("defer content of {} to browser with {}", u.getFile(), uri);
             Desktop.getDesktop().browse(uri);
         } else if (u.getProtocol().equalsIgnoreCase("file")) {
@@ -77,7 +80,7 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
             }
             File file = new File(pathName);
             if (!file.exists()) {
-                URI uri = new URI("http://jmri.org/" + u.getFile());
+                URI uri = new URI("https://jmri.org/" + u.getFile());
                 log.debug("fallback to browser with {}", uri);
                 Desktop.getDesktop().browse(uri);
             }

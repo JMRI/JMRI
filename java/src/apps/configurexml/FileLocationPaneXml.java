@@ -3,6 +3,7 @@ package apps.configurexml;
 import apps.FileLocationPane;
 import java.util.List;
 import jmri.ConfigureManager;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -59,11 +60,11 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
          FileUtil.setUserFilesPath(userLocation.getValue());*/
         String value = loadUserLocations(shared, "defaultUserLocation");
         if (value != null) {
-            FileUtil.setUserFilesPath(value);
+            FileUtil.setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), value);
         }
         value = loadUserLocations(shared, "defaultScriptLocation");
         if (value != null) {
-            FileUtil.setScriptsPath(value);
+            FileUtil.setScriptsPath(ProfileManager.getDefault().getActiveProfile(), value);
         }
         ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
@@ -83,17 +84,7 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @param o       ignored
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
-    }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(FileLocationPaneXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(FileLocationPaneXml.class);
 
 }

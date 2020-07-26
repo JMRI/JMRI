@@ -18,7 +18,6 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class RowComboBoxPanel
         extends    DefaultCellEditor
-        implements TableCellEditor, TableCellRenderer {
+        implements TableCellRenderer {
 
     /**
      * The surrounding panel for the combobox.
@@ -382,6 +381,6 @@ public abstract class RowComboBoxPanel
         return new JComboBox<>(list);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
+    private final static Logger log = LoggerFactory.getLogger(RowComboBoxPanel.class);
 
 }

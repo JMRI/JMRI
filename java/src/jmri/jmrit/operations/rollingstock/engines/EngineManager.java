@@ -4,19 +4,21 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages the engines.
@@ -30,18 +32,6 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
     public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength"; // NOI18N
 
     public EngineManager() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized EngineManager instance() {
-        return InstanceManager.getDefault(EngineManager.class);
     }
 
     /**
@@ -116,7 +106,9 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
             Consist newConsist = newConsist(newName);
             // keep the lead engine
             Engine leadEngine = oldConsist.getLead();
-            leadEngine.setConsist(newConsist);
+            if (leadEngine != null) {
+                leadEngine.setConsist(newConsist);
+            }
             for (Engine engine : oldConsist.getEngines()) {
                 engine.setConsist(newConsist);
             }
@@ -316,14 +308,6 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
 
         Element values;
         List<String> names = getConsistNameList();
-        if (Control.backwardCompatible) {
-            root.addContent(values = new Element(Xml.CONSISTS));
-            for (String name : names) {
-                String consistNames = name + "%%"; // NOI18N
-                values.addContent(consistNames);
-            }
-        }
-        // new format using elements
         Element consists = new Element(Xml.NEW_CONSISTS);
         for (String name : names) {
             Element consist = new Element(Xml.CONSIST);

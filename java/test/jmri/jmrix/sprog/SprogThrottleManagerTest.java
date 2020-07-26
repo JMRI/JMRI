@@ -1,10 +1,9 @@
 package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogThrottleManager.
@@ -20,8 +19,8 @@ public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleMana
        Assert.assertNotNull("exists",tm);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -34,7 +33,7 @@ public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleMana
         tm = new SprogThrottleManager(m);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         stcs.dispose();
         JUnitUtil.tearDown();

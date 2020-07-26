@@ -19,9 +19,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     public AbstractConnectionConfigXml() {
     }
 
-    /**
-     * get instance
-     */
     abstract protected void getInstance();
 
     abstract protected void register();
@@ -119,6 +116,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     
     /** 
      * Check for a deprecated system prefix and warn if found
+     * @param prefix The alphanumeric prefix to test for
      * @deprecated 4.15.3  part of #4670 migration to parsable prefixes
      */
     @Deprecated // part of #4670 migration to parsable prefixes
@@ -205,14 +203,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("method with two args invoked");
-    }
-
-    /**
      * Service routine to look through "parameter" child elements to find a
      * particular parameter value
      *
@@ -222,8 +212,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
      */
     protected String findParmValue(Element e, String name) {
         List<Element> l = e.getChildren("parameter");
-        for (int i = 0; i < l.size(); i++) {
-            Element n = l.get(i);
+        for (Element n : l) {
             if (n.getAttributeValue("name").equals(name)) {
                 return n.getTextTrim();
             }

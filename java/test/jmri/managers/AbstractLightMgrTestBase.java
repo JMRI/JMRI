@@ -4,8 +4,7 @@ import java.beans.PropertyChangeListener;
 import jmri.Light;
 import jmri.LightManager;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Abstract Base Class for LightManager tests in specific jmrix packages.
@@ -14,15 +13,15 @@ import org.junit.Test;
  * Instead, this forms the base for test classes, including providing some
  * common tests
  *
- * @author	Bob Jacobsen 2003, 2006, 2008
+ * @author Bob Jacobsen 2003, 2006, 2008
  * @author  Paul Bender Copyright (C) 2016
  */
 public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerTestBase<LightManager, Light> {
 
     // implementing classes must provide these abstract members:
     //
-    @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    @BeforeEach
+    abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
 
@@ -77,14 +76,8 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
 
     @Test
     public void testProvideFailure() {
-        boolean correct = false;
-        try {
-            l.provideLight("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            correct = true;
-        }
-        Assert.assertTrue("Exception thrown properly", correct);
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideLight(""));
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -110,7 +103,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
 
     @Test
     public void testUpperLower() {
-        Light t = l.provideLight("" + getNumToTest2());
+        Light t = l.provideLight(getSystemName(getNumToTest2()));
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }

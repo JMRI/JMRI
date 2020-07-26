@@ -6,10 +6,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.PowerManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -78,7 +77,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
 
     @Override
     protected void sendIdleReply() {
-        Assert.assertTrue(false);
+        Assert.fail("Should not have been called");
     }
     
     @Test
@@ -86,7 +85,6 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         // unused but needs to be there for CanListener
         jmri.jmrix.can.CanMessage m = new jmri.jmrix.can.CanMessage(new int[]{CbusConstants.CBUS_TON},0x12);
         pwr.message(m);
-        Assert.assertTrue(true);
         
     }
     
@@ -112,15 +110,21 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         r.setRtr(false);
         pwr.reply(r);
         Assert.assertEquals("on", PowerManager.ON, p.getPower());
+        Assert.assertEquals(0, controller.outbound.size());
         
     }
     
-    CanSystemConnectionMemo memo;
-    CbusPowerManager pwr;
-    TrafficControllerScaffold controller;
+    @Test
+    public void checkName() {
+        Assert.assertNotNull(pwr.getUserName());
+    }
     
-    // The minimal setup for log4J
-    @Before
+    private CanSystemConnectionMemo memo;
+    private CbusPowerManager pwr;
+    private TrafficControllerScaffold controller;
+    
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         controller = new TrafficControllerScaffold();
@@ -130,7 +134,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         try {
@@ -138,10 +142,13 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         } catch (jmri.JmriException ex) {}
         
         memo.dispose();
+        controller.terminateThreads();
         pwr = null;
         memo = null;
         controller = null;
+        
         JUnitUtil.tearDown();
+
         
     }
 

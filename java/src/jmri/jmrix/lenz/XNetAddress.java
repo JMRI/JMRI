@@ -4,6 +4,8 @@ import jmri.Manager.NameValidity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Utility Class supporting parsing and testing of addresses for Lenz XpressNet
  * <p>
@@ -35,18 +37,21 @@ public class XNetAddress {
      * Public static method to parse a Lenz XpressNet system name.
      * Note: Bits are numbered from 1.
      *
+     * @param systemName system name to parse.
+     * @param prefix system prefix.
      * @return the hardware address number, return -1 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
         // validate the system Name leader characters
         if (!systemName.startsWith(prefix)) {
             // here if an invalid XpressNet system name
-            log.error("invalid character in header field of XpressNet system name: {}", systemName);
+            log.error("invalid character in header field of XpressNet system name: {} wants prefix {}", 
+                systemName, prefix);
             return (-1);
         }
         // name must be in the Xtnnnnn or XSmm:pp format (X is user 
         // configurable)
-        int num = 0;
+        int num;
         try {
             String curAddress = systemName.substring(prefix.length() + 1);
             if( ( systemName.charAt(prefix.length())=='S' ||
@@ -75,13 +80,17 @@ public class XNetAddress {
      * Public static method to validate system name format.
      * Logging of handled cases no higher than WARN.
      *
+     * @param systemName system name.
+     * @param type bean type, S for Sensor, T for Turnout, L for Light.
+     * @param prefix system prefix.
      * @return VALID if system name has a valid format, else return INVALID
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
             // here if an illegal format 
-            log.error("invalid character in header field of system name: {}", systemName);
+            log.error("invalid character in header field of system name: {} wants prefix {} type {}", 
+                systemName, prefix, type);
             return NameValidity.INVALID;
         }
         if (getBitFromSystemName(systemName, prefix) > 0) {
@@ -94,6 +103,8 @@ public class XNetAddress {
     /**
      * Public static method to check the user name for a valid system name.
      *
+     * @param systemName system name to check.
+     * @param prefix system prefix.
      * @return "" (null string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName, String prefix) {
@@ -104,7 +115,7 @@ public class XNetAddress {
         }
         // check for a sensor
         if (systemName.charAt(prefix.length() + 1) == 'S') {
-            jmri.Sensor s = null;
+            jmri.Sensor s;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
                 return s.getUserName();
@@ -113,7 +124,7 @@ public class XNetAddress {
             }
         } // check for a turnout
         else if (systemName.charAt(prefix.length() + 1) == 'T') {
-            jmri.Turnout t = null;
+            jmri.Turnout t;
             t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
             if (t != null) {
                 return t.getUserName();
@@ -122,7 +133,7 @@ public class XNetAddress {
             }
         } // check for a light
         else if (systemName.charAt(prefix.length() + 1) == 'L') {
-            jmri.Light lgt = null;
+            jmri.Light lgt;
             lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(systemName);
             if (lgt != null) {
                 return lgt.getUserName();
@@ -135,6 +146,6 @@ public class XNetAddress {
         return ("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetAddress.class);
 
 }

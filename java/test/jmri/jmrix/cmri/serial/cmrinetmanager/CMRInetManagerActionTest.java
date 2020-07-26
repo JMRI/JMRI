@@ -1,18 +1,18 @@
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of CMRInetManagerAction
  * Copied from Diagnostic
- * @author	Chuck Catania Copyright (C) 2017
+ * @author Chuck Catania Copyright (C) 2017
  */
 public class CMRInetManagerActionTest {
 
@@ -30,11 +30,11 @@ public class CMRInetManagerActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

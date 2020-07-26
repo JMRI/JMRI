@@ -1,19 +1,18 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
- * JUnit tests for the DCCppSimulatorPortController class
- * <p>
+ * JUnit tests for the DCCppSimulatorPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
 public class DCCppSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
@@ -35,16 +34,14 @@ public class DCCppSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialP
                 return null;
             }
 
-            /**
-             * Get an array of valid baud rates; used to display valid options.
-             */
             @Override
             public String[] validBaudRates(){
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override
@@ -65,9 +62,10 @@ public class DCCppSimulatorPortControllerTest extends jmri.jmrix.AbstractSerialP
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
-       JUnitUtil.tearDown();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
 }

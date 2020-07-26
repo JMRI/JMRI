@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.*;
-
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -21,7 +19,6 @@ import org.slf4j.LoggerFactory;
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
 
     private final static String PROTOCOL = "tcp://";
-    private final static String CLID = "JMRI";
     private final static String DEFAULT_BASETOPIC = "/trains/";
     
     public String baseTopic = DEFAULT_BASETOPIC;
@@ -63,7 +60,15 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                 options.put(option2Name, new Option("MQTT channel :", new String[]{baseTopic, DEFAULT_BASETOPIC}));
             }
 
-            String clientID = CLID + "-" + this.getUserName();
+            //generate a unique client ID based on the network ID and the system prefix of the MQTT connection.
+            String clientID = jmri.util.node.NodeIdentity.networkIdentity() + getSystemPrefix();
+
+            //ensure that only valid characters are included in the client ID
+            clientID = clientID.replaceAll("[^A-Za-z0-9]", "");
+            //ensure the length of the client ID doesn't exceed the guaranteed acceptable length of 23
+            if (clientID.length() > 23) {
+                clientID = clientID.substring(clientID.length() - 23);
+            }
             mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), clientID);
             mqttClient.connect();
         } catch (MqttException ex) {
@@ -78,7 +83,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     public void subscribe(String topic, MqttEventListener mel) {
         if (mqttEventListeners == null || mqttClient == null) {
-            jmri.util.Log4JUtil.warnOnce(log, "Trying to subscribe before connect/configure is done");
+            jmri.util.LoggingUtil.warnOnce(log, "Trying to subscribe before connect/configure is done");
             return;
         }
         try {
@@ -93,6 +98,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             mels.add(mel);
             mqttEventListeners.put(fullTopic, mels);
             mqttClient.subscribe(fullTopic);
+            log.debug("Subscribed : \"{}\"", fullTopic);
         } catch (MqttException ex) {
             log.error("Can't subscribe : ", ex);
         }
@@ -100,11 +106,16 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     public void unsubscribe(String topic, MqttEventListener mel) {
         String fullTopic = baseTopic + topic;
+        if (mqttEventListeners == null || mqttClient == null) {
+            jmri.util.LoggingUtil.warnOnce(log, "Trying to unsubscribe before connect/configure is done");
+            return;
+        }
         mqttEventListeners.get(fullTopic).remove(mel);
         if (mqttEventListeners.get(fullTopic).isEmpty()) {
             try {
                 mqttClient.unsubscribe(fullTopic);
                 mqttEventListeners.remove(fullTopic);
+                log.debug("Unsubscribed : \"{}\"", fullTopic);
             } catch (MqttException ex) {
                 log.error("Can't unsubscribe : ", ex);
             }

@@ -1,16 +1,18 @@
 package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ControlPanelTest {
 
@@ -20,23 +22,23 @@ public class ControlPanelTest {
         WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
         LearnThrottleFrame f = new LearnThrottleFrame(wf);
         ControlPanel t = new ControlPanel(f);
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(wf);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ControlPanelTest.class);
-
 }

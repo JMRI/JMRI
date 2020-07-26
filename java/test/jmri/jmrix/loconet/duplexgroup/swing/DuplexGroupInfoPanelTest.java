@@ -1,18 +1,18 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of DuplexGroupInfoPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class DuplexGroupInfoPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         panel = new DuplexGroupInfoPanel();
@@ -21,6 +21,6 @@ public class DuplexGroupInfoPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

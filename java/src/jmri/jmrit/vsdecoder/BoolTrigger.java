@@ -17,12 +17,11 @@ package jmri.jmrit.vsdecoder;
  * @author   Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class BoolTrigger extends Trigger implements PropertyChangeListener {
+class BoolTrigger extends Trigger {
 
     boolean match_value;
 
@@ -78,11 +77,11 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
         Element me = new Element("trigger");
 
         log.debug("Bool Trigger getXml():");
-        log.debug("  trigger_name = " + this.getName());
-        log.debug("  event_name = " + this.event_name);
-        log.debug("  target_name = " + target.getName());
-        log.debug("  match = " + Boolean.valueOf(match_value).toString());
-        log.debug("  action = " + this.getTriggerType().toString());
+        log.debug("  trigger_name = {}", this.getName());
+        log.debug("  event_name = {}", this.event_name);
+        log.debug("  target_name = {}", target.getName());
+        log.debug("  match = {}", Boolean.valueOf(match_value).toString());
+        log.debug("  action = {}", this.getTriggerType().toString());
 
         me.setAttribute("name", this.getName());
         me.setAttribute("type", "BOOLEAN");

@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implements Z21Listener {
 
-    private Z21TrafficController tc = null;
-    private Z21SystemConnectionMemo _memo = null;
+    private Z21TrafficController tc;
+    private Z21SystemConnectionMemo _memo;
     private boolean enabled = false;  // disable by default; prevent polling when not being used.
 
     public Z21MultiMeter(Z21SystemConnectionMemo memo) {
@@ -85,6 +85,11 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
     @Override
     public boolean hasVoltage() {
         return true;
+    }
+
+    @Override
+    public CurrentUnits getCurrentUnits() {
+        return  CurrentUnits.CURRENT_UNITS_MILLIAMPS;
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21MultiMeter.class);

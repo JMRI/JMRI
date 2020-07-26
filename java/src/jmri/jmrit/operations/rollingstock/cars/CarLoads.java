@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Represents the loads that cars can have.
@@ -34,18 +38,6 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     public static final String LOAD_COMMENT_CHANGED_PROPERTY = "CarLoads_Load_Comment"; // NOI18N
 
     public CarLoads() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarLoads instance() {
-        return InstanceManager.getDefault(CarLoads.class);
     }
 
     /**
@@ -420,17 +412,20 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     @Override
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
+            maxName = "";
             maxNameLength = MIN_NAME_LENGTH;
             Enumeration<String> en = listCarLoads.keys();
             while (en.hasMoreElements()) {
                 String key = en.nextElement();
                 List<CarLoad> loads = listCarLoads.get(key);
                 for (CarLoad load : loads) {
-                    if (load.getName().length() > maxNameLength) {
-                        maxNameLength = load.getName().length();
+                    if (load.getName().split(TrainCommon.HYPHEN)[0].length() > maxNameLength) {
+                        maxName = load.getName().split(TrainCommon.HYPHEN)[0];
+                        maxNameLength = load.getName().split(TrainCommon.HYPHEN)[0].length();
                     }
                 }
             }
+            log.info("Max car load name ({}) length {}", maxName, maxNameLength);
         }
         return maxNameLength;
     }

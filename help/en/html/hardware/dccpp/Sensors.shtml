@@ -21,10 +21,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>DCC++ Sensors</h1>
       
       Any Arduino pin can be used as a DCC++ Sensor input.
@@ -118,7 +119,7 @@
       DCC++ Controller software.  As long as the IDs assigned in the Base Station match the Hardware Address
       assigned in JMRI's Sensor Table, all will be well.</p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

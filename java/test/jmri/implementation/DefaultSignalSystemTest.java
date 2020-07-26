@@ -3,15 +3,14 @@ package jmri.implementation;
 import jmri.NamedBean;
 import jmri.SignalSystem;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the DefaultSignalSystem interface implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class DefaultSignalSystemTest {
 
@@ -176,12 +175,12 @@ public class DefaultSignalSystemTest {
         Assert.assertEquals(NamedBean.INCONSISTENT, dss.getState());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

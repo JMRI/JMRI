@@ -135,7 +135,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             loadAspectRelationMap(signalSystemName, aspectMapName, map, root);
             log.debug("loading complete");
         } catch (java.io.IOException | org.jdom2.JDOMException e) {
-            log.error("error reading file " + file.getPath(), e);
+            log.error("error reading file {}", file.getPath(), e);
             return null;
         }
 
@@ -156,7 +156,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     static void loadSpecificMap(String signalSystemName, String aspectMapName, DefaultSignalAppearanceMap SMmap, Element root) {
-        log.debug("load specific signalSystem= \"{}\", aspectMap= \"{}\"" + signalSystemName, aspectMapName);
+        log.debug("load specific signalSystem= \"{}\", aspectMap= \"{}\"{}", aspectMapName, signalSystemName);
         loadSpecificAspect(signalSystemName, aspectMapName, HELD, SMmap, root);
         loadSpecificAspect(signalSystemName, aspectMapName, DANGER, SMmap, root);
         loadSpecificAspect(signalSystemName, aspectMapName, PERMISSIVE, SMmap, root);
@@ -185,14 +185,14 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
 
         String appearance = null;
         if (root.getChild("specificappearances") == null || root.getChild("specificappearances").getChild(child) == null) {
-            log.debug("appearance not configured " + child);
+            log.debug("appearance not configured {}", child);
             return;
         }
         try {
             appearance = root.getChild("specificappearances").getChild(child).getChild("aspect").getText();
             SMmap.specificMaps.put(aspectType, appearance);
         } catch (java.lang.NullPointerException e) {
-            log.debug("aspect for specific appearance not configured " + child);
+            log.debug("aspect for specific appearance not configured {}", child);
         }
 
         try {
@@ -231,7 +231,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
 
     static void loadAspectRelationMap(String signalSystemName, String aspectMapName, DefaultSignalAppearanceMap SMmap, Element root) {
         if (log.isDebugEnabled()) {
-            log.debug("load aspect relation map signalSystem= \"" + signalSystemName + "\", aspectMap= \"" + aspectMapName + "\"");
+            log.debug("load aspect relation map signalSystem= \"{}\", aspectMap= \"{}\"", signalSystemName, aspectMapName);
         }
 
         try {
@@ -251,7 +251,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             log.debug("appearance not configured");
             return;
         }
-
     }
 
     /**
@@ -347,8 +346,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
 
     public void addAspect(String aspect, int[] appearances) {
         if (log.isDebugEnabled()) {
-            log.debug("add aspect \"" + aspect + "\" for " + appearances.length + " heads "
-                    + appearances[0]);
+            log.debug("add aspect \"{}\" for {} heads {}", aspect, appearances.length, appearances[0]);
         }
         table.put(aspect, appearances);
     }
@@ -373,9 +371,10 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     /**
-     * Returns a list of potential aspects that we could set the signalmast to
-     * given the state of the advanced signal mast.
+     * {@inheritDoc}
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "null returned is documented to mean no valid result")
     @Override
     public String[] getValidAspectsForAdvancedAspect(String advancedAspect) {
         if (aspectRelationshipMap == null) {

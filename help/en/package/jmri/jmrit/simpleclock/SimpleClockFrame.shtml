@@ -22,10 +22,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Fast Clock Setup </h1>
 
       <h2>Introduction to JMRI Fast Clocks</h2>
@@ -239,10 +239,10 @@
       "../../../../html/doc/Technical/I8N.shtml">Internationalization</a>
       mechanism. More information on the DateFormat mechanism used
       for this is available <a href=
-      "http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html">
+      "https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html">
       here</a>.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

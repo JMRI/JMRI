@@ -3,7 +3,9 @@ package jmri.jmrix.can.cbus.swing.configtool;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.swing.configtool package.
@@ -22,15 +24,19 @@ public class ConfigToolActionTest {
         //f.initComponents(memo);
         ConfigToolPane pane = new ConfigToolPane();
         Assert.assertNotNull("exists", pane);
+        
+        memo.dispose();
+        tcs.terminateThreads();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
+
     }
 }

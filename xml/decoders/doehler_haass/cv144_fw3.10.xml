@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2019</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2019-07-28</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>CV144 addtional bits from fw version 3.10+</revremark>
+    </revision>
+  </revhistory>
+  <variable item="Advanced Group 1 Option 1" CV="144" mask="XXXXXXVX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Immediate starting after current interruption</label>
+    <label xml:lang="de">Sofortiges Anfahren nach Stromunterbrechung</label>
+    <label xml:lang="fr">Démarrage immédiat après interruption courant</label>
+  </variable>
+  <variable item="Radio Power Conversion" CV="144" mask="XXXXXVXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Lighting in analog operation</label>
+    <label xml:lang="de">Beleuchtung im Analogbetrieb</label>
+    <label xml:lang="fr">Lumières en mode Analogique</label>
+    <tooltip>Special bit for lighting in analog operation</tooltip>
+    <tooltip xml:lang="de">Spezielles Bit für Beleuchtung im Analogbetrieb</tooltip>
+    <tooltip xml:lang="fr">Bit Spécial Lumières en mode Analogique</tooltip>
+  </variable>
+  <variable item="Brake Section Output" CV="144" mask="XXXXVXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09">
+      <enumVal>
+        <enumChoice choice="Braking">
+            <choice>Braking</choice>
+            <choice xml:lang="fr">Freiner</choice>
+            <choice xml:lang="de">Bremsen</choice>
+        </enumChoice>
+        <enumChoice choice="No Brake Section">
+            <choice>No Brake Section detected</choice>
+            <choice xml:lang="fr">Pas Section Freinage Détectée</choice>
+            <choice xml:lang="de">Keine Bremsstrecke erkannt</choice>
+        </enumChoice>
+      </enumVal>
+    <label>Brake section output</label>
+    <label xml:lang="de">Bremsstreckenausgabe an "GPIO"</label>
+    <label xml:lang="fr">Sortie Section Freinage</label>
+  </variable>
+  <variable item="Brake with GPIO" CV="144" mask="XXXVXXXX" default="0" include="DH21A_2018_04,DH21A_2018_09,DH22A_2018_04,DH22A_2018_09,FH22A_2018_04,FH22A_2018_09">
+      <enumVal>
+        <enumChoice choice="Braking">
+            <choice>Braking</choice>
+            <choice xml:lang="fr">Freiner</choice>
+            <choice xml:lang="de">Bremsen</choice>
+        </enumChoice>
+        <enumChoice choice="Driving">
+            <choice>Driving</choice>
+            <choice xml:lang="fr">Rouler</choice>
+            <choice xml:lang="de">Fahren</choice>
+        </enumChoice>
+      </enumVal>
+    <label>Brake with GPIO</label>
+    <label xml:lang="de">Bremsen mit "GPIO"</label>
+    <label xml:lang="fr">Freinage avec "GPIO"</label>
+  </variable>
+</variables>

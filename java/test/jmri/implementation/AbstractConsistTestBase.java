@@ -1,29 +1,37 @@
 package jmri.implementation;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import jmri.Consist;
-import org.junit.After;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of Consist classes.
  *
- * @author	Paul Copyright (C) 2017
+ * @author Paul Copyright (C) 2017
  */
 abstract public class AbstractConsistTestBase {
 
     protected Consist c = null;
-    @Before
+    @BeforeEach
     abstract public void setUp();  // should set the consist under test to c.
-    @After
+    @AfterEach
     abstract public void tearDown(); // should clean up the consist c.
 
     @Test public void testCtor() {
         Assert.assertNotNull(c);
     }
 
-    @Test(expected=java.lang.NullPointerException.class)
+    @Test
     public void checkDisposeMethod(){
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
@@ -36,8 +44,8 @@ abstract public class AbstractConsistTestBase {
         Assert.assertTrue("Advanced Consist Contains",c.contains(B));
         c.dispose();
         // after dispose, this should fail
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
-        Assert.assertTrue("Advanced Consist Contains",c.contains(B));
+        Assert.assertThrows("Advanced Consist Throws", NullPointerException.class, () -> c.contains(A));
+        Assert.assertThrows("Advanced Consist Throws", NullPointerException.class, () -> c.contains(B));
     }
 
     @Test public void testGetConsistType(){
@@ -97,18 +105,78 @@ abstract public class AbstractConsistTestBase {
         Assert.assertFalse("Direction in Advanced Consist",c.getLocoDirection(B));
     }
 
-    @Test public void checkGetSetLocoRosterIDAdvanced(){
+    @Test public void checkGetSetLocoRosterIDAdvanced() throws IOException,FileNotFoundException {
+        jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
+        RosterEntry entry = Roster.getDefault().getEntryForId("ATSF123");
         c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
-        jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
+        jmri.DccLocoAddress A = entry.getDccLocoAddress();
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
         c.restore(A,true); // use restore here, as it does not send
                            // any data to the command station
         c.restore(B,false); // revese direction.
-        c.setRosterId(A,"foo");
-        Assert.assertEquals("Roster ID A","foo",c.getRosterId(A));
+        c.setRosterId(A,"ATSF123");
+        Assert.assertEquals("Roster ID A","ATSF123",c.getRosterId(A));
         Assert.assertNull("Roster ID B",c.getRosterId(B));
     }
 
-    // The minimal setup for log4J
+    @Test public void checkRemoveWithGetRosterIDAdvanced() throws IOException,FileNotFoundException {
+        jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
+        RosterEntry entry = Roster.getDefault().getEntryForId("ATSF123");
+        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
+        jmri.DccLocoAddress A = entry.getDccLocoAddress();
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        c.restore(B,false); // revese direction.
+        c.setRosterId(A,"ATSF123");
+        Assert.assertEquals("Roster ID A","ATSF123",c.getRosterId(A));
+        Assert.assertNull("Roster ID B",c.getRosterId(B));
+        c.remove(A);
+        Assert.assertFalse("Roster A is no longer in consist",c.contains(A));
+    }
+
+    @Test public void checkAddRemoveWithRosterUpdateAdvanced() throws IOException,FileNotFoundException {
+        // verify the roster update process is active.
+        jmri.InstanceManager.getDefault(jmri.jmrit.consisttool.ConsistPreferencesManager.class).setUpdateCV19(true);
+        jmri.util.RosterTestUtil.createTestRoster(new File(Roster.getDefault().getRosterLocation()),"rosterTest.xml");
+        RosterEntry entry = Roster.getDefault().getEntryForId("ATSF123");
+        c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
+        jmri.DccLocoAddress A = entry.getDccLocoAddress();
+        jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
+        c.restore(A,true); // use restore here, as it does not send
+                           // any data to the command station
+        c.restore(B,false); // revese direction.
+        c.setRosterId(A,"ATSF123");
+
+        // verify that roster ATSF123 has CV19 set to the consist address
+        CvTableModel  cvTable = new CvTableModel(null, null);  // will hold CV objects
+        VariableTableModel varTable = new VariableTableModel(null,new String[]{"Name","Value"},cvTable);
+        entry.readFile();  // read, but don’t yet process
+
+        // load from decoder file
+        jmri.util.RosterTestUtil.loadDecoderFromLoco(entry,varTable);
+
+        entry.loadCvModel(varTable, cvTable);
+        CvValue cv19Value = cvTable.getCvByNumber("19");
+        Assert.assertEquals("CV19 value after add",c.getConsistAddress().getNumber(),cv19Value.getValue());
+
+        Assert.assertEquals("Roster ID A","ATSF123",c.getRosterId(A));
+        Assert.assertNull("Roster ID B",c.getRosterId(B));
+        c.remove(A);
+        Assert.assertFalse("Roster A is no longer in consist",c.contains(A));
+
+        cvTable = new CvTableModel(null, null);  // will hold CV objects
+        varTable = new VariableTableModel(null,new String[]{"Name","Value"},cvTable);
+        entry.readFile();  // read, but don’t yet process
+
+        // load from decoder file
+        jmri.util.RosterTestUtil.loadDecoderFromLoco(entry,varTable);
+
+        entry.loadCvModel(varTable, cvTable);
+        cv19Value = cvTable.getCvByNumber("19");
+        Assert.assertEquals("CV19 value after remove",0,cv19Value.getValue());
+    }
+
+
 
 }

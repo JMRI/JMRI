@@ -2,10 +2,9 @@ package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectReply class
@@ -125,17 +124,16 @@ public class GridConnectReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("num elements", 0, r.getNumDataElements());
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = new GridConnectReply(":S123N12345678;");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 }

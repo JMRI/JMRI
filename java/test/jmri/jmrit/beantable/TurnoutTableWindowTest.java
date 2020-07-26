@@ -1,29 +1,34 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.TurnoutManager;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.SerialTurnoutManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Swing tests for the turnout table.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010, 2017
+ * @author Bob Jacobsen Copyright 2009, 2010, 2017
  */
 public class TurnoutTableWindowTest {
 
     @Test
     public void testShowAndClose() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TurnoutManager cmri = new SerialTurnoutManager(new CMRISystemConnectionMemo("C", "CMRI"));
+        InstanceManager.setTurnoutManager(cmri);
+        TurnoutManager internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class).getTurnoutManager();
 
         // ask for the window to open
         TurnoutTableAction a = new TurnoutTableAction();
@@ -69,12 +74,14 @@ public class TurnoutTableWindowTest {
         JTextField hwAddressField = (JTextField) jlo.getLabelFor();
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
+        // Find system combobox
+        JComboBoxOperator cbo = new JComboBoxOperator(afo); // finds first combo box.
         // set to "C/MRI"
-        a.connectionChoice = "C/MRI";
-        // set address to "a" (invalid for C/MRI)
+        cbo.selectItem("CMRI");
+        // set address to "a" (invalid for C/MRI, but valid for Internal)
         hwAddressField.setText("a");
         // test silent entry validation
-        boolean _valid = hwAddressField.isValid();
+        boolean _valid = hwAddressField.getInputVerifier().verify(hwAddressField);
         Assert.assertEquals("invalid entry", false, _valid);
 
         // set address to "1"
@@ -87,11 +94,9 @@ public class TurnoutTableWindowTest {
 
         Assert.assertEquals("name content", "1", hwAddressField.getText());
 
-        // Find system combobox
-        JComboBoxOperator cbo = new JComboBoxOperator(afo); // finds first combo box.
-        // set to "Internal"
-        cbo.setSelectedItem("Internal");
-        Assert.assertEquals("Selected system item", "Internal", cbo.getSelectedItem()); // this connection type is always available
+        cbo.selectItem("Internal");
+        jtfo.setText("1");
+        Assert.assertEquals("Selected system item", internal, cbo.getSelectedItem()); // this connection type is always available
 
         // Find the Add Create button
         jbo = new JButtonOperator(afo,Bundle.getMessage("ButtonCreate"));
@@ -152,8 +157,7 @@ public class TurnoutTableWindowTest {
 
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -162,8 +166,9 @@ public class TurnoutTableWindowTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

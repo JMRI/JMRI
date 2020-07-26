@@ -1,8 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
+
 import org.jdom2.Element;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the NotchTrigger class
@@ -16,7 +18,7 @@ public class NotchTriggerTest {
         // Maybe check the enums here?
     }
 
-    // Note: Trigger is abstract.  Using BoolTrigger as test vehicle.
+    // Note: Trigger is abstract.  Using NotchTrigger as test vehicle.
     @Test
     public void testCreateSimple() {
         NotchTrigger uut = new NotchTrigger("unitUnderTest");
@@ -114,15 +116,14 @@ public class NotchTriggerTest {
         Element e = new Element("Trigger");
         e.setAttribute("name", "test_trigger");
         e.setAttribute("type", "NOTCH");
-        e.addContent(new Element("event_name").addContent("test_event"));
-        e.addContent(new Element("target_name").addContent("test_target"));
+        e.addContent(new Element("event-name").addContent("test_event"));
+        e.addContent(new Element("target-name").addContent("test_target"));
         e.addContent(new Element("match").addContent("2"));
         e.addContent(new Element("action").addContent("PLAY"));
-        return (e);
+        return e;
     }
 
     @Test
-    @Ignore("Causes NPE")
     public void testSetXML() {
         NotchTrigger uut = new NotchTrigger("unitUnderTest", 3, 4);
         Element e = buildTestXML();
@@ -132,16 +133,16 @@ public class NotchTriggerTest {
         Assert.assertEquals("xml event name", "test_event", uut.getEventName());
         Assert.assertEquals("xml target name", "test_target", uut.getTargetName());
         Assert.assertEquals("xml action", Trigger.TargetAction.PLAY, uut.getTargetAction());
-
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
+
 }

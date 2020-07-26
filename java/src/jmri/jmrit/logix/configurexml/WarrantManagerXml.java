@@ -1,7 +1,8 @@
 package jmri.jmrit.logix.configurexml;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.logix.BlockOrder;
@@ -19,16 +20,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the abstract base and store functionality for
- * configuring the CatalogTreeManager.
+ * configuring the WarrantManager.
  * <p>
- * Typically, a subclass will just implement the load(Element catalogTree)
- * class, relying on implementation here to load the individual CatalogTree objects.
+ * Typically, a subclass will just implement the load(Element warrant)
+ * class, relying on implementation here to load the individual Warrant objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2009
- * 
  */
-public class WarrantManagerXml //extends XmlFile
-                    extends jmri.configurexml.AbstractXmlAdapter {
+public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public WarrantManagerXml() {
     }
@@ -42,62 +41,70 @@ public class WarrantManagerXml //extends XmlFile
     @Override
     public Element store(Object o) {
         Element warrants = new Element("warrants");
-        warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
-        WarrantManager manager = (WarrantManager) o;
-        for (Warrant warrant : manager.getNamedBeanSet()) {
-            String sname = warrant.getSystemName();
-            String uname = warrant.getUserName();
-            if (log.isDebugEnabled())
-                log.debug("Warrant: sysName= {}, userName= {}", sname, uname);
-            Element elem = new Element("warrant");
-            elem.setAttribute("systemName", sname);
-            if (uname==null) uname = "";
-            if (uname.length()>0) {
-                elem.setAttribute("userName", uname);
+        warrants.setAttribute("class", "jmri.jmrit.logix.configurexml.WarrantManagerXml");
+        WarrantManager wm = (WarrantManager) o;
+        if (wm != null) {
+            SortedSet<Warrant> warrantList = wm.getNamedBeanSet();
+            // don't return an element if there are no warrants to include
+            if (warrantList.isEmpty()) {
+                return null;
             }
-            if (warrant instanceof SCWarrant) {
-                elem.setAttribute("wtype", "SC");
-                elem.setAttribute("speedFactor", ""+((SCWarrant) warrant).getSpeedFactor());
-                elem.setAttribute("timeToPlatform", ""+((SCWarrant) warrant).getTimeToPlatform());
-                elem.setAttribute("forward", ((SCWarrant) warrant).getForward()?"true":"false");
-            } else {
-                elem.setAttribute("wtype", "normal");
-            }
-            String comment = warrant.getComment();
-            if (comment != null) {
-                Element c = new Element("comment");
-                c.addContent(comment);
-                elem.addContent(c);
-            }
-            
-            List <BlockOrder> orders = warrant.getBlockOrders();
-            for (int j=0; j<orders.size(); j++) {
-                elem.addContent(storeOrder(orders.get(j), "blockOrder"));
-            }
-            
-            BlockOrder viaOrder = warrant.getViaOrder();
-            if (viaOrder!=null) {
-                elem.addContent(storeOrder(viaOrder, "viaOrder"));
-            }
-            BlockOrder avoidOrder = warrant.getAvoidOrder();
-            if (avoidOrder!=null) {
-                elem.addContent(storeOrder(avoidOrder, "avoidOrder"));
-            }
+            for (Warrant warrant : warrantList) {
+                String sName = warrant.getSystemName();
+                String uName = warrant.getUserName();
+                log.debug("Warrant: sysName= {}, userName= {}", sName, uName);
+                Element elem = new Element("warrant");
+                elem.setAttribute("systemName", sName);
+                if (uName == null) {
+                    uName = "";
+                }
+                if (uName.length() > 0) {
+                    elem.setAttribute("userName", uName);
+                }
+                if (warrant instanceof SCWarrant) {
+                    elem.setAttribute("wtype", "SC");
+                    elem.setAttribute("speedFactor", "" + ((SCWarrant) warrant).getSpeedFactor());
+                    elem.setAttribute("timeToPlatform", "" + ((SCWarrant) warrant).getTimeToPlatform());
+                    elem.setAttribute("forward", ((SCWarrant) warrant).getForward() ? "true" : "false");
+                } else {
+                    elem.setAttribute("wtype", "normal");
+                }
+                String comment = warrant.getComment();
+                if (comment != null) {
+                    Element c = new Element("comment");
+                    c.addContent(comment);
+                    elem.addContent(c);
+                }
 
-            List <ThrottleSetting> throttleCmds = warrant.getThrottleCommands();
-            for (int j=0; j<throttleCmds.size(); j++) {
-                elem.addContent(storeCommand(throttleCmds.get(j), "throttleCommand"));
+                List<BlockOrder> orders = warrant.getBlockOrders();
+                for (BlockOrder bo : orders) {
+                    elem.addContent(storeOrder(bo, "blockOrder"));
+                }
+
+                BlockOrder viaOrder = warrant.getViaOrder();
+                if (viaOrder != null) {
+                    elem.addContent(storeOrder(viaOrder, "viaOrder"));
+                }
+                BlockOrder avoidOrder = warrant.getAvoidOrder();
+                if (avoidOrder != null) {
+                    elem.addContent(storeOrder(avoidOrder, "avoidOrder"));
+                }
+
+                List<ThrottleSetting> throttleCmds = warrant.getThrottleCommands();
+                for (ThrottleSetting ts : throttleCmds) {
+                    elem.addContent(storeCommand(ts, "throttleCommand"));
+                }
+
+                elem.addContent(storeTrain(warrant, "train"));
+
+                // and put this element out
+                warrants.addContent(elem);
             }
-
-            elem.addContent(storeTrain(warrant, "train"));
-
-            // and put this element out
-            warrants.addContent(elem);
         }
         return warrants;
     }
 
-    static Element storeTrain(Warrant warrant, String type) {
+    private static Element storeTrain(Warrant warrant, String type) {
         Element elem = new Element(type);
         SpeedUtil speedUtil = warrant.getSpeedUtil();
         String str = speedUtil.getRosterId();
@@ -120,7 +127,7 @@ public class WarrantManagerXml //extends XmlFile
         return elem;
     }
 
-    static Element storeOrder(BlockOrder order, String type) {
+    private static Element storeOrder(BlockOrder order, String type) {
         Element elem = new Element(type);
         OBlock block = order.getBlock();
         if (block!=null) {
@@ -136,42 +143,48 @@ public class WarrantManagerXml //extends XmlFile
             log.error("Null block in BlockOrder!");
         }
         String str = order.getPathName();
-        if (str==null) str = "";
+        if (str == null) {
+            str = "";
+        }
         elem.setAttribute("pathName", str);
 
         str = order.getEntryName();
-        if (str==null) str = "";
+        if (str == null) {
+            str = "";
+        }
         elem.setAttribute("entryName", str);
 
         str = order.getExitName();
-        if (str==null) str = "";
+        if (str == null) {
+            str = "";
+        }
         elem.setAttribute("exitName", str);
 
         return elem;
     }
 
-    static Element storeCommand(ThrottleSetting command, String type) {
+    private static Element storeCommand(ThrottleSetting command, String type) {
         Element elem = new Element(type);
 
         String time = String.valueOf(command.getTime());
         elem.setAttribute("time", time);
 
         String str = command.getCommand();
-        if (str==null) {
+        if (str == null) {
             str = "";
             log.error("ThrottleSetting command has no command type! {}", command);
         }
         elem.setAttribute("command", str);
 
         str = command.getValue();
-        if (str==null) {
+        if (str == null) {
             str = "";
             log.error("ThrottleSetting command has no value! {}", command);
         }
         elem.setAttribute("value", str);
 
         str = command.getBeanSystemName();
-        if (str==null) {
+        if (str == null) {
             str = "";
             log.error("ThrottleSetting command has no bean name! {}", command);
         }
@@ -196,9 +209,8 @@ public class WarrantManagerXml //extends XmlFile
         }
         
         List<Element> warrantList = shared.getChildren("warrant");
-        if (log.isDebugEnabled()) log.debug("Found {} Warrant objects", warrantList.size());
-        for (int i=0; i<warrantList.size(); i++) {
-            Element elem = warrantList.get(i);
+        log.debug("Found {} Warrant objects", warrantList.size());
+        for (Element elem : warrantList) {
             if (elem.getAttribute("systemName") == null) {
                 log.warn("unexpected null for systemName in elem {}", elem);
                 break;
@@ -228,31 +240,33 @@ public class WarrantManagerXml //extends XmlFile
                 try {
                     timeToPlatform = TTP.getLongValue();
                 } catch (DataConversionException e) {
-                    log.debug("ignoring DataConversionException (and reverting to default value): "+e.toString());
+                    log.debug("ignoring DataConversionException (and reverting to default value): {}", e.toString());
                 }
             }
 
             Warrant warrant = manager.createNewWarrant(sysName, userName, SCWa, timeToPlatform);
-            if (warrant==null) {
+            if (warrant == null) {
                 log.info("Warrant \"{}\" (userName={}) previously loaded. This version not loaded.", sysName, userName);
                 continue;
             }
-            if (SCWa) {
+            if (SCWa && warrant instanceof SCWarrant) {
                 if (elem.getAttribute("forward") != null) {
                     ((SCWarrant)warrant).setForward(elem.getAttribute("forward").getValue().equals("true"));
                 }
                 if (elem.getAttribute("speedFactor") != null) {
                     try {
                         ((SCWarrant)warrant).setSpeedFactor(elem.getAttribute("speedFactor").getFloatValue());
-                    } catch (DataConversionException e) {}
+                    } catch (DataConversionException e) {
+                        log.warn("error converting speed value");
+                    }
                 }
                 warrant.setNoRamp(SCWa);
                 warrant.setShareRoute(SCWa);
             }
             List<Element> orders = elem.getChildren("blockOrder");
-            for (int k=0; k<orders.size(); k++) {
-                BlockOrder bo = loadBlockOrder(orders.get(k));
-                if (bo==null) {
+            for (Element ord : orders) {
+                BlockOrder bo = loadBlockOrder(ord);
+                if (bo == null) {
                     log.error("Bad BlockOrder in warrant \"{}\".", warrant.getDisplayName());
                 } else {
                     warrant.addBlockOrder(bo);
@@ -277,7 +291,9 @@ public class WarrantManagerXml //extends XmlFile
                 if (elem.getAttribute("forward") != null) {
                     forward = elem.getAttribute("forward").getValue().equals("true");
                 }
-                ((SCWarrant)warrant).setForward(forward);
+                if (warrant instanceof SCWarrant) {
+                    ((SCWarrant)warrant).setForward(forward);
+                }
                 warrant.setNoRamp(SCWa);
                 warrant.setShareRoute(SCWa);
             }
@@ -291,33 +307,28 @@ public class WarrantManagerXml //extends XmlFile
         // references made to warrants in commands are fully specified. Due to ThrottleSetting
         // Ctor using provideWarrant to establish the referenced warrant.
         warrantList = shared.getChildren("warrant");
-        for (int i=0; i<warrantList.size(); i++) {
-            // boolean forward =true;  // variable not used, see GitHub JMRI/JMRI Issue #5661
-            Element elem = warrantList.get(i);
+        for (Element elem : warrantList) {
+            // boolean forward = true;  // variable not used, see GitHub JMRI/JMRI Issue #5661
             if (elem.getAttribute("systemName") == null) {
                 break;
             }
-            String sysName = null;
-            if (elem.getAttribute("systemName") != null)
-                sysName = elem.getAttribute("systemName").getValue();
-            Warrant warrant = manager.getBySystemName(sysName);
-            List<Element> throttleCmds = elem.getChildren("throttleCommand");
-            if (throttleCmds != null) {
-                for (int k=0; k<throttleCmds.size(); k++) {
-                    ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
-                    warrant.addThrottleCommand(ts);
-                }                
+            if (elem.getAttribute("systemName") != null) {
+                String sysName = elem.getAttribute("systemName").getValue();
+                if (sysName != null) {
+                    Warrant warrant = manager.getBySystemName(sysName);
+                    List<Element> throttleCmds = elem.getChildren("throttleCommand");
+                    if (throttleCmds != null) {
+                        throttleCmds.forEach((e) -> {
+                            warrant.addThrottleCommand(loadThrottleCommand(e));
+                        });
+                    }
+                }
             }
         }
         return true;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("load called. Invalid method.");
-    }
-
-    static void loadTrain(Element elem, Warrant warrant) {
+    private static void loadTrain(Element elem, Warrant warrant) {
         SpeedUtil speedUtil = warrant.getSpeedUtil();
         if (elem.getAttribute("trainId") != null) {
             speedUtil.setRosterId(elem.getAttribute("trainId").getValue());
@@ -347,7 +358,7 @@ public class WarrantManagerXml //extends XmlFile
         }
     }
 
-    static BlockOrder loadBlockOrder(Element elem) {
+    private static BlockOrder loadBlockOrder(Element elem) {
 
         OBlock block = null;
         List<Element> blocks = elem.getChildren("block");
@@ -383,11 +394,13 @@ public class WarrantManagerXml //extends XmlFile
         return new BlockOrder(block, pathName, entryName, exitName);
     }
     
-    static ThrottleSetting loadThrottleCommand(Element elem) {
+    private static ThrottleSetting loadThrottleCommand(Element elem) {
         long time = 0;
         try {
             time = elem.getAttribute("time").getLongValue();
-        } catch (org.jdom2.DataConversionException dce) {}
+        } catch (org.jdom2.DataConversionException dce) {
+            log.warn("error loading throttle command");
+        }
 
         Attribute attr = elem.getAttribute("command");
         String command = null;
@@ -424,5 +437,5 @@ public class WarrantManagerXml //extends XmlFile
     }
     
     private final static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class);
-}
 
+}

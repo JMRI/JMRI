@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
@@ -22,8 +24,9 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
-import jmri.util.FileUtilSupport;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -143,10 +146,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     public Roster() {
         super();
-        FileUtilSupport.getDefault().addPropertyChangeListener(FileUtil.PREFERENCES, (PropertyChangeEvent evt) -> {
-            if (Roster.this.getRosterLocation().equals(evt.getOldValue())) {
-                Roster.this.setRosterLocation((String) evt.getNewValue());
-                Roster.this.reloadRosterFile();
+        FileUtil.getDefault().addPropertyChangeListener(FileUtil.PREFERENCES, (PropertyChangeEvent evt) -> {
+            FileUtil.Property oldValue = (FileUtil.Property) evt.getOldValue();
+            FileUtil.Property newValue = (FileUtil.Property) evt.getNewValue();
+            Profile project = oldValue.getKey();
+            if (this.equals(getRoster(project)) && getRosterLocation().equals(oldValue.getValue())) {
+                setRosterLocation(newValue.getValue());
+                reloadRosterFile();
             }
         });
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((upm) -> {
@@ -179,16 +185,24 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Get the default Roster instance, creating it as required.
+     * Get the roster for the profile returned by
+     * {@link ProfileManager#getActiveProfile()}.
      *
-     * @return The default Roster object
+     * @return the roster for the active profile
      */
     public static synchronized Roster getDefault() {
-        return InstanceManager.getOptionalDefault(Roster.class).orElseGet(() -> {
-            log.debug("Creating Roster default instance.");
-            // Pass null to use defaults.
-            return InstanceManager.setDefault(Roster.class, new Roster(null));
-        });
+        return getRoster(ProfileManager.getDefault().getActiveProfile());
+    }
+
+    /**
+     * Get the roster for the specified profile.
+     *
+     * @param profile the Profile to get the roster for
+     * @return the roster for the profile
+     */
+    public static synchronized @Nonnull
+    Roster getRoster(@CheckForNull Profile profile) {
+        return InstanceManager.getDefault(RosterConfigManager.class).getRoster(profile);
     }
 
     /**
@@ -490,7 +504,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Get a List of {@link RosterEntry} objects in Roster matching some
      * information. The list will be empty if there are no matches.
-     *
+     * <p>
      * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      * }
      * with a null group.
@@ -613,17 +627,18 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Write the entire roster to a file.
-     *
+     * <p>
      * Creates a new file with the given name, and then calls writeFile (File)
      * to perform the actual work.
      *
      * @param name Filename for new file, including path info as needed.
+     * @throws java.io.FileNotFoundException if file does not exist
+     * @throws java.io.IOException           if unable to write file
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
-            log.debug("writeFile " + name);
+            log.debug("writeFile {}", name);
         }
-        // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
             file = new File(name);
@@ -637,7 +652,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * has to be done separately. See writeRosterFile() for a public function
      * that finds the default location, does a backup and then calls this.
      *
-     * @param file an op
+     * @param file the file to write to
+     * @throws java.io.IOException if unable to write file
      */
     void writeFile(File file) throws java.io.IOException {
         // create root element
@@ -699,7 +715,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                     }
                     entry.setDecoderComment(xmlDecoderComment.toString());
                 } else {
-                    log.debug("skip unsaved roster entry with default name " + entry.getId());
+                    log.debug("skip unsaved roster entry with default name {}", entry.getId());
                 }
             }); //All Comments and Decoder Comment line feeds have been changed to processor directives
         }
@@ -712,7 +728,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 if (!entry.getId().equals(newLocoString)) {
                     values.addContent(entry.store());
                 } else {
-                    log.debug("skip unsaved roster entry with default name " + entry.getId());
+                    log.debug("skip unsaved roster entry with default name {}", entry.getId());
                 }
             });
         }
@@ -805,6 +821,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Note that this does not clear any existing entries.
      *
      * @param name filename of roster file
+     * @throws org.jdom2.JDOMException if file is invalid XML
+     * @throws java.io.IOException     if unable to read file
      */
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // roster exists?
@@ -825,7 +843,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (root.getChild("roster") != null) { // NOI18N
             List<Element> l = root.getChild("roster").getChildren("locomotive"); // NOI18N
             if (log.isDebugEnabled()) {
-                log.debug("readFile sees " + l.size() + " children");
+                log.debug("readFile sees {} children", l.size());
             }
             l.stream().forEach((e) -> {
                 addEntry(new RosterEntry(e));
@@ -928,7 +946,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         for (String fileName : Roster.getAllFileNames()) {
             // Read file
             try {
-                Element loco = (new LocoFile()).rootFromName(LocoFile.getFileLocation() + fileName).getChild("locomotive");
+                Element loco = (new LocoFile()).rootFromName(getRosterFilesLocation() + fileName).getChild("locomotive");
                 if (loco != null) {
                     RosterEntry re = new RosterEntry(loco);
                     re.setFileName(fileName);
@@ -978,6 +996,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     public String getRosterIndexPath() {
         return this.getRosterLocation() + this.getRosterIndexFileName();
+    }
+
+    /*
+     * get the path to the file containing roster entry files.
+     */
+    public String getRosterFilesLocation() {
+        return getDefault().getRosterLocation() + "roster" + File.separator;
     }
 
     /**
@@ -1095,7 +1120,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Add a roster group, notifying all listeners of the change.
-     *
+     * <p>
      * This method fires the property change notification
      * {@value #ROSTER_GROUP_ADDED}.
      *
@@ -1112,7 +1137,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Add a roster group, notifying all listeners of the change.
-     *
+     * <p>
      * This method creates a {@link jmri.jmrit.roster.rostergroup.RosterGroup}.
      * Use {@link #addRosterGroup(jmri.jmrit.roster.rostergroup.RosterGroup) }
      * if you need to add a subclass of RosterGroup. This method fires the
@@ -1196,7 +1221,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Rename a roster group, while keeping every entry in the roster group.
-     *
+     * <p>
      * If a roster group with the target name already exists, this method
      * silently fails to rename the roster group. The GUI method
      * RenameRosterGroupAction.performAction() catches this error and informs
@@ -1216,7 +1241,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Get a list of the user defined roster group names.
-     *
+     * <p>
      * Strings are immutable, so deleting an item from the copy should not
      * affect the system-wide list of roster groups.
      *
@@ -1231,7 +1256,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Get the identifier for all entries in the roster.
      *
-     * @param locale  The desired locale
+     * @param locale The desired locale
      * @return "All Entries" in the specified locale
      */
     public static String allEntries(Locale locale) {
@@ -1240,7 +1265,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Get the default roster group.
-     *
+     * <p>
      * This method ensures adherence to the RosterGroupSelector protocol
      *
      * @return The entire roster
@@ -1269,20 +1294,22 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Get an array of all the RosterEntry-containing files in the target
-     * directory
+     * directory.
+     *
+     * @return the list of file names for entries in this roster
      */
     static String[] getAllFileNames() {
         // ensure preferences will be found for read
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(getDefault().getRosterFilesLocation());
 
         // create an array of file names from roster dir in preferences, count entries
         int i;
         int np = 0;
         String[] sp = null;
         if (log.isDebugEnabled()) {
-            log.debug("search directory " + LocoFile.getFileLocation());
+            log.debug("search directory {}", getDefault().getRosterFilesLocation());
         }
-        File fp = new File(LocoFile.getFileLocation());
+        File fp = new File(getDefault().getRosterFilesLocation());
         if (fp.exists()) {
             sp = fp.list();
             if (sp != null) {
@@ -1292,10 +1319,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                     }
                 }
             } else {
-                log.warn("expected directory, but {} was a file", LocoFile.getFileLocation());
+                log.warn("expected directory, but {} was a file", getDefault().getRosterFilesLocation());
             }
         } else {
-            log.warn(FileUtil.getUserFilesPath() + "roster directory was missing, though tried to create it");
+            log.warn("{}roster directory was missing, though tried to create it", FileUtil.getUserFilesPath());
         }
 
         // Copy the entries to the final array
@@ -1315,7 +1342,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (log.isDebugEnabled()) {
             log.debug("filename list:");
             for (i = 0; i < sbox.length; i++) {
-                log.debug("      " + sbox[i]);
+                log.debug("      {}", sbox[i]);
             }
         }
         return sbox;
@@ -1334,7 +1361,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Changes the key used to lookup a RosterGroup by name. This is a helper
      * method that does not fire a notification to any propertyChangeListeners.
-     *
+     * <p>
      * To rename a RosterGroup, use
      * {@link jmri.jmrit.roster.rostergroup.RosterGroup#setName(java.lang.String)}.
      *

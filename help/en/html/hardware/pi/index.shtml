@@ -18,17 +18,19 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Setup Support: Raspberry Pi via GPIO</h1>
 
-      <p>The <a href="http://www.raspberrypi.org">Raspberry Pi</a>
+      <p>The <a href="http://www.raspberrypi.org" target="_blank">Raspberry Pi</a>
       is a family of inexpensive credit card size single board
       computers that have many applications in embedded
       electronics. This page describes the use of the Raspberry
@@ -36,22 +38,26 @@
       natively, other connections are also possible using either a
       <a href="../USBtoSerial.shtml">USB connection</a> or via the
       Raspberry Pi's built in serial ports.</p><img src=
-      "Pi2ModB1GB_-comp.jpg" alt=
+      "images/Pi2ModB1GB_-comp.jpg" alt=
       "Raspberry Pi2 model B (courtesy www.raspberrypi.org" width=
       "528" height="300" align="right" title=
       "Pi2 model B (&copy; www.raspberrypi.org)"> <a name=
       "hardware" id="hardware"></a>
 
+      <p class="noted">See <a href="../../../../../install/Raspbian.shtml">here for information </a>
+      on how to install JMRI on a Raspberry Pi under the Raspian operating system.  This must be done before
+      using Raspberry Pi GPIO pins with JMRI objects.</p>
+
       <h2>Supported Hardware</h2>
 
       <p>Theoretically, any Raspberry Pi supported by <a href=
-      "http://pi4j.com/">Pi4J</a> is supported by JMRI.<br>
+      "http://pi4j.com/" target="_blank">Pi4J</a> is supported by JMRI.<br>
       JMRI support has been tested with the Models B, B+, 2B, and 3.
       There's also a <a href=
-      "http://jmri.org/install/Raspbian.shtml">JMRI install help
-      page for the Pi</a>.</p><a name="connecting" id=
-      "connecting"></a>
-
+      "../../../../../install/Raspbian.shtml">JMRI install help
+      page for the Pi</a>.</p>
+      
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
 
       <p>Underlying support for the Raspberry Pi's GPIO connections
@@ -78,7 +84,8 @@
       <p><b>This environment varialbe must be set prior to executing 
       JMRI</b></p>.  
      <p>For more information, please see the relavent portions of 
-     <a href="http://www.savagehomeautomation.com/projects/pi4j-now-supports-non-privileged-access-no-more-rootsudo.html">the pi4j web page</a>.</p>
+     <a href="http://www.savagehomeautomation.com/projects/pi4j-now-supports-non-privileged-access-no-more-rootsudo.html" target="_blank">
+     the pi4j web page</a>.</p>
 
       <h3>Pi4j 1.1 and Raspbian Stretch</h3>
 
@@ -150,13 +157,15 @@
         Manufacturer selection box.</li>
 
         <li>Select "Raspberry Pi GPIO" from the System Connection
-        selection box. <!--
+        selection box. 
+        
+<!--
   <li> The "Connection Prefix" is used to help JMRI communicate 
   separately with multiple "connections" to layout hardware. Each 
   "connection" must have a unique identifier, which is specified as
-  the "Connection Prefix". By default, the first XBee connection is 
-  given a prefix of "Pi", and additional XBee networks are given 
-  prefixes like "Pi", "Pi2", ... Most users should be able to use the 
+  the "Connection Prefix". By default, the first Pi connection is
+  given a prefix of "P", and additional Pi networks are given
+  prefixes like "P1", "P2", ... Most users should be able to use the
   default "Connection Prefix" value provided by the JMRI tools. 
 
   <li>When a JMRI tool is configured for more than one connection, 
@@ -171,20 +180,22 @@
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="documentation" id="documentation"></a>
-
+      </ol>
+      
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
 
-      <p><a href="http://jmri.org/install/Raspbian.shtml">JMRI
+      <p><a href="../../../../../install/Raspbian.shtml">JMRI
       installation on Pi/Raspbian</a>.</p>
 
       <h3>Third Party info</h3>
 
-      <p>The <a href="http://pi4j.com/">Pi4J website</a> provides
+      <p>The <a href="http://pi4j.com/" target="_blank">Pi4J website</a> provides
       model specific Java I/O information.</p>
-      <!--#include virtual="/Footer" -->
+      
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

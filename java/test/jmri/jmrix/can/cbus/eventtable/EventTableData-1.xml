@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CbusEventDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/MERG-DEV/JMRI/master/schema/MergCBUSEventTable.xsd">
+  <Event NodeNum="0" EventNum="1">
+    <Name>Short Event 1</Name>
+    <Comment>Short Event 1 Comment</Comment>
+  </Event>
+  <Event NodeNum="0" EventNum="2">
+    <Name>Short Event 2</Name>
+    <Comment>Short Event 2 Comment</Comment>
+    <LastHeard>2019-08-22 15:23:49</LastHeard>
+    <On>123456</On>
+    <Off>234567</Off>
+    <In>345678</In>
+    <Out>456789</Out>
+  </Event>
+  <Event NodeNum="65535" EventNum="65535">
+    <Name>Long Event Node 65535 Event 65535</Name>
+    <Off>20</Off>
+    <In>30</In>
+    <Out>40</Out>
+  </Event>
+</CbusEventDetails>

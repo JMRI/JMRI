@@ -1,9 +1,12 @@
 package jmri.jmrix.loconet.sdfeditor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -13,8 +16,8 @@ public class EditorFrameTest extends jmri.util.JmriJFrameTestBase {
            
     private SdfBuffer b;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -28,7 +31,8 @@ public class EditorFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         b = null;
         super.tearDown();

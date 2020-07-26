@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
@@ -28,40 +28,12 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     public Mx1Throttle(Mx1SystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
         this.tc = memo.getMx1TrafficController();
-        super.speedStepMode = SpeedStepMode128;
+        super.speedStepMode = jmri.SpeedStepMode.NMRA_DCC_128;
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
         this.speedSetting = 0;
-        this.f0 = false;
-        this.f1 = false;
-        this.f2 = false;
-        this.f3 = false;
-        this.f4 = false;
-        this.f5 = false;
-        this.f6 = false;
-        this.f7 = false;
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
-        this.f13 = false;
-        this.f14 = false;
-        this.f15 = false;
-        this.f16 = false;
-        this.f17 = false;
-        this.f18 = false;
-        this.f19 = false;
-        this.f20 = false;
-        this.f21 = false;
-        this.f22 = false;
-        this.f23 = false;
-        this.f24 = false;
-        this.f25 = false;
-        this.f26 = false;
-        this.f27 = false;
-        this.f28 = false;
+        // Functions default to false
         this.address = address;
         this.isForward = true;
         if (address.isLongAddress()) {
@@ -109,7 +81,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         // Always need speed command before function group command to reset consist pointer
         /*int data = 0x00 |
          (f8 ? 0x08 : 0) |
-         (f7 ? 0x04 : 0)	|
+         (f7 ? 0x04 : 0) |
          (f6 ? 0x02 : 0) |
          (f5 ? 0x01 : 0);
         
@@ -133,7 +105,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
     /**
      * Send the message to set the state of functions F13 to F20 in function
-     * Group 4 {@literal &} 5
+     * Group 4 and 5
      */
     @Override
     protected void sendFunctionGroup4() {
@@ -183,7 +155,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
@@ -193,9 +165,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         sendSpeedCmd();
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting); //IN18N
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
     }
 
@@ -203,8 +173,8 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         Mx1Message m;
         int value = 0;
         int cData1 = (isForward ? 0x20 : 0x00);
-        cData1 = cData1 + (f0 ? 0x10 : 0x00);
-        if (super.speedStepMode == SpeedStepMode128) {
+        cData1 = cData1 + (getFunction(0) ? 0x10 : 0x00);
+        if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_128) {
             //m = Mx1Message.getSendSpeed128(addressLo, addressHi, value);
             value = (int) ((127 - 1) * speedSetting);     // -1 for rescale to avoid estop
             if (value > 0) {
@@ -218,7 +188,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
             }
             value = (value & 0x7F);
             cData1 = cData1 + 0xc;
-        } else if (super.speedStepMode == SpeedStepMode28) {
+        } else if (super.speedStepMode == jmri.SpeedStepMode.NMRA_DCC_28) {
             value = (int) ((28) * speedSetting); // -1 for rescale to avoid estop
             if (value > 0) {
                 value = value + 3; // skip estop
@@ -230,7 +200,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
                 value = 2; // emergency stop
             }
             int speedC = (value & 0x1F) >> 1;
-            int c = (value & 0x01) << 4;	// intermediate speed step
+            int c = (value & 0x01) << 4; // intermediate speed step
 
             speedC = speedC + c;
             value = (isForward ? 0x60 : 0x40) | speedC;
@@ -244,24 +214,24 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     int getFunction1to8() {
 
         int data = 0x00
-                | (f1 ? 0x01 : 0)
-                | (f2 ? 0x02 : 0)
-                | (f3 ? 0x04 : 0)
-                | (f4 ? 0x08 : 0)
-                | (f5 ? 0x10 : 0)
-                | (f6 ? 0x20 : 0)
-                | (f7 ? 0x40 : 0)
-                | (f8 ? 0x80 : 0);
+                | (getFunction(1) ? 0x01 : 0)
+                | (getFunction(2) ? 0x02 : 0)
+                | (getFunction(3) ? 0x04 : 0)
+                | (getFunction(4) ? 0x08 : 0)
+                | (getFunction(5) ? 0x10 : 0)
+                | (getFunction(6) ? 0x20 : 0)
+                | (getFunction(7) ? 0x40 : 0)
+                | (getFunction(8) ? 0x80 : 0);
 
         return data;
     }
 
     int getFunction9to12() {
         int data = 0x00
-                | (f9 ? 0x01 : 0)
-                | (f10 ? 0x02 : 0)
-                | (f11 ? 0x04 : 0)
-                | (f12 ? 0x08 : 0);
+                | (getFunction(9) ? 0x01 : 0)
+                | (getFunction(10) ? 0x02 : 0)
+                | (getFunction(11) ? 0x04 : 0)
+                | (getFunction(12) ? 0x08 : 0);
         return data;
     }
 
@@ -271,9 +241,7 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         log.debug("setIsForward= {}", forward);
-        if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward); //IN18N
-        }
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override

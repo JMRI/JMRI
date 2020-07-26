@@ -1,15 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * PositionableEllipseXmlTest.java
  *
- * Description: tests for the PositionableEllipseXml class
+ * Test for the PositionableEllipseXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class PositionableEllipseXmlTest {
       Assert.assertNotNull("PositionableEllipseXml constructor",new PositionableEllipseXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

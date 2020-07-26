@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * The PRICOM format documentation is Copyright 2003, 2005, PRICOM Corp. They
  * have kindly given permission for this use.
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class PdiFile {
 
@@ -67,7 +67,7 @@ public class PdiFile {
         low = (buffIn.read() & 0xFF);
         address = high * 256 + low;
         if (log.isDebugEnabled()) {
-            log.debug("address " + high + " " + low);
+            log.debug("address {} {}", high, low);
         }
 
         // get last address to write
@@ -75,20 +75,19 @@ public class PdiFile {
         low = (buffIn.read() & 0xFF);
         lastAddress = high * 256 + low;
         if (log.isDebugEnabled()) {
-            log.debug("length " + high + " " + low);
+            log.debug("length {} {}", high, low);
         }
 
         fileLength = (int) file.length() - 6 - commentLength;
 
         if (log.isDebugEnabled()) {
-            log.debug("lengths: file " + (int) file.length()
-                    + ", comment " + commentLength
-                    + ", data " + lastAddress);
+            log.debug("lengths: file {}, comment {}, data {}", (int) file.length(), commentLength, lastAddress);
         }
     }
 
     /**
-     * Return the comment embedded at the front of the file
+     * Return the comment embedded at the front of the file.
+     * @return file comment.
      */
     public String getComment() {
         return comment;
@@ -105,6 +104,8 @@ public class PdiFile {
      * @return byte buffer, starting with address info and containing data, but
      *         not CRC
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "API defined by Pricom docs")
     public byte[] getNext(int n) {
         byte[] buffer = new byte[n + 3 + 2]; // 3 at front, 2 at back for CRC
         int rd;
@@ -133,7 +134,7 @@ public class PdiFile {
                 buffer[3 + i] = (byte) (rd & 0xFF);             // tuck the byte
             }
         } catch (IOException e) {
-            log.error("IO exception reading file: " + e);
+            log.error("IO exception reading file: {}", e);
         }
         return buffer;
     }

@@ -2,13 +2,12 @@ package jmri.jmrix.direct;
 
 import jmri.NmraPacket;
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the MakePacketTest class
  *
- * @author	Bob Jacobsen Copyright 2004
+ * @author Bob Jacobsen Copyright 2004
  */
 public class MakePacketTest {
 
@@ -89,7 +88,7 @@ public class MakePacketTest {
      * will not routinely select it to be run.
      */
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testAll3BytePacket() {
         int[] result = new int[100];
         byte i, j;
@@ -122,7 +121,7 @@ public class MakePacketTest {
      * will not routinely select it to be run.
      */
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testAllSpeed128Packets() {
         int[] result = new int[100];
         int addressRange, speedRange;
@@ -174,7 +173,7 @@ public class MakePacketTest {
      * will not routinely select it to be run.
      */
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testAllOpsCvWrite() {
         int[] result = new int[100];
         int addressRange, cvNum, data;

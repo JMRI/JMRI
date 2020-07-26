@@ -1,6 +1,5 @@
 package jmri.jmrix.mqtt.configurexml;
 
-import jmri.jmrix.dcc.DccTurnoutManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,16 +24,11 @@ public class MqttTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) {
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MqttTurnoutManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(MqttTurnoutManagerXml.class);
 }

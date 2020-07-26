@@ -1,19 +1,19 @@
 package jmri.jmrix.srcp;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SRCPSystemConnectionMemoTest.java
+ * <p>
+ * Test for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
- *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
-public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class SRCPSystemConnectionMemoTest extends SystemConnectionMemoTestBase<SRCPSystemConnectionMemo> {
 
     @Test
     public void testTCCtor() {
@@ -25,17 +25,18 @@ public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         };
         SRCPSystemConnectionMemo m = new SRCPSystemConnectionMemo(et);
         Assert.assertNotNull(m);
+        m.getTrafficController().terminateThreads();
+        m.dispose();
     }
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         SRCPTrafficController et = new SRCPTrafficController() {
@@ -43,19 +44,25 @@ public class SRCPSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
             public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
                 // we aren't actually sending anything to a layout.
             }
+
             @Override
-            public void transmitLoop(){
+            public void transmitLoop() {
             }
+
             @Override
-            public void receiveLoop(){
+            public void receiveLoop() {
             }
         };
         scm = new SRCPSystemConnectionMemo("D", "SRCP", et);
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
+        SRCPTrafficController trafficController = scm.getTrafficController();
+        scm.dispose();
+        trafficController.terminateThreads();
+        scm = null;
         JUnitUtil.tearDown();
     }
 }

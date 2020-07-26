@@ -31,6 +31,9 @@ import javax.swing
 
 # decode them and make an announcement
 
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
+
 class PM4LnListener (jmri.jmrix.loconet.LocoNetListener) :
 
     def init(self) :
@@ -106,8 +109,6 @@ jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get
 #packet.setElement(3, 0x3F)
 #F in lower bits means all AR
 #packet.setElement(4, 0x10+(on << zone))
-#set the intended LocoNet connection by its index; when you have just 1 connection index = 0
-#connectionIndex = 0
 #set the control bit for just the channel
 #jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
 
@@ -129,7 +130,7 @@ jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get
 # If you take the default install options, then the command
 # line I inserted in the script will work for a Windows environment.
 # Step two is to set up PanelPro to run the Script everytime you start your Panel.
-# On PanelPro or Decoder Pro Screen  Select Edit - Preferences
+# On PanelPro or DecoderPro Screen  Select Edit - Preferences
 # Once the screen opens click the Show Advanced Preferences box
 # Scroll down to the run scripts at startup section - Click Add Script - scroll to where your
 # scripts are stored - On windows normally c:\Program Files\JMRI\Jython\your script name here.

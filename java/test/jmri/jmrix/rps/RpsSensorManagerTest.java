@@ -2,15 +2,16 @@ package jmri.jmrix.rps;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the RPS SensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  * @author Paul Bender Copyright (C) 2016
  */
 public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
@@ -26,6 +27,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
@@ -53,6 +55,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     }
 
     @Test
+    @Override
     public void testMoveUserName() {
         Sensor t1 = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
         Sensor t2 = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,2)");
@@ -65,20 +68,37 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
         Assert.assertTrue(null == t1.getUserName());
     }
 
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l,
+                "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)",
+                "RS(0,0,0);(1,0,0);(1,1,0);(0,1,2)");
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
+
     @Test
     public void testGetSystemPrefix() {
         Assert.assertEquals("R", l.getSystemPrefix());
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
         l = new RpsSensorManager(new RpsSystemConnectionMemo());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         JUnitUtil.tearDown();

@@ -1,6 +1,9 @@
 package jmri.jmrix.lenz;
 
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,28 +20,22 @@ import org.slf4j.LoggerFactory;
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
     // ctor has to register for XNet events
-    public XNetSensorManager(XNetTrafficController controller, String prefix) {
-        tc = controller;
+    public XNetSensorManager(XNetSystemConnectionMemo memo) {
+        super(memo);
+        tc = memo.getXNetTrafficController();
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
-        this.prefix = prefix;
     }
 
-    protected XNetTrafficController tc = null;
-    protected String prefix = null;
+    protected XNetTrafficController tc;
 
     /**
-     * Return the system letter for XpressNet.
+     * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public XNetSystemConnectionMemo getMemo() {
+        return (XNetSystemConnectionMemo) memo;
     }
-
-    @Deprecated
-    static public XNetSensorManager instance() {
-        return mInstance;
-    }
-    static private XNetSensorManager mInstance = null;
 
     // to free resources when no longer used
     @Override
@@ -50,23 +47,27 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     // XpressNet specific methods
 
     /**
-     * Create a new Sensor based on the system name.
+     * {@inheritDoc}
+     * <p>
      * Assumes calling method has checked that a Sensor with this
      * system name does not already exist.
      *
-     * @return null if the system name is not in a valid format
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
-        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                    systemName +
+                    " to XNet sensor address"); // NOI18N
         }
         // normalize system name
-        String sName = prefix + typeLetter() + bitNum;
+        String sName = getSystemNamePrefix() + bitNum;
         // create the new Sensor object
-        return new XNetSensor(sName, userName, tc, prefix);
+        return new XNetSensor(sName, userName, tc, getSystemPrefix());
     }
 
     // listen for sensors, creating them as needed
@@ -86,7 +87,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
                     // Each Feedback encoder includes 8 addresses, so register 
                     // a sensor for each address.
                     for (int j = 0; j < 8; j++) {
-                        String s = prefix + typeLetter() + (firstaddress + j);
+                        String s = getSystemNamePrefix() + (firstaddress + j);
                         if (null == getBySystemName(s)) {
                             // The sensor doesn't exist.  We need to create a 
                             // new sensor, and forward this message to it.
@@ -120,30 +121,75 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 
     /**
-     * Validate Sensor system name format.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @return VALID if system name has a valid format, else return INVALID
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        if (name.contains(":")) {
+            validateSystemNamePrefix(name, locale);
+            String[] parts = name.substring(getSystemNamePrefix().length()).split(":");
+            if (parts.length != 2) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidAddress", name),
+                        Bundle.getMessage(locale, "SystemNameInvalidAddress", name));
+            }
+            try {
+                int address = Integer.parseInt(parts[0]);
+                if (address < 1 || address > 127) {
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidModule", name, parts[0]),
+                            Bundle.getMessage(locale, "SystemNameInvalidModule", name, parts[0]));
+                }
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidModule", name, parts[0]),
+                        Bundle.getMessage(locale, "SystemNameInvalidModule", name, parts[0]));
+            }
+            try {
+                int bit = Integer.parseInt(parts[1]);
+                if (bit < 1 || bit > 8) {
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, parts[1]),
+                            Bundle.getMessage(locale, "SystemNameInvalidBit", name, parts[1]));
+                }
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidBit", name, parts[1]),
+                        Bundle.getMessage(locale, "SystemNameInvalidBit", name, parts[1]));
+            }
+            return name;
+        } else {
+            return validateIntegerSystemNameFormat(name,
+                    XNetAddress.MINSENSORADDRESS,
+                    XNetAddress.MAXSENSORADDRESS,
+                    locale);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    synchronized public String createSystemName(String curAddress, String prefix) throws JmriException {
-        int encoderAddress = 0;
-        int input = 0;
+    @Nonnull
+    synchronized public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        int encoderAddress;
+        int input;
 
         if (curAddress.contains(":")) {
             // Address format passed is in the form of encoderAddress:input or T:turnout address
@@ -168,15 +214,15 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         return prefix + typeLetter() + iName;
     }
 
-    int iName; // must synchronize to avoid race conditions.
+    private int iName; // must synchronize to avoid race conditions.
 
     /**
      * Does not enforce any rules on the encoder or input values.
      */
     @Override
-    synchronized public String getNextValidAddress(String curAddress, String prefix) {
+    synchronized public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -212,6 +258,6 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetSensorManager.class);
 
 }

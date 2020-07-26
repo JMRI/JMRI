@@ -3,7 +3,7 @@ package jmri.jmrix.ztc;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.Bundle {
 
-    @Nullable
+    @CheckForNull
     private static final String name = "jmri.jmrix.ztc.ZtcBundle"; // NOI18N
 
     //
@@ -94,7 +94,7 @@ public class Bundle extends jmri.jmrix.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

@@ -1,22 +1,21 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * SRCPThrottleManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPThrottleManager class
+ * Test for the jmri.jmrix.srcp.SRCPThrottleManager class
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class SRCPThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
@@ -28,8 +27,9 @@ public class SRCPThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         tm = new SRCPThrottleManager(sm);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

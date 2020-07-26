@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,6 +11,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 /**
+ * JUnit tests for the LnPacketizerTest class.
+ *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2018
  */
@@ -28,7 +32,7 @@ public class LnPacketizerTest {
     }
 
     @Test
-    @Ignore("may be causing hang on travis and appveyor")
+    @Disabled("may be causing hang on travis and appveyor")
     public void testStartThreads() {
        lnp.connectPort(new LnPortController(memo){
             @Override
@@ -47,16 +51,14 @@ public class LnPacketizerTest {
                 return new DataOutputStream(new ByteArrayOutputStream());
             }
 
-            /**
-             * Get an array of valid baud rates; used to display valid options.
-             */
             @Override
             public String[] validBaudRates(){
                String[] retval = {"9600"};
                return retval;
             }
+
             /**
-             * Open a specified port. The appname argument is to be provided to the
+             * Open a specified port. The appName argument is to be provided to the
              * underlying OS during startup so that it can show on status displays, etc
              */
             @Override
@@ -69,14 +71,14 @@ public class LnPacketizerTest {
        memo.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();
         lnp = new LnPacketizer(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         lnp = null;
         memo = null;

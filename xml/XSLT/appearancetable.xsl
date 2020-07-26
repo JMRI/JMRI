@@ -25,7 +25,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2019')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2020')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -51,13 +51,13 @@
 
 <html>
 	<head>
-		<title>JMRI &quot;<xsl:value-of select="document('http:aspects.xml', .)/aspecttable/name"/>
+		<title>JMRI &quot;<xsl:value-of select="document('aspects.xml', .)/aspecttable/name"/>
 		                  <xsl:text>: </xsl:text>
 		                  <xsl:value-of select="appearancetable/name"/>&quot; Appearance Table</title>
 	</head>
 	
 	<body>
-		<h2>JMRI &quot;<xsl:value-of select="document('http:aspects.xml', .)/aspecttable/name"/> 
+		<h2>JMRI &quot;<xsl:value-of select="document('aspects.xml', .)/aspecttable/name"/> 
 		               <xsl:text>: </xsl:text>
 		               <xsl:value-of select="appearancetable/name"/>&quot; Appearance Table</h2>
 
@@ -83,7 +83,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <a href="aspects.xml">
         <!-- The second argument provides the context (parent file) for the document() path; -->
         <!-- without it, the reference is relative to the stylesheet location -->
-        <xsl:value-of select="document('http:aspects.xml', .)/aspecttable/name"/>
+        <xsl:value-of select="document('aspects.xml', .)/aspecttable/name"/>
     </a>
     <p/>
     Name: <xsl:value-of select="name"/><p/>
@@ -116,7 +116,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- Compare to each aspect name in aspects.xml for matching rule -->
     <!-- The second argument provides the context (parent file) for the document() path; -->
     <!-- without it, the reference is relative to the stylesheet location -->
-    <xsl:for-each select="document('http:aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
+    <xsl:for-each select="document('aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
         <!-- looking at all aspects to find the one matching matchaspect -->
             <!-- now current node is match in aspects.xml -->
                         
@@ -139,7 +139,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- end heading -->
     
     <!-- error if no match -->
-    <xsl:if test="not(document('http:aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect])">
+    <xsl:if test="not(document('aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect])">
         <em>Error: This appearance does not appear in the <a href="aspects.xml">aspect table</a>.
         Check spelling and upper/lower case.</em>
     </xsl:if>
@@ -147,7 +147,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- then compare to each aspect name in aspects.xml for match -->
     <!-- The second argument provides the context (parent file) for the document() path; -->
     <!-- without it, the reference is relative to the stylesheet location -->
-    <xsl:for-each select="document('http:aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
+    <xsl:for-each select="document('aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
             <!-- now current node is match in aspects.xml -->
 
             <!-- show title element if it exists -->

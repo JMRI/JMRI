@@ -1,12 +1,14 @@
 package jmri.jmrix.xpa;
 
 import jmri.Turnout;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.xpa.XpaTurnout class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase  {
 
@@ -37,9 +39,8 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         Assert.assertNotNull(t);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         memo = new XpaSystemConnectionMemo();
@@ -48,7 +49,7 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         t = new XpaTurnout(3,memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
         memo = null;

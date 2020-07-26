@@ -1,18 +1,18 @@
 package jmri.jmrix.loconet.sdfeditor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class EditorPaneTest {
 
@@ -26,14 +26,13 @@ public class EditorPaneTest {
         f.dispose();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

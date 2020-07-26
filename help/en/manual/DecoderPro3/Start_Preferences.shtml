@@ -21,12 +21,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Getting Started with DecoderPro&reg;</h1>
 
       <h2>How to set up Preferences</h2>
@@ -432,7 +431,7 @@
           <p><img src="images/Preferences_Console.png" alt=
           "console" height="444" width="673"></p>
 
-          <p>Display settings for the JMRI system console.</p>
+          <p>Display settings for the JMRI System Console.</p>
 
           <p><strong><a href="#Top">Top</a></strong></p>
 
@@ -532,7 +531,7 @@
         </blockquote>
       </div>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

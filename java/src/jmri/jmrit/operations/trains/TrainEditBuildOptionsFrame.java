@@ -7,19 +7,7 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,6 +196,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         addItemLeft(pOption, buildConsistCheckBox, 1, 3);
         pOption.setMaximumSize(new Dimension(2000, 250));
 
+
+        buildNormalCheckBox.setEnabled(Setup.isBuildAggressive());
         returnStagingCheckBox.setEnabled(false); // only enable if train departs and returns to same staging loc
 
         // row 7
@@ -412,7 +402,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         InstanceManager.getDefault(EngineModels.class).addPropertyChangeListener(this);
 
         // get notified if return to staging option changes
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
 
         initMinimumSize();
     }
@@ -649,7 +639,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             roadCaboose1Box.setEnabled(change1Caboose.isSelected());
             roadCaboose1Box.setSelectedItem(_train.getSecondLegCabooseRoad());
             // adjust radio button text
-            if ((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE) {
+            if (_train.isCabooseNeeded()) {
                 change1Caboose.setText(Bundle.getMessage("ChangeCaboose"));
                 remove1Caboose.setEnabled(true);
             } else {
@@ -701,7 +691,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             roadCaboose2Box.setEnabled(change2Caboose.isSelected());
             roadCaboose2Box.setSelectedItem(_train.getThirdLegCabooseRoad());
             // adjust radio button text
-            if (((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE || change1Caboose.isSelected()) &&
+            if ((_train.isCabooseNeeded() || change1Caboose.isSelected()) &&
                     !remove1Caboose.isSelected()) {
                 change2Caboose.setText(Bundle.getMessage("ChangeCaboose"));
                 remove2Caboose.setEnabled(true);
@@ -819,10 +809,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             return false;
         }
         try {
-            if (!builtAfterTextField.getText().trim().equals("")) {
+            if (!builtAfterTextField.getText().trim().isEmpty()) {
                 Integer.parseInt(builtAfterTextField.getText().trim());
             }
-            if (!builtBeforeTextField.getText().trim().equals("")) {
+            if (!builtBeforeTextField.getText().trim().isEmpty()) {
                 Integer.parseInt(builtBeforeTextField.getText().trim());
             }
         } catch (NumberFormatException e) {
@@ -981,7 +971,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     public void dispose() {
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(EngineModels.class).removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         if (_train != null) {
             _train.removePropertyChangeListener(this);
         }

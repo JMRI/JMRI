@@ -51,7 +51,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     int progState = 0;
     static final int NOTPROGRAMMING = 0;    // is notProgramming
     static final int COMMANDSENT = 2;       // read/write command sent, waiting reply
-    int _val;	// remember the value being read/written for confirmative reply
+    int _val; // remember the value being read/written for confirmative reply
 
     /** 
      * {@inheritDoc}
@@ -60,7 +60,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " mode " + getMode() + " listens " + p);
+            log.debug("writeCV {} mode {} listens {}", CV, getMode(), p);
         }
         useProgrammer(p);
         _val = val;
@@ -82,7 +82,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " mode " + getMode() + " listens " + p);
+            log.debug("readCV {} mode {} listens {}", CV, getMode(), p);
         }
         useProgrammer(p);
         _val = -1;
@@ -113,12 +113,14 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     /**
      * Internal method to remember who's using the programmer.
+     * @param p Who gets reply
+     * @throws ProgrammerException when programmer in invalid state
      */
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -129,6 +131,10 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     /**
      * Internal method to create the SprogMessage for programmer task start.
+     * @param mode Mode to be used
+     * @param val value to be written
+     * @param cvnum CV address to write to 
+     * @return formatted message to do programming operation
      */
     protected SprogMessage progTaskStart(ProgrammingMode mode, int val, int cvnum) {
         // val = -1 for read command; mode is direct, etc
@@ -154,20 +160,20 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
-            log.debug("reply in NOTPROGRAMMING state" + " [" + reply + "]");
+            log.debug("reply in NOTPROGRAMMING state [{}]", reply);
             return;
         } else if (progState == COMMANDSENT) {
-            log.debug("reply in COMMANDSENT state" + " [" + reply + "]");
+            log.debug("reply in COMMANDSENT state [{}]", reply);
             // operation done, capture result, then have to leave programming mode
             progState = NOTPROGRAMMING;
             // check for errors
             if (reply.match("No Ack") >= 0) {
-                log.debug("handle No Ack reply " + reply);
+                log.debug("handle No Ack reply {}", reply);
                 // perhaps no loco present? Fail back to end of programming
                 progState = NOTPROGRAMMING;
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
             } else if (reply.match("!O") >= 0) {
-                log.debug("handle !O reply " + reply);
+                log.debug("handle !O reply {}", reply);
                 // Overload. Fail back to end of programming
                 progState = NOTPROGRAMMING;
                 notifyProgListenerEnd(-1, jmri.ProgListener.ProgrammingShort);
@@ -212,7 +218,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
-        log.debug("notifyProgListenerEnd value " + value + " status " + status);
+        log.debug("notifyProgListenerEnd value {} status {}", value, status);
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;

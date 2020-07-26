@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
 
 <html lang="fr">
 <head>
@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>D&eacute;finir Signaux aux aiguillages</h1>
 
       <h2>Introduction</h2>
@@ -87,8 +88,9 @@
       illustr&eacute; ci-dessous.
 
       <p><a href="./images/TurnoutSignalModel.gif"><img src=
-      "./images/TurnoutSignalModel.gif" align="center" width="225"
-      height="75" hspace="0" vspace="0"></a></p>
+      "./images/TurnoutSignalModel.gif" width="225"
+      height="75" hspace="0" vspace="0" alt="Ic&ocirc;ne
+      d'Aiguillage"></a></p>
 
       <p>Si un signal est entr&eacute; pour la <b>Pointe -
       Divergente</b>, puis <b>Pointe - Directe</b> signale la voie
@@ -202,7 +204,7 @@
 
       <p><b>S'il vous pla&icirc;t rappelez vous de sauver votre TCO
       apr&egrave;s l'utilisation de cet outil.</b></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

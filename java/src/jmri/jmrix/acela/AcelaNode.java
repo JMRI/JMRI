@@ -35,7 +35,7 @@ public class AcelaNode extends AbstractNode {
      */
     static final int MAXSENSORBITS = 16;  // Used to initialize arrays
     static final int MAXOUTPUTBITS = 16;  // Used to initialize arrays
-    private static int MAXNODE = 1024;
+    static final int MAXNODE = 1024;
     private static int MAXDELAY = 65535;
 
     // class constants
@@ -235,6 +235,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Set starting output address for range.
      * Used to help linear address search.
+     * @param startingAddress starting output address for range.
      */
     public void setStartingOutputAddress(int startingAddress) {
         startingOutputAddress = startingAddress;
@@ -243,6 +244,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Get starting output address for range.
      * Used to help linear address search.
+     * @return starting output address.
      */
     public int getStartingOutputAddress() {
         return startingOutputAddress;
@@ -251,6 +253,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Set ending output address for range.
      * Used to help linear address search.
+     * @param endingAddress end output address for range.
      */
     public void setEndingOutputAddress(int endingAddress) {
         endingOutputAddress = endingAddress;
@@ -259,6 +262,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Get ending output address for range.
      * Used to help linear address search.
+     * @return end output address for range.
      */
     public int getEndingOutputAddress() {
         return endingOutputAddress;
@@ -267,6 +271,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Set starting sensor address for range.
      * Used to help linear address search.
+     * @param startingAddress start sensor address for range.
      */
     public void setStartingSensorAddress(int startingAddress) {
         startingSensorAddress = startingAddress;
@@ -275,6 +280,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Get starting sensor addresses for range.
      * Used to help linear address search.
+     * @return starting sensor address for range.
      */
     public int getStartingSensorAddress() {
         return startingSensorAddress;
@@ -283,6 +289,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Set ending sensor addresses for range.
      * Used to help linear address search.
+     * @param endingAddress end sensor address.
      */
     public void setEndingSensorAddress(int endingAddress) {
         endingSensorAddress = endingAddress;
@@ -291,6 +298,7 @@ public class AcelaNode extends AbstractNode {
     /**
      * Get ending sensor addresses for range.
      * Used to help linear address search.
+     * @return end of range sensor address.
      */
     public int getEndingSensorAddress() {
         return endingSensorAddress;
@@ -346,11 +354,7 @@ public class AcelaNode extends AbstractNode {
         int newbitNumber = 0;
         newbitNumber = bitNumber - startingOutputAddress;
         byte testByte = outputArray[newbitNumber];
-        if (testByte == 0) {
-            return (false);
-        } else {
-            return (true);
-        }
+        return  (testByte != 0);
     }
 
     /**
@@ -362,7 +366,9 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Set and return Output configuration values.
+     * Get Output configuration values.
+     * @param circuitnum wired output index number.
+     * @return  configuration value.
      */
     public int getOutputWired(int circuitnum) {
         return outputWired[circuitnum];
@@ -370,10 +376,14 @@ public class AcelaNode extends AbstractNode {
 
     public String getOutputWiredString(int circuitnum) {
         int sensortype = outputWired[circuitnum];
-        String value = outputWireds.substring(sensortype * 2, sensortype * 2 + 2);
-        return value;
+        return outputWireds.substring(sensortype * 2, sensortype * 2 + 2);
     }
 
+    /**
+     * Set Output configuration values.
+     * @param circuitnum output index number.
+     * @param type output type.
+     */
     public void setOutputWired(int circuitnum, int type) {
         outputWired[circuitnum] = type;
     }
@@ -389,8 +399,7 @@ public class AcelaNode extends AbstractNode {
 
     public String getOutputInitString(int circuitnum) {
         int sensortype = outputInit[circuitnum];
-        String value = outputInits.substring(sensortype * 3, sensortype * 3 + 3);
-        return value;
+        return outputInits.substring(sensortype * 3, sensortype * 3 + 3);
     }
 
     public void setOutputInit(int circuitnum, int type) {
@@ -408,8 +417,7 @@ public class AcelaNode extends AbstractNode {
 
     public String getOutputTypeString(int circuitnum) {
         int outputtype = outputType[circuitnum];
-        String value = outputTypes.substring(outputtype * 5, outputtype * 5 + 5);
-        return value;
+        return outputTypes.substring(outputtype * 5, outputtype * 5 + 5);
     }
 
     public void setOutputType(int circuitnum, int type) {
@@ -447,8 +455,7 @@ public class AcelaNode extends AbstractNode {
     public String getOutputSignalHeadTypeString(int circuitnum) {
         int newbitNumber = circuitnum - startingOutputAddress;
         int outputsignalheadtype = outputSignalHeadType[newbitNumber];
-        String value = outputSignalHeadTypes.substring(outputsignalheadtype * 6, outputsignalheadtype * 6 + 6);
-        return value;
+        return outputSignalHeadTypes.substring(outputsignalheadtype * 6, outputsignalheadtype * 6 + 6);
     }
 
     public void setOutputSignalHeadType(int circuitnum, int type) {
@@ -463,7 +470,9 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to set and return Sensor configuration values
+     * Public method to set and return Sensor configuration values.
+     * @param circuitnum sensor type array index number.
+     * @return sensor index value.
      */
     public int getSensorType(int circuitnum) {
         return sensorType[circuitnum];
@@ -471,8 +480,7 @@ public class AcelaNode extends AbstractNode {
 
     public String getSensorTypeString(int circuitnum) {
         int sensortype = sensorType[circuitnum];
-        String value = sensorTypes.substring(sensortype * 2, sensortype * 2 + 2);
-        return value;
+        return sensorTypes.substring(sensortype * 2, sensortype * 2 + 2);
     }
 
     public void setSensorType(int circuitnum, int type) {
@@ -490,8 +498,7 @@ public class AcelaNode extends AbstractNode {
 
     public String getSensorPolarityString(int circuitnum) {
         int sensorpolarity = sensorPolarity[circuitnum];
-        String value = sensorPolarities.substring(sensorpolarity * 3, sensorpolarity * 3 + 3);
-        return value;
+        return sensorPolarities.substring(sensorpolarity * 3, sensorpolarity * 3 + 3);
     }
 
     public void setSensorPolarity(int circuitnum, int polarity) {
@@ -512,19 +519,20 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Public method to return node type
+     * Public method to return node type.
+     * @return node type number.
      */
     public int getNodeType() {
         return (nodeType);
     }
 
     public String getNodeTypeString() {
-        String value = moduleTypes.substring(nodeType * 2, nodeType * 2 + 2);
-        return value;
+        return moduleTypes.substring(nodeType * 2, nodeType * 2 + 2);
     }
 
     /**
-     * Public method to set node type
+     * Public method to set node type.
+     * @param stringtype string form of node type.
      */
     public void setNodeTypeString(String stringtype) {
         int type = moduleTypes.lastIndexOf(stringtype) / 2;
@@ -535,66 +543,47 @@ public class AcelaNode extends AbstractNode {
         nodeType = type;
         // set default values for other instance variables
         switch (type) {
-            case AC: {
+            case AC:
+            case UN:
                 outputbitsPerCard = 0;
                 sensorbitsPerCard = 0;
                 break;
-            }
-            case TB: {
+            case TB:
                 outputbitsPerCard = 4;
                 sensorbitsPerCard = 4;
                 break;
-            }
-            case D8: {
+            case D8:
                 outputbitsPerCard = 8;
                 sensorbitsPerCard = 0;
                 break;
-            }
-            case WM: {
+            case WM:
                 outputbitsPerCard = 0;
                 sensorbitsPerCard = 8;
                 break;
-            }
-            case SM: {
-                outputbitsPerCard = 16;
-                sensorbitsPerCard = 0;
-                break;
-            }
-            case SC: {
+            case SC:
                 outputbitsPerCard = 1;
                 sensorbitsPerCard = 0;
                 break;
-            }
-            case SW: {
+            case SM:
+            case SW:
+            case YM:
                 outputbitsPerCard = 16;
                 sensorbitsPerCard = 0;
                 break;
-            }
-            case YM: {
-                outputbitsPerCard = 16;
-                sensorbitsPerCard = 0;
-                break;
-            }
-            case SY: {
+            case SY:
                 outputbitsPerCard = 0;
                 sensorbitsPerCard = 16;
                 break;
-            }
-            case UN: {
-                outputbitsPerCard = 0;
-                sensorbitsPerCard = 0;
-                break;
-            }
-            default: {
+            default:
                 outputbitsPerCard = 0;
                 sensorbitsPerCard = 0;
                 log.error("Bad node type - {}", Integer.toString(type));
-            }
         }
     }
 
     /**
      * Public method to return number of bits per card.
+     * @return number of output bits per card.
      */
     public int getNumOutputBitsPerCard() {
         return (outputbitsPerCard);
@@ -622,7 +611,8 @@ public class AcelaNode extends AbstractNode {
     }
 
     /**
-     * Get the transmission delay on thsi node.
+     * Get the transmission delay on this node.
+     * @return delay in 10s of microseconds.
      */
     public int getTransmissionDelay() {
         return (transmissionDelay);
@@ -710,7 +700,7 @@ public class AcelaNode extends AbstractNode {
         //  If we are going to do a bulk command then the address will be
         //  the starting address.  If we are not going to do a bulk command
         //  then the address will start from the starting address.
-        Integer tempint = Integer.valueOf(startingOutputAddress);
+        Integer tempint = startingOutputAddress;
         addrlo = tempint.byteValue();
 
         // For each nodetype set up variables that will end up in the msg
@@ -729,12 +719,12 @@ public class AcelaNode extends AbstractNode {
                 settinglo = (byte) (tempsettings);
             }
             if ((nodeType == WM) || (nodeType == SY)) {
-                cmdlen = 3;
+                //cmdlen = 3;
                 cmdcode = 0x01;  //  This really is an error case since these
                 //  nodes do not have outputs
             }
             if (nodeType == SC) {
-                cmdlen = 3;
+                //cmdlen = 3;
                 cmdcode = 0x01;  //  This really is an error case since these
                 //  nodes do not have outputs
             }
@@ -761,7 +751,7 @@ public class AcelaNode extends AbstractNode {
                     // Need to adjust addr to address the actual output
                     // circuit rather than the starting output address
                     // That it currently points to.
-                    Integer tempaddr = Integer.valueOf(c + addrlo);
+                    Integer tempaddr = c + addrlo;
                     addrlo = tempaddr.byteValue();
 
                     // Reset the needtosend flag for this output circuit
@@ -863,22 +853,16 @@ public class AcelaNode extends AbstractNode {
                                         cmdcode = 0x0c;
                                         settinglo = 0x02;
                                         break; // Flashing red
-                                    case 3:
+                                    case 3: // Yellow
+                                    case 4: // Flashing Yellow
+                                    case 6: // Flashing Green
                                         cmdcode = 0x0c;
                                         settinglo = 0x08;
-                                        break; // Yellow
-                                    case 4:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x08;
-                                        break; // Flashing Yellow
+                                        break;
                                     case 5:
                                         cmdcode = 0x0c;
                                         settinglo = 0x04;
                                         break; // Green
-                                    case 6:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x08;
-                                        break; // Flashing Green
                                     case 7:
                                         cmdcode = 0x0c;
                                         settinglo = 0x00;
@@ -966,38 +950,23 @@ public class AcelaNode extends AbstractNode {
                             }
                             case WIGWAG: {
                                 switch (outputSpecial[c]) {
-                                    case 1:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Red
-                                    case 2:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Flashing red
+                                    case 1: // Red
+                                    case 2: // Flashing red
                                     case 3:
+                                    case 4: // Flashing Yellow
+                                    case 5: // Green
+                                    case 6: // Flashing Green
                                         cmdcode = 0x0c;
                                         settinglo = 0x0B;
-                                        break; // Yellow
-                                    case 4:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Flashing Yellow
-                                    case 5:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Green
-                                    case 6:
-                                        cmdcode = 0x0c;
-                                        settinglo = 0x0B;
-                                        break; // Flashing Green
-                                    case 7:
+                                        break;
+                                    case 7: // Dark
                                         cmdcode = 0x0c;
                                         settinglo = 0x00;
-                                        break; // Dark
-                                    default:
+                                        break;
+                                    default: // Flashing red
                                         cmdcode = 0x0c;
                                         settinglo = 0x0F;
-                                        break; // Flashing red
+                                        break;
                                 }
                                 break;
                             }
@@ -1007,10 +976,6 @@ public class AcelaNode extends AbstractNode {
                                         cmdcode = 0x0d;
                                         settinglo = 0x01;
                                         break; // Red
-                                    case 2:
-                                        cmdcode = 0x0d;
-                                        settinglo = 0x03;
-                                        break; // Flashing red
                                     case 3:
                                         cmdcode = 0x0d;
                                         settinglo = 0x04;
@@ -1031,10 +996,11 @@ public class AcelaNode extends AbstractNode {
                                         cmdcode = 0x0d;
                                         settinglo = 0x00;
                                         break; // Dark
+                                    case 2: // Flashing red
                                     default:
                                         cmdcode = 0x0d;
                                         settinglo = 0x03;
-                                        break; // Flashing red
+                                        break;
                                 }
                             }
                         }
@@ -1190,7 +1156,7 @@ public class AcelaNode extends AbstractNode {
                 }
             }
         } catch (JmriException e) {
-            log.error("exception in markChanges: " + e);
+            log.error("exception in markChanges: {}", e);
         }
     }
 

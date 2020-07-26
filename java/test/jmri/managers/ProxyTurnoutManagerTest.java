@@ -1,20 +1,20 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
-import java.util.*;
 
 import jmri.*;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.jmrix.internal.InternalTurnoutManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests the ProxyTurnoutManager.
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014, 2018
+ * @author Bob Jacobsen 2003, 2006, 2008, 2014, 2018
  */
 public class ProxyTurnoutManagerTest {
 
@@ -22,7 +22,7 @@ public class ProxyTurnoutManagerTest {
         return "JT" + i;
     }
 
-    protected TurnoutManager l = null;	// holds objects under test
+    protected TurnoutManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -44,9 +44,9 @@ public class ProxyTurnoutManagerTest {
         // create
         Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertSame("user name correct ", t, l.getByUserName("mine"));
+        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test
@@ -54,50 +54,35 @@ public class ProxyTurnoutManagerTest {
         // create
         Turnout t = l.provideTurnout("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
-    }
-
-    @Test
-    public void testNormalizeName() {
-        // create
-        String name = l.provideTurnout("" + getNumToTest1()).getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test
     public void testProvideFailure() {
-        boolean correct = false;
-        try {
-            l.provideTurnout("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            correct = true;
-        }
-        Assert.assertTrue("Exception thrown properly", correct);
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for turnout: JT needed JT followed by a suffix");
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+        JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
-        Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
-        Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("t1 real object returned ", t1);
+        Assert.assertSame("same by user ", t1, l.getByUserName("mine"));
+        Assert.assertSame("same by system ", t1, l.getBySystemName(getSystemName(getNumToTest1())));
 
         Turnout t2 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assert.assertNotNull("t2 real object returned ", t2);
         // check
-        Assert.assertTrue("same new ", t1 == t2);
+        Assert.assertSame("same new ", t1, t2);
     }
 
     @Test
     public void testMisses() {
         // try to get nonexistant objects
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        Assert.assertNull(l.getByUserName("foo"));
+        Assert.assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -115,7 +100,7 @@ public class ProxyTurnoutManagerTest {
         t1.setUserName("after");
         Turnout t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
-        Assert.assertEquals("no old object", null, l.getByUserName("before"));
+        Assert.assertNull("no old object", l.getByUserName("before"));
     }
 
     @Test
@@ -125,7 +110,7 @@ public class ProxyTurnoutManagerTest {
 
         Assert.assertNotNull(jl212);
         Assert.assertNotNull(jl211);
-        Assert.assertTrue(jl212 != jl211);
+        Assert.assertNotSame(jl212, jl211);
     }
 
     @Test
@@ -166,12 +151,7 @@ public class ProxyTurnoutManagerTest {
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IS1"));
 
-        InternalTurnoutManager m = new InternalTurnoutManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        InternalTurnoutManager m = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setTurnoutManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class).provideTurnout("JS1"));
@@ -190,20 +170,15 @@ public class ProxyTurnoutManagerTest {
         return 7;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalTurnoutManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        l = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setTurnoutManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

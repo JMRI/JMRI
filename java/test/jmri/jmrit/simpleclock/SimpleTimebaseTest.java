@@ -4,11 +4,8 @@ import java.beans.*;
 import java.time.Instant;
 import java.util.Date;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 import jmri.TimebaseRateException;
 import jmri.util.JUnitUtil;
@@ -16,7 +13,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the SimpleTimebase class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SimpleTimebaseTest {
 
@@ -133,6 +130,7 @@ public class SimpleTimebaseTest {
         seenNewMinutes = -1;
         seenOldMinutes = -1;
         p.addMinuteChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 seenOldMinutes = (Double) e.getOldValue();
                 seenNewMinutes = (Double) e.getNewValue();
@@ -173,7 +171,7 @@ public class SimpleTimebaseTest {
     }
 
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testShortDelay() throws TimebaseRateException {
         SimpleTimebase p = new SimpleTimebase();
         Date now = new Date();
@@ -186,12 +184,12 @@ public class SimpleTimebaseTest {
         Assert.assertTrue("delta lt 150 (nominal value)", delta < 150);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

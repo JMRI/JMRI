@@ -1,6 +1,5 @@
 package jmri.jmrix.powerline.cm11;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 /**
@@ -34,13 +33,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      */
     @Override
     public void loadDetails(JPanel details) {
-        // have to embed the usual one in a new JPanel
+        super.loadDetails(details);
 
-        JPanel p = new JPanel();
-        super.loadDetails(p);
-
-        details.setLayout(new BoxLayout(details, BoxLayout.Y_AXIS));
-        details.add(p);
     }
 
     @Override
@@ -49,7 +43,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     public boolean isOptList1Advanced() {
-        return false;
+        return true;
     }
 
     /**

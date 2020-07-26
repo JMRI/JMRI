@@ -64,7 +64,6 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
             ((XnTcpAdapter) controller).xnTcpSetPendingPackets(-1);
             log.debug("XnTcpNetPacketizer: received end of packet");
         } catch (java.io.InterruptedIOException ex) {
-            return;
         } catch (java.io.IOException ex) {
             ((XnTcpAdapter) controller).xnTcpError();
             throw ex;
@@ -72,6 +71,6 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XnTcpXNetPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(XnTcpXNetPacketizer.class);
 
 }

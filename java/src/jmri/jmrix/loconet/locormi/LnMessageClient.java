@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet.locormi;
 
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnTrafficRouter;
 import jmri.jmrix.loconet.LocoNetException;
@@ -65,6 +65,9 @@ public class LnMessageClient extends LnTrafficRouter {
     // be passed to this.notify(LocoNetMessage m)
     /**
      * Start the connection to the server. This is invoked once.
+     * @param remoteHostName remote host name.
+     * @param timeoutSec timeout, value in seconds, not ms.
+     * @throws jmri.jmrix.loconet.LocoNetException if failed to connect to server.
      */
     public void configureRemoteConnection(String remoteHostName, int timeoutSec) throws LocoNetException {
         serverName = remoteHostName;

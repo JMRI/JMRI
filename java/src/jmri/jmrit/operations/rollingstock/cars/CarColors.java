@@ -1,9 +1,12 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import org.jdom2.Element;
 
 /**
  * Represents the colors that cars can have.
@@ -17,18 +20,6 @@ public class CarColors extends RollingStockAttribute implements InstanceManagerA
     public static final String CARCOLORS_NAME_CHANGED_PROPERTY = "CarColorsName"; // NOI18N
 
     public CarColors() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarColors instance() {
-        return InstanceManager.getDefault(CarColors.class);
     }
 
     @Override
@@ -54,6 +45,15 @@ public class CarColors extends RollingStockAttribute implements InstanceManagerA
         // need to keep old name so location manager can replace properly
         super.deleteName(oldName);
     }
+    
+    @Override
+    public int getMaxNameLength() {
+        if (maxNameLength == 0) {
+            super.getMaxNameLength();
+            log.info("Max color name ({}) length {}", maxName, maxNameLength);
+        }
+        return maxNameLength;
+    }
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
@@ -62,7 +62,7 @@ public class CarColors extends RollingStockAttribute implements InstanceManagerA
      * @param root The common Element for operations-cars.dtd.
      */
     public void store(Element root) {
-        store(root, Xml.COLORS, Xml.COLOR, Xml.CAR_COLORS);
+        store(root, Xml.COLORS, Xml.COLOR);
     }
 
     public void load(Element root) {
@@ -74,7 +74,7 @@ public class CarColors extends RollingStockAttribute implements InstanceManagerA
         InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.firePropertyChange(p, old, n);
     }
-
-//    private final static Logger log = LoggerFactory.getLogger(CarColors.class);
+        
+    private final static Logger log = LoggerFactory.getLogger(CarColors.class);
 
 }

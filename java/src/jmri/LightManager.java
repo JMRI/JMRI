@@ -1,6 +1,5 @@
 package jmri;
 
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -45,6 +44,7 @@ public interface LightManager extends ProvidingManager<Light> {
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     default public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     /** {@inheritDoc} */
@@ -129,25 +129,6 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     public boolean validSystemNameConfig(@Nonnull String systemName);
-
-    /**
-     * Normalize the system name.
-     * <p>
-     * This routine is used to ensure that each system name is uniquely linked
-     * to one C/MRI bit, by removing extra zeros inserted by the user.
-     * <p>
-     * This routine is implemented in AbstractLightManager to return the same
-     * name. If a system implementation has names that could be normalized, the
-     * system-specific Light Manager should override this routine and supply a
-     * normalized system name.
-     *
-     * @param systemName the system name to normalize
-     * @return the normalized system name
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Override
-    public String normalizeSystemName(@Nonnull String systemName);
 
     /**
      * Convert the system name to a normalized alternate name.

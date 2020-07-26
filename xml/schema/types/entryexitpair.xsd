@@ -32,7 +32,10 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
-        <xs:element name="cleardown" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="cleardown" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="overlap" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="memorycleardelay" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="memoryname" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="dispatcherintegration" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="colourwhilesetting" type="xs:string" minOccurs="0" maxOccurs="1"/>
 

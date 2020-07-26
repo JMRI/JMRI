@@ -6,9 +6,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import com.fasterxml.jackson.databind.node.NullNode;
 
@@ -24,10 +23,9 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
 
     protected B bean = null;
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
-        service = null;
         bean = null;
         super.tearDown();
     }
@@ -45,7 +43,7 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
         String name = "non-existant";
         String type = "non-existant";
         try {
-            service.doGet(type, name, service.getObjectMapper().createObjectNode(), locale, 42);
+            service.doGet(type, name, service.getObjectMapper().createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
@@ -66,7 +64,7 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
         String name = "non-existant";
         String type = "non-existant";
         try {
-            service.getNamedBean(bean, name, type, locale, 0);
+            service.getNamedBean(bean, name, type, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
@@ -88,7 +86,7 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
         String name = "non-existant";
         String type = "non-existant";
         try {
-            service.postNamedBean(bean, this.mapper.createObjectNode(), name, type, locale, 42);
+            service.postNamedBean(bean, this.mapper.createObjectNode(), name, type, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
@@ -103,12 +101,17 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
     public void testDoDelete() throws JsonException {
         try {
             assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
-            service.doDelete(service.getType(), "non-existant", NullNode.getInstance(), locale, 42);
+            service.doDelete(service.getType(), "non-existant", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Code is HTTP METHOD NOT ALLOWED", 405, ex.getCode());
             assertEquals("Message", "Deleting " + service.getType() + " is not allowed.", ex.getMessage());
             assertEquals("ID is 42", 42, ex.getId());
         }
+    }
+    
+    @Test
+    public void testDoSchema() throws JsonException {
+        testDoSchema(service.getType());
     }
 }

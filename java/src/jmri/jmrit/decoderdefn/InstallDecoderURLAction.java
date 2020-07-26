@@ -75,19 +75,19 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
     }
 
     void copyAndInstall(URL from, JPanel who) {
-        log.debug("[" + from.getFile() + "]");
+        log.debug("[{}]", from.getFile());
 
         // get output name
         File temp = new File(from.getFile());
 
-        log.debug("[" + temp.toString() + "]");
+        log.debug("[{}]", temp.toString());
 
         // ensure directories exist
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "decoders");
 
         // output file
         File toFile = new File(FileUtil.getUserFilesPath() + "decoders" + File.separator + temp.getName());
-        log.debug("[" + toFile.toString() + "]");
+        log.debug("[{}]", toFile.toString());
 
         // first do the copy, but not if source and output files are the same
         if (!temp.toString().equals(toFile.toString())) {
@@ -97,8 +97,8 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         } else {
             // write a log entry
             log.info("Source and destination files identical - file not copied");
-            log.info("  source file: " + temp.toString());
-            log.info("  destination: " + toFile.toString());
+            log.info("  source file: {}", temp.toString());
+            log.info("  destination: {}", toFile.toString());
         }
 
         // and rebuild index
@@ -125,11 +125,11 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             }
             // done - finally cleans up
         } catch (FileNotFoundException ex) {
-            log.debug("" + ex);
+            log.debug("{}", ex);
             JOptionPane.showMessageDialog(who, Bundle.getMessage("CopyError1"));
             return false;
         } catch (IOException e) {
-            log.debug("" + e);
+            log.debug("{}", e);
             JOptionPane.showMessageDialog(who, Bundle.getMessage("CopyError2"));
             return false;
         } finally {
@@ -168,7 +168,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             return true;
 
         } catch (java.io.IOException | org.jdom2.JDOMException ex) {
-            log.debug("" + ex);
+            log.debug("{}", ex);
             JOptionPane.showMessageDialog(who, Bundle.getMessage("ParseError"));
             return false;
         }

@@ -4,15 +4,14 @@ import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the DccSignalHead implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  */
 public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
 
@@ -158,8 +157,7 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
         return new DccSignalHead("IH$1");
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -189,7 +187,7 @@ public class DccSignalHeadTest extends AbstractSignalHeadTestBase {
     byte[] lastSentPacket;
     int sentPacketCount;
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

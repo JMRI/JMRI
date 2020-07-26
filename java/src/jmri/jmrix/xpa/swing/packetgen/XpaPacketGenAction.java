@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register an XpaPacketGenFrame object
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public class XpaPacketGenAction extends AbstractAction {
 
-    XpaSystemConnectionMemo memo = null;
+    final XpaSystemConnectionMemo memo;
 
     public XpaPacketGenAction(String s,XpaSystemConnectionMemo m) {
         super(s);
@@ -26,7 +26,7 @@ public class XpaPacketGenAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

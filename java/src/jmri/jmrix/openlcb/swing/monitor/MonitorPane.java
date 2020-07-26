@@ -1,16 +1,27 @@
 package jmri.jmrix.openlcb.swing.monitor;
 
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
+
+import org.openlcb.EventID;
+import org.openlcb.EventMessage;
 import org.openlcb.Message;
+import org.openlcb.OlcbInterface;
 import org.openlcb.can.AliasMap;
 import org.openlcb.can.MessageBuilder;
 import org.openlcb.can.OpenLcbCanFrame;
+import org.openlcb.implementations.EventTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 
 /**
  * Frame displaying (and logging) OpenLCB (CAN) frames
@@ -21,11 +32,20 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     public MonitorPane() {
         super();
+        pm = InstanceManager.getDefault(UserPreferencesManager.class);
     }
 
     CanSystemConnectionMemo memo;
     AliasMap aliasMap;
     MessageBuilder messageBuilder;
+    OlcbInterface olcbInterface;
+    final JCheckBox nodeNameCheckBox = new JCheckBox();
+    final JCheckBox eventCheckBox = new JCheckBox();
+    final JCheckBox eventAllCheckBox = new JCheckBox();
+    final String nodeNameCheck = this.getClass().getName() + ".NodeName";
+    final String eventCheck = this.getClass().getName() + ".Event";
+    final String eventAllCheck = this.getClass().getName() + ".EventAll";
+    private final UserPreferencesManager pm;
 
     @Override
     public void initContext(Object context) {
@@ -42,6 +62,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
         aliasMap = memo.get(org.openlcb.can.AliasMap.class);
         messageBuilder = new MessageBuilder(aliasMap);
+        olcbInterface = memo.get(OlcbInterface.class);
 
         setFixedWidthFont();
     }
@@ -57,12 +78,45 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     @Override
     public void dispose() {
-        memo.getTrafficController().removeCanListener(this);
+        try {
+            memo.getTrafficController().removeCanListener(this);
+        } catch(NullPointerException npe){
+            log.debug("Null Pointer Exception while attempting to remove Can Listener",npe);
+        }
+
+        pm.setSimplePreferenceState(nodeNameCheck, nodeNameCheckBox.isSelected());
+        pm.setSimplePreferenceState(eventCheck, eventCheckBox.isSelected());
+        pm.setSimplePreferenceState(eventAllCheck, eventAllCheckBox.isSelected());
+
         super.dispose();
     }
 
+    @Override
+    protected void addCustomControlPanes(JPanel parent) {
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+                
+        nodeNameCheckBox.setText(Bundle.getMessage("CheckBoxShowNodeName"));
+        nodeNameCheckBox.setVisible(true);
+        nodeNameCheckBox.setSelected(pm.getSimplePreferenceState(nodeNameCheck));
+        p.add(nodeNameCheckBox);
+
+        eventCheckBox.setText(Bundle.getMessage("CheckBoxShowEvent"));
+        eventCheckBox.setVisible(true);
+        eventCheckBox.setSelected(pm.getSimplePreferenceState(eventCheck));
+        p.add(eventCheckBox);
+
+        eventAllCheckBox.setText(Bundle.getMessage("CheckBoxShowEventAll"));
+        eventAllCheckBox.setVisible(true);
+        eventAllCheckBox.setSelected(pm.getSimplePreferenceState(eventAllCheck));
+        p.add(eventAllCheckBox);
+
+        parent.add(p);
+        super.addCustomControlPanes(parent);
+    }
+
     String formatFrame(boolean extended, int header, int len, int[] content) {
-        StringBuilder formatted = new StringBuilder("");
+        StringBuilder formatted = new StringBuilder();
         formatted.append(extended ? "[" : "(");
         formatted.append(Integer.toHexString(header));
         formatted.append((extended ? "]" : ")"));
@@ -89,8 +143,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
 
         aliasMap.processFrame(frame);
-        java.util.List<Message> list = messageBuilder.processFrame(frame);
-        return list;
+        return messageBuilder.processFrame(frame);
     }
 
     void format(String prefix, boolean extended, int header, int len, int[] content) {
@@ -125,7 +178,34 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                     formatted = prefix + ": Unknown message " + raw;
                 }
             } else {
-                formatted = prefix + ": " + list.get(0).toString();
+                Message msg = list.get(0);
+                StringBuilder sb = new StringBuilder();
+                sb.append(prefix);
+                sb.append(": ");
+                sb.append(list.get(0).toString());
+                if (nodeNameCheckBox.isSelected() && olcbInterface != null) {
+                    String name = olcbInterface.getNodeStore().findNode(list.get(0).getSourceNodeID()).getSimpleNodeIdent().getUserName();
+                    if (name != null && !name.equals("")) {
+                        sb.append("\n  Src: ");
+                        sb.append(name);
+                    }
+                }
+                if ((eventCheckBox.isSelected() || eventAllCheckBox.isSelected()) && olcbInterface != null && msg instanceof EventMessage) {
+                    EventID ev = ((EventMessage) msg).getEventID();
+                    EventTable.EventTableEntry[] descr =
+                            olcbInterface.getEventTable().getEventInfo(ev).getAllEntries();
+                    if (descr.length > 0) {
+                        sb.append("\n  Event: ");
+                        sb.append(descr[0].getDescription());
+                    }
+                    if (eventAllCheckBox.isSelected()) {
+                        for (int i = 1; i < descr.length; i++) {
+                            sb.append("\n  Event: ");
+                            sb.append(descr[i].getDescription());
+                        }
+                    }
+                }
+                formatted = sb.toString();
             }
         } else {
             // control type

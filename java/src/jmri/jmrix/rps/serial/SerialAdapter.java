@@ -11,6 +11,9 @@ import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +34,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * each address up to the max receiver, even if some are missing (0 in that
  * case)
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
@@ -56,10 +59,10 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     @Override
     public void configure() {
         // Connect the control objects:
-        //   connect an Engine to the Distributor
+        log.debug("configure() connecting RPS objects");
+        // connect an Engine to the Distributor
         Engine e = Engine.instance();
         Distributor.instance().addReadingListener(e);
-
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
@@ -81,15 +84,10 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 // find the baud rate value, configure comm options
-                int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i < validSpeeds.length; i++) {
-                    if (validSpeeds[i].equals(mBaudRate)) {
-                        baud = validSpeedValues[i];
-                    }
-                }
+                int baud = currentBaudNumber(mBaudRate);
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
@@ -115,14 +113,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
 
             opened = true;
@@ -140,6 +131,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     /**
      * Send output bytes, e.g. characters controlling operation, with small
      * delays between the characters. This is used to reduce overrrun problems.
+     * @param bytes Array of characters to be sent one at a time
      */
     synchronized void sendBytes(byte[] bytes) {
         try {
@@ -150,10 +142,10 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
             final byte endbyte = bytes[bytes.length - 1];
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
-            log.error("Exception on output: " + e);
+            log.error("Exception on output: ", e);
         } catch (java.lang.InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
-            log.error("Interrupted output: " + e);
+            log.error("Interrupted output: ", e);
         }
     }
 
@@ -175,7 +167,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
+            log.error("getOutputStream exception: ", e);
         }
         return null;
     }
@@ -185,13 +177,29 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         return opened;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int[] validBaudNumbers() {
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
+    }
+
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud115200")};
     protected int[] validSpeedValues = new int[]{115200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     String[] validOptions1 = new String[]{Bundle.getMessage("Version1Choice"), Bundle.getMessage("Version2Choice")};
 
@@ -228,29 +236,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
     // flag for protocol version
     int version = 1;
-
-    // use deprecated stop method to stop thread,
-    // which will be sitting waiting for input
-    @SuppressWarnings("deprecation")
-    void stopThread(Thread t) {
-        t.stop();
-    }
-
-    @Override
-    public synchronized void dispose() {
-        // stop operations here. This is a deprecated method, but OK for us.
-        if (readerThread != null) {
-            stopThread(readerThread);
-        }
-
-        // release port
-        if (activeSerialPort != null) {
-            activeSerialPort.close();
-        }
-        serialStream = null;    // flags state
-        activeSerialPort = null; // flags state
-        super.dispose();
-    }
 
     /**
      * Internal class to handle the separate character-receive thread.
@@ -300,7 +285,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
                     break;
                 }
                 // Strip off the CR and LF
-                if (char1 != 10 && char1 != 13) {
+                if (char1 != 10) {
                     msg.append(char1);
                 }
             }
@@ -348,7 +333,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         Reading r;
         try {
             r = makeReading(s);
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Exception formatting input line \"{}\": ", s, e);
             // r = new Reading(-1, new double[]{-1, -1, -1, -1} );
             // skip handling this line
@@ -369,27 +354,28 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     /**
      * Handle the message which lists the receiver numbers. Just makes an array
      * of those, which is not actually used.
+     * @param s Input line
      */
     void setReceivers(String s) {
         try {
             // parse string
-            java.io.StringReader b = new java.io.StringReader(s);
-            com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
-            c.readRecord();
+            CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
+            CSVRecord r = c.getRecords().get(0);
+            c.close();
 
             // first two are "Data, ," so are ignored.
             // rest are receiver numbers
             // Find how many
-            int n = c.getColumnCount() - 2;
+            int n = r.size() - 2;
             log.debug("Found {} receivers", n);
 
             // find max receiver number
-            int max = Integer.valueOf(c.get(c.getColumnCount() - 1)).intValue();
+            int max = Integer.parseInt(r.get(r.size() - 1));
             log.debug("Highest receiver address is {}", max);
 
             offsetArray = new int[n];
             for (int i = 0; i < n; i++) {
-                offsetArray[i] = Integer.valueOf(c.get(i + 2)).intValue();
+                offsetArray[i] = Integer.parseInt(r.get(i + 2));
             }
 
         } catch (IOException e) {
@@ -397,11 +383,14 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         }
     }
 
-    static private int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
+    static private final int SKIPCOLS = 0; // used to skip DATA,TIME; was there a trailing "'"?
     private boolean first = true;
 
     /**
      * Convert input line to Reading object.
+     * @param s The line of input
+     * @return A Reading object with content parsed from the input line
+     * @throws IOException from underlying I/O
      */
     Reading makeReading(String s) throws IOException {
         if (first) {
@@ -411,40 +400,39 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
 
         if (version == 1) {
             // parse string
-            java.io.StringReader b = new java.io.StringReader(s);
-            com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
-            c.readRecord();
+            CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
+            CSVRecord record = c.getRecords().get(0);
+            c.close();
 
             // values are stored in 1-N of the output array; 0 not used
-            int count = c.getColumnCount() - SKIPCOLS;
+            int count = record.size() - SKIPCOLS;
             double[] vals = new double[count + 1];
             for (int i = 1; i < count + 1; i++) {
-                vals[i] = Double.valueOf(c.get(i + SKIPCOLS - 1)).doubleValue();
+                vals[i] = Double.valueOf(record.get(i + SKIPCOLS - 1));
             }
 
-            Reading r = new Reading(Engine.instance().getPolledID(), vals, s);
-            return r;
+            return new Reading(Engine.instance().getPolledID(), vals, s);
         } else if (version == 2) {
             // parse string
-            java.io.StringReader b = new java.io.StringReader(s);
-            com.csvreader.CsvReader c = new com.csvreader.CsvReader(b);
-            c.readRecord();
+            CSVParser c = CSVParser.parse(s, CSVFormat.DEFAULT);
+            CSVRecord record = c.getRecords().get(0);
+            c.close();
 
-            int count = (c.getColumnCount() - 2) / 2;  // skip 'ADR, DAT,'
+            int count = (record.size() - 2) / 2;  // skip 'ADR, DAT,'
             double[] vals = new double[Engine.instance().getMaxReceiverNumber() + 1]; // Receiver 2 goes in element 2
             for (int i = 0; i < vals.length; i++) {
                 vals[i] = 0.0;
             }
             try {
                 for (int i = 0; i < count; i++) {  // i is zero-based count of input pairs
-                    int index = Integer.parseInt(c.get(2 + i * 2));  // index is receiver number
+                    int index = Integer.parseInt(record.get(2 + i * 2));  // index is receiver number
                     // numbers are from one for valid receivers
                     // the null message starts with index zero
                     if (index < 0) {
                         continue;
                     }
                     if (index >= vals.length) { // data for undefined Receiver
-                        log.warn("Data from unexpected receiver " + index + ", creating receiver");
+                        log.warn("Data from unexpected receiver {}, creating receiver", index);
                         Engine.instance().setMaxReceiverNumber(index + 1);
                         //
                         // Originally, we made vals[] longer if we got
@@ -457,17 +445,16 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
                         //vals = temp;
                     }
                     if (index < vals.length) {
-                        vals[index] = Double.valueOf(c.get(2 + i * 2 + 1)).doubleValue();
+                        vals[index] = Double.valueOf(record.get(2 + i * 2 + 1));
                     }
                 }
-            } catch (IOException | NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 log.warn("Exception handling input.", e);
                 return null;
             }
-            Reading r = new Reading(Engine.instance().getPolledID(), vals, s);
-            return r;
+            return new Reading(Engine.instance().getPolledID(), vals, s);
         } else {
-            log.error("can't handle version " + version);
+            log.error("can't handle version {}", version);
             return null;
         }
     }

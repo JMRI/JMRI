@@ -5,7 +5,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -26,8 +25,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ClockItemPanel extends IconItemPanel {
 
-    public ClockItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
-        super(parentFrame, type, editor);
+    public ClockItemPanel(DisplayFrame parentFrame, String type) {
+        super(parentFrame, type);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
 
@@ -52,15 +51,12 @@ public class ClockItemPanel extends IconItemPanel {
             _iconPanel.removeAll();
         }
 
-        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
+        for (Entry<String, NamedIcon> entry : iconMap.entrySet()) {
             NamedIcon icon = new NamedIcon(entry.getValue()); // make copy for possible reduction
             JPanel panel = new JPanel();
             panel.setOpaque(false);
             String borderName = ItemPalette.convertText(entry.getKey());
-            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                    borderName));
+            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), borderName));
             try {
                 JLabel label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
                 if (icon.getIconWidth() < 1 || icon.getIconHeight() < 1) {
@@ -72,12 +68,12 @@ public class ClockItemPanel extends IconItemPanel {
                 label.setIcon(icon);
                 label.setName(borderName);
                 panel.add(label);
-            } catch (java.lang.ClassNotFoundException cnfe) {
+            } catch (ClassNotFoundException cnfe) {
                 log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             }
             _iconPanel.add(panel);
         }
-        _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
+        _iconPanel.setImage(_frame.getPreviewBackground()); // pick up shared setting
     }
 
     public class ClockDragJLabel extends DragJLabel {
@@ -97,9 +93,9 @@ public class ClockItemPanel extends IconItemPanel {
                 AnalogClock2Display c;
                 String link = _linkName.getText().trim();
                 if (link.length() == 0) {
-                    c = new AnalogClock2Display(_editor);
+                    c = new AnalogClock2Display(_frame.getEditor());
                 } else {
-                    c = new AnalogClock2Display(_editor, link);
+                    c = new AnalogClock2Display(_frame.getEditor(), link);
                 }
                 c.setOpaque(false);
                 c.update();

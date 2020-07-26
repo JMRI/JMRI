@@ -1,7 +1,8 @@
 package jmri.jmris.srcp;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPServer class
@@ -13,13 +14,13 @@ public class JmriSRCPServerTest {
     @Test
     public void testCtor() {
         JmriSRCPServer a = new JmriSRCPServer();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test
     public void testCtorwithParameter() {
         JmriSRCPServer a = new JmriSRCPServer(2048);
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
 }

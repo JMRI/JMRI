@@ -5,10 +5,9 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -16,12 +15,10 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
-        
-    private TrafficControllerScaffold tcis = null;
-
+    
     @Override
     public int numListeners() {return 0;}
 
@@ -47,7 +44,7 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
     
     public void checkNoMsgSent() {
-        Assert.assertTrue(tcis.outbound.size()==0);
+        Assert.assertTrue(tcis.outbound.isEmpty());
     }
 
     @Test
@@ -110,89 +107,83 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Test
-    public void testNameCreation() {
-        Assert.assertTrue("create MSX0A;+N15E6", null != new CbusSensor("MS", "X0A;+N15E6", tcis));
-    }
-
-    @Test
     public void testNullEvent() {
         try {
-            new CbusSensor("MS",null,tcis);
-            Assert.fail("Should have thrown an exception");
+            CbusSensor fail = new CbusSensor("MS",null,tcis);
+            Assert.fail("Should have thrown an exception" + fail);
         } catch (NullPointerException e) {
-            Assert.assertTrue(true);
         }
     }
 
 
     @Test
     public void testCTorShortEventSingle() {
-        CbusSensor t = new CbusSensor("MS","+7",tcis);
+        t = new CbusSensor("MS","+7",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testCTorShortEventSingleNegative() {
-        CbusSensor t = new CbusSensor("MS","-7",tcis);
+        t = new CbusSensor("MS","-7",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testCTorShortEventDouble() {
-        CbusSensor t = new CbusSensor("MS","+1;-1",tcis);
+        t = new CbusSensor("MS","+1;-1",tcis);
         Assert.assertNotNull("exists",t);
     }
 
 
     @Test
     public void testLongEventSingleNoN() {
-        CbusSensor t = new CbusSensor("MS","+654e321",tcis);
+        t = new CbusSensor("MS","+654e321",tcis);
         Assert.assertNotNull("exists",t);
     }    
 
 
     @Test
     public void testLongEventDoubleNoN() {
-        CbusSensor t = new CbusSensor("MS","-654e321;+123e456",tcis);
+        t = new CbusSensor("MS","-654e321;+123e456",tcis);
         Assert.assertNotNull("exists",t);
     }    
 
     
     @Test
     public void testCTorLongEventSingle() {
-        CbusSensor t = new CbusSensor("MS","+n654e321",tcis);
+        t = new CbusSensor("MS","+n654e321",tcis);
         Assert.assertNotNull("exists",t);
     }    
     
     @Test
     public void testCTorLongEventDouble() {
-        CbusSensor t = new CbusSensor("MS","+N299E17;-N123E456",tcis);
+        t = new CbusSensor("MS","+N299E17;-N123E456",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testCTorHexEventJustOpsCode() {
-        CbusSensor t = new CbusSensor("MS","X04;X05",tcis);
+        t = new CbusSensor("MS","X04;X05",tcis);
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testCTorHexEventOneByte() {
-        CbusSensor t = new CbusSensor("MS","X2301;X30FF",tcis);
+        t = new CbusSensor("MS","X2301;X30FF",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     
     @Test
     public void testCTorHexEventTwoByte() {
-        CbusSensor t = new CbusSensor("MS","X410001;X56FFFF",tcis);
+        t = new CbusSensor("MS","X410001;X56FFFF",tcis);
         Assert.assertNotNull("exists",t);
     }
 
     
     @Test
     public void testCTorHexEventThreeByte() {
-        CbusSensor t = new CbusSensor("MS","X6000010001;X72FFFFFF",tcis);
+        t = new CbusSensor("MS","X6000010001;X72FFFFFF",tcis);
         Assert.assertNotNull("exists",t);
     }    
     
@@ -200,35 +191,35 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     
     @Test
     public void testCTorHexEventFourByte() {
-        CbusSensor t = new CbusSensor("MS","X9000010001;X91FFFFFFFF",tcis);
+        t = new CbusSensor("MS","X9000010001;X91FFFFFFFF",tcis);
         Assert.assertNotNull("exists",t);
     }
 
 
     @Test
     public void testCTorHexEventFiveByte() {
-        CbusSensor t = new CbusSensor("MS","XB00D60010001;XB1FFFAAFFFFF",tcis);
+        t = new CbusSensor("MS","XB00D60010001;XB1FFFAAFFFFF",tcis);
         Assert.assertNotNull("exists",t);
     }
 
 
     @Test
     public void testCTorHexEventSixByte() {
-        CbusSensor t = new CbusSensor("MS","XD00D0060010001;XD1FFFAAAFFFFFE",tcis);
+        t = new CbusSensor("MS","XD00D0060010001;XD1FFFAAAFFFFFE",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     
     @Test
     public void testCTorHexEventSevenByte() {
-        CbusSensor t = new CbusSensor("MS","XF00D0A0600100601;XF1FFFFAAFAFFFFFE",tcis);
+        t = new CbusSensor("MS","XF00D0A0600100601;XF1FFFFAAFAFFFFFE",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testShortEventSinglegetAddrActive() {
-        CbusSensor t = new CbusSensor("MS","+7",tcis);
-        CanMessage m1 = t.getAddrActive();
+        t = new CbusSensor("MS","+7",tcis);
+        CanMessage m1 = ((CbusSensor)t).getAddrActive();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x98); // ASON OPC
@@ -241,8 +232,8 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Test
     public void testShortEventSinglegetAddrInactive() {
-        CbusSensor t = new CbusSensor("MS","+7",tcis);
-        CanMessage m1 = t.getAddrInactive();
+        t = new CbusSensor("MS","+7",tcis);
+        CanMessage m1 = ((CbusSensor)t).getAddrInactive();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x99); // ASOF OPC
@@ -255,8 +246,8 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Test
     public void testLongEventgetAddrActive() {
-        CbusSensor t = new CbusSensor("MS","+N54321E12345",tcis);
-        CanMessage m1 = t.getAddrActive();
+        t = new CbusSensor("MS","+N54321E12345",tcis);
+        CanMessage m1 = ((CbusSensor)t).getAddrActive();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x90); // ACON OPC
@@ -269,8 +260,8 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Test
     public void testLongEventgetAddrInactive() {
-        CbusSensor t = new CbusSensor("MS","+N54321E12345",tcis);
-        CanMessage m1 = t.getAddrInactive();
+        t = new CbusSensor("MS","+N54321E12345",tcis);
+        CanMessage m1 = ((CbusSensor)t).getAddrInactive();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x91); // ACOF OPC
@@ -285,9 +276,9 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Test
     public void testLongEventgetAddrActiveInverted() {
-        CbusSensor t = new CbusSensor("MS","+N54321E12345",tcis);
+        t = new CbusSensor("MS","+N54321E12345",tcis);
         t.setInverted(true);
-        CanMessage m1 = t.getAddrActive();
+        CanMessage m1 = ((CbusSensor)t).getAddrActive();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x91); // ACOF OPC
@@ -300,9 +291,9 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Test
     public void testLongEventgetAddrInactiveInverted() {
-        CbusSensor t = new CbusSensor("MS","+N54321E12345",tcis);
+        t = new CbusSensor("MS","+N54321E12345",tcis);
         t.setInverted(true);
-        CanMessage m1 = t.getAddrInactive();
+        CanMessage m1 = ((CbusSensor)t).getAddrInactive();
         CanMessage m2 = new CanMessage(tcis.getCanid());
         m2.setNumDataElements(5);
         m2.setElement(0, 0x90); // ACON OPC
@@ -315,7 +306,7 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Test
     public void testSensorCanMessage() throws jmri.JmriException {
-        CbusSensor t = new CbusSensor("MS","+N54321E12345",tcis);
+        t = new CbusSensor("MS","+N54321E12345",tcis);
         CanMessage m = new CanMessage(tcis.getCanid());
         m.setNumDataElements(5);
         m.setElement(0, 0x95); // EVULN OPC
@@ -323,31 +314,31 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setElement(2, 0x31);
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
-        t.message(m);
+        ((CbusSensor)t).message(m);
         Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN); 
         
         m.setElement(0, 0x90); // ACON OPC
-        t.message(m);
+        ((CbusSensor)t).message(m);
         Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
         
         m.setElement(0, 0x91); // ACOF OPC
-        t.message(m);
+        ((CbusSensor)t).message(m);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
         
         t.setInverted(true);
         t.setKnownState(Sensor.UNKNOWN);
-        t.message(m);
+        ((CbusSensor)t).message(m);
         Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
         
         m.setElement(0, 0x90); // ACON OPC
         t.setInverted(true);
-        t.message(m);
+        ((CbusSensor)t).message(m);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);    
     }
 
     @Test
     public void testSensorCanReply() throws jmri.JmriException {
-        CbusSensor t = new CbusSensor("MS","+N54321E12345",tcis);
+        t = new CbusSensor("MS","+N54321E12345",tcis);
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(5);
         r.setElement(0, 0x95); // EVULN OPC
@@ -355,32 +346,32 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         r.setElement(2, 0x31);
         r.setElement(3, 0x30);
         r.setElement(4, 0x39);
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);        
         
         r.setElement(0, 0x90); // ACON OPC
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
         
         r.setElement(0, 0x91); // ACOF OPC
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
         
         t.setInverted(true);
         t.setKnownState(Sensor.UNKNOWN);
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
         
         r.setElement(0, 0x90); // ACON OPC
         t.setInverted(true);
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);    
     }
     
     // with presence of node number should still resolve to short event turnout due to opc
     @Test
     public void testSensorCanReplyShortEvWithNode() throws jmri.JmriException {
-        CbusSensor t = new CbusSensor("MS","+12345",tcis);
+        t = new CbusSensor("MS","+12345",tcis);
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(5);
         r.setElement(0, 0x95); // EVULN OPC
@@ -388,26 +379,26 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         r.setElement(2, 0x31);
         r.setElement(3, 0x30);
         r.setElement(4, 0x39);
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);        
         
         r.setElement(0, 0x98); // ASON OPC
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
         
         r.setElement(0, 0x99); // ASOF OPC
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
         
         
         r.setElement(0, 0x98); // ASON OPC
         r.setExtended(true);
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
         
         r.setExtended(false);
         r.setRtr(true);
-        t.reply(r);
+        ((CbusSensor)t).reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
         
     
@@ -417,7 +408,7 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Test
     public void testSensorCanMessageShortEvWithNode() throws jmri.JmriException {
     
-        CbusSensor t = new CbusSensor("MS","+12345",tcis);
+        t = new CbusSensor("MS","+12345",tcis);
         CanMessage m = new CanMessage(tcis.getCanid());
         m.setNumDataElements(5);
         m.setElement(0, 0x95); // EVULN OPC
@@ -425,21 +416,21 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setElement(2, 0x31);
         m.setElement(3, 0x30);
         m.setElement(4, 0x39);
-        t.message(m);
+        ((CbusSensor)t).message(m);
         Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN); 
         
         m.setElement(0, 0x98); // ASON OPC
-        t.message(m);
+        ((CbusSensor)t).message(m);
         Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
         
         m.setElement(0, 0x99); // ASOF OPC
-        t.message(m);
+        ((CbusSensor)t).message(m);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
         
         
         m.setElement(0, 0x98); // ASON OPC
         m.setExtended(true);
-        t.message(m);
+        ((CbusSensor)t).message(m);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
         
         m.setExtended(false);
@@ -448,9 +439,10 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     
     }
     
-    // The minimal setup for log4J
+    private TrafficControllerScaffold tcis;
+    
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // load dummy TrafficController
@@ -459,11 +451,14 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
+        t = null;
+        tcis.terminateThreads();
         tcis=null;
         JUnitUtil.tearDown();
+
     }
     // private final static Logger log = LoggerFactory.getLogger(CbusSensorTest.class);
 }

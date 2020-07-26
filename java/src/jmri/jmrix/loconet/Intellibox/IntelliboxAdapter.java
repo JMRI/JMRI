@@ -51,21 +51,25 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         packets.startThreads();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] validBaudRates() {
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
-     * Get an array of valid baud rates as integers.
+     * {@inheritDoc}
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**
-     * Rephrase option 1, so that it doesn't talk about LocoBuffer
+     * Rephrase option 1, so that it doesn't talk about LocoBuffer.
+     * @return human readable string, TypeSerial.
      */
     public String option1Name() {
         return Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial"));
@@ -73,6 +77,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
 
     /**
      * Provide just one valid command station value.
+     * @return single value array with name of COMMAND_STATION_IBX_TYPE_1 .
      */
     public String[] commandStationOptions() {
         String[] retval = {

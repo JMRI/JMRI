@@ -5,16 +5,17 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
-import  jmri.util.FileUtil;
+import jmri.util.FileUtil;
 import jmri.jmrit.ctc.CTCFiles;
 
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  *
- * This just maintains all of the properties a user can create.  Stupid simple.
+ * This just maintains all of the properties a user can create. Stupid simple.
  */
 public class ProgramProperties {
+
     private static final String PROPERTIES_FILENAME = "ProgramProperties.xml";  // NOI18N
 
     public static final String FILENAME_DEFAULT = "preference:ctc/CTCSystem.xml";   // NOI18N
@@ -75,10 +76,10 @@ public class ProgramProperties {
     public ProgramProperties() {
         try {
             File file = CTCFiles.getFile(PROPERTIES_FILENAME);
-            FileInputStream fileInputStream = new FileInputStream(file);
             Properties properties = new Properties();
-            properties.loadFromXML(fileInputStream);
-            fileInputStream.close();    // Spotbugs complains, but "loadFromXML" has a "in.close()" and is DOCUMENTED to close it.  But it won't hurt.
+            try (FileInputStream fileInputStream = new FileInputStream(file)) {
+                properties.loadFromXML(fileInputStream);
+            }
 
             // Migrate file name if necessary
             String tempName = properties.getProperty(FILENAME_KEY, FILENAME_DEFAULT);
@@ -102,8 +103,7 @@ public class ProgramProperties {
             _mTUL_DispatcherInternalSensorLockTogglePattern = properties.getProperty(TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN, TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT);
             _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = properties.getProperty(TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN, TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT);
             _mCodeButtonDelayTime = Integer.parseInt(properties.getProperty(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS, NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT));
-        }
-        catch (IOException | NumberFormatException e) {
+        } catch (IOException | NumberFormatException e) {
             _mFilename = FileUtil.getExternalFilename(FILENAME_DEFAULT);
             _mCodeButtonInternalSensorPattern = CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mSIDI_CodingTimeInMilliseconds = Integer.parseInt(SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
@@ -155,6 +155,7 @@ public class ProgramProperties {
             try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                 properties.storeToXML(fileOutputStream, PROPERTIES_FILENAME);
             }
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
     }
 }

@@ -93,7 +93,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -112,7 +112,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
     @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
 
         if (status != OK ) {
@@ -157,7 +157,7 @@ public class OffsetHighCvProgrammerFacade extends AbstractProgrammerFacade imple
                 }
                 break;
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;

@@ -1,17 +1,20 @@
 package jmri.jmrit.operations.setup;
 
-import apps.Apps;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.ExceptionContext;
 import jmri.util.swing.ExceptionDisplayFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to backup operation files to a directory selected by the user.
@@ -23,8 +26,8 @@ public class RestoreFilesAction extends AbstractAction {
 
 //    private final static Logger log = LoggerFactory.getLogger(RestoreFilesAction.class);
 
-    public RestoreFilesAction(String s) {
-        super(s);
+    public RestoreFilesAction() {
+        super(Bundle.getMessage("Restore"));
     }
 
     @Override
@@ -85,7 +88,11 @@ public class RestoreFilesAction extends AbstractAction {
             // otherwise it is normal to not have the task running
             InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
 
-            Apps.handleRestart();
+            try {
+                InstanceManager.getDefault(jmri.ShutDownManager.class).restart();
+            } catch (Exception er) {
+                log.error("Continuing after error in handleRestart", er);
+            }
 
         } catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex,
@@ -117,6 +124,7 @@ public class RestoreFilesAction extends AbstractAction {
         }
     }
 
+    private static final Logger log = LoggerFactory.getLogger(RestoreFilesAction.class);
 }
 
 

@@ -1,9 +1,11 @@
 package jmri.server.json.reporter;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
@@ -11,11 +13,11 @@ import jmri.ReporterManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -34,7 +36,7 @@ public class JsonReporterSocketServiceTest {
             JsonReporterSocketService service = new JsonReporterSocketService(connection);
             ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
             Reporter memory1 = manager.provideReporter("IR1");
-            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
+            service.onMessage(JsonReporter.REPORTER, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             // TODO: test that service is listener in ReporterManager
             // default null value of memory1 has text representation "null" in JSON
             message = connection.getMessage();
@@ -72,22 +74,22 @@ public class JsonReporterSocketServiceTest {
             Reporter memory1 = manager.provideReporter("IR1");
             // Reporter "close"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "close");
-            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
+            service.onMessage(JsonReporter.REPORTER, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals("close", memory1.getCurrentReport());
             // Reporter "throw"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "throw");
-            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
+            service.onMessage(JsonReporter.REPORTER, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals("throw", memory1.getCurrentReport());
             // Reporter UNKNOWN - remains ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").putNull(JsonReporter.REPORT);
-            service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
+            service.onMessage(JsonReporter.REPORTER, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals(null, memory1.getCurrentReport());
             memory1.setReport("throw");
             // Reporter no value
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1");
             JsonException exception = null;
             try {
-                service.onMessage(JsonReporter.REPORTER, message, JSON.POST, locale, 42);
+                service.onMessage(JsonReporter.REPORTER, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             } catch (JsonException ex) {
                 exception = ex;
             }
@@ -98,15 +100,14 @@ public class JsonReporterSocketServiceTest {
         }
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initReporterManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

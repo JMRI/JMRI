@@ -1,15 +1,14 @@
 package jmri.util;
 
 import java.util.*;
+
 import org.apache.log4j.*;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JTextPaneAppenderTest {
 
@@ -34,13 +33,12 @@ public class JTextPaneAppenderTest {
             ));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     @SuppressWarnings("unchecked") // cast required by logging APIs
     public void tearDown() {        
         // remove any JTextPaneAppender objects that 

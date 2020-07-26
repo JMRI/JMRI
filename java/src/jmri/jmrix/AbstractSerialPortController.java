@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import java.util.Enumeration;
 import java.util.Vector;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -41,7 +42,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @Override
     public String handlePortBusy(PortInUseException p, String portName, Logger log) {
-        log.error(portName + " port is in use: " + p.getMessage());
+        log.error("{} port is in use: {}", portName, p.getMessage());
         /*JOptionPane.showMessageDialog(null, "Port is in use",
          "Error", JOptionPane.ERROR_MESSAGE);*/
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
@@ -50,9 +51,13 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * Standard error handling for port-not-found case.
+     * @param p no such port exception.
+     * @param portName port name.
+     * @param log system log.
+     * @return human readable string with error detail.
      */
     public String handlePortNotFound(NoSuchPortException p, String portName, Logger log) {
-        log.error("Serial port " + portName + " not found");
+        log.error("Serial port {} not found", portName);
         /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
          "Error", JOptionPane.ERROR_MESSAGE);*/
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
@@ -84,7 +89,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     public String getCurrentPortName() {
         if (mPort == null) {
             if (getPortNames() == null) {
-                // This shouldn't happen in normal operation
+                // this shouldn't happen in normal operation
                 // but in the tests this can happen if the receive thread has been interrupted
                 log.error("Port names returned as null");
                 return null;
@@ -105,7 +110,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      *
      * @param serialPort Port to be updated
      * @param flow       flow control mode from (@link purejavacomm.SerialPort}
-     * @param rts        Set RTS active if true
+     * @param rts        set RTS active if true
      * @param dtr        set DTR active if true
      */
     protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow, boolean rts, boolean dtr) {
@@ -123,7 +128,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         } catch (purejavacomm.UnsupportedCommOperationException e) {
             log.warn("Could not set flow control, ignoring");
         }
-        if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts);  // not connected in some serial ports and adapters
+        if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts); // not connected in some serial ports and adapters
         serialPort.setDTR(dtr);
     }
 
@@ -144,7 +149,93 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     public void configureBaudRate(String rate) {
         mBaudRate = rate;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void configureBaudRateFromNumber(String indexString) {
+        int baudNum;
+        int index = 0;
+        final String[] rates = validBaudRates();
+        final int[] numbers = validBaudNumbers();
+        if ((numbers == null) || (numbers.length == 0)) { // simulators return null TODO for SpotBugs make that into an empty array
+            mBaudRate = null;
+            log.debug("no serial port speed values received (OK for simulator)");
+            return;
+        }
+        if (numbers.length != rates.length) {
+            mBaudRate = null;
+            log.error("arrays wrong length in currentBaudNumber: {}, {}", numbers.length, rates.length);
+            return;
+        }
+        if (indexString.isEmpty()) {
+            mBaudRate = null; // represents "(none)"
+            log.debug("empty baud rate received");
+            return;
+        }
+        try {
+            // since 4.16 first try to convert loaded value directly to integer
+            baudNum = Integer.parseInt(indexString); // new storage format, will throw ex on old format
+            log.debug("new profile format port speed value");
+        } catch (NumberFormatException ex) {
+            // old pre 4.15.8 format is i18n string including thousand separator and whatever suffix like "18,600 bps (J1)"
+            log.warn("old profile format port speed value converted");
+            // filter only numerical characters from indexString
+            StringBuilder baudNumber = new StringBuilder();
+            boolean digitSeen = false;
+            for (int n = 0; n < indexString.length(); n++) {
+                if (Character.isDigit(indexString.charAt(n))) {
+                    digitSeen = true;
+                    baudNumber.append(indexString.charAt(n));
+                } else if ((indexString.charAt(n) == ' ') && digitSeen) {
+                    break; // break on first space char encountered after at least 1 digit was found
+                }
+            }
+            if (baudNumber.toString().equals("")) { // no number found in indexString e.g. "(automatic)"
+                baudNum = 0;
+            } else {
+                try {
+                    baudNum = Integer.parseInt(baudNumber.toString());
+                } catch (NumberFormatException e2) {
+                    mBaudRate = null; // represents "(none)"
+                    log.error("error in filtering old profile format port speed value");
+                    return;
+                }
+                log.debug("old format baud number: {}", indexString);
+            }
+        }
+        // fetch baud rate description from validBaudRates[] array copy and set
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] == baudNum) {
+                index = i;
+                log.debug("found new format baud value at index {}", i);
+                break;
+            }
+        }
+        mBaudRate = validBaudRates()[index];
+        log.debug("mBaudRate set to: {}", mBaudRate);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void configureBaudRateFromIndex(int index) {
+        if (validBaudRates().length > index) {
+            mBaudRate = validBaudRates()[index];
+            log.debug("mBaudRate set by index to: {}", mBaudRate);
+        } else {
+            log.debug("no baud rates in array"); // expected for simulators extending serialPortAdapter, mBaudRate already null
+        }
+    }
+
     protected String mBaudRate = null;
+
+    @Override
+    public int defaultBaudIndex() {
+        return -1;
+    }
 
     /**
      * {@inheritDoc}
@@ -152,50 +243,107 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public String getCurrentBaudRate() {
         if (mBaudRate == null) {
-            return validBaudRates()[0];
+            return "";
         }
         return mBaudRate;
     }
 
     /**
-     * Get an array of valid baud rates as integers. This allows subclasses to
-     * change the arrays of speeds.
-     * <p>
-     * This method need not be reimplemented unless the subclass is using
-     * currentBaudNumber, which requires it.
+     * {@inheritDoc}
      */
-    public int[] validBaudNumber() {
-        log.error("default validBaudNumber implementation should not be used", new Exception());
+    @Override
+    public String getCurrentBaudNumber() {
+        int[] numbers = validBaudNumbers();
+        String[] rates = validBaudRates();
+        if (numbers == null || rates == null || numbers.length != rates.length) { // entries in arrays should correspond
+            return "";
+        }
+        String baudNumString = "";
+        // first try to find the configured baud rate value
+        if (mBaudRate != null) {
+            for (int i = 0; i < numbers.length; i++) {
+                if (rates[i].equals(mBaudRate)) {
+                    baudNumString = Integer.toString(numbers[i]);
+                    break;
+                }
+            }
+        } else if (defaultBaudIndex() > -1) {
+            // use default
+            baudNumString = Integer.toString(numbers[defaultBaudIndex()]);
+            log.debug("using default port speed {}", baudNumString);
+        }
+        log.debug("mBaudRate = {}, matched to string {}", mBaudRate, baudNumString);
+        return baudNumString;
+    }
+
+    @Override
+    public int getCurrentBaudIndex() {
+        if (mBaudRate != null) {
+            String[] rates = validBaudRates();
+            // find the configured baud rate value
+            for (int i = 0; i < rates.length; i++) {
+                if (rates[i].equals(mBaudRate)) {
+                    return i;
+                }
+            }
+        }
+        return defaultBaudIndex(); // default index or -1 if port speed not supported
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "null signals incorrect implementation of portcontroller")
+    @Override
+    public String[] validBaudRates() {
+        log.error("default validBaudRates implementation should not be used", new Exception());
         return null;
     }
 
     /**
-     * Convert a baud rate String to a int number,e.g. "9,600" to 9600.
+     * {@inheritDoc}
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "null signals incorrect implementation of portcontroller")
+    @Override
+    public int[] validBaudNumbers() {
+        log.error("default validBaudNumbers implementation should not be used", new Exception());
+        return null;
+    }
+
+    /**
+     * Convert a baud rate I18N String to an int number, e.g. "9,600 baud" to 9600.
      * <p>
-     * Uses the validBaudNumber and validBaudRates methods to do this.
+     * Uses the validBaudNumbers() and validBaudRates() methods to do this.
      *
-     * @param currentBaudRate a rate from validBaudRates
-     * @return -1 if no match (configuration system should prevent this)
+     * @param currentBaudRate a rate from validBaudRates()
+     * @return baudrate as integer if available and matching first digits in currentBaudRate,
+     *         0 if baudrate not supported by this adapter,
+     *         -1 if no match (configuration system should prevent this)
      */
     public int currentBaudNumber(String currentBaudRate) {
         String[] rates = validBaudRates();
-        int[] numbers = validBaudNumber();
+        int[] numbers = validBaudNumbers();
 
         // return if arrays invalid
         if (numbers == null) {
-            log.error("numbers array null in currentBaudNumber");
+            log.error("numbers array null in currentBaudNumber()");
             return -1;
         }
         if (rates == null) {
-            log.error("rates array null in currentBaudNumber");
+            log.error("rates array null in currentBaudNumber()");
             return -1;
         }
-        if (numbers.length < 1 || (numbers.length != rates.length)) {
-            log.error("arrays wrong length in currentBaudNumber: " + numbers.length + "," + rates.length);
+        if (numbers.length != rates.length) {
+            log.error("arrays are of different length in currentBaudNumber: {} vs {}", numbers.length, rates.length);
             return -1;
         }
-
-        // find the baud rate value, configure comm options
+        if (numbers.length < 1) {
+            log.warn("baudrate is not supported by adapter");
+            return 0;
+        }
+        // find the baud rate value
         for (int i = 0; i < numbers.length; i++) {
             if (rates[i].equals(currentBaudRate)) {
                 return numbers[i];
@@ -203,12 +351,13 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
 
         // no match
-        log.error("no match to (" + currentBaudRate + ") in currentBaudNumber");
+        log.error("no match to ({}) in currentBaudNumber", currentBaudRate);
         return -1;
     }
 
     /**
-     * Set event logging
+     * Set event logging.
+     * @param port Serial port to configure
      */
     protected void setPortEventLogging(SerialPort port) {
         // arrange to notify later
@@ -219,38 +368,37 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                     int type = e.getEventType();
                     switch (type) {
                         case SerialPortEvent.DATA_AVAILABLE:
-                            log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue()); // NOI18N
                             return;
                         case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                            log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue()); // NOI18N
                             return;
                         case SerialPortEvent.CTS:
-                            log.info("SerialEvent: CTS is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: CTS is {}", e.getNewValue()); // NOI18N
                             return;
                         case SerialPortEvent.DSR:
-                            log.info("SerialEvent: DSR is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: DSR is {}", e.getNewValue()); // NOI18N
                             return;
                         case SerialPortEvent.RI:
-                            log.info("SerialEvent: RI is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: RI is {}", e.getNewValue()); // NOI18N
                             return;
                         case SerialPortEvent.CD:
-                            log.info("SerialEvent: CD is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: CD is {}", e.getNewValue()); // NOI18N
                             return;
                         case SerialPortEvent.OE:
-                            log.info("SerialEvent: OE (overrun error) is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: OE (overrun error) is {}", e.getNewValue()); // NOI18N
                             return;
                         case SerialPortEvent.PE:
-                            log.info("SerialEvent: PE (parity error) is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: PE (parity error) is {}", e.getNewValue()); // NOI18N
                             return;
                         case SerialPortEvent.FE:
-                            log.info("SerialEvent: FE (framing error) is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: FE (framing error) is {}", e.getNewValue()); // NOI18N
                             return;
                         case SerialPortEvent.BI:
-                            log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue()); // NOI18N
+                            log.info("SerialEvent: BI (break interrupt) is {}", e.getNewValue()); // NOI18N
                             return;
                         default:
-                            log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue()); // NOI18N
-                            return;
+                            log.info("SerialEvent of unknown type: {} value: {}", type, e.getNewValue()); // NOI18N
                     }
                 }
             }
@@ -262,25 +410,25 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             port.notifyOnFramingError(true);
         } catch (Exception e) {
-            log.debug("Could not notifyOnFramingError: " + e); // NOI18N
+            log.debug("Could not notifyOnFramingError: {}", e); // NOI18N
         }
 
         try {
             port.notifyOnBreakInterrupt(true);
         } catch (Exception e) {
-            log.debug("Could not notifyOnBreakInterrupt: " + e); // NOI18N
+            log.debug("Could not notifyOnBreakInterrupt: {}", e); // NOI18N
         }
 
         try {
             port.notifyOnParityError(true);
         } catch (Exception e) {
-            log.debug("Could not notifyOnParityError: " + e); // NOI18N
+            log.debug("Could not notifyOnParityError: {}", e); // NOI18N
         }
 
         try {
             port.notifyOnOverrunError(true);
         } catch (Exception e) {
-            log.debug("Could not notifyOnOverrunError: " + e); // NOI18N
+            log.debug("Could not notifyOnOverrunError: {}", e); // NOI18N
         }
 
         port.notifyOnCarrierDetect(true);
@@ -332,6 +480,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             closeConnection();
         } catch (RuntimeException e) {
+            log.warn("closeConnection failed");
         }
         reconnect();
     }
@@ -361,7 +510,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             thread.join();
         } catch (InterruptedException e) {
-            log.error("Unable to join to the reconnection thread ", e.getMessage());
+            log.error("Unable to join to the reconnection thread {}", e.getMessage());
         }
         if (!opened) {
             log.error("Failed to re-establish connectivity");
@@ -408,6 +557,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                         }
                     }
                 } catch (RuntimeException e) {
+                    log.warn("failed to reconnect to port {}", (mPort == null ? "null" : mPort));
                 }
                 reply = !opened;
                 if (count >= retryAttempts) {
