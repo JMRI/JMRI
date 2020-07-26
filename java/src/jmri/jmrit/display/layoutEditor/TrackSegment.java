@@ -8,8 +8,6 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.Bundle;
-import jmri.util.MathUtil;
 
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the

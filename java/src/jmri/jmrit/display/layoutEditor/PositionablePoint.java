@@ -6,8 +6,6 @@ import java.util.*;
 import javax.annotation.*;
 
 import jmri.*;
-import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.jmrit.signalling.SignallingGuiTools;  // temporary
 
 

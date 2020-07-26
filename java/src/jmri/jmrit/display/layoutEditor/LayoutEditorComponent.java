@@ -11,10 +11,11 @@ import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.util.*;
-import org.slf4j.*;
 
 /*
 * This is an intermediate component used to put the Layout Editor

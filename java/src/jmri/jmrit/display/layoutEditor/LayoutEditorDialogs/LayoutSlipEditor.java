@@ -13,7 +13,6 @@ import javax.swing.*;
 
 import jmri.NamedBean.DisplayOptions;
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.Bundle;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;

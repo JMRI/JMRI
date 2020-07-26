@@ -14,7 +14,6 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.jmrit.display.layoutEditor.LevelXing.Geometry;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.MathUtil;

@@ -13,7 +13,6 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.jmrit.display.layoutEditor.PositionablePoint.PointType;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;

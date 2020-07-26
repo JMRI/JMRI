@@ -5,11 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
+
 import javax.annotation.*;
 import javax.swing.*;
 import javax.swing.event.*;
+
 import jmri.util.MathUtil;
-import org.slf4j.*;
 
 /**
  * A collection of tools to check various things on the layout editor panel.
@@ -814,6 +815,5 @@ final public class LayoutEditorChecks {
         return results;
     }   // getCheckMarkedMenuItemNames
 
-    private final static Logger log
-            = LoggerFactory.getLogger(LayoutEditorChecks.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorChecks.class);
 }

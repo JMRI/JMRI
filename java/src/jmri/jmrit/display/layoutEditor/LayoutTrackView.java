@@ -12,7 +12,6 @@ import javax.swing.*;
 
 import jmri.JmriException;
 import jmri.Turnout;
-import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.util.*;
 
 /**

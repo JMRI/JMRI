@@ -2,15 +2,15 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
+
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A collection of tools to find various objects within the layout model(s)

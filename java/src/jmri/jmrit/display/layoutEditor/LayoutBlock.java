@@ -14,7 +14,6 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.*;
-import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;

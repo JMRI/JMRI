@@ -9,7 +9,6 @@ import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
 
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.Bundle;
 
 /**
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
