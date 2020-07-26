@@ -1147,8 +1147,10 @@
         Also wrote all the slip code for the web server.
         </li>
 
-        <li>Mark Waters, who provided numerous Zimo decoder
-        definitions and new Zimo MX620 definitions.</li>
+        <li>Mark Waters, <!-- markw16 -->
+        who provided numerous Zimo decoder
+        definitions, new Zimo MX620 definitions
+        and install instructions for Linux Mint.</li>
 
         <li>Howard Watkins, who helped test the CBUS support and
         provide a sample script for Layout Editor</li>
