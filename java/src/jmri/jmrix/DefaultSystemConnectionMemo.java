@@ -31,7 +31,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     private String prefixAsLoaded;
     private String userName;
     private String userNameAsLoaded;
-    protected Map<Class,Object> classObjectMap;
+    protected Map<Class<?>,Object> classObjectMap;
 
     @SuppressWarnings("deprecation")
     protected DefaultSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
@@ -199,7 +199,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     }
 
     public void dispose() {
-        Set<Class> keySet = new HashSet<>(classObjectMap.keySet());
+        Set<Class<?>> keySet = new HashSet<>(classObjectMap.keySet());
         keySet.forEach(this::removeRegisteredObject);
         SystemConnectionMemoManager.getDefault().deregister(this);
     }
