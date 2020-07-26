@@ -198,9 +198,18 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
         }
     }
 
+    // removeRegisteredObject requires a Class<T> argument, but 
+    // the classObjectMap member (and hence keySet here) contains
+    // a Class object.  
+    // It's not at all clear that type-safety is being 
+    // assured, as opposed to assumed, but to avoid warnings on every compile
+    // we'll annotate the assumption.
+    @SuppressWarnings("unchecked")  // foreach statement below assumes type-safety, see comment above.
     public void dispose() {
         Set<Class> keySet = new HashSet<>(classObjectMap.keySet());
+        
         keySet.forEach(this::removeRegisteredObject);
+        
         SystemConnectionMemoManager.getDefault().deregister(this);
     }
 
