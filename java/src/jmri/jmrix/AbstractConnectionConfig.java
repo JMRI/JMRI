@@ -6,6 +6,10 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+<<<<<<< HEAD
+=======
+import java.util.TreeMap;
+>>>>>>> next-mqtt
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -99,7 +103,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     protected JPanel _details = null;
 
-    protected final HashMap<String, Option> options = new HashMap<>();
+    protected final Map<String, Option> options = new TreeMap<>();
 
     /**
      * Determine if configuration needs to be written to disk.
@@ -133,7 +137,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         String optionDisplayName;
         JComponent optionSelection;
         Boolean advanced = true;
-        JLabel label = null;
+	    JLabel label = null;
 
         public Option(String name, JComponent optionSelection, Boolean advanced) {
             this.optionDisplayName = name;

@@ -8,6 +8,7 @@ import jmri.implementation.AbstractSensor;
  * Implementation of the Sensor interface for MQTT layouts.
  *
  * @author Lionel Jeanson Copyright (c) 2017, 2019
+ * @author Bob Jacobsen   Copyright (c) 2020
  */
 public class MqttSensor extends AbstractSensor implements MqttEventListener {
 
@@ -16,6 +17,9 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
 
     /**
      * Requires, but does not check, that the system name and topic be consistent
+     * @param Adapter to specific connection
+     * @param System Name for this Sensor
+     * @param Topic string to be used in communications
      */
     MqttSensor(MqttAdapter ma, String systemName, String topic) {
         super(systemName);
@@ -84,7 +88,7 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
     public void setKnownState(int s) {
         // sort out states
         String payload = parser.payloadFromBean(this, s);
-        System.out.println("payload "+payload);
+        log.debug("payload: {}", payload);
         // send appropriate command
         sendMessage(payload);
     }

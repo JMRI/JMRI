@@ -71,9 +71,8 @@
         When e.g. Sensors become available, they might have
         e.g. a type-specific part of "track/sensor/".
         <p>
-        <a href="images/MQTT_Preferences.png"><img
-        src="images/MQTT_Preferences.png" align="right" height="211"
-        width="345"></a>
+        <a href="MQTT_Preferences.png"><img src="MQTT_Preferences.png" align="right" height="211" width="345"></a>
+        <span class="since">Since JMRI 4.15.5</span>
         You can change the base topic by 
         going to the JMRI Connection preferences,
         selecting your MQTT connection's preference
@@ -81,8 +80,11 @@
         and then entering the desired value in the "MQTT channel"
         selection box.  Depending on which kind of computer you
         have, you might have to click once or twice in that box
-        before you can enter your new prefix text.  Then
-        save your changes and restart the program.
+        before you can enter your new prefix text. 
+        You then must 
+        save your changes and restart the program; the program
+        won't continue to operate normally after changing the base prefix
+        until you restart it.
         
         <p>
         You can change the type-specific part of the prepended string using
