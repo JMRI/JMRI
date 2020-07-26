@@ -76,12 +76,18 @@
         <h4>MQTT</h4>
             <ul>
                 <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
-                <li>When status UNKNOWN or INCONSISTENT is received from MQTT and the turnout operating mode is MONITORING or EXACT, the layout is now updated with this status</li>
-                <li>When EXACT feedback mode is selected, two different MQTT topics will be used - one for commands and one for state</li>
+                <li>When status UNKNOWN or INCONSISTENT is received from MQTT 
+                    and the turnout operating mode is MONITORING or EXACT, 
+                    the layout is now updated with this status</li>
+                <li>When EXACT feedback mode is selected, 
+                    two different MQTT topics will be used - one for commands and one for state</li>
                 <li>Added MQTT Sensors</li>
                 <li>MQTT connection configuration now lets you set the prefix for Turnouts, Sensors,
                         Lights, Reporters, Signal Heads and Signal Masts.  (There's no actual support
-                        for Lights, Reporters, Heads and Masts yet, but you can set the prefix)
+                        for Lights, Reporters, Heads and Masts yet, but you can set the prefix).
+                        Note: You should check the settings for Turnouts and Sensors to ensure
+                        they're what you want.  This code upgrade might have overwritten any
+                        values you (had to) manually edit into preferences in the past.
                     
             </ul>
 
