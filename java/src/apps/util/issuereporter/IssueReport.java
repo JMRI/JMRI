@@ -36,9 +36,9 @@ public abstract class IssueReport extends Bean {
      *
      * @param repository the GitHub repository to submit to
      * @return the URI to submit the report to
-     * @throws URISyntaxException              if unable to create URI for issue
-     * @throws IOException                     if unable to connect to GitHub
-     * @throws IssueReport414Exception         if report is too long
+     * @throws URISyntaxException      if unable to create URI for issue
+     * @throws IOException             if unable to connect to GitHub
+     * @throws IssueReport414Exception if report is too long
      */
     @Nonnull
     public URI submit(GitHubRepository repository) throws URISyntaxException, IOException, IssueReport414Exception {

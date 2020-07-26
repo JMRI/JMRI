@@ -23,7 +23,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import jmri.Application;
-import jmri.util.SystemType;
 
 import org.apiguardian.api.API;
 
@@ -276,20 +275,11 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
             URI uri = report.submit(repoCB.getItemAt(repoCB.getSelectedIndex()));
             List<File> attachments = report.getAttachments();
             if (!attachments.isEmpty()) {
-                if (!SystemType.isMacOSX()) {
-                    FileTransferable ft = new FileTransferable(attachments);
-                    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ft, this);
-                    JOptionPane.showMessageDialog(this,
-                            Bundle.getMessage("IssueReporter.attachments.message"),
-                            Bundle.getMessage("IssueReporter.attachments.title"),
-                            JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this,
-                            Bundle.getMessage("IssueReporter.macOSAttachments.message"),
-                            Bundle.getMessage("IssueReporter.macOSAttachments.title"),
-                            JOptionPane.INFORMATION_MESSAGE);
-                    Desktop.getDesktop().open(attachments.get(0).getParentFile());
-                }
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("IssueReporter.attachments.message"),
+                        Bundle.getMessage("IssueReporter.attachments.title"),
+                        JOptionPane.INFORMATION_MESSAGE);
+                Desktop.getDesktop().open(attachments.get(0).getParentFile());
             }
             Desktop.getDesktop().browse(uri);
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
@@ -307,11 +297,6 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
                     Bundle.getMessage("IssueReporter.414.title"),
                     JOptionPane.INFORMATION_MESSAGE);
             submitReport(report);
-            List<File> attachments = report.getAttachments();
-            if (!attachments.isEmpty()) {
-                // open attachments folder
-                // display dialog instructing user to copy attachments
-            }
         }
     }
 

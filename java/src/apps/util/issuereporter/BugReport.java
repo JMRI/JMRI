@@ -2,16 +2,13 @@ package apps.util.issuereporter;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.prefs.InitializationException;
 
-import org.apache.commons.io.FileUtils;
 import org.jdom2.JDOMException;
 
 /**
@@ -36,55 +33,49 @@ public class BugReport extends IssueReport {
 
     @Override
     public void prepare() {
-        String instructions = "";
         title = Bundle.getMessage(Locale.US, "bug.title", title);
         if (!tooLong) {
-            if (includeProfile) {
-                try {
-                    Path dir = Files.createTempDirectory("jmri-issue-report-" + new Date().getTime());
+            try {
+                Path dir = Files.createTempDirectory("jmri-issue-report-" + new Date().getTime());
+                if (includeLogs) {
                     Files.copy(new File(System.getProperty("jmri.log.path"), "session.log").toPath(), dir.resolve("session.log"), StandardCopyOption.REPLACE_EXISTING);
-                    java.awt.Desktop.getDesktop().open(dir.toFile());
-                    File archive = new File(dir.toFile(), "profile.zip");
-                    ProfileManager.getDefault().export(ProfileManager.getDefault().getActiveProfile(), archive, false, false);
-                    Files.newDirectoryStream(dir).forEach(p -> files.add(p.toFile()));
-                    // TODO: copy sysInfo to temp file and add to files
-                } catch (IOException | JDOMException | InitializationException | NullPointerException ex) {
-                    log.error("Unable to include profile in report.", ex);
-                    includeProfile = false;
                 }
+                if (includeProfile) {
+                    Profile profile = ProfileManager.getDefault().getActiveProfile();
+                    if (profile != null) {
+                        File archive = new File(dir.toFile(), "profile.zip");
+                        ProfileManager.getDefault().export(profile, archive, false, false);
+                    }
+                }
+                if (includeSysInfo) {
+                    getSysInfoFile(dir);
+                }
+                Files.newDirectoryStream(dir).forEach(p -> files.add(p.toFile()));
+            } catch (IOException | JDOMException | InitializationException | NullPointerException ex) {
+                log.error("Unable to include profile in report.", ex);
+                includeProfile = false;
             }
             body = Bundle.getMessage(Locale.US,
                     "bug.body",
-                    instructions,
+                    !files.isEmpty() ? Bundle.getMessage("instructions.paste.files") : "",
                     body,
                     getSimpleContext(),
-                    !includeProfile ? getSysInfo() : "",
-                    !includeProfile ? getLogs() : "",
-                    !files.isEmpty() ? Bundle.getMessage("instructions.paste.files") : "",
                     getIssueFooter());
         } else {
             body = Bundle.getMessage("instructions.paste.414");
         }
     }
 
-    private String getLogs() {
+    private void getSysInfoFile(Path path) {
+        Path file = path.resolve("systemInfo.md");
         try {
-            return includeLogs
-                    ? "<details>\n<summary>Session Log</summary>\n\n```\n"
-                    + FileUtils.readFileToString(new File(System.getProperty("jmri.log.path"), "session.log"), StandardCharsets.UTF_8)
-                    + "```\n</details>\n\n"
-                    : "";
+            Files.createFile(file);
+            Files.write(file, new SystemInfo(false).asList(), StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException ex) {
-            log.error("Exception reading session log", ex);
-            return "";
+            log.error("Exception writing system info", ex);
         }
     }
 
-    @Nonnull
-    private String getSysInfo() {
-        return includeSysInfo ? new SystemInfo(true).toString() : "";
-    }
-    
     @Override
     public List<File> getAttachments() {
         return files;
