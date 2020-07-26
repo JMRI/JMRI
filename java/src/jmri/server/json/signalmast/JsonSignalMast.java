@@ -1,7 +1,7 @@
 package jmri.server.json.signalMast;
 
 /**
- * Constants used by the {@link jmri.server.json.signalmast} package.
+ * Constants used by the {@link jmri.server.json.signalMast} package.
  *
  * @author Randall Wood 2016
  */

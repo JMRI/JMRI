@@ -1,7 +1,7 @@
 package jmri.server.json.signalHead;
 
 /**
- * Constants used by the {@link jmri.server.json.signalhead} package.
+ * Constants used by the {@link jmri.server.json.signalHead} package.
  *
  * @author Randall Wood 2016
  */
