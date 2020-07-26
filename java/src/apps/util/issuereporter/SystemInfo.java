@@ -14,7 +14,7 @@ import javax.swing.filechooser.FileSystemView;
 import jmri.*;
 import jmri.configurexml.LoadXmlUserAction;
 import jmri.jmrit.audio.AudioFactory;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.roster.Roster;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.jmrix.ConnectionConfigManager;
@@ -87,7 +87,7 @@ public class SystemInfo {
 
         addLine(list, "Locale", InstanceManager.getDefault(GuiLafPreferencesManager.class).getLocale().toString());
 
-        addLine(list, "Operations location", OperationsSetupXml.getFileLocation());
+        addLine(list, "Operations location", OperationsXml.getFileLocation());
 
         InstanceManager.getOptionalDefault(AudioManager.class).ifPresent(am -> {
             AudioFactory af = am.getActiveAudioFactory();
