@@ -671,7 +671,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 int feet = (int) (inches * Setup.getScaleRatio() / 12);
                 length = Integer.toString(feet);
             } catch (NumberFormatException e) {
-                //                log.error("Can not convert from inches to feet");
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"), Bundle
                         .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
                 return false;
