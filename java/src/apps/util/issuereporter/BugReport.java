@@ -67,7 +67,7 @@ public class BugReport extends IssueReport {
     }
 
     private void getSysInfoFile(Path path) {
-        Path file = path.resolve("systemInfo.md");
+        Path file = path.resolve("systemInfo.txt");
         try {
             Files.createFile(file);
             Files.write(file, new SystemInfo(false).asList(), StandardOpenOption.TRUNCATE_EXISTING);
