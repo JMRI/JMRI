@@ -370,7 +370,9 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed problem where operations database was always saved when exiting JMRI.</li>
+            <li>Fixed problem with Panel name for train icons.</li>
+            <li>Fixed problem with track move count when track has an alternate track.</li>
         </ul>
 
    <h3>Panel Editor</h3>
