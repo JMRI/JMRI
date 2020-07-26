@@ -37,8 +37,6 @@ import purejavacomm.CommPortIdentifier;
  */
 public class SystemInfo {
 
-    private static final String TD = "|";
-    private static final String TDNL = "|\n";
     private final boolean inBody;
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemInfo.class);
 
@@ -164,7 +162,7 @@ public class SystemInfo {
     }
 
     private void addLine(List<String> list, String item, String value) {
-        list.add(TD + escapePipes(item) + TD + escapePipes(value) + TD);
+        list.add(String.format("|%s|%s|", escapePipes(item), escapePipes(value)));
     }
 
     private String escapePipes(String input) {
