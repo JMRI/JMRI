@@ -1,4 +1,4 @@
-package jmri.server.json.idtag;
+package jmri.server.json.idTag;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;

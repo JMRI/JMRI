@@ -1,4 +1,4 @@
-package jmri.server.json.idtag;
+package jmri.server.json.idTag;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

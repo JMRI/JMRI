@@ -1,4 +1,4 @@
-package jmri.server.json.signalhead;
+package jmri.server.json.signalHead;
 
 /**
  * Constants used by the {@link jmri.server.json.signalhead} package.

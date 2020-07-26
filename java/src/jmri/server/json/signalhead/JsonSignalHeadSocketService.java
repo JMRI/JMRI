@@ -1,10 +1,10 @@
-package jmri.server.json.signalhead;
+package jmri.server.json.signalHead;
 
 import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.signalhead.JsonSignalHead.SIGNAL_HEAD;
-import static jmri.server.json.signalhead.JsonSignalHead.SIGNAL_HEADS;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEADS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;

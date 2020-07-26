@@ -1,11 +1,11 @@
-package jmri.server.json.signalmast;
+package jmri.server.json.signalMast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
 
-import static jmri.server.json.signalmast.JsonSignalMast.SIGNAL_MAST;
-import static jmri.server.json.signalmast.JsonSignalMast.SIGNAL_MASTS;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MASTS;
 
 import org.openide.util.lookup.ServiceProvider;
 

@@ -1,10 +1,10 @@
-package jmri.server.json.idtag;
+package jmri.server.json.idTag;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
 
-import static jmri.server.json.idtag.JsonIdTag.IDTAG;
+import static jmri.server.json.idTag.JsonIdTag.IDTAG;
 
 import org.openide.util.lookup.ServiceProvider;
 

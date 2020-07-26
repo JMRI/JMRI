@@ -1,4 +1,4 @@
-package jmri.server.json.signalhead;
+package jmri.server.json.signalHead;
 
 import java.util.Locale;
 import org.junit.Assert;

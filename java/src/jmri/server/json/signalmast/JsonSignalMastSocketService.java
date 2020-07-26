@@ -1,4 +1,4 @@
-package jmri.server.json.signalmast;
+package jmri.server.json.signalMast;
 
 import jmri.SignalMast;
 import jmri.server.json.JsonConnection;

@@ -1,4 +1,4 @@
-package jmri.server.json.signalhead;
+package jmri.server.json.signalHead;
 
 import static jmri.server.json.JSON.APPEARANCE;
 import static jmri.server.json.JSON.APPEARANCE_NAME;
@@ -6,8 +6,8 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LIT;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TOKEN_HELD;
-import static jmri.server.json.signalhead.JsonSignalHead.SIGNAL_HEAD;
-import static jmri.server.json.signalhead.JsonSignalHead.SIGNAL_HEADS;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEADS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

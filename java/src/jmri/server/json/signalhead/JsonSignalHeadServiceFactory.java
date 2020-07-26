@@ -1,11 +1,11 @@
-package jmri.server.json.signalhead;
+package jmri.server.json.signalHead;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
 
-import static jmri.server.json.signalhead.JsonSignalHead.SIGNAL_HEAD;
-import static jmri.server.json.signalhead.JsonSignalHead.SIGNAL_HEADS;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
+import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEADS;
 
 import org.openide.util.lookup.ServiceProvider;
 

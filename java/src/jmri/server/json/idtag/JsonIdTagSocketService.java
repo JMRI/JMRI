@@ -1,4 +1,4 @@
-package jmri.server.json.idtag;
+package jmri.server.json.idTag;
 
 import jmri.IdTag;
 import jmri.server.json.JsonConnection;

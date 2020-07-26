@@ -1,4 +1,4 @@
-package jmri.server.json.idtag;
+package jmri.server.json.idTag;
 
 import java.util.Locale;
 import org.junit.Assert;

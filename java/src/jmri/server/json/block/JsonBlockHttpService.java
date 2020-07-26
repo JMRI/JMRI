@@ -3,7 +3,7 @@ package jmri.server.json.block;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.block.JsonBlock.BLOCK;
 import static jmri.server.json.block.JsonBlock.BLOCKS;
-import static jmri.server.json.idtag.JsonIdTag.IDTAG;
+import static jmri.server.json.idTag.JsonIdTag.IDTAG;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,7 +27,7 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
 import jmri.server.json.JsonRequest;
-import jmri.server.json.idtag.JsonIdTagHttpService;
+import jmri.server.json.idTag.JsonIdTagHttpService;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.reporter.JsonReporterHttpService;
 import jmri.server.json.roster.JsonRosterHttpService;

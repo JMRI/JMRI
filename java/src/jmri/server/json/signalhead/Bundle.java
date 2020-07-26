@@ -1,4 +1,4 @@
-package jmri.server.json.signalhead;
+package jmri.server.json.signalHead;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;

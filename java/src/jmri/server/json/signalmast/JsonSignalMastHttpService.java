@@ -1,4 +1,4 @@
-package jmri.server.json.signalmast;
+package jmri.server.json.signalMast;
 
 import static jmri.server.json.JSON.ASPECT;
 import static jmri.server.json.JSON.ASPECT_DARK;
@@ -8,8 +8,8 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LIT;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TOKEN_HELD;
-import static jmri.server.json.signalmast.JsonSignalMast.SIGNAL_MAST;
-import static jmri.server.json.signalmast.JsonSignalMast.SIGNAL_MASTS;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MASTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

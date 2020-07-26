@@ -1,4 +1,4 @@
-package jmri.server.json.signalmast;
+package jmri.server.json.signalMast;
 
 import com.fasterxml.jackson.databind.JsonNode;
 

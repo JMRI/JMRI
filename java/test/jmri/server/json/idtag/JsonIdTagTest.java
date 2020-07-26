@@ -1,4 +1,4 @@
-package jmri.server.json.idtag;
+package jmri.server.json.idTag;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

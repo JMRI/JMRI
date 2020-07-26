@@ -1,4 +1,4 @@
-package jmri.server.json.signalhead;
+package jmri.server.json.signalHead;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;

@@ -1,11 +1,11 @@
-package jmri.server.json.idtag;
+package jmri.server.json.idTag;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
-import static jmri.server.json.idtag.JsonIdTag.IDTAG;
+import static jmri.server.json.idTag.JsonIdTag.IDTAG;
 
 import java.util.Date;
 import javax.servlet.http.HttpServletResponse;

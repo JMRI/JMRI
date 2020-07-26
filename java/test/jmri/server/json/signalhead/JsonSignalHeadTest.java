@@ -1,4 +1,4 @@
-package jmri.server.json.signalhead;
+package jmri.server.json.signalHead;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

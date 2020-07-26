@@ -1,4 +1,4 @@
-package jmri.server.json.idtag;
+package jmri.server.json.idTag;
 
 /**
  * Constants used by the internal JMRI JSON IdTag service.
