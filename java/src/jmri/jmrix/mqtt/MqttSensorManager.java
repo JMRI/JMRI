@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implementation of the MqttSensorManager interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2006, 2019
+ * @author  Bob Jacobsen Copyright (C) 2001, 2003, 2006, 2019
  */
 public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
 
