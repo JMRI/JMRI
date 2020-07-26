@@ -24,6 +24,8 @@
     <version author="Dave Heap" version="1.3" lastUpdated="20161101"/>
     <!-- ver1.4 refactor -->
     <version author="Dave Heap" version="1.4" lastUpdated="20190507"/>
+    <!-- ver1.5 refactor and add Pullman Silberling -->
+    <version author="Dave Heap" version="1.5" lastUpdated="20200726"/>
     <decoder>
         <family name="ESU LokPilot Standard V1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777308,16777361">
