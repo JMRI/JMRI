@@ -406,7 +406,7 @@
 
     <p class="refPanel">Demo panel: GS-3-Panel Sensors.xml</p>
 
-    <h5></h5>
+    <h5 style="text-align: center; padding-left: 0">- - - - -</h5>
 
     <p>The basic panel is now done.  It has turnouts, occupancy sensors and blocks.  It can
     simulate sending turnout commands to the layout and respond to simulated occupancy changes.
@@ -629,7 +629,7 @@
     alt="SML turnout tab" width="916" height="779"></a>
     </div>
 
-    <h5></h5>
+    <h5 style="text-align: center; padding-left: 0">- - - - -</h5>
 
     <p>The panel is now fully functional and can be used as the basis for other activities
     such as CTC, Entry/Exit or Dispatching.

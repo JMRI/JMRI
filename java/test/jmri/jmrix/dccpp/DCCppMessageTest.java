@@ -313,13 +313,13 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringAccessoryDecoderMsgActivateTrue() {
         msg = DCCppMessage.makeAccessoryDecoderMsg(23, 2, true);
-        Assert.assertEquals("Monitor string", "Accessory Decoder Cmd: \n\tAddress: 23\n\tSubaddr: 2\n\tState: ON", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Accessory Decoder Cmd: Address: 23, Subaddr: 2, State: ON", msg.toMonitorString());
     }
 
     @Test
     public void testMonitorStringAccessoryDecoderMsgActivateFalse() {
         msg = DCCppMessage.makeAccessoryDecoderMsg(23, 2, false);
-        Assert.assertEquals("Monitor string", "Accessory Decoder Cmd: \n\tAddress: 23\n\tSubaddr: 2\n\tState: OFF", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Accessory Decoder Cmd: Address: 23, Subaddr: 2, State: OFF", msg.toMonitorString());
     }
 
     @Test
@@ -351,13 +351,13 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringTurnoutCommandMsgThrown() {
         msg = DCCppMessage.makeTurnoutCommandMsg(23, true);
-        Assert.assertEquals("Monitor string", "Turnout Cmd: \n\tT/O ID: 23\n\tState: THROWN", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Turnout Cmd: T/O ID: 23, State: THROWN", msg.toMonitorString());
     }
 
     @Test
     public void testMonitorStringTurnoutCommandMsgClosed() {
         msg = DCCppMessage.makeTurnoutCommandMsg(23, false);
-        Assert.assertEquals("Monitor string", "Turnout Cmd: \n\tT/O ID: 23\n\tState: CLOSED", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Turnout Cmd: T/O ID: 23, State: CLOSED", msg.toMonitorString());
     }
 
     @Test
@@ -381,7 +381,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringWriteDirectCVMsg() {
         msg = DCCppMessage.makeWriteDirectCVMsg(29, 12, 1, 2);
-        Assert.assertEquals("Monitor string", "Prog Write Byte Cmd: \n\tCV : 29\n\tValue: 12\n\tCallback Num: 1\n\tCallback Sub: 2", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Prog Write Byte Cmd: CV : 29, Value: 12, Callback Num: 1, Callback Sub: 2", msg.toMonitorString());
     }
 
     @Test
@@ -406,7 +406,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringBitWriteDirectCVMsg() {
         msg = DCCppMessage.makeBitWriteDirectCVMsg(17, 4, 1, 3, 4);
-        Assert.assertEquals("Monitor string", "Prog Write Bit Cmd: \n\tCV : 17\n\tBit : 4\n\tValue: 1\n\tCallback Num: 3\n\tCallback Sub: 4", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Prog Write Bit Cmd: CV : 17, Bit : 4, Value: 1, Callback Num: 3, Callback Sub: 4", msg.toMonitorString());
     }
 
     @Test
@@ -427,7 +427,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringReadDirectCVMsg() {
         msg = DCCppMessage.makeReadDirectCVMsg(17, 4, 3);
-        Assert.assertEquals("Monitor string", "Prog Read Cmd: \n\tCV: 17\n\tCallback Num: 4\n\tCallback Sub: 3", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Prog Read Cmd: CV: 17, Callback Num: 4, Callback Sub: 3", msg.toMonitorString());
     }
 
     @Test
@@ -448,7 +448,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringWriteOpsModeCVMsg() {
         msg = DCCppMessage.makeWriteOpsModeCVMsg(17, 4, 3);
-        Assert.assertEquals("Monitor string", "Ops Write Byte Cmd: \n\tAddress: 17\n\tCV: 4\n\tValue: 3", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Ops Write Byte Cmd: Address: 17, CV: 4, Value: 3", msg.toMonitorString());
     }
 
     @Test
@@ -471,7 +471,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringBitWriteOpsModeCVMsg() {
         msg = DCCppMessage.makeBitWriteOpsModeCVMsg(17, 4, 3, 1);
-        Assert.assertEquals("Monitor string", "Ops Write Bit Cmd: \n\tAddress: 17\n\tCV: 4\n\tBit: 3\n\tValue: 1", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Ops Write Bit Cmd: Address: 17, CV: 4, Bit: 3, Value: 1", msg.toMonitorString());
     }
 
     @Test
@@ -542,7 +542,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringAddressedEmergencyStopMsg() {
         msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
-        Assert.assertEquals("Monitor string", "Throttle Cmd: \n\tRegister: 5\n\tAddress: 24\n\tSpeed: -1\n\t:Direction: Forward", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
     }
 
     @Test
@@ -597,7 +597,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringSpeedAndDirectionMsg() {
         msg = DCCppMessage.makeSpeedAndDirectionMsg(5, 24, 0.5f, false);
-        Assert.assertEquals("Monitor string", "Throttle Cmd: \n\tRegister: 5\n\tAddress: 24\n\tSpeed: 63\n\t:Direction: Reverse", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: 63, Direction: Reverse", msg.toMonitorString());
     }
 
     @Test
@@ -630,7 +630,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testMonitorStringWriteDccPacketMainMsg() {
         byte packet[] = {(byte) 0xC4, (byte) 0xD2, (byte) 0x12, (byte) 0x0C, (byte) 0x08};
         msg = DCCppMessage.makeWriteDCCPacketMainMsg(0, 5, packet);
-        Assert.assertEquals("Monitor string", "Write DCC Packet Main Cmd: \n\tRegister: 0\n\tPacket: C4 D2 12 0C 08", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Write DCC Packet Main Cmd: Register: 0, Packet: C4 D2 12 0C 08", msg.toMonitorString());
     }
 
     @Test
@@ -663,7 +663,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testMonitorStringWriteDccPacketProgMsg() {
         byte packet[] = {(byte) 0xC4, (byte) 0xD2, (byte) 0x12, (byte) 0x0C, (byte) 0x08};
         msg = DCCppMessage.makeWriteDCCPacketProgMsg(0, 5, packet);
-        Assert.assertEquals("Monitor string", "Write DCC Packet Prog Cmd: \n\tRegister: 0\n\tPacket: C4 D2 12 0C 08", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Write DCC Packet Prog Cmd: Register: 0, Packet: C4 D2 12 0C 08", msg.toMonitorString());
     }
 
     @Test
@@ -695,13 +695,13 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringOutputCmdMsgOn() {
         msg = DCCppMessage.makeOutputCmdMsg(23, true);
-        Assert.assertEquals("Monitor string", "Output Cmd: \n\tOutput ID: 23\n\tState: HIGH", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Output Cmd: Output ID: 23, State: HIGH", msg.toMonitorString());
     }
 
     @Test
     public void testMonitorStringOutputCmdMsgOff() {
         msg = DCCppMessage.makeOutputCmdMsg(23, false);
-        Assert.assertEquals("Monitor string", "Output Cmd: \n\tOutput ID: 23\n\tState: LOW", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Output Cmd: Output ID: 23, State: LOW", msg.toMonitorString());
     }
 
     @BeforeEach
