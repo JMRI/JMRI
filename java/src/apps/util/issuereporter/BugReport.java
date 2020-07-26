@@ -50,7 +50,9 @@ public class BugReport extends IssueReport {
                 if (includeSysInfo) {
                     getSysInfoFile(dir);
                 }
-                Files.newDirectoryStream(dir).forEach(p -> files.add(p.toFile()));
+                try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+                    stream.forEach(p -> files.add(p.toFile()));
+                }
             } catch (IOException | JDOMException | InitializationException | NullPointerException ex) {
                 log.error("Unable to include profile in report.", ex);
                 includeProfile = false;

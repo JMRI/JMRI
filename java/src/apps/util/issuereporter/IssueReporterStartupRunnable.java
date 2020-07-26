@@ -24,9 +24,8 @@ public final class IssueReporterStartupRunnable implements StartupRunnable {
     @Override
     public void run() {
             Path tempDir = new File(System.getProperty("java.io.tmpdir")).toPath();
-        try {
-            Files.newDirectoryStream(tempDir, entry -> entry.toFile().getName().startsWith("jmri-issue-report-"))
-                    .forEach(entry -> FileUtil.delete(entry.toFile()));
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(tempDir, entry -> entry.toFile().getName().startsWith("jmri-issue-report-"))) {
+                    stream.forEach(entry -> FileUtil.delete(entry.toFile()));
         } catch (IOException ex) {
             log.error("Exception cleaning up from issue reporter", ex);
         }
