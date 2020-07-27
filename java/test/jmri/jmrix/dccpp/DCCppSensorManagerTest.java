@@ -3,16 +3,15 @@ package jmri.jmrix.dccpp;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.dccpp.DCCppSensorManager class.
  *
- * @author	Paul Bender Copyright (c) 2003,2016
- * @author	Mark Underwood Copyright (c) 2015
+ * @author Paul Bender Copyright (c) 2003,2016
+ * @author Mark Underwood Copyright (c) 2015
  */
 public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -83,9 +82,8 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppSensorManagerTest.class);
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -98,7 +96,7 @@ public class DCCppSensorManagerTest extends jmri.managers.AbstractSensorMgrTestB
         jmri.InstanceManager.setSensorManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         l = null;

@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains.schedules;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.InstanceManager;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import org.jdom2.Element;
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2010
  */
-public class TrainSchedule {
+public class TrainSchedule extends PropertyChangeSupport {
     
     public static final String NONE = "";
     public static final String ANY = "ANY"; // allow cars to be picked up any day of the week NOI18N
@@ -155,19 +156,9 @@ public class TrainSchedule {
         }
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainSchedule.class);

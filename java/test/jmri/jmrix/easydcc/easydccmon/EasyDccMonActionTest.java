@@ -1,16 +1,14 @@
 package jmri.jmrix.easydcc.easydccmon;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 
 /**
  * JUnit tests for the EasyDccProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccMonActionTest {
 
@@ -20,12 +18,12 @@ public class EasyDccMonActionTest {
         Assert.assertNotNull("exists", a);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

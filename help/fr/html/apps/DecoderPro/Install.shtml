@@ -9,7 +9,8 @@
   <!-- Translated by Blorec Herv&#233; le 2013-09-25-->
 
   <title>JMRI: T&eacute;l&eacute;chargement et installation
-  DP</title><!-- Style -->
+  DP</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,17 +18,18 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: T&eacute;l&eacute;chargement et installation
+        <!-- Page Body -->
+
+<h1>JMRI: T&eacute;l&eacute;chargement et installation
       DecoderPro</h1>
 
       <p>DecoderPro est distribu&eacute; dans le cadre des
@@ -60,7 +62,7 @@
         JMRI</dt>
 
         <dd class="first">
-          La <a href="http://jmri.org/download/index.shtml">page de
+          La <a href="https://jmri.org/download/index.shtml">page de
           t&eacute;l&eacute;chargement</a> sur le site Web
           principal JMRI fournit des liens pour
           t&eacute;l&eacute;charger les diff&eacute;rentes versions
@@ -83,12 +85,12 @@
         programme</dt>
 
         <dd class="first">Les instructions d'installation obtenues
-        par la <a href="http://jmri.org/download/index.shtml">page
+        par la <a href="https://jmri.org/download/index.shtml">page
         de t&eacute;l&eacute;chargement</a> vous auront dit comment
         d&eacute;marrer le programme et le configurer. Lorsque
         c'est fait, vous devriez avoir une installation
         fonctionnelle DecoderPro.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

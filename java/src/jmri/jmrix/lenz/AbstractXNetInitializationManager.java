@@ -4,21 +4,24 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.event.ActionEvent;
+
 /**
  * This class provides a base implementation for Command Station/interface
  * dependent initilization for XpressNet. It adds the appropriate Managers via
  * the Initialization Manager based on the Command Station Type.
  *
  * @author Paul Bender Copyright (C) 2003-2010
+ * @deprecated since 4.21.1.  Use {@link XNetInitializationManager} instead.
  */
-abstract public class AbstractXNetInitializationManager {
+@Deprecated
+public abstract class AbstractXNetInitializationManager {
 
-    protected Thread initThread = null;
-
-    protected XNetSystemConnectionMemo systemMemo = null;
+    protected final XNetSystemConnectionMemo systemMemo;
 
     /**
      * Define timeout used during initialization
+     * @return timout value in milliseconds
      */
     protected int getInitTimeout() {
         return 30000;
@@ -31,35 +34,31 @@ abstract public class AbstractXNetInitializationManager {
             log.debug("Starting XpressNet Initialization Process");
         }
         systemMemo = memo;
-        initThread = new Thread(new XNetInitializer(this));
+        new XNetInitializer(this);
 
         // Since we can't currently reconfigure the user interface after  
         // initilization, We need to wait for the initilization thread 
         // to finish before we can continue.  The wait  can be removed IF 
         // we revisit the GUI initilization process.
         synchronized (this) {
-            if (log.isDebugEnabled()) {
-                log.debug("start wait");
-            }
+            log.debug("start wait");
             new jmri.util.WaitHandler(this);
-            if (log.isDebugEnabled()) {
-                log.debug("end wait");
-            }
+            log.debug("end wait");
         }
 
         init();
     }
 
-    abstract protected void init();
+    protected abstract void init();
 
-    /* Interal class to configure the XNet implementation */
-    protected class XNetInitializer implements Runnable, XNetListener {
+    /* Internal class to configure the XNet implementation */
+    protected class XNetInitializer implements XNetListener {
 
-        private javax.swing.Timer initTimer; // Timer used to let he 
+        private final javax.swing.Timer initTimer; // Timer used to let he
         // command station response time 
         // out, and configure the defaults.
 
-        private Object parent = null;
+        private final Object parent;
 
         public XNetInitializer(Object Parent) {
 
@@ -81,10 +80,7 @@ abstract public class AbstractXNetInitializationManager {
         protected javax.swing.Timer setupInitTimer() {
             // Initialize and start initilization timeout timer.
             javax.swing.Timer retVal = new javax.swing.Timer(getInitTimeout(),
-                    new java.awt.event.ActionListener() {
-                        @Override
-                        public void actionPerformed(
-                                java.awt.event.ActionEvent e) {
+                    (ActionEvent e) -> {
                                     /* If the timer times out, notify any 
                                      waiting objects, and dispose of
                                      this thread */
@@ -92,15 +88,10 @@ abstract public class AbstractXNetInitializationManager {
                                         log.debug("Timeout waiting for Command Station Response");
                                     }
                                     finish();
-                                }
-                    });
+                                });
             retVal.setInitialDelay(getInitTimeout());
             retVal.start();
             return retVal;
-        }
-
-        @Override
-        public void run() {
         }
 
         @SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method (the designated parent, which started the thread).")
@@ -112,7 +103,7 @@ abstract public class AbstractXNetInitializationManager {
                     parent.notify();
                 }
             } catch (Exception e) {
-                log.error("Exception " + e + "while notifying initilization thread.");
+                log.error("Exception {] while notifying initilization thread.",e);
             }
             if (log.isDebugEnabled()) {
                 log.debug("Notification Sent");
@@ -126,9 +117,9 @@ abstract public class AbstractXNetInitializationManager {
         public void message(XNetReply l) {
             // Check to see if this is a response with the Command Station 
             // Version Info
-            if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
+            if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE &&
+                    l.getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
                 // This is the Command Station Software Version Response
-                if (l.getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
                     systemMemo.getXNetTrafficController()
                             .getCommandStation()
                             .setCommandStationSoftwareVersion(l);
@@ -136,20 +127,20 @@ abstract public class AbstractXNetInitializationManager {
                             .getCommandStation()
                             .setCommandStationType(l);
                     finish();
-                }
             }
         }
 
         // listen for the messages to the LI100/LI101
         @Override
         public void message(XNetMessage l) {
+            // we aren't concerned with incoming messages in this class.
         }
 
         // Handle a timeout notification
         @Override
         public void notifyTimeout(XNetMessage msg) {
             if (log.isDebugEnabled()) {
-                log.debug("Notified of timeout on message" + msg.toString());
+                log.debug("Notified of timeout on message {}",msg);
             }
         }
 
@@ -158,6 +149,6 @@ abstract public class AbstractXNetInitializationManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractXNetInitializationManager.class);
 
 }

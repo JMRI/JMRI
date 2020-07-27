@@ -16,7 +16,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to SECSI via a serial comm port. Normally controlled by the
+ * Provide access to SECSI via a serial com port. Normally controlled by the
  * secsi.serialdriver.SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007
@@ -54,7 +54,7 @@ public class SerialDriverAdapter extends SerialPortController {
                 log.debug("Serial framing was observed as: {} {}", activeSerialPort.isReceiveFramingEnabled(),
                         activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.debug("failed to set serial framing: " + ef);
+                log.debug("failed to set serial framing: {}", ef);
             }
 
             // set timeout; framing should work before this anyway
@@ -156,15 +156,11 @@ public class SerialDriverAdapter extends SerialPortController {
 
     /**
      * Local method to do specific port configuration.
+     * @throws UnsupportedCommOperationException from underlying operation
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 38400;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(selectedSpeed)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
 
@@ -189,23 +185,18 @@ public class SerialDriverAdapter extends SerialPortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    /**
-     * Set the baud rate.
-     */
-    @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: {}", rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
-    }
-
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud38400")};
     protected int[] validSpeedValues = new int[]{38400};
-    protected String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     /**
      * Get an array of valid values for "option 2"; used to display valid
-     * options. May not be null, but may have zero entries
+     * options.May not be null, but may have zero entries
+     * @return zero entries.
      */
     public String[] validOption2() {
         return new String[]{""};

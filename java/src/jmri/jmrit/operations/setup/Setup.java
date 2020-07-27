@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
@@ -28,7 +29,7 @@ import jmri.web.server.WebServerPreferences;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
  */
-public class Setup implements InstanceManagerAutoDefault, Disposable {
+public class Setup extends PropertyChangeSupport implements InstanceManagerAutoDefault, Disposable {
 
     public static final String NONE = "";
 
@@ -121,8 +122,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String PAGE_PER_TRAIN = Bundle.getMessage("PagePerTrain");
     public static final String PAGE_PER_VISIT = Bundle.getMessage("PagePerVisit");
 
-    public static final String LENGTHABV = Bundle.getMessage("LengthSymbol");
-
     public static final String BUILD_REPORT_MINIMAL = "1";
     public static final String BUILD_REPORT_NORMAL = "3";
     public static final String BUILD_REPORT_DETAILED = "5";
@@ -133,7 +132,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String TYPE = Bundle.getMessage("Type");
     public static final String MODEL = Bundle.getMessage("Model");
     public static final String LENGTH = Bundle.getMessage("Length");
+    public static final String WEIGHT = Bundle.getMessage("Weight");
     public static final String LOAD = Bundle.getMessage("Load");
+    public static final String LOAD_TYPE = Bundle.getMessage("Load_Type");
     public static final String COLOR = Bundle.getMessage("Color");
     public static final String TRACK = Bundle.getMessage("Track");
     public static final String DESTINATION = Bundle.getMessage("Destination");
@@ -170,17 +171,19 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     // Unit of Length
     public static final String FEET = Bundle.getMessage("Feet");
     public static final String METER = Bundle.getMessage("Meter");
+    public static final String FEET_ABV = Bundle.getMessage("FeetAbbreviation");
+    public static final String METER_ABV = Bundle.getMessage("MeterAbbreviation");
 
     private static final String[] CAR_ATTRIBUTES
-            = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
+            = {ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
                 TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
                 PICKUP_COMMENT, RWE};
-    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
+    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, CONSIST, OWNER, TRACK,
         LOCATION, DESTINATION, COMMENT};
     /*
      * The print Manifest and switch list user selectable options are stored in the xml file using the English translation.
      */
-    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Load", "Color", // NOI18N
+    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type", "Color", // NOI18N
         "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", // NOI18N
         "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3"}; // NOI18N
 
@@ -239,6 +242,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private int travelTime = 4; // how long it takes a train to move from one location to another in minutes
     private String yearModeled = NONE; // year being modeled
     private String lengthUnit = FEET;
+    private String lengthUnitAbv = FEET_ABV;
     private String iconNorthColor = NONE;
     private String iconSouthColor = NONE;
     private String iconEastColor = NONE;
@@ -303,6 +307,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private boolean allowCarsReturnStaging = false; // allow cars on a turn to return to staging if necessary (prevent build failure)
     private boolean promptFromStaging = false; // prompt user to specify which departure staging track to use
     private boolean promptToStaging = false; // prompt user to specify which arrival staging track to use
+    private boolean tryNormalModeStaging = true; // try normal build if route length failure using aggressive
 
     private boolean generateCsvManifest = false; // when true generate csv manifest
     private boolean generateCsvSwitchList = false; // when true generate csv switch list
@@ -322,12 +327,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private boolean showTrackMoves = false; // when true show track moves in table
 
     // property changes
-    public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
-    public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; //  NOI18N
-    public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
-    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
-    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
-    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; //  NOI18N
+    public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; // NOI18N
+    public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; // NOI18N
+    public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; // NOI18N
+    public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; // NOI18N
+    public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; // NOI18N
+    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; // NOI18N
 
     public static boolean isMainMenuEnabled() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load file
@@ -353,9 +358,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static void setAutoSaveEnabled(boolean enabled) {
         getDefault().autoSave = enabled;
         if (enabled) {
-            new AutoSave().start();
+            AutoSave.start();
         } else {
-            new AutoSave().stop();
+            AutoSave.stop();
         }
     }
 
@@ -555,6 +560,14 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static void setPromptToStagingEnabled(boolean enabled) {
         getDefault().promptToStaging = enabled;
     }
+    
+    public static boolean isStagingTryNormalBuildEnabled() {
+        return getDefault().tryNormalModeStaging;
+    }
+
+    public static void setStagingTryNormalBuildEnabled(boolean enabled) {
+        getDefault().tryNormalModeStaging = enabled;
+    }
 
     public static boolean isGenerateCsvManifestEnabled() {
         return getDefault().generateCsvManifest;
@@ -672,9 +685,22 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static String getLengthUnit() {
         return getDefault().lengthUnit;
     }
+    
+    /**
+     * Abbreviation unit of length
+     * @return symbol for feet or meter
+     */
+    public static String getLengthUnitAbv() {
+        return getDefault().lengthUnitAbv;
+    }
 
     public static void setLengthUnit(String unit) {
         getDefault().lengthUnit = unit;
+        if (unit.equals(FEET)) {
+            getDefault().lengthUnitAbv = FEET_ABV;
+        } else {
+            getDefault().lengthUnitAbv = METER_ABV;
+        }
     }
 
     public static String getYearModeled() {
@@ -1660,24 +1686,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return box;
     }
 
-    /**
-     *
-     * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead.
-     */
-    @Deprecated
-    public static JComboBox<String> getPrintColorComboBox() {
-        JComboBox<String> box = new JComboBox<>();
-        box.addItem(ColorUtil.ColorBlack);
-        box.addItem(ColorUtil.ColorRed);
-        box.addItem(ColorUtil.ColorOrange);
-        box.addItem(ColorUtil.ColorYellow);
-        box.addItem(ColorUtil.ColorGreen);
-        box.addItem(ColorUtil.ColorBlue);
-        box.addItem(ColorUtil.ColorGray);
-        return box;
-    }
-
     public static JComboBox<String> getEngineMessageComboBox() {
         JComboBox<String> box = new JComboBox<>();
         box.addItem(BLANK);
@@ -1839,20 +1847,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         values.setAttribute(Xml.RFID_LABEL, getRfidLabel());
         values.setAttribute(Xml.LENGTH_UNIT, getLengthUnit());
         values.setAttribute(Xml.YEAR_MODELED, getYearModeled());
-        // next 7 manifest attributes for backward compatibility TODO remove in future release 2014
-        //        values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_TRAIN_SCHEDULE, isPrintTrainScheduleNameEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
-        // This one was left out, wait until 2016
-        values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
-        // next three logger attributes for backward compatibility TODO remove in future release 2014
-        //        values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.PICKUP_ENG_FORMAT));
         storeXmlMessageFormat(values, getPickupEnginePrefix(), getPickupEngineMessageFormat());
@@ -1941,9 +1935,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         values.setAttribute(Xml.PRINT_PASSENGER_LOAD, isPrintPassengerLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
-        // backward compatible, remove in 2015
-        //        e.addContent(values = new Element(Xml.COLUMN_FORMAT));
-        //        values.setAttribute(Xml.TWO_COLUMNS, getManifestFormat() == TWO_COLUMN_FORMAT ? Xml.TRUE : Xml.FALSE);
         // new format June 2014
         e.addContent(values = new Element(Xml.MANIFEST_FORMAT));
 
@@ -1979,6 +1970,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         values.setAttribute(Xml.ALLOW_RETURN_STAGING, isAllowReturnToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PROMPT_STAGING_ENABLED, isPromptFromStagingEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PROMPT_TO_STAGING_ENABLED, isPromptToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.STAGING_TRY_NORMAL, isStagingTryNormalBuildEnabled() ? Xml.TRUE : Xml.FALSE);
 
         values.setAttribute(Xml.GENERATE_CSV_MANIFEST, isGenerateCsvManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.GENERATE_CSV_SWITCH_LIST, isGenerateCsvSwitchListEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2612,17 +2604,22 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_INTERCHANGE)) != null) {
                 String enable = a.getValue();
-                log.debug("noLocalInterchange: {}", enable);
+                log.debug("allowLocalInterchangeMoves: {}", enable);
                 setLocalInterchangeMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_SPUR)) != null) {
                 String enable = a.getValue();
-                log.debug("noLocalSpur: {}", enable);
+                log.debug("allowLocalSpurMoves: {}", enable);
+                setLocalSpurMovesEnabled(enable.equals(Xml.TRUE));
+            }
+            else if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_SIDING)) != null) {
+                String enable = a.getValue();
+                log.debug("allowLocalSidingMoves: {}", enable);
                 setLocalSpurMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_YARD)) != null) {
                 String enable = a.getValue();
-                log.debug("noLocalYard: {}", enable);
+                log.debug("allowLocalYardMoves: {}", enable);
                 setLocalYardMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_RESTRICTION_ENABLED)) != null) {
@@ -2649,6 +2646,11 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
                 String enable = a.getValue();
                 log.debug("promptToStagingEnabled: {}", enable);
                 setPromptToStagingEnabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_TRY_NORMAL)) != null) {
+                String enable = a.getValue();
+                log.debug("stagingTryNormalEnabled: {}", enable);
+                setStagingTryNormalBuildEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.GENERATE_CSV_MANIFEST)) != null) {
                 String enable = a.getValue();
@@ -2935,19 +2937,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         }
     }
 
-    static java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(Setup.class);
-
-    public static synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public static synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected static void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        getDefault().firePropertyChange(p, old, n);
     }
 
     public static Setup getDefault() {
@@ -2958,7 +2950,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
 
     @Override
     public void dispose() {
-        new AutoSave().stop();
+        AutoSave.stop();
     }
 
 }

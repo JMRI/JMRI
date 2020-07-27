@@ -3,11 +3,13 @@ package jmri.jmrix.bachrus;
 import java.awt.GraphicsEnvironment;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SpeedoDialTest {
     
@@ -32,16 +34,16 @@ public class SpeedoDialTest {
         dial.reset();
         jmri.util.JUnitUtil.waitFor(() -> { return dial.isVisible(); },"dial visible");
         new JFrameOperator("SpeedoDial test frame").requestClose();
+        JUnitUtil.dispose(frame);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         dial = new SpeedoDial();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         dial = null;
         JUnitUtil.tearDown();

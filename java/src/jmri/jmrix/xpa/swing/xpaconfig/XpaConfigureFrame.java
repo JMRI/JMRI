@@ -1,8 +1,3 @@
-/**
- * Frame for configuring an XPA using a modem.
- *
- * @author	Paul Bender Copyright (C) 2004
- */
 package jmri.jmrix.xpa.swing.xpaconfig;
 
 import java.awt.FlowLayout;
@@ -12,33 +7,38 @@ import javax.swing.JPanel;
 import jmri.jmrix.xpa.XpaMessage;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 
+/**
+ * Frame for configuring an XPA using a modem.
+ *
+ * @author Paul Bender Copyright (C) 2004
+ */
 public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmrix.xpa.XpaListener {
 
     // member declarations
-    XpaSystemConnectionMemo memo = null;
+    final XpaSystemConnectionMemo memo;
 
     // Drop down box and button to set XpressNet address
-    javax.swing.JComboBox<String> addrBox = new javax.swing.JComboBox<String>();
-    javax.swing.JButton setAddr = new javax.swing.JButton();
+    final javax.swing.JComboBox<String> addrBox = new javax.swing.JComboBox<>();
+    final javax.swing.JButton setAddr = new javax.swing.JButton();
 
     // Buttons to set the function of the phone's zero button (is it 
     // emergency stop or emenrgency off?
-    javax.swing.JRadioButton zeroEmergencyOff = new javax.swing.JRadioButton();
-    javax.swing.JRadioButton zeroEmergencyStop = new javax.swing.JRadioButton();
-    javax.swing.JButton setZero = new javax.swing.JButton();
+    final javax.swing.JRadioButton zeroEmergencyOff = new javax.swing.JRadioButton();
+    final javax.swing.JRadioButton zeroEmergencyStop = new javax.swing.JRadioButton();
+    final javax.swing.JButton setZero = new javax.swing.JButton();
 
     // Drop down box and button to set duration of a momentary 
     // function
-    javax.swing.JComboBox<String> functionBox = new javax.swing.JComboBox<String>();
-    javax.swing.JButton setFunction = new javax.swing.JButton();
+    final javax.swing.JComboBox<String> functionBox = new javax.swing.JComboBox<>();
+    final javax.swing.JButton setFunction = new javax.swing.JButton();
 
-    protected String[] validTimes = new String[]{"0.2s", "0.4s", "0.6s", "0.8s", "1.0s", "1.2s", "1.4s", "1.6s", "1.8s", "2.0s"};
-    protected int[] validTimeValues = new int[]{50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60};
+    protected final String[] validTimes = new String[]{"0.2s", "0.4s", "0.6s", "0.8s", "1.0s", "1.2s", "1.4s", "1.6s", "1.8s", "2.0s"};
+    protected final int[] validTimeValues = new int[]{50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60};
 
-    protected String[] validXNetAddresses = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
+    protected final String[] validXNetAddresses = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};
 
     // Button to send a reset to the XPA
-    javax.swing.JButton xpaReset = new javax.swing.JButton();
+    final javax.swing.JButton xpaReset = new javax.swing.JButton();
 
     public XpaConfigureFrame(XpaSystemConnectionMemo m) {
         super();
@@ -86,18 +86,13 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         setAddr.setText(Bundle.getMessage("ButtonSetAddress"));
         setAddr.setVisible(true);
 
-        setAddr.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setAddrActionPerformed(e);
-            }
-        });
+        setAddr.addActionListener(this::setAddrActionPerformed);
 
         // Initilize the Address Components
         addrBox.setVisible(true);
         addrBox.setToolTipText(Bundle.getMessage("SetAddressToolTip"));
-        for (int i = 0; i < validXNetAddresses.length; i++) {
-            addrBox.addItem(validXNetAddresses[i]);
+        for (String validXNetAddress : validXNetAddresses) {
+            addrBox.addItem(validXNetAddress);
         }
         addrBox.setSelectedIndex(0);
 
@@ -106,47 +101,27 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         zeroEmergencyOff.setText(Bundle.getMessage("XNetCSStatusEmergencyOff"));
         zeroEmergencyOff.setSelected(true);
 
-        zeroEmergencyOff.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                zeroEmergencyOffActionPerformed(e);
-            }
-        });
+        zeroEmergencyOff.addActionListener(this::zeroEmergencyOffActionPerformed);
 
         zeroEmergencyStop.setText(Bundle.getMessage("XNetCSStatusEmergencyStop"));
         zeroEmergencyStop.setSelected(false);
 
-        zeroEmergencyStop.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                zeroEmergencyStopActionPerformed(e);
-            }
-        });
+        zeroEmergencyStop.addActionListener(this::zeroEmergencyStopActionPerformed);
 
         setZero.setText(Bundle.getMessage("ButtonSetZero"));
 
-        setZero.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setZeroActionPerformed(e);
-            }
-        });
+        setZero.addActionListener(this::setZeroActionPerformed);
 
         // Initilize the Function durration components
         setFunction.setText(Bundle.getMessage("ButtonSetDuration"));
         setFunction.setVisible(true);
 
-        setFunction.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setFunctionActionPerformed(e);
-            }
-        });
+        setFunction.addActionListener(this::setFunctionActionPerformed);
 
         functionBox.setVisible(true);
         functionBox.setToolTipText(Bundle.getMessage("SetDurationToolTip"));
-        for (int i = 0; i < validTimes.length; i++) {
-            functionBox.addItem(validTimes[i]);
+        for (String validTime : validTimes) {
+            functionBox.addItem(validTime);
         }
         functionBox.setSelectedIndex(0);
 
@@ -154,12 +129,7 @@ public class XpaConfigureFrame extends jmri.util.JmriJFrame implements jmri.jmri
         xpaReset.setText(Bundle.getMessage("ButtonReset"));
         xpaReset.setVisible(true);
 
-        xpaReset.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                xpaResetActionPerformed(e);
-            }
-        });
+        xpaReset.addActionListener(this::xpaResetActionPerformed);
 
         // pack for display
         pack();

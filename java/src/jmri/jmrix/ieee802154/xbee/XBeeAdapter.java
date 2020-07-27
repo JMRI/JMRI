@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.*;
 
 /**
- * Provide access to IEEE802.15.4 devices via a serial comm port.
+ * Provide access to IEEE802.15.4 devices via a serial com port.
  *
  * @author Paul Bender Copyright (C) 2013
  */
@@ -48,14 +48,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud with"
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
 
             }
             if (log.isDebugEnabled()) {
@@ -78,10 +71,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         return null; // normal operation
     }
 
-    /**
-     *
-     */
-    @SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL","NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
+    @SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL", "NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
     @Override
     public void serialEvent(SerialPortEvent e) {
         int type = e.getEventType();
@@ -149,20 +139,13 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     protected void setSerialPort() throws UnsupportedCommOperationException {
         log.debug("setSerialPort() called.");
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
-
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
         configureLeadsAndFlowControl(activeSerialPort, flow);
-
 
         if (log.isDebugEnabled()) {
             activeSerialPort.notifyOnFramingError(true);
@@ -185,7 +168,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     }
 
     /**
-     * set up all of the other objects to operate connected to this port
+     * Set up all of the other objects to operate connected to this port.
      */
     @Override
     public void configure() {
@@ -198,7 +181,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         tc.connectPort(this);
         this.getSystemConnectionMemo().configureManagers();
         // Configure the form of serial address validation for this connection
-//        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
+        // adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
     }
 
     /**
@@ -232,10 +215,15 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200"),
             Bundle.getMessage("Baud38400"), Bundle.getMessage("Baud57600"),
             Bundle.getMessage("Baud115200")};
-    private int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200,
-        38400, 57600, 115200};
+    private int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // methods for IConnectionInterface
+
     @Override
     public void close() {
         activeSerialPort.close();

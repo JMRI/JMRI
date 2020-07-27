@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -174,7 +173,6 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     @Override
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
-        ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
         MenuElement[] subElements;
         JMenu fileMenu = null;
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
@@ -192,7 +190,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
             MenuElement[] popsubElements = subElement.getSubElements();
             for (MenuElement popsubElement : popsubElements) {
                 if (popsubElement instanceof JMenuItem) {
-                    if (((JMenuItem) popsubElement).getText().equals(rbapps.getString("PrintTable"))) {
+                    if (((JMenuItem) popsubElement).getText().equals(Bundle.getMessage("PrintTable"))) {
                         JMenuItem printMenu = (JMenuItem) popsubElement;
                         fileMenu.remove(printMenu);
                         break;
@@ -298,6 +296,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
          *
          * @param subType Audio sub-type to update
          */
+        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
         protected synchronized void updateSpecificNameList(char subType) {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
@@ -350,7 +349,11 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
         @Override
         public String getValue(String systemName) {
             Object m = InstanceManager.getDefault(jmri.AudioManager.class).getBySystemName(systemName);
-            return (m != null) ? m.toString() : "";
+            if (subType == Audio.SOURCE) {
+                return (m != null) ? ((jmri.jmrit.audio.AudioSource) m).getDebugString() : "";
+            } else {
+                return (m != null) ? m.toString() : "";
+            }
         }
 
         @Override
@@ -374,7 +377,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
                 case EDITCOL:
                     return Bundle.getMessage("ButtonEdit");
                 default:
-                    log.error("internal state inconsistent with table requst for " + row + " " + col);
+                    log.error("internal state inconsistent with table requst for {} {}", row, col);
                     return null;
             }
         }

@@ -9,7 +9,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.util.ColorUtil;
 
@@ -102,9 +102,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         int rangemin = 1;
         int rangemax = 32;
         int columns = 4;
-        String type = "T";
-        String connection = "I";
-        String shape = "key";
+        String type;
+        String connection;
+        String shape;
         String name;
 
         try {
@@ -130,24 +130,23 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
 
         // If available, override location and size with machine dependent values
-        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+        if (!InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
-                String windowFrameRef = name;
 
-                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(name);
                 if (prefsWindowLocation != null) {
                     x = (int) prefsWindowLocation.getX();
                     y = (int) prefsWindowLocation.getY();
                 }
 
-                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(name);
                 if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
                     height = (int) prefsWindowSize.getHeight();
                     width = (int) prefsWindowSize.getWidth();
@@ -157,7 +156,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         SwitchboardEditor panel = new SwitchboardEditor(name);
         //panel.makeFrame(name);
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+        InstanceManager.getDefault(EditorManager.class).add(panel);
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
 
@@ -209,8 +208,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setHideUnconnected(value);
 
         value = true;
-        if ((a = shared.getAttribute("autoitemrange")) != null && a.getValue().equals("yes")) {
-            value = true;
+        if ((a = shared.getAttribute("autoitemrange")) != null && a.getValue().equals("no")) {
+            value = false;
         }
         panel.setAutoItemRange(value);
 
@@ -267,10 +266,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.initView();
 
         // load the contents with their individual option settings
-        List<Element> items = shared.getChildren();
-        for (int i = 0; i < items.size(); i++) {
+        List<Element> panelItems = shared.getChildren();
+        for (Element item : panelItems) {
             // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via {}", adapterName);
             try {

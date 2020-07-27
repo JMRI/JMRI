@@ -3,7 +3,6 @@ package jmri.jmrit.symbolicprog;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -177,6 +176,10 @@ public class CompositeVariableValue extends EnumVariableValue {
 
     /**
      * Add a setting to an existing choice.
+     * @param choice existing choice.
+     * @param varName variable name.
+     * @param variable variable value.
+     * @param value setting value.
      */
     public void addSetting(String choice, String varName, VariableValue variable, String value) {
         SettingList s = choiceHash.get(choice);

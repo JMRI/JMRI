@@ -1,14 +1,16 @@
 package jmri.jmrix.acela;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link jmri.jmrix.acela.AcelaTurnout} class.
  *
- * @author	Bob Coleman
+ * @author Bob Coleman
  */
 public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
@@ -22,23 +24,20 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     @Override
     public void checkClosedMsgSent() {
-
-//        Assert.assertEquals("closed message","52 05 88 00",
-//                tcis.outbound.elementAt(tcis.outbound.size()-1).toString());
-//	Assert.assertTrue("closed message sent", tcis.outbound.size()>0);
-
+//        Assert.assertEquals("closed message", "52 05 88 00",
+//                tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+//        Assert.assertTrue("closed message sent", tcis.outbound.size() > 0);
     }
 
     @Override
     public void checkThrownMsgSent() {
-
-//        Assert.assertEquals("thrown message","52 05 89 00",
-//                tcis.outbound.elementAt(tcis.outbound.size()-1).toString());
-//	Assert.assertTrue("thrown message sent", tcis.outbound.size()>0);
+//        Assert.assertEquals("thrown message", "52 05 89 00",
+//                tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+//        Assert.assertTrue("thrown message sent", tcis.outbound.size() > 0);
     }
 
     @Test
-    @Ignore("Copied verbatim from Lenz, probably isn't correct")
+    @Disabled("Copied verbatim from Lenz, probably isn't correct")
     public void checkIncoming() {
         // notify the object that somebody else changed it...
         AcelaReply m = new AcelaReply();
@@ -60,14 +59,14 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     // AcelaTurnout test for incoming status message
     @Test
-    @Ignore("Copied verbatim from Lenz, probably isn't correct")
+    @Disabled("Copied verbatim from Lenz, probably isn't correct")
     public void testAcelaTurnoutStatusMsg() {
         // prepare an interface
         // set closed
         try {
             t.setCommandedState(jmri.Turnout.CLOSED);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
@@ -84,8 +83,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     AcelaNode a0, a1, a2, a3;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -128,9 +126,11 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         t = new AcelaTurnout("AT11",memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutTest.class);

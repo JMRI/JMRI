@@ -11,21 +11,8 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTabbedPane;
-import javax.swing.JToggleButton;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -36,44 +23,19 @@ import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.FunctionLabelPane;
-import jmri.jmrit.roster.PrintRosterEntry;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.RosterEntryPane;
-import jmri.jmrit.roster.RosterMediaPane;
-import jmri.jmrit.symbolicprog.CsvExportAction;
-import jmri.jmrit.symbolicprog.CsvImportAction;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.CvValue;
-import jmri.jmrit.symbolicprog.DccAddressVarHandler;
-import jmri.jmrit.symbolicprog.EnumVariableValue;
-import jmri.jmrit.symbolicprog.FactoryResetAction;
-import jmri.jmrit.symbolicprog.LokProgImportAction;
-import jmri.jmrit.symbolicprog.Pr1ExportAction;
-import jmri.jmrit.symbolicprog.Pr1ImportAction;
-import jmri.jmrit.symbolicprog.Pr1WinExportAction;
-import jmri.jmrit.symbolicprog.PrintAction;
-import jmri.jmrit.symbolicprog.PrintCvAction;
-import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
-import jmri.jmrit.symbolicprog.Qualifier;
-import jmri.jmrit.symbolicprog.QualifierAdder;
-import jmri.jmrit.symbolicprog.QuantumCvMgrImportAction;
-import jmri.jmrit.symbolicprog.ResetTableModel;
-import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.symbolicprog.VariableValue;
+import jmri.jmrit.roster.*;
+import jmri.jmrit.symbolicprog.*;
 import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014, 2018, 2019
  * @author D Miller Copyright 2003, 2005
  * @author Howard G. Penny Copyright (C) 2005
  */
@@ -132,6 +94,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * appropriate.
      * <p>
      * A null value is ignored (?)
+     * @return new mode panel for inclusion in the GUI
      */
     abstract protected JPanel getModePane();
 
@@ -139,11 +102,9 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // create ShutDownTasks
         if (decoderDirtyTask == null) {
-            decoderDirtyTask
-                    = new SwingShutDownTask("DecoderPro Decoder Window Check",
-                            Bundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
-                            (String) null, this
-                    ) {
+            decoderDirtyTask = new SwingShutDownTask("DecoderPro Decoder Window Check",
+                    Bundle.getMessage("PromptQuitWindowNotWrittenDecoder"),
+                    (String) null, this) {
                 @Override
                 public boolean checkPromptNeeded() {
                     return !checkDirtyDecoder();
@@ -152,11 +113,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(decoderDirtyTask);
         if (fileDirtyTask == null) {
-            fileDirtyTask
-                    = new SwingShutDownTask("DecoderPro Decoder Window Check",
-                            Bundle.getMessage("PromptQuitWindowNotWrittenConfig"),
-                            Bundle.getMessage("PromptSaveQuit"), this
-                    ) {
+            fileDirtyTask = new SwingShutDownTask("DecoderPro Decoder Window Check",
+                    Bundle.getMessage("PromptQuitWindowNotWrittenConfig"),
+                    Bundle.getMessage("PromptSaveQuit"), this) {
                 @Override
                 public boolean checkPromptNeeded() {
                     return !checkDirtyFile();
@@ -164,8 +123,8 @@ abstract public class PaneProgFrame extends JmriJFrame
 
                 @Override
                 public boolean doPrompt() {
-                    boolean result = storeFile(); // storeFile false if failed, abort shutdown
-                    return result;
+                    // storeFile returns false if failed, so abort shutdown
+                    return storeFile();
                 }
             };
         }
@@ -407,6 +366,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param pFrameTitle     Name/title for the frame
      * @param pProgrammerFile Name of the programmer file to use
      * @param pProg           Programmer object to be used to access CVs
+     * @param opsMode         true for opsmode, else false.
      */
     public PaneProgFrame(DecoderFile pDecoderFile, @Nonnull RosterEntry pRosterEntry,
             String pFrameTitle, String pProgrammerFile, Programmer pProg, boolean opsMode) {
@@ -511,7 +471,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 && a.getValue().equals("yes")) {
             if (decoderRoot != null) {
                 if (log.isDebugEnabled()) {
-                    log.debug("will process " + decoderPaneList.size() + " pane definitions from decoder file");
+                    log.debug("will process {} pane definitions from decoder file", decoderPaneList.size());
                 }
                 for (int i = 0; i < decoderPaneList.size(); i++) {
                     // load each pane
@@ -531,10 +491,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         pack();
 
         if (log.isDebugEnabled()) {  // because size elements take time
-            log.debug("PaneProgFrame \"" + pFrameTitle
-                    + "\" constructed for file " + _rosterEntry.getFileName()
-                    + ", unconstrained size is " + super.getPreferredSize()
-                    + ", constrained to " + getPreferredSize());
+            log.debug("PaneProgFrame \"{}\" constructed for file {}, unconstrained size is {}, constrained to {}", pFrameTitle, _rosterEntry.getFileName(), super.getPreferredSize(), getPreferredSize());
         }
     }
 
@@ -554,7 +511,8 @@ abstract public class PaneProgFrame extends JmriJFrame
      *                      "model" and "productID".
      * @param aRosterEntry  The current roster entry, used to get "family".
      * @param extraIncludes additional "include" terms
-     * @param extraExcludes additional "exclude" terms
+     * @param extraExcludes additional "exclude" terms.
+     * @return true if front ended included, else false.
      */
     public static boolean isIncludedFE(Element e, Element aModelElement, RosterEntry aRosterEntry, String extraIncludes, String extraExcludes) {
 
@@ -621,16 +579,19 @@ abstract public class PaneProgFrame extends JmriJFrame
         List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
 
         if (log.isDebugEnabled()) {
-            log.debug("XML specifies modes: P " + paged + " DBi " + directbit + " Dby " + directbyte + " R " + register + " now " + mProgrammer.getMode());
+            log.debug("XML specifies modes: P {} DBi {} Dby {} R {} now {}", paged, directbit, directbyte, register, mProgrammer.getMode());
             log.debug("Programmer supports:");
             for (ProgrammingMode m : modes) {
                 log.debug("   {} {}", m.getStandardName(), m.toString());
             }
         }
 
+        StringBuilder desiredModes = new StringBuilder();
         // first try specified modes
         for (Element el1 : programming.getChildren("mode")) {
             String name = el1.getText();
+            if (desiredModes.length() > 0) desiredModes.append(", ");
+            desiredModes.append(name);
             if (log.isDebugEnabled()) {
                 log.debug(" mode {} was specified", name);
             }
@@ -660,6 +621,11 @@ abstract public class PaneProgFrame extends JmriJFrame
             mProgrammer.setMode(ProgrammingMode.REGISTERMODE);
             log.debug("Set to REGISTERMODE");
         } else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    Bundle.getMessage("ErrorCannotSetMode", desiredModes.toString()),
+                    Bundle.getMessage("ErrorCannotSetModeTitle"),
+                    JOptionPane.OK_OPTION);
             log.warn("No acceptable mode found, leave as found");
         }
 
@@ -682,11 +648,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         log.debug("found {} matches", l.size());
         if (l.size() == 0) {
-            log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
+            log.debug("Loco uses {} {} decoder, but no such decoder defined", decoderFamily, decoderModel);
             // fall back to use just the decoder name, not family
             l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
             if (log.isDebugEnabled()) {
-                log.debug("found " + l.size() + " matches without family key");
+                log.debug("found {} matches without family key", l.size());
             }
         }
         if (l.size() > 0) {
@@ -696,7 +662,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (decoderModel.equals("")) {
                 log.debug("blank decoderModel requested, so nothing loaded");
             } else {
-                log.warn("no matching \"" + decoderModel + "\" decoder found for loco, no decoder info loaded");
+                log.warn("no matching \"{}\" decoder found for loco, no decoder info loaded", decoderModel);
             }
         }
     }
@@ -706,17 +672,16 @@ abstract public class PaneProgFrame extends JmriJFrame
             throw new IllegalArgumentException("loadDecoder file invoked with null object");
         }
         if (log.isDebugEnabled()) {
-            log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                    + " " + df.getFileName());
+            log.debug("loadDecoderFile from {} {}", DecoderFile.fileLocation, df.getFileName());
         }
 
         try {
             decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (org.jdom2.JDOMException e) {
-            log.error("Exception while parsing decoder XML file: " + df.getFileName(), e);
+            log.error("Exception while parsing decoder XML file: {}", df.getFileName(), e);
             return;
         } catch (java.io.IOException e) {
-            log.error("Exception while reading decoder XML file: " + df.getFileName(), e);
+            log.error("Exception while reading decoder XML file: {}", df.getFileName(), e);
             return;
         }
         // load variables from decoder tree
@@ -735,7 +700,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // get the showEmptyPanes attribute, if yes/no update our state
         if (decoderRoot.getAttribute("showEmptyPanes") != null) {
             if (log.isDebugEnabled()) {
-                log.debug("Found in decoder " + decoderRoot.getAttribute("showEmptyPanes").getValue());
+                log.debug("Found in decoder {}", decoderRoot.getAttribute("showEmptyPanes").getValue());
             }
             decoderShowEmptyPanes = decoderRoot.getAttribute("showEmptyPanes").getValue();
         } else {
@@ -764,14 +729,14 @@ abstract public class PaneProgFrame extends JmriJFrame
             // get the showEmptyPanes attribute, if yes/no update our state
             if (programmerRoot.getChild("programmer").getAttribute("showEmptyPanes") != null) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Found in programmer " + programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue());
+                    log.debug("Found in programmer {}", programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue());
                 }
                 programmerShowEmptyPanes = programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue();
             } else {
                 programmerShowEmptyPanes = "";
             }
             if (log.isDebugEnabled()) {
-                log.debug("programmerShowEmptyPanes=" + programmerShowEmptyPanes);
+                log.debug("programmerShowEmptyPanes={}", programmerShowEmptyPanes);
             }
 
             // get extra any panes from the decoder file
@@ -800,7 +765,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      */
     protected boolean checkDirtyDecoder() {
         if (log.isDebugEnabled()) {
-            log.debug("Checking decoder dirty status. CV: " + cvModel.decoderDirty() + " variables:" + variableModel.decoderDirty());
+            log.debug("Checking decoder dirty status. CV: {} variables:{}", cvModel.decoderDirty(), variableModel.decoderDirty());
         }
         return (getModePane() != null && (cvModel.decoderDirty() || variableModel.decoderDirty()));
     }
@@ -829,7 +794,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // check for various types of dirty - first table data not written back
         if (log.isDebugEnabled()) {
-            log.debug("Checking decoder dirty status. CV: " + cvModel.decoderDirty() + " variables:" + variableModel.decoderDirty());
+            log.debug("Checking decoder dirty status. CV: {} variables:{}", cvModel.decoderDirty(), variableModel.decoderDirty());
         }
         if (checkDirtyDecoder()) {
             if (JOptionPane.showConfirmDialog(null,
@@ -858,7 +823,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // Check for a "<new loco>" roster entry; if found, remove it
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, Bundle.getMessage("LabelNewDecoder"));
         if (l.size() > 0 && log.isDebugEnabled()) {
-            log.debug("Removing " + l.size() + " <new loco> entries");
+            log.debug("Removing {} <new loco> entries", l.size());
         }
         int x = l.size() + 1;
         while (l.size() > 0) {
@@ -922,7 +887,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // for all "pane" elements in the programmer
         List<Element> progPaneList = base.getChildren("pane");
         if (log.isDebugEnabled()) {
-            log.debug("will process " + progPaneList.size() + " pane definitions");
+            log.debug("will process {} pane definitions", progPaneList.size());
         }
         for (int i = 0; i < progPaneList.size(); i++) {
             // load each programmer pane
@@ -965,8 +930,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         for (int i = 0; i < n; i++) {
             CvValue cv = cvModel.getCvByNumber(defaultCvNumbers[i]);
             if (cv == null) {
-                log.warn("Trying to set default in CV " + defaultCvNumbers[i]
-                        + " but didn't find the CV object");
+                log.warn("Trying to set default in CV {} but didn't find the CV object", defaultCvNumbers[i]);
             } else {
                 cv.setValue(defaultCvValues[i]);
             }
@@ -1169,9 +1133,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     void updateDccAddress() {
 
         if (log.isDebugEnabled()) {
-            log.debug("updateDccAddress: short " + (primaryAddr == null ? "<null>" : primaryAddr.getValueString())
-                    + " long " + (extendAddr == null ? "<null>" : extendAddr.getValueString())
-                    + " mode " + (addMode == null ? "<null>" : addMode.getValueString()));
+            log.debug("updateDccAddress: short {} long {} mode {}", primaryAddr == null ? "<null>" : primaryAddr.getValueString(), extendAddr == null ? "<null>" : extendAddr.getValueString(), addMode == null ? "<null>" : addMode.getValueString());
         }
 
         new DccAddressVarHandler(primaryAddr, extendAddr, addMode) {
@@ -1203,7 +1165,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty, boolean programmerPane) {
         if (log.isDebugEnabled()) {
-            log.debug("newPane with enableEmpty " + enableEmpty + " showEmptyPanes " + isShowingEmptyPanes());
+            log.debug("newPane with enableEmpty {} showEmptyPanes {}", enableEmpty, isShowingEmptyPanes());
         }
         // create a panel to hold columns
         PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, variableModel, modelElem, _rosterEntry, programmerPane);
@@ -1237,6 +1199,11 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * If there are any modifier elements, process them.
+     * @param e Process the contents of this element
+     * @param pane Destination of any visible items
+     * @param model Used to locate any needed variables
+     * @param tabPane For overall GUI navigation
+     * @param index Which pane in the overall window
      */
     protected void processModifierElements(Element e, final PaneProgPane pane, VariableTableModel model, final JTabbedPane tabPane, final int index) {
         QualifierAdder qa = new QualifierAdder() {
@@ -1303,6 +1270,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     @Override
     public void paneFinished() {
+        log.debug("paneFinished with isBusy={}", isBusy());
         if (!isBusy()) {
             if (glassPane != null) {
                 glassPane.setVisible(false);
@@ -1324,6 +1292,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      */
     @Override
     public void enableButtons(boolean stat) {
+        log.debug("enableButtons({})", stat);
         if (stat) {
             enableReadButtons();
         } else {
@@ -1346,6 +1315,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     private boolean _busy = false;
 
     private void setBusy(boolean stat) {
+        log.debug("setBusy({})", stat);
         _busy = stat;
 
         for (int i = 0; i < paneList.size(); i++) {
@@ -1420,7 +1390,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         _read = true;
         while (paneListIndex < paneList.size()) {
             if (log.isDebugEnabled()) {
-                log.debug("doRead on " + paneListIndex);
+                log.debug("doRead on {}", paneListIndex);
             }
             _programmingPane = (PaneProgPane) paneList.get(paneListIndex);
             // some programming operations are instant, so need to have listener registered at readPaneAll
@@ -1437,7 +1407,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (running) {
                 // operation in progress, stop loop until called back
                 if (log.isDebugEnabled()) {
-                    log.debug("doRead expecting callback from readPane " + paneListIndex);
+                    log.debug("doRead expecting callback from readPane {}", paneListIndex);
                 }
                 return true;
             } else {
@@ -1512,7 +1482,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         _read = false;
         while (paneListIndex < paneList.size()) {
             if (log.isDebugEnabled()) {
-                log.debug("doWrite starts on " + paneListIndex);
+                log.debug("doWrite starts on {}", paneListIndex);
             }
             _programmingPane = (PaneProgPane) paneList.get(paneListIndex);
             // some programming operations are instant, so need to have listener registered at readPane
@@ -1529,7 +1499,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (running) {
                 // operation in progress, stop loop until called back
                 if (log.isDebugEnabled()) {
-                    log.debug("doWrite expecting callback from writePane " + paneListIndex);
+                    log.debug("doWrite expecting callback from writePane {}", paneListIndex);
                 }
                 return true;
             } else {
@@ -1576,8 +1546,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             log.warn("unexpected propertyChange: {}", e);
             return;
         } else if (log.isDebugEnabled()) {
-            log.debug("property changed: " + e.getPropertyName()
-                    + " new value: " + e.getNewValue());
+            log.debug("property changed: {} new value: {}", e.getPropertyName(), e.getNewValue());
         }
         log.debug("check valid: {} {} {}", e.getSource() == _programmingPane, !e.getPropertyName().equals("Busy"), ((Boolean) e.getNewValue()).equals(Boolean.FALSE));
         if (e.getSource() == _programmingPane
@@ -1748,7 +1717,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * get value of Preference option to show empty panes
+     * get value of Preference option to show empty panes.
+     * @return value from programmer config. manager, else true.
      */
     public static boolean getShowEmptyPanes() {
         return (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null)
@@ -1757,7 +1727,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Get value of whether current item should show empty panes
+     * Get value of whether current item should show empty panes.
      */
     private boolean isShowingEmptyPanes() {
         boolean temp = getShowEmptyPanes();
@@ -1819,6 +1789,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         return _rosterEntry;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgFrame.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaneProgFrame.class);
 
 }

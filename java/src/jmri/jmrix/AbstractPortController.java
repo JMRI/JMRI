@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -300,7 +301,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * enabled.
      *
      * If the implementing class does not use a
-     * {@link jmri.jmrix.SystemConnectionMemo}, this method must be overridden.
+     * {@link SystemConnectionMemo}, this method must be overridden.
      * Overriding methods must call <code>super.setDisabled(boolean)</code> to
      * ensure the configuration change state is correctly set.
      *
@@ -347,7 +348,7 @@ abstract public class AbstractPortController implements PortAdapter {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
-            log.error("Sleep Exception raised during reconnection attempt" + s);
+            log.error("Sleep Exception raised during reconnection attempt{}", s);
         }
     }
 
@@ -375,11 +376,13 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Service method to purge a stream of initial contents
      * while opening the connection.
+     * @param serialStream input data
+     * @throws java.io.IOException from underlying operations
      */
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
      protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {
         int count = serialStream.available();
-        log.debug("input stream shows " + count + " bytes available");
+         log.debug("input stream shows {} bytes available", count);
         while (count > 0) {
             serialStream.skip(count);
             count = serialStream.available();
@@ -387,7 +390,7 @@ abstract public class AbstractPortController implements PortAdapter {
     }
     
     /**
-     * Get the {@link jmri.jmrix.SystemConnectionMemo} associated with this
+     * Get the {@link SystemConnectionMemo} associated with this
      * object.
      * <p>
      * This method should only be overridden to ensure that a specific subclass
@@ -405,7 +408,7 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     /**
-     * Set the {@link jmri.jmrix.SystemConnectionMemo} associated with this
+     * Set the {@link SystemConnectionMemo} associated with this
      * object.
      * <p>
      * Overriding implementations must call

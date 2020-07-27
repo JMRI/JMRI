@@ -4,11 +4,13 @@ import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<jmri.MemoryManager,jmri.Memory> {
 
@@ -41,13 +43,13 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         Assert.assertEquals("correct system name","IMiM",im.getSystemName());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         l = new DefaultMemoryManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

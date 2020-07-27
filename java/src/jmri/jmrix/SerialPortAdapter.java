@@ -14,6 +14,7 @@ public interface SerialPortAdapter extends PortAdapter {
 
     /**
      * Provide a vector of valid port names, each a String.
+     * @return port names.
      */
     public Vector<String> getPortNames();
 
@@ -23,6 +24,7 @@ public interface SerialPortAdapter extends PortAdapter {
      * @param portName name tu use for this port
      * @param appName provided to the underlying OS during startup so
      *                that it can show on status displays, etc.
+     * @return null indicates OK return, else error message.
      */
     public String openPort(String portName, String appName);
 
@@ -64,19 +66,36 @@ public interface SerialPortAdapter extends PortAdapter {
     public int[] validBaudNumbers();
 
     /**
-     * Set the baud rate. Only to be used after construction, but before the
-     * openPort call.
+     * Get the index of the default port speed for this adapter from the validSpeeds and validRates arrays.
+     *
+     * @return -1 to indicate not supported, unless overridden in adapter
+     */
+    public int defaultBaudIndex();
+
+    /**
+     * Set the baud rate description by port speed description.
+     * <p>
+     * Only to be used after construction, but before the openPort call.
+     *
+     * @param rate the baud rate as I18N description, eg. "28,800 baud"
      */
     public void configureBaudRate(String rate);
 
     /**
-     * Set the baud rate by index from ValidBaudRates[].
+     * Set the baud rate description by port speed number (as a string) from validBaudRates[].
      * <p>
      * Only to be used after construction, but before the openPort call.
+     *
+     * @param index the port speed as unformatted number string, eg. "28800"
      */
     public void configureBaudRateFromNumber(String index);
 
-    public void configureBaudIndex(int index);
+    /**
+     * Set the baud rate description by index (integer) from validBaudRates[].
+     *
+     * @param index the index to select from speeds[] array
+     */
+    public void configureBaudRateFromIndex(int index);
 
     public String getCurrentBaudRate();
 
@@ -120,6 +139,12 @@ public interface SerialPortAdapter extends PortAdapter {
     /**
      * Error handling for busy port at open.
      *
+     * @param p        the exception being handled, if additional information
+     *                 from it is desired.
+     * @param portName name of the port being accessed.
+     * @param log      where to log a status message.
+     * @return Localized message, in case separate presentation to user is
+     *         desired.
      * @see jmri.jmrix.AbstractSerialPortController
      */
     public String handlePortBusy(PortInUseException p, String portName, Logger log);

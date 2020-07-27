@@ -1,17 +1,16 @@
 package jmri.jmrix.rfid;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * RfidSensorTest.java
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidSensor class
+ * Test for the jmri.jmrix.rfid.RfidSensor class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class RfidSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -33,16 +32,15 @@ public class RfidSensorTest extends jmri.implementation.AbstractSensorTestBase {
        Assert.assertNotNull("exists", s);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         t = new RfidSensor("FSA");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         JUnitUtil.tearDown();

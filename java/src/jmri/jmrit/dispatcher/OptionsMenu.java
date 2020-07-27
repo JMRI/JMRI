@@ -25,7 +25,7 @@ import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.ScaleManager;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
@@ -396,14 +396,14 @@ public class OptionsMenu extends JMenu {
         try {
             InstanceManager.getDefault(OptionsFile.class).writeDispatcherOptions(dispatcher);
         } catch (java.io.IOException ioe) {
-            log.error("Exception writing Dispatcher options: " + ioe);
+            log.error("Exception writing Dispatcher options: {}", ioe);
         }
     }
 
     private boolean initializeLayoutEditorCombo() {
         // get list of Layout Editor panels
-        layoutEditorList = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
-        if (layoutEditorList.size() == 0) {
+        layoutEditorList = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
+        if (layoutEditorList.isEmpty()) {
             return false;
         }
         layoutEditorBox.removeAllItems();

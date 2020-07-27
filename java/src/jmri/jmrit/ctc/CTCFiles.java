@@ -12,8 +12,6 @@ import jmri.util.FileUtil;
 
 public class CTCFiles {
 
-    private static String fileLocation = FileUtil.getUserFilesPath() + "ctc/";  // NOI18N
-
     /**
      * Verify that the standard file path is valid.
      * Create the ctc directory if needed.
@@ -33,10 +31,7 @@ public class CTCFiles {
     }
 
     public static String getFileLocation() {
-        if (fileLocation == null) {
-            fileLocation = FileUtil.getUserFilesPath() + "ctc/";  // NOI18N
-        }
-        return fileLocation;
+        return new File(FileUtil.getUserFilesPath(), "ctc").getAbsolutePath();  // NOI18N
     }
 
     /**
@@ -45,7 +40,7 @@ public class CTCFiles {
      * @return the full path and name.
      */
     public static String getFullName(String fileName) {
-        return getFileLocation() + fileName;
+        return new File(getFileLocation(), fileName).getAbsolutePath();
     }
 
     /**

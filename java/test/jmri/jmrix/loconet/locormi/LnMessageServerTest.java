@@ -1,13 +1,13 @@
 package jmri.jmrix.loconet.locormi;
 
 import java.security.Permission;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
@@ -23,7 +23,7 @@ public class LnMessageServerTest {
         Assert.assertNotNull("exists", t);
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
         if (SM == null) {
             System.setSecurityManager(new SecurityManager() {
@@ -44,18 +44,17 @@ public class LnMessageServerTest {
         }
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
         System.setSecurityManager(SM);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

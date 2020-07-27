@@ -4,7 +4,7 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
@@ -12,7 +12,7 @@ import org.junit.Test;
  * <p>
  * Still to do: Everything
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarLengthsTest extends OperationsTestCase {
 
@@ -27,7 +27,7 @@ public class CarLengthsTest extends OperationsTestCase {
     @Test
     public void testAddAndDeleteCarLengths() {
         CarLengths cl1 = InstanceManager.getDefault(CarLengths.class);
-        cl1.getNames();	// load predefined lengths
+        cl1.getNames(); // load predefined lengths
 
         cl1.addName("1");
         cl1.deleteName("13"); // en_GB defines a length 13.

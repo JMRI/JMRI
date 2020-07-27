@@ -8,12 +8,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -51,7 +51,11 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li><a href="https://www.jmri.org/help/en/html/hardware/loconet/Digitrax.shtml#deviceBoardId">
+                    Instructions</a> detailing how to change the Board ID (Board 
+                    Address) of certain Digitrax LocoNet-based devices using 
+                    JMRI have been added to the Digitrax hardware page.</li>
+                <li>Fixed a problem in the PM4Announce script</li>
             </ul>
 
         <h4>Maple</h4>
@@ -71,7 +75,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
+                <li>When status UNKNOWN or INCONSISTENT is received from MQTT and the turnout operating mode is MONITORING or EXACT, the layout is now updated with this status</li>
+                <li>When EXACT feedback mode is selected, two different MQTT topics will be used - one for commands and one for state</li>
             </ul>
 
         <h4>MRC</h4>
@@ -141,10 +147,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li>The CV19 references in multiple decoder definitions
-            have been updated to use common fragment files.</li>
-          <li>The Schema references in numerous fragment files have been updated to 
-            a consistent form.</li>
+          <li></li>
         </ul>
 
         <h4>Arnold</h4>
@@ -159,7 +162,8 @@
 
         <h4>BLI</h4>
             <ul>
-                <li></li>
+                <li>
+                </li>
             </ul>
 
         <h4>BNM Hobbies</h4>
@@ -184,7 +188,7 @@
 
         <h4>Doehler &amp; Haas</h4>
             <ul>
-                <li>Alain Le Marchand updated some definitions</li>
+                <li></li>
             </ul>
 
         <h4>ESU</h4>
@@ -209,8 +213,7 @@
 
         <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
-                <li>Fixed some duplicate definitions of "Motor Output 2"</li>
-                <li>Updated from DTD to Schema checks</li>
+                <li></li>
             </ul>
 
         <h4>Lenz</h4>
@@ -248,6 +251,11 @@
                 <li></li>
             </ul>
 
+        <h4>Public Domain and DIY decoders</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>QSI</h4>
             <ul>
                 <li></li>
@@ -265,6 +273,12 @@
 
         <h4>SoundTraxx</h4>
             <ul>
+                <li>
+                </li>
+            </ul>
+
+        <h4>TAMS</h4>
+            <ul>
                 <li></li>
             </ul>
 
@@ -272,7 +286,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -339,8 +353,13 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+	        <li></li>
         </ul>
+
+        <h4>NX - Entry/Exit Tool</h4>
+            <ul>
+                <li></li>
+            </ul>
 
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
@@ -351,10 +370,12 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed problem where operations database was always saved when exiting JMRI.</li>
+            <li>Fixed problem with Panel name for train icons.</li>
+            <li>Fixed problem with track move count when track has an alternate track.</li>
         </ul>
 
-   <h3>Panel Editors</h3>
+   <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
@@ -365,6 +386,22 @@
                 <li></li>
             </ul>
 
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
+        <ul>
+            <li></li>
+        </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li></li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+                <li></li>
+            </ul>
+   
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -392,7 +429,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Some internal refactoring that should help with the long term
+            maintenance of JMRI has been done. This may cause some scripts to
+            fail until classes or methods are renamed in those scripts.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -402,7 +441,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>
+                </li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -414,18 +454,18 @@
             <ul>
                 <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
             </ul>
 
-    	<h4>Simple Signal Logic</h4>
+	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
-	    <h4>NX Entry/Exit Logic</h4>
+    	<h4>Simple Signal Logic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -441,8 +481,20 @@
             <li></li>
         </ul>
 
+    <h3>Throttle</h3>
+        <a id="throttle" name="throttle"></a>
+        <ul>
+            <li></li>
+        </ul>
+
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Tracker</h3>
+        <a id="Tr" name="Tr"></a>
         <ul>
             <li></li>
         </ul>
@@ -456,7 +508,13 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li></li>
+        </ul>
+
+    <h3>Where Used</h3>
+        <a id="WhereUsed" name="WhereUsed"></a>
+        <ul>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -464,16 +522,32 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>VSD now supports the "Location Following" (sound follows loco) with occupancy
+                sensors and JMRI Blocks. See the 
+				<a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#VSDLocations">
+                documentation</a> for details.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
+                interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
+                require changes to scripts.  If you have a script that references
+                jmri.jmrix.SystemConnectionMemo, please change it to either
+                jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
+                (it's easier to have you just try the two than to explain which 
+                one will work in which case)</li>
+            <li>Added PR automation to check for a comment in the release note when a PR
+                is opened, and to ensure that somebody has been assigned to the PR.</li>
+            <li>The jmri.JmriPlugin class is deprecated without a replacement. If you depend on
+	              on this class, please <a href="https://github.com/JMRI/JMRI/issues/new">raise an issue on GitHub</a>
+		            so we can discuss how to meet your requirements through other means.</li>
+            <li>"Display Message Log" has been removed from the Debug Menu. Use the
+                "System Console" from the Help Menu to view log messages.</li>
         </ul>
 

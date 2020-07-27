@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Portions by Paul Bender Copyright (C) 2003
  * @author Mark Underwood Copyright (C) 2015
+ * @author Harald Barth Copyright (C) 2019
  *
  * Based on LenzCommandStation by Bob Jacobsen and Paul Bender
  */
@@ -25,16 +26,15 @@ public class DCCppCommandStation implements jmri.CommandStation {
     private String baseStationType;
     private String codeBuildDate;
     private DCCppRegisterManager rmgr = null;
+    private int maxNumSlots = 0;
 
     public DCCppCommandStation() {
         super();
-        rmgr = new DCCppRegisterManager();
     }
 
     public DCCppCommandStation(DCCppSystemConnectionMemo memo) {
         super();
         adaptermemo = memo;
-        rmgr = new DCCppRegisterManager();
     }
 
     public void setBaseStationType(String s) {
@@ -56,6 +56,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /**
      * Parses the DCC++ CS status response to pull out the base station version
      * and software version.
+     * @param l status response to query.
      */
     protected void setCommandStationInfo(DCCppReply l) {
  // V1.0 Syntax
@@ -74,9 +75,33 @@ public class DCCppCommandStation implements jmri.CommandStation {
         codeBuildDate = l.getStatusBuildDateString();
     }
 
+    protected void setCommandStationMaxNumSlots(DCCppReply l) {
+        if (maxNumSlots != 0) {
+            log.error("Command Station maxNumSlots already initialized");
+            return;
+        }
+        maxNumSlots = l.getValueInt(1);
+        log.debug("maxNumSlots set to {}", maxNumSlots);
+    }
+    protected void setCommandStationMaxNumSlots(int n) {
+        if (maxNumSlots != 0) {
+            log.error("Command Station maxNumSlots already initialized");
+            return;
+        }
+        maxNumSlots = n;
+        log.debug("maxNumSlots set to {}", maxNumSlots);
+    }
+    protected int getCommandStationMaxNumSlots() {
+        if (maxNumSlots <= 0) {
+            log.error("Command Station maxNumSlots not initialized yet");
+        }
+        return maxNumSlots;
+    }
+
     /**
      * Provide the version string returned during the initial check.
      * This function is not yet implemented...
+     * @return version string.
      */
     public String getVersionString() {
         return(baseStationType + ": BUILD " + codeBuildDate);
@@ -89,15 +114,18 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     /**
      * DCC++ command station does provide Ops Mode.
+     * @return always true.
      */
     public boolean isOpsModePossible() {
- return true;
+        return true;
     }
 
     // A few utility functions
     /**
      * Get the Lower byte of a locomotive address from the decimal locomotive
      * address.
+     * @param address loco address.
+     * @return loco address byte lo.
      */
     public static int getDCCAddressLow(int address) {
         /* For addresses below 128, we just return the address, otherwise,
@@ -115,6 +143,8 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /**
      * Get the Upper byte of a locomotive address from the decimal locomotive
      * address.
+     * @param address loco address.
+     * @return high byte of address.
      */
     public static int getDCCAddressHigh(int address) {
         /* this isn't actually the high byte, For addresses below 128, we
@@ -149,7 +179,9 @@ public class DCCppCommandStation implements jmri.CommandStation {
         }
 
         int reg = 0;  // register 0, so this doesn't repeat
-        DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length, packet);
+        //  DCC++ BaseStation code appends its own error-correction byte.
+        // So we have to omit the JMRI-generated one.
+        DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length - 1, packet);
         log.debug("sendPacket:'{}'", msg.toString());
 
         for (int i = 0; i < repeats; i++) {
@@ -178,6 +210,12 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     private DCCppSystemConnectionMemo adaptermemo;
 
+    private void creatermgr() {
+        if (rmgr == null) {
+            rmgr = new DCCppRegisterManager(maxNumSlots);
+        }
+    }
+
     @Override
     public String getUserName() {
         if (adaptermemo == null) {
@@ -195,21 +233,25 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     public int requestNewRegister(int addr) {
- return(rmgr.requestRegister(addr));
+        creatermgr();
+        return (rmgr.requestRegister(addr));
     }
 
     public void releaseRegister(int addr) {
- rmgr.releaseRegister(addr);
+        creatermgr();
+        rmgr.releaseRegister(addr);
     }
 
     // Return DCCppConstants.NO_REGISTER_FREE if address is not in list
     public int getRegisterNum(int addr) {
- return(rmgr.getRegisterNum(addr));
+        creatermgr();
+        return (rmgr.getRegisterNum(addr));
     }
 
     // Return DCCppConstants.REGISTER_UNALLOCATED if register is unused.
     public int getRegisterAddress(int num) {
- return(rmgr.getRegisterAddress(num));
+        creatermgr();
+        return (rmgr.getRegisterAddress(num));
     }
 
     /*

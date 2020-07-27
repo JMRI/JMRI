@@ -30,7 +30,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to RFID devices via a serial comm port.
+ * Provide access to RFID devices via a serial com port.
  * Derived from the Oaktree code.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
@@ -100,14 +100,7 @@ public class SerialDriverAdapter extends RfidPortController {
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at " // NOI18N
-                        + activeSerialPort.getBaudRate() + " baud with" // NOI18N
-                        + " DTR: " + activeSerialPort.isDTR() // NOI18N
-                        + " RTS: " + activeSerialPort.isRTS() // NOI18N
-                        + " DSR: " + activeSerialPort.isDSR() // NOI18N
-                        + " CTS: " + activeSerialPort.isCTS() // NOI18N
-                        + "  CD: " + activeSerialPort.isCD() // NOI18N
-                );
+                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
             if (log.isDebugEnabled()) {
                 // report additional status
@@ -154,6 +147,7 @@ public class SerialDriverAdapter extends RfidPortController {
                 // create a Generic Stand-alone port controller
                 log.debug("Create Generic Standalone SpecificTrafficController"); // NOI18N
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
                         new StandaloneSensorManager(this.getSystemConnectionMemo()),
                         new StandaloneReporterManager(this.getSystemConnectionMemo()));
@@ -162,6 +156,7 @@ public class SerialDriverAdapter extends RfidPortController {
                 // create a MERG Concentrator port controller
                 log.debug("Create MERG Concentrator SpecificTrafficController"); // NOI18N
                 control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
                         new ConcentratorSensorManager(this.getSystemConnectionMemo()),
                         new ConcentratorReporterManager(this.getSystemConnectionMemo()));
@@ -171,6 +166,7 @@ public class SerialDriverAdapter extends RfidPortController {
                 log.warn("adapter option {} defaults to Generic Stand-alone", opt1); // NOI18N
                 // create a Generic Stand-alone port controller
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
                 this.getSystemConnectionMemo().configureManagers(
                         new StandaloneSensorManager(this.getSystemConnectionMemo()),
                         new StandaloneReporterManager(this.getSystemConnectionMemo()));
@@ -278,7 +274,7 @@ public class SerialDriverAdapter extends RfidPortController {
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
+        int baud = currentBaudNumber(mBaudRate);
 
         // the Parallax reader uses 2400 baud, so set that here
         if (getOptionState(option3Name).equals("Parallax")) {
@@ -316,21 +312,13 @@ public class SerialDriverAdapter extends RfidPortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    /**
-     * Set the baud rate.
-     *
-     * @param rate the baud rate to set
-     */
-    @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: {}", rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
-    }
-
     protected String[] validSpeeds = new String[]{Bundle.getMessage("BaudAutomatic")};
     protected int[] validSpeedValues = new int[]{9600};
-    protected String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // private control members
     private boolean opened = false;

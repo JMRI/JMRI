@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -37,12 +36,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created and
- * provide rotation {@literal &} scaling services.
+ * provide rotation and scaling services.
  * <p>
  * We store both a "URL" for finding the file this was made from (so we can load
- * this later), plus a shorter "name" for display.
+ * this later), plus a shorter (localized) "name" for display in GUI.
  * <p>
- * These can be persisted by storing their name and rotation
+ * These can be persisted by storing their name and rotation.
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen Copyright 2002, 2008
@@ -209,7 +208,7 @@ public class NamedIcon extends ImageIcon {
      *
      * @param name the new name, can be null
      */
-    public void setName(@Nullable String name) {
+    public void setName(@CheckForNull String name) {
         mName = name;
     }
 
@@ -229,7 +228,7 @@ public class NamedIcon extends ImageIcon {
      *
      * @param url the URL associated with this icon
      */
-    public void setURL(@Nullable String url) {
+    public void setURL(@CheckForNull String url) {
         mURL = url;
     }
 
@@ -291,7 +290,8 @@ public class NamedIcon extends ImageIcon {
      }*/
 
     /**
-     * Valid values are <ul>
+     * Valid values are
+     * <ul>
      * <li>0 - no rotation
      * <li>1 - 90 degrees counter-clockwise
      * <li>2 - 180 degrees counter-clockwise
@@ -406,7 +406,7 @@ public class NamedIcon extends ImageIcon {
 
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
         if (w <= 0 || h <= 0) {
-            if (log.isDebugEnabled()) {
+            if (comp instanceof jmri.jmrit.display.Positionable) {
                 log.debug("transformImage bad coords {}",
                         ((jmri.jmrit.display.Positionable) comp).getNameString());
             }

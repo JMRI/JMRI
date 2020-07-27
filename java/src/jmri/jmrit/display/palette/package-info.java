@@ -1,5 +1,5 @@
 /**
- * Select from palette of items
+ * Select from palette of items.
  *
  * <h2>Related Documentation</h2>
  *
@@ -10,6 +10,8 @@
  * @see jmri.jmrit.display
  * @see jmri.jmrit.picker
  */
+// include empty DefaultAnnotation to avoid excessive recompilation
+@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})
 package jmri.jmrit.display.palette;
 
 /*

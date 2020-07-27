@@ -1,10 +1,8 @@
 package jmri.jmrix.loconet;
 
 import jmri.managers.AbstractCabSignalManager;
-import java.util.HashMap;
 import jmri.LocoAddress;
 import jmri.CabSignal;
-import jmri.implementation.DefaultCabSignal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +33,7 @@ public class LnCabSignalManager extends AbstractCabSignalManager {
     }
 
     /**
-     * { @inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     protected CabSignal createCabSignal(LocoAddress address){

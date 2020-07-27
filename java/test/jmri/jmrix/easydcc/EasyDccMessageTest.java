@@ -1,17 +1,16 @@
 /**
  * EasyDccMessageTest.java
  *
- * Description:	JUnit tests for the EasyDccMessage class
+ * JUnit tests for the EasyDccMessage class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.easydcc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 public class EasyDccMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         
@@ -67,16 +66,16 @@ public class EasyDccMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
-	JUnitUtil.setUp();
-	m = msg = new EasyDccMessage(1);
+        JUnitUtil.setUp();
+        m = msg = new EasyDccMessage(1);
     }
 
-    @After
-    public void tearDown(){
-	m = msg = null;
-	JUnitUtil.tearDown();
+    @AfterEach
+    public void tearDown() {
+        m = msg = null;
+        JUnitUtil.tearDown();
     }
 
 }

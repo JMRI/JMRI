@@ -4,10 +4,8 @@ import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the serial address functions in memo.
@@ -15,7 +13,7 @@ import org.junit.Test;
  * These used to be in a separate SerialAddress class, with its own test class.
  * This structure is a vestige of that.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2017
  */
 public class SerialAddressTest {
@@ -26,7 +24,7 @@ public class SerialAddressTest {
     SerialNode n10;
     SerialNode n18;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
 
@@ -58,14 +56,15 @@ public class SerialAddressTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
         if (stcs != null) stcs.terminateThreads();
         stcs = null;
         memo = null;
         n10 = null;
         n18 = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
     @Test

@@ -1,9 +1,11 @@
 package jmri.server.json.memory;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Memory;
@@ -11,11 +13,11 @@ import jmri.MemoryManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -34,7 +36,7 @@ public class JsonMemorySocketServiceTest {
             JsonMemorySocketService service = new JsonMemorySocketService(connection);
             MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
             Memory memory1 = manager.provideMemory("IM1");
-            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
+            service.onMessage(JsonMemory.MEMORY, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             // TODO: test that service is listener in MemoryManager
             // default null value of memory1 has text representation "null" in JSON
             message = connection.getMessage();
@@ -72,22 +74,22 @@ public class JsonMemorySocketServiceTest {
             Memory memory1 = manager.provideMemory("IM1");
             // Memory "close"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "close");
-            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
+            service.onMessage(JsonMemory.MEMORY, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals("close", memory1.getValue());
             // Memory "throw"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "throw");
-            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
+            service.onMessage(JsonMemory.MEMORY, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals("throw", memory1.getValue());
             // Memory UNKNOWN - remains ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1").putNull(JSON.VALUE);
-            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
+            service.onMessage(JsonMemory.MEMORY, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             Assert.assertEquals(null, memory1.getValue());
             memory1.setValue("throw");
             // Memory no value
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1");
             JsonException exception = null;
             try {
-                service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
+                service.onMessage(JsonMemory.MEMORY, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
             } catch (JsonException ex) {
                 exception = ex;
             }
@@ -98,14 +100,14 @@ public class JsonMemorySocketServiceTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initMemoryManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

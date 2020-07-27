@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import java.util.List;
+
 import jmri.BeanSetting;
 import jmri.Block;
 import jmri.ConfigureManager;
@@ -11,10 +12,9 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSensor;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
 
 /**
  * Tests for BlockManagerXml.
@@ -39,7 +39,7 @@ public class BlockManagerXmlTest {
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTest.xml"));
 
-        // check existance of blocks
+        // check existence of blocks
         Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
         Assert.assertNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("no block"));
         Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB2"));
@@ -90,7 +90,7 @@ public class BlockManagerXmlTest {
 //         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwest"));
 //         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwestsiding"));
 
-        // check existance of turmouts
+        // check existence of turmouts
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
         Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no turnout"));
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT2"));
@@ -101,7 +101,7 @@ public class BlockManagerXmlTest {
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT7"));
         Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT8"));
 
-        // check existance of memories        
+        // check existence of memories
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0001"));
         Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0002"));
@@ -128,7 +128,7 @@ public class BlockManagerXmlTest {
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestmemory"));
         Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestsidingmemory"));
 
-        // check existance of sensors
+        // check existence of sensors
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO1"));
         Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO2"));
@@ -155,7 +155,7 @@ public class BlockManagerXmlTest {
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestoccupied"));
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestsidingoccupied"));
 
-        // check existance of paths between blocks
+        // check existence of paths between blocks
         Block[] blockstotest;
         Sensor[] occupiedsensor;
         int[] expectedpreviouspaths;
@@ -171,9 +171,9 @@ public class BlockManagerXmlTest {
         passnexttest = new Boolean[4];        //Make sure this is bigger than needed
 
         Block[][] previousblock;
-        previousblock = new Block[12][4];         //Make sure this is bigger than the list below
+        previousblock = new Block[12][4];     //Make sure this is bigger than the list below
         Block[][] nextblock;
-        nextblock = new Block[12][4];             //Make sure this is bigger than the list below
+        nextblock = new Block[12][4];         //Make sure this is bigger than the list below
 
         //  This matches up with the test file, ...
         blockstotest[0] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthwest");
@@ -429,14 +429,15 @@ public class BlockManagerXmlTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

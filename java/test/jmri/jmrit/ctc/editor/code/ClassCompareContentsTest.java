@@ -1,6 +1,7 @@
 package jmri.jmrit.ctc.editor.code;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /*
 * Tests for the ClassCompareContents Class
@@ -13,12 +14,12 @@ public class ClassCompareContentsTest {
         Assert.assertNotNull("ClassCompareContents Constructor Return", new ClassCompareContents());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

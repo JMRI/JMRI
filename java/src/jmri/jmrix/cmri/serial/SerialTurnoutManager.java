@@ -1,6 +1,7 @@
 package jmri.jmrix.cmri.serial;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Turnout;
@@ -27,6 +28,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CMRISystemConnectionMemo getMemo() {
         return (CMRISystemConnectionMemo) memo;
     }
@@ -35,7 +37,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = "";
         sName = getMemo().normalizeSystemName(systemName);
@@ -84,6 +86,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Public method to notify user of Turnout creation error.
+     * @param conflict human readable name of turnout with conflict.
+     * @param bitNum conflict bit number.
      */
     public void notifyTurnoutCreationError(String conflict, int bitNum) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +
@@ -109,7 +113,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * machines.
      */
     @Override
-    public int askNumControlBits(String systemName) {
+    public int askNumControlBits(@Nonnull String systemName) {
 
         // ask user how many bits should control the turnout - 1 or 2
         int iNum = selectNumberOfControlBits();
@@ -156,7 +160,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * (normally in seconds).
      */
     @Override
-    public int askControlType(String systemName) {
+    public int askControlType(@Nonnull String systemName) {
         // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
         // 'pulsed' output (some turnout controllers).
         int iType = selectOutputType();
@@ -202,6 +206,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * Public method to notify user when the second bit of a proposed two output
      * bit turnout has a conflict with another assigned bit.
+     * @param conflict human readable name of turnout with conflict.
+     * @param bitNum conflict bit number.
      */
     public void notifySecondBitConflict(String conflict, int bitNum) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssign2Dialog", bitNum, conflict) + "\n" +
@@ -214,7 +220,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * Turnout format is more than a simple format.
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -222,7 +228,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean isNumControlBitsSupported(String systemName) {
+    public boolean isNumControlBitsSupported(@Nonnull String systemName) {
         return true;
     }
 
@@ -230,7 +236,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean isControlTypeSupported(String systemName) {
+    public boolean isControlTypeSupported(@Nonnull String systemName) {
         return true;
     }
 
@@ -238,7 +244,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         int seperator = 0;
         String tmpSName;
 
@@ -289,14 +295,14 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return (tmpSName);
     }
 
-    int bitNum = 0;
-    int nAddress = 0;
+    private int bitNum = 0;
+    private int nAddress = 0;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         String tmpSName = "";
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -346,7 +352,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
     
@@ -354,7 +361,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 

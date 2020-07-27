@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * System names are "RSpppp", where ppp is a representation of the region, for
  * example "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class RpsSensor extends AbstractSensor
         implements MeasurementListener {
@@ -101,6 +101,7 @@ public class RpsSensor extends AbstractSensor
     /**
      * Notify parameter listeners that a device has left the region covered by
      * this sensor
+     * @param id Number of region being left
      */
     void notifyLeaving(Integer id) {
         firePropertyChange("Leaving", null, id);
@@ -109,6 +110,7 @@ public class RpsSensor extends AbstractSensor
     /**
      * Notify parameter listeners that a device has entered the region covered
      * by this sensor
+     * @param id Number of region being entered
      */
     void notifyArriving(Integer id) {
         firePropertyChange("Arriving", null, id);
@@ -117,6 +119,7 @@ public class RpsSensor extends AbstractSensor
     @Override
     public void dispose() {
         Model.instance().removeRegion(region);
+        super.dispose();
     }
 
     @Override

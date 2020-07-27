@@ -7,6 +7,8 @@ import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 
+import javax.annotation.Nonnull;
+
 /**
  * Get access to available {@link Programmer} objects.
  * <p>
@@ -45,7 +47,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
         super(pProgrammer);
     }
 
-    public OlcbProgrammerManager(Programmer pProgrammer, jmri.jmrix.SystemConnectionMemo memo) {
+    public OlcbProgrammerManager(Programmer pProgrammer, jmri.SystemConnectionMemo memo) {
         super(pProgrammer, memo);
     }
 
@@ -78,7 +80,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * elsewhere.
      */
     @Override
-    public void releaseAddressedProgrammer(AddressedProgrammer p) {}
+    public void releaseAddressedProgrammer(@Nonnull AddressedProgrammer p) {}
 
     /**
      * Convenience method to check whether you'll be able to get an Addressed
@@ -98,6 +100,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * <p>
      * If the order is significant, earlier modes are better.
      */
+    @Nonnull
     @Override
     public List<ProgrammingMode> getDefaultModes() { return new java.util.ArrayList<>(); }
 
@@ -106,6 +109,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * ProgrammerManagers directly in user interface components, so it should return a
      * user-provided name for this particular one.
      */
+    @Nonnull
     @Override
     public String getUserName() { return "OpenLCB"; }
 
@@ -114,6 +118,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * ProgrammerManagers directly in user interface components, so it should return a
      * user-provided name for this particular one.
      */
+    @Nonnull
     @Override
     public String toString() { return "OlcbProgrammerManager"; }
 }

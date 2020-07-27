@@ -8,7 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro - Sharing DecoderPro Rosters across a
-  Network</title><!-- Style -->
+  Network</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,15 +17,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -46,7 +46,7 @@
         together (Windows XP clients and a Windows 2000 Server). I
         would like to store the roster and all else that is needed
         on the Windows 2000 server and be able to run copies of
-        Decoder Pro on at lease two of the Windows XP PC's. Is that
+        DecoderPro on at lease two of the Windows XP PC's. Is that
         possible?
       </blockquote>Yes!
 
@@ -76,7 +76,7 @@
         click "Show Advanced Preferences". The window will get
         bigger. Press "Set" under "Roster:" and follow
         directions.</li>
-      </ol><!--#include virtual="/Footer" -->
+      </ol><!--#include virtual="/Footer.shtml" -->
     </div><!-- close #mainContent -->
   </div><!-- close #mBody -->
 </body>

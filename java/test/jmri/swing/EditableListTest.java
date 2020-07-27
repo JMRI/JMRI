@@ -1,11 +1,11 @@
 package jmri.swing;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.swing.EditableList class.
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  */
 public class EditableListTest {
 

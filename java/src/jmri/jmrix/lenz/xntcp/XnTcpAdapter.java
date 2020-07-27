@@ -10,8 +10,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.Vector;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
@@ -45,13 +45,14 @@ public class XnTcpAdapter extends XNetNetworkPortController {
     static final int READ_TIMEOUT = 8000;
     // Increasing MAX_PENDING_PACKETS makes output to CS faster, but may delay reception of unexpected notifications from CS
     static final int MAX_PENDING_PACKETS = 15; // Allow a buffer of up to 128 bytes to be sent before waiting for acknowledgment
+    private static final String MANUAL = "Manual";
 
     private Vector<String> hostNameVector = null;  // Contains the list of interfaces found on the LAN
     private Vector<HostAddress> hostAddressVector = null; // Contains their IP and port numbers
     private InputStream inTcpStream = null;
     private OutputTcpStream outTcpStream = null;
     private int pendingPackets = 0;   // Number of packets sent and not yet acknowledged
-    private String outName = "Manual";  // Interface name, used for possible error messages (can be either the netBios name or the IP address)
+    private String outName = MANUAL;  // Interface name, used for possible error messages (can be either the netBios name or the IP address)
 
     public XnTcpAdapter() {
         super();
@@ -65,8 +66,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
     // of each interface found on the LAN
     private static class HostAddress {
 
-        private String ipNumber;
-        private int portNumber;
+        private final String ipNumber;
+        private final int portNumber;
 
         private HostAddress(String h, int p) {
             ipNumber = h;
@@ -76,11 +77,11 @@ public class XnTcpAdapter extends XNetNetworkPortController {
 
     String[] getInterfaces() {
         Vector<String> v = getInterfaceNames();
-        String a[] = new String[v.size() + 1];
+        String[] a = new String[v.size() + 1];
         for (int i = 0; i < v.size(); i++) {
             a[i + 1] = v.elementAt(i);
         }
-        a[0] = Bundle.getMessage("Manual");
+        a[0] = Bundle.getMessage(MANUAL);
         return a;
     }
 
@@ -99,7 +100,7 @@ public class XnTcpAdapter extends XNetNetworkPortController {
             outName = getOptionState(option1Name);
         }
         // Did user manually provide IP number and port?
-        if (outName.equals(Bundle.getMessage("Manual")) || outName.equals("Manual")) {
+        if (outName.equals(Bundle.getMessage(MANUAL)) || outName.equals(MANUAL)) {
             // Yes - retrieve IP number and port
             if (m_HostName == null) {
                 m_HostName = DEFAULT_IP_ADDRESS;
@@ -171,8 +172,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
 
         DatagramSocket udpSocket = null;
 
-        hostNameVector = new Vector<String>(10, 1);
-        hostAddressVector = new Vector<HostAddress>(10, 1);
+        hostNameVector = new Vector<>(10, 1);
+        hostAddressVector = new Vector<>(10, 1);
 
         try {
             byte[] udpBuffer = new byte[UDP_LENGTH];
@@ -193,16 +194,15 @@ public class XnTcpAdapter extends XNetNetworkPortController {
                 // Reply received, make sure that we got all data
                 if (udpPacket.getLength() >= UDP_LENGTH) {
                     // Retrieve the NETBIOS name of the interface
-                    hostNameVector.addElement((new String(udpBuffer, 0, 16, "US-ASCII")).trim());
+                    hostNameVector.addElement((new String(udpBuffer, 0, 16, StandardCharsets.US_ASCII)).trim());
                     // Retrieve the IP and port numbers of the interface
                     hostAddressVector.addElement(new HostAddress(cleanIP((udpPacket.getAddress()).getHostAddress()),
                             ((udpBuffer[16]) & 0xff) * 256 + ((udpBuffer[17]) & 0xff)));
                 }
             }
         } // When timeout or any error occurs, simply exit the loop // When timeout or any error occurs, simply exit the loop
-        catch (SocketTimeoutException e) {
-        } catch (SocketException e) {
-        } catch (IOException e) {
+        catch (IOException e) {
+            log.debug("Exception occured: {}",e);
         } finally {
             // Before exiting, release resources
             if (udpSocket != null) {
@@ -225,8 +225,10 @@ public class XnTcpAdapter extends XNetNetworkPortController {
      * than that of commands sent, but this fact simply implies that we may have
      * a higher number of pending commands for a while, without any negative
      * consequence (the maximum is however arbitrary).
+     *
+     * @param s number to send
      */
-    synchronized protected void xnTcpSetPendingPackets(int s) {
+    protected synchronized void xnTcpSetPendingPackets(int s) {
         pendingPackets += s;
         if (pendingPackets < 0) {
             pendingPackets = 0;
@@ -239,7 +241,7 @@ public class XnTcpAdapter extends XNetNetworkPortController {
      * TCP/IP connection is re-established via the reconnection routines defined
      * in the parent classes.
      */
-    synchronized protected void xnTcpError() {
+    protected synchronized void xnTcpError() {
         // If the error message was already posted, simply ignore this call
         if (opened) {
             ConnectionStatus.instance().setConnectionState(
@@ -278,7 +280,12 @@ public class XnTcpAdapter extends XNetNetworkPortController {
         XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
 // Base class methods for the XNetNetworkPortController interface
@@ -301,7 +308,7 @@ public class XnTcpAdapter extends XNetNetworkPortController {
             outTcpStream = (new OutputTcpStream(socketConn.getOutputStream()));
             return new DataOutputStream(outTcpStream);
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}",e.getMessage());
         }
         return null;
     }
@@ -317,7 +324,7 @@ public class XnTcpAdapter extends XNetNetworkPortController {
      */
     private static String cleanIP(String ip) {
         String outIP = ip;
-        int i = outIP.indexOf("/");
+        int i = outIP.indexOf('/');
         if ((i >= 0) && (i < (outIP.length() - 2))) {
             outIP = outIP.substring(i + 1);
         }
@@ -348,7 +355,9 @@ public class XnTcpAdapter extends XNetNetworkPortController {
             synchronized (tcpOut) {
                 try {
                     tcpOut.write(b);
-                    log.debug("XnTcpAdapter: sent {}", Integer.toHexString(b & 0xff));
+                    if(log.isDebugEnabled()) {
+                        log.debug("XnTcpAdapter: sent {}", Integer.toHexString(b & 0xff));
+                    }
                     // If this is the start of a new packet, save its length
                     if (count < 0) {
                         count = b & 0x0f;
@@ -381,6 +390,6 @@ public class XnTcpAdapter extends XNetNetworkPortController {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XnTcpAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(XnTcpAdapter.class);
 
 }

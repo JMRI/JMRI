@@ -135,7 +135,7 @@ public class TransitSection {
         } else {
             mSection = InstanceManager.getDefault(jmri.SectionManager.class).getSection(tSectionName);
             if (mSection == null) {
-                log.error("Missing Section - " + tSectionName + " - when initializing a TransitSection");
+                log.error("Missing Section - {} - when initializing a TransitSection", tSectionName);
             }
         }
         needsInitialization = false;

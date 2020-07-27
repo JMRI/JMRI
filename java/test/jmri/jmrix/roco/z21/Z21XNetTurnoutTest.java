@@ -1,20 +1,20 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.Turnout;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link jmri.jmrix.roco.z21.Z21XNetTurnout} class.
  *
- * @author	Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2016	
+ * @author Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2016
  */
 public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
@@ -40,12 +40,14 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         try {
             t.setCommandedState(jmri.Turnout.CLOSED);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
-        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
+        Assert.assertEquals(Turnout.CLOSED, t.getCommandedState());
 
         Assert.assertEquals("on message sent", "53 00 14 88 CF",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        ((Z21XNetTurnout)t).message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
         // notify that the command station received the reply
         XNetReply m = new XNetReply();
@@ -65,6 +67,8 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         Assert.assertEquals("off message sent", "53 00 14 80 C7",
                 lnis.outbound.elementAt(n).toString());
 
+        ((Z21XNetTurnout)t).message(lnis.outbound.elementAt(lnis.outbound.size()-1));
+
         // the turnout will not set its state until it sees a reply message.
         m = new XNetReply();
         m.setElement(0, 0x43);
@@ -77,7 +81,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
 
         // no wait here.  The last reply should cause the turnout to 
         // set it's state, but it will not cause another reply.
-        Assert.assertTrue(t.getKnownState() == jmri.Turnout.CLOSED);
+        Assert.assertEquals(Turnout.CLOSED, t.getKnownState());
     }
 
     // Test that property change events are properly sent from the parent
@@ -95,9 +99,9 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         try {
             t.setCommandedState(jmri.Turnout.THROWN);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
-        Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
+        Assert.assertEquals(Turnout.THROWN, t.getCommandedState());
 
         t.setFeedbackMode(jmri.Turnout.ONESENSOR);
         jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
@@ -105,15 +109,15 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
             s.setState(jmri.Sensor.INACTIVE);
             t.provideFirstFeedbackSensor("IS1");
         } catch (Exception x1) {
-            log.error("TO exception: " + x1);
+            log.error("TO exception: {}", x1);
         }
         try {
             s.setState(jmri.Sensor.ACTIVE);
         } catch (Exception x) {
-            log.error("TO exception: " + x);
+            log.error("TO exception: {}", x);
         }
         // check to see if the turnout state changes.
-        Assert.assertTrue(t.getKnownState() == jmri.Turnout.THROWN);
+        Assert.assertEquals(Turnout.THROWN, t.getKnownState());
     }
 
     @Test
@@ -126,8 +130,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -138,7 +141,7 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         lnis.terminateThreads();

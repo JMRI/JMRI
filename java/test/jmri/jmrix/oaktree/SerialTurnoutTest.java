@@ -2,13 +2,13 @@ package jmri.jmrix.oaktree;
 
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.oaktree.SerialTurnout class.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
@@ -32,7 +32,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         //    Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -44,12 +44,14 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         t = new SerialTurnout("OT0104", "t4", _memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tcis = null;
         _memo.dispose();
         t = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

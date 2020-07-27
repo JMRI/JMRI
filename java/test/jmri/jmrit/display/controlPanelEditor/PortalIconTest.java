@@ -2,7 +2,10 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.display.PositionableIconTest;
-import org.junit.*;
+import jmri.util.JUnitUtil;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of the PortalIcon class.
@@ -20,26 +23,35 @@ public class PortalIconTest extends PositionableIconTest {
 
     @Override
     @Test
-    @Ignore("not supported for PortalIcon")
+//    @Disabled("not supported for PortalIcon")
     public void testDoViemMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Do View Menu", p.doViemMenu());
+        Assert.assertFalse("Do View Menu", p.doViemMenu());
     }
 
     @Override
     @Test
-    @Ignore("a PortalIcon constructed with just an Editor does not have an associated portal, so this fails")
+    @Disabled("a PortalIcon constructed with just an Editor does not have an associated portal, so this fails")
     public void testGetNameString() {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new ControlPanelEditor("Portal Icon Test Panel");
             p = new PortalIcon(editor);
         }
+    }
+
+    @AfterEach
+    @Override
+    public void tearDown() {
+        if (editor != null) {
+            JUnitUtil.dispose(editor);
+        }
+        super.tearDown();
     }
 
 }

@@ -1,14 +1,11 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
-import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
 /**
@@ -16,15 +13,15 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
  * users may have customized the defaultPanelIcons, the default family,
  * "Standard" is added by overriding the initIconFamiliesPanel method.
  * 
-* @author Pete Cressman Copyright (c) 2013
+* @author Pete Cressman Copyright (c) 2013, 2020
  */
-public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
+public class PortalItemPanel extends FamilyItemPanel {
 
     /*
      * Constructor types with multiple families and multiple icon families.
      */
-    public PortalItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
-        super(parentFrame, type, family, editor);
+    public PortalItemPanel(DisplayFrame parentFrame, String type, String family) {
+        super(parentFrame, type, family);
     }
 
     /**
@@ -48,12 +45,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         JButton setDefaultsButton = new JButton(Bundle.getMessage("setDefaultIcons"));
-        setDefaultsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                setDefaults();
-            }
-        });
+        setDefaultsButton.addActionListener(a -> setDefaults());
         setDefaultsButton.setToolTipText(Bundle.getMessage("ToolTipSetDefaultIcons"));
         panel.add(setDefaultsButton);
         return panel;
@@ -61,7 +53,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
 
     private void setDefaults() {
         HashMap<String, NamedIcon> map = getIconMap();
-        ((ControlPanelEditor) _editor).setDefaultPortalIcons(jmri.jmrit.display.PositionableIcon.cloneMap(map, null));
+        ((ControlPanelEditor)_frame.getEditor()).setDefaultPortalIcons(jmri.jmrit.display.PositionableIcon.cloneMap(map, null));
     }
 
     @Override

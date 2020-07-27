@@ -4,8 +4,10 @@
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Paul Harman" version="0.2" lastUpdated="20120918"/>
+	<version author="Michael Mosher" version="2" lastUpdated="20200109"/>
+	<!-- Version 2 - change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="Harman DIY Function Decoders" mfg="Harman-DIY">
+    <family name="Harman DIY Function Decoders" mfg="Harman DCC">
       <model model="Function1-8" numOuts="8" numFns="16" formFactor="HO">
         <output name="1" label="Output A"/>
         <output name="2" label="Output B"/>
@@ -127,23 +129,23 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL in Forward</label>
       </variable>
-      <variable CV="21" mask="XXXXXXVX" minOut="2" item="Consist Address Active For FL in Reverse">
+      <variable CV="22" mask="XXXXXXVX" minOut="2" item="Consist Address Active For FL in Reverse">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL in Reverse</label>
       </variable>
-      <variable CV="21" mask="XXXXXVXX" minOut="3" item="Consist Address Active For F9">
+      <variable CV="22" mask="XXXXXVXX" minOut="3" item="Consist Address Active For F9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F9</label>
       </variable>
-      <variable CV="21" mask="XXXXVXXX" minOut="3" item="Consist Address Active For F10">
+      <variable CV="22" mask="XXXXVXXX" minOut="3" item="Consist Address Active For F10">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F10</label>
       </variable>
-      <variable CV="21" mask="XXXVXXXX" minOut="3" item="Consist Address Active For F11">
+      <variable CV="22" mask="XXXVXXXX" minOut="3" item="Consist Address Active For F11">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F11</label>
       </variable>
-      <variable mask="XXVXXXXX" minOut="3" item="Consist Address Active For F12">
+      <variable CV="22" mask="XXVXXXXX" minOut="3" item="Consist Address Active For F12">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
       </variable>

@@ -1,8 +1,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -37,23 +35,17 @@ public class IndicatorTOIconDialog extends IconDialog {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
         JButton addFamilyButton = new JButton(Bundle.getMessage("addMissingStatus"));
-        addFamilyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                addFamilySet();
-                dispose();
-            }
+        addFamilyButton.addActionListener(a -> {
+            addFamilySet();
+            dispose();
         });
         addFamilyButton.setToolTipText(Bundle.getMessage("ToolTipMissingStatus"));
         panel1.add(addFamilyButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("deleteStatus"));
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                deleteFamilySet();
-                dispose();
-            }
+        deleteButton.addActionListener(a -> {
+            deleteFamilySet();
+            dispose();
         });
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteStatus"));
         panel1.add(deleteButton);
@@ -77,7 +69,7 @@ public class IndicatorTOIconDialog extends IconDialog {
                 }
             }
             Object[] selections = options.toArray();
-            String key = (String) JOptionPane.showInputDialog(_parent._paletteFrame,
+            String key = (String) JOptionPane.showInputDialog(_parent._frame,
                     Bundle.getMessage("PickStatus"), Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE, null,
                     selections, selections[0]);
             if (key != null) {
@@ -86,7 +78,7 @@ public class IndicatorTOIconDialog extends IconDialog {
 //                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);
             }
         } else {
-            JOptionPane.showMessageDialog(_parent._paletteFrame,
+            JOptionPane.showMessageDialog(_parent._frame,
                     Bundle.getMessage("AllStatus"),
                     Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
         }

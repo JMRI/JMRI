@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.Assume;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -10,9 +15,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -36,6 +38,7 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(t.isVisible());
 
         JUnitUtil.dispose(t);
+
     }
 
     @Test
@@ -65,16 +68,17 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(tlef.addRoadButton);
         JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
 
-        Assert.assertTrue(track.acceptsRoadName("AA"));
+        Assert.assertTrue(track.isRoadNameAccepted("AA"));
 
         for (String roadName : InstanceManager.getDefault(CarRoads.class).getNames()) {
             if (roadName.equals("AA")) {
                 continue; // the only road name accepted by this track
             }
-            Assert.assertFalse("confirm road name not accepted", track.acceptsRoadName(roadName));
+            Assert.assertFalse("confirm road name not accepted", track.isRoadNameAccepted(roadName));
         }
 
         JUnitUtil.dispose(tlef);
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrameTest.class);

@@ -1,6 +1,7 @@
 package jmri.jmrix.acela;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,42 +34,53 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public AcelaSystemConnectionMemo getMemo() {
         return (AcelaSystemConnectionMemo) memo;
     }
 
     /**
-     * Create a new sensor if all checks are passed. System name is normalized to
-     * ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        // Validate the systemName
+        if (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.INVALID) {
+            log.error("Invalid Sensor system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Sensor System Name format: " + systemName);
+        }
         Sensor s;
-        // TODO: validate the system name
         String sName = systemName;
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid Acela Sensor system name: {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Invalid Acela Sensor system name - " +  // NOI18N
+                    systemName);
         }
         // does this Sensor already exist
         s = getBySystemName(sName);
         if (s != null) {
-            log.error("Sensor with this name already exists: {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Acela Sensor with this name already exists - " +  // NOI18N
+                    systemName);
         }
         // check under alternate name
         String altName = AcelaAddress.convertSystemNameToAlternate(sName, getSystemPrefix());
         s = getBySystemName(altName);
         if (s != null) {
-            log.error("Sensor with name: '{}' already exists as: '{}'", systemName, altName);
-            return null;
+            throw new IllegalArgumentException("Acela Sensor with name  " +  // NOI18N
+                    systemName + " already exists as " + altName);
         }
         // check bit number
         int bit = AcelaAddress.getBitFromSystemName(sName, getSystemPrefix());
         if ((bit < AcelaAddress.MINSENSORADDRESS) || (bit > AcelaAddress.MAXSENSORADDRESS)) {
             log.error("Sensor bit number {} is outside the supported range {}-{}", bit, AcelaAddress.MINSENSORADDRESS, AcelaAddress.MAXSENSORADDRESS);
-            return null;
+            throw new IllegalArgumentException("Sensor bit number " +  // NOI18N
+                    Integer.toString(bit) + " is outside the supported range " + // NOI18N
+                    Integer.toString(AcelaAddress.MAXSENSORADDRESS) + "-" +
+                    Integer.toString(AcelaAddress.MAXSENSORADDRESS));
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
         if (userName == null) {
@@ -84,9 +96,9 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
             return s;
         }
         if (!node.hasActiveSensors) {
-            int newnodeaddress;
-            newnodeaddress = node.getNodeAddress();
-            log.warn("We got the wrong node: {}", newnodeaddress);
+            int newNodeAddress;
+            newNodeAddress = node.getNodeAddress();
+            log.warn("We got the wrong node: {}", newNodeAddress);
             return s;
         }
         // register this sensor with the Acela Node
@@ -102,7 +114,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * {@value AcelaAddress#MAXSENSORADDRESS}.
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return super.validateIntegerSystemNameFormat(systemName,
                 AcelaAddress.MINSENSORADDRESS,
                 AcelaAddress.MAXSENSORADDRESS,
@@ -113,7 +126,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 
@@ -210,7 +223,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Method to register any orphan Sensors when a new Acela Node is created.
+     * Register any orphan Sensors when a new Acela Node is created.
+     * @param node which node to search for sensors.
      */
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(AcelaNode node) {
@@ -240,7 +254,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

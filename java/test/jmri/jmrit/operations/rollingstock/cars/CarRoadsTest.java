@@ -4,7 +4,7 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations RollingStock Cars Roads class Last manually
@@ -12,7 +12,7 @@ import org.junit.Test;
  * <p>
  * Still to do: Everything
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class CarRoadsTest extends OperationsTestCase {
 
@@ -29,7 +29,7 @@ public class CarRoadsTest extends OperationsTestCase {
     @Test
     public void testAddAndDeleteCarRoads() {
         CarRoads cr1 = InstanceManager.getDefault(CarRoads.class);
-        cr1.getNames();	//load predefined roads
+        cr1.getNames(); // load predefined roads
         cr1.addName("Road New1");
         Assert.assertTrue("Car Roads Add New1", cr1.containsName("Road New1"));
         Assert.assertFalse("Car Roads Never Added New2", cr1.containsName("Road New2"));

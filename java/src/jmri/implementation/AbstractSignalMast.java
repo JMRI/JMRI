@@ -1,7 +1,6 @@
 package jmri.implementation;
 
 import java.util.*;
-import java.util.List;
 import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;
@@ -152,6 +151,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     ArrayList<String> disabledAspects = new ArrayList<>(1);
 
     @Override
+    @Nonnull
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
         // copy List to Vector

@@ -44,6 +44,12 @@
         <authorinitials>PAB</authorinitials>
         <revremark>fix image links</revremark>
     </revision>    
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Fix a typo in aspectmappings</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>SLSF</aspecttable>
@@ -51,7 +57,7 @@
   <reference> As described in the
 July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
   </reference>
-  <description>Appearances for a three-searchlight signal head with an A plackard</description>
+  <description>Appearances for a three-searchlight signal head with an A placard.</description>
   
   <appearances>
 
@@ -120,33 +126,6 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
     </appearance>
 
     <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>lunar</show>
-      <show>red</show>
-      <show>red</show>
-      <reference>Rule 288</reference>
-      <imagelink></imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>lunar</show>
-      <show>red</show>
-      <reference>Rule 288</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-b.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>red</show>
-      <show>lunar</show>
-      <reference>Rule 288</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-c.gif</imagelink>
-    </appearance>
-
-    <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
@@ -196,7 +175,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
 
     <aspectMapping>
      <advancedAspect>Diverging Clear</advancedAspect>
-     <ourAspect>Approace Medium</ourAspect>
+     <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>

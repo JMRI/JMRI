@@ -1,12 +1,14 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of SlipTurnoutIcon
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SlipTurnoutIconTest extends PositionableTestBase {
 
@@ -16,7 +18,7 @@ public class SlipTurnoutIconTest extends PositionableTestBase {
         Assert.assertNotNull("SlipTurnoutIcon Constructor", p);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();

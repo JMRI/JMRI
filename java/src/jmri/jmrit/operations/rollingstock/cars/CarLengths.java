@@ -1,9 +1,11 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.jdom2.Element;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import org.jdom2.Element;
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * Represents the lengths that cars can have.
@@ -15,20 +17,10 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
     private static final String LENGTHS = Bundle.getMessage("carLengths");
     public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths"; // NOI18N
     public static final String CARLENGTHS_NAME_CHANGED_PROPERTY = "CarLengthsName"; // NOI18N
+    
+    protected static final int MIN_NAME_LENGTH = Control.max_len_string_length_name;
 
     public CarLengths() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarLengths instance() {
-        return InstanceManager.getDefault(CarLengths.class);
     }
 
     @Override
@@ -60,6 +52,11 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
         // need to keep old name so location manager can replace properly
         super.deleteName(oldName);
     }
+    
+    @Override
+    protected int getMinNameLength() {
+        return MIN_NAME_LENGTH;
+    }
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
@@ -68,7 +65,7 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
      *
      */
     public void store(Element root) {
-        store(root, Xml.LENGTHS, Xml.LENGTH, Xml.CAR_LENGTHS);
+        store(root, Xml.LENGTHS, Xml.LENGTH);
     }
 
     public void load(Element root) {

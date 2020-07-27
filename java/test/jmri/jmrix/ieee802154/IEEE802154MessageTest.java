@@ -1,17 +1,16 @@
 package jmri.jmrix.ieee802154;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * IEEE802154MessageTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154Message class
+ * Test for the jmri.jmrix.ieee802154.IEEE802154Message class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class IEEE802154MessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -21,17 +20,16 @@ public class IEEE802154MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("length", 3, m.getNumDataElements());
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = new IEEE802154Message(3);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

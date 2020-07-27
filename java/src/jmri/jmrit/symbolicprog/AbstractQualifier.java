@@ -20,8 +20,8 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
             watchedVal.addPropertyChangeListener(this);
         }
 
-        // subclass ctors are required to qualify on initial value of variable   
-        // to get initial qualification state right after listener was added.   
+        // subclass ctors are required to qualify on initial value of variable
+        // to get initial qualification state right after listener was added.
     }
 
     VariableValue watchedVal;
@@ -30,6 +30,7 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
      * Process property change from the qualifier Variable (one being watched).
      * <p>
      * Follows changes "Value" property, which it assumes is an Integer.
+     * @param e The event that triggered the query
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -41,6 +42,7 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
     /**
      * Process Value property change from the qualifier Variable (one being
      * watched).
+     * @param e The event that triggered the query
      */
     void processValueChangeEvent(java.beans.PropertyChangeEvent e) {
         // watched value change, check if this changes state of qualified (output) object
@@ -55,19 +57,23 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
     /**
      * Calculate whether this PropertyChangeEvent means that the qualified
      * Object should be set Available or not.
+     * @param e The event that triggered the query
+     * @return true if should be set available
      */
     protected boolean availableStateFromEvent(java.beans.PropertyChangeEvent e) {
-        return availableStateFromValue(((Integer) e.getNewValue()).intValue());
+        return availableStateFromValue(e.getNewValue());
     }
 
     /**
      * Retrieve the current "available" state from the qualified Object.
+     * @return true if available
      */
     abstract protected boolean currentAvailableState();
 
     /**
-     * Calculate whether the current value of qualifier Variable means that the
-     * qualified object should be set Available or not.
+     * Does the current value of qualifier Variable means that the
+     * qualified object should be set Available or not?
+     * @return true if should be set available
      */
     @Override
     abstract public boolean currentDesiredState();
@@ -77,14 +83,16 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
      * that the qualified Object should be set Available or not.
      *
      * @param value base for the calculation
+     * @return true if should be set available
      */
-    abstract protected boolean availableStateFromValue(int value);
+    abstract protected boolean availableStateFromValue(Object value);
 
     /**
      * Drive the available or not state of the qualified Object.
      * <p>
      * Subclasses implement this to control a specific type of qualified Object,
      * like a Variable or Pane.
+     * @param enable true if should be enabled
      */
     @Override
     abstract public void setWatchedAvailable(boolean enable);

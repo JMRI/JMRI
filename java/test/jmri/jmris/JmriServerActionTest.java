@@ -1,9 +1,10 @@
 package jmri.jmris;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmris.JmriServerAction class
@@ -15,17 +16,16 @@ public class JmriServerActionTest {
     @Test
     public void testCtorDefault() {
         JmriServerAction a = new JmriServerAction();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 
     }

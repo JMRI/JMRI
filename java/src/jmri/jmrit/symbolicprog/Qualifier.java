@@ -9,7 +9,7 @@ package jmri.jmrit.symbolicprog;
 public interface Qualifier {
 
     /**
-     * Process the current value {@literal &} do whatever is needed.
+     * Process the current value and do whatever is needed.
      */
     public void update();
 
@@ -26,6 +26,7 @@ public interface Qualifier {
      * <p>
      * Subclasses implement this to control a specific type of qualified object,
      * like a Variable or Pane.
+     * @param enable true to drive, else false.
      */
     public void setWatchedAvailable(boolean enable);
 

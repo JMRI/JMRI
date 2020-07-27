@@ -17,7 +17,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to ProTrak Grapevine via a serial comm port. Normally
+ * Provide access to ProTrak Grapevine via a serial com port. Normally
  * controlled by the serialdriver.SerialDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007
@@ -63,7 +63,7 @@ public class SerialDriverAdapter extends SerialPortController {
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: {}", et);
             }
 
             // get and save stream
@@ -75,14 +75,7 @@ public class SerialDriverAdapter extends SerialPortController {
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud with"
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );
+                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
             if (log.isDebugEnabled()) {
                 // report additional status
@@ -170,15 +163,11 @@ public class SerialDriverAdapter extends SerialPortController {
 
     /**
      * Local method to do specific port configuration.
+     * @throws UnsupportedCommOperationException if the port can't implement the required options
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 38400;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(selectedSpeed)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
 
@@ -203,19 +192,13 @@ public class SerialDriverAdapter extends SerialPortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    /**
-     * Set the baud rate.
-     */
-    @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: {}", rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
-    }
-
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud38400")};
     protected int[] validSpeedValues = new int[]{38400};
-    protected String selectedSpeed = validSpeeds[0];
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // private control members
     private boolean opened = false;

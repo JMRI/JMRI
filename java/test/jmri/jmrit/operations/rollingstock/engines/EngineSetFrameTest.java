@@ -1,6 +1,11 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.Assume;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -9,15 +14,11 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Operations EnginesSetFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EngineSetFrameTest extends OperationsTestCase {
@@ -25,6 +26,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
     @Test
     public void testEngineSetFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        loadEngines();
         EngineSetFrame f = new EngineSetFrame();
         f.setTitle("Test Engine Set Frame");
         f.initComponents();
@@ -32,15 +34,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Engine e3 = cManager.getByRoadAndNumber("AA", "3");
         f.loadEngine(e3);
         JUnitUtil.dispose(f);
-    }
 
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        loadEngines();
     }
 
     private void loadEngines() {
@@ -60,8 +54,8 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Location westford = lManager.newLocation("Westford");
         Track westfordYard = westford.addTrack("Yard", Track.YARD);
         westfordYard.setLength(300);
-        Track westfordSiding = westford.addTrack("Siding", Track.SPUR);
-        westfordSiding.setLength(300);
+        Track westfordSpur = westford.addTrack("Spur", Track.SPUR);
+        westfordSpur.setLength(300);
         Track westfordAble = westford.addTrack("Able", Track.SPUR);
         westfordAble.setLength(300);
         Location boxford = lManager.newLocation("Boxford");
@@ -111,7 +105,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         e4.setOwner("AAA");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
         e4.setRfid("RFID 4");
-        Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSiding));
+        Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSpur));
         Assert.assertEquals("e4 destination", Track.OKAY, e4.setDestination(boxford, boxfordHood));
 
         Engine e5 = eManager.newRS("NH", "5");

@@ -2,14 +2,13 @@ package jmri.jmrix.easydcc;
 
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -208,8 +207,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup3() {
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -220,7 +218,7 @@ public class EasyDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new EasyDccThrottle(memo, new jmri.DccLocoAddress(100, true));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc.terminateThreads();

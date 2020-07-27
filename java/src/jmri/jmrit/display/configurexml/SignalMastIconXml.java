@@ -83,8 +83,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             }
             l.setScale(scale);
             if (log.isDebugEnabled()) {
-                log.debug("Load SignalMast rotation= " + rotation
-                        + " scale= " + scale + " attr text= " + text);
+                log.debug("Load SignalMast rotation= {} scale= {} attr text= {}", rotation, scale, text);
             }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert rotation or scale attribute");
@@ -97,7 +96,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         } else {
             name = attr.getValue();
             if (log.isDebugEnabled()) {
-                log.debug("Load SignalMast " + name);
+                log.debug("Load SignalMast {}", name);
             }
         }
 
@@ -106,7 +105,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         if (sh != null) {
             l.setSignalMast(name);
         } else {
-            log.error("SignalMast named '" + attr.getValue() + "' not found.");
+            log.error("SignalMast named '{}' not found.", attr.getValue());
             ed.loadFailed();
             //    return;
         }
@@ -127,7 +126,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
                 l.setClickMode(attr.getIntValue());
             }
         } catch (org.jdom2.DataConversionException e) {
-            log.error("Failed on clickmode attribute: " + e);
+            log.error("Failed on clickmode attribute: {}", e);
         }
 
         try {
@@ -136,7 +135,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
                 l.setLitMode(attr.getBooleanValue());
             }
         } catch (org.jdom2.DataConversionException e) {
-            log.error("Failed on litmode attribute: " + e);
+            log.error("Failed on litmode attribute: {}", e);
         }
 
         ed.putItem(l);

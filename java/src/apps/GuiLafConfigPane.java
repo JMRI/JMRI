@@ -1,8 +1,7 @@
 package apps;
 
-import static apps.gui.GuiLafPreferencesManager.MIN_FONT_SIZE;
+import static jmri.util.gui.GuiLafPreferencesManager.MIN_FONT_SIZE;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -29,7 +28,7 @@ import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
-import jmri.util.swing.SwingSettings;
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -37,7 +36,7 @@ import org.openide.util.lookup.ServiceProvider;
  * <p>
  * Provides GUI configuration for SWING LAF by displaying radio buttons for each
  * LAF implementation available. This information is then persisted separately
- * by {@link apps.configurexml.GuiLafConfigPaneXml}
+ * by the {@link jmri.util.gui.GuiLafPreferencesManager}.
  * <p>
  * Locale default language and country is also considered a GUI (and perhaps
  * LAF) configuration item.
@@ -54,13 +53,13 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     /**
      * Smallest font size shown to a user ({@value}).
      *
-     * @see apps.gui.GuiLafPreferencesManager#MIN_FONT_SIZE
+     * @see GuiLafPreferencesManager#MIN_FONT_SIZE
      */
     public static final int MIN_DISPLAYED_FONT_SIZE = MIN_FONT_SIZE;
     /**
      * Largest font size shown to a user ({@value}).
      *
-     * @see apps.gui.GuiLafPreferencesManager#MAX_FONT_SIZE
+     * @see GuiLafPreferencesManager#MAX_FONT_SIZE
      */
     public static final int MAX_DISPLAYED_FONT_SIZE = 20;
 
@@ -94,7 +93,6 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     void doClickSelection(JPanel panel) {
         panel.setLayout(new FlowLayout());
         mouseEvent = new JCheckBox(ConfigBundle.getMessage("GUIButtonNonStandardRelease"));
-        mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
         });

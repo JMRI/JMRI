@@ -8,7 +8,7 @@ import javax.vecmath.Point3d;
  * This algorithm tends to pick arbitrary solutions with only three sensors, so
  * we test with four and more.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class Ash2_2AlgorithmTest extends AbstractAlgorithmTestBase {
 

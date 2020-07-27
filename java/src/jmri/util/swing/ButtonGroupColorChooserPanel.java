@@ -20,7 +20,7 @@ public class ButtonGroupColorChooserPanel extends AbstractColorChooserPanel {
 
     private String[] colorText = {"Black", "DarkGray", "Gray",
        "LightGray", "White", "Red", "Pink", "Orange",
-       "Yellow", "Green", "Blue", "Magenta", "Cyan"};    //NOI18N
+       "Yellow", "Green", "Blue", "Magenta", "Cyan"};    // NOI18N
     private Color[] colorCode = {Color.black, Color.darkGray, Color.gray,
        Color.lightGray, Color.white, Color.red, Color.pink, Color.orange,
        Color.yellow, Color.green, Color.blue, Color.magenta, Color.cyan};

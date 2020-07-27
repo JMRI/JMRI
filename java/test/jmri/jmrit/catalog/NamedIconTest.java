@@ -3,17 +3,18 @@ package jmri.jmrit.catalog;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.PixelGrabber;
+
 import javax.swing.JLabel;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
- * @author Joe Comuzzi Copyright (C) 2018	
+ * @author Joe Comuzzi Copyright (C) 2018
  */
 public class NamedIconTest {
 
@@ -271,13 +272,12 @@ public class NamedIconTest {
         return pixels;
     }
      
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

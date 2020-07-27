@@ -3,10 +3,9 @@ package jmri.jmrix.can.cbus;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -322,37 +321,44 @@ public class CbusAddressTest {
     }
     
     @Test
-    public void testvalidateSysName() {
-        try {
-            CbusAddress.validateSysName("+0");
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("Event cannot be 0 in address: +0", ex.getMessage());
-        }
-
-        try {
-            Assert.assertEquals("-0",null,CbusAddress.validateSysName("-0"));
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("Event cannot be 0 in address: -0", ex.getMessage());
-        }   
-
-    }
-    
-    @Test
     public void testhashcode() {
         CbusAddress a = new CbusAddress("X9801D203A4");
         Assert.assertEquals("a hashcode is present",530,a.hashCode());
     }
     
+    @Test
+    public void testMatchRequest() {
+        
+        Assert.assertTrue("short request 12 match",new CbusAddress("+12").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_ASRQ, 0x00, 0x00, 0x00, 12})));
+        
+        Assert.assertFalse("short request 13 no match",new CbusAddress("+13").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_ASRQ, 0x00, 0x00, 0x00, 12})));
+            
+        Assert.assertFalse("Data element no match",new CbusAddress("+12").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_ACON3, 0x00, 0x00, 0x00, 12, 0x12, 0x13})));
+        
+        Assert.assertFalse("ASON 12 no match",new CbusAddress("+12").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_ASON, 0x00, 0x00, 0x00, 12})));
+            
+        Assert.assertTrue("long request N12E34 match",new CbusAddress("+N12E34").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_AREQ, 0x00, 12, 0x00, 34})));
+            
+        Assert.assertFalse("long request N11E34 no match",new CbusAddress("+N11E34").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_AREQ, 0x00, 12, 0x00, 34})));
+            
+        Assert.assertFalse("long request N123E35 no match",new CbusAddress("+N12E35").matchRequest(
+            new CanReply(new int[]{CbusConstants.CBUS_AREQ, 0x00, 12, 0x00, 34})));
+            
+    }
+    
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

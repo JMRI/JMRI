@@ -1,6 +1,9 @@
 package jmri.implementation;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.Memory;
+import jmri.NamedBean;
 
 /**
  * Base for the Memory interface.
@@ -38,6 +41,17 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
         _current = v;
         // notify
         firePropertyChange("value", old, _current);
+    }
+    
+    /**
+     * {@inheritDoc} 
+     * 
+     * Do a string comparison.
+     */
+    @CheckReturnValue
+    @Override
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+        return suffix1.compareTo(suffix2);
     }
 
     // internal data members

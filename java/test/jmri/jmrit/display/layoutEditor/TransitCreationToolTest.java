@@ -1,18 +1,18 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.util.List;
+
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of TransitCreationTool
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class TransitCreationToolTest {
 
@@ -100,12 +100,12 @@ public class TransitCreationToolTest {
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

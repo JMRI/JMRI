@@ -1,8 +1,11 @@
 package apps.configurexml;
 
 import apps.CreateButtonModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
+import java.lang.reflect.InvocationTargetException;
 import jmri.InstanceManager;
+import jmri.SystemConnectionMemo;
+import jmri.jmrix.swing.SystemConnectionAction;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,12 +60,37 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
         String className = shared.getAttribute("name").getValue();
         CreateButtonModel model = new CreateButtonModel();
         model.setClassName(className);
-        for (Element child : shared.getChildren("property")) { // NOI18N
+        shared.getChildren("property").forEach(child -> { // NOI18N
+            String value = child.getAttributeValue("value"); // NOI18N
             if (child.getAttributeValue("name").equals("systemPrefix") // NOI18N
-                    && child.getAttributeValue("value") != null) { // NOI18N
-                model.setSystemPrefix(child.getAttributeValue("value")); // NOI18N
+                    && value != null) {
+                // handle the situation where the model expects a system prefix
+                // but was not saved with one in a pre-4.19.7 JMRI instance
+                // TODO: at some point (June 2022 release?) change entire
+                // try/catch block to just "model.setSystemPrefix(value);"
+                try {
+                    Class<?> ac = Class.forName(className);
+                    if (value.isEmpty() && SystemConnectionAction.class.isAssignableFrom(ac)) {
+                        SystemConnectionAction<?> a = (SystemConnectionAction<?>) ac.getConstructor().newInstance();
+                        InstanceManager.getList(SystemConnectionMemo.class)
+                                .forEach(memo -> a.getSystemConnectionMemoClasses().stream()
+                                .filter(mc -> memo.getClass().isAssignableFrom(mc))
+                                .forEach(mc -> model.setSystemPrefix(memo.getSystemPrefix())));
+                    } else {
+                        model.setSystemPrefix(value);
+                    }
+                } catch (ClassNotFoundException
+                        | InstantiationException
+                        | IllegalAccessException
+                        | IllegalArgumentException
+                        | InvocationTargetException
+                        | NoSuchMethodException
+                        | SecurityException ex) {
+                    // ignore to allow manager to handle later
+                    log.warn("While trying to do {}, encountered exception", className, ex);
+                }
             }
-        }
+        });
         InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
         return result;
     }

@@ -2,19 +2,19 @@ package jmri.jmrix.loconet;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -27,8 +27,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     @Override
     public void testMisses() {
         // try to get nonexistant turnouts
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        Assert.assertNull(l.getByUserName("foo"));
+        Assert.assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -118,17 +118,13 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertNotNull(l.getBySystemName("LT21"));
         Assert.assertNotNull(l.getByUserName("my name"));
     }
-    
+
         @Test
     public void testOpcLongAck() {
-        LocoNetSystemConnectionMemo memo2 = new LocoNetSystemConnectionMemo(lnis,
-                new jmri.jmrix.loconet.SlotManager(lnis));
-        lnis.setSystemConnectionMemo(memo2);
-
         Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
         ((LnTurnoutManager)l).mTurnoutNoRetry=false;
 
-        Turnout t = ((LnTurnoutManager)l).createNewTurnout("LT1","");
+        Turnout t = ((LnTurnoutManager)l).provideTurnout("LT1");   // createNewTurnout does not register it.
         LocoNetMessage m = new LocoNetMessage(new int[] {0xb0, 0x00, 0x20, 0x6f});
         lnis.sendTestMessage(m);
         Assert.assertEquals("check now closed", Turnout.CLOSED, t.getKnownState());
@@ -155,19 +151,17 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
         jmri.util.JUnitUtil.fasterWaitFor(() -> {return 1 < lnis.outbound.size();});
         Assert.assertEquals("Check an outbound message", 1, lnis.outbound.size());
-        
+
         Assert.assertEquals("Check outbound message opcode", LnConstants.OPC_SW_REQ, lnis.outbound.get(0).getOpCode());
         Assert.assertEquals("Check outbound message byte 1", 0x00, lnis.outbound.get(0).getElement(1));
         Assert.assertEquals("Check outbound message byte 2", 0x20, lnis.outbound.get(0).getElement(2));
     }
 
-
-
     private LocoNetInterfaceScaffold lnis;
     private LocoNetSystemConnectionMemo memo;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -180,10 +174,11 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         lnis = null;
+        l = null;
         JUnitUtil.tearDown();
     }
 

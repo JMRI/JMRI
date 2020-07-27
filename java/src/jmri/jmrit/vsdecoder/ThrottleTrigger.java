@@ -49,12 +49,12 @@ class ThrottleTrigger extends Trigger {
             //log.debug("Quit.  TriggerType = NONE");
             return;
         }
-        if (this.getTargetAction() == TargetAction.NOTHING) {
+        if (this.getTargetAction() == TargetAction.NOTHING || this.getTargetAction() == TargetAction.STOP_AT_ZERO) {
             //log.debug("Quit.  TargetAction = NOTHING");
             return;
         }
 
-        log.debug("Throttle Trigger old value = " + event.getOldValue() + " new value = " + event.getNewValue());
+        log.debug("Throttle Trigger old value = {} new value = {}", event.getOldValue(), event.getNewValue());
         this.callback.takeAction((Float) event.getNewValue());
     }
 

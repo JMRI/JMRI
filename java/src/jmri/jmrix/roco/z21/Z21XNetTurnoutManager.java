@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * System names are "XTnnn", where X is the user-configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2016 
+ * @author Paul Bender Copyright (C) 2016 
  */
 public class Z21XNetTurnoutManager extends XNetTurnoutManager {
 
@@ -23,7 +24,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager {
 
     // XNet-specific methods
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new Z21XNetTurnout(getSystemPrefix(), addr, tc);
         t.setUserName(userName);
@@ -31,7 +32,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -69,6 +70,6 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
 
 }

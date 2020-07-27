@@ -1,18 +1,11 @@
 package jmri.jmrit.ctc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Set;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
-import jmri.Reporter;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
@@ -78,8 +71,6 @@ public class NBHSensor {
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 //  Functions that don't return any of the above have specific implementations.  Ex: PropertyChangeListener[] or ArrayList<>
 
-    private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-
 //  The "thing" we're protecting:
     private final NamedBeanHandle<Sensor> _mNamedBeanHandleSensor;
     public Sensor getBean() {
@@ -95,7 +86,7 @@ public class NBHSensor {
     public NBHSensor(String module, String userIdentifier, String parameter, String sensor, boolean optional) {
         Sensor tempSensor = optional ? getSafeOptionalJMRISensor(module, userIdentifier, parameter, sensor) : getSafeExistingJMRISensor(module, userIdentifier, parameter, sensor);
         if (tempSensor != null) {
-            _mNamedBeanHandleSensor = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(sensor, tempSensor);
+            _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensor, tempSensor);
         } else {
             _mNamedBeanHandleSensor = null;
         }

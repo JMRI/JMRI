@@ -36,6 +36,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Displays the Activate New Train dialog and processes information entered
@@ -193,10 +194,10 @@ public class ActivateTrainFrame {
         if (initiateFrame == null) {
             initiateFrame = new JmriJFrame(Bundle.getMessage("AddTrainTitle"), false, true);
             initiateFrame.addHelpMenu("package.jmri.jmrit.dispatcher.NewTrain", true);
-            
+
             initiatePane = new JPanel();
             initiatePane.setLayout(new BoxLayout(initiatePane, BoxLayout.Y_AXIS));
-            
+
             // add buttons to load and save train information
             JPanel p0 = new JPanel();
             p0.setLayout(new FlowLayout());
@@ -451,7 +452,7 @@ public class ActivateTrainFrame {
                 }
             });
             addNewTrainButton.setToolTipText(Bundle.getMessage("AddNewTrainButtonHint"));
-            
+
             JPanel mainPane = new JPanel();
             mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
             JScrollPane scrPane = new JScrollPane(initiatePane);
@@ -459,7 +460,7 @@ public class ActivateTrainFrame {
             mainPane.add(scrPane);
             mainPane.add(p7);
             initiateFrame.setContentPane(mainPane);
-            
+
         }
         if (_TrainsFromRoster || _TrainsFromOperations) {
             trainBoxLabel.setVisible(true);
@@ -636,19 +637,19 @@ public class ActivateTrainFrame {
             cancelInitiateTrain(null);
             return;
         }
-        String transitName = selectedTransit.getSystemName();
+        String transitName = selectedTransit.getDisplayName();
         String trainName = "";
         int index = startingBlockBox.getSelectedIndex();
         if (index < 0) {
             return;
         }
-        String startBlockName = startingBlockBoxList.get(index).getSystemName();
+        String startBlockName = startingBlockBoxList.get(index).getDisplayName();
         int startBlockSeq = startingBlockSeqList.get(index).intValue();
         index = destinationBlockBox.getSelectedIndex();
         if (index < 0) {
             return;
         }
-        String endBlockName = destinationBlockBoxList.get(index).getSystemName();
+        String endBlockName = destinationBlockBoxList.get(index).getDisplayName();
         int endBlockSeq = destinationBlockSeqList.get(index).intValue();
         boolean autoRun = autoRunBox.isSelected();
         if (!checkResetWhenDone()) {
@@ -722,8 +723,8 @@ public class ActivateTrainFrame {
             trainName = (String) trainSelectBox.getSelectedItem();
             // get lead engine for this train
             Train train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(trainName);
-            if (train != null && train.getLeadEngine() != null) {
-                dccAddress = train.getLeadEngine().getDccAddress();
+            if (train != null) {
+                dccAddress = train.getLeadEngineDccAddress();
             }
         } else if (_TrainsFromUser) {
             trainName = trainNameField.getText();
@@ -822,15 +823,12 @@ public class ActivateTrainFrame {
                 }
             }
             if (free) {
-                String tName = t.getSystemName();
+                String tName = t.getDisplayName();
                 transitBoxList.add(t);
-                String uname = t.getUserName();
-                if ((uname != null) && (!uname.equals("")) && (!uname.equals(tName))) {
-                    tName = tName + "(" + uname + ")";
-                }
                 transitSelectBox.addItem(tName);
             }
         }
+        JComboBoxUtil.setupComboBoxMaxRows(transitSelectBox);
         if (transitBoxList.size() > 0) {
             transitSelectBox.setSelectedIndex(0);
             selectedTransit = transitBoxList.get(0);
@@ -966,6 +964,7 @@ public class ActivateTrainFrame {
                 found = true;
             }
         }
+        JComboBoxUtil.setupComboBoxMaxRows(startingBlockBox);
     }
 
     private void initializeDestinationBlockCombo() {
@@ -988,16 +987,12 @@ public class ActivateTrainFrame {
             }
             destinationBlockBox.addItem(bName);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(destinationBlockBox);
     }
 
     private String getBlockName(Block b) {
         if (b != null) {
-            String sName = b.getSystemName();
-            String uName = b.getUserName();
-            if ((uName != null) && (!uName.equals("")) && (!uName.equals(sName))) {
-                return (sName + "(" + uName + ")");
-            }
-            return sName;
+            return b.getDisplayName();
         }
         return " ";
     }
@@ -1035,9 +1030,9 @@ public class ActivateTrainFrame {
                     trainInfoToDialog(info);
                 }
             } catch (java.io.IOException ioe) {
-                log.error("IO Exception when reading train info file " + ioe);
+                log.error("IO Exception when reading train info file {}", ioe);
             } catch (org.jdom2.JDOMException jde) {
-                log.error("JDOM Exception when reading train info file " + jde);
+                log.error("JDOM Exception when reading train info file {}", jde);
             }
         }
         handleDelayStartClick(null);
@@ -1089,7 +1084,7 @@ public class ActivateTrainFrame {
         // log.error("JDOM exception writing Train Info: "+jde);
         //}
         catch (java.io.IOException ioe) {
-            log.error("IO exception writing Train Info: " + ioe);
+            log.error("IO exception writing Train Info: {}", ioe);
         }
     }
 
@@ -1108,7 +1103,7 @@ public class ActivateTrainFrame {
 
     private void trainInfoToDialog(TrainInfo info) {
         if (!setComboBox(transitSelectBox, info.getTransitName())) {
-            log.warn("Transit " + info.getTransitName() + " from file not in Transit menu");
+            log.warn("Transit {} from file not in Transit menu", info.getTransitName());
             JOptionPane.showMessageDialog(initiateFrame,
                     Bundle.getMessage("TransitWarn", info.getTransitName()),
                     null, JOptionPane.WARNING_MESSAGE);
@@ -1119,7 +1114,7 @@ public class ActivateTrainFrame {
         if (_TrainsFromRoster || _TrainsFromOperations) {
             initializeFreeTrainsCombo();
             if (!setComboBox(trainSelectBox, info.getTrainName())) {
-                log.warn("Train " + info.getTrainName() + " from file not in Train menu");
+                log.warn("Train {} from file not in Train menu", info.getTrainName());
                 JOptionPane.showMessageDialog(initiateFrame,
                         Bundle.getMessage("TrainWarn", info.getTrainName()),
                         null, JOptionPane.WARNING_MESSAGE);
@@ -1157,7 +1152,7 @@ public class ActivateTrainFrame {
     private TrainInfo dialogToTrainInfo() {
         TrainInfo info = new TrainInfo();
         info.setTransitName((String) transitSelectBox.getSelectedItem());
-        info.setTransitId(selectedTransit.getSystemName());
+        info.setTransitId(selectedTransit.getDisplayName());
         if (_TrainsFromRoster || _TrainsFromOperations) {
             info.setTrainName((String) trainSelectBox.getSelectedItem());
             info.setDccAddress(" ");
@@ -1171,7 +1166,7 @@ public class ActivateTrainFrame {
         if (index < 0) {
             log.error("No Starting Block.");
         } else {
-            info.setStartBlockId(startingBlockBoxList.get(index).getSystemName());
+            info.setStartBlockId(startingBlockBoxList.get(index).getDisplayName());
             info.setStartBlockSeq(startingBlockSeqList.get(index).intValue());
         }
         info.setDestinationBlockName((String) destinationBlockBox.getSelectedItem());
@@ -1179,7 +1174,7 @@ public class ActivateTrainFrame {
         if (index < 0) {
             log.error("No Destination Block.");
         } else {
-            info.setDestinationBlockId(destinationBlockBoxList.get(index).getSystemName());
+            info.setDestinationBlockId(destinationBlockBoxList.get(index).getDisplayName());
             info.setDestinationBlockSeq(destinationBlockSeqList.get(index).intValue());
         }
         info.setTrainFromRoster(_TrainsFromRoster);
@@ -1240,7 +1235,7 @@ public class ActivateTrainFrame {
                 break;
             }
         }
-        if (!found) {
+        if (!found && box.getItemCount() > 0) {
             box.setSelectedIndex(0);
         }
         return found;
@@ -1251,7 +1246,7 @@ public class ActivateTrainFrame {
         int result = jmri.util.StringUtil.getStateFromName(mode, delayedStartInt, delayedStartString);
 
         if (result < 0) {
-            log.warn("unexpected mode string in turnoutMode: " + mode);
+            log.warn("unexpected mode string in turnoutMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -1337,13 +1332,13 @@ public class ActivateTrainFrame {
         initializeRampCombo();
         pa1.setLayout(new FlowLayout());
         pa1.add(speedFactorLabel);
-        speedFactorSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+        speedFactorSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(2.0f), Float.valueOf(0.01f)));
         speedFactorSpinner.setEditor(new JSpinner.NumberEditor(speedFactorSpinner, "# %"));
         pa1.add(speedFactorSpinner);
         speedFactorSpinner.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
         pa1.add(new JLabel("   "));
         pa1.add(maxSpeedLabel);
-        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(2.0f), Float.valueOf(0.01f)));
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         pa1.add(maxSpeedSpinner);
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
@@ -1361,7 +1356,7 @@ public class ActivateTrainFrame {
         pa2a.add(stopBySpeedProfileCheckBox);
         stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint")); // reuse identical hint for Stop
         pa2a.add(stopBySpeedProfileAdjustLabel);
-        stopBySpeedProfileAdjustSpinner.setModel(new SpinnerNumberModel( Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+        stopBySpeedProfileAdjustSpinner.setModel(new SpinnerNumberModel( Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(5.0f), Float.valueOf(0.01f)));
         stopBySpeedProfileAdjustSpinner.setEditor(new JSpinner.NumberEditor(stopBySpeedProfileAdjustSpinner, "# %"));
         pa2a.add(stopBySpeedProfileAdjustSpinner);
         stopBySpeedProfileAdjustSpinner.setToolTipText(Bundle.getMessage("StopBySpeedProfileAdjustHint"));

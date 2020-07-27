@@ -2,21 +2,20 @@ package jmri.managers;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.JUnitUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.managers.DefaultConditionalManager class.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.ConditionalManager,jmri.Conditional> {
 
@@ -47,16 +46,16 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
         Assert.assertTrue(c2.getUserName().equals("Foo"));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initIdTagManager();
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initConditionalManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initIdTagManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initConditionalManager();
 
         Logix x1 = new jmri.implementation.DefaultLogix("IX01");
         assertNotNull("Logix x1 is null!", x1);
@@ -68,9 +67,10 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
         l = new DefaultConditionalManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         l = null;
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 }

@@ -15,15 +15,30 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class ConfigurationManager {
 
+    final public static String SPROGCBUS = "SPROG CBUS";
     final public static String MERGCBUS = "MERG CBUS";
     final public static String OPENLCB = "OpenLCB";
     final public static String RAWCAN = "Raw CAN"; // TODO I18N
     final public static String TEST = "Test - do not use";
 
-    private static String[] options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
+    public enum SubProtocol {
+        NONE,
+        CBUS
+    }
+    
+    private static String[] options = new String[]{SPROGCBUS, MERGCBUS, OPENLCB, RAWCAN, TEST};
 
     /**
+     * Create a new ConfigurationManager
+     * @param memo System Connection
+     */
+    public ConfigurationManager(CanSystemConnectionMemo memo) {
+        adapterMemo = memo;
+    }
+    
+    /**
      * Provide the current set of "Option1" values
+     * @return Copy of System Options Array
      */
     static public String[] getSystemOptions() {
         return Arrays.copyOf(options, options.length);
@@ -45,8 +60,12 @@ abstract public class ConfigurationManager {
         options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
     }
 
-    public ConfigurationManager(CanSystemConnectionMemo memo) {
-        adapterMemo = memo;
+    /**
+     * Set the list of protocols to start with SPROG.
+     */
+    static public void setSPROG() {
+        log.debug("setSPROG");
+        options = new String[]{SPROGCBUS};
     }
 
     protected CanSystemConnectionMemo adapterMemo;
@@ -54,12 +73,17 @@ abstract public class ConfigurationManager {
     abstract public void configureManagers();
 
     /**
-     * Tells which managers this class provides.
+     * Get which managers this class provides.
+     * @param type class to query.
+     * @return true if provided, else false.
      */
     abstract public boolean provides(Class<?> type);
 
     abstract public <T> T get(Class<?> T);
 
+    /**
+     * Dispose of the ConfigurationManager
+     */
     abstract public void dispose();
 
     abstract protected ResourceBundle getActionModelResourceBundle();

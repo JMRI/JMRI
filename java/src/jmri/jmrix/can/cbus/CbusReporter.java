@@ -32,16 +32,15 @@ import org.slf4j.LoggerFactory;
 public class CbusReporter extends AbstractReporter implements CanListener {
 
     private final int _number;
-    private TrafficController tc;
+    private final TrafficController tc;
 
-    @SuppressWarnings("LeakingThisInConstructor")
     public CbusReporter(int number, TrafficController tco, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix + "R" + number);  // can't use prefix here, as still in construction
         _number = number;
         // At construction, register for messages
         tc = tco;
-        tc.addCanListener(this);
-        log.debug("Added new reporter " + prefix + "R" + number);
+        addTc(tc);
+        log.debug("Added new reporter {}R{}", prefix, number);
     }
 
     private int state = UNKNOWN;
@@ -64,19 +63,21 @@ public class CbusReporter extends AbstractReporter implements CanListener {
 
     /**
      * {@inheritDoc}
-     * Unused to prevent RfID writes being mistaken for RfID reads by a DDES
+     * CBUS Reporters can respond to ACDAT or DDES OPC's.
      */
     @Override
     public void message(CanMessage m) {
+        CanReply mNew = new CanReply(m);
+        reply(mNew);
     }
 
     /**
      * {@inheritDoc}
-     * Reporters can respond to ACDAT or DDES OPC's
+     * CBUS Reporters can respond to ACDAT or DDES OPC's
      */
     @Override
     public void reply(CanReply m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         if ( m.getOpCode() != CbusConstants.CBUS_DDES && m.getOpCode() != CbusConstants.CBUS_ACDAT) {
@@ -116,8 +117,8 @@ public class CbusReporter extends AbstractReporter implements CanListener {
     // there is no "exit" area message in CBUS
     private void clearPreviousReporter(IdTag tag) {
         log.debug("clear previous reporter for tag {}",tag);
-        CbusReporter r;
-        if ((r = (CbusReporter) tag.getWhereLastSeen()) != null) {
+        CbusReporter r = (CbusReporter) tag.getWhereLastSeen();
+        if (r != null) {
             log.debug("previous reporter {} found",r);
             if (r != this && r.getCurrentReport() == tag) {
                 r.clear();
@@ -131,6 +132,7 @@ public class CbusReporter extends AbstractReporter implements CanListener {
     @Override
     public void dispose() {
         tc.removeCanListener(this);
+        super.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusReporter.class);

@@ -2,10 +2,9 @@ package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogThrottle.
@@ -362,8 +361,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -378,7 +376,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new SprogThrottle(m, new jmri.DccLocoAddress(2,false));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         stcs.dispose();

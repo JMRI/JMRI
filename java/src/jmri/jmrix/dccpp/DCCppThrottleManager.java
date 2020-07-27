@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
-import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +25,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public DCCppThrottleManager(DCCppSystemConnectionMemo memo) {
         super(memo);
@@ -45,7 +45,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         DCCppThrottle throttle;
         if (log.isDebugEnabled()) {
-            log.debug("Requesting Throttle: " + address);
+            log.debug("Requesting Throttle: {}", address);
         }
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);

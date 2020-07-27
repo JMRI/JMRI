@@ -3,13 +3,12 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -17,8 +16,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for setting up the Trains table colors in operations.
@@ -42,18 +39,12 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
     // combo boxes
     JComboBox<Train> trainBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
     
-    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
+    // JColorChooser is not a replacement for getRowColorComboBox as it doesn't support no color as a selection.
     JComboBox<String> colorBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
-    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorResetBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
-
-    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorBuiltBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
-    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorBuildFailedBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
-    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorTrainEnRouteBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
-    @SuppressWarnings("deprecation") // JColorChooser is replacement for getRowColorComboBox, but has different layout
     JComboBox<String> colorTerminatedBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
 
     // display panels based on which option is selected

@@ -76,11 +76,13 @@ public class SplitDateTimeVariableValue extends SplitVariableValue {
         factor = Long.parseLong(extra2);
         unit = extra3;
         display = extra4;
+        _minVal = 0;
+        _maxVal = ~0;
     }
 
     @Override
     public void stepTwoActions() {
-        log.debug(_name + " SplitDateTimeVariableValue stepTwoActions");
+        log.debug("{} SplitDateTimeVariableValue stepTwoActions", _name);
         super.stepTwoActions(); // need to do base level checks
         _columns = cvCount * 4; //new default column width
         switch (display) {

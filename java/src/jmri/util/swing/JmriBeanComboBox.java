@@ -6,7 +6,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -167,7 +166,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         } else {
             for (int i = 0; i < nameList.size(); i++) {
                 String name = nameList.get(i);
-                NamedBean nBean = _manager.getBeanBySystemName(name);
+                NamedBean nBean = _manager.getBySystemName(name);
 
                 if (nBean != null) {
                     String uname = nBean.getUserName();
@@ -181,13 +180,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                             break;
 
                         case USERNAMESYSTEMNAME:
-                            if (uname != null && !uname.equals("")) {
-                                displayList[i] = nBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
-                            } else {
-                                displayList[i] = name;
-                            }
-                            break;
-
                         case SYSTEMNAMEUSERNAME:
                             if (uname != null && !uname.equals("")) {
                                 displayList[i] = nBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
@@ -400,13 +392,6 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                     break;
 
                 case USERNAMESYSTEMNAME:
-                    if (uname != null && !uname.equals("")) {
-                        selectedItem = inNamedBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
-                    } else {
-                        selectedItem = inNamedBean.getSystemName();
-                    }
-                    break;
-
                 case SYSTEMNAMEUSERNAME:
                     if (uname != null && !uname.equals("")) {
                         selectedItem = inNamedBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
@@ -505,11 +490,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         if (comboBoxText != null) {
 
             //try user name
-            result = uDaManager.getBeanByUserName(comboBoxText);
+            result = uDaManager.getByUserName(comboBoxText);
 
             if (null == result) {
                 //try system name
-                //note: don't use getBeanBySystemName here
+                //note: don't use getBySystemName here
                 //throws an IllegalArgumentException if text is invalid
                 result = uDaManager.getNamedBean(comboBoxText);
             }

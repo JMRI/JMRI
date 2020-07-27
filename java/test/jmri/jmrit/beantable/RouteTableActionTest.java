@@ -2,28 +2,22 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import jmri.Route;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  *
- * @author	Bob Jacobsen Copyright 2004, 2007
+ * @author Bob Jacobsen Copyright 2004, 2007
  */
-public class RouteTableActionTest extends AbstractTableActionBase {
+public class RouteTableActionTest extends AbstractTableActionBase<Route> {
 
     @Test
     public void testCreate() {
@@ -73,15 +67,17 @@ public class RouteTableActionTest extends AbstractTableActionBase {
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddRoute"));  // NOI18N
         Assert.assertNotNull("Found Add Route Frame", addFrame);  // NOI18N
 
-        new JTextFieldOperator(addFrame, 0).setText("105");  // NOI18N
-        new JTextFieldOperator(addFrame, 1).setText("Route 105");  // NOI18N
+        JLabelOperator systemLabel = new JLabelOperator(addFrame,Bundle.getMessage("LabelSystemName"));
+        new JTextFieldOperator((JTextField)systemLabel.getLabelFor()).setText("105");  // NOI18N
+        JLabelOperator userLabel = new JLabelOperator(addFrame,Bundle.getMessage("LabelUserName"));
+        new JTextFieldOperator((JTextField) userLabel.getLabelFor()).setText("Route 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
-        new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+        //new JButtonOperator(addFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
 
 
         Route chk105 = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("Route 105");  // NOI18N
-        Assert.assertNotNull("Verify IR105 Added", chk105);  // NOI18N
-        Assert.assertEquals("Verify system name prefix", "IR105", chk105.getSystemName());  // NOI18N
+        Assert.assertNotNull("Verify IO105 Added", chk105);  // NOI18N
+        Assert.assertEquals("Verify system name prefix", "IO105", chk105.getSystemName());  // NOI18N
 
         addFrame.dispose();
         JUnitUtil.dispose(f);
@@ -106,7 +102,7 @@ public class RouteTableActionTest extends AbstractTableActionBase {
         
         //press create button to create a Route, then close the create window
         jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
-        jf.requestClose();
+        //jf.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         // press "Edit" button, which is the last column (no heading), to open the Edit Route window
@@ -116,10 +112,9 @@ public class RouteTableActionTest extends AbstractTableActionBase {
         //enter a username in the Edit window
         JFrame f2 = JFrameOperator.waitJFrame("Edit Route", true, true);
         jf = new JFrameOperator(f2);
-        //username field is the first field in window
-        JTextFieldOperator jtxt = new JTextFieldOperator(jf, 0);
-        jtxt.clickMouse();
-        jtxt.setText("TestRouteUserName");      
+
+        JLabelOperator userLabel = new JLabelOperator(jf,Bundle.getMessage("LabelUserName"));
+        new JTextFieldOperator((JTextField) userLabel.getLabelFor()).typeText("TestRouteUserName");
         
         //press Update to save the Route change
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonUpdate"));
@@ -128,10 +123,10 @@ public class RouteTableActionTest extends AbstractTableActionBase {
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         
         //retrieve the expected route for verification
-        Route chkRoute = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("IR:AUTO:0001");  // NOI18N
+        Route chkRoute = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("IO:AUTO:0001");  // NOI18N
         Assert.assertEquals("Verify no additional routes were created", 1, tbl.getRowCount());  // NOI18N
-        Assert.assertNotNull("Verify IR:AUTO:0001 Added", chkRoute);  // NOI18N
-        Assert.assertEquals("Verify system name didn't change", "IR:AUTO:0001", chkRoute.getSystemName());  // NOI18N
+        Assert.assertNotNull("Verify IO:AUTO:0001 Added", chkRoute);  // NOI18N
+        Assert.assertEquals("Verify system name didn't change", "IO:AUTO:0001", chkRoute.getSystemName());  // NOI18N
         Assert.assertEquals("Verify user name is TestRouteUserName", "TestRouteUserName", chkRoute.getUserName());  // NOI18N
         
         JUnitUtil.dispose(f2);
@@ -145,22 +140,21 @@ public class RouteTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
-    @Ignore("Route create frame does not have a hardware address")
+    @Disabled("Route create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name")
     @Override
     public void testAddThroughDialog() {
     }
 
     @Test
-    @Ignore("Route create frame does not have a hardware address")
+    @Disabled("Route create frame does not have a hardware address")
     @ToDo("Re-write parent class test to use the right name, or add without dialog")
     @Override
     public void testEditButton() {
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -170,7 +164,7 @@ public class RouteTableActionTest extends AbstractTableActionBase {
         a = new RouteTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

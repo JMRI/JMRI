@@ -18,7 +18,6 @@ import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.swing.NcePanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1402,7 +1401,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             log.debug("Receive character");
         }
         if (waiting <= 0) {
-            log.error("unexpected response. Len: " + r.getNumDataElements() + " code: " + r.getElement(0));
+            log.error("unexpected response. Len: {} code: {}", r.getNumDataElements(), r.getElement(0));
             return;
         }
         waiting--;

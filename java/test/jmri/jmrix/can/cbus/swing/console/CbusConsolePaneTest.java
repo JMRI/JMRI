@@ -1,21 +1,24 @@
 package jmri.jmrix.can.cbus.swing.console;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CbusConsolePane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
-
-    jmri.jmrix.can.CanSystemConnectionMemo memo = null;
-    jmri.jmrix.can.TrafficController tc = null;
 
     @Override 
     @Test
@@ -36,23 +39,58 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         // for now, just makes ure there isn't an exception.
         ((CbusConsolePane) panel).initContext(memo);
     }
+    
+    @Test
+    public void testSendCanMessageCanReply() throws Exception{
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        cbPanel.initComponents(memo);
+        
+        CanMessage m = new CanMessage(tc.getCanid());
+        m.setNumDataElements(1);
+        m.setElement(0, CbusConstants.CBUS_RTON);
+        cbPanel.decodePane.message(m);
+        
+        CanReply r = new CanReply(tc.getCanid());
+        m.setNumDataElements(1);
+        m.setElement(0, CbusConstants.CBUS_TON);
+        cbPanel.decodePane.reply(r);
+    
+    }
 
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tc;
+    private CbusConsolePane cbPanel;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        memo = new jmri.jmrix.can.CanSystemConnectionMemo();
-        tc = new jmri.jmrix.can.TrafficControllerScaffold();
+        memo = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
-        panel = new CbusConsolePane();
+        panel = cbPanel = new CbusConsolePane();
         helpTarget="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame";
         title="CBUS Console";
     }
 
-    @After
+    @AfterEach
     @Override
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        
+        CbusEventTableDataModel evMod = jmri.InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
+        if ( evMod != null){
+            evMod.skipSaveOnDispose();
+            evMod.dispose();
+        }
+        
+        tc.terminateThreads();
+        memo.dispose();
+        tc = null;
+        memo = null;
+        
+        JUnitUtil.tearDown();
+    }
 
 
 }

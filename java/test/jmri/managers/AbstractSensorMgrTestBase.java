@@ -6,26 +6,27 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.Sensor;
 import jmri.SensorManager;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Abstract Base Class for SensorManager tests in specific jmrix packages. This
  * is not itself a test class, e.g. should not be added to a suite. Instead,
  * this forms the base for test classes, including providing some common tests
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2016
- * @author      Paul Bender Copyright(C) 2016
+ * @author Bob Jacobsen 2003, 2006, 2008, 2016
+ * @author  Paul Bender Copyright(C) 2016
  */
 public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManagerTestBase<SensorManager, Sensor> {
 
     // implementing classes must provide these abstract members:
     //
-    @Before
-    abstract public void setUp();    	// load l with actual object; create scaffolds as needed
+    @BeforeEach
+    abstract public void setUp(); // load l with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
 
@@ -89,13 +90,10 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         // check for lengths
         Assert.assertEquals(0, l.getNamedBeanList().size());
         Assert.assertEquals(0, l.getNamedBeanSet().size());
-        Assert.assertEquals(0, l.getSystemNameAddedOrderList().size());
         Assert.assertEquals(0, l.getSystemNameList().size());
-        Assert.assertEquals(0, l.getSystemNameArray().length);
         jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         Assert.assertEquals(0, l.getObjectCount());
     }
-
 
     @Test
     public void testDefaultSystemName() {
@@ -106,14 +104,10 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testProvideFailure() {
-        try {
-            l.provideSensor("");
-        } catch (IllegalArgumentException ex) {
-            jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
-            throw ex;
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideSensor(""));
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -178,12 +172,18 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         t1.setUserName("after");
         Sensor t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
-        Assert.assertEquals("no old object", null, l.getByUserName("before"));
+        Assert.assertNull("no old object", l.getByUserName("before"));
     }
 
     @Test
     public void testPullResistanceConfigurable(){
        Assert.assertFalse("Pull Resistance Configurable", l.isPullResistanceConfigurable());
+    }
+
+    @Disabled("Sensor managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
     }
 
     /**

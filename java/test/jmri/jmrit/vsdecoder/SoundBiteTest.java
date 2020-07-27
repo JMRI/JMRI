@@ -1,11 +1,15 @@
 package jmri.jmrit.vsdecoder;
 
+import jmri.AudioManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.jmrit.audio.DefaultAudioManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the SoundBite class
@@ -13,6 +17,8 @@ import org.junit.Test;
  * @author Mark Underwood Copyright (C) 2011
  */
 public class SoundBiteTest {
+
+    private Runnable damsdt;
 
     @Test
     public void testStateConstants() {
@@ -64,14 +70,18 @@ public class SoundBiteTest {
         Assert.assertEquals("xml name", "unitUnderTest", uut.getName());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        DefaultAudioManager dam = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        damsdt = dam.audioShutDownTask;
+        InstanceManager.setDefault(AudioManager.class, dam);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        jmri.util.JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
+        InstanceManager.getDefault(ShutDownManager.class).deregister(damsdt);
         JUnitUtil.tearDown();
     }
 }

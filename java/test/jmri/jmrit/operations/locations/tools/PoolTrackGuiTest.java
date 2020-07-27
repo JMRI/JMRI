@@ -1,15 +1,17 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.Assume;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Pool;
 import jmri.jmrit.operations.locations.Track;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  * Tests for the Operations PoolTrackFrame class
@@ -37,7 +39,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location l = new Location("LOC1", "Location One");
 
-        Track t = new Track("ID1", "TestTrack1", "Siding", l);
+        Track t = new Track("ID1", "TestTrack1", "Spur", l);
         t.setLength(100);
 
         PoolTrackFrame f = new PoolTrackFrame(t);
@@ -74,7 +76,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         // is 1
         Location l = new Location("LOC1", "Location One");
 
-        Track t = new Track("ID1", "TestTrack1", "Siding", l);
+        Track t = new Track("ID1", "TestTrack1", "Spur", l);
         t.setLength(100);
 
         PoolTrackFrame f = new PoolTrackFrame(t);
@@ -117,7 +119,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
 
         Assert.assertEquals("Pool count", 3, l.getPoolsByNameList().size());
 
-        Track t = new Track("ID1", "TestTrack1", "Siding", l);
+        Track t = new Track("ID1", "TestTrack1", "Spur", l);
         Assert.assertEquals("Initial Track Pool", null, t.getPool());
 
         PoolTrackFrame f = new PoolTrackFrame(t);
@@ -140,7 +142,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         // Enter a new minimum length, click save and check that the Track is updated.
         Location l = new Location("LOC1", "Location One");
 
-        Track t = new Track("ID1", "TestTrack1", "Siding", l);
+        Track t = new Track("ID1", "TestTrack1", "Spur", l);
         Assert.assertEquals("Minimum track length", 0, t.getMinimumLength());
 
         PoolTrackFrame f = new PoolTrackFrame(t);

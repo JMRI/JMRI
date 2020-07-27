@@ -1,5 +1,4 @@
 <!-- Defines XML for configuring the JMRIdemo and DecoderPro programs -->
-<!-- $Id$ -->
 
 <!-- This file is obsolete! Preferences are now stored -->
 <!-- via the general layout-config DTD -->

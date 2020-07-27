@@ -22,10 +22,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Liste profils de vitesse</h1>
 
       <p>L'outil est con&ccedil;u pour cr&eacute;er le profil d'une
@@ -116,7 +116,7 @@
       de constater un d&eacute;passement.</p>Ceci est la page
       d'aide
       help/fr/package/jmri/jmrit/roster/swing/speedprofile/speedProfileFrame.shtml
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -2,10 +2,9 @@ package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs.MergReply class
@@ -121,17 +120,16 @@ public class MergReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         return (((h >> 3) & 0x1FFC0000) | (h & 0x3FFFF));
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = new MergReply(":S1260N12345678;");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	m = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 }

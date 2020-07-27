@@ -1,6 +1,9 @@
 package jmri.jmrix;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
+import jmri.NamedBean;
+import jmri.util.NamedBeanPreferNumericComparator;
 
 /**
  * A SystemConnectionMemo that does not get registered its prefix registered
@@ -16,7 +19,7 @@ import java.util.ResourceBundle;
  * remove immediately when no longer used
  */
 @Deprecated
-public class ConflictingSystemConnectionMemo extends SystemConnectionMemo {
+public class ConflictingSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public ConflictingSystemConnectionMemo(String prefix, String userName) {
         super(prefix, userName);
@@ -25,6 +28,11 @@ public class ConflictingSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null; // no resource bundle
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanPreferNumericComparator<>();
     }
 
     @Override

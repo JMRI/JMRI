@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -10,7 +11,8 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.operations.setup.Control;
+import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Represents an attribute a rolling stock can have. Some attributes are length,
@@ -19,9 +21,9 @@ import jmri.jmrit.operations.setup.Control;
  * @author Daniel Boudreau Copyright (C) 2014
  *
  */
-public abstract class RollingStockAttribute {
+public abstract class RollingStockAttribute extends PropertyChangeSupport {
 
-    protected static final int MIN_NAME_LENGTH = 4;
+    protected static final int MIN_NAME_LENGTH = 1;
 
     public RollingStockAttribute() {
     }
@@ -39,10 +41,8 @@ public abstract class RollingStockAttribute {
     protected List<String> list = new ArrayList<>();
 
     public String[] getNames() {
-        if (list.size() == 0) {
-            for (String name : getDefaultNames().split(",")) {
-                list.add(name);
-            }
+        if (list.isEmpty()) {
+            list.addAll(Arrays.asList(getDefaultNames().split(",")));
         }
         String[] names = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
@@ -52,7 +52,7 @@ public abstract class RollingStockAttribute {
     }
 
     protected String getDefaultNames() {
-        return "Error"; // overridden //  NOI18N
+        return "Error"; // overridden // NOI18N
     }
 
     public void setNames(String[] names) {
@@ -83,9 +83,9 @@ public abstract class RollingStockAttribute {
             for (int i = 0; i < lengths.length; i++) {
                 try {
                     Integer.parseInt(lengths[i]);
-                    log.error("length " + i + " = " + lengths[i]);
+                    log.error("length {} = {}", i, lengths[i]);
                 } catch (NumberFormatException ee) {
-                    log.error("length " + i + " = " + lengths[i] + " is not a valid number!");
+                    log.error("length {} = {} is not a valid number!", i, lengths[i]);
                 }
             }
         }
@@ -106,11 +106,13 @@ public abstract class RollingStockAttribute {
         // insert at start of list, sort on restart
         list.add(0, name);
         maxNameLength = 0; // reset maximum name length
+        maxNameSubStringLength = 0;
     }
 
     public void deleteName(String name) {
         list.remove(name);
         maxNameLength = 0; // reset maximum name length
+        maxNameSubStringLength = 0;
     }
 
     public boolean containsName(String name) {
@@ -136,7 +138,7 @@ public abstract class RollingStockAttribute {
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
             maxName = "";
-            maxNameLength = MIN_NAME_LENGTH;
+            maxNameLength = getMinNameLength();
             for (String name : getNames()) {
                 if (name.length() > maxNameLength) {
                     maxName = name;
@@ -147,20 +149,25 @@ public abstract class RollingStockAttribute {
         return maxNameLength;
     }
     
+    protected int maxNameSubStringLength = 0;
+    
     public int getMaxNameSubStringLength() {
-        if (maxNameLength == 0) {
+        if (maxNameSubStringLength == 0) {
             maxName = "";
-            maxNameLength = MIN_NAME_LENGTH;
+            maxNameSubStringLength = getMinNameLength();
             for (String name : getNames()) {
-                String[] subString = name.split("-");
-                if (subString[0].length() > maxNameLength) {
+                String[] subString = name.split(TrainCommon.HYPHEN);
+                if (subString[0].length() > maxNameSubStringLength) {
                     maxName = name;
-                    maxNameLength = subString[0].length();
+                    maxNameSubStringLength = subString[0].length();
                 }
             }
-            log.info("Max car type name ({}) length {}", maxName, maxNameLength);
         }
-        return maxNameLength;
+        return maxNameSubStringLength;
+    }
+    
+    protected int getMinNameLength() {
+        return MIN_NAME_LENGTH;
     }
 
     /**
@@ -169,18 +176,9 @@ public abstract class RollingStockAttribute {
      * @param root Common Element for storage.
      * @param eNames New format Element group name
      * @param eName New format Element name
-     * @param oldName Backwards compatibility Element name
      *
      */
-    public void store(Element root, String eNames, String eName, String oldName) {
-        if (Control.backwardCompatible) {
-            Element values = new Element(oldName);
-            for (String name : getNames()) {
-                values.addContent(name + "%%"); // NOI18N
-            }
-            root.addContent(values);
-        }
-        // new format using elements
+    public void store(Element root, String eNames, String eName) {
         Element names = new Element(eNames);
         for (String name : getNames()) {
             Element e = new Element(eName);
@@ -217,20 +215,6 @@ public abstract class RollingStockAttribute {
             String[] names = root.getChildText(oldName).split("%%"); // NOI18N
             setNames(names);
         }
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);

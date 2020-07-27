@@ -3,10 +3,6 @@
  */
 package jmri.jmrit.ctc;
 
-import jmri.jmrit.ctc.CTCMain;
-import jmri.jmrit.ctc.CTCException;
-import jmri.jmrit.ctc.CTCConstants;
-import jmri.JmriException;
 import jmri.Sensor;
 
 public class SignalDirectionLever {

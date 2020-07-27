@@ -1,17 +1,17 @@
 package jmri.jmrix.pricom.pockettester;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * JUnit tests for the MonitorFrame class
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class MonitorFrameTest {
 
@@ -29,13 +29,13 @@ public class MonitorFrameTest {
         MonitorFrame f = new MonitorFrame();
         f.initComponents();
         f.setVisible(true);
-        f.asciiFormattedMessage(PackageTest.version);
-        f.asciiFormattedMessage(PackageTest.speed0003A);
-        f.asciiFormattedMessage(PackageTest.idlePacket);
+        f.asciiFormattedMessage(TestConstants.version);
+        f.asciiFormattedMessage(TestConstants.speed0003A);
+        f.asciiFormattedMessage(TestConstants.idlePacket);
         f.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -43,7 +43,7 @@ public class MonitorFrameTest {
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

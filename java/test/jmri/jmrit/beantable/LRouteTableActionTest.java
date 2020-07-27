@@ -12,9 +12,7 @@ import javax.swing.JDialog;
 
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -31,7 +29,7 @@ import jmri.util.JUnitUtil;
 /**
  * Tests for the jmri.jmrit.beantable.LRouteTableAction class
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  */
 public class LRouteTableActionTest {
 
@@ -81,9 +79,8 @@ public class LRouteTableActionTest {
         new JFrameOperator(_lRouteTable._addFrame).dispose();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
-    @Ignore("Commented out in JUnit 3")
+    @Disabled("Commented out in JUnit 3")
     public void testPrompt() {
         assertNotNull("LRouteTableAction is null!", _lRouteTable); // test has begun
         _lRouteTable.addPressed(null);
@@ -111,7 +108,7 @@ public class LRouteTableActionTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
 
@@ -161,11 +158,13 @@ public class LRouteTableActionTest {
         }
     }
 
-    @Before
+    @AfterEach
     public void tearDown() throws Exception {
         // now close action window
         if (_lRouteTable.f != null) {
-            new JFrameOperator(_lRouteTable.f).dispose();
+            _lRouteTable.f.dispose();
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 }

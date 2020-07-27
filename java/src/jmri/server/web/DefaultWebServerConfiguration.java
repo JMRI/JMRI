@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Properties;
-import jmri.server.web.spi.WebServerConfiguration;
+
+import javax.annotation.Nonnull;
+
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.server.web.spi.WebServerConfiguration;
 
 /**
  * Default implementation of {@link jmri.server.web.spi.WebServerConfiguration}.
@@ -22,38 +26,32 @@ public final class DefaultWebServerConfiguration extends AbstractWebServerConfig
 
     private final HashMap<String, String> redirections = new HashMap<>();
     private final HashMap<String, String> files = new HashMap<>();
-    private final static Logger log = LoggerFactory.getLogger(DefaultWebServerConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultWebServerConfiguration.class);
 
     public DefaultWebServerConfiguration() {
-        try (InputStream in = this.getClass().getResourceAsStream("FilePaths.properties")) { // NOI18N
-            Properties properties = new Properties();
-            properties.load(in);
-            in.close();
-            properties.stringPropertyNames().forEach((path) -> {
-                this.files.put(path, properties.getProperty(path));
-            });
-        } catch (IOException ex) {
-            log.error(ex.getMessage());
-        }
-        try (InputStream in = this.getClass().getResourceAsStream("Redirections.properties")) { // NOI18N
-            Properties properties = new Properties();
-            properties.load(in);
-            in.close();
-            properties.stringPropertyNames().forEach((path) -> {
-                this.redirections.put(path, properties.getProperty(path));
-            });
-        } catch (IOException ex) {
-            log.error(ex.getMessage());
-        }
+        loadMap(files, "FilePaths.properties"); // NOI18N
+        loadMap(redirections, "Redirections.properties"); // NOI18N
     }
 
     @Override
+    @Nonnull
     public HashMap<String, String> getFilePaths() {
         return files;
     }
 
     @Override
+    @Nonnull
     public HashMap<String, String> getRedirectedPaths() {
         return redirections;
+    }
+
+    private void loadMap(@Nonnull HashMap<String, String> map, @Nonnull String resource) {
+        try (InputStream in = getClass().getResourceAsStream(resource)) {
+            Properties properties = new Properties();
+            properties.load(in);
+            properties.stringPropertyNames().forEach(path -> map.put(path, properties.getProperty(path)));
+        } catch (IllegalArgumentException | NullPointerException | IOException ex) {
+            log.error("Unable to load {}", resource, ex);
+        }
     }
 }

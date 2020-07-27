@@ -1,9 +1,10 @@
 package jmri.configurexml;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
- * JUnit tests for the AbstractXmlAdapter class 
+ * Base class for tests of classes inheriting and implementing AbstractXmlAdapter
  *
  * @author Paul Bender Copyright (C) 2018 
  */
@@ -16,11 +17,10 @@ abstract public class AbstractXmlAdapterTestBase {
         Assert.assertNotNull(xmlAdapter);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

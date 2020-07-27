@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2015 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,11 +13,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20150315"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
   <!-- Version 1.0 - created from DCC_Concepts_Loco.xml version 2
 				   based on DCC Concepts documentation M-CV-Basics-Zen-Decoders-2014.pdf of December 2014
 					 and on correspondence with Richard Johnson of DCC Concepts -->
+  <!-- Version 2 - change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="DCC Concepts Zen" mfg="DCC Concepts" lowVersionID="34" highVersionID="35">
+    <family name="DCC Concepts Zen" mfg="DCCconcepts" lowVersionID="34" highVersionID="35">
       <model model="ZBHP Buddha" numOuts="6" numFns="14" maxMotorCurrent="3A (peak=5A)" productID="ZBHP" formFactor="O" connector="other" comment="O-scale, with screw connectors">
         <output name="1" label="White" connection="other" maxcurrent="250 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="250 mA"/>

@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
@@ -51,7 +51,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @javax.annotation.concurrent.Immutable
 public class Bundle {
 
-    @Nullable
+    @CheckForNull
     private final static String name = "jmri.NamedBeanBundle";  // NOI18N
 
     /**
@@ -194,7 +194,7 @@ public class Bundle {
 
     private final static Bundle b = new Bundle();
 
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

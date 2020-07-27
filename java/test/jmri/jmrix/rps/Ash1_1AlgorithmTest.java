@@ -1,10 +1,9 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the rps.Ash1_1Algorithm class.
@@ -14,7 +13,7 @@ import org.junit.Test;
  *
  * The default transmitter location is (3,2,1)
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  */
 public class Ash1_1AlgorithmTest {
 
@@ -122,12 +121,12 @@ public class Ash1_1AlgorithmTest {
         Assert.assertEquals("z close", true, Math.abs(m.z - 1.) < 0.001);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

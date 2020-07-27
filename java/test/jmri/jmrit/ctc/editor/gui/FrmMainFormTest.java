@@ -2,12 +2,13 @@ package jmri.jmrit.ctc.editor.gui;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
-import org.netbeans.jemmy.EventTool;
-import org.netbeans.jemmy.operators.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /*
-* Tests for the FrmMainForm Class
+* Tests for the FrmMainForm Class.
+*
 * @author  Dave Sand   Copyright (C) 2019
 */
 public class FrmMainFormTest {
@@ -15,19 +16,22 @@ public class FrmMainFormTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("FrmMainForm Constructor Return", new FrmMainForm());
+        javax.swing.JFrame frame = new FrmMainForm();
+        Assert.assertNotNull("FrmMainForm Constructor Return", frame);
+        JUnitUtil.dispose(frame);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 }
 

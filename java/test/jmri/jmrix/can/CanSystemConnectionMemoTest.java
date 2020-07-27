@@ -1,39 +1,37 @@
 package jmri.jmrix.can;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class CanSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class CanSystemConnectionMemoTest extends SystemConnectionMemoTestBase<CanSystemConnectionMemo> {
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       // without knowing which system is connected via can, there is no
-       // way to provide a consist manager.
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        // without knowing which system is connected via can, there is no
+        // way to provide a consist manager.
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new CanSystemConnectionMemo();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CanSystemConnectionMemoTest.class);
-
 }

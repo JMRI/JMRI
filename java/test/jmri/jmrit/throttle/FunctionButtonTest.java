@@ -1,11 +1,12 @@
 package jmri.jmrit.throttle;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of FunctionButton
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class FunctionButtonTest {
 
@@ -45,13 +46,13 @@ public class FunctionButtonTest {
         Assert.assertFalse("no image", panel.isSelectedImageOK() );
     }
 
-    @Before
+    @BeforeEach
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
 
     }
     
-    @After
+    @AfterEach
     public void tearDown(){
         jmri.util.JUnitUtil.tearDown();
 

@@ -13,7 +13,9 @@ import purejavacomm.UnsupportedCommOperationException;
  * falling back to JavaComm 2 if necessary.
  *
  * @author Paul Bender Copyright 2007
+ * @deprecated since 4.19.4; use {@link SerialPort#setSerialPortParams(int, int, int, int) } instead
  */
+@Deprecated
 public class SerialUtil {
 
     static public void setSerialPortParams(SerialPort activeSerialPort, int baud, int databits, int stopbits, int parity)

@@ -3,10 +3,8 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import jmri.LocoAddress;
-import jmri.SpeedStepMode;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
+
+import jmri.*;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +71,7 @@ public class MultiThrottleController extends ThrottleController {
                 listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("SpeedSteps")) {
+        if (eventName.matches(Throttle.SPEEDSTEPS)) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append("s");
             message.append(encodeSpeedStepMode((SpeedStepMode)event.getNewValue()));
@@ -81,7 +79,7 @@ public class MultiThrottleController extends ThrottleController {
                 listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("IsForward")) {
+        if (eventName.matches(Throttle.ISFORWARD)) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append("R");
             message.append((Boolean) event.getNewValue() ? "1" : "0");
@@ -89,7 +87,7 @@ public class MultiThrottleController extends ThrottleController {
                listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("SpeedSetting")) {
+        if (eventName.matches(Throttle.SPEEDSETTING)) {
             float currentSpeed = ((Float) event.getNewValue()).floatValue();
             log.debug("Speed Setting: {} head of queue {}",currentSpeed, lastSentSpeed.peek());
             if(lastSentSpeed.isEmpty()) { 

@@ -2,11 +2,13 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Ib2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -411,8 +413,7 @@ public class Ib2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(expResult, result);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -424,7 +425,7 @@ public class Ib2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new Ib2Throttle(memo,new LocoNetSlot(5));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         ((Ib2ThrottleManager)jmri.InstanceManager.getDefault(jmri.ThrottleManager.class)).dispose();

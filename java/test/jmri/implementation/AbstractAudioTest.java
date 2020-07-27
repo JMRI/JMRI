@@ -1,7 +1,9 @@
 package jmri.implementation;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for AbstractAudio
@@ -26,8 +28,7 @@ public class AbstractAudioTest {
         Assert.assertTrue("state is playing", audio.getState() == jmri.Audio.STATE_PLAYING);
         // Check that audio.setState() triggers stateChanged()
         Assert.assertTrue("state has changed", stateHasChanged.get());
-        Assert.assertTrue("toString() matches",
-                "jmri.implementation.AbstractAudioTest$MyAbstractAudio (MySystemName)".equals(audio.toString()));
+        Assert.assertEquals("toString() matches", "MySystemName", audio.toString());
         
         Assert.assertTrue("getBeanType() matches", "Audio".equals(audio.getBeanType()));
     }
@@ -50,12 +51,12 @@ public class AbstractAudioTest {
         Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555) < 10.561);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

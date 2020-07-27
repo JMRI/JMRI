@@ -260,6 +260,17 @@ public class Engine extends RollingStock {
         }
         return NONE;
     }
+    
+    /**
+     * B units that aren't part of a consist are blocked at the end.
+     */
+    @Override
+    public int getBlocking() {
+        if (isBunit() && getConsist() == null) {
+            return B_UNIT_BLOCKING;
+        }
+        return super.getBlocking();
+    }
 
     /**
      * Used to determine if engine is lead engine in a consist
@@ -416,7 +427,7 @@ public class Engine extends RollingStock {
                     _consist.setConsistNumber(Integer.parseInt(a.getValue()));
                 }
             } else {
-                log.error("Consist " + a.getValue() + " does not exist");
+                log.error("Consist {} does not exist", a.getValue());
             }
         }
         addPropertyChangeListeners();

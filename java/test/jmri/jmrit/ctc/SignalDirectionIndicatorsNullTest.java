@@ -1,6 +1,7 @@
 package jmri.jmrit.ctc;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /*
 * Tests for the SignalDirectionIndicatorsNull Class
@@ -13,12 +14,12 @@ public class SignalDirectionIndicatorsNullTest {
         Assert.assertNotNull("SignalDirectionIndicatorsNull Constructor Return", new SignalDirectionIndicatorsNull());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

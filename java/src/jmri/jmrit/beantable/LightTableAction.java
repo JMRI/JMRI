@@ -41,7 +41,7 @@ import javax.swing.table.TableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import com.alexandriasoftware.swing.Validation;
 import jmri.InstanceManager;
 import jmri.Light;
@@ -51,9 +51,6 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.LightControl;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.SystemConnectionMemoManager;
-import jmri.managers.ProxyLightManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
@@ -477,7 +474,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 public JLabel updateLabel(String value, int row) {
                     if (iconHeight > 0) { // if necessary, increase row height;
                         log.debug("TODO adjust table row height for Lights?");
-                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); 
+                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5));
                     }
                     if (value.equals(Bundle.getMessage("StateOff")) && offIcon != null) {
                         label = new JLabel(offIcon);
@@ -633,7 +630,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            initializePrefixCombo();
+            configureManagerComboBox(prefixBox, lightManager, LightManager.class);
             panel1.add(systemLabel);
             panel1.add(prefixBox);
             panel1.add(new JLabel("   "));
@@ -826,20 +823,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
         addFrame.pack();
         addFrame.setVisible(true);
-    }
-
-    private void initializePrefixCombo() {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (lightManager instanceof ProxyLightManager) {
-            ProxyLightManager proxy = (ProxyLightManager) lightManager;
-            prefixBox.setManagers(proxy.getDisplayOrderManagerList());
-            if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
-                SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
-                prefixBox.setSelectedItem(memo.get(LightManager.class));
-            }
-        } else {
-            prefixBox.setManagers(lightManager);
-        }
     }
 
     private String addEntryToolTip;
@@ -1359,6 +1342,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         lightCreatedOrUpdated = false;
         // finally, get rid of the add/edit Frame
         if (addFrame != null) {
+            removePrefixBoxListener(prefixBox);
             addFrame.dispose();
             addFrame = null;
             create.removePropertyChangeListener(colorChangeListener);
@@ -1738,7 +1722,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             return;
         }
         lc = new LightControl();
-        if (setControlInformation(lc)) {
+        if (setControlInformation(lc,controlList)) {
             controlList.add(lc);
             lightControlChanged = true;
             lightControlTableModel.fireTableDataChanged();
@@ -1765,7 +1749,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             log.error("Incorrect value found in a FastClock Time: {}", pe);
             return;
         }
-        if (setControlInformation(lc)) {
+        if (setControlInformation(lc,controlList)) {
             lightControlChanged = true;
             lightControlTableModel.fireTableDataChanged();
             cancelControlPressed(e);
@@ -1807,7 +1791,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
      *
      * @return 'true' if no errors or warnings
      */
-    private boolean setControlInformation(LightControl g) {
+    private boolean setControlInformation(LightControl g, ArrayList<LightControl> currentList) {
         // Get control information
         if (sensorControl.equals(typeBox.getSelectedItem())) {
             // Set type of control
@@ -1855,13 +1839,20 @@ public class LightTableAction extends AbstractTableAction<Light> {
             int offHour = (Integer) fastHourSpinner2.getValue(); // hours
             int offMin = (Integer) fastMinuteSpinner2.getValue(); // minutes
 
-            // check for 2 x 00:00 entry
-            if ((onHour * 60 + onMin) == (offHour * 60 + offMin)) {
+            g.setFastClockControlSchedule(onHour, onMin, offHour, offMin);
+
+            if (g.onOffTimesFaulty()) {
                 status1.setText(Bundle.getMessage("LightWarn11"));
                 status1.setForeground(Color.red);
                 return false;
             }
-            g.setFastClockControlSchedule(onHour, onMin, offHour, offMin);
+
+            if (g.areFollowerTimesFaulty(currentList)) {
+                status1.setText(Bundle.getMessage("LightWarn12"));
+                status1.setForeground(Color.red);
+                return false;
+            }
+
         } else if (turnoutStatusControl.equals(typeBox.getSelectedItem())) {
             boolean error = false;
             Turnout t = null;

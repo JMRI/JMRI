@@ -1,10 +1,10 @@
 package jmri.jmrix.bachrus;
 
 import java.awt.GraphicsEnvironment;
-import org.netbeans.jemmy.operators.JFrameOperator;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -12,11 +12,11 @@ import org.junit.Before;
  */
 public class SpeedoConsoleFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initDebugThrottleManager();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -27,12 +27,12 @@ public class SpeedoConsoleFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SpeedoConsoleFrameTest.class);
-
 }

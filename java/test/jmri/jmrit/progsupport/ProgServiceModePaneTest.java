@@ -1,23 +1,23 @@
  package jmri.jmrit.progsupport;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+
 import jmri.*;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the ProgServiceModePane
  *
- * @author	Bob Jacobsen 2008
+ * @author Bob Jacobsen 2008
  */
 public class ProgServiceModePaneTest {
 
@@ -65,13 +65,13 @@ public class ProgServiceModePaneTest {
         JUnitUtil.dispose(f);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

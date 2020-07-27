@@ -1,25 +1,22 @@
 package jmri.jmrix.lenz.swing.stackmon;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.stackmon.StackMonFrame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class StackMonFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private jmri.jmrix.lenz.XNetInterfaceScaffold t = null;
     private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -31,11 +28,12 @@ public class StackMonFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo = null;
         t = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 

@@ -11,7 +11,6 @@ import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.util.SerialUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -21,7 +20,7 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to DCC++ via a FTDI Virtual Comm Port. Normally controlled by
+ * Provide access to DCC++ via a FTDI Virtual Com Port. Normally controlled by
  * the lenz.liusb.LIUSBFrame class.
  *
  * @author Mark Underwood Copyright (C) 2015
@@ -62,8 +61,8 @@ public class DCCppAdapter extends DCCppSerialPortController {
                 log.debug("Serial timeout was observed as: {} {}",
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
+            } catch (UnsupportedCommOperationException et) {
+                log.info("failed to set serial timeout: {}", et);
             }
 
             // get and save stream
@@ -75,19 +74,11 @@ public class DCCppAdapter extends DCCppSerialPortController {
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at "
-                         + activeSerialPort.getBaudRate() + " baud with"
-                         + " DTR: " + activeSerialPort.isDTR()
-                         + " RTS: " + activeSerialPort.isRTS()
-                         + " DSR: " + activeSerialPort.isDSR()
-                         + " CTS: " + activeSerialPort.isCTS()
-                         + "  CD: " + activeSerialPort.isCD()
-                         );
+                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -142,7 +133,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
         try {
             return new DataInputStream(activeSerialPort.getInputStream());
         } catch (java.io.IOException e) {
-            log.error("getInputStream exception: " + e.getMessage());
+            log.error("getInputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -155,7 +146,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -167,16 +158,12 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     /**
      * Local method to do specific configuration.
+     * @throws UnsupportedCommOperationException if the underlying port cannot comply
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
-        SerialUtil.setSerialPortParams(activeSerialPort, baud,
+        int baud = currentBaudNumber(mBaudRate);
+        activeSerialPort.setSerialPortParams(baud,
                                        SerialPort.DATABITS_8,
                                        SerialPort.STOPBITS_1,
                                        SerialPort.PARITY_NONE);
@@ -206,6 +193,11 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud115200")};
     protected int[] validSpeedValues = new int[]{115200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     // protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHw"), Bundle.getMessage("FlowOptionNo")};

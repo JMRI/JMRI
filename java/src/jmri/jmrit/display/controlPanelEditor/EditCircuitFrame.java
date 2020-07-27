@@ -2,82 +2,73 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GraphicsDevice;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 
+import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.NamedBean.DisplayOptions;
+import jmri.jmrit.display.IndicatorTrack;
 import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.TurnoutIcon;
-import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.picker.PickListModel;
-import jmri.jmrit.picker.PickPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Pete Cressman Copyright: Copyright (c) 2011
  */
-public class EditCircuitFrame extends jmri.util.JmriJFrame {
+public class EditCircuitFrame extends EditFrame implements PropertyChangeListener {
 
-    private final OBlock _block;
-    private final CircuitBuilder _parent;
-
-    private final JTextField _blockName = new JTextField();
-    private final JTextField _detectorSensorName = new JTextField();
-    private final JTextField _errorSensorName = new JTextField();
-    private final JTextField _blockState = new JTextField();
-    private final JTextField _numTrackSeg = new JTextField();
-    private final JTextField _numTurnouts = new JTextField();
-    private final JTextField _length = new JTextField();
-    private JToggleButton _units;
+    private JTextField _systemName;
+    private JTextField _blockName;
+    private JTextField _detectorSensorName;
+    private JTextField _errorSensorName;
+    private JTextField _blockState;
+    private JTextField _numTrackSeg;
+    private JTextField _numTurnouts;
+    private LengthPanel _lengthPanel;
+    private JPanel _namePanel;
+    private boolean _create;
 
     // Sensor list
-    private JFrame _pickFrame;
-    private JButton _openPicklistButton;
-
-    static int STRUT_SIZE = 10;
-    static Point _loc = new Point(-1, -1);
-    static Dimension _dim = new Dimension();
+    OpenPickListButton<Sensor> _pickTable;
 
     public EditCircuitFrame(String title, CircuitBuilder parent, OBlock block) {
-        super(false, false);
-        _block = block;
-        setTitle(java.text.MessageFormat.format(title, _block.getDisplayName()));
-        addHelpMenu("package.jmri.jmrit.display.CircuitBuilder", true);
-        _parent = parent;
-        makeContentPanel();
-        updateContentPanel();
+        super(title, parent, block);
+        _create = (block == null);
+        updateContentPanel(_create);
+        _homeBlock.addPropertyChangeListener("deleted", this);
+        pack();
     }
 
-    private void makeContentPanel() {
+    @Override
+    protected JPanel makeContentPanel() {
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                closingEvent(true);
-            }
-        });
-        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
+        _blockName = new JTextField();
+        _detectorSensorName = new JTextField();
+        _errorSensorName = new JTextField();
+        _blockState = new JTextField();
+        _numTrackSeg = new JTextField();
+        _numTurnouts = new JTextField();
         JPanel p = new JPanel();
+        
         p.add(new JLabel(Bundle.getMessage("AddRemoveIcons")));
         contentPane.add(p);
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -88,16 +79,18 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _blockState.setPreferredSize(new Dimension(150, _blockState.getPreferredSize().height));
         contentPane.add(panel);
 
+        _namePanel = new JPanel();
+        _namePanel.setLayout(new BoxLayout(_namePanel, BoxLayout.Y_AXIS));
+        contentPane.add(_namePanel);
+
         panel = new JPanel();
-        _blockName.setText(_block.getDisplayName());
-        panel.add(CircuitBuilder.makeTextBoxPanel(
-                false, _blockName, "blockName", true, "TooltipBlockName"));
-        _blockName.setPreferredSize(new Dimension(300, _blockName.getPreferredSize().height));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel _buttonPanel = new JPanel();
+        _buttonPanel.setLayout(new FlowLayout());
+        panel.add(_buttonPanel);
         contentPane.add(panel);
-
-        contentPane.add(makeButtonPanel());
+        
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
-
         p = new JPanel();
         p.add(new JLabel(Bundle.getMessage("numTrackElements")));
         contentPane.add(p);
@@ -133,150 +126,91 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _errorSensorName.setToolTipText(Bundle.getMessage("detectorErrorName"));
         contentPane.add(panel);
 
-        contentPane.add(makePickListPanel());
+        String[] blurbLines = { Bundle.getMessage("DragOccupancySensor", Bundle.getMessage("DetectionSensor")),
+                                Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))};
+        _pickTable = new OpenPickListButton<>(blurbLines, PickListModel.sensorPickModelInstance(), this);
+        contentPane.add(_pickTable.getButtonPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        JPanel pp = new JPanel();
-        // pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
-        _length.setText(Float.toString(_block.getLengthIn()));
-        pp.add(CircuitBuilder.makeTextBoxPanel(
-                false, _length, "Length", true, "TooltipBlockLength"));
-        _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
-        _units = new JToggleButton("foo", !_block.isMetric());
-        _units.setToolTipText(Bundle.getMessage("TooltipPathUnitButton"));
-        _units.addActionListener((ActionEvent event) -> {
-            changeUnits();
-        });
-        pp.add(_units);
-        contentPane.add(pp);
+        _lengthPanel = new LengthPanel(_homeBlock, "blockLength");
+        _lengthPanel.changeUnits();
+        _lengthPanel.setLength(_homeBlock.getLengthMm());
+        contentPane.add(_lengthPanel);
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         contentPane.add(makeDoneButtonPanel());
-        JPanel border = new JPanel();
-        border.setLayout(new java.awt.BorderLayout(20, 20));
-        border.add(contentPane);
-
-        setContentPane(new JScrollPane(border));
-
-        pack();
-        if (_loc.x < 0) {
-            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
-        } else {
-            setLocation(_loc);
-            setSize(_dim);
-        }
-        setVisible(true);
-        if (log.isDebugEnabled()) {
-            log.debug("_loc: X= {}, Y= {}", _loc.x, _loc.y);
-            Point pt1 = getLocation();
-            GraphicsDevice device = getGraphicsConfiguration().getDevice();
-            log.debug("Screen device= {}: getLocation()= [{}, {}]",
-                    device.getIDstring(), pt1.x, pt1.y);
-        }
-        changeUnits();
+        return contentPane;
     }
+    private JPanel makeCreateBlockPanel() {
+        _systemName = new JTextField();
+        _systemName.setText(_homeBlock.getSystemName());
+        _blockName.setText(_homeBlock.getUserName());
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(CircuitBuilder.makeTextBoxPanel(
+                false, _systemName, "ColumnSystemName", true, "TooltipBlockName"));
+        _systemName.setPreferredSize(new Dimension(300, _systemName.getPreferredSize().height));
+        panel.add(CircuitBuilder.makeTextBoxPanel(
+                false, _blockName, "blockName", true, "TooltipBlockName"));
+        _blockName.setPreferredSize(new Dimension(300, _blockName.getPreferredSize().height));
 
-    private JPanel makePickListPanel() {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setLayout(new FlowLayout());
+        JButton createButton = new JButton(Bundle.getMessage("buttonCreate"));
+        createButton.addActionListener((ActionEvent a) -> createBlock());
+        createButton.setToolTipText(Bundle.getMessage("createOBlock"));
+        buttonPanel.add(createButton);
+        
+        panel.add(buttonPanel);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        return panel;
+    }
+
+    private JPanel makeEditBlockPanel() {
+        _blockName.setText(_homeBlock.getUserName());
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(CircuitBuilder.makeTextBoxPanel(
+                false, _blockName, "blockName", true, "TooltipBlockName"));
+        _blockName.setPreferredSize(new Dimension(300, _blockName.getPreferredSize().height));
 
-        _openPicklistButton = new JButton(Bundle.getMessage("OpenSensorPicklist"));
-        _openPicklistButton.addActionListener((ActionEvent a) -> {
-            if (_pickFrame == null) {
-                openPickList();
-            } else {
-                closePickList();
-            }
-        });
-        _openPicklistButton.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
-        panel.add(_openPicklistButton);
-        panel.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
-
-        buttonPanel.add(panel);
-        return buttonPanel;
-    }
-
-    void openPickList() {
-        _pickFrame = new JFrame();
-        JPanel content = new JPanel();
-        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-
-        JPanel blurb = new JPanel();
-        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("DetectionSensor"))));
-        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        JPanel panel = new JPanel();
-        panel.add(blurb);
-        content.add(panel);
-        PickListModel[] models = {PickListModel.sensorPickModelInstance()};
-        content.add(new PickPanel(models));
-
-        _pickFrame.setContentPane(content);
-        _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                closePickList();
-            }
-        });
-        _pickFrame.setLocationRelativeTo(this);
-        _pickFrame.toFront();
-        _pickFrame.setVisible(true);
-        _pickFrame.pack();
-        _openPicklistButton.setText(Bundle.getMessage("ClosePicklist"));
-    }
-
-    void closePickList() {
-        if (_pickFrame != null) {
-            _pickFrame.dispose();
-            _pickFrame = null;
-            _openPicklistButton.setText(Bundle.getMessage("OpenSensorPicklist"));
-        }
-    }
-
-    private JPanel makeButtonPanel() {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
+        buttonPanel.setLayout(new FlowLayout());
 
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
-        changeButton.addActionListener((ActionEvent a) -> {
-            changeBlockName();
-        });
+        changeButton.addActionListener((ActionEvent a) -> changeBlockName());
         changeButton.setToolTipText(Bundle.getMessage("ToolTipChangeName"));
-        panel.add(changeButton);
+        buttonPanel.add(changeButton);
 
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-        deleteButton.addActionListener((ActionEvent a) -> {
-            deleteCircuit();
-        });
+        deleteButton.addActionListener((ActionEvent a) -> deleteCircuit());
         deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteCircuit"));
-        panel.add(deleteButton);
-        buttonPanel.add(panel);
+        buttonPanel.add(deleteButton);
 
-        return buttonPanel;
-    }
+        panel.add(buttonPanel);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        return panel;
+     }
 
-    private JPanel makeDoneButtonPanel() {
+    @Override
+    protected JPanel makeDoneButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
         JButton convertButton = new JButton(Bundle.getMessage("ButtonConvertIcon"));
-        convertButton.addActionListener((ActionEvent a) -> {
-            convertIcons();
-        });
+        convertButton.addActionListener((ActionEvent a) -> convertIcons());
         convertButton.setToolTipText(Bundle.getMessage("ToolTipConvertIcon"));
         panel.add(convertButton);
 
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener((ActionEvent a) -> {
-            closingEvent(false);
+            if (_create) {
+                closeCreate();
+            } else {
+                closingEvent(false);
+            }
         });
         panel.add(doneButton);
         buttonPanel.add(panel);
@@ -285,42 +219,72 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     }
 
     private void convertIcons() {
-        _parent.convertIcons(_parent._editor.getSelectionGroup());
+        _parent.setIconGroup(_homeBlock);
+        _parent.queryConvertTrackIcons(_homeBlock, "PortalOrPath");
         this.toFront();
-    }
-
-    private void changeUnits() {
-        if (_units.isSelected()) {
-            _units.setText("in");
-            _length.setText(Float.toString(_block.getLengthIn()));
-        } else {
-            _units.setText("cm");
-            _length.setText(Float.toString(_block.getLengthCm()));
-        }
     }
 
     /*
      * *********************** end setup *************************
      */
 
-    private void changeBlockName() {
-        String name = _blockName.getText();
-        if (name == null || name.trim().length() == 0) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("changeBlockName"),
+    private void createBlock() {
+        String userName = _blockName.getText().trim();
+        String systemName = _systemName.getText().trim();
+        OBlockManager mgr = InstanceManager.getDefault(OBlockManager.class);
+        StringBuilder  sb = new StringBuilder ();
+        if (userName.length() > 0) {
+             OBlock block = mgr.getByUserName(userName);
+            if (block != null) {
+                sb.append(Bundle.getMessage("duplicateName", userName, block.getSystemName()));
+                sb.append("\n");
+            }
+        }
+        if (!mgr.isValidSystemNameFormat(systemName)) {
+            sb.append(Bundle.getMessage("sysnameOBlock"));
+            sb.append("\n");
+        } else {
+            OBlock block = mgr.getBySystemName(systemName);
+            if (block != null) {
+                sb.append(Bundle.getMessage("duplicateName", systemName, block.getUserName()));
+                sb.append("\n");
+            }
+        }
+        if (sb.toString().length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(),
                     Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+            _systemName.setText(_homeBlock.getSystemName());
             return;
         }
-        _block.setUserName(name);
+        _homeBlock = mgr.createNewOBlock(systemName, userName);
+        updateContentPanel(false);
+    }
+
+    private void changeBlockName() {
+        String name = _blockName.getText().trim();
+        String msg = null;
+        if (name.length() == 0) {
+            msg = Bundle.getMessage("TooltipBlockName");
+        } else {
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getByUserName(name);
+            if (block != null) {
+                msg = Bundle.getMessage("duplicateName", name, block.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME));
+            }
+        }
+        if (msg != null) {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+            
+        }
+        _homeBlock.setUserName(name);
         // block user name change will change portal names.  Change PortalIcon names to match
-        java.util.List<Positionable> list = _parent.getCircuitIcons(_block);
-        if (list != null) {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) instanceof PortalIcon) {
-                    PortalIcon icon = (PortalIcon) list.get(i);
-                    Portal portal = icon.getPortal();
-                    icon.setName(portal.getName());
-                    icon.setToolTip(new ToolTip(portal.getDescription(), 0, 0));
-                }
+        for (Positionable p : _parent.getCircuitIcons(_homeBlock)) {
+            if (p instanceof PortalIcon) {
+                PortalIcon icon = (PortalIcon)p;
+                Portal portal = icon.getPortal();
+                icon.setName(portal.getName());
+                icon.setToolTip(new ToolTip(portal.getDescription(), 0, 0));
             }
         }
     }
@@ -330,30 +294,27 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
                 Bundle.getMessage("editCiruit"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
-            _parent.removeBlock(_block);
-            _parent.closeCircuitFrame();
-            dispose();
+            _parent.removeBlock(_homeBlock);
+            closingEvent(true, null);   // No Messages, just close
         }
     }
 
-    protected void updateContentPanel() {
+    private void updateContentPanel(boolean create) {
         updateIconList(_parent._editor.getSelectionGroup());
         String name = "";
-        Sensor sensor = _block.getSensor();
+        Sensor sensor = _homeBlock.getSensor();
         if (sensor != null) {
             name = sensor.getDisplayName();
+            _detectorSensorName.setText(name);
         }
-        _detectorSensorName.setText(name);
 
-        sensor = _block.getErrorSensor();
+        sensor = _homeBlock.getErrorSensor();
         if (sensor != null) {
             name = sensor.getDisplayName();
-        } else {
-            name = "";
+            _errorSensorName.setText(name);
         }
-        _errorSensorName.setText(name);
 
-        int state = _block.getState();
+        int state = _homeBlock.getState();
         StringBuilder stateText = new StringBuilder();
         if ((state & OBlock.UNKNOWN) != 0) {
             stateText.append("Unknown ");
@@ -389,101 +350,130 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
             log.debug("updateContentPanel: state= {}", stateText);
         }
         _blockState.setText(stateText.toString());
+
+        JPanel panel;
+        if (create) {
+            panel = makeCreateBlockPanel();
+        } else {
+            panel = makeEditBlockPanel();
+            _create = false;
+        }
+        _namePanel.removeAll();
+        _namePanel.add(panel);
+        _namePanel.invalidate();
+        pack();
     }
 
+    private void closeCreate() {
+        StringBuilder  sb = new StringBuilder ();
+        String sysName = _homeBlock.getSystemName();
+        OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
+        if (block == null) {
+            // get rid of icon selections
+            for (Positionable pos : _parent.getCircuitIcons(_homeBlock)) {
+                if (pos instanceof IndicatorTrack) {
+                    ((IndicatorTrack) pos).setOccBlockHandle(null);
+                }
+            }
+            _parent._editor.getSelectionGroup().clear();
+            sb.append( Bundle.getMessage("notCreated", _systemName.getText().trim()));
+            closingEvent(false, sb.toString());
+            if (_pickTable != null) {
+                _pickTable.closePickList();
+            }
+        } else {
+            closingEvent(false);
+        }
+    }
+
+    @Override
     protected void closingEvent(boolean close) {
-        String title = "newCircuitItem";
-        String msg = _parent.setIconGroup(_block);
-        if (msg == null) {
-            String name = _length.getText();
-            try {
-                float f = Float.parseFloat(name);
-                if (_units.isSelected()) {
-                    f *= 25.4f;
-                } else {
-                    f *= 10f;
-                }
-                if (f < 0) {
-                    msg = Bundle.getMessage("MustBeFloat", name);
-                } else if (f < .0001) {
-                    msg = Bundle.getMessage("needLength", name);
-                }
-                _block.setLength(Math.max(f, 0.0f));
-            } catch (NumberFormatException nfe) {
-                msg = Bundle.getMessage("MustBeFloat", name);
-            }
-        }
-        if (msg == null) {
-            if (!_parent.iconsConverted(_block)) {
-                msg = Bundle.getMessage("pathsNeedConversion");
-            }
-        }
-        // check Sensors
-        if (msg == null) {
-            msg = checkForSensors();
-            title = "noSensor";
-        }
+        StringBuffer sb = new StringBuffer();
+        String msg = checkForSensors();
         if (msg != null) {
-            if (close) {
-                JOptionPane.showMessageDialog(this, msg, Bundle.getMessage(title), JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                StringBuilder sb = new StringBuilder(msg);
-                sb.append(" ");
-                sb.append(Bundle.getMessage("exitQuestion"));
-                int answer = JOptionPane.showConfirmDialog(this, sb.toString(), Bundle.getMessage(title),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (answer == JOptionPane.NO_OPTION) {
-                    return;
-                }
+            sb.append(msg);
+            sb.append("\n");
+        }
+        String name = _blockName.getText().trim();
+        if (name.length() == 0) {
+            msg = Bundle.getMessage("blankUserName");
+            if (msg != null) {
+                sb.append(msg);
+                sb.append("\n");
+            }
+        } else if (!name.equals(_homeBlock.getUserName())) {
+            msg = Bundle.getMessage("changeBlockName", name, _homeBlock.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME));
+            if (msg != null) {
+                sb.append(msg);
+                sb.append("\n");
             }
         }
-        closePickList();
-        getLocation(_loc);
-        getSize(_dim);
-        _parent.closeCircuitFrame();
-        dispose();
+        _parent.setIconGroup(_homeBlock);
+        msg = _parent.checkForTrackIcons(_homeBlock, "PortalOrPath");
+        if (msg.length() > 0) {
+            sb.append(msg);
+            sb.append("\n");
+        }
+        if (_lengthPanel.getLength() <= 0.001) {
+            msg = Bundle.getMessage("noBlockLength");
+            if (msg != null) {
+                sb.append(msg);
+                sb.append("\n");
+            }
+        } else {
+            _homeBlock.setLength(_lengthPanel.getLength());
+        }
+
+        closingEvent(close, sb.toString());
+        if (_pickTable != null) {
+            _pickTable.closePickList();
+        }
     }
     
     private String checkForSensors() {
         String name = _detectorSensorName.getText();
         String errName = _errorSensorName.getText();
-        String msg = null;
-        if (!_block.setSensor(name)) {
-            msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), name);
+        if (!_homeBlock.setSensor(name)) {
+           return java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), name);
         }
-        if (msg == null) {
-            if (errName.length() > 0) {
-                if (_block.getSensor() == null) {
-                    int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("mixedSensors"),
-                            Bundle.getMessage("noSensor"), JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                    if (result == JOptionPane.YES_OPTION) {
-                        if (!_block.setSensor(errName)) {
-                            msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
-                        } else {
-                            _block.setErrorSensor(null);
-                            _detectorSensorName.setText(_block.getSensor().getDisplayName());
-                        }
+        if (errName.length() > 2) {
+            if (_homeBlock.getSensor() == null) {
+                int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("mixedSensors"),
+                        Bundle.getMessage("noSensor"), JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    if (!_homeBlock.setSensor(errName)) {
+                        return java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
                     } else {
-                        if (!_block.setErrorSensor(errName)) {
-                            msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
-                        }
+                        _homeBlock.setErrorSensor(null);
+                        _detectorSensorName.setText(_homeBlock.getSensor().getDisplayName());
+                        _errorSensorName.setText(null);
                     }
                 } else {
-                    if (!_block.setErrorSensor(errName)) {
-                        msg = java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
+                    if (!_homeBlock.setErrorSensor(errName)) {
+                        return java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
                     }
                 }
+            } else {
+                if (!_homeBlock.setErrorSensor(errName)) {
+                    return java.text.MessageFormat.format(Bundle.getMessage("badSensorName"), errName);
+                }
             }
+        } else if (errName.trim().length() == 0){ {
+            _homeBlock.setErrorSensor(null);
         }
-        if (msg == null && _block.getSensor() == null) {
-            msg = Bundle.getMessage("noDetecterSensor");
+            
         }
-        return msg;
-    }
-
-    protected OBlock getBlock() {
-        return _block;
+        Sensor sensor = _homeBlock.getSensor();
+        if (sensor == null) {
+            return Bundle.getMessage("noDetecterSensor");
+        } else if (sensor.equals(_homeBlock.getErrorSensor())) {
+            _homeBlock.setErrorSensor(null);
+            _errorSensorName.setText(null);
+            return java.text.MessageFormat.format(Bundle.getMessage("DuplSensorRemoved"),
+                    sensor.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME));
+        }
+        return null;
     }
 
     protected void updateIconList(java.util.List<Positionable> icons) {
@@ -494,8 +484,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
             if (log.isDebugEnabled()) {
                 log.debug("updateIconList: icons.size()= {}", icons.size());
             }
-            for (int i = 0; i < icons.size(); i++) {
-                Positionable pos = icons.get(i);
+            for (Positionable pos : icons) {
                 if (pos instanceof IndicatorTurnoutIcon) {
                     turnouts++;
                 } else if (pos instanceof IndicatorTrackIcon) {
@@ -509,6 +498,13 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         }
         _numTrackSeg.setText(String.valueOf(segments));
         _numTurnouts.setText(String.valueOf(turnouts));
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("deleted")) {
+            closingEvent(true, null);   // No Messages, just close
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(EditCircuitFrame.class);

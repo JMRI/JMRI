@@ -3,6 +3,7 @@ package jmri.jmrit.audio;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import javax.annotation.Nonnull;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioManager;
@@ -71,7 +72,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         super(systemName);
         AudioListener al = activeAudioFactory.getActiveAudioListener();
         if (al != null) {
-            metersPerUnit = al.getMetersPerUnit();
+            storeMetersPerUnit(al.getMetersPerUnit());
         }
     }
 
@@ -85,8 +86,12 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         super(systemName, userName);
         AudioListener al = activeAudioFactory.getActiveAudioListener();
         if (al != null) {
-            metersPerUnit = al.getMetersPerUnit();
+            storeMetersPerUnit(al.getMetersPerUnit());
         }
+    }
+
+    private static void storeMetersPerUnit(float newVal) {
+        metersPerUnit = newVal;
     }
 
     public boolean isAudioAlive() {
@@ -125,11 +130,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
             activeAudioFactory.getCommandThread().interrupt();
             if (log.isDebugEnabled()) {
-                log.debug("Queued Buffer " + audioBuffer.getSystemName() + " to Source " + this.getSystemName());
+                log.debug("Queued Buffer {} to Source {}", audioBuffer.getSystemName(), this.getSystemName());
             }
             return true;
         } else {
-            log.error("Attempted to queue buffer " + audioBuffer.getSystemName() + " to Bound Source " + this.getSystemName());
+            log.error("Attempted to queue buffer {} to Bound Source {}", audioBuffer.getSystemName(), this.getSystemName());
             return false;
         }
     }
@@ -137,17 +142,17 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public boolean unqueueBuffers() {
         if (bound) {
-            log.error("Attempted to unqueue buffers on Bound Source " + this.getSystemName());
+            log.error("Attempted to unqueue buffers on Bound Source {}", this.getSystemName());
             return false;
         } else if (queued) {
             activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_UNQUEUE_BUFFERS));
             activeAudioFactory.getCommandThread().interrupt();
             if (log.isDebugEnabled()) {
-                log.debug("Unqueued Processed Buffers on Source " + this.getSystemName());
+                log.debug("Unqueued Processed Buffers on Source {}", this.getSystemName());
             }
             return true;
         } else {
-            log.debug("Source neither queued nor bound. Not an error. " + this.getSystemName());
+            log.debug("Source neither queued nor bound. Not an error. {}", this.getSystemName());
             return false;
         }
     }
@@ -165,10 +170,10 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_BIND_BUFFER));
             activeAudioFactory.getCommandThread().interrupt();
             if (log.isDebugEnabled()) {
-                log.debug("Assigned Buffer " + audioBuffer.getSystemName() + " to Source " + this.getSystemName());
+                log.debug("Assigned Buffer {} to Source {}", audioBuffer.getSystemName(), this.getSystemName());
             }
         } else {
-            log.error("Attempted to assign buffer " + audioBuffer.getSystemName() + " to Queued Source " + this.getSystemName());
+            log.error("Attempted to assign buffer {} to Queued Source {}", audioBuffer.getSystemName(), this.getSystemName());
         }
     }
 
@@ -185,7 +190,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 this.bound = false;
             }
         } else {
-            log.error("Attempted to assign buffer " + bufferSystemName + " to Queued Source " + this.getSystemName());
+            log.error("Attempted to assign buffer {} to Queued Source {}", bufferSystemName, this.getSystemName());
         }
     }
 
@@ -205,7 +210,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         this.currentPosition = pos;
         changePosition(pos);
         if (log.isDebugEnabled()) {
-            log.debug("Set position of Source " + this.getSystemName() + " to " + pos);
+            log.debug("Set position of Source {} to {}", this.getSystemName(), pos);
         }
     }
 
@@ -243,7 +248,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void setVelocity(Vector3f vel) {
         this.velocity = vel;
         if (log.isDebugEnabled()) {
-            log.debug("Set velocity of Source " + this.getSystemName() + " to " + vel);
+            log.debug("Set velocity of Source {} to {}", this.getSystemName(), vel);
         }
     }
 
@@ -262,17 +267,14 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         float timePassed = (currentTime - this.timeOfLastPositionCheck);
         this.timeOfLastPositionCheck = currentTime;
 
-        log.debug("timePassed = " + timePassed
-                + " metersPerUnit = " + metersPerUnit
-                + " source = " + this.getSystemName()
-                + " state = " + this.getState());
+        log.debug("timePassed = {} metersPerUnit = {} source = {} state = {}", timePassed, metersPerUnit, this.getSystemName(), this.getState());
         if (this.velocity.length() != 0) {
             this.currentPosition.scaleAdd((timePassed / 1000) * metersPerUnit,
                     this.velocity,
                     this.currentPosition);
             changePosition(this.currentPosition);
             if (log.isDebugEnabled()) {
-                log.debug("Set current position of Source " + this.getSystemName() + " to " + this.currentPosition);
+                log.debug("Set current position of Source {} to {}", this.getSystemName(), this.currentPosition);
             }
         }
     }
@@ -301,7 +303,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void setGain(float gain) {
         this.gain = gain;
         if (log.isDebugEnabled()) {
-            log.debug("Set gain of Source " + this.getSystemName() + " to " + gain);
+            log.debug("Set gain of Source {} to {}", this.getSystemName(), gain);
         }
     }
 
@@ -326,7 +328,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         }
         this.pitch = pitch;
         if (log.isDebugEnabled()) {
-            log.debug("Set pitch of Source " + this.getSystemName() + " to " + pitch);
+            log.debug("Set pitch of Source {} to {}", this.getSystemName(), pitch);
         }
     }
 
@@ -342,7 +344,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         }
         this.referenceDistance = referenceDistance;
         if (log.isDebugEnabled()) {
-            log.debug("Set reference distance of Source " + this.getSystemName() + " to " + referenceDistance);
+            log.debug("Set reference distance of Source {} to {}", this.getSystemName(), referenceDistance);
         }
     }
 
@@ -361,7 +363,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         }
         this.offset = offset;
         if (log.isDebugEnabled()) {
-            log.debug("Set byte offset of Source " + this.getSystemName() + "to " + offset);
+            log.debug("Set byte offset of Source {}to {}", this.getSystemName(), offset);
         }
     }
 
@@ -377,7 +379,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         }
         this.maximumDistance = maximumDistance;
         if (log.isDebugEnabled()) {
-            log.debug("Set maximum distance of Source " + this.getSystemName() + " to " + maximumDistance);
+            log.debug("Set maximum distance of Source {} to {}", this.getSystemName(), maximumDistance);
         }
     }
 
@@ -390,7 +392,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void setRollOffFactor(float rollOffFactor) {
         this.rollOffFactor = rollOffFactor;
         if (log.isDebugEnabled()) {
-            log.debug("Set roll-off factor of Source " + this.getSystemName() + " to " + rollOffFactor);
+            log.debug("Set roll-off factor of Source {} to {}", this.getSystemName(), rollOffFactor);
         }
     }
 
@@ -562,8 +564,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                     this.fading = Audio.FADE_NONE;
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("Set fade out gain of AudioSource "
-                            + this.getSystemName() + " to " + this.fadeGain);
+                    log.debug("Set fade out gain of AudioSource {} to {}", this.getSystemName(), this.fadeGain);
                 }
                 break;
             case Audio.FADE_IN:
@@ -578,8 +579,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                     this.fading = Audio.FADE_NONE;
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("Set fade in gain of AudioSource "
-                            + this.getSystemName() + " to " + this.fadeGain);
+                    log.debug("Set fade in gain of AudioSource {} to {}", this.getSystemName(), this.fadeGain);
                 }
                 break;
             default:
@@ -840,12 +840,9 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this.fading;
     }
 
-    // note that this doesn't properly implement the 
-    // contract in {@link NamedBean.toString()}, 
-    // which means things like tables and persistance 
-    // might not behave properly.
     @Override
-    public String toString() {
+    @Nonnull
+    public String getDebugString() {
         return "Pos: " + this.getPosition().toString()
                 + ", bound to: " + this.getAssignedBufferName()
                 + ", loops: "
@@ -886,7 +883,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             this.audioSource = audioSource;
             this.fadeDirection = audioSource.getFading();
             if (log.isDebugEnabled()) {
-                log.debug("Created AudioSourceFadeThread for AudioSource " + audioSource.getSystemName());
+                log.debug("Created AudioSourceFadeThread for AudioSource {}", audioSource.getSystemName());
             }
         }
 
@@ -926,7 +923,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
             // Finish up
             if (log.isDebugEnabled()) {
-                log.debug("Clean up thread " + this.getName());
+                log.debug("Clean up thread {}", this.getName());
             }
             cleanup();
         }
@@ -968,7 +965,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             this.setName("movesrc-" + super.getName());
             this.audioSource = audioSource;
             if (log.isDebugEnabled()) {
-                log.debug("Created AudioSourceMoveThread for AudioSource " + audioSource.getSystemName());
+                log.debug("Created AudioSourceMoveThread for AudioSource {}", audioSource.getSystemName());
             }
         }
 
@@ -996,7 +993,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //            audioSource.resetCurrentPosition();
             // Finish up
             if (log.isDebugEnabled()) {
-                log.debug("Clean up thread " + this.getName());
+                log.debug("Clean up thread {}", this.getName());
             }
             cleanup();
         }

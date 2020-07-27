@@ -7,12 +7,14 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the RpsIcon class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class RpsPositionIconTest extends PositionableTestBase {
 
@@ -80,7 +82,7 @@ public class RpsPositionIconTest extends PositionableTestBase {
         id = newID;
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -92,7 +94,7 @@ public class RpsPositionIconTest extends PositionableTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         rpsIcon = null;
         super.tearDown();

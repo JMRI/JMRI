@@ -19,14 +19,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>D&eacute;finir Signaux &agrave; une Travers&eacute;e
       Jonction Simple/Double</h1>
 
@@ -34,8 +35,9 @@
 
       <p>Cet outil fournit une proc&eacute;dure automatique our
       affecter des signaux &agrave; une TJS ou TJD.</p><a href=
-      "./images/Slip.png"><img src="./images/Slip.png" align=
-      "center" width="229" height="104" hspace="0" vspace="0"></a>
+      "./images/Slip.png"><img src="./images/Slip.png" width="229"
+      alt="Icone Travers&eacute;e Jonction" height="104"
+      hspace="0" vspace="0"></a>
 
       <p>Si n&eacute;cessaire, cet outil permettra de placer des
       ic&ocirc;nes de signalisation sur le panneau aux quatre
@@ -160,7 +162,7 @@
       &eacute;t&eacute; attribu&eacute;s aux aiguillages et aux
       limites de cantons sur le panneau.</p>
 
-      <h3>notes</h3>
+      <h3>Notes</h3>
 
       <p>L'outil mettra en place la logique Simple signal pour
       d&eacute;finir tous les signaux au rouge si la
@@ -252,7 +254,7 @@
 
       <p><b>S'il vous pla&icirc;t n'oubliez pas d'enregistrer votre
       &eacute;cran apr&egrave;s l'utilisation de cet outil.</b></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

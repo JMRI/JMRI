@@ -2,15 +2,17 @@ package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * DCCppReplyTest.java
+ * <p>
+ * Test for the jmri.jmrix.dccpp.DCCppReply class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppReply class
- *
- * @author	Bob Jacobsen
- * @author	Mark Underwood (C) 2015
+ * @author Bob Jacobsen
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -52,7 +54,7 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @NotApplicable("Method under test is not implemented for DCC++")
     public void testGetServiceModeCVValue() {
     }
-    
+
     // Test Comm Type Reply
     @Test
     public void testCommTypeReply() {
@@ -61,13 +63,13 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals('N', l.getOpCodeChar());
         Assert.assertEquals(0, l.getCommTypeInt());
         Assert.assertEquals("SERIAL", l.getCommTypeValueString());
-        
+
         l = DCCppReply.parseDCCppReply("N1: 192.168.0.1");
         Assert.assertTrue(l.isCommTypeReply());
         Assert.assertEquals('N', l.getOpCodeChar());
         Assert.assertEquals(1, l.getCommTypeInt());
         Assert.assertEquals("192.168.0.1", l.getCommTypeValueString());
-        
+
     }
 
     // Test named power districts
@@ -135,68 +137,67 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringCurrentReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("a MAIN 0");
-        Assert.assertEquals("Named Current Monitor string","Current: 0 / 1024",l.toMonitorString());
+        Assert.assertEquals("Named Current Monitor string", "Current: 0 / 1024", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("a 41");
-        Assert.assertEquals("Current Monitor string","Current: 41 / 1024",l.toMonitorString());
+        Assert.assertEquals("Current Monitor string", "Current: 41 / 1024", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringThrottleSpeedReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("T 123 59 1");
-        Assert.assertEquals("Monitor string","Throttle Reply: \n\tRegister: 123\n\tSpeed: 59\n\tDirection: Forward",l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Throttle Reply: Register: 123, Speed: 59, Direction: Forward", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringTurnoutReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("H 1234 0");
-        Assert.assertEquals("Monitor string","Turnout Reply: \n\tT/O Number: 1234\n\tDirection: CLOSED",l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Turnout Reply: T/O Number: 1234, Direction: CLOSED", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringOutputPinReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("Y 1234 0");
-        Assert.assertEquals("Monitor string","Output Command Reply: \n\tOutput Number: 1234\n\tOutputState: LOW",l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Output Command Reply: Output Number: 1234, OutputState: LOW", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringSensorStatusReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("Q 1234");
-        Assert.assertEquals("Monitor string","Sensor Reply (Active): \n\tSensor Number: 1234\n\tState: ACTIVE",l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Sensor Reply (Active): Sensor Number: 1234, State: ACTIVE", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("q 1234");
-        Assert.assertEquals("Monitor string","Sensor Reply (Inactive): \n\tSensor Number: 1234\n\tState: INACTIVE",l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Sensor Reply (Inactive): Sensor Number: 1234, State: INACTIVE", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringCVWriteByteReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("r 1234|4321|5 123");
-        Assert.assertEquals("Monitor string","Program Reply: \n\tCallback Num: 1234\n\tCallback Sub: 4321\n\tCV: 5\n\tValue: 123",l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Program Reply: Callback Num: 1234, Callback Sub: 4321, CV: 5, Value: 123", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringBitWriteReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("r 1234|4321|5 3 1");
-        Assert.assertEquals("Monitor string","Program Bit Reply: \n\tCallback Num: 1234\n\tCallback Sub: 4321\n\tCV: 5\n\tCV Bit: 3\n\tValue: 1",l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Program Bit Reply: Callback Num: 1234, Callback Sub: 4321, CV: 5, CV Bit: 3, Value: 1", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringPowerReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("p0");
-        Assert.assertEquals("Monitor string","Power Status: OFF",l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Power Status: OFF", l.toMonitorString());
         l = DCCppReply.parseDCCppReply("p1");
-        Assert.assertEquals("Monitor string","Power Status: ON",l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Power Status: ON", l.toMonitorString());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new DCCppReply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	m = msg = null;
+        m = msg = null;
         JUnitUtil.tearDown();
     }
 

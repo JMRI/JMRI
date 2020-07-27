@@ -1,24 +1,20 @@
 package jmri.jmrix.jinput;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Rule;
-import org.junit.rules.Timeout;
 
 /**
  * Test simple functioning of TreeModel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
+@Timeout(10)
 public class TreeModelTest {
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Test
     public void testInstance() throws InterruptedException {
@@ -26,7 +22,7 @@ public class TreeModelTest {
         try {
             Assert.assertNotNull("exists", TreeModel.instance());
         } catch (Throwable e) {
-            log.warn("TreeModelTest caught "+e);
+            log.warn("TreeModelTest caught {}", e);
             if (e instanceof UnsatisfiedLinkError) {
                 log.info("TreeModel.instance threw UnsatisfiedLinkError, which means we can't test on this platform");
                 return;
@@ -41,12 +37,12 @@ public class TreeModelTest {
         TreeModel.instance().terminateThreads();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        
         JUnitUtil.tearDown();
     }

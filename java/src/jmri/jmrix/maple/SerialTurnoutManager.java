@@ -1,6 +1,7 @@
 package jmri.jmrix.maple;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -24,12 +25,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public MapleSystemConnectionMemo getMemo() {
         return (MapleSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = "";
         sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
@@ -62,7 +64,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // does system name correspond to configured hardware
         if (!SerialAddress.validSystemNameConfig(sName, 'T', getMemo())) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an unconfigured output bit.");
+            log.warn("Turnout '{}' refers to an unconfigured output bit.", sName);
             javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Turnout just added, "
                     + sName + ", refers to an unconfigured output bit.", "Configuration Warning",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
@@ -71,12 +73,14 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     /**
      * Public method to notify user of Turnout creation error.
+     * @param conflict string of the turnout which is in conflict.
+     * @param bitNum the bit number in conflict.
      */
     public void notifyTurnoutCreationError(String conflict, int bitNum) {
         javax.swing.JOptionPane.showMessageDialog(null, "ERROR - The output bit, "
@@ -89,7 +93,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
@@ -97,7 +102,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
@@ -157,7 +162,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //    "How many output bits should be used to control this turnout?",
 //     "Turnout Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 //      javax.swing.JOptionPane.QUESTION_MESSAGE,
-//      null,new String[] {"Use 1 bit","Use 2 bits"},"Use 1 bit");
+//      null, new String[] {"Use 1 bit", "Use 2 bits"}, "Use 1 bit");
 //  return iNum;
 // }
 //    /**
@@ -172,7 +177,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 //    "Should the output bit(s) be 'steady state' or 'pulsed'?",
 //     "Output Bits Question",javax.swing.JOptionPane.DEFAULT_OPTION,
 //      javax.swing.JOptionPane.QUESTION_MESSAGE,
-//      null,new String[] {"Steady State Output","Pulsed Output"},"Steady State Output");
+//      null, new String[] {"Steady State Output", "Pulsed Output"}, "Steady State Output");
 //  return iType;
 // }
 //    /**
@@ -182,14 +187,10 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 // public void notifySecondBitConflict(String conflict,int bitNum) {
 //  javax.swing.JOptionPane.showMessageDialog(null,"The second output bit, "+bitNum+
 //   ", is currently assigned to "+conflict+". Turnout cannot be created as "+
-//     "you specified.","Assignment Conflict",
+//     "you specified.", "Assignment Conflict",
 //       javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
 // }
 
-    @Deprecated
-    static public SerialTurnoutManager instance() {
-        return null;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 

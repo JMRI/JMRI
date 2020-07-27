@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class ConsistTest extends OperationsTestCase {

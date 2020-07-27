@@ -6,11 +6,12 @@ import java.util.Hashtable;
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SignallingPanelTest {
 
@@ -68,8 +69,7 @@ public class SignallingPanelTest {
         JUnitUtil.dispose(jf);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -77,8 +77,9 @@ public class SignallingPanelTest {
         jmri.util.JUnitUtil.initDefaultSignalMastManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

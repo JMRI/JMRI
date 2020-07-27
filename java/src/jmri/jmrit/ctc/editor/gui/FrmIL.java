@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
@@ -26,6 +27,8 @@ public class FrmIL extends javax.swing.JFrame {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final CheckJMRIObject _mCheckJMRIObject;
     private final boolean _mSignalHeadSelected;
+    private final CTCSerialData _mCTCSerialData;
+    private final ArrayList<Integer> _mUniqueIDS = new ArrayList<>();
 
     private ArrayList<String> _mSignalsArrayListOrig;
     private void initOrig(ArrayList<String> signalsArrayList) {
@@ -48,7 +51,8 @@ public class FrmIL extends javax.swing.JFrame {
     public FrmIL(   AwtWindowProperties awtWindowProperties,
                     CodeButtonHandlerData codeButtonHandlerData,
                     CheckJMRIObject checkJMRIObject,
-                    boolean signalHeadSelected) {
+                    boolean signalHeadSelected,
+                    CTCSerialData ctcSerialData) {
         super();
         initComponents();
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmIL", true);  // NOI18N
@@ -56,26 +60,23 @@ public class FrmIL extends javax.swing.JFrame {
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mCheckJMRIObject = checkJMRIObject;
         _mSignalHeadSelected = signalHeadSelected;
+        _mCTCSerialData = ctcSerialData;
         _mIL_TableOfExternalSignalNamesDefaultTableModel = (DefaultTableModel)_mIL_TableOfExternalSignalNames.getModel();
         ArrayList<String> signalsArrayList = ProjectsCommonSubs.getArrayListFromCSV(_mCodeButtonHandlerData._mIL_ListOfCSVSignalNames);
-        int signalsArrayLength = signalsArrayList.size();
-        if (signalsArrayLength > _mIL_TableOfExternalSignalNames.getRowCount()) { // Has more than default (100 as of this writing) rows:
-            _mIL_TableOfExternalSignalNamesDefaultTableModel.setRowCount(signalsArrayLength);
-        }
-        for (int index = 0; index < signalsArrayLength; index++) {
-            _mIL_TableOfExternalSignalNamesDefaultTableModel.setValueAt(signalsArrayList.get(index), index, 0);
-        }
+        loadUpSignalTable(signalsArrayList);
+        initOrig(signalsArrayList);
 //  This is TYPICAL of the poor quality of Java coding by supposed advanced programmers.
 //  I searched the entire Oracle Web sites that publishes documentation on Java, and NOWHERE
 //  is this mentioned.  HOW IN THE HELL is anyone supposed to find out about this?
 //  And WHY would the default be the other way?  Why don't they just admit they are poor programmers!
 //  Where is a list of properties available and their corresponding functions?
         _mIL_TableOfExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
-        initOrig(signalsArrayList);
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
 
         enableSignalListComboBox(_mIL_TableOfExternalSignalNames);
+        boolean anyAvailable = CommonSubs.populateJComboBoxWithColumnDescriptionsExceptOurs(_mOS_NumberEntry, _mCTCSerialData, _mCodeButtonHandlerData._mUniqueID, _mUniqueIDS);
+        BT_Replace.setEnabled(anyAvailable);
     }
 
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
@@ -118,6 +119,16 @@ public class FrmIL extends javax.swing.JFrame {
         table.getColumnModel().getColumn(0).setCellEditor(new javax.swing.DefaultCellEditor(comboBox));
     }
 
+    private void loadUpSignalTable(ArrayList<String> signalsArrayList) {
+        int signalsArrayLength = signalsArrayList.size();
+        if (signalsArrayLength > _mIL_TableOfExternalSignalNames.getRowCount()) { // Has more than default (100 as of this writing) rows:
+            _mIL_TableOfExternalSignalNamesDefaultTableModel.setRowCount(signalsArrayLength);
+        }
+        for (int index = 0; index < signalsArrayLength; index++) {
+            _mIL_TableOfExternalSignalNamesDefaultTableModel.setValueAt(signalsArrayList.get(index), index, 0);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,6 +147,9 @@ public class FrmIL extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         _mTableOfSignalNamesPrompt = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        _mOS_NumberEntry = new javax.swing.JComboBox<>();
+        BT_Replace = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgIL"));
@@ -148,6 +162,7 @@ public class FrmIL extends javax.swing.JFrame {
 
         _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
@@ -274,6 +289,7 @@ public class FrmIL extends javax.swing.JFrame {
 
         jButton1.setText(Bundle.getMessage("ButtonDlgILCompact"));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
@@ -288,6 +304,16 @@ public class FrmIL extends javax.swing.JFrame {
         jLabel6.setText(Bundle.getMessage("InfoDlgILAutomatic"));
 
         _mTableOfSignalNamesPrompt.setText(Bundle.getMessage("LabelDlgILNames"));
+
+        jLabel2.setText(Bundle.getMessage("LabelDlgILReplaceSet"));
+
+        BT_Replace.setText(Bundle.getMessage("ButtonDlgILReplace"));
+        BT_Replace.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BT_ReplaceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -307,8 +333,13 @@ public class FrmIL extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(_mSaveAndClose)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)))
-                .addContainerGap(185, Short.MAX_VALUE))
+                        .addComponent(jLabel6))
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(_mOS_NumberEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BT_Replace)))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,12 +356,18 @@ public class FrmIL extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
-                        .addGap(65, 65, 65)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(_mOS_NumberEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BT_Replace))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(_mSaveAndClose)
                             .addComponent(jLabel6)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -355,12 +392,23 @@ public class FrmIL extends javax.swing.JFrame {
         CommonSubs.compactDefaultTableModel(_mIL_TableOfExternalSignalNamesDefaultTableModel);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void BT_ReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_ReplaceActionPerformed
+        int index = _mOS_NumberEntry.getSelectedIndex();
+        if (index != -1) { // Safety:
+            CodeButtonHandlerData otherCodeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerDataViaUniqueID(_mUniqueIDS.get(index));
+            loadUpSignalTable(ProjectsCommonSubs.getArrayListFromCSV(otherCodeButtonHandlerData._mIL_ListOfCSVSignalNames));
+        }
+    }//GEN-LAST:event_BT_ReplaceActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BT_Replace;
     private javax.swing.JTable _mIL_TableOfExternalSignalNames;
+    private javax.swing.JComboBox<String> _mOS_NumberEntry;
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JLabel _mTableOfSignalNamesPrompt;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

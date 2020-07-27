@@ -141,8 +141,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
 
     @Override
     public String getValue(String name) {
-        int state = _manager.getBySystemName(name).getState();
-        return getValue(state);
+        OBlock bl = _manager.getBySystemName(name);
+        if (bl !=null) {
+            return getValue(bl.getState());
+        }
+        return "";
     }
 
     static protected String getValue(int state) {
@@ -430,7 +433,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                                 block.setReportingCurrent(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
                             }
                         } catch (Exception ex) {
-                            log.error("No Reporter named \"" + tempRow[REPORTERCOL] + "\" found. threw exception: " + ex);
+                            log.error("No Reporter named \"{}\" found. threw exception: {}", tempRow[REPORTERCOL], ex);
                         }
                         if (rep == null) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
@@ -555,7 +558,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         fireTableRowsUpdated(row, row);
                     }
                 } catch (Exception ex) {
-                    log.error("getSensor(" + (String) value + ") threw exception: " + ex);
+                    log.error("getSensor({}) threw exception: {}", value, ex);
                 }
                 if (!ok) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", (String) value),
@@ -572,7 +575,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         fireTableRowsUpdated(row, row);
                     }
                 } catch (Exception ex) {
-                    log.error("No Reporter named \"" + (String) value + "\" found. threw exception: " + ex);
+                    log.error("No Reporter named \"{}\" found. threw exception: {}", value, ex);
                 }
                 if (rep == null) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
@@ -672,47 +675,22 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         return super.getColumnName(col);
     }
 
-    boolean noWarnDelete = false;
-
     void deleteBean(OBlock bean) {
-        int count = bean.getNumPropertyChangeListeners() - 2; // one is this table, other is manager
-        if (log.isDebugEnabled()) {
-            log.debug("Delete with {} remaining listeners", count);
-            //java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(bean);
-            PropertyChangeListener[] listener = bean.getPropertyChangeListeners();
-            for (int i = 0; i < listener.length; i++) {
-                log.debug("{}) {}", i, listener[i].getClass().getName());
+        StringBuilder sb = new StringBuilder(Bundle.getMessage("DeletePrompt", bean.getSystemName()));
+        for (PropertyChangeListener listener : bean.getPropertyChangeListeners()) {
+            if (!(listener instanceof OBlockTableModel) && 
+                    !(listener instanceof BlockPathTableModel) && 
+                    !(listener instanceof PathTurnoutTableModel) &&
+                    !(listener instanceof jmri.jmrit.picker.PickListModel) &&
+                    !(listener instanceof OBlockManager)) {
+                sb.append("\n");
+                sb.append(Bundle.getMessage("InUseBy", bean.getDisplayName(), listener.getClass().getName()));
             }
         }
-        if (!noWarnDelete) {
-            String msg;
-            if (count > 0) { // warn of listeners attached before delete
-                msg = java.text.MessageFormat.format(
-                        Bundle.getMessage("DeletePrompt"), bean.getSystemName()) + "\n"
-                        + java.text.MessageFormat.format(Bundle.getMessage("ReminderInUse"),
-                                count);
-            } else {
-                msg = java.text.MessageFormat.format(
-                        Bundle.getMessage("DeletePrompt"),
-                        new Object[]{bean.getSystemName()});
-            }
-
-            // verify deletion
-            int val = JOptionPane.showOptionDialog(null,
-                    msg, Bundle.getMessage("WarningTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{Bundle.getMessage("ButtonYes"),
-                        Bundle.getMessage("ButtonYesPlus"),
-                        Bundle.getMessage("ButtonNo")},
-                    Bundle.getMessage("ButtonNo")); // default choice = No
-            if (val == 2) {
-                return;  // return without deleting
-            }
-            if (val == 1) { // suppress future warnings
-                noWarnDelete = true;
-            }
+        int val = _parent.verifyWarning(sb.toString());
+        if (val == 2) {
+            return;  // return without deleting
         }
-        // finally OK, do the actual delete
         bean.dispose();
     }
 
@@ -796,9 +774,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         if (log.isDebugEnabled()) log.debug("PropertyChange = {}", property);
         _parent.getXRefModel().propertyChange(e);
         _parent.getSignalModel().propertyChange(e);
+        _parent.getPortalModel().propertyChange(e);
 
-        if (property.equals("length") || property.equals("UserName")
-                || property.equals("portalCount")) {
+        if (property.equals("length") || property.equals("UserName")) {
             _parent.updateOpenMenu();
         }
     }

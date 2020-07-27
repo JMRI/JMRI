@@ -16,6 +16,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -60,21 +61,21 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         updateList();
     }
 
-    public final int SORTBY_NUMBER = 1;
-    public final int SORTBY_ROAD = 2;
-    public final int SORTBY_MODEL = 3;
-    public final int SORTBY_LOCATION = 4;
-    public final int SORTBY_DESTINATION = 5;
-    public final int SORTBY_TRAIN = 6;
-    public final int SORTBY_MOVES = 7;
-    public final int SORTBY_CONSIST = 8;
-    public final int SORTBY_BUILT = 9;
-    public final int SORTBY_OWNER = 10;
-    public final int SORTBY_VALUE = 11;
-    public final int SORTBY_RFID = 12;
-    public final int SORTBY_LAST = 13;
-    public final int SORTBY_HP = 14;
-    public final int SORTBY_DCC_ADDRESS = 15;
+    public final int SORTBY_NUMBER = 0;
+    public final int SORTBY_ROAD = 1;
+    public final int SORTBY_MODEL = 2;
+    public final int SORTBY_LOCATION = 3;
+    public final int SORTBY_DESTINATION = 4;
+    public final int SORTBY_TRAIN = 5;
+    public final int SORTBY_MOVES = 6;
+    public final int SORTBY_CONSIST = 7;
+    public final int SORTBY_BUILT = 8;
+    public final int SORTBY_OWNER = 9;
+    public final int SORTBY_VALUE = 10;
+    public final int SORTBY_RFID = 11;
+    public final int SORTBY_LAST = 12;
+    public final int SORTBY_HP = 13;
+    public final int SORTBY_DCC_ADDRESS = 14;
 
     private int _sort = SORTBY_NUMBER;
 
@@ -107,6 +108,47 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         fireTableDataChanged();
     }
 
+    public String getSortByName() {
+        return getSortByName(_sort);
+    }
+
+    public String getSortByName(int sort) {
+        switch (sort) {
+            case SORTBY_NUMBER:
+                return Bundle.getMessage("Number");
+            case SORTBY_ROAD:
+                return Bundle.getMessage("Road");
+            case SORTBY_MODEL:
+                return Bundle.getMessage("Model");
+            case SORTBY_LOCATION:
+                return Bundle.getMessage("Location");
+            case SORTBY_DESTINATION:
+                return Bundle.getMessage("Destination");
+            case SORTBY_TRAIN:
+                return Bundle.getMessage("Train");
+            case SORTBY_MOVES:
+                return Bundle.getMessage("Moves");
+            case SORTBY_CONSIST:
+                return Bundle.getMessage("Consist");
+            case SORTBY_BUILT:
+                return Bundle.getMessage("Built");
+            case SORTBY_OWNER:
+                return Bundle.getMessage("Owner");
+            case SORTBY_DCC_ADDRESS:
+                return Bundle.getMessage("DccAddress");
+            case SORTBY_HP:
+                return Bundle.getMessage("HP");
+            case SORTBY_VALUE:
+                return Setup.getValueLabel();
+            case SORTBY_RFID:
+                return Setup.getRfidLabel();
+            case SORTBY_LAST:
+                return Bundle.getMessage("Last");
+            default:
+                return "Error"; // NOI18N
+        }
+    }
+
     String _roadNumber = "";
     int _index = 0;
 
@@ -135,7 +177,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         for (int index = start; index < engineList.size(); index++) {
             Engine e = engineList.get(index);
             if (e != null) {
-                String[] number = e.getNumber().split("-");
+                String[] number = e.getNumber().split(TrainCommon.HYPHEN);
                 // check for wild card '*'
                 if (roadNumber.startsWith("*")) {
                     String rN = roadNumber.substring(1);
@@ -173,33 +215,51 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     public List<Engine> getSelectedEngineList() {
+        return getEngineList(_sort);
+    }
+
+    public List<Engine> getEngineList(int sort) {
         List<Engine> list;
-        if (_sort == SORTBY_ROAD) {
-            list = engineManager.getByRoadNameList();
-        } else if (_sort == SORTBY_MODEL) {
-            list = engineManager.getByModelList();
-        } else if (_sort == SORTBY_LOCATION) {
-            list = engineManager.getByLocationList();
-        } else if (_sort == SORTBY_DESTINATION) {
-            list = engineManager.getByDestinationList();
-        } else if (_sort == SORTBY_TRAIN) {
-            list = engineManager.getByTrainList();
-        } else if (_sort == SORTBY_MOVES) {
-            list = engineManager.getByMovesList();
-        } else if (_sort == SORTBY_CONSIST) {
-            list = engineManager.getByConsistList();
-        } else if (_sort == SORTBY_OWNER) {
-            list = engineManager.getByOwnerList();
-        } else if (_sort == SORTBY_BUILT) {
-            list = engineManager.getByBuiltList();
-        } else if (_sort == SORTBY_VALUE) {
-            list = engineManager.getByValueList();
-        } else if (_sort == SORTBY_RFID) {
-            list = engineManager.getByRfidList();
-        } else if (_sort == SORTBY_LAST) {
-            list = engineManager.getByLastDateList();
-        } else {
-            list = engineManager.getByNumberList();
+        switch (sort) {
+            case SORTBY_ROAD:
+                list = engineManager.getByRoadNameList();
+                break;
+            case SORTBY_MODEL:
+                list = engineManager.getByModelList();
+                break;
+            case SORTBY_LOCATION:
+                list = engineManager.getByLocationList();
+                break;
+            case SORTBY_DESTINATION:
+                list = engineManager.getByDestinationList();
+                break;
+            case SORTBY_TRAIN:
+                list = engineManager.getByTrainList();
+                break;
+            case SORTBY_MOVES:
+                list = engineManager.getByMovesList();
+                break;
+            case SORTBY_CONSIST:
+                list = engineManager.getByConsistList();
+                break;
+            case SORTBY_OWNER:
+                list = engineManager.getByOwnerList();
+                break;
+            case SORTBY_BUILT:
+                list = engineManager.getByBuiltList();
+                break;
+            case SORTBY_VALUE:
+                list = engineManager.getByValueList();
+                break;
+            case SORTBY_RFID:
+                list = engineManager.getByRfidList();
+                break;
+            case SORTBY_LAST:
+                list = engineManager.getByLastDateList();
+                break;
+            case SORTBY_NUMBER:
+            default:
+                list = engineManager.getByNumberList();
         }
         return list;
     }

@@ -1,10 +1,9 @@
 package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogCSThrottle.
@@ -363,13 +362,10 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        // prepare an interface
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
 
         m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.OPS);
         stcs = new SprogTrafficControlScaffold(m);
@@ -380,12 +376,15 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new SprogCSThrottle(m,new jmri.DccLocoAddress(2,false));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-        m.getSlotThread().interrupt();
-        stcs.dispose();
-        JUnitUtil.tearDown();
+        try {
+            m.getSlotThread().interrupt();
+            stcs.dispose();
+        } finally {
+            JUnitUtil.tearDown();
+        }
     }
 
 }

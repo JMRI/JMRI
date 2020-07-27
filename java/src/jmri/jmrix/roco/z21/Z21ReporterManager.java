@@ -1,9 +1,9 @@
 package jmri.jmrix.roco.z21;
 
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.RailComManager;
 import jmri.Reporter;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,12 +55,13 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Z21SystemConnectionMemo getMemo() {
         return (Z21SystemConnectionMemo) memo;
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         if (!systemName.matches(getSystemPrefix() + typeLetter() + "[" + 1 + "]")) {
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
             if (bitNum != -1) {
@@ -68,7 +69,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
                 register(r);
                 return r;
             } else {
-                log.warn("Invalid Reporter name: {} " + systemName);
+                log.warn("Invalid Reporter name: {} ", systemName);
                 throw new IllegalArgumentException("Invalid Reporter name: " + systemName);
             }
         }
@@ -76,11 +77,6 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
         Reporter r = new Z21Reporter(systemName, userName, getMemo());
         register(r);
         return r;
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
     // the Z21 Listener interface
@@ -97,12 +93,13 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
         // reporter.
         if (autoCreateInternalReporter && msg.isRailComDataChangedMessage()) {
             log.debug("Received RailComDatachanged message");
-            Z21Reporter r = (Z21Reporter) getBySystemName(getSystemPrefix() + typeLetter() + 1); // there is only one built in reporter.
+            String systemName = getSystemPrefix() + typeLetter() + 1;
+            Z21Reporter r = (Z21Reporter) getBySystemName(systemName); // there is only one built in reporter.
             if (null == r) {
-                log.debug("Creating reporter {}", getSystemPrefix() + typeLetter() + 1);
+                log.debug("Creating reporter {}",systemName);
                 // need to create a new one, and send the message on 
                 // to the newly created object.
-                ((Z21Reporter) provideReporter(getSystemPrefix() + typeLetter() + 1)).reply(msg);
+                ((Z21Reporter) provideReporter(systemName)).reply(msg);
             }
             // LAN_CAN_DETECTOR message are related to CAN reporters.
         } else if (msg.isCanDetectorMessage()) {
@@ -113,19 +110,19 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
                 int netID = (msg.getElement(4) & 0xFF) + ((msg.getElement(5) & 0xFF) << 8);
                 int msgPort = (msg.getElement(8) & 0xFF);
                 int address = (msg.getElement(6) & 0xFF) + ((msg.getElement(7) & 0xFF) << 8);
-                String sysName = getSystemPrefix() + typeLetter() + address + ":" + msgPort;
-                log.debug("asking for reporter {}", sysName);
-                Z21CanReporter r = (Z21CanReporter) getBySystemName(sysName);
+                String systemName = Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),address,msgPort);
+                log.debug("asking for reporter {}", systemName);
+                Z21CanReporter r = (Z21CanReporter) getBySystemName(systemName);
                 if (null == r) {
                     // try with the module's CAN network ID
-                    sysName = getSystemPrefix() + typeLetter() + String.format("%4X", netID) + ":" + msgPort;
-                    log.debug("not found; asking for reporter {}", sysName);
-                    r = (Z21CanReporter) getBySystemName(sysName);
+                    systemName = Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),netID,msgPort);
+                    log.debug("not found; asking for reporter {}", systemName);
+                    r = (Z21CanReporter) getBySystemName(systemName);
                     if (null == r) {
-                        log.debug("Creating reporter {}", sysName);
+                        log.debug("Creating reporter {}", systemName);
                         // need to create a new one, and send the message on 
                         // to the newly created object.
-                        ((Z21CanReporter) provideReporter(sysName)).reply(msg);
+                        ((Z21CanReporter) provideReporter(systemName)).reply(msg);
                     }
                 }
             }
@@ -151,6 +148,15 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
      */
     public void enableInternalReporterCreationFromMessages() {
         autoCreateInternalReporter = true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Reporter getBySystemName(@Nonnull String sName){
+        Z21SystemNameComparator comparator = new Z21SystemNameComparator(getSystemPrefix(),typeLetter());
+        return getBySystemName(sName,comparator);
     }
 
     private static final Logger log = LoggerFactory.getLogger(Z21ReporterManager.class);

@@ -1,16 +1,16 @@
 package jmri.managers;
 
 import jmri.*;
-import org.junit.Test;
-import org.junit.After;
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Overall tests of Logix operation, including operation of 
  * conditionals.  To ease setup, reads from XML files.
  *
- * @author	Bob Jacobsen Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class LogixSystemTest {
 
@@ -53,18 +53,19 @@ public class LogixSystemTest {
         Assert.assertTrue("IT2", oldIt2 != it2.getState());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initIdTagManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 }

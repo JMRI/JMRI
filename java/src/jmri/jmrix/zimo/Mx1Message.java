@@ -1,6 +1,5 @@
 package jmri.jmrix.zimo;
 
-import java.io.Serializable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * that bytes have, and because a Java char is actually a variable number of
  * bytes in Unicode.
  *
- * @author	Kevin Dickerson Copyright (C) 2014
+ * @author Kevin Dickerson Copyright (C) 2014
  *
  * Adapted by Sip Bosch for use with zimo MX-1
  *
@@ -35,7 +34,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         this.protocol = protocol;
         if (!protocol) {
             if (len > 15 || len < 0) {
-                log.error("Invalid length in ctor: " + len);
+                log.error("Invalid length in ctor: {}", len);
             }
         }
     }
@@ -145,7 +144,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         return CS;
     }
 
-    long timeStamp = 0l;
+    long timeStamp = 0L;
 
     protected long getTimeStamp() {
         return timeStamp;

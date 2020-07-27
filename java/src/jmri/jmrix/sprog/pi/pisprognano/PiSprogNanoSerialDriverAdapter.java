@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
-import java.util.Arrays;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -13,7 +12,7 @@ import java.util.Arrays;
  * The current implementation only handles the 115,200 baud rate, and does not use
  * any other options at configuration time.
  *
- * @author	Andrew Crosland Copyright (C) 2016
+ * @author Andrew Crosland Copyright (C) 2016
  */
 public class PiSprogNanoSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -44,13 +43,6 @@ public class PiSprogNanoSerialDriverAdapter
         return new int[]{115200};
     }
 
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated  // will be removed when class converted to multi-system
-    static public PiSprogNanoSerialDriverAdapter instance() {
-        return null;
-    }
     // private final static Logger log = LoggerFactory.getLogger(PiSprogNanoSerialDriverAdapter.class);
 
 }

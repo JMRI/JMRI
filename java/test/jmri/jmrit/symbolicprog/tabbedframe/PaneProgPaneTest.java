@@ -5,27 +5,29 @@ import static org.junit.Assert.*;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
+ * @author Bob Jacobsen Copyright 2001, 2002, 2003, 2004
  */
 public class PaneProgPaneTest {
 
@@ -62,7 +64,7 @@ public class PaneProgPaneTest {
         };
         assertNotNull("exists", pane);
         assertEquals("column count", 2, colCount);
-        JUnitUtil.dispose(pFrame);
+        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
     }
 
     // test specifying variables in columns
@@ -94,7 +96,7 @@ public class PaneProgPaneTest {
         };
         assertNotNull("exists", pane);
         assertEquals("variable defn count", 7, varCount);
-        JUnitUtil.dispose(pFrame);
+        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
     }
 
     // test storage of programming info in list
@@ -140,7 +142,7 @@ public class PaneProgPaneTest {
         assertEquals("variable list length", 2, pane.varList.size());
         assertEquals("1st variable index ", Integer.valueOf(1), pane.varList.get(0));
         assertEquals("2nd variable index ", Integer.valueOf(0), pane.varList.get(1));
-        JUnitUtil.dispose(pFrame);
+        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
     }
 
     // test storage of programming info in list
@@ -198,7 +200,7 @@ public class PaneProgPaneTest {
         Assert.assertEquals("CV 3 value ", "30", varModel.getValString(1));
 
         log.debug("testPaneRead ends ok");
-        JUnitUtil.dispose(pFrame);
+        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
     }
 
     @Test
@@ -257,7 +259,7 @@ public class PaneProgPaneTest {
         Assert.assertEquals("CV 3 value ", 30, p.getCvVal(3));
 
         log.debug("testPaneWrite ends ok");
-        JUnitUtil.dispose(pFrame);
+        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
     }
 
     // test counting of read operations needed
@@ -345,7 +347,7 @@ public class PaneProgPaneTest {
         Assert.assertEquals("spdtbl changed CVs to write ", 2, progPane.countOpsNeeded(false, true));
 
         log.debug("testPaneReadOpCount ends ok");
-        JUnitUtil.dispose(pFrame);
+        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
     }
 
     // static variables for internal classes to report their interpretations
@@ -421,14 +423,14 @@ public class PaneProgPaneTest {
         log.debug("setupDoc complete");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

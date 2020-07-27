@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
+import jmri.beans.Identifiable;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -28,7 +30,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013
  */
-public abstract class RollingStock implements java.beans.PropertyChangeListener {
+public abstract class RollingStock extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
     public static final String NONE = "";
     public static final int DEFAULT_BLOCKING_ORDER = 0;
@@ -105,10 +107,10 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
     }
 
     public static String createId(String road, String number) {
-        String id = road + number;
-        return id;
+        return road + number;
     }
 
+    @Override
     public String getId() {
         return _id;
     }
@@ -123,7 +125,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
         String oldNumber = _number;
         _number = number;
         if (!oldNumber.equals(number)) {
-            pcs.firePropertyChange("rolling stock number", oldNumber, number); // NOI18N
+            firePropertyChange("rolling stock number", oldNumber, number); // NOI18N
             String oldId = _id;
             _id = createId(_road, number);
             setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);
@@ -138,7 +140,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
         String old = _road;
         _road = road;
         if (!old.equals(road)) {
-            pcs.firePropertyChange("rolling stock road", old, road); // NOI18N
+            firePropertyChange("rolling stock road", old, road); // NOI18N
             String oldId = _id;
             _id = createId(road, _number);
             setDirtyAndFirePropertyChange(Xml.ID, oldId, _id);
@@ -498,7 +500,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
         if (location != null && !location.isTrackAtLocation(track)) {
             return ERROR_TRACK;
         }
-        return track.accepts(this);
+        return track.isRollingStockAccepted(this);
     }
 
     /**
@@ -520,7 +522,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
      * @param destination The Location.
      *
      * @param track (yard, spur, staging, or interchange track)
-     * @param force when true ignore track length, type, {@literal &} road when
+     * @param force when true ignore track length, type, and road when
      *            setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit.
@@ -609,7 +611,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
         if (destination == null || track == null) {
             return Track.OKAY;
         }
-        return track.accepts(this);
+        return track.isRollingStockAccepted(this);
     }
 
     public Location getDestination() {
@@ -1517,18 +1519,8 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
         }
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(RollingStock.class);

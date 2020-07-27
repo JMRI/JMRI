@@ -1,15 +1,14 @@
 package jmri.jmrix.tams.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * TamsSensorManagerXmlTest.java
  *
- * Description: tests for the TamsSensorManagerXml class
+ * Test for the TamsSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class TamsSensorManagerXmlTest {
       Assert.assertNotNull("TamsSensorManagerXml constructor",new TamsSensorManagerXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

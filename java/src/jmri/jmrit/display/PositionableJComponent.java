@@ -139,7 +139,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
         int oldDisplayLevel = _displayLevel;
         _displayLevel = l;
         if (oldDisplayLevel != l) {
-            log.debug("Changing label display level from " + oldDisplayLevel + " to " + _displayLevel);
+            log.debug("Changing label display level from {} to {}", oldDisplayLevel, _displayLevel);
             _editor.displayLevelChange(this);
         }
     }
@@ -306,8 +306,8 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return getHeight();
     }
 
-    /**
-     * ************** end Positionable methods *********************
+    /*
+     ************** end Positionable methods *********************
      */
     /**
      * Removes this object from display and persistance

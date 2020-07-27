@@ -7,12 +7,14 @@ import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import org.netbeans.jemmy.operators.*;
 
 /**
- * @author	Bob Jacobsen Copyright 2018
+ * @author Bob Jacobsen Copyright 2018
  */
 public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
@@ -156,14 +158,14 @@ public class VirtualSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestB
         });
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

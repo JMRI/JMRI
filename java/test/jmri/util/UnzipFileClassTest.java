@@ -2,7 +2,8 @@ package jmri.util;
 
 import java.io.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the UnzipFileClassTest class
@@ -34,13 +35,12 @@ public class UnzipFileClassTest  {
         Assert.assertTrue(new File("temp/UnzipFileClass/UnzipFileClass.txt").exists());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

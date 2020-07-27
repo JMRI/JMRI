@@ -1,8 +1,9 @@
 package jmri.jmrit.operations.trains.configurexml;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  * TrainIconXmlTest.java

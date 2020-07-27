@@ -13,21 +13,20 @@
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Index Editor">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>L'&eacute;diteur Index des Images</h1>Cette fen&ecirc;tre
       est utilis&eacute;e pour cr&eacute;er un Index d'Image.
       L'index peut &ecirc;tre organis&eacute; selon toute
@@ -202,7 +201,7 @@
           quitt&eacute; le n&oelig;ud et pour retourner ensuite au
           n&oelig;ud.</i></p>
         </li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

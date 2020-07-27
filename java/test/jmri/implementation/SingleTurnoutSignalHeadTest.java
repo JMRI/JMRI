@@ -4,16 +4,15 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 
 /**
  * Tests for the SingleTurnoutSignalHead implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class SingleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
 
@@ -121,13 +120,12 @@ public class SingleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
                         SignalHead.GREEN, SignalHead.DARK);
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

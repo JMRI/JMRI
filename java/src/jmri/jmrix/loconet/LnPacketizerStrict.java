@@ -123,12 +123,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
                                 }
                                 if ((b & 0x80) != 0) {
-                                    log.warn("LocoNet message with opCode: " // NOI18N
-                                            + Integer.toHexString(opCode)
-                                            + " ended early. Expected length: " + len // NOI18N
-                                            + " seen length: " + i // NOI18N
-                                            + " unexpected byte: " // NOI18N
-                                            + Integer.toHexString(b)); // NOI18N
+                                    log.warn("LocoNet message with opCode: {} ended early. Expected length: {} seen length: {} unexpected byte: {}", Integer.toHexString(opCode), len, i, Integer.toHexString(b)); // NOI18N
                                     opCode = b;
                                     throw new LocoNetMessageException();
                                 }
@@ -169,7 +164,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                 }
                             } else if (msg.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
                                 waitingOnLack = false;
-                            } else if ( msg.getOpCode() == 0xe6 ) { // Extended slot status
+                            } else if ( msg.getOpCode() == LnConstants.OPC_ALM_READ ) { // Extended slot status
                                 waitingOnLack = false;
                             }
                             // check for CS busy
@@ -184,7 +179,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                     // done with this one
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected LocoNetMessageException: " + e); // NOI18N
+                    log.warn("run: unexpected LocoNetMessageException: {}", e); // NOI18N
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.trace("EOFException, is LocoNet serial I/O using timeouts?"); // NOI18N
@@ -197,7 +192,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                 } // normally, we don't catch RuntimeException, but in this
                 // permanently running loop it seems wise.
                 catch (RuntimeException e) {
-                    log.warn("run: unexpected Exception: " + e); // NOI18N
+                    log.warn("run: unexpected Exception: {}", e); // NOI18N
                 }
             } // end of permanent loop
         }
@@ -341,7 +336,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                             log.warn("sendLocoNetMessage: no connection established"); // NOI18N
                         }
                     } catch (java.io.IOException e) {
-                        log.warn("sendLocoNetMessage: IOException: " + e.toString()); // NOI18N
+                        log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
@@ -369,7 +364,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         if (xmtHandler == null) {
             xmtHandler = new XmtHandlerStrict();
         }
-        Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
@@ -379,7 +374,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandlerStrict(this);
         }
-        Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();

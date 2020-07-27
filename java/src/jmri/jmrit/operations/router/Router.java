@@ -4,6 +4,10 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.locations.Location;
@@ -15,8 +19,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Router for car movement. This code attempts to find a way (a route) to move a
@@ -53,19 +55,6 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
     private boolean _addtoReport = false;
     private boolean _addtoReportVeryDetailed = false;
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     *             {@link jmri.InstanceManager#getDefault(java.lang.Class)}
-     *             instead
-     */
-    @Deprecated
-    public static synchronized Router instance() {
-        return InstanceManager.getDefault(Router.class);
-    }
 
     /**
      * Returns the status of the router when using the setDestination() for a
@@ -150,8 +139,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (clone.getDestination() != null && clone.getDestinationTrack() == null) {
             // determine if there's a track that can service the car
             String status = "";
-            for (Track track : clone.getDestination().getTrackList()) {
-                status = track.accepts(clone);
+            for (Track track : clone.getDestination().getTracksList()) {
+                status = track.isRollingStockAccepted(clone);
                 if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
                     log.debug("Track ({}) will accept car ({})", track.getName(), car);
                     break;
@@ -245,7 +234,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         boolean trainServicesCar = false; // specific train
         Train testTrain = null;
         if (_train != null) {
-            trainServicesCar = _train.services(_buildReport, clone);
+            trainServicesCar = _train.isServiceable(_buildReport, clone);
         }
         if (trainServicesCar) {
             testTrain = _train; // use the specific train
@@ -326,7 +315,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 clone.getDestinationTrack().getAlternateTrack() != car.getTrack()) {
             String status = car.setDestination(clone.getDestination(), clone.getDestinationTrack().getAlternateTrack());
             if (status.equals(Track.OKAY)) {
-                if (_train == null || _train.services(car)) {
+                if (_train == null || _train.isServiceable(car)) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSendCarToAlternative"),
                             new Object[]{car.toString(), clone.getDestinationTrack().getAlternateTrack().getName(),
                                     clone.getDestination().getName()}));
@@ -360,12 +349,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSpurFull"), new Object[]{
                     clone.getDestinationTrackName(), clone.getDestinationName()}));
             Location dest = clone.getDestination();
-            List<Track> yards = dest.getTrackByMovesList(Track.YARD);
+            List<Track> yards = dest.getTracksByMovesList(Track.YARD);
             log.debug("Found {} yard(s) at destination ({})", yards.size(), clone.getDestinationName());
             for (Track track : yards) {
                 String status = car.setDestination(dest, track);
                 if (status.equals(Track.OKAY)) {
-                    if (_train != null && !_train.services(car)) {
+                    if (_train != null && !_train.isServiceable(car)) {
                         log.debug("Train ({}) can not deliver car ({}) to yard ({})", _train.getName(), car,
                                 track.getName());
                         continue;
@@ -454,7 +443,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (car.getTrack() == track) {
                 continue; // don't use car's current track
             }
-            String status = track.accepts(testCar);
+            String status = track.isRollingStockAccepted(testCar);
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 if (_addtoReportVeryDetailed) {
                     addLine(_buildReport, SEVEN, BLANK_LINE);
@@ -949,7 +938,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (_lastLocationTracks.contains(track)) {
                 continue;
             }
-            String status = track.accepts(testCar);
+            String status = track.isRollingStockAccepted(testCar);
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 continue; // track doesn't accept this car
             }
@@ -1011,7 +1000,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (_train == null) {
             return NO_SPECIFIC_TRAIN;
         }
-        if (_train.services(car)) {
+        if (_train.isServiceable(car)) {
             return YES;
         } // is the reason this train can't service route moves or train length?
         else if (!_train.getServiceStatus().equals(Train.NONE)) {

@@ -27,6 +27,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     /**
      * Ctor for a connection configuration with no preexisting adapter.
      * {@link #setInstance()} will fill the adapter member.
+     * @param p network port adapter.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
@@ -53,6 +54,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
 
 }

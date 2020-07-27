@@ -2,39 +2,16 @@ package jmri.jmrit.operations.automation;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
-import jmri.jmrit.operations.automation.actions.Action;
-import jmri.jmrit.operations.automation.actions.ActionCodes;
-import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
-import jmri.jmrit.operations.automation.actions.ApplyTrainScheduleAction;
-import jmri.jmrit.operations.automation.actions.BuildTrainAction;
-import jmri.jmrit.operations.automation.actions.BuildTrainIfSelectedAction;
-import jmri.jmrit.operations.automation.actions.DeselectTrainAction;
-import jmri.jmrit.operations.automation.actions.GotoAction;
-import jmri.jmrit.operations.automation.actions.GotoFailureAction;
-import jmri.jmrit.operations.automation.actions.GotoSuccessAction;
-import jmri.jmrit.operations.automation.actions.HaltAction;
-import jmri.jmrit.operations.automation.actions.IsTrainEnRouteAction;
-import jmri.jmrit.operations.automation.actions.MessageYesNoAction;
-import jmri.jmrit.operations.automation.actions.MoveTrainAction;
-import jmri.jmrit.operations.automation.actions.NoAction;
-import jmri.jmrit.operations.automation.actions.PrintSwitchListAction;
-import jmri.jmrit.operations.automation.actions.PrintTrainManifestAction;
-import jmri.jmrit.operations.automation.actions.PrintTrainManifestIfSelectedAction;
-import jmri.jmrit.operations.automation.actions.ResetTrainAction;
-import jmri.jmrit.operations.automation.actions.ResumeAutomationAction;
-import jmri.jmrit.operations.automation.actions.RunAutomationAction;
-import jmri.jmrit.operations.automation.actions.RunSwitchListAction;
-import jmri.jmrit.operations.automation.actions.RunSwitchListChangesAction;
-import jmri.jmrit.operations.automation.actions.RunTrainAction;
-import jmri.jmrit.operations.automation.actions.SelectTrainAction;
-import jmri.jmrit.operations.automation.actions.StopAutomationAction;
-import jmri.jmrit.operations.automation.actions.TerminateTrainAction;
-import jmri.jmrit.operations.automation.actions.UpdateSwitchListAction;
-import jmri.jmrit.operations.automation.actions.WaitSwitchListAction;
-import jmri.jmrit.operations.automation.actions.WaitTrainAction;
-import jmri.jmrit.operations.automation.actions.WaitTrainTerminatedAction;
+import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.automation.actions.*;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -42,16 +19,13 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents one automation item of a automation
  *
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class AutomationItem implements java.beans.PropertyChangeListener {
+public class AutomationItem extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
     public static final String NONE = ""; // NOI18N
 
@@ -416,6 +390,8 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 //        list.add(new PrintSwitchListChangesAction()); // see UpdateSwitchListAction
         list.add(new UpdateSwitchListAction());
         list.add(new WaitSwitchListAction());
+        list.add(new GenerateSwitchListAction());
+        list.add(new GenerateSwitchListChangesAction());
         list.add(new RunSwitchListAction());
         list.add(new RunSwitchListChangesAction());
         list.add(new RunAutomationAction());
@@ -553,24 +529,10 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         }
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutomationItem.class);

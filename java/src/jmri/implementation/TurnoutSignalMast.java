@@ -1,7 +1,6 @@
 package jmri.implementation;
 
 import java.util.*;
-import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
@@ -153,6 +152,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         if (!allowUnLit() || newLit == getLit()) {
             return;
         }
+        super.setLit(newLit);
         if (newLit) {
             // This will force the signalmast to send out the commands to set the aspect again.
             setAspect(getAspect());
@@ -176,7 +176,6 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                 }
             }
         }
-        super.setLit(newLit);
     }
 
     public String getTurnoutName(String appearance) {
@@ -301,7 +300,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             if (evt.getOldValue() instanceof Turnout) {
                 if (isTurnoutUsed((Turnout) evt.getOldValue())) {
                     java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); //IN18N
+                    throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); // NOI18N
                 }
             }
         }

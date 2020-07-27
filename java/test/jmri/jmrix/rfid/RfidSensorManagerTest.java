@@ -2,28 +2,27 @@ package jmri.jmrix.rfid;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import javax.annotation.Nonnull;
 
 /**
- * RfidSensorManagerTest.java
+ * Tests for the jmri.jmrix.rfid.RfidSensorManager class
  *
- * Description:	tests for the jmri.jmrix.rfid.RfidSensorManager class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012, 2016
  */
 public class RfidSensorManagerTest {
 
-    RfidTrafficController tc = null;
+    private RfidSystemConnectionMemo memo = null;
 
     @Test
     public void testCtor() {
-        RfidSensorManager c = new RfidSensorManager(new RfidSystemConnectionMemo()){
+        RfidSensorManager c = new RfidSensorManager(memo){
             @Override
-            protected Sensor createNewSensor(String systemName, String userName){
-               return null;
+            protected Sensor createNewSensor(@Nonnull String systemName, String userName){
+                return null;
             }
             @Override
             public void message(RfidMessage m){}
@@ -35,21 +34,18 @@ public class RfidSensorManagerTest {
         Assert.assertNotNull(c);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new RfidTrafficController(){
-           @Override
-           public void sendInitString(){
-           }
-        };
+        memo = new RfidSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        tc = null;
+        memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

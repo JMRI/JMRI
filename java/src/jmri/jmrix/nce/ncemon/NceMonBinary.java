@@ -18,8 +18,6 @@ public class NceMonBinary {
 
     private static final Logger log = LoggerFactory.getLogger(NceMonBinary.class);
 
-    private int replyType = REPLY_UNKNOWN;
-
     private static final int REPLY_UNKNOWN = 0;
     private static final int REPLY_STANDARD = 1;
     private static final int REPLY_DATA = 2;
@@ -32,6 +30,8 @@ public class NceMonBinary {
     private static final int REPLY_THREE = '3';// CV address or data out of range
     private static final int REPLY_FOUR = '4'; // byte count out of range
     private static final int REPLY_OK = '!';   // command completed successfully
+
+    private int replyType = REPLY_UNKNOWN;
 
     /**
      * Creates a command message for the log, in a human-friendly form if

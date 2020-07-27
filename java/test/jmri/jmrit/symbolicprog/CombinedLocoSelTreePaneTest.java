@@ -1,15 +1,18 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrit.progsupport.ProgModePane;
+
 import javax.swing.JLabel;
+
+import jmri.InstanceManager;
+import jmri.util.JUnitUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CombinedLocoSelTreePaneTest {
 
@@ -17,26 +20,25 @@ public class CombinedLocoSelTreePaneTest {
     public void testCTor() {
         JLabel jl = new JLabel("test selector");
         ProgModePane pmp = new ProgModePane(javax.swing.BoxLayout.X_AXIS);
-        CombinedLocoSelTreePane t = new CombinedLocoSelTreePane(jl,pmp);
-        Assert.assertNotNull("exists",t);
+        CombinedLocoSelTreePane t = new CombinedLocoSelTreePane(jl, pmp);
+        Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.InstanceManager.setDefault(ProgrammerConfigManager.class,new ProgrammerConfigManager());
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        InstanceManager.setDefault(ProgrammerConfigManager.class, new ProgrammerConfigManager());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
 
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CombinedLocoSelTreePaneTest.class);
-
 }

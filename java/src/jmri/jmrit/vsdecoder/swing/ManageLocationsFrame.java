@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 import jmri.Block;
 import jmri.BlockManager;
@@ -41,6 +39,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * GUI to manage Reporters, Blocks, Locations and Listener attributes. 
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -72,8 +72,6 @@ public class ManageLocationsFrame extends JmriJFrame {
         Mnemonics.put("SaveButton", KeyEvent.VK_S); // NOI18N
     }
 
-    protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
-
     private JTabbedPane tabbedPane;
     private JPanel listenerPanel;
     private JPanel reporterPanel;
@@ -84,11 +82,13 @@ public class ManageLocationsFrame extends JmriJFrame {
     private Object[][] opsData;       // positions of Operations Locations
     private Object[][] locData;       // positions of Listener Locations
     private Object[][] blockData;     // positions of Blocks
-    private LocationTableModel reporterModel;
+    private ReporterBlockTableModel reporterModel;
     private LocationTableModel opsModel;
     private ListenerTableModel locModel;
-    private LocationTableModel blockModel;
+    private ReporterBlockTableModel blockModel;
     private ListeningSpot listenerLoc;
+
+    private HashMap<String, PhysicalLocation> data;
 
     private List<JMenu> menuList;
 
@@ -170,7 +170,6 @@ public class ManageLocationsFrame extends JmriJFrame {
         JTable locTable = new JTable(locModel);
         locTable.setFillsViewportHeight(true);
         locTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
-
         locScrollPanel.getViewport().add(locTable);
 
         listenerPanel.add(modePanel);
@@ -179,20 +178,20 @@ public class ManageLocationsFrame extends JmriJFrame {
         reporterPanel = new JPanel();
         reporterPanel.setLayout(new GridBagLayout());
         JScrollPane reporterScrollPanel = new JScrollPane();
-        reporterModel = new LocationTableModel(reporterData);
+        reporterModel = new ReporterBlockTableModel(reporterData);
         JTable reporterTable = new JTable(reporterModel);
         reporterTable.setFillsViewportHeight(true);
+        reporterTable.setPreferredScrollableViewportSize(new Dimension(540, 200));
         reporterScrollPanel.getViewport().add(reporterTable);
-        reporterTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
         blockPanel = new JPanel();
         blockPanel.setLayout(new GridBagLayout());
         JScrollPane blockScrollPanel = new JScrollPane();
-        blockModel = new LocationTableModel(blockData);
+        blockModel = new ReporterBlockTableModel(blockData);
         JTable blockTable = new JTable(blockModel);
         blockTable.setFillsViewportHeight(true);
+        blockTable.setPreferredScrollableViewportSize(new Dimension(540, 200));
         blockScrollPanel.getViewport().add(blockTable);
-        blockTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
         opsPanel = new JPanel();
         opsPanel.setLayout(new GridBagLayout());
@@ -202,7 +201,6 @@ public class ManageLocationsFrame extends JmriJFrame {
         JTable opsTable = new JTable(opsModel);
         opsTable.setFillsViewportHeight(true);
         opsTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
-
         opsScrollPanel.getViewport().add(opsTable);
 
         tabbedPane = new JTabbedPane();
@@ -210,14 +208,14 @@ public class ManageLocationsFrame extends JmriJFrame {
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipReporterTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("Blocks"), blockScrollPanel);
-        tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipBlockTab"));
-        tabbedPane.setMnemonicAt(0, Mnemonics.get("BlockTab")); // NOI18N
+        tabbedPane.setToolTipTextAt(1, Bundle.getMessage("ToolTipBlockTab"));
+        tabbedPane.setMnemonicAt(1, Mnemonics.get("BlockTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("FieldOpsTabTitle"), opsScrollPanel);
-        tabbedPane.setToolTipTextAt(1, Bundle.getMessage("ToolTipOpsTab"));
-        tabbedPane.setMnemonicAt(1, Mnemonics.get("OpsTab")); // NOI18N
+        tabbedPane.setToolTipTextAt(2, Bundle.getMessage("ToolTipOpsTab"));
+        tabbedPane.setMnemonicAt(2, Mnemonics.get("OpsTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("FieldListenersTabTitle"), listenerPanel);
-        tabbedPane.setToolTipTextAt(2, Bundle.getMessage("ToolTipListenerTab"));
-        tabbedPane.setMnemonicAt(2, Mnemonics.get("ListenerTab")); // NOI18N
+        tabbedPane.setToolTipTextAt(3, Bundle.getMessage("ToolTipListenerTab"));
+        tabbedPane.setMnemonicAt(3, Mnemonics.get("ListenerTab")); // NOI18N
 
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
@@ -293,7 +291,7 @@ public class ManageLocationsFrame extends JmriJFrame {
             }
         }
 
-        HashMap<String, PhysicalLocation> data = reporterModel.getDataMap();
+        data = reporterModel.getDataMap();
         ReporterManager mgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
         for (String s : data.keySet()) {
             log.debug("Reporter: {}, Location: {}", s, data.get(s));
@@ -332,7 +330,99 @@ public class ManageLocationsFrame extends JmriJFrame {
     private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class);
 
     /**
-     * Private class to serve as TableModel for Reporters and Ops Locations
+     * Private class to serve as TableModel for Reporters and Blocks
+     */
+    private static class ReporterBlockTableModel extends AbstractTableModel {
+
+        // These get internationalized at runtime in the constructor below.
+        private String[] columnNames = new String[7];
+        private Object[][] rowData;
+
+        public ReporterBlockTableModel(Object[][] dataMap) {
+            super();
+            // Use i18n-ized column titles.
+            columnNames[0] = Bundle.getMessage("Name");
+            columnNames[1] = Bundle.getMessage("ColumnUserName");
+            columnNames[2] = Bundle.getMessage("FieldTableUseColumn");
+            columnNames[3] = Bundle.getMessage("FieldTableXColumn");
+            columnNames[4] = Bundle.getMessage("FieldTableYColumn");
+            columnNames[5] = Bundle.getMessage("FieldTableZColumn");
+            columnNames[6] = Bundle.getMessage("FieldTableIsTunnelColumn");
+            rowData = dataMap;
+        }
+
+        public HashMap<String, PhysicalLocation> getDataMap() {
+            // Includes only the ones with the checkbox made
+            HashMap<String, PhysicalLocation> retv = new HashMap<>();
+            for (Object[] row : rowData) {
+                if ((Boolean) row[2]) {
+                    if (row[3] == null) { 
+                        row[3] = 0.0f;
+                    }
+                    if (row[4] == null) { 
+                        row[4] = 0.0f;
+                    }
+                    if (row[5] == null) { 
+                        row[5] = 0.0f;
+                    }
+                    retv.put((String) row[0], 
+                            new PhysicalLocation((Float) row[3], (Float) row[4], (Float) row[5], (Boolean) row[6]));
+                }
+            }
+            return retv;
+        }
+
+        @Override
+        public String getColumnName(int col) {
+            return columnNames[col];
+        }
+
+        @Override
+        public int getRowCount() {
+            return rowData.length;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
+        @Override
+        public Object getValueAt(int row, int col) {
+            return rowData[row][col];
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            return true;
+        }
+
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            rowData[row][col] = value;
+            fireTableCellUpdated(row, col);
+        }
+
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+                case 2:
+                case 6:
+                    return Boolean.class;
+                case 5:
+                case 4:
+                case 3:
+                    return Float.class;
+                case 1:
+                case 0:
+                default:
+                    return super.getColumnClass(columnIndex);
+            }
+        }
+    }
+
+    /**
+     * Private class to serve as TableModel for Ops Locations
      */
     private static class LocationTableModel extends AbstractTableModel {
 
@@ -366,7 +456,7 @@ public class ManageLocationsFrame extends JmriJFrame {
                     if (row[4] == null) { 
                         row[4] = 0.0f;
                     }
-                    retv.put((String) row[0],
+                    retv.put((String) row[0], 
                             new PhysicalLocation((Float) row[2], (Float) row[3], (Float) row[4], (Boolean) row[5]));
                 }
             }

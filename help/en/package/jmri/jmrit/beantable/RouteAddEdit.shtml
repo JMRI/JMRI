@@ -16,10 +16,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1><a name="Adding_Editing_Routes"
       id="Adding_Editing_Routes"></a>Adding/Editing
       Routes</h1>
@@ -31,7 +31,9 @@
 
       <p>The first thing you must do when creating a route is name
       it. In the box labeled "System Name" enter a unique name for
-      your Route. You can optionally enter a more descriptive name
+      your Route. If the system name does not start with "IO", "IO"
+      will be prepended to the system name when the Route is created.
+      You can optionally enter a more descriptive name
       in the "User Name" box.</p>
 
       <p>The radio button below the "User Name" allows you to show
@@ -133,7 +135,7 @@
       <p>Back to the <a href="RouteTable.shtml">Route Table help
       page</a>.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

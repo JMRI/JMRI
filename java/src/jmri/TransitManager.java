@@ -1,8 +1,7 @@
 package jmri;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import javax.annotation.Nonnull;
 import jmri.managers.AbstractManager;
 
 /**
@@ -11,9 +10,9 @@ import jmri.managers.AbstractManager;
  * This doesn't need an interface, since Transits are globaly implemented,
  * instead of being system-specific.
  * <p>
- * Note that Transit system names must begin with IZ, and be followed by a
- * string, usually, but not always, a number. This is enforced when a Transit is
- * created.
+ * Note that Transit system names must begin with system prefix and type character,
+ * usually IZ, and be followed by a string, usually, but not always, a number. This
+ * is enforced when a Transit is created.
  * <br>
  * <hr>
  * This file is part of JMRI.
@@ -31,7 +30,7 @@ import jmri.managers.AbstractManager;
 public class TransitManager extends AbstractManager<Transit> implements InstanceManagerAutoDefault {
 
     public TransitManager() {
-        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        super();
         InstanceManager.getDefault(jmri.SectionManager.class).addVetoableChangeListener(this);
     }
 
@@ -61,8 +60,8 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
             return null;
         }
         String sysName = systemName;
-        if ((sysName.length() < 2) || (!sysName.substring(0, 2).equals("IZ"))) {
-            sysName = "IZ" + sysName;
+        if (!sysName.startsWith(getSystemNamePrefix())) {
+            sysName = makeSystemName(sysName);
         }
         // Check that Transit does not already exist
         Transit z;
@@ -80,6 +79,10 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         z = new Transit(sysName, userName);
         // save in the maps
         register(z);
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return z;
     }
 
@@ -96,24 +99,8 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
      *         another Transit
      */
     public Transit createNewTransit(String userName) {
-        boolean found = false;
-        String testName = "";
-        Transit z;
-        while (!found) {
-            int nextAutoTransitRef = lastAutoTransitRef + 1;
-            testName = "IZ" + nextAutoTransitRef;
-            z = getBySystemName(testName);
-            if (z == null) {
-                found = true;
-            }
-            lastAutoTransitRef = nextAutoTransitRef;
-        }
-        return createNewTransit(testName, userName);
+        return createNewTransit(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoTransitRef = 0;
 
     /**
      * Get an existing Transit. First looks up assuming that name is a User
@@ -129,14 +116,6 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
             return z;
         }
         return getBySystemName(name);
-    }
-
-    public Transit getBySystemName(String key) {
-        return  _tsys.get(key);
-    }
-
-    public Transit getByUserName(String key) {
-        return _tuser.get(key);
     }
 
     /**
@@ -189,11 +168,20 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         }
         return list;
     }
-
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Transit> getNamedBeanClass() {
+        return Transit.class;
+    }
+
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
+
 }

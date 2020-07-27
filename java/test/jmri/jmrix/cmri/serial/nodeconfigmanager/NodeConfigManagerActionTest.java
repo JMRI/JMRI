@@ -1,20 +1,20 @@
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of NodeConfigManagerAction
  * Copied from nodeconfig
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Chuck Catania Copyright (C) 2017
+ * @author Paul Bender Copyright (C) 2016
+ * @author Chuck Catania Copyright (C) 2017
  */
 public class NodeConfigManagerActionTest {
 
@@ -32,11 +32,11 @@ public class NodeConfigManagerActionTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

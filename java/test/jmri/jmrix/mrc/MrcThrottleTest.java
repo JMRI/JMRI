@@ -2,14 +2,13 @@ package jmri.jmrix.mrc;
 
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -381,8 +380,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -394,7 +392,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new MrcThrottle(memo,new jmri.DccLocoAddress(42,false));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

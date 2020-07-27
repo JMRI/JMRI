@@ -17,6 +17,7 @@ import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.operations.JsonOperations.BUILT;
 import static jmri.server.json.operations.JsonOperations.CAR;
+import static jmri.server.json.operations.JsonOperations.CAR_SUB_TYPE;
 import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
 import static jmri.server.json.operations.JsonOperations.DESTINATION;
 import static jmri.server.json.operations.JsonOperations.ENGINE;
@@ -65,7 +66,7 @@ import org.slf4j.LoggerFactory;
 public class JsonUtil {
 
     private final ObjectMapper mapper;
-    private final static Logger log = LoggerFactory.getLogger(JsonUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonUtil.class);
 
     /**
      * Create utilities.
@@ -89,7 +90,7 @@ public class JsonUtil {
         Car car = carManager().getById(name);
         if (car == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, "ErrorNotFound", CAR, name), id);
+                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, CAR, name), id);
         }
         return this.getCar(car, locale);
     }
@@ -109,7 +110,8 @@ public class JsonUtil {
      * Get the JSON representation of an Engine.
      *
      * @param engine the Engine
-     * @param data   the JSON data from {@link #getRollingStock(RollingStock, Locale)}
+     * @param data   the JSON data from
+     *               {@link #getRollingStock(RollingStock, Locale)}
      * @param locale the client's locale
      * @return the JSON representation of engine
      */
@@ -132,7 +134,7 @@ public class JsonUtil {
         Engine engine = engineManager().getById(name);
         if (engine == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, "ErrorNotFound", ENGINE, name), id);
+                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, ENGINE, name), id);
         }
         return this.getEngine(engine, locale);
     }
@@ -152,7 +154,8 @@ public class JsonUtil {
      * Get a JSON representation of a Car.
      *
      * @param car    the Car
-     * @param data the JSON data from {@link #getRollingStock(RollingStock, Locale)}
+     * @param data   the JSON data from
+     *               {@link #getRollingStock(RollingStock, Locale)}
      * @param locale the client's locale
      * @return the JSON representation of car
      */
@@ -169,12 +172,14 @@ public class JsonUtil {
         if (car.getFinalDestinationTrack() != null) {
             data.set(JSON.FINAL_DESTINATION, this.getRSLocationAndTrack(car.getFinalDestinationTrack(), null, locale));
         } else if (car.getFinalDestination() != null) {
-            data.set(JSON.FINAL_DESTINATION, this.getRSLocation(car.getFinalDestination(), (RouteLocation) null, locale));
+            data.set(JSON.FINAL_DESTINATION,
+                    this.getRSLocation(car.getFinalDestination(), (RouteLocation) null, locale));
         } else {
             data.set(JSON.FINAL_DESTINATION, null);
         }
         if (car.getReturnWhenEmptyDestTrack() != null) {
-            data.set(JSON.RETURN_WHEN_EMPTY, this.getRSLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null, locale));
+            data.set(JSON.RETURN_WHEN_EMPTY,
+                    this.getRSLocationAndTrack(car.getReturnWhenEmptyDestTrack(), null, locale));
         } else if (car.getReturnWhenEmptyDestination() != null) {
             data.set(JSON.RETURN_WHEN_EMPTY,
                     this.getRSLocation(car.getReturnWhenEmptyDestination(), (RouteLocation) null, locale));
@@ -203,13 +208,13 @@ public class JsonUtil {
         data.put(COMMENT, location.getComment());
         Reporter reporter = location.getReporter();
         data.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
-        // note type defaults to all in-use rolling stock types 
+        // note type defaults to all in-use rolling stock types
         ArrayNode types = data.putArray(CAR_TYPE);
         for (String type : location.getTypeNames()) {
             types.add(type);
         }
         ArrayNode tracks = data.putArray(TRACK);
-        for (Track track : location.getTrackList()) {
+        for (Track track : location.getTracksList()) {
             tracks.add(getTrack(track, locale));
         }
         return data;
@@ -229,17 +234,17 @@ public class JsonUtil {
             return getLocation(locationManager().getLocationById(name), locale);
         } catch (NullPointerException e) {
             log.error("Unable to get location id [{}].", name);
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LOCATION, name), id);
+            throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, LOCATION, name), id);
         }
     }
 
     /**
      * Get a Track in JSON.
      * <p>
-     * <strong>Note:</strong>use {@link #getRSTrack(Track, Locale)} if
-     * including in rolling stock or train.
+     * <strong>Note:</strong>use {@link #getRSTrack(Track, Locale)} if including
+     * in rolling stock or train.
      * 
-     * @param track the track to get
+     * @param track  the track to get
      * @param locale the client's locale
      * @return a JSON representation of the track
      */
@@ -249,11 +254,12 @@ public class JsonUtil {
         node.put(NAME, track.getId());
         node.put(COMMENT, track.getComment());
         node.put(LENGTH, track.getLength());
-        node.put(LOCATION, track.getLocation().getId()); // only includes ID to avoid recursion
+        // only includes location ID to avoid recursion
+        node.put(LOCATION, track.getLocation().getId());
         Reporter reporter = track.getReporter();
         node.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
         node.put(TYPE, track.getTrackType());
-        // note type defaults to all in-use rolling stock types 
+        // note type defaults to all in-use rolling stock types
         ArrayNode types = node.putArray(CAR_TYPE);
         for (String type : track.getTypeNames()) {
             types.add(type);
@@ -262,7 +268,8 @@ public class JsonUtil {
     }
 
     /**
-     * Get the JSON representation of a Location for use in rolling stock or train.
+     * Get the JSON representation of a Location for use in rolling stock or
+     * train.
      * <p>
      * <strong>Note:</strong>use {@link #getLocation(Location, Locale)} if not
      * including in rolling stock or train.
@@ -297,10 +304,10 @@ public class JsonUtil {
     /**
      * Get a Track in JSON for use in rolling stock or train.
      * <p>
-     * <strong>Note:</strong>use {@link #getTrack(Track, Locale)} if
-     * not including in rolling stock or train.
+     * <strong>Note:</strong>use {@link #getTrack(Track, Locale)} if not
+     * including in rolling stock or train.
      * 
-     * @param track the track to get
+     * @param track  the track to get
      * @param locale the client's locale
      * @return a JSON representation of the track
      */
@@ -316,10 +323,11 @@ public class JsonUtil {
         node.put(NAME, rs.getId());
         node.put(NUMBER, TrainCommon.splitString(rs.getNumber()));
         node.put(ROAD, rs.getRoadName());
-        String[] type = rs.getTypeName().split("-"); // second half of string
-        // can be anything
+        // second half of string can be anything
+        String[] type = rs.getTypeName().split("-", 2);
         node.put(RFID, rs.getRfid());
         node.put(CAR_TYPE, type[0]);
+        node.put(CAR_SUB_TYPE, type.length == 2 ? type[1] : null);
         node.put(LENGTH, rs.getLengthInteger());
         try {
             node.put(WEIGHT, Double.parseDouble(rs.getWeight()));
@@ -344,7 +352,8 @@ public class JsonUtil {
             node.set(LOCATION, null);
         }
         if (rs.getDestinationTrack() != null) {
-            node.set(DESTINATION, this.getRSLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination(), locale));
+            node.set(DESTINATION,
+                    this.getRSLocationAndTrack(rs.getDestinationTrack(), rs.getRouteDestination(), locale));
         } else if (rs.getDestination() != null) {
             node.set(DESTINATION, this.getRSLocation(rs.getDestination(), rs.getRouteDestination(), locale));
         } else {
@@ -410,7 +419,7 @@ public class JsonUtil {
             return getTrain(trainManager().getTrainById(name), locale);
         } catch (NullPointerException ex) {
             log.error("Unable to get train id [{}].", name, ex);
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", JsonOperations.TRAIN, name), id);
+            throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JsonOperations.TRAIN, name), id);
         }
     }
 
@@ -422,31 +431,28 @@ public class JsonUtil {
      */
     public ArrayNode getTrains(Locale locale) {
         ArrayNode array = this.mapper.createArrayNode();
-        trainManager().getTrainsByNameList().forEach((train) -> {
-            array.add(getTrain(train, locale));
-        });
+        trainManager().getTrainsByNameList()
+                .forEach(train -> array.add(getTrain(train, locale)));
         return array;
     }
 
     private ArrayNode getCarsForTrain(Train train, Locale locale) {
         ArrayNode array = mapper.createArrayNode();
-        carManager().getByTrainDestinationList(train).forEach((car) -> {
-            array.add(getCar(car, locale));
-        });
+        carManager().getByTrainDestinationList(train)
+                .forEach(car -> array.add(getCar(car, locale)));
         return array;
     }
 
     private ArrayNode getEnginesForTrain(Train train, Locale locale) {
         ArrayNode array = mapper.createArrayNode();
-        engineManager().getByTrainBlockingList(train).forEach((engine) -> {
-            array.add(getEngine(engine, locale));
-        });
+        engineManager().getByTrainBlockingList(train)
+                .forEach(engine -> array.add(getEngine(engine, locale)));
         return array;
     }
 
     private ArrayNode getRouteLocationsForTrain(Train train, Locale locale) {
         ArrayNode array = mapper.createArrayNode();
-        train.getRoute().getLocationsBySequenceList().forEach((route) -> {
+        train.getRoute().getLocationsBySequenceList().forEach(route -> {
             ObjectNode root = mapper.createObjectNode();
             RouteLocation rl = route;
             root.put(NAME, rl.getId());
@@ -457,11 +463,11 @@ public class JsonUtil {
             root.put(EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));
             root.put(EXPECTED_DEPARTURE, train.getExpectedDepartureTime(rl));
             root.set(LOCATION, getRSLocation(rl.getLocation(), locale));
-            array.add(root); //add this routeLocation to the routeLocation array
+            array.add(root);
         });
-        return array; //return array of routeLocations
+        return array;
     }
-    
+
     private CarManager carManager() {
         return InstanceManager.getDefault(CarManager.class);
     }

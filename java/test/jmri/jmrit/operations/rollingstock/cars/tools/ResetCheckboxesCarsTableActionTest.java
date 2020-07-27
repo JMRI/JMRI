@@ -1,18 +1,21 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.rollingstock.cars.CarsTableModel;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ResetCheckboxesCarsTableActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        ResetCheckboxesCarsTableAction t = new ResetCheckboxesCarsTableAction("Test");
+        CarsTableModel carsTableModel = new CarsTableModel(false, "test", "test");
+        ResetCheckboxesCarsTableAction t = new ResetCheckboxesCarsTableAction(carsTableModel);
         Assert.assertNotNull("exists",t);
     }
 

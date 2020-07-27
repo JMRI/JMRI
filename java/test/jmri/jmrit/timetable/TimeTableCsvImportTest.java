@@ -6,20 +6,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for the TimeTableCsvImport Class
  * @author Dave Sand Copyright (C) 2019
  */
 public class TimeTableCsvImportTest {
-
-    @Rule
-    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     @Test
     public void testImport() {
@@ -104,7 +106,7 @@ public class TimeTableCsvImportTest {
     public void createCsvFile(File file) {
         // Create a test CSV file for the import test
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(file.getAbsolutePath()), "utf-8"))) {
+                new FileOutputStream(file.getAbsolutePath()), StandardCharsets.UTF_8))) {
            writer.write("Layout,Time Table CSV Test Layout,N,6,0,Yes\n");
            writer.write("TrainType,Freight,123123\n");
            writer.write("Segment,Mainline\n");
@@ -129,7 +131,7 @@ public class TimeTableCsvImportTest {
     public void createMinimalCsvFile(File file) {
         // Create a test CSV file for the import test
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(file.getAbsolutePath()), "utf-8"))) {
+                new FileOutputStream(file.getAbsolutePath()), StandardCharsets.UTF_8))) {
            writer.write("Layout\n");
            writer.write("TrainType\n");
            writer.write("Segment\n");
@@ -148,7 +150,7 @@ public class TimeTableCsvImportTest {
     public void createBadCsvFile(File file) {
         // Create a test CSV file for the import test
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(file.getAbsolutePath()), "utf-8"))) {
+                new FileOutputStream(file.getAbsolutePath()), StandardCharsets.UTF_8))) {
            writer.write("Layout\n");
            writer.write("Layout\n");
            writer.write("TrainType, UseLayoutTypes\n");
@@ -159,19 +161,15 @@ public class TimeTableCsvImportTest {
             log.warn("Unable to create the bad test import CSV file ", ex);
         }
     }
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
-        try {
-            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch(java.io.IOException ioe){
-          Assert.fail("failed to setup profile for test");
-        }
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
        // use reflection to reset the static file location.
        try {

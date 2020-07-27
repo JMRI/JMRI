@@ -1,13 +1,19 @@
 package jmri.jmrix;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JmriJFrame;
-import org.junit.After;
+import jmri.util.ThreadingUtil;
+
+import org.assertj.swing.edt.GuiActionRunner;
+
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 /**
  * JUnit tests for the AbstractMonPane class
@@ -24,129 +30,133 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
     // implementing classes must set pane to the pane under test in setUp.
     protected AbstractMonPane pane = null;
 
-    // implementing classes must override setUp and tearDown.
-    // to set pane.
-    @Before
+    // implementing classes must override setUp to set pane
+    @BeforeEach
     @Override
     public void setUp() {
-        pane = new AbstractMonPane() {
-            @Override
-            public String getTitle() {
-                return "title";
-            }
-
-            @Override
-            protected void init() {
-            }
-        };
+        JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         pane = null;
+        JUnitUtil.tearDown();
     }
 
     @Test
-    public void testConcreteCtor() throws Exception {
-        pane.initComponents();
+    public void testConcreteCtor() {
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute(() -> pane.initComponents()));
+        assertThat(thrown).isNull();
     }
 
     @Test
-    public void testInsertLine() throws Exception {
-        pane.initComponents();
+    public void testInsertLine() {
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
 
-        pane.entryField.setText("foo");
-        pane.enterButtonActionPerformed(null);
+        setFrameTextOnGUIThread("foo");
 
         JUnitUtil.waitFor(() -> {
-            return pane.getFrameText().equals("foo\n");
+            return getFrameTextONGUIThread().equals("foo\n");
         }, "frame text");
-        Assert.assertEquals("foo\n", pane.getFrameText());
+        assertThat("foo\n").isEqualTo(getFrameTextONGUIThread());
 
-        pane.entryField.setText("bar");
-        pane.enterButtonActionPerformed(null);
+        setFrameTextOnGUIThread("bar");
 
         JUnitUtil.waitFor(() -> {
-            return pane.getFrameText().equals("foo\nbar\n");
+            return getFrameTextONGUIThread().equals("foo\nbar\n");
         }, "frame text");
-        Assert.assertEquals("foo\nbar\n", pane.getFrameText());
+        assertThat("foo\nbar\n").isEqualTo(getFrameTextONGUIThread());
+    }
+
+    private void setFrameTextOnGUIThread(String text) {
+        ThreadingUtil.runOnGUI(() -> {
+            pane.entryField.setText(text);
+            pane.enterButtonActionPerformed(null);
+        });
+    }
+
+    protected String getFrameTextONGUIThread() {
+        return ThreadingUtil.runOnGUIwithReturn(() -> pane.getFrameText());
     }
 
     @Test
-    public void testClearButton() throws Exception {
-        pane.initComponents();
+    public void testClearButton() {
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
 
-        pane.entryField.setText("foo");
-        pane.enterButtonActionPerformed(null);
+        setFrameTextOnGUIThread("foo");
 
-        pane.clearButtonActionPerformed(null);
+        ThreadingUtil.runOnGUI( () -> pane.clearButtonActionPerformed(null));
 
         JUnitUtil.waitFor(() -> {
-            return pane.getFrameText().equals("");
+            return getFrameTextONGUIThread().equals("");
         }, "frame text");
-        Assert.assertEquals("", pane.getFrameText());
+        assertThat("").isEqualTo(getFrameTextONGUIThread());
     }
 
     @Test
-    public void testFreezeButton() throws Exception {
+    public void testFreezeButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         AbstractMonPaneScaffold s = new AbstractMonPaneScaffold(pane);
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        try {
-            pane.initComponents();
-        } catch (Exception ex) {
-            Assert.fail("Could not load pane: " + ex);
-        }
-        f.add(pane);
-        // set title if available
-        if (pane.getTitle() != null) {
-            f.setTitle(pane.getTitle());
-        }
-        f.pack();
-        f.setVisible(true);
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
 
-        Assert.assertFalse(s.getFreezeButtonState());
+        ThreadingUtil.runOnGUI( () -> {
+            f.add(pane);
+            // set title if available
+            if (pane.getTitle() != null) {
+                f.setTitle(pane.getTitle());
+            }
+            f.pack();
+            f.setVisible(true);
+        });
 
-        // there is no label on the entryField, so we access that directly.
-        pane.entryField.setText("foo");
+        assertThat(s.getFreezeButtonState()).isFalse();
+
+        s.enterTextInEntryField("foo");
         s.clickEnterButton();
         s.clickFreezeButton();
-        Assert.assertTrue(s.getFreezeButtonState());
+        
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        assertThat(s.getFreezeButtonState()).isTrue();
 
-        pane.entryField.setText("bar");
+        s.enterTextInEntryField("bar");
         s.clickEnterButton();
 
-        JUnitUtil.waitFor(() -> {
-            return pane.getFrameText().equals("foo\n");
-        }, "frame text");
-        Assert.assertEquals("foo\n", pane.getFrameText());
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
-        f.dispose();
+        assertThat("foo\n").isEqualTo(getFrameTextONGUIThread());
+
+        ThreadingUtil.runOnGUI( () -> {
+            f.setVisible(false);
+            f.dispose();
+        });
     }
 
     @Test
-    public void testFilterFormatting() throws Exception {
+    public void testFilterFormatting() {
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
 
-        pane.initComponents();
+        setAndCheckFilterTextEntry("00", "00", "filter field unedited");
 
-        pane.setFilterText("00");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        Assert.assertEquals("filter field unedited", "00", pane.getFilterText());
+        setAndCheckFilterTextEntry("A0", "A0", "filter field unedited");
 
-        pane.setFilterText("A0");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        Assert.assertEquals("filter field unedited", "A0", pane.getFilterText());
+        setAndCheckFilterTextEntry("#", "", "filter field rejected");
 
-        pane.setFilterText("#");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        Assert.assertEquals("filter field rejected", "", pane.getFilterText());
+        setAndCheckFilterTextEntry("ab", "AB", "filter field edited");
+    }
 
-        pane.setFilterText("ab");
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-        Assert.assertEquals("filter field edited", "AB", pane.getFilterText());
+    protected void setAndCheckFilterTextEntry(String entryText, String resultText, String errorMessage) {
+        ThreadingUtil.runOnGUI( () -> pane.setFilterText(entryText));
+        assertThat(resultText).withFailMessage(errorMessage)
+                .isEqualTo(ThreadingUtil.runOnGUIwithReturn( () -> pane.getFilterText()));
     }
 
     // Test checking the Time Stamp checkbox.
@@ -157,22 +167,25 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        try {
-            pane.initComponents();
-        } catch (Exception ex) {
-            Assert.fail("Could not load pane: " + ex);
-        }
-        f.add(pane);
-        // set title if available
-        if (pane.getTitle() != null) {
-            f.setTitle(pane.getTitle());
-        }
-        f.pack();
-        f.setVisible(true);
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
+
+        ThreadingUtil.runOnGUI( () -> {
+                    f.add(pane);
+                    // set title if available
+                    if (pane.getTitle() != null) {
+                        f.setTitle(pane.getTitle());
+                    }
+                    f.pack();
+                    f.setVisible(true);
+                });
+
         s.checkTimeStampCheckBox();
-        Assert.assertTrue(s.getTimeStampCheckBoxValue());
-        f.dispose();
-    }
+        assertThat(s.getTimeStampCheckBoxValue()).isTrue();
+        ThreadingUtil.runOnGUI( () -> {
+            f.setVisible(false);
+            f.dispose();
+        });    }
 
     // Test checking the Raw checkbox.
     @Test
@@ -182,22 +195,24 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        try {
-            pane.initComponents();
-        } catch (Exception ex) {
-            Assert.fail("Could not load pane: " + ex);
-        }
-        f.add(pane);
-        // set title if available
-        if (pane.getTitle() != null) {
-            f.setTitle(pane.getTitle());
-        }
-        f.pack();
-        f.setVisible(true);
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
+
+        ThreadingUtil.runOnGUI( () -> {
+            f.add(pane);
+            // set title if available
+            if (pane.getTitle() != null) {
+                f.setTitle(pane.getTitle());
+            }
+            f.pack();
+            f.setVisible(true);
+        });
         s.checkRawCheckBox();
-        Assert.assertTrue(s.getRawCheckBoxValue());
-        f.dispose();
-    }
+        assertThat(s.getRawCheckBoxValue()).isTrue();
+        ThreadingUtil.runOnGUI( () -> {
+            f.setVisible(false);
+            f.dispose();
+        });   }
 
     // Test checking the Always On Top checkbox.
     @Test
@@ -207,21 +222,24 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        try {
-            pane.initComponents();
-        } catch (Exception ex) {
-            Assert.fail("Could not load pane: " + ex);
-        }
-        f.add(pane);
-        // set title if available
-        if (pane.getTitle() != null) {
-            f.setTitle(pane.getTitle());
-        }
-        f.pack();
-        f.setVisible(true);
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
+
+        ThreadingUtil.runOnGUI( () -> {
+            f.add(pane);
+            // set title if available
+            if (pane.getTitle() != null) {
+                f.setTitle(pane.getTitle());
+            }
+            f.pack();
+            f.setVisible(true);
+        });
         s.checkOnTopCheckBox();
-        Assert.assertTrue(s.getOnTopCheckBoxValue());
-        f.dispose();
+        assertThat(s.getOnTopCheckBoxValue()).isTrue();
+        ThreadingUtil.runOnGUI( () -> {
+            f.setVisible(false);
+            f.dispose();
+        });
     }
 
     // Test checking the AutoScroll checkbox.
@@ -232,23 +250,25 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
         // for Jemmy to work, we need the pane inside of a frame
         JmriJFrame f = new JmriJFrame();
-        try {
-            pane.initComponents();
-        } catch (Exception ex) {
-            Assert.fail("Could not load pane: " + ex);
-        }
-        f.add(pane);
-        // set title if available
-        if (pane.getTitle() != null) {
-            f.setTitle(pane.getTitle());
-        }
-        f.pack();
-        f.setVisible(true);
-        Assert.assertTrue(s.getAutoScrollCheckBoxValue());
+        Throwable thrown = catchThrowable( () -> GuiActionRunner.execute( () ->  pane.initComponents()));
+        assertThat(thrown).isNull();
+
+        ThreadingUtil.runOnGUI( () -> {
+            f.add(pane);
+            // set title if available
+            if (pane.getTitle() != null) {
+                f.setTitle(pane.getTitle());
+            }
+            f.pack();
+            f.setVisible(true);
+        });
+        assertThat(s.getAutoScrollCheckBoxValue()).isTrue();
         s.checkAutoScrollCheckBox();
-        Assert.assertFalse(s.getAutoScrollCheckBoxValue());
-        f.setVisible(false);
-        f.dispose();
+        assertThat(s.getAutoScrollCheckBoxValue()).isFalse();
+        ThreadingUtil.runOnGUI( () -> {
+            f.setVisible(false);
+            f.dispose();
+        });
     }
 
 }

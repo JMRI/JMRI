@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -37,10 +38,11 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public LocoNetSystemConnectionMemo getMemo() {
         return (LocoNetSystemConnectionMemo) memo;
     }
-    
+
     // to free resources when no longer used
     @Override
     public void dispose() {
@@ -60,8 +62,13 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     // LocoNet-specific methods
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         return new LnSensor(systemName, userName, tc, getSystemPrefix());
     }
 
@@ -70,6 +77,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     public void message(LocoNetMessage l) {
         // parse message type
         LnSensorAddress a;
+        LnSensor ns;
         switch (l.getOpCode()) {
             case LnConstants.OPC_INPUT_REP:                /* page 9 of LocoNet PE */
 
@@ -83,14 +91,15 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         }
         // reach here for LocoNet sensor input command; make sure we know about this one
         String s = a.getNumericAddress();
-        if (null == getBySystemName(s)) {
+        ns = (LnSensor) getBySystemName(s);
+        if (ns == null) {
             // need to store a new one
             if (log.isDebugEnabled()) {
                 log.debug("Create new LnSensor as {}", s);
             }
-            LnSensor ns = (LnSensor) newSensor(s, null);
-            ns.message(l);  // have it update state
+            ns = (LnSensor) newSensor(s, null);
         }
+        ns.messageFromManager(l);  // have it update state
     }
 
     volatile LnSensorUpdateThread thread;
@@ -126,13 +135,20 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     private boolean busy = false;
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (curAddress.contains(":")) {
+            
+            // NOTE: This format is deprecated in JMRI 4.17.4 on account the 
+            // "byte:bit" format cannot be used under normal JMRI usage 
+            // circumstances.  It is retained for the normal deprecation period 
+            // in order to support any atypical usage patterns.
+            
             int board = 0;
             int channel = 0;
             // Address format passed is in the form of board:channel or T:turnout address
@@ -159,6 +175,9 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             } else {
                 iName = 16 * board + channel - 16;
             }
+            jmri.util.LoggingUtil.warnOnce(log, 
+                    "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '{}' format is deprecated as of JMRI 4.17.4 and will be removed in a future JMRI release.  Use the curAddress format '{}' instead.",
+                    curAddress, iName);
         } else {
             // Entered in using the old format
             try {
@@ -177,7 +196,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -185,7 +204,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
@@ -204,7 +224,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName = "";
 
@@ -251,6 +271,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
         /**
          * Constructs the thread
+         * @param sm SensorManager to use
+         * @param tc TrafficController to use
          */
         public LnSensorUpdateThread(LnSensorManager sm, LnTrafficController tc) {
             this.sm = sm;
@@ -265,6 +287,16 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         @Override
         public void run() {
             sm.setUpdateBusy();
+            while (!tc.status()) {
+                try {
+                    // Delay 500 mSec to allow init of traffic controller, listeners.
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                    sm.setUpdateNotBusy();
+                    return; // and stop work
+                }
+            }
             byte sw1[] = {0x78, 0x79, 0x7a, 0x7b, 0x78, 0x79, 0x7a, 0x7b};
             byte sw2[] = {0x27, 0x27, 0x27, 0x27, 0x07, 0x07, 0x07, 0x07};
             // create and initialize LocoNet message
@@ -281,7 +313,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 }
                 msg.setElement(1, sw1[k]);
                 msg.setElement(2, sw2[k]);
-                        
+
                 tc.sendLocoNetMessage(msg);
                 log.debug("LnSensorUpdate sent");
             }

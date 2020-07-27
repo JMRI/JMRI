@@ -1,12 +1,13 @@
 package jmri.jmrit.beantable;
 
-import jmri.IdTag;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class IdTagTableTabActionTest extends AbstractTableTabActionBase {
 
@@ -33,11 +34,11 @@ public class IdTagTableTabActionTest extends AbstractTableTabActionBase {
 
     @Test
     @Override
-    @Ignore("parent class test causes an NPE; need to investigate cause")
+    @Disabled("parent class test causes an NPE; need to investigate cause")
     public void testGetPanel() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -47,7 +48,7 @@ public class IdTagTableTabActionTest extends AbstractTableTabActionBase {
         a = new IdTagTableTabAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;

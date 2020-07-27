@@ -3,17 +3,16 @@ package jmri.jmrix.ieee802154.xbee;
 import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XBeeTurnoutTest.java
  *
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
+ * Test for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XBeeTurnoutTest {
 
@@ -74,8 +73,7 @@ public class XBeeTurnoutTest {
         Assert.assertNotNull("exists", s);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
@@ -95,10 +93,12 @@ public class XBeeTurnoutTest {
         tc.registerNode(node);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminate();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

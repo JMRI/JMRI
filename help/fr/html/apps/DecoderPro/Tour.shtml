@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
 <title>JMRI: DecoderPro - Tour</title>
 
@@ -16,18 +15,21 @@
 </head>
 
 <body>
-<!--#include virtual="/header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: Guide Utilisateur DecoderPro </h1>
 <h2>Une Visite Rapide </h2>
-<p class="important">Cette visite montre DecoderPro version 3.x. Depuis la version 4, elle a &#233;t&#233; remplac&#233;e par une nouvelle interface, 
+
+<p class="important">Cette visite montre DecoderPro version 3.x.<br>
+Depuis la version 4, elle a &#233;t&#233; remplac&#233;e par une nouvelle interface,
 connue avant comme <a href="index.shtml">DecoderPro3</a>.</p>
 
 <div class="image100w">
-<table border=0>
+<table border="0">
 		<tr>
 		<td style="vertical-align:top;">
 		<a href="./images/DPStart.gif">
@@ -156,7 +158,7 @@ connue avant comme <a href="index.shtml">DecoderPro3</a>.</p>
 		exige la configuration de deux ensembles de bits en un seul CV.
 		Un autre exemple est la configuration du mapping d'un d&#233;codeur de Soundtraxx entre 
 		les fonctions et les sons. Il s'agit de bits et de valeurs r&#233;parties sur une douzaine de CV 
-		diff&#233;rents, mais Decoder Pro transforme ce travail de configuration par de simples cochage de cases.</p>
+		diff&#233;rents, mais DecoderPro transforme ce travail de configuration par de simples cochage de cases.</p>
 		<p>
 		Chaque zone de s&#233;lection, case &#224; cocher ou bouton radio est mapp&#233; dans un bit(s) 
 		sp&#233;cifique(s) dans les CV du d&#233;codeur. Le programmateur g&#232;re la lecture et l'&#233;criture 
@@ -165,7 +167,6 @@ connue avant comme <a href="index.shtml">DecoderPro3</a>.</p>
 		</p>
 		</td>
 		</tr>
-
 
 		<tr>
 		<td style="vertical-align:top;">
@@ -182,7 +183,7 @@ connue avant comme <a href="index.shtml">DecoderPro3</a>.</p>
 		l'homme en format XML. La documentation sur le contenu du fichier existe, et nous travaillons 
 		continuellement pour la mettre &#224; jour.</p>
 
-		<P>Ces fichiers rendent commode la mise &#224; jour de DecoderPro pour travailler avec un
+		<p>Ces fichiers rendent commode la mise &#224; jour de DecoderPro pour travailler avec un
 		nouveau d&#233;codeur. Par exemple, les capacit&#233;s uniques d'un DH142 Digitrax
 		figurent sur une feuille "Digitrax" .</p>
 
@@ -216,7 +217,7 @@ connue avant comme <a href="index.shtml">DecoderPro3</a>.</p>
 		<td style="vertical-align:top;">
 		<a href="./images/Roster75.gif">
 		<img src="./images/Roster75.gif" width="100" height="100" alt="Rosters"></a>
-		<p>Pour plus d'informations, voir <a href="./Roster.shtml"> Liste Sujets </A></p>
+		<p>Pour plus d'informations, voir <a href="./Roster.shtml"> Liste Sujets </a></p>
 		</td>
 
 		<td style="vertical-align:top;">
@@ -229,7 +230,7 @@ connue avant comme <a href="index.shtml">DecoderPro3</a>.</p>
 		peut &#233;galement stocker des informations de locomotive pour vous. La feuille "Entr&#233;e Inventaire"  
 		affiche cette information et vous permet de la modifier.</p>
 
-		<P>
+		<p>
 		Cliquez sur "Enregistrer" pour stocker les informations de l'inventaire dans un fichier sur le disque dur de 
 		votre ordinateur, vous serez invit&#233; &#224; le faire si vous fermez le programmateur avec des 
 		informations non m&#233;moris&#233;es.</p>
@@ -254,13 +255,13 @@ connue avant comme <a href="index.shtml">DecoderPro3</a>.</p>
 		pour ..." .
 		</p>
 
-		<P>
+		<p>
 		Le bouton "Identifier" utilise l'adresse DCC pour s&#233;lectionner une locomotive sp&#233;cifique 
 		dans le fichier. Lorsque vous cliquez sur "Ouvrir programmateur" avec une locomotive 
 		sp&#233;cifique s&#233;lectionn&#233;e, le programmateur ouvre chaque feuille avec les valeurs 
 		actuelles d&#233;j&#224; pr&#233;sentes. </p>
 
-		<P> Vous pouvez imprimer les informations de la locomotive actuelle 
+		<p> Vous pouvez imprimer les informations de la locomotive actuelle
 		depuis les fen&#234;tres de programmation. Dans le menu "Fichier ...", s&#233;lectionnez 
 		"Imprimer ...", et remplir la bo&#238;te de dialogue qui est pr&#233;sent&#233;e.</p>
 		</td>
@@ -276,8 +277,9 @@ Plus d'informations disponibles sur
 <a href="MoreInfo.shtml"> comment travaille DecoderPro </a>,
 y compris la fa&#231;on d'<a href="CreateDecoder.shtml">ajouter de nouveaux Types de D&#233;codeur </a>.
 
- <!--#include virtual="/Footer" -->
-  </div> <!-- close #mainContent -->
-</div> <!-- close #mBody -->    
+			</div>
+ 		<!--#include virtual="/Footer.shtml" -->
+  	</div> <!-- close #mainContent -->
+	</div> <!-- close #mBody -->
 </body>
 </html>

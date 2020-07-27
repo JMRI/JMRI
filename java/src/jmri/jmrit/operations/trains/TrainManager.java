@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -40,7 +41,7 @@ import jmri.util.ColorUtil;
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
  */
-public class TrainManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
+public class TrainManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     static final String NONE = "";
 
@@ -75,24 +76,12 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
 //    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
     public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
+    public static final String TRAINS_SHOW_FULL_NAME_PROPERTY = "TrainsShowFullName"; // NOI18N
 
     public TrainManager() {
     }
 
     private int _id = 0; // train ids
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized TrainManager instance() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
-        return InstanceManager.getDefault(TrainManager.class);
-    }
 
     /**
      * Get the number of items in the roster
@@ -183,6 +172,12 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     public boolean isShowLocationHyphenNameEnabled() {
         return _showLocationHyphenName;
     }
+    
+    public void setShowLocationHyphenNameEnabled(boolean enable) {
+        boolean old = _showLocationHyphenName;
+        _showLocationHyphenName = enable;
+        setDirtyAndFirePropertyChange(TRAINS_SHOW_FULL_NAME_PROPERTY, old, enable);
+    }
 
     public String getTrainsFrameTrainAction() {
         return _trainAction;
@@ -194,28 +189,6 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         if (!old.equals(action)) {
             setDirtyAndFirePropertyChange(TRAIN_ACTION_CHANGED_PROPERTY, old, action);
         }
-    }
-
-    /**
-     * Sets the selected schedule id
-     *
-     * @param id Selected schedule id
-     * Moved to TrainScheduleManager.java
-     * @deprecated at or before 4.13.7
-     */
-    @Deprecated  // at or before 4.13.7
-    public void setTrainSecheduleActiveId(String id) {
-        InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
-    }
-
-    /**
-     * @deprecated at or before 4.13.7
-     * Moved to TrainScheduleManager.java
-     * @return active schedule id
-     */
-    @Deprecated // at or before 4.13.7
-    public String getTrainScheduleActiveId() {
-        return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
     }
 
     /**
@@ -244,7 +217,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
 
     public void runStartUpScripts() {
         // use thread to prevent object (Train) thread lock
-        Thread scripts = new Thread(new Runnable() {
+        Thread scripts = jmri.util.ThreadingUtil.newThread(new Runnable() {
             @Override
             public void run() {
                 for (String scriptPathName : getStartUpScripts()) {
@@ -296,7 +269,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
     }
     
-    public boolean hasRoadRestrictions() {
+    public boolean isRoadRestricted() {
         for (Train train : getList()) {
             if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
                 return true;
@@ -305,7 +278,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         return false;
     }
     
-    public boolean hasLoadRestrictions() {
+    public boolean isLoadRestricted() {
         for (Train train : getList()) {
             if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
                 return true;
@@ -449,6 +422,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     public boolean isAnyTrainBuilding() {
         for (Train train : getTrainsByIdList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
+                log.debug("Train {} is currently building", train.getName());
                 return true;
             }
         }
@@ -475,9 +449,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      *         destination.
      */
     public Train getTrainForCar(Car car, Train excludeTrain, PrintWriter buildReport) {
-        log.debug("Find train for car (" + car.toString() + ") location (" + car.getLocationName() + ", " // NOI18N
-                + car.getTrackName() + ") destination (" + car.getDestinationName() + ", " // NOI18N
-                + car.getDestinationTrackName() + ")"); // NOI18N
+        log.debug("Find train for car ({}) location ({}, {}) destination ({}, {})", car.toString(), car.getLocationName(), car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()); // NOI18N
         if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle
@@ -492,7 +464,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
                 continue;
             }
             // does this train service this car?
-            if (train.services(buildReport, car)) {
+            if (train.isServiceable(buildReport, car)) {
                 return train;
             }
         }
@@ -674,7 +646,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         box.removeAllItems();
         box.addItem(null);
         for (Train train : getTrainsByNameList()) {
-            if (train.services(car)) {
+            if (train.isServiceable(car)) {
                 box.addItem(train);
             }
         }
@@ -738,11 +710,10 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     /**
-     *
-     * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
+     * JColorChooser is not a replacement for getRowColorComboBox as it doesn't support no color as a selection.
+     * 
+     * @return the available colors used highlighting table rows including no color.
      */
-    @Deprecated
     public JComboBox<String> getRowColorComboBox() {
         JComboBox<String> box = new JComboBox<>();
         box.addItem(NONE);
@@ -939,7 +910,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
 
     public void buildSelectedTrains(List<Train> trains) {
         // use a thread to allow table updates during build
-        Thread build = new Thread(new Runnable() {
+        Thread build = jmri.util.ThreadingUtil.newThread(new Runnable() {
             @Override
             public void run() {
                 for (Train train : trains) {
@@ -1163,31 +1134,19 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.debug("TrainManager sees property change: "
-                + e.getPropertyName()
-                + " old: "
-                + e.getOldValue()
-                + " new "
-                + e.getNewValue()); // NOI18N
+        log.debug("TrainManager sees property change: {} old: {} new: {}",
+                e.getPropertyName(),
+                e.getOldValue(),
+                e.getNewValue());
         // TODO use listener to determine if load name has changed
         // if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
         // replaceLoad((String)e.getOldValue(), (String)e.getNewValue());
         // }
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     private void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainManager.class);

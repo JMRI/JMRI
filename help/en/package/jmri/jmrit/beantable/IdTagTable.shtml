@@ -15,10 +15,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The ID Tag Table</h1>You can use the ID Tag Table to look
       at the contents of JMRI IdTag objects.
 
@@ -41,7 +41,7 @@
 
       <p>For more information on ID Tags, see the <a href=
       "../../../../html/tools/IdTags.shtml">ID Tag help page</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

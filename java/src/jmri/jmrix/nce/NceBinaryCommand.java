@@ -156,10 +156,12 @@ public class NceBinaryCommand {
     public static final byte LOCO_CMD_DELETE_LOCO_CONSIST = 0x10; // Delete loco from consist
     public static final byte LOCO_CMD_KILL_CONSIST = 0x11;        // Kill consist
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "Long-standing API, risky to update")
     public static byte[] accDecoder(int number, boolean closed) {
 
         if (number < NmraPacket.accIdLowLimit || number > NmraPacket.accIdAltHighLimit) {
-            log.error("invalid NCE accessory address " + number);
+            log.error("invalid NCE accessory address {}", number);
             return null;
         }
         byte op_1;
@@ -399,9 +401,11 @@ public class NceBinaryCommand {
         return retVal;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "Long-standing API, risky to update")
     public static byte[] nceLocoCmd(int locoAddr, byte locoSubCmd, byte locoData) {
         if (locoSubCmd < 1 || locoSubCmd > 0x17) {
-            log.error("invalid NCE loco command " + locoSubCmd);
+            log.error("invalid NCE loco command {}", locoSubCmd);
             return null;
         }
 
