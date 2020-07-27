@@ -30,6 +30,18 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
     }
 
+    @Override
+    protected void checkClosedOffSent() {
+        Assert.assertEquals("thrown message", "53 00 14 80 C7",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+    }
+
+    @Override
+    protected void checkThrownOffSent() {
+        Assert.assertEquals("thrown message", "53 00 14 81 C6",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+    }
+
     // Test the Z21XNetTurnout message sequence.
     @Test
     @Override
