@@ -53,7 +53,7 @@ public class DetectionPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(makeSensorPanel(_occDetectorName, "DetectionSensor", "ToolTipOccupancySensor"));
+        panel.add(makeSensorPanel(_occDetectorName, "OccupancySensor", "ToolTipOccupancySensor"));
         _openPicklistButton = new JButton(Bundle.getMessage("OpenPicklist"));
         _openPicklistButton.addActionListener(a -> {
             if (_pickFrame == null) {
@@ -110,7 +110,7 @@ public class DetectionPanel extends JPanel {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("DetectionSensor"))));
+        blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("OccupancySensor"))));
 //        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
