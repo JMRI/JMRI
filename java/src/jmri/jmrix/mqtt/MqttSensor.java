@@ -91,6 +91,9 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
         log.debug("payload: {}", payload);
         // send appropriate command
         sendMessage(payload);
+        
+        // and do internal operations
+        setOwnState(s);
     }
 
     private void sendMessage(String c) {
