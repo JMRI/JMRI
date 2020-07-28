@@ -290,23 +290,23 @@ public class FrmTRL extends javax.swing.JFrame {
 
     private void _mAutoGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mAutoGenerateActionPerformed
         ArrayList<TopologyInfo> topologyInfosArrayList = _mTopology.getTrafficLockingRules(true);        // Left traffic.
-        String resultString = "";
+        StringBuilder resultString = new StringBuilder();
         for (int index = 0; index < topologyInfosArrayList.size(); index++) {
             TopologyInfo topologyInfo = topologyInfosArrayList.get(index);
             TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(index + 1, topologyInfo.getDestinationSignalMast(), topologyInfo);
             String thisEntry = trafficLockingEntry.toCSVString();
-            resultString = (0 == index) ? thisEntry : resultString + ProjectsCommonSubs.SSV_SEPARATOR + thisEntry;
+            resultString.append((0 == index) ? thisEntry : ProjectsCommonSubs.SSV_SEPARATOR + thisEntry);
         }
-        _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList = resultString;
+        _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList = resultString.toString();
         topologyInfosArrayList = _mTopology.getTrafficLockingRules(false);        // Right traffic.
-        resultString = "";
+        resultString = new StringBuilder();
         for (int index = 0; index < topologyInfosArrayList.size(); index++) {
             TopologyInfo topologyInfo = topologyInfosArrayList.get(index);
             TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(index + 1, topologyInfo.getDestinationSignalMast(), topologyInfo);
             String thisEntry = trafficLockingEntry.toCSVString();
-            resultString = (0 == index) ? thisEntry : resultString + ProjectsCommonSubs.SSV_SEPARATOR + thisEntry;
+            resultString.append((0 == index) ? thisEntry : ProjectsCommonSubs.SSV_SEPARATOR + thisEntry);
         }
-        _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList = resultString;
+        _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList = resultString.toString();
         updateRuleCounts();
     }//GEN-LAST:event__mAutoGenerateActionPerformed
 
