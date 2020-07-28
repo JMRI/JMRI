@@ -144,7 +144,6 @@ public class TopologyInfo {
                 if (null != turnoutData) { // Safety:
 //  ToDo someday: Reverse "isNormal" if feedback different?                    
                     boolean isNormal = signalMastLogic.getTurnoutState(turnout, signalMast) == Turnout.CLOSED;
-                    TurnoutInfo blah = new TurnoutInfo();
                     _mTurnoutInfos.add(new TurnoutInfo(turnoutData._mOSSectionText, isNormal ? _mNormal : _mReverse, turnoutData._mUniqueID));
 //                  _mOSSectionInfosDebug.add(OSSectionText);
                 }
