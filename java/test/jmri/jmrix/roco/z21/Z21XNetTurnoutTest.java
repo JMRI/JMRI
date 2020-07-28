@@ -3,6 +3,7 @@ package jmri.jmrix.roco.z21;
 import jmri.Turnout;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
+import jmri.jmrix.lenz.XNetTurnout;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -130,6 +131,75 @@ public class Z21XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         }
         // check to see if the turnout state changes.
         Assert.assertEquals(Turnout.THROWN, t.getKnownState());
+    }
+    @Test
+    @Override
+    public void testDirectFeedback() {
+        t.setFeedbackMode(Turnout.DIRECT);
+        Assert.assertEquals("Feedback Mode after set", Turnout.DIRECT, t.getFeedbackMode());
+
+        listenStatus = Turnout.UNKNOWN;
+        t.addPropertyChangeListener(new Listen());
+
+        // Check that state changes appropriately
+        t.setCommandedState(Turnout.THROWN);
+        checkThrownMsgSent();
+        ((jmri.jmrix.lenz.XNetTurnout) t).message(lnis.outbound.elementAt(lnis.outbound.size()-1));
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        checkThrownOffSent();
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        checkThrownOffSent();
+        jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
+        Assert.assertEquals(Turnout.THROWN,t.getState());
+        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN, listenStatus);
+
+        listenStatus = Turnout.UNKNOWN;
+        t.setCommandedState(Turnout.CLOSED);
+        checkClosedMsgSent();
+        ((jmri.jmrix.lenz.XNetTurnout) t).message(lnis.outbound.elementAt(lnis.outbound.size()-1));
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        checkClosedOffSent();
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        checkClosedOffSent();
+        jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
+        Assert.assertEquals(Turnout.CLOSED,t.getState());
+        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
+    }
+
+    @Override
+    @Test
+    public void testMonitoringFeedback() {
+        Assert.assertEquals("Feedback Mode after set", Turnout.MONITORING, t.getFeedbackMode());
+
+        listenStatus = Turnout.UNKNOWN;
+        t.addPropertyChangeListener(new Listen());
+
+        // Check that state changes appropriately
+        t.setCommandedState(Turnout.THROWN);
+        checkThrownMsgSent();
+        ((jmri.jmrix.lenz.XNetTurnout) t).message(lnis.outbound.elementAt(lnis.outbound.size()-1));
+        ((XNetTurnout) t).message(new XNetReply("42 05 02 46"));
+        checkThrownOffSent();
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        checkThrownOffSent();
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
+        Assert.assertEquals(Turnout.THROWN,t.getState());
+        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN, listenStatus);
+
+        listenStatus = Turnout.UNKNOWN;
+        t.setCommandedState(Turnout.CLOSED);
+        checkClosedMsgSent();
+        ((jmri.jmrix.lenz.XNetTurnout) t).message(lnis.outbound.elementAt(lnis.outbound.size()-1));
+        ((XNetTurnout) t).message(new XNetReply("42 05 01 46"));
+        checkClosedOffSent();
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        checkClosedOffSent();
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        checkClosedOffSent();
+        jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
+        Assert.assertEquals(Turnout.CLOSED,t.getState());
+        Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
     }
 
     @Test
