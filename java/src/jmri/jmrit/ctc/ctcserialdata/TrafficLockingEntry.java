@@ -184,6 +184,7 @@ public class TrafficLockingEntry {
      * Constructor to take a TopologyInfo entry and create a properly formed "this".
      * 
      * @param ruleNumber    Rule # (just an integer, starting with 1)
+     * @param destinationSignalMast String representation of the destination signal mast so user can see on the form.
      * @param topologyInfo  Source of data.
      */
     
