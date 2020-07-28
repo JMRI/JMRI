@@ -289,18 +289,20 @@ public class FrmTRL extends javax.swing.JFrame {
     }//GEN-LAST:event__mReverseLeftRightActionPerformed
 
     private void _mAutoGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mAutoGenerateActionPerformed
-        ArrayList<TopologyInfo> topologyInfo = _mTopology.getTrafficLockingRules(true);        // Left traffic.
+        ArrayList<TopologyInfo> topologyInfosArrayList = _mTopology.getTrafficLockingRules(true);        // Left traffic.
         String resultString = "";
-        for (int index = 0; index < topologyInfo.size(); index++) {
-            TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(index + 1, topologyInfo.get(index));
+        for (int index = 0; index < topologyInfosArrayList.size(); index++) {
+            TopologyInfo topologyInfo = topologyInfosArrayList.get(index);
+            TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(index + 1, topologyInfo.getDestinationSignalMast(), topologyInfo);
             String thisEntry = trafficLockingEntry.toCSVString();
             resultString = (0 == index) ? thisEntry : resultString + ProjectsCommonSubs.SSV_SEPARATOR + thisEntry;
         }
         _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList = resultString;
-        topologyInfo = _mTopology.getTrafficLockingRules(false);        // Right traffic.
+        topologyInfosArrayList = _mTopology.getTrafficLockingRules(false);        // Right traffic.
         resultString = "";
-        for (int index = 0; index < topologyInfo.size(); index++) {
-            TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(index + 1, topologyInfo.get(index));
+        for (int index = 0; index < topologyInfosArrayList.size(); index++) {
+            TopologyInfo topologyInfo = topologyInfosArrayList.get(index);
+            TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(index + 1, topologyInfo.getDestinationSignalMast(), topologyInfo);
             String thisEntry = trafficLockingEntry.toCSVString();
             resultString = (0 == index) ? thisEntry : resultString + ProjectsCommonSubs.SSV_SEPARATOR + thisEntry;
         }

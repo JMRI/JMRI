@@ -115,7 +115,7 @@ public class Topology {
     
     private void processDestinations(ArrayList<TopologyInfo> topologyInfos, SignalMastLogic facingSignalMastLogic) {
         for (SignalMast destinationSignalMast : facingSignalMastLogic.getDestinationList()) {
-            TopologyInfo topologyInfo = new TopologyInfo(_mCTCSerialData, _mNormal, _mReverse);
+            TopologyInfo topologyInfo = new TopologyInfo(_mCTCSerialData, destinationSignalMast.getUserName(), _mNormal, _mReverse);
             createRules(topologyInfo, facingSignalMastLogic, destinationSignalMast);
             for (SignalMast tempSignalMast = destinationSignalMast; isIntermediateSignalMast(tempSignalMast); ) {
                 SignalMastLogic tempSignalMastLogic = _mSignalMastLogicManager.getSignalMastLogic(tempSignalMast);

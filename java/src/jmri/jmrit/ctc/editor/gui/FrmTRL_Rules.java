@@ -166,6 +166,8 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mOptionalExternalSensor1 = new javax.swing.JComboBox<>();
         _mOptionalExternalSensor2 = new javax.swing.JComboBox<>();
         _mDupToEnd = new javax.swing.JButton();
+        _mDestinationSignalOrCommentPrompt = new javax.swing.JLabel();
+        _mDestinationSignalOrComment = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTRLRules"));
@@ -265,6 +267,9 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
             }
         });
 
+        _mDestinationSignalOrCommentPrompt.setText(Bundle.getMessage("InfoDlgTRLRulesDestinationSignalOrCommentPrompt")
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -277,16 +282,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(_mOS_NumberEntry1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(_mOS_NumberEntry2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(_mOS_NumberEntry3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(_mOS_NumberEntry4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(_mOS_NumberEntry5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel8)
                             .addComponent(jLabel7)
                             .addComponent(jLabel1)
@@ -326,7 +321,17 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(_mGroupingListAddReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(_mCancel))))))
+                                        .addComponent(_mCancel))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(_mOS_NumberEntry1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mOS_NumberEntry2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mOS_NumberEntry3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mOS_NumberEntry4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mOS_NumberEntry5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jLabel10)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +341,11 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(_mEnableALLRules, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(_mDisableALLRules, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(_mDisableALLRules, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(_mDestinationSignalOrCommentPrompt)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(_mDestinationSignalOrComment, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(_mRulesInfo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -374,7 +383,9 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mRuleEnabled)
                     .addComponent(_mEnableALLRules)
-                    .addComponent(_mDisableALLRules))
+                    .addComponent(_mDisableALLRules)
+                    .addComponent(_mDestinationSignalOrCommentPrompt)
+                    .addComponent(_mDestinationSignalOrComment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -489,6 +500,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mGroupingListAddReplace.setText(Bundle.getMessage("TextDlgTRLRulesAddThis"));  // NOI18N
         _mGroupingListAddReplace.setEnabled(true);
         _mRuleEnabled.setSelected(true);
+        _mDestinationSignalOrComment.setText("");
         _mOS_NumberEntry1.requestFocusInWindow();
     }//GEN-LAST:event__mAddNewActionPerformed
 
@@ -529,6 +541,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mGroupingListAddReplace.setText(Bundle.getMessage("TextDlgTRLRulesUpdateThis"));       // NOI18N
         _mGroupingListAddReplace.setEnabled(true);
         _mRuleEnabled.setSelected(!trafficLockingEntry._mRuleEnabled.equals(Bundle.getMessage("TLE_RuleDisabled")));  // NOI18N  Default if invalid is ENABLED
+        _mDestinationSignalOrComment.setText(trafficLockingEntry._mDestinationSignalOrComment);
         _mOS_NumberEntry1.requestFocusInWindow();
     }//GEN-LAST:event__mEditBelowActionPerformed
 
@@ -542,6 +555,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
     private void _mGroupingListAddReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGroupingListAddReplaceActionPerformed
         TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(  _mRuleEnabled.isSelected() ? Bundle.getMessage("TLE_RuleEnabled") : Bundle.getMessage("TLE_RuleDisabled"),  // NOI18N
+                                                                            _mDestinationSignalOrComment.getText(),
                                                                             (String)_mSwitchAlignment1.getSelectedItem(),
                                                                             (String)_mSwitchAlignment2.getSelectedItem(),
                                                                             (String)_mSwitchAlignment3.getSelectedItem(),
@@ -650,6 +664,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
 
     private void enableTopPart(boolean enabled) {
         _mAddNew.setEnabled(enabled);
+        _mDestinationSignalOrComment.setEnabled(!enabled);
         _mOccupancyExternalSensor1.setEnabled(!enabled);
         _mOccupancyExternalSensor2.setEnabled(!enabled);
         _mOccupancyExternalSensor3.setEnabled(!enabled);
@@ -695,6 +710,8 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
     private javax.swing.JButton _mAddNew;
     private javax.swing.JButton _mCancel;
     private javax.swing.JButton _mDelete;
+    private javax.swing.JTextField _mDestinationSignalOrComment;
+    private javax.swing.JLabel _mDestinationSignalOrCommentPrompt;
     private javax.swing.JButton _mDisableALLRules;
     private javax.swing.JButton _mDupToEnd;
     private javax.swing.JButton _mEditBelow;

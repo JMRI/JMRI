@@ -37,17 +37,6 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="_mOS_NumberEntry1" min="-2" pref="126" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="_mOS_NumberEntry2" min="-2" pref="126" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="_mOS_NumberEntry3" min="-2" pref="126" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="_mOS_NumberEntry4" min="-2" pref="126" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="_mOS_NumberEntry5" min="-2" pref="126" max="-2" attributes="0"/>
-                          </Group>
                           <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -96,6 +85,17 @@
                                   </Group>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="_mOS_NumberEntry1" min="-2" pref="126" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="_mOS_NumberEntry2" min="-2" pref="126" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="_mOS_NumberEntry3" min="-2" pref="126" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="_mOS_NumberEntry4" min="-2" pref="126" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="_mOS_NumberEntry5" min="-2" pref="126" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
@@ -108,6 +108,10 @@
                               <Component id="_mEnableALLRules" min="-2" pref="133" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="_mDisableALLRules" min="-2" pref="143" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="_mDestinationSignalOrCommentPrompt" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="_mDestinationSignalOrComment" min="-2" pref="113" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="_mRulesInfo" min="-2" max="-2" attributes="0"/>
@@ -157,6 +161,8 @@
                   <Component id="_mRuleEnabled" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mEnableALLRules" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mDisableALLRules" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mDestinationSignalOrCommentPrompt" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mDestinationSignalOrComment" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -600,6 +606,15 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mDupToEndActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="_mDestinationSignalOrCommentPrompt">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Bundle.getMessage(&quot;InfoDlgTRLRulesDestinationSignalOrCommentPrompt&quot;)&#xa;    " type="code"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="_mDestinationSignalOrComment">
     </Component>
   </SubComponents>
 </Form>

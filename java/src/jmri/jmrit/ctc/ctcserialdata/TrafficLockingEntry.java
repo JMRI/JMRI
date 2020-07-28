@@ -13,6 +13,7 @@ import jmri.jmrit.ctc.topology.TopologyInfo;
 public class TrafficLockingEntry {
     public String _mUserRuleNumber;
     public String _mRuleEnabled;
+    public final String _mDestinationSignalOrComment;
     public String _mUserText1;
     public final String _mSwitchAlignment1;
     public String _mUserText2;
@@ -42,7 +43,8 @@ public class TrafficLockingEntry {
 
     private static final int USER_RULE_NUMBER_INDEX = 0;
     private static final int RULE_ENABLED_INDEX = 1;
-//  Unused indexes 2,3 (was terminating O.S. section info)
+    private static final int DESTINATION_SIGNAL_OR_COMMENT_INDEX = 2;
+//  Unused index 3 (was terminating O.S. section info)
     private static final int USER_TEXT1_INDEX = 4;
     private static final int SWITCH_ALIGNMENT1_INDEX = 5;
     private static final int USER_TEXT2_INDEX = 6;
@@ -77,6 +79,7 @@ public class TrafficLockingEntry {
         ArrayList<String> arrayListOfStrings = ProjectsCommonSubs.getFixedArrayListSizeFromCSV(csvString, ARRAY_SIZE);
         _mUserRuleNumber = arrayListOfStrings.get(USER_RULE_NUMBER_INDEX);
         _mRuleEnabled = arrayListOfStrings.get(RULE_ENABLED_INDEX);
+        _mDestinationSignalOrComment = arrayListOfStrings.get(DESTINATION_SIGNAL_OR_COMMENT_INDEX);
         _mUserText1 = arrayListOfStrings.get(USER_TEXT1_INDEX);
         _mSwitchAlignment1 = arrayListOfStrings.get(SWITCH_ALIGNMENT1_INDEX);
         _mUserText2 = arrayListOfStrings.get(USER_TEXT2_INDEX);
@@ -104,7 +107,9 @@ public class TrafficLockingEntry {
         _mUniqueID4 = arrayListOfStrings.get(UNIQUE_ID4_INDEX);
         _mUniqueID5 = arrayListOfStrings.get(UNIQUE_ID4_INDEX);
     }
+    
     public TrafficLockingEntry( String ruleEnabled,
+                                String destinationSignalOrComment,
                                 String switchAlignment1,
                                 String switchAlignment2,
                                 String switchAlignment3,
@@ -123,6 +128,7 @@ public class TrafficLockingEntry {
                                 String optionalExternalSensor2) {
 // Any uninitialized are null, and thats OK for "constructCSVStringFromArrayList":
         _mRuleEnabled = ruleEnabled;
+        _mDestinationSignalOrComment = destinationSignalOrComment;
         _mSwitchAlignment1 = switchAlignment1;
         _mSwitchAlignment2 = switchAlignment2;
         _mSwitchAlignment3 = switchAlignment3;
@@ -144,6 +150,7 @@ public class TrafficLockingEntry {
     public TrafficLockingEntry(TrafficLockingEntry sourceTrafficLockingEntry) { // "Deep" Copy constructor (copying immutable strings makes it so):
         _mUserRuleNumber = sourceTrafficLockingEntry._mUserRuleNumber;
         _mRuleEnabled= sourceTrafficLockingEntry._mRuleEnabled;
+        _mDestinationSignalOrComment = sourceTrafficLockingEntry._mDestinationSignalOrComment;
         _mUserText1= sourceTrafficLockingEntry._mUserText1;
         _mSwitchAlignment1= sourceTrafficLockingEntry._mSwitchAlignment1;
         _mUserText2= sourceTrafficLockingEntry._mUserText2;
@@ -180,9 +187,10 @@ public class TrafficLockingEntry {
      * @param topologyInfo  Source of data.
      */
     
-    public TrafficLockingEntry(int ruleNumber, TopologyInfo topologyInfo) {
+    public TrafficLockingEntry(int ruleNumber, String destinationSignalMast, TopologyInfo topologyInfo) {
         _mUserRuleNumber = FrmTRL_Rules.getRuleNumberString(ruleNumber);
         _mRuleEnabled = FrmTRL_Rules.getRuleEnabledString();
+        _mDestinationSignalOrComment = topologyInfo.getDestinationSignalMast();
         _mUserText1 = topologyInfo.getOSSectionText(0);
         _mSwitchAlignment1 = topologyInfo.getNormalReversed(0);
         _mUserText2 = topologyInfo.getOSSectionText(1);
@@ -215,6 +223,7 @@ public class TrafficLockingEntry {
         ArrayList<String> newValueArrayList = new ArrayList<>(Arrays.asList(new String[ARRAY_SIZE]));
         newValueArrayList.set(USER_RULE_NUMBER_INDEX, _mUserRuleNumber);
         newValueArrayList.set(RULE_ENABLED_INDEX, _mRuleEnabled);
+        newValueArrayList.set(DESTINATION_SIGNAL_OR_COMMENT_INDEX, _mDestinationSignalOrComment);
         newValueArrayList.set(USER_TEXT1_INDEX, _mUserText1);
         newValueArrayList.set(SWITCH_ALIGNMENT1_INDEX, _mSwitchAlignment1);
         newValueArrayList.set(USER_TEXT2_INDEX, _mUserText2);

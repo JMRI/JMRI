@@ -13,13 +13,17 @@ import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 
 public class TopologyInfo {
     private final CTCSerialData _mCTCSerialData;    // Needed to look up a turnout in order to return an O.S. section text.
+    private final String _mDestinationSignalMast;
     private final String _mNormal;                  // Bundle.getMessage("TLE_Normal")
     private final String _mReverse;                 // Bundle.getMessage("TLE_Reverse")
-    public TopologyInfo(CTCSerialData CTCSerialData, String normal, String reverse) {
+    public TopologyInfo(CTCSerialData CTCSerialData, String destinationSignalMast, String normal, String reverse) {
         _mCTCSerialData = CTCSerialData;
+        _mDestinationSignalMast = destinationSignalMast;
         _mNormal = normal;
         _mReverse = reverse;
     }
+    public String getDestinationSignalMast() { return _mDestinationSignalMast; }
+    
     /**
      * Simple class to contain simple info about a turnout.
      */
@@ -35,9 +39,9 @@ public class TopologyInfo {
         }
     }
     private final ArrayList<Sensor> _mSensors = new ArrayList<>();
-//  private final LinkedList<String> _mSensorNamesDebug = new LinkedList<>();    //????
+//  private final LinkedList<String> _mSensorNamesDebug = new LinkedList<>();    //Debugging
     private final ArrayList<TurnoutInfo> _mTurnoutInfos = new ArrayList<>();
-//  private final LinkedList<String> _mOSSectionInfosDebug = new LinkedList<>(); //????
+//  private final LinkedList<String> _mOSSectionInfosDebug = new LinkedList<>(); //Debugging
     private final ArrayList<Turnout> _mTurnouts = new ArrayList<>();  // ONLY used for duplicate check (lazy).
     
     /**
@@ -107,13 +111,14 @@ public class TopologyInfo {
     
     /**    
      * Quick and dirty routine to all all of the sensors in the passed blocks to
-     * our internal lists.  Duplicates are ignored.
+     * our internal lists.  Duplicates are ignored.  It is possible that the user
+     * didn't associate a sensor with the block.  Ignore such entries.
      * @param blocks    List of Blocks to add.
      */
     public void addBlocks(List<Block> blocks) {
         for (Block block : blocks) {
             Sensor sensor = block.getSensor();
-            if (!_mSensors.contains(sensor)) { //  VERIFY not in list already for some reason (safety, shouldn't happen):
+            if (null != sensor && !_mSensors.contains(sensor)) { //  Safety: valid && VERIFY not in list already for some reason (safety, shouldn't happen):
                 _mSensors.add(sensor);
 //              _mSensorNamesDebug.add(sensor.getDisplayName());
             }
