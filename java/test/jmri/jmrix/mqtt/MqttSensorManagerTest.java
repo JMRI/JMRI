@@ -14,7 +14,6 @@ public class MqttSensorManagerTest {
 
     @Test
     public void ConstructorTest() {
-        MqttAdapter a = new MqttAdapter();
         Assert.assertNotNull("constructor", new MqttSystemConnectionMemo());
     }
 
