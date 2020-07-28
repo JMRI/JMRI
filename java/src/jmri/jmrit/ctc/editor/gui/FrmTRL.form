@@ -51,7 +51,10 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="_mLeftNumberOfRules" min="-2" pref="62" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="_mAutoGenerate" min="-2" pref="117" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="_mAutoGenerateWarning" min="-2" max="-2" attributes="0"/>
+                                  <Component id="_mAutoGenerate" min="-2" pref="117" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -80,6 +83,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="_mAutoGenerateWarning" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="_mLeftNumberOfRulesPrompt" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mEditLeftTrafficLockingRules" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -101,7 +106,7 @@
               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="_mOK" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="37" max="32767" attributes="0"/>
+              <EmptySpace pref="31" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -205,6 +210,13 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mReverseLeftRightActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="_mAutoGenerateWarning">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Bundle.getMessage(&quot;LabelDlgTRLAutoGenerateWarning&quot;)" type="code"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

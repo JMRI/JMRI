@@ -26,22 +26,83 @@ public class TopologyInfo {
     private static class TurnoutInfo {
         public final String _mOSSectionText;
         public final String _mNormalReversed;
-        private TurnoutInfo() { _mOSSectionText = ""; _mNormalReversed = ""; }
-        public TurnoutInfo(String OSSectionText, String normalReversed) {
+        public final int    _mUniqueID;
+        private TurnoutInfo() { _mOSSectionText = null; _mNormalReversed = "Normal"; _mUniqueID = -1;}  // To support constructor "TrafficLockingEntry(int ruleNumber, TopologyInfo topologyInfo)"
+        public TurnoutInfo(String OSSectionText, String normalReversed, int uniqueID) {
             _mOSSectionText = OSSectionText;
             _mNormalReversed = normalReversed;
+            _mUniqueID = uniqueID;
         }
     }
-    private final LinkedList<Sensor> _mSensors = new LinkedList<>();
+    private final ArrayList<Sensor> _mSensors = new ArrayList<>();
 //  private final LinkedList<String> _mSensorNamesDebug = new LinkedList<>();    //????
-    private final LinkedList<TurnoutInfo> _mTurnoutInfos = new LinkedList<>();
+    private final ArrayList<TurnoutInfo> _mTurnoutInfos = new ArrayList<>();
 //  private final LinkedList<String> _mOSSectionInfosDebug = new LinkedList<>(); //????
-    private final LinkedList<Turnout> _mTurnouts = new LinkedList<>();  // ONLY used for duplicate check (lazy).
+    private final ArrayList<Turnout> _mTurnouts = new ArrayList<>();  // ONLY used for duplicate check (lazy).
     
     /**
      * @return true if any of our lists have anything.
      */
     public boolean nonEmpty() { return !_mSensors.isEmpty() || !_mTurnoutInfos.isEmpty(); }
+    
+    /**
+     * Quick and dirty routine to get O.S. section information.
+     * 
+     * @param index Index into array
+     * @return String null if no information, else text (of form "29/30" for instance)
+     */
+    public String getOSSectionText(int index) {
+        if (index < _mTurnoutInfos.size()) { // Safety: Can return info:
+            return _mTurnoutInfos.get(index)._mOSSectionText;
+        } else {
+            return null;
+        }
+    }
+
+    
+    /**
+     * Quick and dirty routine to get "Normal"/"Reverse" information.
+     * 
+     * @param index Index into array
+     * @return String "Normal" if no information, else text (of form "Normal" for instance)
+     */
+    public String getNormalReversed(int index) {
+        if (index < _mTurnoutInfos.size()) { // Safety: Can return info:
+            return _mTurnoutInfos.get(index)._mNormalReversed;
+        } else {
+            return "Normal";    // Doesn't hurt to return this for a turnout that has no information.
+        }
+    }
+
+    
+    /**
+     * Quick and dirty routine to get the Display Name of the sensor.
+     * 
+     * @param index Index into array
+     * @return String "" if no information, else text (of form "SW31-OS" for instance)
+     */
+    public String getSensorDisplayName(int index) {
+        if (index < _mSensors.size()) { // Safety: Can return info:
+            return _mSensors.get(index).getDisplayName();
+        } else {
+            return "";
+        }
+    }
+    
+    
+    /**
+     * Quick and dirty routine to get the unique id..
+     * 
+     * @param index Index into array
+     * @return String null if no information, else uniqueID as String of the O.S. section.
+     */
+    public String getUniqueID(int index) {
+        if (index < _mTurnoutInfos.size()) { // Safety: Can return info:
+            return Integer.toString(_mTurnoutInfos.get(index)._mUniqueID);
+        } else {
+            return null;
+        }
+    }
     
     
     /**    
@@ -75,11 +136,11 @@ public class TopologyInfo {
             if (!_mTurnouts.contains(turnout)) {    // VERIFY not in list already for some reason (safety, shouldn't happen):
                 _mTurnouts.add(turnout);            // For above if statement dup check.
 //  Need to convert the turnout to an O.S. section text:                
-                String OSSectionText = _mCTCSerialData.convertTurnoutToOSSectionDesignation(turnout);
-                if (null != OSSectionText) { // Safety:
+                CTCSerialData.CTCTurnoutData turnoutData = _mCTCSerialData.getCTCTurnoutData(turnout);
+                if (null != turnoutData) { // Safety:
 //  ToDo someday: Reverse "isNormal" if feedback different?                    
                     boolean isNormal = signalMastLogic.getTurnoutState(turnout, signalMast) == Turnout.CLOSED;
-                    _mTurnoutInfos.add(new TurnoutInfo(OSSectionText, isNormal ? _mNormal : _mReverse));
+                    _mTurnoutInfos.add(new TurnoutInfo(turnoutData._mOSSectionText, isNormal ? _mNormal : _mReverse, turnoutData._mUniqueID));
 //                  _mOSSectionInfosDebug.add(OSSectionText);
                 }
             }
@@ -88,11 +149,11 @@ public class TopologyInfo {
             if (!_mTurnouts.contains(turnout)) {    // VERIFY not in list already for some reason (safety, shouldn't happen):
                 _mTurnouts.add(turnout);            // For above if statement dup check.
 //  Need to convert the turnout to an O.S. section text:                
-                String OSSectionText = _mCTCSerialData.convertTurnoutToOSSectionDesignation(turnout);
-                if (null != OSSectionText) { // Safety:
+                CTCSerialData.CTCTurnoutData turnoutData = _mCTCSerialData.getCTCTurnoutData(turnout);
+                if (null != turnoutData) { // Safety:
 //  ToDo someday: Reverse "isNormal" if feedback different?                    
                     boolean isNormal = signalMastLogic.getAutoTurnoutState(turnout, signalMast) == Turnout.CLOSED;
-                    _mTurnoutInfos.add(new TurnoutInfo(OSSectionText, isNormal ? _mNormal : _mReverse));
+                    _mTurnoutInfos.add(new TurnoutInfo(turnoutData._mOSSectionText, isNormal ? _mNormal : _mReverse, turnoutData._mUniqueID));
 //                  _mOSSectionInfosDebug.add(OSSectionText);
                 }
             }

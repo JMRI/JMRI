@@ -170,6 +170,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTRLRules"));
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -643,7 +644,9 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
             trafficLockingEntry._mUserRuleNumber = getRuleNumberString(ruleNumber);
             return trafficLockingEntry.toCSVString();
     }
-    private String getRuleNumberString(int ruleNumber) { return " " + Bundle.getMessage("InfoDlgTRLRuleNumber") + Integer.toString(ruleNumber); }   // NOI18N
+    
+    public static String getRuleNumberString(int ruleNumber) { return " " + Bundle.getMessage("InfoDlgTRLRuleNumber") + Integer.toString(ruleNumber); }   // NOI18N
+    public static String getRuleEnabledString() { return Bundle.getMessage("TLE_RuleEnabled"); }
 
     private void enableTopPart(boolean enabled) {
         _mAddNew.setEnabled(enabled);

@@ -3,6 +3,9 @@ package jmri.jmrit.ctc.ctcserialdata;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import jmri.jmrit.ctc.editor.gui.FrmTRL_Rules;
+import jmri.jmrit.ctc.topology.TopologyInfo;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -167,6 +170,45 @@ public class TrafficLockingEntry {
         _mUniqueID3= sourceTrafficLockingEntry._mUniqueID3;
         _mUniqueID4= sourceTrafficLockingEntry._mUniqueID4;
         _mUniqueID5= sourceTrafficLockingEntry._mUniqueID5;
+    }
+    
+
+    /**
+     * Constructor to take a TopologyInfo entry and create a properly formed "this".
+     * 
+     * @param ruleNumber    Rule # (just an integer, starting with 1)
+     * @param topologyInfo  Source of data.
+     */
+    
+    public TrafficLockingEntry(int ruleNumber, TopologyInfo topologyInfo) {
+        _mUserRuleNumber = FrmTRL_Rules.getRuleNumberString(ruleNumber);
+        _mRuleEnabled = FrmTRL_Rules.getRuleEnabledString();
+        _mUserText1 = topologyInfo.getOSSectionText(0);
+        _mSwitchAlignment1 = topologyInfo.getNormalReversed(0);
+        _mUserText2 = topologyInfo.getOSSectionText(1);
+        _mSwitchAlignment2 = topologyInfo.getNormalReversed(1);
+        _mUserText3 = topologyInfo.getOSSectionText(2);
+        _mSwitchAlignment3 = topologyInfo.getNormalReversed(2);
+        _mUserText4 = topologyInfo.getOSSectionText(3);
+        _mSwitchAlignment4 = topologyInfo.getNormalReversed(3);
+        _mUserText5 = topologyInfo.getOSSectionText(4);
+        _mSwitchAlignment5 = topologyInfo.getNormalReversed(4);
+        _mOccupancyExternalSensor1 = topologyInfo.getSensorDisplayName(0);
+        _mOccupancyExternalSensor2 = topologyInfo.getSensorDisplayName(1);
+        _mOccupancyExternalSensor3 = topologyInfo.getSensorDisplayName(2);
+        _mOccupancyExternalSensor4 = topologyInfo.getSensorDisplayName(3);
+        _mOccupancyExternalSensor5 = topologyInfo.getSensorDisplayName(4);
+        _mOccupancyExternalSensor6 = topologyInfo.getSensorDisplayName(5);
+        _mOccupancyExternalSensor7 = topologyInfo.getSensorDisplayName(6);
+        _mOccupancyExternalSensor8 = topologyInfo.getSensorDisplayName(7);
+        _mOccupancyExternalSensor9 = topologyInfo.getSensorDisplayName(8);
+        _mOptionalExternalSensor1 = "";
+        _mOptionalExternalSensor2 = "";
+        _mUniqueID1 = topologyInfo.getUniqueID(0);
+        _mUniqueID2 = topologyInfo.getUniqueID(1);
+        _mUniqueID3 = topologyInfo.getUniqueID(2);
+        _mUniqueID4 = topologyInfo.getUniqueID(3);
+        _mUniqueID5 = topologyInfo.getUniqueID(4);
     }
 
     public String toCSVString() {

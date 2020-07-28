@@ -31,6 +31,18 @@ public class CTCSerialData {
     private ArrayList<CodeButtonHandlerData> _mCodeButtonHandlerDataArrayList;
     private final static Logger log = LoggerFactory.getLogger(CTCSerialData.class);
 
+    /**
+     * "Return" value from function "getCTCTurnoutData":
+     */
+    public static class CTCTurnoutData {
+        public final String   _mOSSectionText;
+        public final int      _mUniqueID;
+        public CTCTurnoutData(String OSSectionText, int uniqueID) {
+            _mOSSectionText = OSSectionText;
+            _mUniqueID = uniqueID;
+        }
+    }
+    
     public CTCSerialData() {
         _mOtherData = new OtherData();
         _mCodeButtonHandlerDataArrayList = new ArrayList<>();
@@ -212,14 +224,14 @@ public class CTCSerialData {
      * that contains the passed turnout.
      * 
      * @param turnout   The turnout to search for in our table.
-     * @return The string representation of the O.S. section, else if turnout not found, null.
+     * @return          CTCTurnoutData, else if turnout not found, null.
      */
-    public String convertTurnoutToOSSectionDesignation(Turnout turnout) {
+    public CTCTurnoutData getCTCTurnoutData(Turnout turnout) {
         String turnoutUserName = turnout.getDisplayName();  // Same routime as called in CommonSubs/populateJComboBoxWithBeans
         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
             if (codeButtonHandlerData._mSWDI_Enabled) { // Only if it has one:
                 if (codeButtonHandlerData._mSWDI_ExternalTurnout.equals(turnoutUserName)) { // Ah match, this is us:
-                    return codeButtonHandlerData.myShortStringNoComma();
+                    return new CTCTurnoutData(codeButtonHandlerData.myShortStringNoComma(), codeButtonHandlerData._mUniqueID);
                 }
             }
         }
