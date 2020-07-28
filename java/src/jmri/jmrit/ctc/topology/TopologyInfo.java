@@ -31,7 +31,6 @@ public class TopologyInfo {
         public final String _mOSSectionText;
         public final String _mNormalReversed;
         public final int    _mUniqueID;
-        private TurnoutInfo() { _mOSSectionText = null; _mNormalReversed = "Normal"; _mUniqueID = -1;}  // To support constructor "TrafficLockingEntry(int ruleNumber, TopologyInfo topologyInfo)"
         public TurnoutInfo(String OSSectionText, String normalReversed, int uniqueID) {
             _mOSSectionText = OSSectionText;
             _mNormalReversed = normalReversed;
@@ -145,6 +144,7 @@ public class TopologyInfo {
                 if (null != turnoutData) { // Safety:
 //  ToDo someday: Reverse "isNormal" if feedback different?                    
                     boolean isNormal = signalMastLogic.getTurnoutState(turnout, signalMast) == Turnout.CLOSED;
+                    TurnoutInfo blah = new TurnoutInfo();
                     _mTurnoutInfos.add(new TurnoutInfo(turnoutData._mOSSectionText, isNormal ? _mNormal : _mReverse, turnoutData._mUniqueID));
 //                  _mOSSectionInfosDebug.add(OSSectionText);
                 }

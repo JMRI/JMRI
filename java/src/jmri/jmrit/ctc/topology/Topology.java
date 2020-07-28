@@ -194,8 +194,9 @@ public class Topology {
                 return new ArrayList<>(Arrays.asList(Path.SOUTH_WEST, Path.WEST, Path.NORTH_WEST));
             case Path.NORTH_WEST:
                 return new ArrayList<>(Arrays.asList(Path.WEST, Path.NORTH_WEST, Path.NORTH));
+            default:
+                return new ArrayList<>();    // Huh?
         }
-        return new ArrayList<>();    // Huh?
     }
     
     
