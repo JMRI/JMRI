@@ -52,6 +52,11 @@ public class Topology {
     private final LayoutBlockManager _mLayoutBlockManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
     private Block _mStartingBlock = null;
     
+    public Topology() { // Temporary for test suite only
+        _mCTCSerialData = null;
+        _mNormal = null;
+        _mReverse = null; 
+    }
     public Topology(CTCSerialData CTCSerialData, String OSSectionOccupiedExternalSensor, String normal, String reverse) {
         _mCTCSerialData = CTCSerialData;
         _mNormal = normal;

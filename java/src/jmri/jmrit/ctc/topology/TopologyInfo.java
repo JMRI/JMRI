@@ -16,6 +16,12 @@ public class TopologyInfo {
     private final String _mDestinationSignalMast;
     private final String _mNormal;                  // Bundle.getMessage("TLE_Normal")
     private final String _mReverse;                 // Bundle.getMessage("TLE_Reverse")
+    public TopologyInfo() { // Temporary for test suite only
+        _mCTCSerialData = null;
+        _mDestinationSignalMast = null;
+        _mNormal = null;
+        _mReverse = null; 
+    }
     public TopologyInfo(CTCSerialData CTCSerialData, String destinationSignalMast, String normal, String reverse) {
         _mCTCSerialData = CTCSerialData;
         _mDestinationSignalMast = destinationSignalMast;
