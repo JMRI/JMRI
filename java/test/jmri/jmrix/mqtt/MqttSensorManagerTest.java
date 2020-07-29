@@ -14,7 +14,7 @@ public class MqttSensorManagerTest {
 
     @Test
     public void ConstructorTest() {
-        Assert.assertNotNull("constructor", new MqttSystemConnectionMemo());
+        Assert.assertNotNull("constructor", new MqttSensorManager(new MqttSystemConnectionMemo()));
     }
 
     @BeforeEach
