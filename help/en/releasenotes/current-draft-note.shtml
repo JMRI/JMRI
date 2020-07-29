@@ -373,16 +373,19 @@
             <li></li>
         </ul>
 
-   <h3>Panel Editor</h3>
-        <a id="PE" name="PE"></a>
+   <h3>CTC Tool</h3>
+        <a id="CTC-Tool" name="CTC-Tool"></a>
         <ul>
-            <li></li>
+            <li>To correct prior release notes, the CTC panel can be created with Layout Editor, Control Panel Editor
+            or Panel Editor.</li>
+            <li>This release gets a new capability: Auto-Generation of Traffic Locking (TRL) rules, which is the most tedious
+            and difficult aspect of CTC systems.  However, TRL Auto-Generation is <strong>dependent</strong> on Layout Editor, with Signal
+            Masts at block boundaries, and with automatically generated Signal Mast Logic.  The Signal Mast Logic
+            can be modified <strong>after</strong> discovery, but there has to be at least <strong>one</strong>
+            discovery process run.  After this process is complete, if you are not happy with the way Layout Editor
+            displays the layout, you can create a parallel Control Panel Editor or Panel Editor screen.  Personally, in
+            my opinion, Layout Editor looks very close to an actual CTC panel if drawn correctly.</li>
         </ul>
-        <h4>CTC Tool</h4>
-            <a id="PE-CTC" name="PE-CTC"></a>
-            <ul>
-                <li></li>
-            </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>

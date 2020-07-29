@@ -65,10 +65,11 @@
       </p>
       
       <p>
-      !!!!
-      I suggest that you use Layout Editor or Control Panel Editor to generate
-      your CTC panel, so that topology information available in those systems
-      can be used to automatically generate Traffic Locking rules.
+      I personally suggest that you use Layout Editor to generate your CTC panel, along
+      with using Signal Mast Logic (and at least <strong>one</strong> discovery
+      of same), along with signal masts placed at block boundaries, so that topology
+      information available in that system can be used to automatically
+      generate Traffic Locking rules for you.
       </p>
 
       <h3>CTC Editor</h3>
@@ -750,9 +751,10 @@ do, then define the missing object(s) in JMRI.
         </p>
         
         <p>
-        !!!!
-        A NEW feature is available with CTC version 1.05 and later:  IF (and only if) you have Blocks and Signal Mast Logic
-        defined for your layout, this screen can use the information available in them to generate all of the
+        A NEW feature is available with CTC version 1.05 and later:  IF (and only if) you have used Layout Editor to generate
+        your track plan, and used Signal Mast Logic (SML) defined for your signal masts (along with
+        a minimum of <strong>one</strong> auto-generation of SML), and Signal Masts at block boundaries, then this screen
+        can use the information available in them to generate all of the
         Traffic Locking rules automatically.  You will know that this is possible because two new buttons will be displayed:
         "Auto-Generate" and "Reverse Left/Right".  See "Auto-Generate details" below for more information.
         </p>
@@ -778,16 +780,16 @@ do, then define the missing object(s) in JMRI.
         </p>
         
         <p>
-        !!!!
         <strong>Auto-Generate details:</strong>
         </p>
         <p>
         First, 3 Caveat Emptor's:
         </p>
         <p>
-        #1: As a prerequisite for CTC in general, you <strong>must</strong> have completed the track diagram in Layout Editor or
-        Control Panel Editor, and have a <strong>properly</strong> operating Signal Mast Logic (SML)
-        signal system completed.  Any missing items in these will prevent proper auto-generation of
+        #1: As a prerequisite for CTC in general, you <strong>must</strong> have completed the track diagram
+        in Layout Editor, and have a <strong>properly</strong> operating Signal Mast Logic (SML)
+        signal system completed, along with at least <strong>one</strong> auto-generated SML.  Any
+        missing items in these will prevent proper auto-generation of
         Traffic Locking rules.  However, you can always after fixing SML rules regenerate the Traffic
         Locking rules for that O.S. section again.
         </p>
