@@ -73,7 +73,6 @@ public class FrmTRL extends javax.swing.JFrame {
         _mRightNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules") + " " + Integer.toString(ProjectsCommonSubs.getArrayListFromSSV(_mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList).size()));      // NOI18N
         _mLeftNumberOfRulesPrompt.setForeground(valid(_mCheckJMRIObject, _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList) ? Color.black : Color.red);
         _mRightNumberOfRulesPrompt.setForeground(valid(_mCheckJMRIObject, _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList) ? Color.black : Color.red);
-        String blah = "123";
     }
 
     private static boolean valid(CheckJMRIObject checkJMRIObject, String trafficLockingRulesSSVList) {
