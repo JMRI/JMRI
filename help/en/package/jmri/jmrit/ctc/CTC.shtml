@@ -63,6 +63,13 @@
       logic. The signaling implementation needs to properly implement ABS
       signaling before adding CTC. This includes proper block boundaries.
       </p>
+      
+      <p>
+      !!!!
+      I suggest that you use Layout Editor or Control Panel Editor to generate
+      your CTC panel, so that topology information available in those systems
+      can be used to automatically generate Traffic Locking rules.
+      </p>
 
       <h3>CTC Editor</h3>
       <p>
@@ -741,6 +748,14 @@ do, then define the missing object(s) in JMRI.
         that direction of travel no matter any other condition, and may be valid in certain situations such as traveling
         to staging where there is no O.S. Section.
         </p>
+        
+        <p>
+        !!!!
+        A NEW feature is available with CTC version 1.05 and later:  IF (and only if) you have Blocks and Signal Mast Logic
+        defined for your layout, this screen can use the information available in them to generate all of the
+        Traffic Locking rules automatically.  You will know that this is possible because two new buttons will be displayed:
+        "Auto-Generate" and "Reverse Left/Right".  See "Auto-Generate details" below for more information.
+        </p>
 
         <p>
         Select either Left or Right to proceed.  On the next screen that appears, you will notice that the "Rules:"
@@ -761,7 +776,37 @@ do, then define the missing object(s) in JMRI.
         interlocking plants.  For instance, it depends on how you want simultaneous moves to occur within
         interlocking limits that may need to be considered.
         </p>
-
+        
+        <p>
+        !!!!
+        <strong>Auto-Generate details:</strong>
+        </p>
+        <p>
+        First, 3 Caveat Emptor's:
+        </p>
+        <p>
+        #1: As a prerequisite for CTC in general, you <strong>must</strong> have completed the track diagram in Layout Editor or
+        Control Panel Editor, and have a <strong>properly</strong> operating Signal Mast Logic (SML)
+        signal system completed.  Any missing items in these will prevent proper auto-generation of
+        Traffic Locking rules.  However, you can always after fixing SML rules regenerate the Traffic
+        Locking rules for that O.S. section again.
+        </p>
+        <p>
+        #2: Auto-generation <strong>assumes</strong> a properly formatted track diagram.  Real CTC systems
+        (in my experience) always proceed left to right and right to left, with occasional 45 degree tracks at an angle.
+        However, Layout Editor and Control Panel Editor allow you to "willy nilly" put track in any orientation.
+        This <strong>will</strong> confuse the auto-generation operation, as to what rules are to the left and right
+        of the O.S. section.  Worst case, if this happens, press the "Reverse Left/Right" button.  The rules should
+        be correct even if the screen orientation is "invalid".
+        </p>
+        <p>
+        #3: As a reminder: When you auto-generate, <strong>all</strong> prior rules are <strong>deleted</strong> first.
+        </p>
+        <p>
+        After auto-generating, you may go and manually edit any of the auto-generated actions, if you feel
+        they are not needed or improper for some reason.
+        </p>
+        
         <p>
         <strong>Specifying a rule:</strong>
         </p>
@@ -785,10 +830,9 @@ do, then define the missing object(s) in JMRI.
         <strong>Final result: </strong> When the dispatcher codes this O.S. Section,
         the <strong>Left</strong> or <strong>Right</strong> rule set is selected based on
         the position of the signal lever.  A specific rule is then selected based on the
-        turnout positions.  If all of the occupancy sensors defined in the rule are inactive
-        <strong>and</strong> not already allocated to another route,
-        along with optional sensors if defined, then the occupancy sensors are allocated.  The allocation for each occupancy sensor is removed
-        after it becomes occupied and then unoccupied.
+        turnout positions.  If all of the occupancy sensors defined in the rule are not already allocated to another route,
+        and all defined optional sensors are ACTIVE, then <strong>only</strong> the occupancy sensors are allocated.  The
+        allocation for each occupancy sensor is removed after it becomes unoccupied <strong>after</strong> becoming occupied.
         </p>
         <p>
         In complex interlocking situations: as a train traverses the rule's occupancy sensor(s) and transited occupancy sensor(s) are released,

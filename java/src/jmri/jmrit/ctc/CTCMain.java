@@ -1,6 +1,8 @@
 /**
  *  @author Gregory J. Bedlek Copyright (C) 2018, 2019
  * 
+ * Release notes(files): /JMRI/help/en/releasenotes/current-draft-note.shtml Section: CTC Tool section.
+ * Help document: /JMRI/help/en/package/jmri/jmrit/ctc/CTC.shtml
  */
 
 package jmri.jmrit.ctc;
