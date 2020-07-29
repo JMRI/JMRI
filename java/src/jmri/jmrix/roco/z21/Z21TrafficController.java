@@ -297,7 +297,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         // handle more than one reply in the same UDP packet.
         List<Z21Reply> replies = new ArrayList<>();
 
-        int totalLength=buffer.length;
+        int totalLength=receivePacket.getLength();
         int consumed=0;
 
         do {
@@ -308,7 +308,9 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
 
             buffer = Arrays.copyOfRange(buffer,length,buffer.length);
             consumed +=length;
-        } while(totalLength<consumed);
+            log.trace("total length: {} consumed {}",totalLength,consumed);
+        } while(totalLength>consumed);
+
 
         // and then dispatch each reply
         replies.forEach(this::dispatchReply);
