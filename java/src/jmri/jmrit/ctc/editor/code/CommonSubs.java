@@ -89,7 +89,7 @@ public class CommonSubs {
         }
         try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT)) {
             printer.printRecord(entries);
-            return printer.getOut().toString().replace("\r\n","");  // At some point this thing began putting on \r\n at the end, prior versions of the Java VM didn't.
+            return printer.getOut().toString().replace("\r\n","");
         } catch (IOException ex) {
             log.error("Unable to create CSV", ex);
             return "";

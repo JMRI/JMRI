@@ -26,17 +26,6 @@ import jmri.jmrit.display.layoutEditor.*;
  * By this time the user SHOULD HAVE been done with all ABS (or APB, etc) rules
  * for signals.  We rely on this to generate our information.
  * 
- * I decided to do my own simple topology here.  I did one in C++ in
- * the early 1990's: a system whereby a layout drawn is analyzed (topology) so
- * that the C++ code could act as engineer and dispatcher, and FULLY automate
- * a layout (which I believe is a design goal of JMRI, which I believe
- * does work).  It supported reverse loops too whereby the route would have to
- * traverse it to get to a location in the opposite direction from where
- * a starting point is......  But enough of that.  It was JMRI for it's day!
- * (except with none of the complexity, IMHO.  That drawn diagram was the
- * ONLY thing needed, no blocks, transits, etc.!)  I ran my "N" scale layout
- * with it for many years.  Off of a "simple" drawing.
- * 
  * Also, NEVER allocate the terminating O.S. section, otherwise the dispatcher
  * cannot clear the terminating O.S. section IN THE SAME DIRECTION as the
  * originating O.S. section!
@@ -100,7 +89,6 @@ public class Topology {
                     SignalMastLogic facingSignalMastLogic = _mSignalMastLogicManager.getSignalMastLogic(facingSignalMast);
                     if (null != facingSignalMastLogic) { // Safety
                         processDestinations(returnValue, facingSignalMastLogic);
-                        break;      // The first one that matches in the proper direction MUST BE CORRECT!
                     }
                 }
             }
