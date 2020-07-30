@@ -5,7 +5,7 @@ import org.junit.jupiter.api.*;
 
 /*
 * Tests for the CTCConstants Class
-* @author  Gregory J. Bedlek   Copyright (C) 2020
+* @author  Dave Sand   Copyright (C) 2019
 */
 public class CTCConstantsTest {
 
