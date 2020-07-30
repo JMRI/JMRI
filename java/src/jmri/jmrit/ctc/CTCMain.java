@@ -1,7 +1,6 @@
 /**
  *  @author Gregory J. Bedlek Copyright (C) 2018, 2019
  * 
- * Help document: /JMRI/help/en/package/jmri/jmrit/ctc/CTC.shtml
  */
 
 package jmri.jmrit.ctc;
