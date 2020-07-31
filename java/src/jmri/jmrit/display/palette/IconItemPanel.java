@@ -149,10 +149,10 @@ public class IconItemPanel extends ItemPanel {
                     log.error("{} Unknown families found for {}", families.size(), _itemType);
                 }
             }
+            makeDataFlavors();
         } else {
             _currentIconMap = new HashMap<>();
         }
-        makeDataFlavors();
         addIconsToPanel();
         makePreviewPanel(true, null);
     }
@@ -167,7 +167,7 @@ public class IconItemPanel extends ItemPanel {
            }
         }
         _wasEmpty = isEmpty;
-        addIconsToPanel(_currentIconMap, _iconPanel, !_update);
+        addIconsToPanel(_currentIconMap, _iconPanel, _update);
     }
 
     private void makeDataFlavors() {
@@ -261,7 +261,7 @@ public class IconItemPanel extends ItemPanel {
     protected void putIcon(String name, NamedIcon icon) {
         _currentIconMap.put(name, icon);
         log.debug("putIcon {}", name);
-        hideIcons();
+        updateIcons();
     }
 
     /**
@@ -275,14 +275,17 @@ public class IconItemPanel extends ItemPanel {
         }
         log.debug("deleteIcon {}", _selectedIcon._key);
         _currentIconMap.remove(_selectedIcon._key);
-        hideIcons();
+        updateIcons();
     }
 
-    /**
-     * implement this abstract method to refresh _iconPanel
-     */
     @Override
     protected void hideIcons() {
+    }
+
+    /*
+     * Family 'set' has changed
+     */
+    private void updateIcons() {
         _previewPanel.setVisible(false);    // necessary to guarantee _iconPanel gets refreshed
         addIconsToPanel();
         Dimension oldDim = getSize();
@@ -370,7 +373,14 @@ public class IconItemPanel extends ItemPanel {
         add(linkPanel);
     }
 
+    /*
+     * edit a PositionableLabel's icon
+     * @param icon the icon to be update/changed
+     */
     public void setUpdateIcon(NamedIcon icon) {
+        if (!_update || icon == null) {
+            return;
+        }
         _updateIcon = icon;
         String name = icon.getName();
         if (name == null) {
@@ -383,11 +393,14 @@ public class IconItemPanel extends ItemPanel {
                 name = name.substring(0, index);
             }
         }
-        _currentIconMap = new HashMap<>();
         _currentIconMap.put(name, icon);
-        hideIcons();
+        updateIcons();
     }
 
+    /*
+     * edit a PositionableLabel's icon
+     * @return return update/changed icon
+     */
     public NamedIcon getUpdateIcon() {
         return _updateIcon;
     }
@@ -495,7 +508,7 @@ public class IconItemPanel extends ItemPanel {
         @Override
         protected void accept(DropTargetDropEvent e, NamedIcon newIcon) {
             super.accept(e, newIcon);
-            setUpdateIcon(newIcon);
+            _updateIcon = newIcon;
         }        
     }
 
@@ -509,13 +522,13 @@ public class IconItemPanel extends ItemPanel {
             _icon = icon;
             JLabel image;
             if (dropIcon) {
-                image = new IconDragJLabel(_positionableDataFlavor, icon, _level);
-            } else {
                 image = new ADropJLabel(icon);
+            } else {
+                image = new IconDragJLabel(_positionableDataFlavor, icon, _level);
+                image.addMouseListener(this);
+                addMouseListener(new IconListener());
             }
-            image.addMouseListener(this);
             wrapIconImage(icon, image, this, key);
-            addMouseListener(new IconListener());
         }
 
         @Override

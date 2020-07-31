@@ -42,6 +42,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
             _detectPanel = new DetectionPanel(this);
             add(_detectPanel, 1);
         }
+        hideIcons();
     }
 
     /**

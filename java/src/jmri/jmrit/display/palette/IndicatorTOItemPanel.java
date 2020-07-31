@@ -53,6 +53,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             _detectPanel = new DetectionPanel(this);
             add(_detectPanel, 1);
         }
+        hideIcons();
     }
 
     /**

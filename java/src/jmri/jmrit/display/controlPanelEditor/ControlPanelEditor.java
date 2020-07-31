@@ -66,7 +66,8 @@ import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrit.display.PositionableJPanel;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
-import jmri.jmrit.display.SensorIcon;
+import jmri.jmrit.display.ReporterIcon;
+import jmri.jmrit.display.RpsPositionIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ColorDialog;
@@ -126,7 +127,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private HashMap<String, NamedIcon> _portalIconMap;
 
     private final JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
-//    private final JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
     private final JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
     private final JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private final JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
@@ -1614,26 +1614,20 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (p instanceof PositionableLabel) {
                 PositionableLabel pl = (PositionableLabel) p;
-                if (!pl.isIcon()) {
-                    setColorMenu(popup, pl, ColorDialog.BORDER);
-                    setColorMenu(popup, pl, ColorDialog.MARGIN);
-                    setColorMenu(popup, pl, ColorDialog.FONT);
-                    setColorMenu(popup, pl, ColorDialog.TEXT);
-//                    popupSet |= p.setTextEditMenu(popup);
-                    popupSet |= setTextAttributes(p, popup);
-                } else if (p instanceof SensorIcon) {
-                    popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
-                    if (pl.isText()) {
-                        setColorMenu(popup, (JComponent) p, ColorDialog.BORDER);
-                        popupSet |= setTextAttributes(p, popup);
-//                        popupSet |= pl.setEditTextMenu(popup);
+                if (pl.isText()) {
+                    setColorMenu(popup, (JComponent) p, ColorDialog.BORDER);
+                    setColorMenu(popup, (JComponent) p, ColorDialog.MARGIN);
+                    setColorMenu(popup, (JComponent) p, ColorDialog.FONT);
+                    if (!(pl instanceof ReporterIcon) && !(pl instanceof RpsPositionIcon)) {
+                        popupSet |= pl.setEditTextItemMenu(popup);
                     }
                 }
             } else if (p instanceof PositionableJPanel) {
                 setColorMenu(popup, (JComponent) p, ColorDialog.BORDER);
                 setColorMenu(popup, (JComponent) p, ColorDialog.MARGIN);
                 setColorMenu(popup, (JComponent) p, ColorDialog.FONT);
-                popupSet |= setTextAttributes(p, popup);
+                PositionableJPanel pj = (PositionableJPanel) p;
+                popupSet |= pj.setEditTextItemMenu(popup);
             }
             if (p instanceof LinkingObject) {
                 ((LinkingObject) p).setLinkMenu(popup);

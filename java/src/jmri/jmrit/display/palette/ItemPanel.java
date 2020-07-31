@@ -26,7 +26,6 @@ import jmri.jmrit.display.PreviewPanel;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.util.swing.ImagePanel;
 
-import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -423,8 +422,9 @@ public abstract class ItemPanel extends JPanel  {
             for (String k : deletes) {
                 ItemPalette.removeIconMap(_itemType, k);
             }
-            ((FamilyItemPanel)this)._family = null;
-
+            if (this instanceof FamilyItemPanel) {
+                ((FamilyItemPanel)this)._family = null;
+            }
         } else {
             IndicatorTOItemPanel p = (IndicatorTOItemPanel)this;
             HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> 
@@ -474,16 +474,20 @@ public abstract class ItemPanel extends JPanel  {
     }
     // oldDim old panel size,
     // totalDim old frame size
-    protected void reSizeDisplay(boolean isPalette, Dimension oldDim, Dimension totalDim) {
+    protected void reSizeDisplay(boolean isPalette, Dimension oldDim, Dimension frameDim) {
         Dimension newDim = getPreferredSize();
-        Dimension frameDiffDim = new Dimension(totalDim.width - oldDim.width, totalDim.height - oldDim.height);
+        Dimension deltaDim = shellDimension(this);
         if (log.isDebugEnabled()) {
             // Gather data for additional dimensions needed to display new panel in the total frame
-            log.debug("resize {} for type {}. totalDim= ({}, {}) \"{}\" OldDim= ({}, {}) frameDiffDim= ({}, {})",
-                    (isPalette?"tabPane":"update"), _itemType, totalDim.width, totalDim.height,
-                    this._itemType, oldDim.width, oldDim.height, frameDiffDim.width, frameDiffDim.height);
+            Dimension frameDiffDim = new Dimension(frameDim.width - oldDim.width, frameDim.height - oldDim.height);
+            /*log.debug("resize {} {}. frameDim= ({}, {}) OldDim= ({}, {})",
+                    (isPalette?"tabPane":"update"), _itemType, frameDim.width, frameDim.height,
+                    oldDim.width, oldDim.height);*/
+            log.debug("resize {} {}. frameDiffDim= ({}, {}) deltaDim= ({}, {}) prefDim= ({}, {}))",
+                    (isPalette?"tabPane":"update"), _itemType,
+                    frameDiffDim.width, frameDiffDim.height,
+                    deltaDim.width, deltaDim.height, newDim.width, newDim.height);
         }
-        Dimension deltaDim = shellDimension(this);
         if (isPalette && _initialized) {
             _frame.reSize(ItemPalette._tabPane, deltaDim, newDim);
         } else if (_update || _initialized) {

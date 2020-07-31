@@ -31,9 +31,7 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
 
     @Override
     public void init() {
-        if (!_initialized) {
-            super.init();
-        }
+        super.init();
         _showIconsButton.setEnabled(_mast != null);
     }
 

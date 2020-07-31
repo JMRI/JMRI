@@ -1,17 +1,28 @@
 package jmri.jmrit.display;
 
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import javax.annotation.Nonnull;
+import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.display.palette.ItemPanel;
+import jmri.jmrit.display.palette.TextItemPanel;
 
 /**
  * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
@@ -198,6 +209,69 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     @Override
     public void setEditor(Editor ed) {
         _editor = ed;
+    }
+
+    public boolean setEditTextItemMenu(JPopupMenu popup) {
+        popup.add(new AbstractAction(Bundle.getMessage("SetTextSizeColor")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editTextItem();
+            }
+        });
+        return true;
+    }
+
+    TextItemPanel _itemPanel;
+
+    protected void editTextItem() {
+        _paletteFrame = makePaletteFrame(Bundle.getMessage("SetTextSizeColor"));
+        _itemPanel = new TextItemPanel(_paletteFrame, "Text");
+        ActionListener updateAction = (ActionEvent a) -> updateTextItem();
+        _itemPanel.init(updateAction, this);
+        initPaletteFrame(_paletteFrame, _itemPanel);
+    }
+
+    protected void updateTextItem() {
+        PositionablePopupUtil util = _itemPanel.getPositionablePopupUtil();
+        _itemPanel.setAttributes(this);
+        if (_editor._selectionGroup != null) {
+            _editor.setSelectionsAttributes(util, this);
+        } else {
+            _editor.setAttributes(util, this);
+        }
+        finishItemUpdate(_paletteFrame, _itemPanel);
+    }
+
+    public jmri.jmrit.display.DisplayFrame _paletteFrame;
+
+    // ********** Methods for Item Popups in Control Panel editor *******************
+    /**
+     * Create a palette window.
+     *
+     * @param title the name of the palette
+     * @return DisplayFrame for palette item
+     */
+    public DisplayFrame makePaletteFrame(String title) {
+        jmri.jmrit.display.palette.ItemPalette.loadIcons();
+
+        return new DisplayFrame(title, _editor);
+    }
+
+    public void initPaletteFrame(DisplayFrame paletteFrame, @Nonnull ItemPanel itemPanel) {
+        Dimension dim = itemPanel.getPreferredSize();
+        JScrollPane sp = new JScrollPane(itemPanel);
+        dim = new Dimension(dim.width + 25, dim.height + 25);
+        sp.setPreferredSize(dim);
+        paletteFrame.add(sp);
+        paletteFrame.pack();
+        jmri.InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_editor, this, paletteFrame);
+        paletteFrame.setVisible(true);
+    }
+
+    public void finishItemUpdate(DisplayFrame paletteFrame, @Nonnull ItemPanel itemPanel) {
+        itemPanel.closeDialogs();
+        paletteFrame.dispose();
+        invalidate();
     }
 
     // overide where used - e.g. momentary

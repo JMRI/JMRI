@@ -48,6 +48,7 @@ public class ClockItemPanel extends IconItemPanel {
             add(Box.createVerticalGlue());
         }
         _previewPanel.invalidate();
+        hideIcons();
     }
 
     @Override

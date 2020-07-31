@@ -1,6 +1,5 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class ReporterItemPanel extends TableItemPanel<Reporter> {
     }
 
     private JPanel makeDraggerPanel(DisplayFrame frame) {
-        JPanel panel = new JPanel(new FlowLayout());
+        JPanel panel = new JPanel();
         panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         panel.setOpaque(false);
         JPanel dragger;

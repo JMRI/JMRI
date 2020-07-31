@@ -88,7 +88,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
             super.init();
             add(initTablePanel(_model), 0); // top of Panel
         }
-//        hideIcons();
+        hideIcons();
     }
 
     /**
