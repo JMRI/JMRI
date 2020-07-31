@@ -337,34 +337,34 @@
                 <label xml:lang="de">Konstanter Bremsweg Rückwärts</label>
                 <label xml:lang="ca">Distància de frenada constant</label>
             </variable>
+            <variable CV="245" default="0" tooltip="Unit is 16 milliseconds" item="ESU Auto Uncoupling Wait Time">
+                <decVal/>
+                <label>Auto Uncoupling Wait Time</label>
+                <label xml:lang="de">Auto Uncoupling Wait Time</label>
+                <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
+                <label xml:lang="ca">Auto Uncoupling Wait Time</label>
+            </variable>
+            <variable CV="246" default="0" item="ESU Auto Uncoupling Speed">
+                <decVal/>
+                <label>Auto Uncoupling Speed</label>
+                <label xml:lang="de">Entkuppeln - Fahrtgeschwindigkeit</label>
+                <label xml:lang="ca">Velociat de desenganxat automàtic</label>
+            </variable>
+            <variable CV="247" default="0" tooltip="Unit is 16 milliseconds" item="ESU Auto Uncoupling Remove Time">
+                <decVal/>
+                <label>Auto Uncoupling Remove Time</label>
+                <label xml:lang="de">     Entkuppeln - Abrückzeit     </label>
+                <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
+                <label xml:lang="ca">Temps d'autodesacoblament d'un tren</label>
+            </variable>
+            <variable CV="248" default="0" tooltip="Unit is 16 milliseconds" item="ESU Auto Uncoupling Push Time">
+                <decVal/>
+                <label>Auto Uncoupling Push Time</label>
+                <label xml:lang="de">    Entkuppeln - Andrückzeit     </label>
+                <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
+                <label xml:lang="ca">Temps d'empenyer enn desenganxat automàtic</label>
+            </variable>
         </variables>
-        <variable CV="245" default="0" tooltip="Unit is 16 milliseconds" item="ESU Auto Uncoupling Wait Time">
-            <decVal/>
-            <label>Auto Uncoupling Wait Time</label>
-            <label xml:lang="de">Auto Uncoupling Wait Time</label>
-            <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
-            <label xml:lang="ca">Auto Uncoupling Wait Time</label>
-        </variable>
-        <variable CV="246" default="0" item="ESU Auto Uncoupling Speed">
-            <decVal/>
-            <label>Auto Uncoupling Speed</label>
-            <label xml:lang="de">Entkuppeln - Fahrtgeschwindigkeit</label>
-            <label xml:lang="ca">Velociat de desenganxat automàtic</label>
-        </variable>
-        <variable CV="247" default="0" tooltip="Unit is 16 milliseconds" item="ESU Auto Uncoupling Remove Time">
-            <decVal/>
-            <label>Auto Uncoupling Remove Time</label>
-            <label xml:lang="de">     Entkuppeln - Abrückzeit     </label>
-            <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
-            <label xml:lang="ca">Temps d'autodesacoblament d'un tren</label>
-        </variable>
-        <variable CV="248" default="0" tooltip="Unit is 16 milliseconds" item="ESU Auto Uncoupling Push Time">
-            <decVal/>
-            <label>Auto Uncoupling Push Time</label>
-            <label xml:lang="de">    Entkuppeln - Andrückzeit     </label>
-            <tooltip xml:lang="de">die Einheit sind 0.016384 sec</tooltip>
-            <label xml:lang="ca">Temps d'empenyer enn desenganxat automàtic</label>
-        </variable>
     </variables>
     <!-- end motor-dependent variables -->
     <!-- begin AC Analog variables -->
@@ -820,7 +820,7 @@
         <label xml:lang="de">Serielles Protokoll für C-Sinus</label>
         <label xml:lang="ca">SUSI</label>
     </variable>
-    <variable CV="124" mask="XXXVXXXX" default="1" item="ESU AUX10/Sensor" exclude="LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 XL,LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC,LokPilot 5 micro Next18,LokPilot 5 micro DCC Next18">
+    <variable CV="124" mask="XXXVXXXX" default="1" item="ESU AUX10/Sensor" exclude="LokSound 5 micro,LokSound 5 micro DCC,LokSound 5 micro DCC Direct,LokSound 5 XL,LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC,LokPilot 5 micro Next18,LokPilot 5 micro DCC Next18,Essential Sound Unit">
         <enumVal>
             <enumChoice value="1">
                 <choice>Use digital wheel sensor</choice>
