@@ -69,7 +69,7 @@ public abstract class DragJComponent extends JPanel implements DragGestureListen
         setPreferredSize(new java.awt.Dimension(width, height));
     }
 
-    protected JComponent getcomponent() {
+    protected JComponent getThing() {
         return _component;
     }
         

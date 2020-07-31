@@ -48,7 +48,7 @@ public class PortalIconTest extends PositionableIconTest {
     @AfterEach
     @Override
     public void tearDown() {
-        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
+//        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
         if (editor != null) {
             JUnitUtil.dispose(editor);
         }

@@ -320,7 +320,7 @@ public class TextItemPanel extends ItemPanel {
 
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 String link = _linkName.getText().trim();
-                PositionableLabel sample = (PositionableLabel)getcomponent();
+                PositionableLabel sample = (PositionableLabel)getThing();
                 PositionableLabel label;
                 if (link.length() == 0) {
                     label = new PositionableLabel(sample.getText(), sample.getEditor());
