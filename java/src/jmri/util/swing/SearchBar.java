@@ -22,7 +22,7 @@ public class SearchBar extends javax.swing.JPanel {
     JTextField textField = new JTextField();
     JButton rightButton = new JButton(">");
     JButton leftButton = new JButton("<");
-    JButton doneButton = new JButton("Done");
+    JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
     
     public SearchBar(Runnable forward, Runnable backward, Runnable done) {
         super();
