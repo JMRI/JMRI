@@ -104,6 +104,7 @@ public class SearchBar extends javax.swing.JPanel {
     /**
      * A service routine to connect the SearchBar to 
      * the usual modifier keys
+     * @param frame JFrame containing this search bar; used to set key maps
      */
     public void configureKeyModifiers(JFrame frame) {
         JRootPane rootPane = frame.getRootPane();
