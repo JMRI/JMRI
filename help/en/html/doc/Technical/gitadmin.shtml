@@ -50,11 +50,11 @@
       JMRI's Github is configured with the following automations and requirements for merging a Pull Request:
       <ul>
         <li>All CI tests have passed for the Pull Request</li>
-        <li>There has been at least one review from a JMRI developer that accepts the Pull Request</li>
+        <li>There has been at least one review from a non-author JMRI developer that accepts the Pull Request</li>
         <li>There are no reviews requesting changes</li>
         <li>The Pull Request has been in-queue for at least a day to allow people to take a look at them</li>
         <li>These rules apply to all members of the development team, including administrators</li>
-        <li>The original author of the Pull Request is automatically assigned to the Pull Request</li>
+        <li>The original author of the Pull Request has been assigned to the Pull Request</li>
       </ul>
 
       <p>
@@ -63,18 +63,32 @@
 
       <p>
       When reviewing a pull request, the focus should be on function and not style.  The following should be
-      considered when reviewing a pull request.
+      considered when reviewing a pull request:
       <ul>
-         <li>Does the Pull Request add something positive to JMRI.  This may include, but is not limited to:
+         <li>Does the Pull Request function as described by the author?</li>
+         <li>Does the Pull Request add something positive to JMRI?  This may include, but is not limited to:
             <ul>
               <li>New features</li>
               <li>Fixing issues in existing code</li>
               <li>Improve some the development or CI process</li>
             </ul>
          </li>
-      <li>Does the Pull Request function as described by the author.</li>
-      <li>Except in rare circumstances, which must be discussed in the PR, the PR does not
-           remove existing features from JMRI</li>
+         <li>Unless it has previously been discussed on
+                <a href="https://jmri-developers.groups.io/g/jmri">jmri-developers list</a>,
+                and agreed to, 
+                the PR does not take anything away or make anything more difficult.
+                This may include, but is not limited to:
+            <ul>
+              <li>Removes features</li>
+              <li>Adds to developer workload</li>
+              <li>Is a incomplete change to structure or practice that will require future work by others</li>
+            </ul>
+            Before coding something that will do any of these, the pros and cons
+            should be discussed on the 
+            <a href="https://jmri-developers.groups.io/g/jmri">jmri-developers list</a>.  
+            This can avoid hard feelings if the adverse impact is determined to be too high, 
+            and can help find alternate approaches if needed.
+         </li>
       </ul>
 
       <p>
