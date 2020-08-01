@@ -1,9 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -300,9 +297,78 @@ abstract public class PaneProgFrame extends JmriJFrame
             progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
             bottom.add(progStatus);
             pane.add(bottom, BorderLayout.SOUTH);
+            
         }
     }
 
+    void setSearchGui(JPanel pane) {
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+        pane.add(bottom, BorderLayout.SOUTH);
+
+        // search field
+        searchBar = new jmri.util.swing.SearchBar(searchForwardTask, searchBackwardTask, searchDoneTask);
+        searchBar.setVisible(false); // start not visible
+        searchBar.configureKeyModifiers(this);
+        bottom.add(searchBar);
+
+        pane.add(bottom, BorderLayout.SOUTH);
+    }
+    
+    jmri.util.swing.SearchBar searchBar;
+    
+    protected boolean searchJPanel(Component c, String target, JComponent tab) {
+        if (c instanceof JPanel) {
+            for (Component d : ((JPanel)c).getComponents()) {
+                if (searchJPanel(d, target, tab)) return true;
+            }
+        } else if (c instanceof JScrollPane) {
+            if (searchJPanel(
+                    ((JScrollPane)c).getViewport().getView(), target, tab
+                )) return true;
+        } else if (c instanceof WatchingLabel) {
+            if (((WatchingLabel)c).getText().contains(target)) {
+                log.info("found it! {}", c);
+                searchGoesTo((WatchingLabel)c, tab);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    protected void searchGoesTo(WatchingLabel c, JComponent tab) {
+        tabPane.setSelectedComponent(tab);
+        SwingUtilities.invokeLater(() -> c.getWatched().requestFocus());
+    }
+    
+    private Runnable searchForwardTask = new Runnable() {
+                    public void run() {
+                        log.info("start forward");
+                        for (JPanel p : getPaneList()) {
+                            log.info("Pane: {}", p);
+                            for (Component c : p.getComponents()) {
+                                if (searchJPanel(c, searchBar.getSearchString(), p) ) {
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                };
+    
+    private Runnable searchBackwardTask = new Runnable() {
+                    public void run() {
+                        log.info("start backward");
+                    }
+                };
+
+    private Runnable searchDoneTask = new Runnable() {
+                    public void run() {
+                        log.info("done search");
+                        searchBar.setVisible(false);
+                    }
+                };
+
+    
     public List<JPanel> getPaneList() {
         return paneList;
     }
@@ -488,6 +554,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         // now that programmer is configured, set the programming GUI
         setProgrammingGui(tempPane);        
 
+        // add the search GUI
+        setSearchGui(tempPane);
+        
         pack();
 
         if (log.isDebugEnabled()) {  // because size elements take time
