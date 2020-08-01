@@ -333,7 +333,15 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>The DecoderPro programming/editing screens now have a Find operation!
+                <p>
+                Ctrl-F or Cmd-F will open a small find bar at the bottom of the pane
+                where you can enter a search string.  Hitting Return will find the first 
+                occurrence. There are right and left arrows to find the next occurrence forward
+                and backwards respectively.  Ctrl-G or Cmd-G will also find the next forward
+                occurance. The "Done" button will dismiss the 
+                bar, but you can leave it up without it interferring.
+            </li>
         </ul>
 
    <h3>Dispatcher</h3>
