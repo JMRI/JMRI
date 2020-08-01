@@ -2,10 +2,9 @@ package jmri.jmrix.maple;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the MapleSystemConnectionMemo class
@@ -28,7 +27,7 @@ public class MapleSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new MapleSystemConnectionMemo();
@@ -49,7 +48,7 @@ public class MapleSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

@@ -9,7 +9,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood Copyright 2020
  */
 @ServiceProvider(service = EditorActionFactory.class)
-public class ControlPanelEditorActionFactory implements EditorActionFactory {
+public final class ControlPanelEditorActionFactory implements EditorActionFactory {
 
     @Override
     public AbstractAction createAction() {

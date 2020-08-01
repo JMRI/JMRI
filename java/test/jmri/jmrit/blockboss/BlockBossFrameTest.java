@@ -1,8 +1,10 @@
 package jmri.jmrit.blockboss;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,7 +12,7 @@ import org.junit.*;
  */
 public class BlockBossFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -20,7 +22,7 @@ public class BlockBossFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

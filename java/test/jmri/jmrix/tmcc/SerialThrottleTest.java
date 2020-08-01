@@ -2,10 +2,9 @@ package jmri.jmrix.tmcc;
 
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -282,7 +281,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 29");
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -293,7 +292,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new SerialThrottle(memo, new jmri.DccLocoAddress(1024, true));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

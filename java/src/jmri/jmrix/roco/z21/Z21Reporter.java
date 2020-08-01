@@ -15,7 +15,7 @@ import jmri.RailComManager;
  */
 public class Z21Reporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener {
 
-    private Z21SystemConnectionMemo _memo = null;
+    private Z21SystemConnectionMemo _memo;
 
     private javax.swing.Timer refreshTimer; // Timer used to periodically
     // referesh the RailCom data (this does not appear to happen automatically).
@@ -95,12 +95,9 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
      */
     private void refreshTimer() {
         if (refreshTimer == null) {
-            refreshTimer = new javax.swing.Timer(refreshTimeoutValue, new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    // If the timer times out, send a request for status
-                    requestUpdateFromLayout();
-                }
+            refreshTimer = new javax.swing.Timer(refreshTimeoutValue, e -> {
+                // If the timer times out, send a request for status
+                requestUpdateFromLayout();
             });
         }
         refreshTimer.stop();

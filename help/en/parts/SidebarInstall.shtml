@@ -7,7 +7,7 @@
             <li><a href="/install/WindowsNew.shtml">Windows</a>
             <li><a href="/install/MacOSX.shtml">Mac OS X</a>
             <li><a href="/install/Linux.shtml">Linux (multiple vers)</a>
-            <li><a href="/install/Raspbian.shtml">Raspbian on RaspberryPi</a>
+            <li><a href="/install/Raspbian.shtml">Raspberry Pi OS on Raspberry Pi</a>
             <li><i><a href="/install/Debug.shtml">Debugging an installation</a></i>
 		    </ul>
 		</dd>

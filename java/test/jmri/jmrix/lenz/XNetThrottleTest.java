@@ -2,13 +2,9 @@ package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Rule;
+import org.junit.jupiter.api.*;
 import jmri.util.junit.rules.RetryRule;
-import org.junit.rules.Timeout;
 
 /**
  * XNetThrottleTest.java
@@ -17,13 +13,10 @@ import org.junit.rules.Timeout;
  *
  * @author Paul Bender Copyright (C) 2008-2016
  */
+@Timeout(1)
 public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
-    @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(1); // 1 second timeout for methods in this test class.
 
     protected XNetInterfaceScaffold tc = null;
     protected XNetSystemConnectionMemo memo = null;
@@ -1605,7 +1598,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // state to idle, and then we can test what we really want to.
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -1614,22 +1607,25 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // infrastructure objects
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         memo = new XNetSystemConnectionMemo(tc);
+        XNetThrottleManager tm = new XNetThrottleManager(memo);
+        memo.setThrottleManager(tm);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, memo.getThrottleManager());
         XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
-        // uncommenting the next two lines causes the base throttle tests to hang.
-        //int n = tc.outbound.size();
-        //initThrottlev35(t,n);
         instance = t;
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         try {
             ((XNetThrottle) instance).throttleDispose();
         }
         finally {
-            JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+            tc.terminateThreads();
+            tc = null;
+            memo.dispose();
+            memo = null;
+            instance = null;
             JUnitUtil.tearDown();
         }
     }

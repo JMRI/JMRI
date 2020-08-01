@@ -1,14 +1,10 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test common functioning of LayoutTrack.
@@ -23,7 +19,7 @@ public class LayoutTrackTest {
     protected LayoutEditor le = null;
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -32,7 +28,7 @@ public class LayoutTrackTest {
         }
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         if (le != null) {

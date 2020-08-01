@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
  * User interface for adding an item to the log file.
  *
  * @author Bob Jacobsen Copyright (C) 2007
+ * @deprecated since 4.21.1; use {@link apps.jmrit.log.LogPanel} instead
  */
+@Deprecated
+@SuppressWarnings("deprecation")
 public class LogPanel extends JPanel {
 
     // member declarations

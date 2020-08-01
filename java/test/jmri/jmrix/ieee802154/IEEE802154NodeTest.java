@@ -3,10 +3,9 @@ package jmri.jmrix.ieee802154;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * IEEE802154NodeTest.java
@@ -68,7 +67,7 @@ public class IEEE802154NodeTest{
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         m = new IEEE802154Node() {
@@ -94,7 +93,7 @@ public class IEEE802154NodeTest{
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

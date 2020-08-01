@@ -5,7 +5,9 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.consisttool.TestConsistManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of ConsistController
@@ -20,7 +22,7 @@ public class ConsistControllerTest {
         Assert.assertNotNull("exists", panel );
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -31,7 +33,7 @@ public class ConsistControllerTest {
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
     
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

@@ -1,15 +1,15 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -32,7 +32,7 @@ public class IndicatorTOIconDialogTest {
         JUnitUtil.dispose(editor);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
@@ -40,7 +40,7 @@ public class IndicatorTOIconDialogTest {
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.tearDown();

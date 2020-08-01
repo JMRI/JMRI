@@ -1,10 +1,9 @@
 package jmri.jmrix.zimo;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -19,7 +18,7 @@ public class Mx1ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         Assert.assertNotNull("exists",tm);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,7 +35,7 @@ public class Mx1ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         tm = new Mx1ThrottleManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

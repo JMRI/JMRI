@@ -1,7 +1,9 @@
 package jmri.jmrix.ztc.ztc611.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.ztc.ztc611.ConnectionConfig;
 
 /**
@@ -13,7 +15,7 @@ import jmri.jmrix.ztc.ztc611.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXmlTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -21,7 +23,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.lenz.configurexml.Abstra
         cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

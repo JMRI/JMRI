@@ -1,0 +1,41 @@
+version: 2
+mergeable: # see https://github.com/mergeability/mergeable
+  - when: pull_request.opened
+    name: 'Ensure author assigned'
+    validate:
+      - do: assignee
+        min:
+          count: 1 # Should be assigned to somebody; if not, assign author
+    fail:
+      - do: assign
+        assignees: [ '@author' ] 
+      - do: checks
+        status: 'success' # Supply the default actions, as if this passed.
+        payload:
+          title: 'Mergeable Run have been Completed!'
+          summary: "All the validators have returned 'pass'! \n Here are some stats of the run: \n {{validationCount}} validations were ran"
+  - when: pull_request.opened
+    name: 'Check for release note if help, java/src, jython, resources, xml, or web'
+    validate:
+      - do: changeset
+        or:  # passes if no lib files or is a release note
+          - and: 
+            - must_exclude:
+                regex: "^help/"
+            - must_exclude:
+                regex: "^java/src/"
+            - must_exclude:
+                regex: "^jython/"
+            - must_exclude:
+                regex: "^resources/"
+            - must_exclude:
+                regex: "^web/"
+            - must_exclude:
+                regex: "^xml/"
+          - must_include:
+              regex: "help/en/releasenotes/current-draft-note.shtml"
+    fail:
+      - do: comment
+        payload:
+          body: > 
+            Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XpaConfigureAction extends AbstractAction {
   
-    private jmri.jmrix.xpa.XpaSystemConnectionMemo memo = null;
+    private final jmri.jmrix.xpa.XpaSystemConnectionMemo memo;
 
     public XpaConfigureAction(String s,jmri.jmrix.xpa.XpaSystemConnectionMemo m) {
         super(s);

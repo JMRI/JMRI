@@ -65,7 +65,7 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
      *
      */
     public void store(Element root) {
-        store(root, Xml.LENGTHS, Xml.LENGTH, Xml.CAR_LENGTHS);
+        store(root, Xml.LENGTHS, Xml.LENGTH);
     }
 
     public void load(Element root) {

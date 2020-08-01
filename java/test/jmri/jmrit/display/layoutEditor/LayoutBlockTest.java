@@ -3,10 +3,9 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.Block;
 import jmri.Memory;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutBlock
@@ -115,14 +114,14 @@ public class LayoutBlockTest {
 
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         // Create layout block and the related automatic block
         layoutBlock = new LayoutBlock("ILB999", "Test Block");
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         layoutBlock = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();

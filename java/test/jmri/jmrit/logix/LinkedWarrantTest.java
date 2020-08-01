@@ -6,14 +6,15 @@ import java.io.File;
 import jmri.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperties;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JFrameOperator;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
@@ -23,10 +24,8 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * todo - test error conditions
  */
+@Timeout(60)
 public class LinkedWarrantTest {
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(2);  // allow 3 retries
 
     private OBlockManager _OBlockMgr;
     private SensorManager _sensorMgr;
@@ -34,10 +33,9 @@ public class LinkedWarrantTest {
 
     // tests a warrant launching itself. (origin, destination the same to make continuous loop)
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testLoopedWarrant() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -47,19 +45,18 @@ public class LinkedWarrantTest {
         panel.setVisible(false);  // hide panel to prevent repaint.
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS12");
-        Assert.assertNotNull("Senor IS12 not found", sensor1);
+        assertThat(sensor1).withFailMessage("Senor IS12 not found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB12"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("tableFrame", tableFrame);
+        assertThat(tableFrame).withFailMessage("tableFrame").isNotNull();
 
         Warrant warrant = _warrantMgr.getWarrant("LoopDeLoop");
-        Assert.assertNotNull("warrant", warrant);
+        assertThat(warrant).withFailMessage("warrant").isNotNull();
       
         // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
-        Assert.assertNull("Warrant starts",
-              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
+        assertThat(tableFrame.runTrain(warrant, Warrant.MODE_RUN)).withFailMessage("Warrant starts").isNull(); // start run
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
@@ -71,9 +68,7 @@ public class LinkedWarrantTest {
         OBlock block = _OBlockMgr.getOBlock("OB12");
         
         // Run the train, then checks end location
-        Assert.assertEquals("LoopDeLoop after first leg", 
-                block.getSensor().getDisplayName(), 
-                NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after first leg").isEqualTo(block.getSensor().getDisplayName());
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -85,9 +80,7 @@ public class LinkedWarrantTest {
             return m.endsWith("Cmd #8.");
         }, "Loopy 2 starts to move at 8th command");
 
-        Assert.assertEquals("LoopDeLoop after second leg", 
-                block.getSensor().getDisplayName(), 
-                NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after second leg").isEqualTo(block.getSensor().getDisplayName());
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -99,9 +92,7 @@ public class LinkedWarrantTest {
             return m.endsWith("Cmd #8.");
         }, "Loopy 3 starts to move at 8th command");
 
-        Assert.assertEquals("LoopDeLoop after last leg", 
-                block.getSensor().getDisplayName(), 
-                NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("LoopDeLoop after last leg").isEqualTo(block.getSensor().getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -112,10 +103,9 @@ public class LinkedWarrantTest {
 
     // Tests warrant launching a different warrant with different address. Origin location cannot be destination of the other)
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testLinkedWarrant() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -125,22 +115,21 @@ public class LinkedWarrantTest {
         panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor12 = _sensorMgr.getBySystemName("IS12");
-        Assert.assertNotNull("Senor IS12 not found", sensor12);
+        assertThat(sensor12).withFailMessage("Senor IS12 not found").isNotNull();
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
-        Assert.assertNotNull("Senor IS1 not found", sensor1);
+        assertThat(sensor1).withFailMessage("Senor IS1 not found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sensor12, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB12"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("tableFrame", tableFrame);
+        assertThat(tableFrame).withFailMessage("tableFrame").isNotNull();
 
         Warrant warrant = _warrantMgr.getWarrant("Loop&Fred");
-        Assert.assertNotNull("warrant", warrant);
+        assertThat(warrant).withFailMessage("warrant").isNotNull();
        
         // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
-        Assert.assertNull("Warrant starts",
-              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
+        assertThat(tableFrame.runTrain(warrant, Warrant.MODE_RUN)).withFailMessage("Warrant starts").isNull(); // start run
 
         Warrant w = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -153,9 +142,7 @@ public class LinkedWarrantTest {
         OBlock block = _OBlockMgr.getOBlock("OB12");
 
         // Run the train, then checks end location
-        Assert.assertEquals("Train after first leg", 
-                block.getSensor().getDisplayName(), 
-                NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName()).withFailMessage("Train after first leg").isEqualTo(block.getSensor().getDisplayName());
 
         // "Loop&Fred" links to "WestToEast". Get start for "WestToEast" occupied quickly
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
@@ -176,8 +163,7 @@ public class LinkedWarrantTest {
         String[] route2 = {"OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11"};
         block = _OBlockMgr.getOBlock("OB11");
 
-        Assert.assertEquals("Train after second leg", block.getSensor().getDisplayName(),
-                NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Train after second leg").isEqualTo(block.getSensor().getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -189,10 +175,9 @@ public class LinkedWarrantTest {
     // tests a warrant running a train out and launching a return train 
     // Both warrants have the same address and origin of each is destination of the other
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testBackAndForth() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -202,15 +187,15 @@ public class LinkedWarrantTest {
         panel.setVisible(false);  // hide panel to prevent repaint.
 
         final Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
-        Assert.assertNotNull("Senor IS1 not found", sensor1);
+        assertThat(sensor1).withFailMessage("Senor IS1 not found").isNotNull();
 
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("tableFrame", tableFrame);
+        assertThat(tableFrame).withFailMessage("tableFrame").isNotNull();
 
         Warrant outWarrant = _warrantMgr.getWarrant("WestToEastLink");
-        Assert.assertNotNull("WestWarrant", outWarrant);
+        assertThat(outWarrant).withFailMessage("WestWarrant").isNotNull();
         Warrant backWarrant = _warrantMgr.getWarrant("EastToWestLink");
 
         // OBlock of route
@@ -221,8 +206,7 @@ public class LinkedWarrantTest {
 
         // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
-        Assert.assertNull("Warrant starts",
-              tableFrame.runTrain(outWarrant, Warrant.MODE_RUN)); // start run
+        assertThat(tableFrame.runTrain(outWarrant, Warrant.MODE_RUN)).withFailMessage("Warrant starts").isNull(); // start run
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  outWarrant.getRunningMessage();
@@ -230,7 +214,7 @@ public class LinkedWarrantTest {
         }, "WestToEastLink starts to move at 8th command");
 
         // Run the train, then checks end location
-        Assert.assertEquals("Train after first leg", outEndSensorName, NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName()).withFailMessage("Train after first leg").isEqualTo(outEndSensorName);
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -242,7 +226,7 @@ public class LinkedWarrantTest {
             return m.endsWith("Cmd #8.");
         }, "EastToWestLink starts to move at 8th command");
 
-        Assert.assertEquals("Train after second leg", backEndSensorName, NXFrameTest.runtimes(routeBack, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(routeBack, _OBlockMgr).getDisplayName()).withFailMessage("Train after second leg").isEqualTo(backEndSensorName);
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -254,7 +238,7 @@ public class LinkedWarrantTest {
             return m.endsWith("Cmd #8.");
         }, "WestToEastLink starts to move at 8th command");
 
-        Assert.assertEquals("Train after third leg", outEndSensorName, NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(routeOut, _OBlockMgr).getDisplayName()).withFailMessage("Train after third leg").isEqualTo(outEndSensorName);
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = tableFrame.getStatus();
@@ -266,7 +250,7 @@ public class LinkedWarrantTest {
             return m.endsWith("Cmd #8.");
         }, "EastToWestLink starts to move at 8th command");
 
-        Assert.assertEquals("Train after fourth leg", backEndSensorName, NXFrameTest.runtimes(routeBack, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(routeBack, _OBlockMgr).getDisplayName()).withFailMessage("Train after fourth leg").isEqualTo(backEndSensorName);
 
             // passed test - cleanup.  Do it here so failure leaves traces.
             JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -277,10 +261,9 @@ public class LinkedWarrantTest {
 
     // Tests warrant launching 3 different warrants mid script - tinker to Evers to Chance (1910 Chicago Cubs)
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testLinkedMidScript() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -291,29 +274,28 @@ public class LinkedWarrantTest {
 
         // Tinker start block
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
-        Assert.assertNotNull("Senor IS0 not found", sensor0);
+        assertThat(sensor0).withFailMessage("Senor IS0 not found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sensor0, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB0"));
 
         // Evers start block
         Sensor sensor7 = _sensorMgr.getBySystemName("IS7");
-        Assert.assertNotNull("Senor IS7 not found", sensor7);
+        assertThat(sensor7).withFailMessage("Senor IS7 not found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sensor7, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB7"));
 
         // Chance start block
         Sensor sensor6 = _sensorMgr.getBySystemName("IS6");
-        Assert.assertNotNull("Senor IS6 not found", sensor6);
+        assertThat(sensor6).withFailMessage("Senor IS6 not found").isNotNull();
         NXFrameTest.setAndConfirmSensorAction(sensor6, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB6"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
-        Assert.assertNotNull("tableFrame", tableFrame);
+        assertThat(tableFrame).withFailMessage("tableFrame").isNotNull();
 
         Warrant w = _warrantMgr.getWarrant("Tinker");
-        Assert.assertNotNull("warrant", w);
+        assertThat(w).withFailMessage("warrant").isNotNull();
        
         // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
-        Assert.assertNull("Warrant starts",
-              tableFrame.runTrain(w, Warrant.MODE_RUN)); // start run
+        assertThat(tableFrame.runTrain(w, Warrant.MODE_RUN)).withFailMessage("Warrant starts").isNull(); // start run
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  w.getRunningMessage();
@@ -325,9 +307,7 @@ public class LinkedWarrantTest {
         OBlock block = _OBlockMgr.getOBlock("OB10");
 
         // Run the train, then checks end location
-        Assert.assertEquals("Tinker after first leg", 
-                block.getSensor().getDisplayName(), 
-                NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(route1, _OBlockMgr).getDisplayName()).withFailMessage("Tinker after first leg").isEqualTo(block.getSensor().getDisplayName());
 
         Warrant ww = _warrantMgr.getWarrant("Evers");
 
@@ -344,9 +324,7 @@ public class LinkedWarrantTest {
         String[] route2 = {"OB7", "OB3", "OB2", "OB1"};
         block = _OBlockMgr.getOBlock("OB1");
 
-        Assert.assertEquals("Evers after second leg", 
-                block.getSensor().getDisplayName(), 
-                NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Evers after second leg").isEqualTo(block.getSensor().getDisplayName());
 
         Warrant www = _warrantMgr.getWarrant("Chance");
 
@@ -363,9 +341,7 @@ public class LinkedWarrantTest {
         String[] route3 = {"OB6", "OB3", "OB4", "OB5"};
         block = _OBlockMgr.getOBlock("OB5");
 
-        Assert.assertEquals("Chance after third leg", 
-                block.getSensor().getDisplayName(), 
-                NXFrameTest.runtimes(route3, _OBlockMgr).getDisplayName());
+        assertThat(NXFrameTest.runtimes(route3, _OBlockMgr).getDisplayName()).withFailMessage("Chance after third leg").isEqualTo(block.getSensor().getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -374,7 +350,7 @@ public class LinkedWarrantTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -392,7 +368,7 @@ public class LinkedWarrantTest {
         _warrantMgr = InstanceManager.getDefault(WarrantManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         _warrantMgr.dispose();
         _warrantMgr = null;

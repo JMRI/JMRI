@@ -1,10 +1,9 @@
 package jmri.jmrix.grapevine.simulator;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SimulatorAdapter class.
@@ -18,14 +17,14 @@ public class SimulatorAdapterTest {
       Assert.assertNotNull("SimulatorAdapter constructor", new SimulatorAdapter());
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         JUnitUtil.tearDown();
    }

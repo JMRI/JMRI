@@ -7,13 +7,14 @@ import static org.assertj.core.api.Assumptions.assumeThat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.SystemConnectionMemo;
 import jmri.util.startup.StartupActionFactory;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Abstract base class for SystemConnectionMemo objects.
@@ -21,7 +22,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017
  * @param <M> the supported memo class
  */
-abstract public class SystemConnectionMemoTestBase<M extends SystemConnectionMemo> {
+abstract public class SystemConnectionMemoTestBase<M extends DefaultSystemConnectionMemo> {
 
     protected M scm = null;
 
@@ -93,7 +94,7 @@ abstract public class SystemConnectionMemoTestBase<M extends SystemConnectionMem
 
     @Test
     public void testMultipleMemosSamePrefix() {
-        SystemConnectionMemo t = new SystemConnectionMemo("t", "test") {
+        SystemConnectionMemo t = new DefaultSystemConnectionMemo("t", "test") {
             @Override
             protected ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -112,10 +113,10 @@ abstract public class SystemConnectionMemoTestBase<M extends SystemConnectionMem
         Assert.assertEquals("t2", scm.getSystemPrefix());
     }
 
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

@@ -1,10 +1,9 @@
 package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogProgrammerManager.
@@ -27,7 +26,7 @@ public class SprogProgrammerManagerTest {
        Assert.assertNotNull("exists",new SprogProgrammerManager(op,SprogConstants.SprogMode.SERVICE,m));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // prepare an interface
@@ -40,7 +39,7 @@ public class SprogProgrammerManagerTest {
         op = new SprogProgrammer(m);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         stcs.dispose();
         op = null;

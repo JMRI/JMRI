@@ -3,12 +3,11 @@ package jmri.jmrix.anyma;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.NamedBean;
+
+import jmri.*;
 import jmri.Manager.NameValidity;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
-public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
+public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     private boolean configured = false;
 
@@ -307,8 +306,6 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
         configured = true;
     }
 
-    private UsbLightManager lightManager;
-
     /**
      * get the LightManager
      *
@@ -316,14 +313,10 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      */
     public UsbLightManager getLightManager() {
         log.debug("* getLightManager()");
-        UsbLightManager result = null;
-        if (!getDisabled()) {
-            if (lightManager == null) {
-                lightManager = new UsbLightManager(this);
-            }
-            result = lightManager;
+        if (getDisabled()) {
+            return null;
         }
-        return result;
+        return (UsbLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new UsbLightManager(this));
     }
 
     /**
@@ -349,9 +342,6 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     public void dispose() {
         log.debug("* dispose()");
         InstanceManager.deregister(this, AnymaDMX_SystemConnectionMemo.class);
-        if (lightManager != null) {
-            InstanceManager.deregister(lightManager, UsbLightManager.class);
-        }
         super.dispose();
     }
 

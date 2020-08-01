@@ -5,7 +5,9 @@ import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * NceConsistTest.java
@@ -77,18 +79,18 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
     }
 
     @Test
-    @Ignore("Remove requires response from command station")
+    @Disabled("Remove requires response from command station")
     @ToDo("re-write parent class test here and include simulated command station response") 
     public void checkRemoveWithGetRosterIDAdvanced(){
     }
 
     @Test
-    @Ignore("Remove requires response from command station")
+    @Disabled("Remove requires response from command station")
     @ToDo("re-write parent class test here and include simulated command station response") 
     public void checkAddRemoveWithRosterUpdateAdvanced(){
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -108,7 +110,7 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
         nnis.sendTestReply(new NceReply(nnis,"00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"),null);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         c.dispose();

@@ -1,12 +1,13 @@
 package jmri.jmrit.sensorgroup;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -39,13 +40,13 @@ public class SensorGroupActionTest {
         JUnitUtil.dispose(frame);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

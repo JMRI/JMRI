@@ -1,8 +1,8 @@
 package jmri.jmrix.nce;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -12,7 +12,7 @@ public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
 
     private NceTrafficControlScaffold tcis = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -21,7 +21,7 @@ public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         programmer = t;
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

@@ -1,10 +1,9 @@
 package jmri.jmrit.display.controlPanelEditor.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * PortalIconXmlTest.java
@@ -20,12 +19,12 @@ public class PortalIconXmlTest {
       Assert.assertNotNull("PortalIconXml constructor",new PortalIconXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

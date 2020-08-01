@@ -4,8 +4,7 @@ import java.beans.PropertyChangeListener;
 import jmri.JmriException;
 import jmri.PowerManager;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Abstract base class for PowerManager tests in specific jmrix. packages.
@@ -20,7 +19,7 @@ import org.junit.Test;
 public abstract class AbstractPowerManagerTestBase {
 
     // required setup routine, must set p to an appropriate value.
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
     // service routines to simulate receiving on, off from interface

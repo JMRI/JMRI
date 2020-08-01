@@ -252,17 +252,21 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         roadEngineBox.setMinimumSize(new Dimension(120, 20));
         roadEngineBox.setToolTipText(Bundle.getMessage("RoadEngineTip"));
         addItem(trainReq, roadEngineBox, 6, 1);
+        
+        JPanel trainLastCar = new JPanel();
+        trainLastCar.setLayout(new GridBagLayout());
+        trainLastCar.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainLastCar")));
 
-        addItem(trainReq, noneRadioButton, 2, 2);
+        addItem(trainLastCar, noneRadioButton, 2, 2);
         noneRadioButton.setToolTipText(Bundle.getMessage("TipNoCabooseOrFRED"));
-        addItem(trainReq, fredRadioButton, 3, 2);
+        addItem(trainLastCar, fredRadioButton, 3, 2);
         fredRadioButton.setToolTipText(Bundle.getMessage("TipFRED"));
-        addItem(trainReq, cabooseRadioButton, 4, 2);
+        addItem(trainLastCar, cabooseRadioButton, 4, 2);
         cabooseRadioButton.setToolTipText(Bundle.getMessage("TipCaboose"));
-        addItem(trainReq, textRoad3, 5, 2);
+        addItem(trainLastCar, textRoad3, 5, 2);
         roadCabooseBox.setMinimumSize(new Dimension(120, 20));
         roadCabooseBox.setToolTipText(Bundle.getMessage("RoadCabooseTip"));
-        addItem(trainReq, roadCabooseBox, 6, 2);
+        addItem(trainLastCar, roadCabooseBox, 6, 2);
         group.add(noneRadioButton);
         group.add(cabooseRadioButton);
         group.add(fredRadioButton);
@@ -291,6 +295,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         getContentPane().add(typeEnginePane);
         getContentPane().add(roadAndLoadStatusPanel);
         getContentPane().add(trainReq);
+        getContentPane().add(trainLastCar);
         getContentPane().add(pC);
         getContentPane().add(pB);
 
@@ -323,8 +328,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
             commentTextArea.setText(_train.getComment());
-            cabooseRadioButton.setSelected((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE);
-            fredRadioButton.setSelected((_train.getRequirements() & Train.FRED) == Train.FRED);
+            cabooseRadioButton.setSelected(_train.isCabooseNeeded());
+            fredRadioButton.setSelected(_train.isFredNeeded());
             updateDepartureTime();
             enableButtons(true);
             // listen for train changes
@@ -569,7 +574,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             return true;
         }
         String type = InstanceManager.getDefault(EngineModels.class).getModelType(model);
-        if (!_train.acceptsTypeName(type)) {
+        if (!_train.isTypeNameAccepted(type)) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainModelService"),
                     new Object[]{model, type}), MessageFormat.format(Bundle.getMessage("CanNot"),
                             new Object[]{Bundle.getMessage("save")}), JOptionPane.ERROR_MESSAGE);
@@ -591,7 +596,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             return true;
         }
         for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
-            if (!_train.acceptsTypeName(rs.getTypeName())) {
+            if (!_train.isTypeNameAccepted(rs.getTypeName())) {
                 continue;
             }
             if (rs.getRoadName().equals(road)) {
@@ -758,7 +763,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             checkBox.setText(type);
             addTypeCheckBoxAction(checkBox);
             addItemLeft(typeCarPanelCheckBoxes, checkBox, x++, y);
-            if (_train != null && _train.acceptsTypeName(type)) {
+            if (_train != null && _train.isTypeNameAccepted(type)) {
                 checkBox.setSelected(true);
             }
             if (x > numberOfCheckboxes) {
@@ -796,7 +801,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             checkBox.setText(type);
             addTypeCheckBoxAction(checkBox);
             addItemLeft(typeEnginePanelCheckBoxes, checkBox, x++, y);
-            if (_train != null && _train.acceptsTypeName(type)) {
+            if (_train != null && _train.isTypeNameAccepted(type)) {
                 checkBox.setSelected(true);
             }
             if (x > numberOfCheckboxes) {
@@ -906,7 +911,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     }
                     // check can drop and pick up, and moves > 0
                     if (services && (rl.isDropAllowed() || rl.isPickUpAllowed()) && rl.getMaxCarMoves() > 0) {
-                        checkBox.setSelected(!_train.skipsLocation(rl.getId()));
+                        checkBox.setSelected(!_train.isLocationSkipped(rl.getId()));
                     } else {
                         checkBox.setEnabled(false);
                     }

@@ -2,7 +2,9 @@ package jmri.jmrit.withrottle;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test stealing behavior of MultiThrottle
@@ -68,7 +70,7 @@ public class MultiThrottleStealTest {
         JUnitAppender.assertWarnMessage("Throttle request failed for 4321(L) because Steal Required.");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initRosterConfigManager();
@@ -80,7 +82,7 @@ public class MultiThrottleStealTest {
         throttle = new MultiThrottle('A', tcls, cis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         cis = null;
         tcls = null;

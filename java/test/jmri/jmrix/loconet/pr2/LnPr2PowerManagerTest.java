@@ -10,7 +10,9 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.SlotManager;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * tests for the Jmri package LnPr2PowerManager
@@ -127,14 +129,14 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
 
     @Test
     @Override
-    @Ignore("test in parent class fails for some reason")
+    @Disabled("test in parent class fails for some reason")
     @ToDo("investigate failure in parent class test and make corrections, either to initialization or to this overriden test")
     public void testDispose2() throws JmriException {
     }
 
     @Test
     @Override
-    @Ignore("test in parent class fails for some reason")
+    @Disabled("test in parent class fails for some reason")
     @ToDo("investigate failure in parent class test and make corrections, either to initialization or to this overriden test")
     public void testStateOff() throws JmriException {
     }
@@ -149,7 +151,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     // setup a default interface
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -162,7 +164,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
         p = pwr = memo.get(jmri.PowerManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         pwr.dispose();
         if (slotmanager != null) slotmanager.dispose();

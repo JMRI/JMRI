@@ -10,7 +10,7 @@ package jmri.jmrix.loconet.hexfile;
  */
 public class HexFileSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSystemConnectionMemo {
 
-    @Override
+/*    @Override
     public jmri.jmrix.loconet.LnSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
@@ -19,6 +19,6 @@ public class HexFileSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSyste
             sensorManager = new LnSensorManager(this);
         }
         return sensorManager;
-    }
+    }*/
 
 }

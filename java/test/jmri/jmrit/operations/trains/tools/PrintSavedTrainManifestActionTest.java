@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 
 import jmri.InstanceManager;
