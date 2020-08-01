@@ -14,7 +14,6 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.TurnoutManager;
 import jmri.jmrit.ctc.ctcserialdata.*;
-import jmri.jmrit.ctc.editor.gui.Bundle;
 
 /**
  *
