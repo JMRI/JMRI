@@ -245,7 +245,7 @@ public class CTCSerialData {
      * code.
      * 
      * @param excludedOne The one to NOT include in the returned information.
-     * @return HashSet<String> All locked turnouts NOT INCLUDING excludedOne.
+     * @return All locked turnouts NOT INCLUDING excludedOne.
      */
     
     public HashSet<String> getHashSetOfAllLockedTurnoutsExcludingPassedOne(CodeButtonHandlerData excludedOne) {

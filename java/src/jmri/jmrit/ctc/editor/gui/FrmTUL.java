@@ -467,7 +467,7 @@ public class FrmTUL extends javax.swing.JFrame {
      * any blank entries, and the one index passed.
      * 
      * @param indexToLeaveOff The JComboBox "field" we will be editing: 0 = _mTUL_ExternalTurnout, 1 = _mTUL_AdditionalExternalTurnout1, 2 = _mTUL_AdditionalExternalTurnout2, 3 = _mTUL_AdditionalExternalTurnout3
-     * @return HashSet<String> The requested subset of _mArrayListOfThisRecordsUsedLockedTurnouts 
+     * @return The requested subset of _mArrayListOfThisRecordsUsedLockedTurnouts 
      */
     private HashSet<String> returnHashSetSubset(int indexToLeaveOff) {
         HashSet<String> returnValue = new HashSet<>();

@@ -68,7 +68,7 @@ public class Topology {
     /**
      * 
      * @param leftTraffic Traffic direction ON THE CTC PANEL that we are generating the rules for.
-     * @return LinkedList of TopologyInfo.  All of the possible paths from this O.S. section to all
+     * @return TopologyInfo.  All of the possible paths from this O.S. section to all
      * destination(s) in the direction indicated.
      * 
      * WE HAVE TO GO in the opposite direction to get the mast for the O.S. section we are in!

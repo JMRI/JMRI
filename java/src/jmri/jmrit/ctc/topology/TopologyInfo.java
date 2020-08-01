@@ -58,7 +58,7 @@ public class TopologyInfo {
      * Quick and dirty routine to get O.S. section information.
      * 
      * @param index Index into array
-     * @return String null if no information, else text (of form "29/30" for instance)
+     * @return null if no information, else text (of form "29/30" for instance)
      */
     public String getOSSectionText(int index) {
         if (index < _mTurnoutInfos.size()) { // Safety: Can return info:
@@ -73,7 +73,7 @@ public class TopologyInfo {
      * Quick and dirty routine to get "Normal"/"Reverse" information.
      * 
      * @param index Index into array
-     * @return String "Normal" if no information, else text (of form "Normal" for instance)
+     * @return "Normal" if no information, else text (of form "Normal" for instance)
      */
     public String getNormalReversed(int index) {
         if (index < _mTurnoutInfos.size()) { // Safety: Can return info:
@@ -88,7 +88,7 @@ public class TopologyInfo {
      * Quick and dirty routine to get the Display Name of the sensor.
      * 
      * @param index Index into array
-     * @return String "" if no information, else text (of form "SW31-OS" for instance)
+     * @return "" if no information, else text (of form "SW31-OS" for instance)
      */
     public String getSensorDisplayName(int index) {
         if (index < _mSensors.size()) { // Safety: Can return info:
@@ -103,7 +103,7 @@ public class TopologyInfo {
      * Quick and dirty routine to get the unique id..
      * 
      * @param index Index into array
-     * @return String null if no information, else uniqueID as String of the O.S. section.
+     * @return null if no information, else uniqueID as String of the O.S. section.
      */
     public String getUniqueID(int index) {
         if (index < _mTurnoutInfos.size()) { // Safety: Can return info:
