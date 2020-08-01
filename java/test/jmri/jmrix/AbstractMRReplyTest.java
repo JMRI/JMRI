@@ -1,10 +1,9 @@
 package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for AbstractMRReply.
@@ -81,7 +80,7 @@ public class AbstractMRReplyTest extends AbstractMessageTestBase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = testMsg = new AbstractMRReply("foo") {
@@ -92,7 +91,7 @@ public class AbstractMRReplyTest extends AbstractMessageTestBase {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = testMsg = null;
         JUnitUtil.tearDown();

@@ -1,10 +1,9 @@
 package jmri.jmrix.tmcc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -17,14 +16,14 @@ public class SerialThrottleManagerTest extends jmri.managers.AbstractThrottleMan
         Assert.assertNotNull("exists",tm);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         tm = new SerialThrottleManager(new TmccSystemConnectionMemo());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

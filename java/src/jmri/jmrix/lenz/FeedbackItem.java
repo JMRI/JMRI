@@ -30,10 +30,11 @@ public class FeedbackItem {
 
     /**
      * Resets the unsolicited flag in the reply.
-     * @see XNetReply#resetUnsolicited()
+     * @deprecated since 4.21.1 without replacement
      */
+    @Deprecated
     public void resetUnsolicited() {
-        reply.resetUnsolicited();
+       // deprecated, take no action.
     }
     
     /**

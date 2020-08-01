@@ -1,10 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21XNetReply class
@@ -95,14 +94,14 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
         Assert.assertEquals("Monitor String", Bundle.getMessage("Z21LAN_X_TURNOUT_INFO", 2, "Closed"), r.toMonitorString());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new Z21XNetReply();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         m = msg = null;

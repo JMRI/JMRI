@@ -1,7 +1,8 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -9,7 +10,7 @@ import org.junit.*;
  */
 public class ItemDialogTest extends jmri.util.JmriJFrameTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -18,7 +19,7 @@ public class ItemDialogTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

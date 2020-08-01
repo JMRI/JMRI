@@ -6,10 +6,9 @@ import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.util.JUnitUtil;
 import jmri.util.PhysicalLocation;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.
@@ -393,7 +392,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
 
     private jmri.jmrix.loconet.LocoNetInterfaceScaffold tc;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -402,7 +401,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
         r = new LnReporter(3, tc, "L");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         r = null;

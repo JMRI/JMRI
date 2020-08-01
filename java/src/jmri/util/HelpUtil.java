@@ -1,23 +1,13 @@
 package jmri.util;
 
-import jmri.swing.AboutAction;
 import java.awt.event.ActionEvent;
 import java.net.URL;
-import java.util.EventObject;
-import java.util.Locale;
-import javax.help.HelpBroker;
-import javax.help.HelpSet;
-import javax.help.HelpSetException;
-import javax.help.SwingHelpUtilities;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.UIManager;
-import jmri.plaf.macosx.Application;
-import jmri.swing.AboutDialog;
+import java.util.*;
+
+import javax.annotation.Nonnull;
+import javax.help.*;
+import javax.swing.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,50 +58,14 @@ public class HelpUtil {
         helpMenu.add(item);
 
         if (direct) {
-            item = new JMenuItem(Bundle.getMessage("MenuItemHelp"));
-            globalHelpBroker.enableHelpOnButton(item, "index", null);
-            helpMenu.add(item);
-
-            // add standard items
-            JMenuItem license = new JMenuItem(Bundle.getMessage("MenuItemLicense"));
-            helpMenu.add(license);
-            license.addActionListener(new apps.LicenseAction());
-
-            JMenuItem directories = new JMenuItem(Bundle.getMessage("MenuItemLocations"));
-            helpMenu.add(directories);
-            directories.addActionListener(new jmri.jmrit.XmlFileLocationAction());
-
-            JMenuItem updates = new JMenuItem(Bundle.getMessage("MenuItemCheckUpdates"));
-            helpMenu.add(updates);
-            updates.addActionListener(new apps.CheckForUpdateAction());
-
-            JMenuItem context = new JMenuItem(Bundle.getMessage("MenuItemContext"));
-            helpMenu.add(context);
-            context.addActionListener(new apps.ReportContextAction());
-
-            JMenuItem console = new JMenuItem(Bundle.getMessage("MenuItemConsole"));
-            helpMenu.add(console);
-            console.addActionListener(new apps.SystemConsoleAction());
-
-            helpMenu.add(new jmri.jmrit.mailreport.ReportAction());
-
-            // Put about dialog in Apple's prefered area on Mac OS X
-            if (SystemType.isMacOSX()) {
-                try {
-                    Application.getApplication().setAboutHandler((EventObject eo) -> {
-                        new AboutDialog(null, true).setVisible(true);
-                    });
-                } catch (java.lang.RuntimeException re) {
-                    log.error("Unable to put About handler in default location", re);
+            ServiceLoader<MenuProvider> providers = ServiceLoader.load(MenuProvider.class);
+            providers.forEach(provider -> provider.getHelpMenuItems().forEach(i -> {
+                if (i != null) {
+                    helpMenu.add(i);
+                } else {
+                    helpMenu.addSeparator();
                 }
-            }
-            // Include About in Help menu if not on Mac OS X or not using Aqua Look and Feel
-            if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
-                helpMenu.addSeparator();
-                JMenuItem about = new JMenuItem(Bundle.getMessage("MenuItemAbout") + " " + jmri.Application.getApplicationName());
-                helpMenu.add(about);
-                about.addActionListener(new AboutAction());
-            }
+            }));
         }
         return helpMenu;
     }
@@ -227,4 +181,16 @@ public class HelpUtil {
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(HelpUtil.class);
 
+    public interface MenuProvider {
+
+        /**
+         * Get the menu items to include in the menu. Any menu item that is null
+         * will be replaced with a separator.
+         *
+         * @return the list of menu items
+         */
+        @Nonnull
+        List<JMenuItem> getHelpMenuItems();
+    
+    }
 }

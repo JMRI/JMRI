@@ -12,7 +12,9 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.swing.ManagerComboBox;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -211,7 +213,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         return "Edit Turnout IT1";
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -222,7 +224,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         a = new TurnoutTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;

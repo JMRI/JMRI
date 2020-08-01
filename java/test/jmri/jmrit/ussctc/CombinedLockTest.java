@@ -1,8 +1,11 @@
 package jmri.jmrit.ussctc;
 
 import java.util.*;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for CombinedLock classes in the jmri.jmrit.ussctc package
@@ -64,12 +67,12 @@ public class CombinedLockTest {
     }
 
         
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

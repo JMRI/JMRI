@@ -1479,20 +1479,22 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $storeTurnoutPoints($widget); //also store the turnout's 3 end points for other connections
                             $drawTurnout($widget); //draw the turnout
 
-                            //add an empty, but clickable, div to the panel and position it over the turnout circle
-                            $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
-                            $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "' " + $hoverText + "></div>");
-                            var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
-                            var $cd = $cr * 2;
-                            $("#panel-area>#" + $widget.id).css(
-                            {
-                                position: 'absolute',
-                                left: ($widget.x - $cr) + 'px',
-                                top: ($widget.y - $cr) + 'px',
-                                zIndex: 3,
-                                width: $cd + 'px',
-                                height: $cd + 'px'
-                            });
+                            //add an empty, but clickable, div to the panel and position it over the turnout circle, if control allowed
+                            if  ($gPanel.controlling == "yes") {
+	                            $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
+	                            $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "' " + $hoverText + "></div>");
+	                            var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
+	                            var $cd = $cr * 2;
+	                            $("#panel-area>#" + $widget.id).css(
+	                            {
+	                                position: 'absolute',
+	                                left: ($widget.x - $cr) + 'px',
+	                                top: ($widget.y - $cr) + 'px',
+	                                zIndex: 3,
+	                                width: $cd + 'px',
+	                                height: $cd + 'px'
+	                            });
+                            }
                             if (typeof $widget["systemName"] === "undefined")
                                 $widget["systemName"] = $widget.name;
                             jmri.getTurnout($widget["systemName"]);
@@ -1562,47 +1564,48 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $storeSlipPoints($widget);          //also store the slip's 4 end points for other connections
                             $drawSlip($widget);                 //draw the slip
 
-                            // convenience variables for points (A, B, C, D)
-                            var a = $getPoint($widget.ident + SLIP_A);
-                            var b = $getPoint($widget.ident + SLIP_B);
-                            var c = $getPoint($widget.ident + SLIP_C);
-                            var d = $getPoint($widget.ident + SLIP_D);
-
-                            var $cr = $gPanel.turnoutcirclesize * SIZE; //turnout circle radius
-                            var $cd = $cr * 2;                          //turnout circle diameter
-
-                            // center
-                            var cen = [$widget.xcen, $widget.ycen];
-                            // left center
-                            var lcen = $point_midpoint(a, b);
-                            var ldelta = $point_subtract(cen, lcen);
-
-                            // left fraction
-                            var lf = $cr / Math.hypot(ldelta[0], ldelta[1]);
-                            // left circle
-                            var lcc = $point_lerp(cen, lcen, lf);
-
-                            //add an empty, but clickable, div to the panel and position it over the left turnout circle
-                            $hoverText = " title='" + $widget.turnout + "' alt='" + $widget.turnout + "'";
-                            $("#panel-area").append("<div id=" + $widget.id + "l class='" + $widget.classes + "' " + $hoverText + "></div>");
-                            $("#panel-area>#" + $widget.id + "l").css(
-                                {position: 'absolute', left: (lcc[0] - $cr) + 'px', top: (lcc[1] - $cr) + 'px', zIndex: 3,
-                                    width: $cd + 'px', height: $cd + 'px'});
-
-                            // right center
-                            var rcen = $point_midpoint(c, d);
-                            var rdelta = $point_subtract(cen, rcen);
-                            // right fraction
-                            var rf = $cr / Math.hypot(rdelta[0], rdelta[1]);
-                            // right circle
-                            var rcc = $point_lerp(cen, rcen, rf);
-
-                            //add an empty, but clickable, div to the panel and position it over the right turnout circle
-                            $hoverText = " title='" + $widget.turnoutB + "' alt='" + $widget.turnoutB + "'";
-                            $("#panel-area").append("<div id=" + $widget.id + "r class='" + $widget.classes + "' " + $hoverText + "></div>");
-                            $("#panel-area>#" + $widget.id + "r").css(
-                                {position: 'absolute', left: (rcc[0] - $cr) + 'px', top: (rcc[1] - $cr) + 'px', zIndex: 3,
-                                    width: $cd + 'px', height: $cd + 'px'});
+                            if ($gPanel.controlling == "yes") {
+	                            // convenience variables for points (A, B, C, D)
+	                            var a = $getPoint($widget.ident + SLIP_A);
+	                            var b = $getPoint($widget.ident + SLIP_B);
+	                            var c = $getPoint($widget.ident + SLIP_C);
+	                            var d = $getPoint($widget.ident + SLIP_D);
+	
+	                            var $cr = $gPanel.turnoutcirclesize * SIZE; //turnout circle radius
+	                            var $cd = $cr * 2;                          //turnout circle diameter
+	
+	                            // center
+	                            var cen = [$widget.xcen, $widget.ycen];
+	                            // left center
+	                            var lcen = $point_midpoint(a, b);
+	                            var ldelta = $point_subtract(cen, lcen);
+	
+	                            // left fraction
+	                            var lf = $cr / Math.hypot(ldelta[0], ldelta[1]);
+	                            // left circle
+	                            var lcc = $point_lerp(cen, lcen, lf);
+	
+	                            //add an empty, but clickable, div to the panel and position it over the left turnout circle
+	                            $hoverText = " title='" + $widget.turnout + "' alt='" + $widget.turnout + "'";
+	                            $("#panel-area").append("<div id=" + $widget.id + "l class='" + $widget.classes + "' " + $hoverText + "></div>");
+	                            $("#panel-area>#" + $widget.id + "l").css(
+	                                {position: 'absolute', left: (lcc[0] - $cr) + 'px', top: (lcc[1] - $cr) + 'px', zIndex: 3,
+	                                    width: $cd + 'px', height: $cd + 'px'});
+	                            // right center
+	                            var rcen = $point_midpoint(c, d);
+	                            var rdelta = $point_subtract(cen, rcen);
+	                            // right fraction
+	                            var rf = $cr / Math.hypot(rdelta[0], rdelta[1]);
+	                            // right circle
+	                            var rcc = $point_lerp(cen, rcen, rf);
+	
+	                            //add an empty, but clickable, div to the panel and position it over the right turnout circle
+	                            $hoverText = " title='" + $widget.turnoutB + "' alt='" + $widget.turnoutB + "'";
+	                            $("#panel-area").append("<div id=" + $widget.id + "r class='" + $widget.classes + "' " + $hoverText + "></div>");
+	                            $("#panel-area>#" + $widget.id + "r").css(
+	                                {position: 'absolute', left: (rcc[0] - $cr) + 'px', top: (rcc[1] - $cr) + 'px', zIndex: 3,
+	                                    width: $cd + 'px', height: $cd + 'px'});
+                            }
 
                             // setup notifications (?)
                             jmri.getTurnout($widget["turnout"]);
@@ -1762,19 +1765,21 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if (isDefined(item.attributes.turnout)) {
                                     var turnout = item.attributes.turnout.value;
                                     var state = item.attributes.turnoutstate.value;
-                                    //add an empty, but clickable, div to the panel and position it over the turnout circle
-                                    $("#panel-area").append("<div " +
-                                            "id='" + rayID + "' " +
-                                            "class='" + $widget.classes + "' " +
-                                            "style='position:absolute;" +
-                                            "left:" + ($t.x - $cr) + "px;" +
-                                            "top: " + ($t.y - $cr) + "px;" +
-                                            "z-index: 3;" +
-                                            "width:" + $cd + "px;" +
-                                            "height:" + $cd + "px;' " +
-                                            "title='" + turnout + "(" + state + ")' " +
-                                            "alt='" + turnout + "'" +
-                                            "></div>");
+                                    //add an empty, but clickable, div to the panel and position it over the turnout circle, if control allowed
+                                    if ($gPanel.controlling == "yes") {
+	                                    $("#panel-area").append("<div " +
+	                                            "id='" + rayID + "' " +
+	                                            "class='" + $widget.classes + "' " +
+	                                            "style='position:absolute;" +
+	                                            "left:" + ($t.x - $cr) + "px;" +
+	                                            "top: " + ($t.y - $cr) + "px;" +
+	                                            "z-index: 3;" +
+	                                            "width:" + $cd + "px;" +
+	                                            "height:" + $cd + "px;' " +
+	                                            "title='" + turnout + "(" + state + ")' " +
+	                                            "alt='" + turnout + "'" +
+	                                            "></div>");
+                                    }                                            
                                     //setup notifications
                                     jmri.getTurnout(turnout);
 
@@ -1840,25 +1845,28 @@ function processPanelXML($returnedData, $success, $xhr) {
         }  //end of function
     );  //end of each
 
-    //hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor and linkinglabel
-    $('.clickable:not(.momentary):not(.multisensoricon):not(.linkinglabel)').bind(UPEVENT, $handleClick);
-
-    //hook up mouseup state change function to multisensor (special handling)
-    $('.clickable.multisensoricon').bind('click', $handleMultiClick);
-
-    //hook up mouseup function to linkinglabel (special handling)
-    $('.clickable.linkinglabel').bind(UPEVENT, $handleLinkingLabelClick);
-
-    //momentary widgets always go active on mousedown, and inactive on mouseup, current state is ignored
-    $('.clickable.momentary').bind(DOWNEVENT, function(e) {
-        e.stopPropagation();
-        e.preventDefault(); //prevent double-firing (touch + click)
-        sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, ACTIVE);  //send active on down
-    }).bind(UPEVENT, function(e) {
-        e.stopPropagation();
-        e.preventDefault(); //prevent double-firing (touch + click)
-        sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, INACTIVE);  //send inactive on up
-    });
+	//only enable click events if panel is marked to allow control
+	if ($gPanel.controlling == "yes") {  
+	    //hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor and linkinglabel
+	    $('.clickable:not(.momentary):not(.multisensoricon):not(.linkinglabel)').bind(UPEVENT, $handleClick);
+	
+	    //hook up mouseup state change function to multisensor (special handling)
+	    $('.clickable.multisensoricon').bind('click', $handleMultiClick);
+	
+	    //hook up mouseup function to linkinglabel (special handling)
+	    $('.clickable.linkinglabel').bind(UPEVENT, $handleLinkingLabelClick);
+	
+	    //momentary widgets always go active on mousedown, and inactive on mouseup, current state is ignored
+	    $('.clickable.momentary').bind(DOWNEVENT, function(e) {
+	        e.stopPropagation();
+	        e.preventDefault(); //prevent double-firing (touch + click)
+	        sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, ACTIVE);  //send active on down
+	    }).bind(UPEVENT, function(e) {
+	        e.stopPropagation();
+	        e.preventDefault(); //prevent double-firing (touch + click)
+	        sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, INACTIVE);  //send inactive on up
+	    });
+    }
 
     $drawAllDrawnWidgets(); //draw all the drawn widgets once more, to address some bidirectional dependencies in the xml
     $("#activity-alert").addClass("hidden").removeClass("show");
@@ -2293,7 +2301,7 @@ function $drawTurntable($widget) {
         $t1['y'] = $t.y - (($t.y - $tycen) * f);
         $drawLine($t1.x, $t1.y, $t.x, $t.y, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
 
-        if (isDefined(item.attributes.turnout)) {
+        if (isDefined(item.attributes.turnout) && ($gPanel.controlling == "yes")) {
             // var turnout = item.attributes.turnout.value;
             // var state = item.attributes.turnoutstate.value;
             // log.log("$drawTurntable ray # " + i + " turnout: '" + turnout + "', state: " + state);
@@ -2578,7 +2586,7 @@ function $drawTurnout($widget) {
     }
 
     // erase and draw turnout circles if enabled, including occupancy check
-    if (($gPanel.turnoutcircles == "yes") && ($widget.disabled !== "yes")) {
+    if (($gPanel.turnoutcircles == "yes") && ($gPanel.controlling == "yes") && ($widget.disabled !== "yes")) {
     	$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $eraseColor, 1);
     	if  (($widget.disableWhenOccupied !== "yes") || ($widget.occupancystate != ACTIVE)) {
     	    var $color = $gPanel.turnoutcirclecolor;
@@ -2763,7 +2771,7 @@ function $drawSlip($widget) {
         }
     }
 
-    if (($gPanel.turnoutcircles == "yes") && ($widget.disabled !== "yes")) {
+    if (($gPanel.turnoutcircles == "yes") && ($gPanel.controlling == "yes") && ($widget.disabled !== "yes")) {
         //draw the two control circles
         var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
 
@@ -4114,8 +4122,14 @@ $(document).ready(function() {
             	if (value !== null) {
             		if (value.type == "idTag") {
             			value = value.data.userName; //for idTags, use the value in userName instead
-            		} else if (value.type == "reporter"){
+            		} else if (value.type == "reporter") {
             			value = value.data.value;    //for reporters, use the value in data instead
+            		} else if (value.type == "rosterEntry") {
+            			if (value.data.icon !== null) {
+            				value = "<html><img src='" + value.data.icon + "'></html>"; //for rosterEntries, create an image tag instead
+            			} else {
+            				value = value.data.name; 						//if roster icon not set, just show the name
+            			}
             		}
             	}
                 updateWidgets(name, value, data);
@@ -4129,6 +4143,12 @@ $(document).ready(function() {
             			value = value.data.userName; //for idTags, use the value in userName instead
             		} else if (value.type == "reporter"){
             			value = value.data.value;    //for reporters, use the value in data instead
+            		} else if (value.type == "rosterEntry") {
+            			if (value.data.icon !== null) {
+            				value = "<html><img src='" + value.data.icon + "'></html>";    //for rosterEntries, create an image tag instead
+            			} else {
+            				value = value.data.name;                        //if roster icon not set, just show the name
+            			}
             		}
             	}
                 updateWidgets(name, value, data);

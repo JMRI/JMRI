@@ -12,7 +12,8 @@ import org.openlcb.OlcbInterface;
 
 import org.jdom2.Element;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * OlcbSignalMastXmlTest
@@ -51,12 +52,12 @@ public class OlcbSignalMastXmlTest {
         Assert.assertEquals("1.2.3.4.5.6.7.4", e.getChild("held").getChild("notheld").getValue());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         messages = new java.util.ArrayList<>();
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -82,12 +83,12 @@ public class OlcbSignalMastXmlTest {
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         messages = null;
     }
 
-    @AfterClass
+    @AfterAll
     public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();

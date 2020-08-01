@@ -1,13 +1,13 @@
 package jmri.jmrix.can.cbus.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of CbusComponentFactory
@@ -26,7 +26,7 @@ public class CbusComponentFactoryTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // tc = new TestTrafficController();
@@ -35,8 +35,10 @@ public class CbusComponentFactoryTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        m.dispose();
+        m = null;
         JUnitUtil.tearDown();
         // tc = null;
     }

@@ -1,10 +1,9 @@
 package jmri.jmrix.openlcb.swing.send;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.openlcb.EventID;
 
 /**
@@ -48,7 +47,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -63,7 +62,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
         title="Send CAN Frames and OpenLCB Messages";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo.dispose();

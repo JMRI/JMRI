@@ -50,26 +50,32 @@ public class CbusTableRowEventDnDHandlerTest  {
         assertThat(t.createTransferable(null)).isNull();
         assertThat(t.createTransferable(table)).isNull();
         t.mouseMoved(0,0);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         
         table.setRowSelectionInterval(0, 0);
-
         Transferable trnfr = t.createTransferable(table);
-        assertThat(trnfr).isNotNull();
+        JUnitUtil.waitFor(()->{ return(trnfr!=null); }, "Transferable Row 0 Not found");
         assertEquals("+N123E456", trnfr.getTransferData(DataFlavor.stringFlavor));
 
         table.setRowSelectionInterval(1, 1);
-        trnfr = t.createTransferable(table);
-        assertEquals("+N222E333", trnfr.getTransferData(DataFlavor.stringFlavor));
+        Transferable trnfrb = t.createTransferable(table);
+        JUnitUtil.waitFor(()->{ return(trnfrb!=null); }, "Transferable Row 1 Not found");
+        assertEquals("+N222E333", trnfrb.getTransferData(DataFlavor.stringFlavor));
         t.mouseMoved(0,0);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         
         table.setName("jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel");
         table.setRowSelectionInterval(0, 0);
-        trnfr = t.createTransferable(table);
-        assertEquals("+N123E456", trnfr.getTransferData(DataFlavor.stringFlavor));
+        
+        Transferable trnfrc = t.createTransferable(table);
+        JUnitUtil.waitFor(()->{ return(trnfrc!=null); }, "Transferable NodeEv Row 0 Not found");
+        assertEquals("+N123E456", trnfrc.getTransferData(DataFlavor.stringFlavor));
         
         table.setRowSelectionInterval(1, 1);
-        trnfr = t.createTransferable(table);
-        assertEquals("+N222E333", trnfr.getTransferData(DataFlavor.stringFlavor));
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        Transferable trnfrd = t.createTransferable(table);
+        JUnitUtil.waitFor(()->{ return(trnfrd!=null); }, "Transferable NodeEv Row 1 Not found");
+        assertEquals("+N222E333", trnfrd.getTransferData(DataFlavor.stringFlavor));
         
         table.setName("Incorrect Table");
         assertThat(t.createTransferable(table)).isNull();

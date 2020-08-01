@@ -1,10 +1,9 @@
 package jmri.jmrix.zimo;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -20,7 +19,7 @@ public class Mx1TurnoutManagerTest {
         Assert.assertNotNull("exists", t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         Mx1SystemConnectionMemo memo = new Mx1SystemConnectionMemo();
@@ -36,7 +35,7 @@ public class Mx1TurnoutManagerTest {
         tc.setAdapterMemo(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

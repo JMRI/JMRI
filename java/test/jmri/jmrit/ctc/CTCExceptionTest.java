@@ -1,7 +1,9 @@
 package jmri.jmrit.ctc;
 
 import jmri.util.JUnitAppender;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /*
 * Tests for the CTCException Class
@@ -18,12 +20,12 @@ public class CTCExceptionTest {
         JUnitAppender.suppressWarnMessage("Test, IDParam, Reason");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

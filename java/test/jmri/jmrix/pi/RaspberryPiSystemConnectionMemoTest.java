@@ -2,13 +2,13 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
+
 import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for RaspberryPiSystemConnectionMemo.
@@ -116,7 +116,7 @@ public class RaspberryPiSystemConnectionMemoTest extends SystemConnectionMemoTes
         Assert.assertNull(InstanceManager.getNullableDefault(RaspberryPiSystemConnectionMemo.class));
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -129,7 +129,7 @@ public class RaspberryPiSystemConnectionMemoTest extends SystemConnectionMemoTes
         scm.configureManagers();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         scm = null;

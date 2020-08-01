@@ -3,9 +3,7 @@ package jmri.jmrix.openlcb;
 import jmri.Light;
 import jmri.util.JUnitUtil;
 
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +42,7 @@ public class OlcbLightTest {
 
     OlcbTestInterface t;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // load dummy TrafficController
@@ -52,7 +50,7 @@ public class OlcbLightTest {
         t.waitForStartup();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         t = null;

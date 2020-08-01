@@ -12,6 +12,7 @@ import jmri.SpeedStepMode;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.SystemConnectionMemo;
 import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.beans.PropertyChangeSupport;

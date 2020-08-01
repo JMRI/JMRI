@@ -77,7 +77,7 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
                 writer.write(s);
 
                 for (Train train : trains) {
-                    if (train.acceptsTypeName(type)) {
+                    if (train.isTypeNameAccepted(type)) {
                         s = TAB +
                                 TrainCommon.padString(train.getName(), max_name_length) +
                                 train.getDescription() +

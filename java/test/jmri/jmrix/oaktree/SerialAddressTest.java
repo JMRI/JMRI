@@ -3,9 +3,8 @@ package jmri.jmrix.oaktree;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
@@ -227,14 +226,14 @@ public class SerialAddressTest {
 
     private OakTreeSystemConnectionMemo memo = null;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new OakTreeSystemConnectionMemo();
         memo.setTrafficController(new SerialTrafficControlScaffold(memo)); // important for successful getTrafficController()
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
