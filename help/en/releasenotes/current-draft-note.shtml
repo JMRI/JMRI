@@ -385,6 +385,10 @@
             discovery process run.  After this process is complete, if you are not happy with the way Layout Editor
             displays the layout, you can create a parallel Control Panel Editor or Panel Editor screen.  Personally, in
             my opinion, Layout Editor looks very close to an actual CTC panel if drawn correctly.</li>
+            <li>Bug Fix: It was possible (though technically wrong) for a user to specify a single turnout as locked
+            in two (or more) <strong>different</strong> O.S. sections.  If this was specified, the program would
+            fight itself and eventually cause a stack overflow.  This is now prevented during user entry from occurring.
+            If you have specified this prior to this release, you <strong>must</strong> manually correct this.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>

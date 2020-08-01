@@ -237,6 +237,34 @@ public class CTCSerialData {
         }
         return null;
     }
+    
+    /**
+     * This routine is used to support FrmTUL.java.  It generates a HashSet (which
+     * prevents duplicate strings) of all such locked turnouts, EXCLUDING the
+     * passed "excludedOne", since that one will be handled locally in the calling
+     * code.
+     * 
+     * @param excludedOne The one to NOT include in the returned information.
+     * @return HashSet<String> All locked turnouts NOT INCLUDING excludedOne.
+     */
+    
+    public HashSet<String> getHashSetOfAllLockedTurnoutsExcludingPassedOne(CodeButtonHandlerData excludedOne) {
+        HashSet<String> lockedTurnouts = new HashSet<>();
+        for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
+            if (codeButtonHandlerData != excludedOne) { // Process this one:
+                if (shouldAdd(codeButtonHandlerData._mTUL_ExternalTurnout)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_ExternalTurnout); }
+                if (shouldAdd(codeButtonHandlerData._mTUL_AdditionalExternalTurnout1)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout1); }
+                if (shouldAdd(codeButtonHandlerData._mTUL_AdditionalExternalTurnout2)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout2); }
+                if (shouldAdd(codeButtonHandlerData._mTUL_AdditionalExternalTurnout3)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout3); }
+            }
+        }
+        return lockedTurnouts;
+    }
+
+//  Quick and dirty routine for above:
+    private boolean shouldAdd(String aString) {
+        return null != aString && !aString.isEmpty();
+    }
 
     @SuppressWarnings("unchecked") // See below comments:
     public boolean readDataFromXMLFile(String filename) {

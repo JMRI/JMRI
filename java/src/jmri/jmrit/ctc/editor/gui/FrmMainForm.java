@@ -890,7 +890,7 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
-        FrmTUL dialog = new FrmTUL(_mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
+        FrmTUL dialog = new FrmTUL(_mAwtWindowProperties, _mCTCSerialData, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
