@@ -379,16 +379,20 @@
             <li>To correct prior release notes, the CTC panel can be created with Layout Editor, Control Panel Editor
             or Panel Editor.</li>
             <li>This release gets a new capability: Auto-Generation of Traffic Locking (TRL) rules, which is the most tedious
-            and difficult aspect of CTC systems.  However, TRL Auto-Generation is <strong>dependent</strong> on Layout Editor, with Signal
+            and difficult aspect of (any) CTC systems.  However, TRL Auto-Generation is <strong>dependent</strong> on Layout Editor, with Signal
             Masts at block boundaries, and with automatically generated Signal Mast Logic.  The Signal Mast Logic
             can be modified <strong>after</strong> discovery, but there has to be at least <strong>one</strong>
             discovery process run.  After this process is complete, if you are not happy with the way Layout Editor
             displays the layout, you can create a parallel Control Panel Editor or Panel Editor screen.  Personally, in
             my opinion, Layout Editor looks very close to an actual CTC panel if drawn correctly.</li>
             <li>Bug Fix: It was possible (though technically wrong) for a user to specify a single turnout as locked
-            in two (or more) <strong>different</strong> O.S. sections.  If this was specified, the program would
+            in two (or more) <strong>different</strong> O.S. sections.  If this was specified, the runtime program would
             fight itself and eventually cause a stack overflow.  This is now prevented during user entry from occurring.
             If you have specified this prior to this release, you <strong>must</strong> manually correct this.</li>
+            <li>Bug Fix: There was a problem that occurred when certain Java libraries were used.  The CTC .xml file that
+            contains all of the data was slightly corrupted due it.  By just running this new version of CTC Editor, those
+            problems will <strong>automatically</strong> be fixed. You may then exit the CTC Editor even without saving,
+            as the fix will have already been done. (internal file version 5 to 6)</li>
         </ul>
 
     <h3>Control Panel Editor</h3>

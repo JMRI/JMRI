@@ -479,17 +479,17 @@ public class FrmTUL extends javax.swing.JFrame {
     
     /**
      * 
-     * This is a DIRECT plagiarization of CommonSubs.populateJComboBoxWithBeans, repurposed to support
-     * the variety of merging / exclusion needed specifically by Turnout Locking.
-     * It does not have the flexibility of the original routine, since it's not needed.
-     * (A little mods about _mIgnoreActionEvent also, since I don't know of another way to do it).
+     * This is a DIRECT plagiarization of Dave Sands CommonSubs.populateJComboBoxWithBeans, repurposed to support
+     * what is needed specifically by Turnout Locking.
+     * It does not have the flexibility of the original routine, since thats not needed.
+     * (see "_mIgnoreActionEvent", since I don't know of another way to do it).
      * 
      * Populate a combo box with bean names using getDisplayName().
      * <p>
      * If a panel xml file has not been loaded, the combo box will behave as a
      * text field (editable), otherwise it will behave as standard combo box (not editable).
      * @param jComboBox The string based combo box to be populated.
-     * @param populateWith A hash set that needs to be sorted first, to pupulate the dropdown with.
+     * @param populateWith A hash set that needs to be sorted first, to populate the drop down list with.
      * @param currentSelection The current item to be selected, none if null.
      */
     public void populateJComboBox(JComboBox<String> jComboBox, HashSet<String> populateWith, String currentSelection) {

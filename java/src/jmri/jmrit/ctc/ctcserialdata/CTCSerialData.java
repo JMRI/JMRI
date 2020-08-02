@@ -268,7 +268,7 @@ public class CTCSerialData {
 
     @SuppressWarnings("unchecked") // See below comments:
     public boolean readDataFromXMLFile(String filename) {
-        CodeButtonHandlerData.preprocessingUpgradeSelf(filename);
+        CodeButtonHandlerData.preprocessingUpgradeSelf(filename);   // WHOLE FILE operations FIRST.
         boolean returnValue = false;    // Assume error
         try {
             try (XMLDecoder xmlDecoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)))) {
