@@ -500,7 +500,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (location != null && !location.isTrackAtLocation(track)) {
             return ERROR_TRACK;
         }
-        return track.accepts(this);
+        return track.isRollingStockAccepted(this);
     }
 
     /**
@@ -611,7 +611,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (destination == null || track == null) {
             return Track.OKAY;
         }
-        return track.accepts(this);
+        return track.isRollingStockAccepted(this);
     }
 
     public Location getDestination() {

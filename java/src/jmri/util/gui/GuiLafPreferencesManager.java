@@ -2,6 +2,7 @@ package jmri.util.gui;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -134,7 +135,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     @Override
     @Nonnull
-    public Iterable<Class<? extends PreferencesManager>> getRequires() {
+    public Collection<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 

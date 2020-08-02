@@ -1,7 +1,9 @@
 package jmri;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the NamedBeanUsageReport Class
@@ -16,13 +18,13 @@ public class NamedBeanUsageReportTest {
         Assert.assertEquals("Test_Bean_Report", report.usageKey);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

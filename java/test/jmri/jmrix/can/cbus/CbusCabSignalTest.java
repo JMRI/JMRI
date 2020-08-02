@@ -8,10 +8,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Unit Tests for CBus Cab Signals
@@ -48,7 +47,7 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -66,7 +65,7 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
         cs = new CbusCabSignal(memo,new DccLocoAddress(1234,true));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo.dispose();

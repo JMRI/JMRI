@@ -38,6 +38,12 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
 
     /** {@inheritDoc} */
     @Override
+    public void load(Element e, Object o) throws JmriConfigureXmlException {
+        log.error("Invalid method called");
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public boolean load(@Nonnull Element shared, Element perNode) throws JmriConfigureXmlException { // may not need exception
         return this.load(shared);
     }

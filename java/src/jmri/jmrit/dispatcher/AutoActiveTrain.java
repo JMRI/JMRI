@@ -706,8 +706,10 @@ public class AutoActiveTrain implements ThrottleListener {
                 });
                 log.debug("new current signal = {}", sh.getDisplayName(USERSYS));
                 setSpeedBySignal();
-            } // Note: null signal head will result when exiting throat-to-throat blocks.
-            log.debug("new current signal is null - sometimes OK");
+            } else {
+                // Note: null signal head will result when exiting throat-to-throat blocks.
+                log.debug("new current signal is null - sometimes OK");
+            }
         } else {
             //SignalMast
             SignalMast sm = null;
@@ -1119,8 +1121,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 _stoppingBySensor = true;
             }
         } else if (_currentAllocatedSection.getLength() < _maxTrainLength || _stopBySpeedProfile) {
-            log.debug("{}: train will not fit in [{}] ({}<{}), stop.", _activeTrain.getTrainName(),
-                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength);
+            log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}] StopBySpeedProfile [{}]. setStopNow", _activeTrain.getTrainName(),
+                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength, _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
             // stopping by speed profile uses block length to stop
             //TODO: don't stop immediately, slow to stop instead

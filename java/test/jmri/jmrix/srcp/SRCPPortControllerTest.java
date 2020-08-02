@@ -1,8 +1,8 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SRCPPortController class.
@@ -12,7 +12,7 @@ import org.junit.Before;
 public class SRCPPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        SRCPSystemConnectionMemo memo = new SRCPSystemConnectionMemo();
@@ -28,7 +28,7 @@ public class SRCPPortControllerTest extends jmri.jmrix.AbstractNetworkPortContro
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

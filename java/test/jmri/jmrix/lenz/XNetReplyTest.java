@@ -7,12 +7,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
+
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.lenz.XNetReply class
@@ -43,7 +43,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testStringCtorEmptyString() {
         Assert.assertEquals("length", 0, msg.getNumDataElements());
-        Assert.assertTrue("empty reply",msg.toString().equals(""));
+        assertEquals("empty reply", "", msg.toString());
     }
 
     // Test the copy constructor.
@@ -83,40 +83,40 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testParity() {
         msg = new XNetReply("21 21 00");
         Assert.assertEquals("parity set test 1", 0, msg.getElement(2));
-        Assert.assertEquals("parity check test 1", true, msg.checkParity());
+        assertTrue("parity check test 1", msg.checkParity());
 
         msg = new XNetReply("21 21 00");
         msg.setElement(0, 0x21);
         msg.setElement(1, ~0x21);
         msg.setParity();
         Assert.assertEquals("parity set test 2", 0xFF, msg.getElement(2));
-        Assert.assertEquals("parity check test 2", true, msg.checkParity());
+        assertTrue("parity check test 2", msg.checkParity());
 
         msg = new XNetReply("21 21 00");
         msg.setElement(0, 0x18);
         msg.setElement(1, 0x36);
         msg.setParity();
         Assert.assertEquals("parity set test 3", 0x2E, msg.getElement(2));
-        Assert.assertEquals("parity check test 3", true, msg.checkParity());
+        assertTrue("parity check test 3", msg.checkParity());
 
         msg = new XNetReply("21 21 00");
         msg.setElement(0, 0x87);
         msg.setElement(1, 0x31);
         msg.setParity();
         Assert.assertEquals("parity set test 4", 0xB6, msg.getElement(2));
-        Assert.assertEquals("parity check test 4", true, msg.checkParity());
+        assertTrue("parity check test 4", msg.checkParity());
 
         msg = new XNetReply("21 21 00");
         msg.setElement(0, 0x18);
         msg.setElement(1, 0x36);
         msg.setElement(2, 0x0e);
-        Assert.assertEquals("parity check test 5", false, msg.checkParity());
+        assertFalse("parity check test 5", msg.checkParity());
 
         msg = new XNetReply("21 21 00");
         msg.setElement(0, 0x18);
         msg.setElement(1, 0x36);
         msg.setElement(2, 0x8e);
-        Assert.assertEquals("parity check test 6", false, msg.checkParity());
+        assertFalse("parity check test 6", msg.checkParity());
     }
 
     // test accessor methods for elements.
@@ -132,7 +132,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testGetElementBCD(){
        msg=new XNetReply("63 14 01 04 72");
-       Assert.assertEquals("getElementBCD Return Value",(long)14,(long)msg.getElementBCD(1));
+       Assert.assertEquals("getElementBCD Return Value", 14,(long)msg.getElementBCD(1));
     }
 
     // check skipPrefix
@@ -1096,9 +1096,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertTrue(r.isUnsolicited());
         // feedback message.
         r = new XNetReply("42 05 48 0f");
-        Assert.assertTrue(r.isUnsolicited());
-        r.resetUnsolicited();
-        Assert.assertFalse(r.isUnsolicited()); 
+        Assert.assertFalse(r.isUnsolicited());
     }
 
     // check toMonitor string for informational messages from the command station
@@ -1500,7 +1498,6 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         FeedbackItem oddItem = selected.get();
 
         assertTrue("Motion completed", oddItem.isMotionComplete());
-        assertTrue("Initially unsolicited", oddItem.isUnsolicited());
         assertTurnoutFeedbackData(r, 1, 21, 0, 1, oddItem);
         
         selected = r.selectTurnoutFeedback(22);
@@ -1509,8 +1506,6 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         FeedbackItem evenItem = selected.get();
         assertTurnoutFeedbackData(r, 1, 22, 2, 1, evenItem);
         
-        // make solicited:
-        oddItem.resetUnsolicited();
         assertFalse(r.isUnsolicited());
         
         // 5 * 4, upper nibble = 23 (C) + 24 (T)
@@ -1686,14 +1681,14 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
     
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new XNetReply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = msg = null;
         JUnitUtil.tearDown();

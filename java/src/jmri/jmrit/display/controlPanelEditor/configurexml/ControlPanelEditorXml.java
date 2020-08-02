@@ -104,11 +104,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         return element;
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     /**
      * Create a ControlPanelEditor object, then register and fill it, then pop
      * it in a JFrame

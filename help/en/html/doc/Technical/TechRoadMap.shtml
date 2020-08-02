@@ -33,7 +33,7 @@
 
     <h1>JMRI: Technology Road Map</h1>
       This page is the road map
-      for JMRI's future develpoment, including changes to our use
+      for JMRI's future development, including changes to our use
       of Java technologies. It is maintained and updated through
       continuing discussion on the <a href=
       "https://jmri-developers.groups.io/g/jmri/topics">
@@ -301,7 +301,8 @@
       For example, Oracle 
       <a href="http://www.oracle.com/technetwork/java/javase/javaclientroadmapupdate2018mar-4414431.pdf">has announced</a> that they'll stop providing standalone JRE installers 
       by the end of 2020, by which time JMRI distributions will have to contain
-      the Java runtime components or it won't be possible to run JMRI on newly-bought PCs. 
+      the Java runtime components or it won't be possible to run JMRI on newly-bought PCs
+      (<a href="http://adoptopenjdk.net">will continue to provide independent JREs</a>). 
       That in turn might require tools like
       jlink from Java 9 or later.
 
@@ -352,9 +353,9 @@
 
         <li>Our <a href="Logging.shtml">logging methodology</a> is
         now a hybrid of native logging (in some included
-        libraries), Log4J 1.2.15 (our original solution) and SLF4J (the
-        most recent addition). We may choose to simplify that, but at 
-        least we have to move to Log4J 2 at some point.
+        libraries), Log4J 1.2.17 (our logger) and SLF4J (a logging abstraction
+        layer). We may choose to simplify that, but at 
+        least we have to move to another logger at some point.
         </li>
 
       </ul>

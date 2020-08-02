@@ -1,6 +1,7 @@
 package jmri.jmrix.xpa;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
+
 import jmri.util.junit.annotations.NotApplicable;
 
 /**
@@ -77,7 +78,7 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
     public void testStateOff() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -87,7 +88,7 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
         p = new XpaPowerManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
         tc = null;

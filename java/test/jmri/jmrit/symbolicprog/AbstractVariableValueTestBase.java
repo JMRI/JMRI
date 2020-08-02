@@ -9,8 +9,7 @@ import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
@@ -432,7 +431,7 @@ public abstract class AbstractVariableValueTestBase {
     // this next is just preserved here; note not being invoked.
     // test that you're not using too much space when you call for a value
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testSpaceUsage() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);

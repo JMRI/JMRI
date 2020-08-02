@@ -6,12 +6,14 @@ import jmri.spi.JmriServiceProviderInterface;
 
 /**
  * Provide an SPI for registering potential startup actions with the
- * {@link apps.StartupActionsManager}.
+ * {@link StartupActionsManager}.
  * <p>
  * Instances of this class need to be registered with a
  * {@link java.util.ServiceLoader}. The best way to register is include a file
  * {@code META-INF/services/jmri.util.startup.StartupActionFactory} in the
- * classpath (preferably in a JAR with the action the instance supports).
+ * classpath (preferably in a JAR with the action the instance supports). JMRI
+ * code uses the {@link org.openide.util.lookup.ServiceProvider} annotation to
+ * generate that file.
  * <p>
  * {@link AbstractStartupActionFactory} provides an abstract base class for
  * creating factories that implements most of the boilerplate needed.

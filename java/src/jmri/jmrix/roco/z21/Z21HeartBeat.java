@@ -31,14 +31,11 @@ public class Z21HeartBeat implements Z21Listener {
      */
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
-            keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    // If the timer times out, send a request for status
-                    tc.sendz21Message(
-                       jmri.jmrix.roco.z21.Z21Message.getSerialNumberRequestMessage(),
-                       null);
-                }
+            keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, e -> {
+                // If the timer times out, send a request for status
+                tc.sendz21Message(
+                   Z21Message.getSerialNumberRequestMessage(),
+                   null);
             });
         }
         keepAliveTimer.stop();

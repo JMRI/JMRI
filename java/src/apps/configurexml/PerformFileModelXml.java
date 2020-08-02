@@ -1,9 +1,10 @@
 package apps.configurexml;
 
-import apps.PerformFileModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.PerformFileModel;
+import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +14,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: 2014(c)
- * @see apps.startup.PerformFileModelFactory
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.configurexml.PerformFileModelXml} instead
  */
+@Deprecated
 public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public PerformFileModelXml() {
@@ -59,17 +61,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         return result;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @param o       ignored
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Unexpected call of load(Element, Object)");
-    }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class);
 
 }

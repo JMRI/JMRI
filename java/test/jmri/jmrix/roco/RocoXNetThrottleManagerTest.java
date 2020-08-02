@@ -1,11 +1,12 @@
 package jmri.jmrix.roco;
 
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottleManagerTest;
+import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 
 
 /**
@@ -16,18 +17,22 @@ import org.junit.Before;
 public class RocoXNetThrottleManagerTest extends XNetThrottleManagerTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new RocoCommandStation());
-        tm = new RocoXNetThrottleManager(new XNetSystemConnectionMemo(tc));
+        XNetTrafficController tc = Mockito.mock(XNetTrafficController.class);
+        RocoCommandStation cs = Mockito.mock(RocoCommandStation.class);
+        Mockito.when(tc.getCommandStation()).thenReturn(cs);
+        XNetSystemConnectionMemo memo = Mockito.mock(XNetSystemConnectionMemo.class);
+        Mockito.when(memo.getXNetTrafficController()).thenReturn(tc);
+        Mockito.when(memo.getUserName()).thenReturn("Roco");
+        tm = new RocoXNetThrottleManager(memo);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tm = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

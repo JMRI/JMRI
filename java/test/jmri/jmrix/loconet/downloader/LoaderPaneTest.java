@@ -1,9 +1,8 @@
 package jmri.jmrix.loconet.downloader;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
@@ -33,7 +32,7 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
         ((LoaderPane)panel).initContext(memo);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -45,7 +44,7 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
         title="Firmware Downloader";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo.dispose();

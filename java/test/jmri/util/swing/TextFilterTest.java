@@ -2,13 +2,12 @@ package jmri.util.swing;
 
 import java.io.File;
 import java.io.IOException;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -16,15 +15,12 @@ import org.junit.rules.TemporaryFolder;
  */
 public class TextFilterTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -36,10 +32,10 @@ public class TextFilterTest {
     }
 
     @Test
-    public void testAccept() throws IOException {
-        File dir = folder.newFolder();
-        File txt = folder.newFile("text.txt");
-        File xml = folder.newFile("xml.xml");
+    public void testAccept(@TempDir File folder) throws IOException {
+        File dir = folder;
+        File txt = new File(folder, "text.txt");
+        File xml = new File(folder, "xml.xml");
         TextFilter instance = new TextFilter();
         Assert.assertTrue(instance.accept(dir));
         Assert.assertTrue(instance.accept(txt));

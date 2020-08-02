@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class SectionManager extends AbstractManager<Section> implements InstanceManagerAutoDefault {
 
     public SectionManager() {
-        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        super();
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
     }

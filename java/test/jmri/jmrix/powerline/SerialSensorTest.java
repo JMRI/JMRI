@@ -1,8 +1,8 @@
 package jmri.jmrix.powerline;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -24,7 +24,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
 
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         SerialTrafficController tc = new SerialTrafficController(){
@@ -38,7 +38,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

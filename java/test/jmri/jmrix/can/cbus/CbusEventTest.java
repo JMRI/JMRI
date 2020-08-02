@@ -55,6 +55,7 @@ public class CbusEventTest {
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
+        memo.configureManagers();
         
         CbusEvent t = new CbusEvent(123,456);
         t.sendOn();

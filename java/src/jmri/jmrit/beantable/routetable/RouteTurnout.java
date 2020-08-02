@@ -3,6 +3,8 @@ package jmri.jmrit.beantable.routetable;
 import jmri.Route;
 import jmri.Turnout;
 
+import static jmri.jmrit.beantable.routetable.AbstractRouteAddEditFrame.*;
+
 /**
  * Route Table RouteTurnout Elements.
  *
@@ -16,15 +18,9 @@ import jmri.Turnout;
  * @author Paul Bender Colyright (C) 2020
  */
 class RouteTurnout extends RouteElement {
-    private final String SET_TO_CLOSED;
-    private final  String SET_TO_THROWN;
-    private final String SET_TO_TOGGLE;
 
     RouteTurnout(String sysName, String userName) {
         super(sysName, userName);
-        SET_TO_CLOSED = Bundle.getMessage("Set") + " " + Bundle.getMessage("TurnoutStateClosed");
-        SET_TO_THROWN = Bundle.getMessage("Set") + " " + Bundle.getMessage("TurnoutStateThrown");
-        SET_TO_TOGGLE = Bundle.getMessage("Set") + " " + Bundle.getMessage("Toggle");
     }
 
     @Override

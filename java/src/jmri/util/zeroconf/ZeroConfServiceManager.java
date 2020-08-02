@@ -305,20 +305,19 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         }
         CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
         new HashMap<>(getDNSes()).values().parallelStream().forEach(dns -> {
-            jmri.util.ThreadingUtil.newThread(
-                () -> {
-                    dns.unregisterAllServices();
-                    if (close) {
-                        try {
-                            dns.close();
-                        } catch (IOException ex) {
-                            log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
-                        }
+            Thread t = new Thread(() -> {
+                dns.unregisterAllServices();
+                if (close) {
+                    try {
+                        dns.close();
+                    } catch (IOException ex) {
+                        log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
                     }
-                    nsLatch.countDown();
-                }, 
-                "dns.close in ZeroConfServiceManager#stopAll")
-            .start();
+                }
+                nsLatch.countDown();
+            });
+            t.setName("dns.close in ZerConfServiceManager#stopAll");
+            t.start();
         });
         try {
             zcLatch.await();

@@ -203,14 +203,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void load(Element element, Object o) {
-        log.error("method with two args invoked");
-    }
-
-    /**
      * Service routine to look through "parameter" child elements to find a
      * particular parameter value
      *

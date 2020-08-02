@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.lenz.LenzCommandStation;
+import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 import org.slf4j.Logger;
@@ -102,7 +103,11 @@ public class ZTC611Adapter extends XNetSerialPortController {
         // start operation
         // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-        new ZTC611XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .turnoutManager(ZTC611XNetTurnoutManager.class)
+                .init();
     }
 
     // base class methods for the XNetSerialPortController interface
@@ -171,8 +176,8 @@ public class ZTC611Adapter extends XNetSerialPortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};
-    protected int[] validSpeedValues = new int[]{19200};
+    protected final String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600")};
+    protected final int[] validSpeedValues = new int[]{19200};
 
     @Override
     public int defaultBaudIndex() {
@@ -180,7 +185,7 @@ public class ZTC611Adapter extends XNetSerialPortController {
     }
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
+    protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
 
     private boolean opened = false;
     InputStream serialStream = null;

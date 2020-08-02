@@ -3,10 +3,8 @@ package jmri.jmrix.cmri.serial;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.Light;
 import jmri.util.JUnitUtil;
@@ -91,7 +89,7 @@ public class SerialLightTest {
         Assert.assertEquals("CL3B4", it.next().getSystemName());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -101,7 +99,7 @@ public class SerialLightTest {
         new SerialNode(0, SerialNode.SMINI,tcis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (tcis != null) tcis.terminateThreads();
         tcis = null;

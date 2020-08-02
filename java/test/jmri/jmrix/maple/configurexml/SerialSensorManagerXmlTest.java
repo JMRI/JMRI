@@ -1,10 +1,9 @@
 package jmri.jmrix.maple.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SerialSensorManagerXmlTest.java
@@ -20,12 +19,12 @@ public class SerialSensorManagerXmlTest {
       Assert.assertNotNull("SerialSensorManagerXml constructor",new SerialSensorManagerXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

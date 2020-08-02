@@ -1,13 +1,16 @@
 package jmri.jmrix.internal;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -244,8 +247,48 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = "Changed";
     }
 
+    @Test
+    public void testBeansAreSilenceable() {
+        CountingPropertyChangeListener pcl = new CountingPropertyChangeListener();
+        l.addPropertyChangeListener("beans", pcl);
+        assertThat(pcl.count).isEqualTo(0);
+        assertThat(pcl.count).isEqualTo(l.getNamedBeanSet().size());
+        l.provide("IS1");
+        assertThat(pcl.count).isEqualTo(1);
+        assertThat(pcl.count).isEqualTo(l.getNamedBeanSet().size());
+        l.setPropertyChangesSilenced("beans", true);
+        l.provide("IS2");
+        assertThat(pcl.count).isEqualTo(1);
+        assertThat(pcl.count).isNotEqualTo(l.getNamedBeanSet().size());
+        l.setPropertyChangesSilenced("beans", false);
+        assertThat(pcl.count).isEqualTo(2);
+        // this is true only if 1 item is added while silenced
+        assertThat(pcl.count).isEqualTo(l.getNamedBeanSet().size());
+        l.provide("IS3");
+        assertThat(pcl.count).isEqualTo(3);
+        assertThat(pcl.count).isEqualTo(l.getNamedBeanSet().size());
+    }
+
+    @Test
+    public void testFooIsNotSilenceable() {
+        assertThatThrownBy(() -> l.setPropertyChangesSilenced("foo", true))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Property foo cannot be silenced.");
+    }
+
+    private static class CountingPropertyChangeListener implements PropertyChangeListener {
+
+        int count = 0;
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            count++;
+        }
+        
+    }
+
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
@@ -263,10 +306,11 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         lastCall = null;
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
     private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerTest.class);
 
 }

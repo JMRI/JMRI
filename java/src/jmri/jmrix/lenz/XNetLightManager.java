@@ -18,7 +18,7 @@ import jmri.managers.AbstractLightManager;
  */
 public class XNetLightManager extends AbstractLightManager {
 
-    private XNetTrafficController tc = null;
+    private XNetTrafficController tc;
 
     public XNetLightManager(XNetSystemConnectionMemo memo) {
         super(memo);
@@ -50,7 +50,7 @@ public class XNetLightManager extends AbstractLightManager {
         if (bitNum == -1) {
             return (null);
         }
-        Light lgt = null;
+        Light lgt;
         // Normalize the System Name
         String sName = getSystemNamePrefix() + bitNum; // removes any leading zeros
         // create the new Light object

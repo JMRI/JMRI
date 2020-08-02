@@ -23,11 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import apps.gui3.tabbedpreferences.TabbedPreferences;
-import jmri.InstanceManager;
-import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import static jmri.jmrix.openlcb.OlcbConfigurationManager.*;
@@ -246,13 +242,8 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         for (Runnable r : saveCallbacks) {
             r.run();
         }
-        if (anyChanged) {
-            // Save current profile's connection config xml.
-            InstanceManager.getDefault(ConnectionConfigManager.class).savePreferences(
-                    ProfileManager.getDefault().getActiveProfile());
-            // This will pop up a restart message for the user.
-            InstanceManager.getDefault(TabbedPreferences.class).savePressed(true);
-        }
+        this.setVisible(false);
+        this.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(ProtocolOptionsFrame.class);

@@ -1,17 +1,18 @@
 package jmri.util.zeroconf;
 
 import java.util.HashMap;
+
 import javax.jmdns.ServiceInfo;
+
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
-import org.junit.After;
-import org.junit.AfterClass;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Tests for the ZeroConfService class
@@ -23,22 +24,22 @@ public class ZeroConfServiceTest {
 
     private static final String HTTP = "_http._tcp.local.";
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initZeroConfServiceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
         

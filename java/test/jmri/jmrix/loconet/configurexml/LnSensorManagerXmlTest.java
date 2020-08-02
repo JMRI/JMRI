@@ -1,10 +1,9 @@
 package jmri.jmrix.loconet.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * LnSensorManagerXmlTest.java
@@ -20,12 +19,12 @@ public class LnSensorManagerXmlTest {
       Assert.assertNotNull("LnSensorManagerXml constructor",new LnSensorManagerXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

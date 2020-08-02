@@ -6,10 +6,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.PowerManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -124,7 +123,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
     private CbusPowerManager pwr;
     private TrafficControllerScaffold controller;
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -135,7 +134,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         try {

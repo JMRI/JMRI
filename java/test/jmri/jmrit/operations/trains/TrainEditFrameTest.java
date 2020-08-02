@@ -4,9 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -55,7 +54,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train comment", "Test Train Comment", train.getComment());
         Assert.assertEquals("train depart time", "00:00", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
-        Assert.assertTrue("train accepts car type Boxcar", train.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
         Assert.assertEquals("train roads", Train.ALL_ROADS, train.getRoadOption());
         Assert.assertEquals("train requirements", Train.NO_CABOOSE_OR_FRED, train.getRequirements());
 
@@ -94,10 +93,10 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         // test car types using the clear and set buttons
         JemmyUtil.enterClickAndLeave(trainEditFrame.clearButton);
-        Assert.assertFalse("train accepts car type Boxcar", train.acceptsTypeName("Boxcar"));
+        Assert.assertFalse("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
 
         JemmyUtil.enterClickAndLeave(trainEditFrame.setButton);
-        Assert.assertTrue("train accepts car type Boxcar", train.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
 
         // test engine fields
         Assert.assertEquals("number of engines", "0", train.getNumberEngines());
@@ -220,7 +219,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train comment", "Test Train Comment", train.getComment());
         Assert.assertEquals("train depart time", "00:00", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
-        Assert.assertTrue("train accepts car type Boxcar", train.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
         Assert.assertEquals("train roads", Train.ALL_ROADS, train.getRoadOption());
         Assert.assertEquals("train requirements", Train.NO_CABOOSE_OR_FRED, train.getRequirements());
 
@@ -317,10 +316,10 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
         // test car types using the clear and set buttons
         JemmyUtil.enterClickAndLeave(trainEditFrame.clearButton);
-        Assert.assertFalse("train accepts car type Boxcar", train.acceptsTypeName("Boxcar"));
+        Assert.assertFalse("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
 
         JemmyUtil.enterClickAndLeave(trainEditFrame.setButton);
-        Assert.assertTrue("train accepts car type Boxcar", train.acceptsTypeName("Boxcar"));
+        Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
 
         // now change them
         //        ThreadingUtil.runOnGUI(() -> {
@@ -502,7 +501,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         JUnitOperationsUtil.loadTrains();
