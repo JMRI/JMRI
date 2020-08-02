@@ -390,9 +390,13 @@
             fight itself and eventually cause a stack overflow.  This is now prevented during user entry from occurring.
             If you have specified this prior to this release, you <strong>must</strong> manually correct this.</li>
             <li>Bug Fix: There was a problem that occurred when certain Java libraries were used.  The CTC .xml file that
-            contains all of the data was slightly corrupted due it.  By just running this new version of CTC Editor, those
+            contains all of the data was slightly corrupted.  By just running this new version of CTC Editor, those
             problems will <strong>automatically</strong> be fixed. You may then exit the CTC Editor even without saving,
-            as the fix will have already been done. (internal file version 5 to 6)</li>
+            as the fix will have already been done. (internal file version goes from 5 to 6)</li>
+            <li>Bug Fix: When Fleeting was introduced, a bug cropped up whereby a restricting signal would be given
+            to a following train in Signal Mast Logic (and maybe Simplified Signal Logic also, not tried) when the signal
+            should have stayed Red when fleeting was <strong>not</strong> enabled.  Now a restricting signal
+            will <strong>only</strong> be given to a following train <strong>only</strong> if fleeting is enabled.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
