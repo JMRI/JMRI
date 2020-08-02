@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -622,6 +622,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_Connections" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#Connections"/>
 
+<mapID target="html.doc.Technical.JUnit_AssertJ" url="html/doc/Technical/JUnit.shtml#AssertJ"/>
+
 <mapID target="html.hardware.loconet.LocoNetTools" url="html/hardware/loconet/LocoNetTools.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SettingsOptions" url="package/jmri/jmrit/operations/Operations.shtml#SettingsOptions"/>
@@ -3887,6 +3889,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_TrainsModify_PreviewTop" url="manual/JMRI_OPS_UsersGuide/Ops_TrainsModify.shtml#PreviewTop"/>
 
 <mapID target="html.hardware.can.cbus.index_connecting" url="html/hardware/can/cbus/index.shtml#connecting"/>
+
+<mapID target="html.doc.Technical.JUnit_AssertJSwing" url="html/doc/Technical/JUnit.shtml#AssertJSwing"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_OperationFiles" url="package/jmri/jmrit/operations/Operations.shtml#OperationFiles"/>
 

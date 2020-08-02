@@ -1,10 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 import jmri.util.JUnitUtil;
 
@@ -25,14 +23,14 @@ public class LayoutEditorChecksTest {
         JUnitUtil.dispose(le);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

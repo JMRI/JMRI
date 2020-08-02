@@ -2,6 +2,7 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.SystemConnectionMemo;
 
 /**
  * Enables basic setup of a interface for a jmrix implementation.

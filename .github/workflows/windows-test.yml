@@ -11,7 +11,6 @@ on: [ push, pull_request ]
 
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
@@ -20,6 +19,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Change screen resolution
+      run: Set-DisplayResolution -Width 1600 -Height 1200 -Force
+      shell: pwsh
     - name: Cache Maven packages
       uses: actions/cache@v1
       with:
@@ -30,3 +32,9 @@ jobs:
       run: |
         # run all tests using maven
         mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
+    - name: Upload generated screenshots artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ always() }}
+      with:
+        name: screenshots
+        path: temp/temp/*.png

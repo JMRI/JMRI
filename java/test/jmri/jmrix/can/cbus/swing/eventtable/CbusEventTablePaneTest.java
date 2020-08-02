@@ -218,6 +218,43 @@ public class CbusEventTablePaneTest {
         
     }
     
+    @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testPersistedViewPanes(){
+        
+        ((CbusEventTablePane) panel).initComponents(memo);
+        initFrame();
+        // Find new window by name
+        JFrameOperator jfo = new JFrameOperator( panel.getTitle() );
+        JMenuBarOperator mainbar = new JMenuBarOperator(jfo);
+        
+        // show pane
+        mainbar.pushMenu(Bundle.getMessage("Display")); // stops at top level
+        JMenuOperator jmo = new JMenuOperator(mainbar, Bundle.getMessage("Display"));
+        new JMenuItemOperator(new JPopupMenuOperator(jmo.getPopupMenu()),Bundle.getMessage("NewTsl")).push();
+
+        // show pane
+        mainbar.pushMenu(Bundle.getMessage("Display")); // stops at top level
+        jmo = new JMenuOperator(mainbar, Bundle.getMessage("Display"));
+        new JMenuItemOperator(new JPopupMenuOperator(jmo.getPopupMenu()),Bundle.getMessage("ButtonSendEvent")).push();
+        
+        panel.dispose();
+        panel = null;
+        
+        panel = new CbusEventTablePane();
+        
+        ((CbusEventTablePane) panel).initComponents(memo);
+        initFrame();
+        
+        assertThat(getEditBeanButtonEnabled(jfo)).isFalse();
+        assertThat(getSendEventButtonEnabled(jfo)).isTrue();
+        
+        panel.dispose();
+        
+       //  new JButtonOperator(jfo, "Not a Button").doClick();  // NOI18N
+        
+    }
+    
     private boolean getNewEventButtonEnabled( JFrameOperator jfo ){
         return ( new JButtonOperator(jfo,Bundle.getMessage("NewEvent")).isEnabled() );
     }
@@ -289,6 +326,9 @@ public class CbusEventTablePaneTest {
         memo.setTrafficController(tcis);
         
         assertThat(tempDir).isNotNull();
+        
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+        memo.configureManagers();
         
         try {
             JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));

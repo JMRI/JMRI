@@ -479,7 +479,9 @@ public class Transit extends AbstractNamedBean {
      * @param panel the panel to check against
      * @return 0 if all Sections have all required signals or the number of
      *         Sections missing required signals; -1 if the panel is null
+     * @deprecated 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
      */
+    @Deprecated // for removal 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
     public int checkSignals(LayoutEditor panel) {
         if (panel == null) {
             log.error("checkSignals called with a null LayoutEditor panel");
@@ -499,8 +501,11 @@ public class Transit extends AbstractNamedBean {
      *
      * @param panel the panel containing Sections to validate
      * @return number of invalid sections or -1 if panel if null
+     * @deprecated 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
      */
+    @Deprecated // for removal 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
     public int validateConnectivity(LayoutEditor panel) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "validateConnectivity");
         if (panel == null) {
             log.error("validateConnectivity called with a null LayoutEditor panel");
             return -1;

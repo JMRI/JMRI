@@ -2,10 +2,10 @@ package jmri.jmrix.openlcb;
 
 import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.openlcb.MimicNodeStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +60,7 @@ public class OlcbConfigurationManagerTest {
         assertEquals("Test Description", nmemo.getSimpleNodeIdent().getUserDesc());
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void preClassInit() {
         JUnitUtil.setUp();
         scm = new OlcbSystemConnectionMemo();
@@ -68,7 +68,7 @@ public class OlcbConfigurationManagerTest {
         scm.setTrafficController(tc);
     }
 
-    @AfterClass
+    @AfterAll
     public static void postClassTearDown() {
         if(scm != null && scm.getInterface() !=null ) {
             scm.getTrafficController().terminateThreads();

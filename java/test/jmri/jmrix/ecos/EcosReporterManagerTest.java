@@ -1,8 +1,8 @@
 package jmri.jmrix.ecos;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * EcosReporterManagerTest.java
@@ -20,7 +20,7 @@ public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
 
     EcosTrafficController tc = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -32,7 +32,7 @@ public class EcosReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         l = new EcosReporterManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

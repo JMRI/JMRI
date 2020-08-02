@@ -4,10 +4,8 @@ import java.util.*;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests the static methods of the interface.
@@ -200,12 +198,12 @@ public class ManagerTest {
         public void setState(int i) {}
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        
         JUnitUtil.clearShutDownManager();
 

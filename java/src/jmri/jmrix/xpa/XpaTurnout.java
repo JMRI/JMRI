@@ -19,7 +19,7 @@ public class XpaTurnout extends AbstractTurnout {
      */
     // Private data member to keep track of what turnout we control.
     private final int _number;
-    private XpaTrafficController tc = null;
+    private final XpaTrafficController tc;
 
     @GuardedBy("this")
     protected int _mThrown = Turnout.THROWN;

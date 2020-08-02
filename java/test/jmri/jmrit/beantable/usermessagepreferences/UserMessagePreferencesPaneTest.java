@@ -1,10 +1,9 @@
 package jmri.jmrit.beantable.usermessagepreferences;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of UserMessagePreferencesPane
@@ -19,14 +18,14 @@ public class UserMessagePreferencesPaneTest {
         Assert.assertNotNull("exists", p);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

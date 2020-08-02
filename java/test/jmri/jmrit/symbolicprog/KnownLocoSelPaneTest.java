@@ -1,11 +1,12 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrit.progsupport.ProgModePane;
+
 import javax.swing.JLabel;
+
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -43,7 +44,7 @@ public class KnownLocoSelPaneTest {
         Assert.assertNotNull("exists", t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -52,7 +53,7 @@ public class KnownLocoSelPaneTest {
         InstanceManager.setDefault(ProgrammerConfigManager.class, new ProgrammerConfigManager());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.tearDown();

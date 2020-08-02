@@ -2,7 +2,9 @@ package jmri.jmrit.roster;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import java.awt.GraphicsEnvironment;
 
 /**
@@ -21,13 +23,13 @@ public class PrintListActionTest {
         JUnitUtil.dispose(jf);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

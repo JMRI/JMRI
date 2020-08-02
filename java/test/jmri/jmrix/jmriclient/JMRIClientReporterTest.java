@@ -1,7 +1,8 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.jmriclient.JMRIClientReporter class
@@ -15,7 +16,7 @@ public class JMRIClientReporterTest extends jmri.implementation.AbstractReporter
         return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -29,7 +30,7 @@ public class JMRIClientReporterTest extends jmri.implementation.AbstractReporter
         r = new JMRIClientReporter(3, new JMRIClientSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         r = null;

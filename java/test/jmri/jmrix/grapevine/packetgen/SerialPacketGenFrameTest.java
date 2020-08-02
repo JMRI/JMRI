@@ -1,8 +1,11 @@
 package jmri.jmrix.grapevine.packetgen;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
@@ -15,7 +18,7 @@ public class SerialPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -27,7 +30,7 @@ public class SerialPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo = null;

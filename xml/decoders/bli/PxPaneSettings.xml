@@ -196,14 +196,24 @@
         <text> </text>
       </label>
       <row>
-        <display item="Motor Load Chuff Power Filter" layout="above" label=""/>
+		<display item="Motor Load Chuff Power Filter" layout="above" label=""/>
         <display item="Motor Load Power Filter" layout="above" label=""/>
-        <label>
+		<label>
           <text> </text>
         </label>
         <display item="Motor Load Chuff Power Filter" layout="above" format="hslider"/>
         <display item="Motor Load Power Filter" layout="above" format="hslider"/>
-        <label>
+		<label>
+          <text> </text>
+        </label>
+	  </row>
+	  <row>
+		<display item="Service Mode PWM Duty" layout="above" label=""/>
+		<label>
+          <text> </text>
+        </label>
+		<display item="Service Mode PWM Duty" layout="above" format="hslider"/>
+		<label>
           <text> </text>
         </label>
       </row>

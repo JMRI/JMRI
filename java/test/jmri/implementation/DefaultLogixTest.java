@@ -2,10 +2,8 @@ package jmri.implementation;
 
 import jmri.*;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test the DefaultLogixTest implementation class
@@ -45,7 +43,7 @@ public class DefaultLogixTest extends NamedBeanTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -53,7 +51,7 @@ public class DefaultLogixTest extends NamedBeanTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

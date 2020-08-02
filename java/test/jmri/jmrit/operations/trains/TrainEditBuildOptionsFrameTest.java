@@ -2,7 +2,9 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 
 import jmri.InstanceManager;
@@ -284,14 +286,14 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         JUnitOperationsUtil.loadTrains();
      }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
     }

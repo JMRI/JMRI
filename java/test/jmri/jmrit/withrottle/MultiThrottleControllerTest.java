@@ -3,9 +3,12 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeEvent;
 //import jmri.InstanceManager;
 //import jmri.NamedBeanHandleManager;
+
 import jmri.Throttle;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of MultiThrottleController
@@ -263,7 +266,7 @@ public class MultiThrottleControllerTest {
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>m028", cis.getLastPacket());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initDebugThrottleManager();
@@ -273,7 +276,7 @@ public class MultiThrottleControllerTest {
         controller = new MultiThrottleController('A', "test", tcls, cis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         cis = null;
         tcls = null;

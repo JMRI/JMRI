@@ -2,13 +2,13 @@ package jmri.jmrix.loconet;
 
 import java.util.Calendar;
 import java.util.Date;
+
 import jmri.Reporter;
 import jmri.implementation.AbstractReporter;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the TranspondingTag class
@@ -99,7 +99,7 @@ public class TranspondingTagTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
@@ -108,7 +108,7 @@ public class TranspondingTagTest {
         new TranspondingTagManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

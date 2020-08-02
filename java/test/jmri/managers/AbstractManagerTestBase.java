@@ -8,7 +8,7 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Base for the various Abstract*MgrTestBase base classes for NamedBean Manager
@@ -37,18 +37,23 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         Manager.ManagerDataListener<E> listener = new Manager.ManagerDataListener<E>() {
             @Override
             public void contentsChanged(Manager.ManagerDataEvent<E> e) {
+                // do nothing
             }
 
             @Override
             public void intervalAdded(Manager.ManagerDataEvent<E> e) {
+                // do nothing
             }
 
             @Override
             public void intervalRemoved(Manager.ManagerDataEvent<E> e) {
+                // do nothing
             }
         };
 
         l.addDataListener(listener);
+        l.removeDataListener(listener);
+
         l.removeDataListener(listener);
 
         l.addDataListener(null);

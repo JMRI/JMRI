@@ -26,7 +26,7 @@ public class Z21XNetPacketizer extends XNetPacketizer {
     }
 
     @Override
-    public void handleOneIncomingReply() throws java.io.IOException {
+    public void handleOneIncomingReply() {
        try{
            super.handleOneIncomingReply();
        } catch(java.io.IOException ioe){

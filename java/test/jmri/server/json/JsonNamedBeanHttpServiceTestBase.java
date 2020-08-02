@@ -6,9 +6,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeNotNull;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import com.fasterxml.jackson.databind.node.NullNode;
 
@@ -24,7 +23,7 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
 
     protected B bean = null;
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         bean = null;

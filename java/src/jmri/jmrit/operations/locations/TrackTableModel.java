@@ -77,7 +77,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         // first, remove listeners from the individual objects
         removePropertyChangeTracks();
 
-        tracksList = _location.getTrackByNameList(_trackType);
+        tracksList = _location.getTracksByNameList(_trackType);
         // and add them back in
         for (Track track : tracksList) {
             track.addPropertyChangeListener(this);

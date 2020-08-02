@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ShutDownManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.srcp.swing.SRCPComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.util.NamedBeanComparator;
@@ -21,7 +21,7 @@ import jmri.util.NamedBeanComparator;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Paul Bender Copyright (C) 2015-2016
  */
-public class SRCPSystemConnectionMemo extends SystemConnectionMemo {
+public class SRCPSystemConnectionMemo extends DefaultSystemConnectionMemo {
 
     public SRCPSystemConnectionMemo(String prefix, String name, SRCPTrafficController et) {
         super(prefix, name);
@@ -58,13 +58,14 @@ public class SRCPSystemConnectionMemo extends SystemConnectionMemo {
     private SRCPTrafficController et;
 
     /**
-     * Configure the common managers for SRCP connections. This puts the
-     * common manager config in one place. This method is static so that it can
-     * be referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
+     * Configure the common managers for SRCP connections.  Currently the
+     * SRCP memo configures no managers directly.  Managers are configured
+     * for each bus.
+     * @deprecated since 4.21.1 without replacement.
      */
+    @Deprecated
     public void configureManagers() {
-
+      // no managers to configure for base SRCP connection.
     }
 
     /**
@@ -117,7 +118,9 @@ public class SRCPSystemConnectionMemo extends SystemConnectionMemo {
 
     @Override
     public void dispose() {
-        InstanceManager.getDefault(ShutDownManager.class).deregister(et.shutDownTask);
+        if (et != null) {
+            InstanceManager.getDefault(ShutDownManager.class).deregister(et.shutDownTask);
+        }
         et = null;
         InstanceManager.deregister(this, SRCPSystemConnectionMemo.class);
         if (cf != null) {

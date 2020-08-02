@@ -5,7 +5,9 @@ import jmri.util.PropertyChangeListenerScaffold;
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.Turnout;
 import jmri.jmrix.can.CanMessage;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests inherited from the abstract turnout test base, specialized for the OlcbTurnout. This is
@@ -20,7 +22,7 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
     protected PropertyChangeListenerScaffold l; 
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tif = new OlcbTestInterface();
@@ -32,7 +34,7 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
         l = new PropertyChangeListenerScaffold();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tif.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

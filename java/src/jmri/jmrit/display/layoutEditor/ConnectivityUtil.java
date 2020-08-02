@@ -13,8 +13,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 
 /**
  * ConnectivityUtil provides methods supporting use of layout connectivity
@@ -57,11 +56,14 @@ final public class ConnectivityUtil {
     private final int TRACKNODE_DIVERGING = 1;
     private final int TRACKNODE_DIVERGING_2ND_3WAY = 2;
 
+    private final BlockBossLogicProvider blockBossLogicProvider;
+
     // constructor method
     public ConnectivityUtil(LayoutEditor thePanel) {
         layoutEditor = thePanel;
         auxTools = layoutEditor.getLEAuxTools();
         layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
+        blockBossLogicProvider = InstanceManager.getDefault(BlockBossLogicProvider.class);
     }
 
     private TrackSegment trackSegment = null;
@@ -1101,7 +1103,7 @@ final public class ConnectivityUtil {
                     || ((bbLogic.getSensor3() != null) && (bbLogic.getSensor3()).equals(name))
                     || ((bbLogic.getSensor4() != null) && (bbLogic.getSensor4()).equals(name))
                     || ((bbLogic.getSensor5() != null) && (bbLogic.getSensor5()).equals(name))) {
-                bbLogic.retain();
+                blockBossLogicProvider.register(bbLogic);
                 bbLogic.start();
                 return true;
             }
@@ -1117,7 +1119,7 @@ final public class ConnectivityUtil {
                 bbLogic.setSensor5(name);
             } else {
                 log.error("could not add sensor to SSL for signal head {} because there is no room in the SSL.", sh.getDisplayName());
-                bbLogic.retain();
+                blockBossLogicProvider.register(bbLogic);
                 bbLogic.start();
                 return false;
             }
@@ -1126,7 +1128,7 @@ final public class ConnectivityUtil {
                 case DIVERGING:
                     if (((bbLogic.getWatchedSensor2() != null) && (bbLogic.getWatchedSensor2()).equals(name))
                             || ((bbLogic.getWatchedSensor2Alt() != null) && (bbLogic.getWatchedSensor2Alt()).equals(name))) {
-                        bbLogic.retain();
+                        blockBossLogicProvider.register(bbLogic);
                         bbLogic.start();
                         return true;
                     }
@@ -1136,7 +1138,7 @@ final public class ConnectivityUtil {
                         bbLogic.setWatchedSensor2Alt(name);
                     } else {
                         log.error("could not add watched sensor to SSL for signal head {} because there is no room in the facing SSL diverging part.", sh.getSystemName());
-                        bbLogic.retain();
+                        blockBossLogicProvider.register(bbLogic);
                         bbLogic.start();
                         return false;
                     }
@@ -1144,7 +1146,7 @@ final public class ConnectivityUtil {
                 case CONTINUING:
                     if (((bbLogic.getWatchedSensor1() != null) && (bbLogic.getWatchedSensor1()).equals(name))
                             || ((bbLogic.getWatchedSensor1Alt() != null) && (bbLogic.getWatchedSensor1Alt()).equals(name))) {
-                        bbLogic.retain();
+                        blockBossLogicProvider.register(bbLogic);
                         bbLogic.start();
                         return true;
                     }
@@ -1154,14 +1156,14 @@ final public class ConnectivityUtil {
                         bbLogic.setWatchedSensor1Alt(name);
                     } else {
                         log.error("could not add watched sensor to SSL for signal head {} because there is no room in the facing SSL continuing part.", sh.getSystemName());
-                        bbLogic.retain();
+                        blockBossLogicProvider.register(bbLogic);
                         bbLogic.start();
                         return false;
                     }
                     break;
                 default:
                     log.error("could not add watched sensor to SSL for signal head {}because 'where' to place the sensor was not correctly designated.", sh.getSystemName());
-                    bbLogic.retain();
+                    blockBossLogicProvider.register(bbLogic);
                     bbLogic.start();
                     return false;
             }
@@ -1169,7 +1171,7 @@ final public class ConnectivityUtil {
             log.error("SSL has not been set up for signal head {}. Could not add sensor - {}.", sh.getDisplayName(), name);
             return false;
         }
-        bbLogic.retain();
+        blockBossLogicProvider.register(bbLogic);
         bbLogic.start();
         return true;
     }
@@ -1229,7 +1231,7 @@ final public class ConnectivityUtil {
             // this to avoid Unexpected mode ERROR message at startup
             bbLogic.setMode(BlockBossLogic.SINGLEBLOCK);
         }
-        bbLogic.retain();
+        blockBossLogicProvider.register(bbLogic);
         bbLogic.start();
         return true;
     }

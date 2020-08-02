@@ -1,8 +1,8 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -73,7 +73,7 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
         return ((stc.outbound.elementAt(index))).toString().equals("POWER IDLE\n");
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -81,7 +81,7 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
         p = new JMRIClientPowerManager(new JMRIClientSystemConnectionMemo(stc));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
