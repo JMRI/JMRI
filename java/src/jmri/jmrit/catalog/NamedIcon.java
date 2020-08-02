@@ -11,7 +11,6 @@ import java.awt.image.ColorModel;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
 import java.awt.image.RenderedImage;
-import java.net.URL;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
