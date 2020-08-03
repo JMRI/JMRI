@@ -49,7 +49,7 @@
 
       JMRI's Github is configured with the following automations and requirements for merging a Pull Request:
       <ul>
-        <li>All CI tests have passed for the Pull Request</li>
+        <li>All required CI tests have passed for the Pull Request</li>
         <li>There has been at least one review from a non-author JMRI developer that accepts the Pull Request</li>
         <li>There are no reviews requesting changes</li>
         <li>The Pull Request has been in-queue for at least a day to allow people to take a look at them</li>
@@ -106,8 +106,9 @@
       <p>
       When merging a PR, please do the following:
       <ul>
-        <li>Add any assignments beyond the original submitter.  The original submitter will
-            be assigned automatically through a github action.
+        <li>Add any assignments beyond the original submitter.  
+            The original submitter may
+            be assigned automatically through a github action, but if not please add them.
             Developers and maintainers can be assigned to any PR, but 
             other people who create PRs can only be assigned to their own.
             By assigning the PR, we make it easy to find what non-developers 
