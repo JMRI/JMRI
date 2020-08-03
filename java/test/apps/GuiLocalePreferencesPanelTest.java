@@ -23,56 +23,56 @@ public class GuiLocalePreferencesPanelTest extends PreferencesPanelTestBase<GuiL
         prefsPanel.setParent(parent);
     }
 
-    @Disabled
+    @Disabled("needs additional setup")
     @ToDo("fix setup so the parent class test can run")
     @Test
     @Override
     public void getPreferencesItem() {
     }
 
-    @Disabled
+    @Disabled("needs additional setup")
     @ToDo("fix setup so the parent class test can run")
     @Test
     @Override
     public void getPreferencesItemText() {
     }
 
-    @Disabled
+    @Disabled("needs additional setup")
     @ToDo("fix setup so the parent class test can run")
     @Test
     @Override
     public void getPreferencesComponent() {
     }
 
-    @Disabled
+    @Disabled("needs additional setup")
     @ToDo("fix setup so the parent class test can run")
     @Test
     @Override
     public void getPreferencesTooltip() {
     }
 
-    @Disabled
+    @Disabled("needs additional setup")
     @ToDo("fix setup so the parent class test can run")
     @Test
     @Override
     public void savePreferences() {
     }
 
-    @Disabled
+    @Disabled("needs additional setup")
     @ToDo("fix setup so the parent class test can run")
     @Test
     @Override
     public void isDirty() {
     }
 
-    @Disabled
+    @Disabled("needs additional setup")
     @ToDo("fix setup so the parent class test can run")
     @Test
     @Override
     public void isRestartRequired() {
     }
 
-    @Disabled
+    @Disabled("needs additional setup")
     @ToDo("fix setup so the parent class test can run")
     @Test
     @Override
