@@ -148,7 +148,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                         log.debug("row is greater than name list");
                         return "";
                     }
-                    Transit z = getBySystemName(sysNameList.get(row));
+                    Transit z = getBySystemName((String) sysNameList.get(row));
                     if (z == null) {
                         return "";
                     } else {
@@ -1319,12 +1319,16 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     private boolean checkTransitInformation() {
+        //transits can now be of length 1 segmant. 
+        //With these the route has to start outside the transit
+        /*
         if ((sectionList.size() <= 1) || (curSequenceNum <= 1)) {
             JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message26"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return false;
-        }
+        }   */ 
+        
         return true;
     }
 
