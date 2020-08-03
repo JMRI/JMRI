@@ -549,5 +549,13 @@
 		            so we can discuss how to meet your requirements through other means.</li>
             <li>"Display Message Log" has been removed from the Debug Menu. Use the
                 "System Console" from the Help Menu to view log messages.</li>
+            <li>The older "Upload Debugging Information" item
+                in the help menu has been replaced by 
+                a "Report Issue..." item.  This walks you through creating a
+                <a href="https://github.com/JMRI/JMRI/issues">JMRI GitHub issue</a> and uploads information 
+                that will make debugging easier.  You need a (free)
+                GitHub account to do the final submission.
+                There's more info on the 
+                <a href="https://jmri.org/help/en/package/apps/util/issuereporter/swing/IssueReporter.shtml">help page</a>.
         </ul>
 
