@@ -70,7 +70,8 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>When the connection is lost to a GridConnect Serial Device ( eg. CANUSB4 losing power /
+                Windows Sleep Modes ), JMRI will periodically attempt to reconnect to the device.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -403,7 +404,10 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>When a hardware connection fails, some hardware types may attempt to reconnect.<br>
+            The interval between reconnection attempts and the maximum number of reconnection attempts
+            can now be changed by saving your profile, then editing the profile.xml file.<br>
+            The reconnectMaxInterval is in seconds, reconnectMaxAttempts is infinite if -1, else the value.</li>
         </ul>
 
     <h3>Resources</h3>
