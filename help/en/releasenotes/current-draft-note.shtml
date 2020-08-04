@@ -88,6 +88,8 @@
                         Note: You should check the settings for Turnouts and Sensors to ensure
                         they're what you want.  This code upgrade might have overwritten any
                         values you (had to) manually edit into preferences in the past.
+                <li>The new "jython/SendMqttMessage.py" sample script show how to
+                    send across an existing MqttMessage.
                     
             </ul>
 
