@@ -9,11 +9,16 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Adapts to an MQTT connection 
+ * <p>
+ * Note that this puts the MQTT temporary directory in the profile: directory by default.
+ * 
  * @author Lionel Jeanson
  */
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
@@ -69,7 +74,12 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             if (clientID.length() > 23) {
                 clientID = clientID.substring(clientID.length() - 23);
             }
-            mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), clientID);
+            String tempdirName = jmri.util.FileUtil.getExternalFilename("profile:");
+            log.debug("will use {} as temporary directory", tempdirName);
+            
+            mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), 
+                                        clientID,
+                                        new MqttDefaultFilePersistence(tempdirName));
             mqttClient.connect();
         } catch (MqttException ex) {
             throw new IOException("Can't create MQTT client", ex);
