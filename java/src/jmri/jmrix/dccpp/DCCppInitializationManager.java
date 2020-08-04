@@ -66,6 +66,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         systemMemo.setMultiMeter(new DCCppMultiMeter(systemMemo));
         jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);
 
+        systemMemo.register();
         log.debug("DCC++ Initialization Complete");
     }
 

@@ -2,7 +2,9 @@ package jmri.jmrix.jinput.treecontrol;
 
 import jmri.jmrix.jinput.TreeModel;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of TreePanel
@@ -32,12 +34,12 @@ public class TreePanelTest {
         TreeModel.instance().terminateThreads();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,11 +1,11 @@
 package jmri.web.server;
 
 import java.util.Set;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.web.server.WebServerPreferencesInstanceInitializer class
@@ -30,12 +30,12 @@ public class WebServerPreferencesInstanceInitializerTest {
         Assert.assertTrue(set.contains(WebServerPreferences.class));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

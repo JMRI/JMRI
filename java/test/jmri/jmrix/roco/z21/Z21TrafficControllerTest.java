@@ -1,8 +1,8 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21TrafficController class
@@ -12,14 +12,14 @@ import org.junit.Before;
 public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new Z21TrafficController();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminateThreads();
         tc = null;

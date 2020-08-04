@@ -1,13 +1,13 @@
 package jmri.jmrix.ztc.ztc611;
 
 import jmri.jmrix.lenz.*;
+
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test for the XNetInitializationManager when configured for the ZTC611.

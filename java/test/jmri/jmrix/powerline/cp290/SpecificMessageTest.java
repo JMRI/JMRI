@@ -1,8 +1,8 @@
 package jmri.jmrix.powerline.cp290;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SpecificMessage class.
@@ -12,7 +12,7 @@ import org.junit.Before;
  */
 public class SpecificMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -21,7 +21,7 @@ public class SpecificMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         m = new SpecificMessage(5);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

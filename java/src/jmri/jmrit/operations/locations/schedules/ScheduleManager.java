@@ -306,7 +306,7 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
         JComboBox<LocationTrackPair> box = new JComboBox<>();
         // search all spurs for that use schedule
         for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-            for (Track spur : location.getTrackByNameList(Track.SPUR)) {
+            for (Track spur : location.getTracksByNameList(Track.SPUR)) {
                 if (spur.getScheduleId().equals(schedule.getId())) {
                     LocationTrackPair ltp = new LocationTrackPair(location, spur);
                     box.addItem(ltp);

@@ -1,10 +1,9 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,7 +122,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
         return i < 100;
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -131,7 +130,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
         tc = new StoppingDCCppPacketizer(lcs);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc.terminateThreads();

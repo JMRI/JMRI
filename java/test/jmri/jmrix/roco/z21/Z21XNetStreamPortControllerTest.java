@@ -4,11 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21XNetStreamPortController class
@@ -23,7 +23,7 @@ public class Z21XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         try {
@@ -39,7 +39,7 @@ public class Z21XNetStreamPortControllerTest extends jmri.jmrix.AbstractStreamPo
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

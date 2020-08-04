@@ -1,8 +1,11 @@
 package jmri.jmrix.loconet;
 
 import java.util.concurrent.TimeUnit;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetThrottledTransmitter class.
@@ -141,13 +144,13 @@ public class LocoNetThrottledTransmitterTest {
 
     LocoNetSystemConnectionMemo memo;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.tearDown();

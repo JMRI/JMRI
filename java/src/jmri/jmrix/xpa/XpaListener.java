@@ -8,7 +8,7 @@ package jmri.jmrix.xpa;
  */
 public interface XpaListener extends java.util.EventListener {
 
-    public void message(XpaMessage m);
+    void message(XpaMessage m);
 
-    public void reply(XpaMessage m);
+    void reply(XpaMessage m);
 }

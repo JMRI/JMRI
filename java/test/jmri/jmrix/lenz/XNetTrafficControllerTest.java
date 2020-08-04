@@ -1,8 +1,8 @@
 package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for XNetTrafficController.
@@ -12,7 +12,7 @@ import org.junit.Before;
  */
 public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -23,7 +23,7 @@ public class XNetTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
         };
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc = null;

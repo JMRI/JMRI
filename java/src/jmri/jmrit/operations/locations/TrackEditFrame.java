@@ -671,7 +671,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 int feet = (int) (inches * Setup.getScaleRatio() / 12);
                 length = Integer.toString(feet);
             } catch (NumberFormatException e) {
-                //                log.error("Can not convert from inches to feet");
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"), Bundle
                         .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -1099,7 +1098,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 checkBox.setText(type);
                 addCheckBoxAction(checkBox);
                 addItemLeft(panelCheckBoxes, checkBox, x++, y);
-                if (_track != null && _track.acceptsTypeName(type)) {
+                if (_track != null && _track.isTypeNameAccepted(type)) {
                     checkBox.setSelected(true);
                 }
             }

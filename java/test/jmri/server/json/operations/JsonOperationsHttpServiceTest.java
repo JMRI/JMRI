@@ -6,8 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
@@ -1196,7 +1195,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertThat(car.getTrack()).isNull();
         // block car from track 1s1 by removing car type from track
         location.getTrackById("1s1").deleteTypeName(car.getTypeName());
-        assertThat(location.getTrackById("1s1").accepts(car)).startsWith(Track.TYPE);
+        assertThat(location.getTrackById("1s1").isRollingStockAccepted(car)).startsWith(Track.TYPE);
         // move to unusable location
         assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
                 .set(JsonOperations.LOCATION, mapper.createObjectNode()
@@ -1276,7 +1275,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertThat(car.getDestinationTrack()).isNull();
         // block car from track 1s1 by removing car type from track
         location.getTrackById("1s1").deleteTypeName(car.getTypeName());
-        assertThat(location.getTrackById("1s1").accepts(car)).startsWith(Track.TYPE);
+        assertThat(location.getTrackById("1s1").isRollingStockAccepted(car)).startsWith(Track.TYPE);
         // move to unusable destination
         assertThatCode(() -> service.doPost(JsonOperations.CAR, car.getId(), mapper.createObjectNode()
                 .set(JsonOperations.DESTINATION, mapper.createObjectNode()
@@ -1287,7 +1286,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
                         .hasFieldOrPropertyWithValue(JsonException.CODE, 409);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();

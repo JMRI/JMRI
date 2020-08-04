@@ -9,16 +9,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
 import jmri.profile.Profile;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.rules.TestName;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -26,17 +24,12 @@ import org.junit.rules.TestName;
  */
 public class JmriPreferencesProviderTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-    @Rule
-    public TestName name = new TestName();
-
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -44,12 +37,14 @@ public class JmriPreferencesProviderTest {
     /**
      * Test of findProvider method, of class JmriPreferencesProvider.
      *
+     * @param info the test info
+     * @param folder temp dir
      * @throws java.io.IOException on unexpected test exception
      */
     @Test
-    public void testFindProvider() throws IOException {
+    public void testFindProvider(TestInfo info, @TempDir File folder) throws IOException {
         String id = Long.toString((new Date()).getTime());
-        Profile p = new Profile(name.getMethodName(), id, new File(folder.newFolder(Profile.PROFILE), id));
+        Profile p = new Profile(info.getTestMethod().get().getName(), id, new File(folder, id));
         JmriPreferencesProvider shared = JmriPreferencesProvider.findProvider(p.getPath(), true);
         JmriPreferencesProvider privat = JmriPreferencesProvider.findProvider(p.getPath(), false);
         assertNotNull(shared);
@@ -61,18 +56,20 @@ public class JmriPreferencesProviderTest {
     /**
      * Test of getPreferences method, of class JmriPreferencesProvider.
      *
+     * @param info the test info
+     * @param folder temp dir
      * @throws java.io.IOException on unexpected test exception
      * @throws BackingStoreException on unexpected test exception
      */
     @Test
-    public void testGetPreferences() throws IOException, BackingStoreException {
+    public void testGetPreferences(TestInfo info, @TempDir File folder) throws IOException, BackingStoreException {
         // this test causes errors to be logged if the settings: portable path does not exist
         // so ensure it does
         File settings = new File(FileUtil.getPreferencesPath());
         settings.mkdirs();
         Assume.assumeTrue("settings dir exists", settings.exists());
         String id = Long.toString((new Date()).getTime());
-        Profile project = new Profile(name.getMethodName(), id, new File(folder.newFolder(Profile.PROFILE), id));
+        Profile project = new Profile(info.getTestMethod().get().getName(), id, new File(folder, id));
         Class<?> clazz = this.getClass();
         Preferences shared = JmriPreferencesProvider.getPreferences(project, clazz, true);
         Preferences privat = JmriPreferencesProvider.getPreferences(project, clazz, false);
@@ -87,13 +84,15 @@ public class JmriPreferencesProviderTest {
     /**
      * Test of isFirstUse method, of class JmriPreferencesProvider.
      *
+     * @param info the test info
+     * @param folder temp dir
      * @throws java.io.IOException on unexpected test exception
      * @throws BackingStoreException on unexpected test exception
      */
     @Test
-    public void testIsFirstUse() throws IOException, BackingStoreException {
+    public void testIsFirstUse(TestInfo info, @TempDir File folder) throws IOException, BackingStoreException {
         String id = Long.toString((new Date()).getTime());
-        Profile project = new Profile(name.getMethodName(), id, new File(folder.newFolder(Profile.PROFILE), id));
+        Profile project = new Profile(info.getTestMethod().get().getName(), id, new File(folder, id));
         JmriPreferencesProvider shared = JmriPreferencesProvider.findProvider(project.getPath(), true);
         assertEquals(true, shared.isFirstUse());
         Preferences prefs = shared.getPreferences(this.getClass());

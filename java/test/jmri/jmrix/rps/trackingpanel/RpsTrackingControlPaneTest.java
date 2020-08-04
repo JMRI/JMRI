@@ -1,10 +1,10 @@
 package jmri.jmrix.rps.trackingpanel;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
@@ -22,13 +22,13 @@ public class RpsTrackingControlPaneTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new RpsSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

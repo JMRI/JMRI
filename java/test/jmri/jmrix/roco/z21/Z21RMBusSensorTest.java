@@ -1,7 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21RMBusSensor class.
@@ -70,7 +72,7 @@ public class Z21RMBusSensorTest extends jmri.implementation.AbstractSensorTestBa
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         znis = new Z21InterfaceScaffold();
@@ -78,7 +80,7 @@ public class Z21RMBusSensorTest extends jmri.implementation.AbstractSensorTestBa
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         znis = null;

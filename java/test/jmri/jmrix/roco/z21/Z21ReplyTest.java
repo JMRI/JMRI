@@ -1,7 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21Reply class
@@ -417,14 +419,14 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Z21 Broadcast flags 43725", reply.toMonitorString());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = message = new Z21Reply();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = message = null;
         JUnitUtil.tearDown();

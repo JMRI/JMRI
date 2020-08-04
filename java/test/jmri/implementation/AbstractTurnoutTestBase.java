@@ -9,7 +9,9 @@ import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import jmri.Turnout;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Abstract base class for Turnout tests in specific jmrix.* packages
@@ -25,12 +27,12 @@ public abstract class AbstractTurnoutTestBase {
     /**
      * Implementing classes must overload to load t with actual object; create scaffolds as needed
      */
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         t = null; // to save space, as JU4 doesn't garbage collect this object
         JUnitUtil.tearDown();
@@ -99,6 +101,15 @@ public abstract class AbstractTurnoutTestBase {
         t.setCommandedState(Turnout.CLOSED); // in case registration with TrafficController is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
+    }
+    
+    @Test
+    public void testRemoveListenerOnDispose() {
+        int startListeners =  t.getNumPropertyChangeListeners();
+        t.addPropertyChangeListener(new Listen());
+        Assert.assertEquals("controller listener added", startListeners+1, t.getNumPropertyChangeListeners());
+        t.dispose();
+        Assert.assertTrue("controller listeners remaining < 1", t.getNumPropertyChangeListeners() < 1);
     }
 
     @Test

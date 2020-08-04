@@ -2,10 +2,9 @@ package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -382,7 +381,7 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -392,7 +391,7 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new TamsThrottle(memo,new jmri.DccLocoAddress(1234,true));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

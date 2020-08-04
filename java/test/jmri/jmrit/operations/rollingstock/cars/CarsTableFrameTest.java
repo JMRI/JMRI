@@ -4,9 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -44,8 +43,8 @@ public class CarsTableFrameTest extends OperationsTestCase {
         Location westford = lManager.newLocation("Newer Westford");
         Track westfordYard = westford.addTrack("Yard", Track.YARD);
         westfordYard.setLength(300);
-        Track westfordSiding = westford.addTrack("Siding", Track.SPUR);
-        westfordSiding.setLength(300);
+        Track westfordSpur = westford.addTrack("Spur", Track.SPUR);
+        westfordSpur.setLength(300);
         Track westfordAble = westford.addTrack("Able", Track.SPUR);
         westfordAble.setLength(300);
         
@@ -96,7 +95,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         Car c4 = cManager.getByRoadAndNumber("SP", "2");
         Assert.assertNotNull(c4);
 
-        Assert.assertEquals("c4 location", Track.OKAY, c4.setLocation(westford, westfordSiding));
+        Assert.assertEquals("c4 location", Track.OKAY, c4.setLocation(westford, westfordSpur));
         Assert.assertEquals("c4 destination", Track.OKAY, c4.setDestination(boxford, boxfordHood));
         c4.setFinalDestination(boxford);
         c4.setReturnWhenEmptyDestination(boxford);
@@ -107,7 +106,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         Assert.assertEquals("c5 location", Track.OKAY, c5.setLocation(westford, westfordAble));
         Assert.assertEquals("c5 destination", Track.OKAY, c5.setDestination(westford, westfordAble));
         c5.setReturnWhenEmptyDestination(westford);
-        c5.setReturnWhenEmptyDestTrack(westfordSiding);
+        c5.setReturnWhenEmptyDestTrack(westfordSpur);
 
         Assert.assertEquals("number of cars", "5", ctf.numCars.getText());
 
@@ -342,7 +341,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         // add type names

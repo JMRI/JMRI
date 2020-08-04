@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ShutDownTask;
 
+import jmri.util.LoggingUtil;
+
 /**
  * Abstract ShutDownTask implementation.
  * <p>
@@ -35,6 +37,7 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     @SuppressWarnings("deprecation")
     public boolean isShutdownAllowed() {
+        LoggingUtil.deprecationWarning(log, "isShutdownAllowed");
         return call();
     }
 
@@ -57,6 +60,7 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     @SuppressWarnings("deprecation")
     public final boolean execute() {
+        LoggingUtil.deprecationWarning(log, "execute");
         run();
         return true;
     }
@@ -69,15 +73,17 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     @Override
     @SuppressWarnings("deprecation")
     public boolean isParallel() {
+        LoggingUtil.deprecationWarning(log, "isParallel");
         return false;
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public boolean isComplete() {
+        LoggingUtil.deprecationWarning(log, "isComplete");
         return !this.isParallel();
     }
-    
+
     /**
      * {@inheritDoc}
      * 
@@ -113,4 +119,6 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
     public void setDoRun(boolean flag) {
         doRun = flag;
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractShutDownTask.class);
 }

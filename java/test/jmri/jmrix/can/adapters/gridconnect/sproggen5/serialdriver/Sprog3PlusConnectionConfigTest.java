@@ -1,7 +1,9 @@
 package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Sprog3PlusConnectionConfig class.
@@ -16,7 +18,7 @@ public class Sprog3PlusConnectionConfigTest extends jmri.jmrix.AbstractSerialCon
         Assert.assertNotNull("exists",c);
     }
     
-   @Before
+   @BeforeEach
    @Override
    public void setUp() {
         JUnitUtil.setUp();
@@ -25,7 +27,7 @@ public class Sprog3PlusConnectionConfigTest extends jmri.jmrix.AbstractSerialCon
         cc = new Sprog3PlusConnectionConfig();
    }
 
-   @After
+   @AfterEach
    @Override
    public void tearDown(){
         cc = null;

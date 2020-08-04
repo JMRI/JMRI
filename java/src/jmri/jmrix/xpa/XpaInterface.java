@@ -8,9 +8,9 @@ package jmri.jmrix.xpa;
  */
 public interface XpaInterface {
 
-    public void addXpaListener(XpaListener l);
+    void addXpaListener(XpaListener l);
 
-    public void removeXpaListener(XpaListener l);
+    void removeXpaListener(XpaListener l);
 
     /**
      * Test operational status of interface.

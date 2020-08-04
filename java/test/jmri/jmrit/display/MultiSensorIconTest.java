@@ -1,7 +1,9 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of MultiSensorIcon
@@ -16,7 +18,7 @@ public class MultiSensorIconTest extends PositionableTestBase {
         Assert.assertNotNull("MultiSensorIcon Constructor", p);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -26,7 +28,7 @@ public class MultiSensorIconTest extends PositionableTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

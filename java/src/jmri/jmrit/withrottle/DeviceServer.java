@@ -35,7 +35,7 @@ package jmri.jmrit.withrottle;
  * 90 - Send '00 90 90' twice, with error byte '90'
  *
  *
- * Out to client, all newline terminated:
+ * Out to client, all newline terminated, cannot have newlines in the message:
  *
  * Track power: 'PPA' + '0' (off), '1' (on), '2' (unknown) Minimum package
  * length of 4 char.
@@ -70,15 +70,16 @@ package jmri.jmrit.withrottle;
  *
  * RSF 'R'oster 'P'roperties 'F'unctions
  *
- *
  * Heartbeat send '*0' to tell device to stop heartbeat, '*#' # = number of
  * seconds until eStop. This class sends initial to device, but does not start
  * monitoring until it gets a response of '*+' Device should send heartbeat to
  * server in shorter time than eStop
  *
- * Alert message: 'HM' + message to display. Cannot have newlines in body of
- * text, only at end of message.
- * Info message: 'Hm' + message to display. Same as HM, but informational only.
+ * Alert message: 'HM' + message to display.
+ * Info message: 'Hm' + message to display. Same as HM, but lower priority.
+ *
+ * Server Type message: 'HT' + type. Always 'JMRI' for this server.
+ * Server Description message: 'Ht' + message. Includes version and railroad name. 
  *
  */
 import java.io.BufferedReader;
@@ -97,6 +98,8 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.ThreadingUtil;
 import jmri.web.server.WebServerPreferences;
+import jmri.web.servlet.ServletUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,6 +137,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private boolean isConsistAllowed;
     private FastClockController fastClockC = null;
     final boolean isClockDisplayed = InstanceManager.getDefault(WiThrottlePreferences.class).isDisplayFastClock();
+    final String railroadName = InstanceManager.getDefault(ServletUtil.class).getRailroadName(false);
 
     private DeviceManager manager;
 
@@ -156,6 +160,9 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             return;
         }
         sendPacketToDevice("VN" + getWiTVersion());
+        sendPacketToDevice("HTJMRI");
+        sendPacketToDevice("HtJMRI " + jmri.Version.getCanonicalVersion() +
+                " " + railroadName);
         sendPacketToDevice(sendRoster());
         addControllers();
         sendPacketToDevice("PW" + getWebServerPort());

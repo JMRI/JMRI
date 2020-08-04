@@ -1,9 +1,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XBeeLightTest.java
@@ -35,7 +33,7 @@ public class XBeeLightTest {
         Assert.assertNotNull("exists", s);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
@@ -45,7 +43,7 @@ public class XBeeLightTest {
         memo.setLightManager(new XBeeLightManager(memo));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminate();
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

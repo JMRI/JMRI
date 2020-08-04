@@ -1,8 +1,8 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * TamsTrafficControllerTest.java
@@ -15,14 +15,14 @@ import org.junit.Before;
 public class TamsTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new TamsTrafficController();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

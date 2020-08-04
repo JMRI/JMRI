@@ -1,12 +1,14 @@
 package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -23,18 +25,18 @@ public class RouteFinderTest {
         BlockOrder via = new BlockOrder(new OBlock("OB3", "Test3"));
         BlockOrder avoid = new BlockOrder(new OBlock("OB4", "Test4"));
         RouteFinder t = new RouteFinder(nxFrame, orig, dest, via, avoid, 3);
-        Assert.assertNotNull("exists", t);
+        assertThat(t).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(nxFrame);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
