@@ -52,12 +52,16 @@
             <li>Then click the "Submit to GitHub" button
         </ul>
         
-    <p>A GitHub window will open in your browser. 
+    <p>A GitHub window will should in your browser. 
+    <p>If JMRI can't open your browser, it'll pop a window 
+        asking for permission to copy a URL to your clipboard (essentially, internally
+        doing a copy operation on the URL). Click "Copy" to do that, then
+        paste the URL you got into a new window of your browser and fetch the indicated page.
     
-    <p>If you checked any of the boxes, 
+    <p>If you checked any of the boxes one them JMRI window, 
         another window will also open showing some files on your computer.
         These are the files that contain the contents you selected. Drag
-        and drop those onto the GitHub page where indicated.
+        and drop those files onto the GitHub page where indicated.
 
     <a href="Issue_after_drag.png"><img src="Issue_after_drag.png" align="right" width="465" height="326" ></a> 
     <p>You can also drag in screen shots or other files that that you
