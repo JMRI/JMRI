@@ -281,9 +281,10 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
                         JOptionPane.INFORMATION_MESSAGE);
                 Desktop.getDesktop().open(attachments.get(0).getParentFile());
             }
-            if (Desktop.getDesktop().isSupported( Desktop.Action.BROWSE)) {
+            if ( Desktop.getDesktop().isSupported( Desktop.Action.BROWSE) ) {
                 // Open browser to URL with draft report
                 Desktop.getDesktop().browse(uri);
+                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)); // close report window
             } else {
                 // Can't open browser, ask the user to instead
                 Object[] options = {Bundle.getMessage("IssueReporter.browser.copy"), Bundle.getMessage("IssueReporter.browser.skip")};
@@ -304,9 +305,10 @@ public class IssueReporter extends JFrame implements ClipboardOwner, DocumentLis
                             new StringSelection(uri.toString()),
                             null
                         );
-                    }
+                    this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)); // close report window
+                }
             }
-            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            
         } catch (IOException | URISyntaxException ex) {
             log.error("Unable to report issue", ex);
             JOptionPane.showMessageDialog(this,
