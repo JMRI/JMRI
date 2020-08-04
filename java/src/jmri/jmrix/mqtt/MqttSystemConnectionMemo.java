@@ -62,7 +62,7 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         mqttAdapter = ma;
     }
 
-    MqttAdapter getMqttAdapter() {
+    public MqttAdapter getMqttAdapter() {
         return mqttAdapter;
     }
 }

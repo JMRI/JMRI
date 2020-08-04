@@ -143,6 +143,10 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         }
     }
 
+    public void publish(String topic, String payload) {
+        publish(topic, payload.getBytes());
+    }
+
     public MqttClient getMQttClient() {
         return (mqttClient);
     }
