@@ -89,7 +89,10 @@
                         they're what you want.  This code upgrade might have overwritten any
                         values you (had to) manually edit into preferences in the past.
                 <li>The new "jython/SendMqttMessage.py" sample script show how to
-                    send across an existing MqttMessage.
+                    send across an existing MQTT connection.
+                <li>The new "jython/ReceiveMqttMessage.py" is simple demo of 
+                    receiving MQTT messages into a script. It just prints the received messages,
+                    but you can build up from there.
                     
             </ul>
 

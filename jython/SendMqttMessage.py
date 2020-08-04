@@ -7,12 +7,10 @@
 
 import jmri
 import java
-import jarray
 from org.python.core.util import StringUtil
 
 # Find the MqttAdapter
 mqqtAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
-
 
 # create content to send "/trains/jmri/test/topic message content"
 topic = "jmri/test/topic"  # note this will be prefixed by configured channel, i.e. "/trains/"
