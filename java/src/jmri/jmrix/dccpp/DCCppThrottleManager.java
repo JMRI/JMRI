@@ -160,6 +160,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
 
     @Override
     public void releaseThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
+        super.releaseThrottle(t, l);
     }
 
     @Override
