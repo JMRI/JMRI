@@ -14,9 +14,10 @@ from org.python.core.util import StringUtil
 mqqtAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
 
 
-# create some content
+# create content to send "/trains/jmri/test/topic message content"
 topic = "jmri/test/topic"  # note this will be prefixed by configured channel, i.e. "/trains/"
 payload = "message content"
 
-# send
+# send  
 mqqtAdapter.publish(topic, payload)
+
