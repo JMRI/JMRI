@@ -154,6 +154,24 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX6 Light Type</label>
     </variable>
+    <variable item="FX7 Phase Selection" CV="55" mask="XXVXXXXX" default="0" minOut="7" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+    </variable>
+    <variable item="FX7 Grade Crossing Logic" CV="55" mask="XVXXXXXX" default="0" minOut="7" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    </variable>
+    <variable item="FX7 Light Type" CV="55" mask="VXXXXXXX" default="0" minOut="7" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+    </variable>
+    <variable item="FX8 Phase Selection" CV="56" mask="XXVXXXXX" default="0" minOut="8" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+    </variable>
+    <variable item="FX8 Grade Crossing Logic" CV="56" mask="XVXXXXXX" default="0" minOut="8" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    </variable>
+    <variable item="FX8 Light Type" CV="56" mask="VXXXXXXX" default="0" minOut="8" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+    </variable>
     <variable item="Headlight F0(f) Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="1" tooltip="Check to enable F0(f) function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Headlight F0(f) Forward Directional Control</label>
@@ -178,10 +196,10 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Forward Directional Control</label>
     </variable>
-    <variable item="None1 Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" >
+    <variable item="FX7 Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" minOut="7" tooltip="Check to enable FX7 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     </variable>
-    <variable item="None2 Forward Directional Control" CV="57" mask="VXXXXXXX" default="1" >
+    <variable item="FX8 Forward Directional Control" CV="57" mask="VXXXXXXX" default="1" minOut="8" tooltip="Check to enable FX8 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     </variable>
     <variable item="Headlight F0(f) Reverse Directional Control" CV="58" mask="XXXXXXXV" default="0" minOut="1" tooltip="Check to enable F0(f) function output in Reverse direction">
@@ -208,10 +226,10 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Reverse Directional Control</label>
     </variable>
-    <variable item="None1 Reverse Directional Control" CV="58" mask="XVXXXXXX" default="1" >
+    <variable item="FX7 Reverse Directional Control" CV="58" mask="XVXXXXXX" default="1" minOut="7" tooltip="Check to enable FX7 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     </variable>
-    <variable item="None2 Reverse Directional Control" CV="58" mask="VXXXXXXX" default="1" >
+    <variable item="FX8 Reverse Directional Control" CV="58" mask="VXXXXXXX" default="1" minOut="8" tooltip="Check to enable FX8 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     </variable>
     <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="2" tooltip="Sets the overall flash rate of the Hyperlight effects, 0 is fast, 15 is slow">
@@ -818,6 +836,69 @@
             </enumChoice>
             <enumChoice>
                 <choice>ECO-21PNEM Diesel</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-1100 Diesel EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-2200 Diesel EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM Diesel EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-PNP Diesel EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-4400 Diesel EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-1100 Steam-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-2200 Steam-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM Steam-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-4400 Steam-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-PNP8 Diesel EMD</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-PNP8 Diesel GE</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-PNP8 Diesel ALCO</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-PNP8 Diesel Baldwin &amp; Others</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-PNP8 Diesel EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM8 Steam-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM8 Diesel EMD</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM8 Diesel GE</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM8 Diesel ALCO</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM8 Diesel Baldwin &amp; Others</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM8 Diesel EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM8 Electric</choice>
             </enumChoice>
         </enumVal>
     </variable>
