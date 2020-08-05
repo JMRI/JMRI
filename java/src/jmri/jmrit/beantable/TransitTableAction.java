@@ -148,7 +148,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                         log.debug("row is greater than name list");
                         return "";
                     }
-                    Transit z = getBySystemName((String) sysNameList.get(row));
+                    Transit z = getBySystemName(sysNameList.get(row));
                     if (z == null) {
                         return "";
                     } else {
