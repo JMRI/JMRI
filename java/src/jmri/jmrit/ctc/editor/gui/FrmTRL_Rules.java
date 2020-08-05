@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
+import jmri.jmrit.ctc.ctcserialdata.*;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
-import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
-import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
 
 /**
  *
@@ -511,6 +508,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         _mTRL_TrafficLockingRulesSSVList.setEnabled(false);
 
         TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(_mDefaultListModel.get(selectedIndex));
+        trafficLockingEntry.convertEscapeToNonEscape();
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor1, "Sensor", trafficLockingEntry._mOccupancyExternalSensor1, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor2, "Sensor", trafficLockingEntry._mOccupancyExternalSensor2, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor3, "Sensor", trafficLockingEntry._mOccupancyExternalSensor3, true);
@@ -572,6 +570,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                                                                             (String)_mOccupancyExternalSensor9.getSelectedItem(),
                                                                             (String)_mOptionalExternalSensor1.getSelectedItem(),
                                                                             (String)_mOptionalExternalSensor2.getSelectedItem());
+        trafficLockingEntry.convertNonEscapeToEscape();
 
         CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(trafficLockingEntry);
         if (verifyClassReturnValue != null) { // Error:

@@ -62,6 +62,7 @@ public class FrmCB extends javax.swing.JFrame {
         _mCTCSerialData = ctcSerialData;
         _mCheckJMRIObject = checkJMRIObject;
         _mArrayListOfSelectableOSSectionUniqueIDs = CommonSubs.getArrayListOfSelectableOSSectionUniqueIDs(_mCTCSerialData.getCodeButtonHandlerDataArrayList());
+        CodeButtonHandlerDataRoutines.convertEscapeToNonEscape_CB(_mCodeButtonHandlerData);
         _mCodeButtonInternalSensor.setText(_mCodeButtonHandlerData._mCodeButtonInternalSensor);
         CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor, true);   // NOI18N
         CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor2, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2, true);  // NOI18N
@@ -77,7 +78,10 @@ public class FrmCB extends javax.swing.JFrame {
 //  Checks:
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCodeButtonInternalSensor)) return false;
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor)) return false;
-        return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
+        CodeButtonHandlerDataRoutines.convertEscapeToNonEscape_CB(codeButtonHandlerData);
+        boolean returnValue = checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
+        CodeButtonHandlerDataRoutines.convertNonEscapeToEscape_CB(codeButtonHandlerData);
+        return returnValue;
     }
 
 //  Validate all internal fields as much as possible:
@@ -286,6 +290,7 @@ public class FrmCB extends javax.swing.JFrame {
         _mCodeButtonHandlerData._mCodeButtonInternalSensor = _mCodeButtonInternalSensor.getText();
         _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor = (String) _mOSSectionOccupiedExternalSensor.getSelectedItem();
         _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2 = (String) _mOSSectionOccupiedExternalSensor2.getSelectedItem();
+        CodeButtonHandlerDataRoutines.convertNonEscapeToEscape_CB(_mCodeButtonHandlerData);
         int selectedIndex = _mOSSectionSwitchSlavedToUniqueID.getSelectedIndex();
         if (selectedIndex > 0) { // None and skip blank entry
             _mCodeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID = _mArrayListOfSelectableOSSectionUniqueIDs.get(selectedIndex - 1);  // Correct for blank entry
