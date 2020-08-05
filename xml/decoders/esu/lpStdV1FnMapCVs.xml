@@ -119,7 +119,7 @@
   <variable item="F3 controls output 8" CV="37" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
   </variable>
-  <variables include="MBW Silberling,Bachmann MK2F">
+  <variables include="Pullman Silberling,MBW Silberling,Bachmann MK2F">
     <variable item="F4 controls output 1" CV="38" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
@@ -217,7 +217,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
   </variables>
-  <variables exclude="MBW Silberling,Bachmann MK2F">
+  <variables exclude="Pullman Silberling,MBW Silberling,Bachmann MK2F">
     <variable item="F4(f) controls output 1" CV="38" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
@@ -603,7 +603,7 @@
   <variable item="F18 controls output 8" CV="134" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
   </variable>
-  <variables include="MBW Silberling,Bachmann MK2F">
+  <variables include="Pullman Silberling,MBW Silberling,Bachmann MK2F">
     <variable item="F19 controls output 1" CV="135" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
@@ -653,7 +653,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>
   </variables>
-  <variables exclude="MBW Silberling,Bachmann MK2F">
+  <variables exclude="Pullman Silberling,MBW Silberling,Bachmann MK2F">
     <variable item="F4(r) controls output 1" CV="135" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     </variable>

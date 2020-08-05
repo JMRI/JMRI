@@ -156,14 +156,20 @@
     <enumChoice choice="Panto control" value="30">
         <choice>Panto control</choice>
     </enumChoice>
+    <enumChoiceGroup include="LokSound XL V4.0">
+        <enumChoice choice="Servo coupler" value="31">
+            <choice>Servo coupler</choice>
+        </enumChoice>
+    </enumChoiceGroup>
     <enumChoiceGroup include="Essential Sound Unit,ESU LokSound 5,ESU LokPilot 5">
         <enumChoice choice="PowerPack control" value="31">
             <choice>PowerPack control</choice>
         </enumChoice>
-    </enumChoiceGroup>
-    <enumChoiceGroup include="LokSound XL V4.0">
-        <enumChoice choice="Servo coupler" value="31">
-            <choice>Servo coupler</choice>
+        <enumChoice choice="Servo Power" value="32">
+            <choice>Servo Power</choice>
+        </enumChoice>
+        <enumChoice choice="Digital coupler Coil#2" value="33">
+            <choice>Digital coupler Coil#2</choice>
         </enumChoice>
     </enumChoiceGroup>
 </enumVal>
