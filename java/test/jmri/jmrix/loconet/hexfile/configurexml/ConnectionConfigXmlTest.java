@@ -15,6 +15,14 @@ import jmri.jmrix.loconet.hexfile.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
+    /**
+     * Ignored in this test as adapter does not store reconnect details.
+     * {@inheritDoc}
+     */
+    @Override
+    protected void testReconnectXml(jmri.jmrix.ConnectionConfig cc,org.jdom2.Element e){
+    }
+    
     @BeforeEach
     @Override
     public void setUp() {
