@@ -295,16 +295,6 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
                 public void notifyThrottleFound(DccThrottle t) {
                 }
 
-                /**
-                 * {@inheritDoc}
-                 *
-                 * @deprecated since 4.15.7; use #notifyDecisionRequired
-                 */
-                @Override
-                @Deprecated
-                public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-                }
-
                 @Override
                 public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
                 }

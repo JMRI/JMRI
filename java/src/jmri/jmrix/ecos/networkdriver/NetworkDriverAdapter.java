@@ -44,15 +44,6 @@ public class NetworkDriverAdapter extends EcosPortController {
         return opened;
     }
 
-    protected void closeConnection() {
-        try {
-            socketConn.close();
-        } catch (IOException e) {
-            log.trace("Unable to close socket", e);
-        }
-        opened = false;
-    }
-
     @Override
     protected void resetupConnection() {
         log.info("reconnected to ECoS after lost connection");

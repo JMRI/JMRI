@@ -73,17 +73,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     }
 
     /**
-     * Query the status of this connection, at least as far as is
-     * known.
-     *
-     * @return true if connection is open
-     */
-    @Override
-    public boolean status() {
-        return opened;
-    }
-
-    /**
      * Remember the associated host name.
      *
      * @param s the host name; if empty will use MDNS to get host name
@@ -279,113 +268,44 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         }
         return null;
     }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    //private boolean allowConnectionRecovery = false;
+    
     /**
-     * Close the client side socket connection, reset the open flag and attempt
-     * a reconnection. Called when a connection is initially lost.
+     * {@inheritDoc}
      */
     @Override
-    public void recover() {
-        if (!allowConnectionRecovery) {
-            return;
-        }
-        opened = false;
+    protected void closeConnection(){
         try {
             socketConn.close();
         } catch (IOException e) {
             log.trace("Unable to close socket", e);
         }
-        reconnect();
-    }
-
-    /**
-     * Attempts to reconnect to a failed Server.
-     */
-    public void reconnect() {
-
-        // If the connection is already open, then we shouldn't try a re-connect.
-        if (opened && !allowConnectionRecovery) {
-            return;
-        }
-        ReconnectWait thread = new ReconnectWait();
-        thread.setName("Connection Recovery " + getCurrentPortName() );
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            log.error("Unable to join to the reconnection thread");
-        }
-
-        if (!opened) {
-            log.error("Failed to re-establish connectivity");
-        } else {
-            resetupConnection();
-            log.info("Reconnected to {}", getHostName());
-        }
+        opened=false;
     }
 
     /**
      * Customizable method to deal with resetting a system connection after a
      * successful recovery of a connection.
      */
+    @Override
     protected void resetupConnection() {
     }
-
-    class ReconnectWait extends Thread {
-
-        public final static int THREADPASS = 0;
-        public final static int THREADFAIL = 1;
-        int _status;
-
-        public int status() {
-            return _status;
-        }
-
-        public ReconnectWait() {
-            _status = THREADFAIL;
-        }
-
-        @Override
-        public void run() {
-            boolean reply = true;
-            int count = 0;
-            int secondCount = 0;
-            while (reply) {
-                safeSleep(reconnectinterval, "Waiting");
-                count++;
-
-                try {
-                    // if the device allows autoConfiguration,
-                    // we need to run the autoConfigure() call
-                    // before we try to reconnect.
-                    if (getMdnsConfigure()) {
-                        autoConfigure();
-                    }
-                    connect();
-                } catch (IOException ex) {
-                    log.trace("restart failed", ex); // main warning to log.error done within connect();
-                    // if returned on exception stops thread and connection attempts
-                }
-                
-                reply = !opened;
-                if (count >= retryAttempts) {
-                    log.error("Unable to reconnect after {} Attempts, increasing duration of retries", count);
-                    //retrying but with twice the retry interval.
-                    reconnectinterval = reconnectinterval * 2;
-                    count = 0;
-                    secondCount++;
-                }
-                if (secondCount >= 10) {
-                    log.error("Giving up on reconnecting after 100 attempts");
-                    reply = false;
-                }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void reconnectFromLoop(int retryNum){
+        try {
+            // if the device allows autoConfiguration,
+            // we need to run the autoConfigure() call
+            // before we try to reconnect.
+            if (getMdnsConfigure()) {
+                autoConfigure();
             }
+            connect();
+        } catch (IOException ex) {
+            log.trace("restart failed", ex); // main warning to log.error done within connect();
+            // if returned on exception stops thread and connection attempts
         }
     }
 

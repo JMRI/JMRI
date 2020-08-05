@@ -95,6 +95,8 @@
     <xs:attribute name="disabled" type="xs:string"/>
     <xs:attribute name="userName" type="xs:string"/>
     <xs:attribute name="systemPrefix" type="xs:string"/>
+    <xs:attribute name="reconnectMaxInterval" type="xs:string"/>
+    <xs:attribute name="reconnectMaxAttempts" type="xs:string"/>
     <xs:attribute name="class" type="classType" use="required"/>
   </xs:complexType>
 

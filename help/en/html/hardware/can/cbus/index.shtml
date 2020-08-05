@@ -419,7 +419,7 @@
         
         <p>When a JMRI application requests a loco ( which is already in a CBUS session ), 
         JMRI will check the main <a 
-        href="../../tools/throttle/ThrottlePreferencesPane.shtml">Throttles Preferences</a>.</p>
+        href="../../../tools/throttle/ThrottlesPreferencesPane.shtml">Throttles Preferences</a>.</p>
         
         <p>If Silent Steal or Silent Share has been selected, this will be the default action.</p>
         
