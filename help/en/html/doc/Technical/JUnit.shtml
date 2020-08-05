@@ -1004,7 +1004,10 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
         <p>Also note the
         <a href="https://jmri.org/JavaDoc/doc/jmri/util/junit/annotations/ToDo.html">@jmri.util.junit.annotations.ToDo annotation</a>
         which indicates that this needs work and provides some more information
-        about what needs to be done.
+        about what needs to be done. 
+        The <code>@ToDo</code> is required when an empty test 
+        is provided to ensure that the parent class test doesn't run, 
+        but the parent class is applicable to the class under test.
         <p>
         In general, we'd rather have working tests rather than ignored ones, so
         we track the number that have been ignored in a Jenkins job, see the image
