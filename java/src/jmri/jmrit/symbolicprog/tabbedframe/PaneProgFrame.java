@@ -370,7 +370,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             int startingSearchTarget = nextSearchTarget;
             
             while (nextSearchTarget < searchTargetList.size()) {
-                if (searchTargetList.get(nextSearchTarget).label.getText().contains(target) ) {
+                if (searchTargetList.get(nextSearchTarget).label.getText().toUpperCase().contains(target.toUpperCase()) ) {
                     // hit!
                     searchGoesTo(searchTargetList.get(nextSearchTarget));
                     return;
@@ -381,7 +381,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             // not found, wrap
             nextSearchTarget = 0;
             while (nextSearchTarget < startingSearchTarget) {
-                if (searchTargetList.get(nextSearchTarget).label.getText().contains(target) ) {
+                if (searchTargetList.get(nextSearchTarget).label.getText().toUpperCase().contains(target.toUpperCase()) ) {
                     // hit!
                     searchGoesTo(searchTargetList.get(nextSearchTarget));
                     return;
@@ -405,7 +405,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             int startingSearchTarget = nextSearchTarget;
             
             while (nextSearchTarget > 0) {
-                if (searchTargetList.get(nextSearchTarget).label.getText().contains(target) ) {
+                if (searchTargetList.get(nextSearchTarget).label.getText().toUpperCase().contains(target.toUpperCase()) ) {
                     // hit!
                     searchGoesTo(searchTargetList.get(nextSearchTarget));
                     return;
@@ -416,7 +416,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             // not found, wrap
             nextSearchTarget = searchTargetList.size()-1;
             while (nextSearchTarget > startingSearchTarget) {
-                if (searchTargetList.get(nextSearchTarget).label.getText().contains(target) ) {
+                if (searchTargetList.get(nextSearchTarget).label.getText().toUpperCase().contains(target.toUpperCase()) ) {
                     // hit!
                     searchGoesTo(searchTargetList.get(nextSearchTarget));
                     return;
