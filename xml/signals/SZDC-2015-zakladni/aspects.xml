@@ -445,6 +445,7 @@
 	<imagetype type="AŽD žzb"/>
 	<imagetype type="AŽD žzbz"/>
 	<imagetype type="AŽD žčb"/>
+	<imagetype type="AŽD žb"/>
 	
         <imagetype type="ESP z"/>
 	<imagetype type="ESP zč"/>
@@ -456,6 +457,7 @@
 	<imagetype type="ESP žzb"/>
 	<imagetype type="ESP žzbz"/>
 	<imagetype type="ESP žčb"/>
+	<imagetype type="ESP žb"/>
 	
   </imagetypes>
 

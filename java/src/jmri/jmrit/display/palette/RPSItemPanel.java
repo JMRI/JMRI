@@ -5,7 +5,11 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashMap;
+
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
@@ -21,8 +25,18 @@ public class RPSItemPanel extends FamilyItemPanel {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "active");
+    protected JPanel instructions() {
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
+        JPanel panel = new JPanel();
+        panel.add(blurb);
+        return panel;
+    }
+
+    @Override
+    protected String getDisplayKey() {
+        return "active";
     }
 
     /*

@@ -210,8 +210,14 @@ public interface PortAdapter {
      */
     public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
 
+    /**
+     * This is called when a connection is to be disposed.
+     */
     public void dispose();
 
+    /**
+     * This is called when a connection is initially lost.
+     */
     public void recover();
 
     /**
@@ -228,5 +234,31 @@ public interface PortAdapter {
      * @return true if application needs to restart, false otherwise
      */
     public boolean isRestartRequired();
+    
+    /**
+     * Set the maximum interval between reconnection attempts.
+     * @param maxInterval in seconds.
+     */
+    public void setReconnectMaxInterval(int maxInterval);
+    
+    /**
+     * Set the maximum number of reconnection attempts.
+     * -1 will set an infinite number of attempts.
+     * @param maxAttempts total maximum reconnection attempts.
+     */
+    public void setReconnectMaxAttempts(int maxAttempts);
+    
+    /**
+     * Get the maximum interval between reconnection attempts.
+     * @return maximum interval in seconds.
+     */
+    public int getReconnectMaxInterval();
+    
+    /**
+     * Get the maximum number of reconnection attempts which should be made.
+     * A value of -1 means no maximum value, i.e. infinite attempts.
+     * @return total number of attempts which should be made.
+     */
+    public int getReconnectMaxAttempts();
 
 }

@@ -24,6 +24,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2020-07-15</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Image types</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-mechaniky</aspecttable>
@@ -35,15 +41,28 @@
     <appearance>
       <aspectname>Stůj, kolej uzavřena</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/426_sku_u.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/426_sku_u_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/426_sku_u_n.gif</imagelink>
+      <imagelink type="uzávěry">../../../resources/icons/largeschematics/aspects/CSD-1962/426_sku_u.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Uzavření koleje zrušeno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/425_ukz_u.gif</imagelink>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/425_ukz_u_n.gif</imagelink>
+      <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/425_ukz_u_n.gif</imagelink>
+      <imagelink type="uzávěry">../../../resources/icons/largeschematics/aspects/CSD-1962/425_ukz_u.gif</imagelink>
     </appearance>
 
   </appearances>
     
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Uzavření koleje zrušeno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Stůj, kolej uzavřena</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  
 </appearancetable>  
