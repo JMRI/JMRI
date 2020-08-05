@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2020-07-15</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Image types</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-mechaniky</aspecttable>
@@ -41,6 +47,7 @@
     <appearance>
       <aspectname>Posun zakázán</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_vn.gif</imagelink>
+      <imagelink type="vyčkávací">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_vn.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/27_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/27_w.png</imagelink>
     </appearance>
@@ -48,6 +55,7 @@
     <appearance>
       <aspectname>Posun dovolen</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_vn.gif</imagelink>
+      <imagelink type="vyčkávací">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_vn.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
     </appearance>
