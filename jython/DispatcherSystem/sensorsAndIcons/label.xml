@@ -5,4 +5,3 @@
     <positionablelabel x="235" y="26" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="testLabel" size="13" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
    </LayoutEditor>
 </layout-config>
-  

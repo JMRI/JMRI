@@ -452,4 +452,3 @@ class LabelledEdge(DefaultEdge):
     #print "Graph = ", g
     #for v in vertices:
         #print("Station "+str(v)+" --> "+ str(Graphs.neighborListOf(self.g_name,v)))
-        

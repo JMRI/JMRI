@@ -1288,6 +1288,3 @@ if __name__ == '__builtin__':
     # trains = {}
     # g = StationGraph()
     # if self.logLevel > 0: print "hi"
-
-
-    
