@@ -303,31 +303,32 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         updateSize();
         if (getSignalHead() == null) {
             log.debug("Display state {}, disconnected", state);
-        } else {
-            log.debug("Display state {} for {}", state, getNameString());
-            if (getSignalHead().getHeld()) {
-                if (isText()) {
-                    super.setText(Bundle.getMessage("Held"));
-                }
-                if (isIcon()) {
-                    super.setIcon(_iconMap.get("SignalHeadStateHeld"));
-                }
-            } else if (getLitMode() && !getSignalHead().getLit()) {
-                if (isText()) {
-                    super.setText(Bundle.getMessage("Dark"));
-                }
-                if (isIcon()) {
-                    super.setIcon(_iconMap.get("SignalHeadStateDark"));
-                }
+            return;
+        }
+        log.debug("Display state {} for {}", state, getNameString());
+        if (getSignalHead().getHeld()) {
+            if (isText()) {
+                super.setText(Bundle.getMessage("Held"));
             }
-        }
-        if (isText()) {
-            super.setText(Bundle.getMessage(getSignalHead().getAppearanceKey(state)));
-        }
-        if (isIcon()) {
-            NamedIcon icon = _iconMap.get(getSignalHead().getAppearanceKey(state));
-            if (icon != null) {
-                super.setIcon(icon);
+            if (isIcon()) {
+                super.setIcon(_iconMap.get("SignalHeadStateHeld"));
+            }
+        } else if (getLitMode() && !getSignalHead().getLit()) {
+            if (isText()) {
+                super.setText(Bundle.getMessage("Dark"));
+            }
+            if (isIcon()) {
+                super.setIcon(_iconMap.get("SignalHeadStateDark"));
+            }
+        } else {
+            if (isText()) {
+                super.setText(Bundle.getMessage(getSignalHead().getAppearanceKey(state)));
+            }
+            if (isIcon()) {
+                NamedIcon icon = _iconMap.get(getSignalHead().getAppearanceKey(state));
+                if (icon != null) {
+                    super.setIcon(icon);
+                }
             }
         }
     }
