@@ -165,18 +165,6 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
      * No steal or share decisions made locally
      * <p>
      * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(LocoAddress address) {
-        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
-    }
-
-    /**
-     * No steal or share decisions made locally
-     * <p>
-     * {@inheritDoc}
      */
     @Override
     public void notifyDecisionRequired(LocoAddress address, DecisionType question) {

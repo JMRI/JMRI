@@ -237,16 +237,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         javax.swing.JOptionPane.showMessageDialog(null, reason, Bundle.getMessage("FailedSetupRequestTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
     }
-    
-    /**
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        notifyDecisionRequired(address, DecisionType.STEAL);
-    }
 
     /**
     * A decision is required for Throttle creation to continue.
