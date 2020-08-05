@@ -125,6 +125,7 @@ public class CircuitBuilder {
     private OBlock _currentBlock;
     private JDialog _dialog;
     protected ControlPanelEditor _editor;
+    private Positionable _selection;
 
     public final static Color _editGroupColor = new Color(100, 200, 255);
     public final static Color _pathColor = Color.green;
@@ -646,7 +647,10 @@ public class CircuitBuilder {
         } else {
             for (ArrayList<PortalIcon> array : _portalIconMap.values()) {
                 for (PortalIcon pi : array) {
-                    pi.setStatus(PortalIcon.HIDDEN);
+                    if (pi.getStatus().equals(PortalIcon.VISIBLE)) {
+                        // don't hide warrant arrows 
+                        pi.setStatus(PortalIcon.HIDDEN);
+                    }
                 }
             }
         }
@@ -988,12 +992,16 @@ public class CircuitBuilder {
     }   // end checkCircuits
 
     protected boolean iconIntersectsBlock(Positionable icon, OBlock block) {
+        Rectangle iconRect = icon.getBounds(new Rectangle());
+        return rectIntersectsBlock(iconRect, block);
+    }
+
+    protected boolean rectIntersectsBlock(Rectangle iconRect, OBlock block) {
         java.util.List<Positionable> list = getCircuitIcons(block);
         if (list.isEmpty()) {
             return false;
         }
         Rectangle rect = new Rectangle();
-        Rectangle iconRect = icon.getBounds(new Rectangle());
         for (Positionable comp : list) {
             if (CircuitBuilder.isTrack(comp)) {
                 rect = comp.getBounds(rect);
@@ -1080,7 +1088,7 @@ public class CircuitBuilder {
     }
 
     /**
-     * Check that there is at least one PortalIcon
+     * Check that there is at least one PortalIcon. called from various _editFrame's
      * @param block check icons of this block
      * @param key properties key
      * @return true if at least one PortalIcon found
@@ -1307,6 +1315,44 @@ public class CircuitBuilder {
     }
 
     /**
+     * 
+     * @param pos PortalIcon attempting a move. allow or disallow
+     * @param x new x position
+     * @param y new y position
+     * @return allow, or not
+     */
+    protected boolean portalIconMove(PortalIcon pos, int x, int y) {
+        if (_editFrame != null) {
+            if (_editFrame instanceof EditPortalFrame) {
+                /* Causes too many alerts - just let user see the results W.O. messages.
+                pos.setLocationBySuper(x, y);
+                ((EditPortalFrame)_editFrame).checkPortalIconForUpdate(pos, true);
+                return false;*/
+                return true;
+            } else {
+                Rectangle iconRect = pos.getBounds(new Rectangle());
+                iconRect.x = x;
+                iconRect.y = y;
+                OBlock block = _editFrame._homeBlock;
+                if (rectIntersectsBlock(iconRect, block)) {
+                    Portal port = pos.getPortal();
+                    if (block.equals(port.getToBlock())) {
+                        block = port.getFromBlock();
+                        if (block == null || rectIntersectsBlock(iconRect, block)) {
+                            return true;
+                        }
+                    }
+                }
+                JOptionPane.showMessageDialog(_editFrame,  
+                        Bundle.getMessage("IconOffBlock", block.getDisplayName()),
+                        Bundle.getMessage("editCiruit"), JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * ************************** Mouse ************************
      */
     ArrayList<Positionable> _saveSelectionGroup;
@@ -1324,13 +1370,24 @@ public class CircuitBuilder {
     }
 
     /**
+     * Make note of selection.
+     *
+     * @param event     the triggering event
+     * @param selection the selection
+     * @return true
+     */
+    protected boolean doMousePressed(MouseEvent event, Positionable selection) {
+        _selection = selection;
+        return true;
+    }
+
+    /**
      * If CircuitBuilder is in progress, restore what editor nulls.
      *
      * @param event     the triggering event
-     * @param selection ignored
      * @return true if the selection group is restored; false otherwise
      */
-    protected boolean doMousePressed(MouseEvent event, Positionable selection) {
+    protected boolean doMousePressed(MouseEvent event) {
         if (_editFrame != null) {
             _editFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);

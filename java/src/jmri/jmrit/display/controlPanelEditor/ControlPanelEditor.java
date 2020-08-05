@@ -1175,6 +1175,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _lastY = _anchorY;
 
         _currentSelection = getCurrentSelection(event);
+        _circuitBuilder.doMousePressed(event, _currentSelection);
 
         if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && !circuitBuilder) {
             _shapeDrawer.doMousePressed(event, _currentSelection);
@@ -1199,7 +1200,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         } else if (_currentSelection == null || (_selectionGroup != null && !_selectionGroup.contains(_currentSelection))) {
             deselectSelectionGroup();
         }
-        _circuitBuilder.doMousePressed(event, _currentSelection);
+        _circuitBuilder.doMousePressed(event);
         _targetPanel.repaint(); // needed for ToolTip
     }
 

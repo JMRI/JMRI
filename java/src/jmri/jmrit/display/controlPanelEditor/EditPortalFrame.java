@@ -341,6 +341,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
                 } else {
                     valid = portal.setFromBlock(block, true);
                 }
+                _portalList.dataChange();
                 log.debug("Adjacent block change of null to {} is {} valid.",
                         block.getDisplayName(), (valid?"":"NOT"));
                 _adjacentBlock = block;
@@ -360,6 +361,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
                             } else {
                                 valid = portal.setFromBlock(block, true);
                             }
+                            _portalList.dataChange();
                             log.debug("Adjacent block change of {} to {} is {} valid.",
                                     _adjacentBlock.getDisplayName(), block.getDisplayName(), (valid?"":"NOT"));
                             _adjacentBlock = block;
