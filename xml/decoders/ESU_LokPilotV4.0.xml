@@ -59,6 +59,8 @@
     <version author="Dave Heap" version="13" lastUpdated="20161101"/>
     <!-- ver 14 refactor -->
     <version author="Dave Heap" version="14" lastUpdated="20190507"/>
+    <!-- ver 15 refactor -->
+    <version author="Dave Heap" version="15" lastUpdated="20200726"/>
     <decoder>
         <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokPilot V4.0" numOuts="12" numFns="32" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554495,33554564">

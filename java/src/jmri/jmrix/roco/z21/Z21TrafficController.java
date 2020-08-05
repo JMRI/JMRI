@@ -2,11 +2,12 @@ package jmri.jmrix.roco.z21;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.net.DatagramPacket;
-import jmri.jmrix.AbstractMRListener;
-import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractPortController;
-import jmri.jmrix.ConnectionStatus;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import jmri.jmrix.*;
+import jmri.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -256,8 +257,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
 
     @Override
     protected boolean endOfMessage(AbstractMRReply r) {
-        // since this is a UDP protocol, and each UDP message contains
-        // exactly one UDP reply, we don't check for end of message manually.
+        // since this is a UDP protocol, and each reply in the packet is complete,
+        // we don't check for end of message manually.
         return true;
     }
 
@@ -292,10 +293,30 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             return;
         }
         if (threadStopRequest) return;
-        
-        // create the reply from the received data.
-        Z21Reply msg = new Z21Reply(buffer, receivePacket.getLength());
 
+        // handle more than one reply in the same UDP packet.
+        List<Z21Reply> replies = new ArrayList<>();
+
+        int totalLength=receivePacket.getLength();
+        int consumed=0;
+
+        do {
+            int length = (0xff & buffer[0]) + ((0xff & buffer[1]) << 8);
+            Z21Reply msg = new Z21Reply(buffer, length);
+
+            replies.add(msg);
+
+            buffer = Arrays.copyOfRange(buffer,length,buffer.length);
+            consumed +=length;
+            log.trace("total length: {} consumed {}",totalLength,consumed);
+        } while(totalLength>consumed);
+
+
+        // and then dispatch each reply
+        replies.forEach(this::dispatchReply);
+    }
+
+    private void dispatchReply(Z21Reply msg) {
         // message is complete, dispatch it !!
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
@@ -308,7 +329,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         Runnable r = new RcvNotifier(msg, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (java.lang.InterruptedException ie) {
+        } catch (InterruptedException ie) {
             if(threadStopRequest) return;
             log.error("Unexpected exception in invokeAndWait:{}", ie, ie);
         } catch (Exception e) {

@@ -1,21 +1,17 @@
 package apps;
 
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ManagerDefaultsConfigPaneTest {
-
-    @Test
-    public void testCTor() {
-        ManagerDefaultsConfigPane t = new ManagerDefaultsConfigPane();
-        Assert.assertNotNull("exists",t);
-    }
+public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase<ManagerDefaultsConfigPane> {
 
     @BeforeEach
     public void setUp() {
@@ -23,11 +19,13 @@ public class ManagerDefaultsConfigPaneTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetPreferencesProviders();
         JUnitUtil.initConfigureManager();
+        prefsPanel = new ManagerDefaultsConfigPane();
     }
 
-    @AfterEach
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    @Override
+    @Test
+    public void isPersistant() {
+        assertThat(prefsPanel.isPersistant()).isTrue();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ManagerDefaultsConfigPaneTest.class);

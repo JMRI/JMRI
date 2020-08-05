@@ -46,17 +46,6 @@ public interface ThrottleListener extends EventListener {
     }
     
     /**
-     * Get notification that a requested throttle is in use by another
-     * device, and a "steal" may be required.
-     * 
-     * @param address the address to steal
-     * @deprecated since 4.15.7; use
-     * #notifyDecisionRequired(LocoAddress, DecisionType) instead
-     */
-    @Deprecated
-    public void notifyStealThrottleRequired(LocoAddress address);
-
-    /**
      * Get notification that a throttle has been found as requested.
      *
      * @param t the throttle with the requested address
