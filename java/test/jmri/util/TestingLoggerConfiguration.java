@@ -1,8 +1,4 @@
-package apps.util;
-
-import java.awt.GraphicsEnvironment;
-
-import apps.SystemConsole;
+package jmri.util;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,7 +6,6 @@ import java.util.*;
 
 import javax.annotation.Nonnull;
 
-import jmri.util.FileUtil;
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
 
 import org.apache.log4j.*;
@@ -18,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Common utility methods for working with Log4J.
+ * Common utility methods for working with Log4J in tests.
  * <p>
  * Two system properties influence how logging is configured in JMRI:
  * <dl>
@@ -37,31 +32,13 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2009, 2010
  * @author Randall Wood Copyright 2014, 2020
  */
-public class Log4JUtil {
+public class TestingLoggerConfiguration {
 
     private static final String LOG_HEADER = "****** JMRI log *******";
-    private static final Logger log = LoggerFactory.getLogger(Log4JUtil.class);
-
-    /**
-     * Initialize logging from a default control file.
-     * <p>
-     * Primary functions:
-     * <ul>
-     * <li>Initialize the JMRI System Console
-     * <li>Set up the slf4j j.u.logging to log4J bridge
-     * <li>Start log4j
-     * <li>Initialize some default exception handlers (to feed the logs?)
-     * </ul>
-     */
-    static public void initLogging() {
-        initLogging(System.getProperty("jmri.log", "default.lcf"));
-    }
+    private static final Logger log = LoggerFactory.getLogger(TestingLoggerConfiguration.class);
 
     /**
      * Initialize logging, specifying a control file.
-     * <p>
-     * Generally, only used for unit testing. Much better to use allow this
-     * class to find the control file using a set of conventions.
      *
      * @param controlfile the logging control file
      */
@@ -85,12 +62,6 @@ public class Log4JUtil {
         if (LogManager.getRootLogger().getAllAppenders().hasMoreElements()) {
             log.debug("initLog4J already initialized!");
             return;
-        }
-        // Initialise JMRI System Console
-        // Need to do this before initialising log4j so that the new
-        // stdout and stderr streams are set up and usable by the ConsoleAppender
-        if (!GraphicsEnvironment.isHeadless()) {
-            SystemConsole.create();
         }
 
         // initialize the java.util.logging to log4j bridge

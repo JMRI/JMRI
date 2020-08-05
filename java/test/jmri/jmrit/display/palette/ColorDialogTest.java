@@ -1,163 +1,115 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
-import java.awt.GraphicsEnvironment;
 
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.ThrowableAssert.catchThrowable;
 
 /**
  *
  * @author Pete Cressman Copyright (C) 2018 
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class ColorDialogTest {
 
-    ControlPanelEditor _cpe;
-    PositionableLabel _pos;
-    boolean _done;
-    
+    private ControlPanelEditor _cpe;
+    private PositionableLabel _pos;
+
     @Test
     public void testCTor1() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        startEditor();
         _cpe.setBackgroundColor(Color.GREEN);
-        Assert.assertEquals("panel color is green", Color.GREEN, _cpe.getTargetPanel().getBackground());
+        assertThat(_cpe.getTargetPanel().getBackground()).withFailMessage("panel color is green").isEqualTo(Color.GREEN);
 
-        _done = false;
         DialogRunner dr = new DialogRunner(ColorDialog.ONLY, "PanelColor", Color.RED, "ButtonDone");
         dr.start();
-        Thread t = new Thread(() -> {
-            new ColorDialog(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY, null);
-        });
-        t.start();
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return _done;
-        }, "Dialog done.");
+        new ColorDialog(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY, null);
+        Throwable thrown = catchThrowable(()-> dr.join());
+        assertThat(thrown).isNull();
+
         new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
-        Assert.assertEquals("panel color is red", Color.RED, _cpe.getTargetPanel().getBackground());
-        JUnitUtil.dispose(_cpe);
+        assertThat(_cpe.getTargetPanel().getBackground()).withFailMessage("panel color is red").isEqualTo(Color.RED);
     }
 
     @Test
     public void testCTor2() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        startEditor();
         _cpe.setBackgroundColor(Color.GREEN);
-        Assert.assertEquals("panel color is green", Color.GREEN, _cpe.getTargetPanel().getBackground());
+        assertThat(_cpe.getTargetPanel().getBackground()).withFailMessage("panel color is green").isEqualTo(Color.GREEN);
 
-        _done = false;
         DialogRunner dr = new DialogRunner(ColorDialog.ONLY, "PanelColor", Color.RED, "ButtonCancel");
         dr.start();
-        Thread t = new Thread(() -> {
-            new ColorDialog(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY, null);
-        });
-        t.start();
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return _done;
-        }, "Dialog done.");
+        new ColorDialog(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY, null);
+        Throwable thrown = catchThrowable(()-> dr.join());
+        assertThat(thrown).isNull();
+
         new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
-        Assert.assertEquals("panel color is green", Color.GREEN, _cpe.getTargetPanel().getBackground());
-        JUnitUtil.dispose(_cpe);
+        assertThat(_cpe.getTargetPanel().getBackground()).withFailMessage("panel color is green").isEqualTo(Color.GREEN);
     }
 
     @Test
     public void testCTor3() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        startEditor();
-        _done = false;
         DialogRunner dr = new DialogRunner(ColorDialog.BORDER, "SetBorderSizeColor", Color.BLUE, "ButtonDone");
         dr.start();
-        Thread t = new Thread(() -> {
-            new ColorDialog(_cpe, _pos, ColorDialog.BORDER, null);
-        });
-        t.start();
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return _done;
-        }, "Dialog done.");
+        new ColorDialog(_cpe, _pos, ColorDialog.BORDER, null);
+        Throwable thrown = catchThrowable(()-> dr.join());
+        assertThat(thrown).isNull();
+
         new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
-        Assert.assertEquals("border color is blue", Color.BLUE, _pos.getPopupUtility().getBorderColor());
-        JUnitUtil.dispose(_cpe);
+        assertThat(_pos.getPopupUtility().getBorderColor()).withFailMessage("border color is blue").isEqualTo(Color.BLUE);
     }
 
     @Test
     public void testCTor4() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        startEditor();
         _pos.getPopupUtility().setBackgroundColor(Color.GREEN);
-        Assert.assertEquals("margin color is green", Color.GREEN, _pos.getPopupUtility().getBackground());
+        assertThat(_pos.getPopupUtility().getBackground()).withFailMessage("margin color is green").isEqualTo(Color.GREEN);
 
-        _done = false;
         DialogRunner dr = new DialogRunner(ColorDialog.MARGIN, "SetMarginSizeColor", Color.RED, "ButtonCancel");
         dr.start();
-        Thread t = new Thread(() -> {
-            new ColorDialog(_cpe, _pos, ColorDialog.MARGIN, null);
-        });
-        t.start();
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return _done;
-        }, "Dialog done.");
+        new ColorDialog(_cpe, _pos, ColorDialog.MARGIN, null);
+        Throwable thrown = catchThrowable(()-> dr.join());
+        assertThat(thrown).isNull();
+
         new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
-        Assert.assertEquals("margin color is green", Color.GREEN, _pos.getPopupUtility().getBackground());
-        JUnitUtil.dispose(_cpe);
+        assertThat(_pos.getPopupUtility().getBackground()).withFailMessage("margin color is green").isEqualTo(Color.GREEN);
     }
 
     @Test
     public void testCTor5() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        startEditor();
-
-        _done = false;
         DialogRunner dr = new DialogRunner(ColorDialog.FONT, "SetFontSizeColor", Color.RED, "ButtonDone");
         dr.start();
-        Thread t = new Thread(() -> {
-            new ColorDialog(_cpe, _pos, ColorDialog.FONT, null);
-        });
-        t.start();
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return _done;
-        }, "Dialog done.");
+        new ColorDialog(_cpe, _pos, ColorDialog.FONT, null);
+        Throwable thrown = catchThrowable(()-> dr.join());
+        assertThat(thrown).isNull();
+
         new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
-        Assert.assertEquals("font color is red", Color.RED, _pos.getPopupUtility().getForeground());
-        JUnitUtil.dispose(_cpe);
+        assertThat(_pos.getPopupUtility().getForeground()).withFailMessage("font color is red").isEqualTo(Color.RED);
     }
 
     @Test
     public void testCTor6() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        startEditor();
-
-        _done = false;
         DialogRunner dr = new DialogRunner(ColorDialog.TEXT, "SetTextSizeColor", Color.BLUE, "ButtonDone");
         dr.start();
-        Thread t = new Thread(() -> {
-            new ColorDialog(_cpe, _pos, ColorDialog.TEXT, null);
-        });
-        t.start();
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return _done;
-        }, "Dialog done.");
+        new ColorDialog(_cpe, _pos, ColorDialog.TEXT, null);
+        Throwable thrown = catchThrowable(()-> dr.join());
+        assertThat(thrown).isNull();
+
         new org.netbeans.jemmy.QueueTool().waitEmpty(50);  // allow some time for button push
 
-        Assert.assertEquals("font color is red", Color.BLUE, _pos.getPopupUtility().getForeground());
-        JUnitUtil.dispose(_cpe);
+        assertThat(_pos.getPopupUtility().getForeground()).withFailMessage("font color is red").isEqualTo(Color.BLUE);
     }
 
     void startEditor() {
@@ -207,9 +159,8 @@ public class ColorDialogTest {
                 default:
                     c = Color.BLACK;
             }
-            Assert.assertEquals(_dialogTitle + " set color", _color, c);
+            assertThat(c).withFailMessage(_dialogTitle + " set color").isEqualTo(_color);
             jbo.pushNoBlock();
-            _done = true;
         }
 
     }
@@ -219,10 +170,13 @@ public class ColorDialogTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.resetProfileManager();
+        startEditor();
     }
 
     @AfterEach
     public void tearDown() {
+        EditorFrameOperator efo = new EditorFrameOperator(_cpe.getTargetFrame());
+        efo.closeFrameWithConfirmations();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

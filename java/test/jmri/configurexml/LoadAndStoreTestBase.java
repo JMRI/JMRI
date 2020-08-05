@@ -175,24 +175,27 @@ public class LoadAndStoreTestBase {
                 if (line1.contains("  <LayoutEditor")) {
                     // if either line contains a windowheight attribute
                     String windowheight_regexe = "( windowheight=\"[^\"]*\")";
-                    String[] splits1 = line1.split(windowheight_regexe);
-                    if (splits1.length == 2) {  // (yes) remove it
-                        line1 = splits1[0] + splits1[1];
-                    }
-                    String[] splits2 = line2.split(windowheight_regexe);
-                    if (splits2.length == 2) {  // (yes) remove it
-                        line2 = splits2[0] + splits2[1];
-                    }
+                    line1 = filterLineUsingRegEx(line1, windowheight_regexe);
+                    line2 = filterLineUsingRegEx(line2, windowheight_regexe);
                     // if either line contains a windowheight attribute
                     String windowwidth_regexe = "( windowwidth=\"[^\"]*\")";
-                    splits1 = line1.split(windowwidth_regexe);
-                    if (splits1.length == 2) {  // (yes) remove it
-                        line1 = splits1[0] + splits1[1];
-                    }
-                    splits2 = line2.split(windowwidth_regexe);
-                    if (splits2.length == 2) {  // (yes) remove it
-                        line2 = splits2[0] + splits2[1];
-                    }
+                    line1 = filterLineUsingRegEx(line1, windowwidth_regexe);
+                    line2 = filterLineUsingRegEx(line2, windowwidth_regexe);
+                }
+            }
+
+            // window positions will sometimes differ based on window decorations.
+            if (!match) {
+                if (line1.contains("  <LayoutEditor") ||
+                    line1.contains(" <switchboardeditor")) {
+                    // if either line contains a y position attribute
+                    String yposition_regexe = "( y=\"[^\"]*\")";
+                    line1 = filterLineUsingRegEx(line1, yposition_regexe);
+                    line2 = filterLineUsingRegEx(line2, yposition_regexe);
+                    // if either line contains an x position attribute
+                    String xposition_regexe = "( x=\"[^\"]*\")";
+                    line1 = filterLineUsingRegEx(line1, xposition_regexe);
+                    line2 = filterLineUsingRegEx(line2, xposition_regexe);
                 }
             }
 
@@ -216,14 +219,8 @@ public class LoadAndStoreTestBase {
             if (!match) {
                 // if either line contains a fontname attribute
                 String fontname_regexe = "( fontname=\"[^\"]*\")";
-                String[] splits1 = line1.split(fontname_regexe);
-                if (splits1.length == 2) {  // (yes) remove it
-                    line1 = splits1[0] + splits1[1];
-                }
-                String[] splits2 = line2.split(fontname_regexe);
-                if (splits2.length == 2) {  // (yes) remove it
-                    line2 = splits2[0] + splits2[1];
-                }
+                line1 = filterLineUsingRegEx(line1, fontname_regexe);
+                line2 = filterLineUsingRegEx(line2, fontname_regexe);
             }
 
             if (!match && !line1.equals(line2)) {
@@ -240,6 +237,14 @@ public class LoadAndStoreTestBase {
 
         fileStream1.close();
         fileStream2.close();
+    }
+
+    private static String filterLineUsingRegEx(String line, String regexe) {
+        String[] splits = line.split(regexe);
+        if (splits.length == 2) {  // (yes) remove it
+            line = splits[0] + splits[1];
+        }
+        return line;
     }
 
     // load file

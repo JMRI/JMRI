@@ -1,10 +1,7 @@
 package jmri.jmrit.dispatcher;
 
-import java.awt.GraphicsEnvironment;
-
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -20,6 +17,8 @@ import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  *
  * @author Steve Gigiel 2018
@@ -27,12 +26,11 @@ import jmri.util.JUnitUtil;
  * Tests the LoadAtStartUp function for Dispatcher In addition it tests auto
  * running of a train.
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LoadAtStartUpTest {
 
     @Test
     public void testShowAndClose() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -61,38 +59,34 @@ public class LoadAtStartUpTest {
         // and load. only one of 2 trains will load
         d.loadAtStartup();
 
-        Assert.assertEquals("Train Loaded", 1, d.getActiveTrainsList().size());
+        assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
 
         // trains loads and runs, 4 allocated sections, the one we are in and 3 ahead.
-        Assert.assertEquals("Allocated sections 4", 4, d.getAllocatedSectionsList().size(), 0);
+        assertThat(d.getAllocatedSectionsList()).withFailMessage("Allocated sections 4").hasSize(4);
         // set up loco address
         DccLocoAddress addr = new DccLocoAddress(1000, true);
         JUnitUtil.waitFor(() -> {
             return smm.getSignalMast("West End Div").getAspect().equals("Clear");
         }, "Signal West End Div now green");
         // check signals and speed
-        Assert.assertTrue("1 West End Div Signal Green", smm.getSignalMast("West End Div").getAspect().equals("Clear"));
-        Assert.assertTrue("1 West To South  Green", smm.getSignalMast("West To South").getAspect().equals("Clear"));
-        Assert.assertTrue("1 South To East Signal Green",
-                smm.getSignalMast("South To East").getAspect().equals("Approach"));
-        Assert.assertTrue("1 East End Throat Signal Green",
-                smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
+        assertThat(smm.getSignalMast("West End Div").getAspect()).withFailMessage("1 West End Div Signal Green").isEqualTo("Clear");
+        assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("1 West To South  Green").isEqualTo("Clear");
+        assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("1 South To East Signal Green").isEqualTo("Approach");
+        assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("1 East End Throat Signal Green").isEqualTo("Stop");
         float speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
-        Assert.assertEquals(0.15, speed, 0.01);
+        assertThat(speed).isBetween(0.14f,0.16f);
 
         sm.getSensor("Occ West Platform Switch").setState(Sensor.ACTIVE);
 
         JUnitUtil.waitFor(() -> {
             return smm.getSignalMast("West End Div").getAspect().equals("Stop");
         }, "Signal Just passed stop");
-        Assert.assertTrue("2 West End Div Signal Stop", smm.getSignalMast("West End Div").getAspect().equals("Stop"));
-        Assert.assertTrue("2 West To South  Green", smm.getSignalMast("West To South").getAspect().equals("Clear"));
-        Assert.assertTrue("2 South To East Signal Green",
-                smm.getSignalMast("South To East").getAspect().equals("Approach"));
-        Assert.assertTrue("2 East End Throat Signal Green",
-                smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
+        assertThat(smm.getSignalMast("West End Div").getAspect()).withFailMessage("2 West End Div Signal Stop").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("2 West To South  Green").isEqualTo("Clear");
+        assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("2 South To East Signal Green").isEqualTo("Approach");
+        assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("2 East End Throat Signal Green").isEqualTo("Stop");
         speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
-        Assert.assertEquals(0.15, speed, 0.01);
+        assertThat(speed).isBetween(0.14f,0.16f);
 
         sm.getSensor("Occ West Block").setState(Sensor.ACTIVE);
         sm.getSensor("Occ South Platform").setState(Sensor.INACTIVE);
@@ -100,26 +94,22 @@ public class LoadAtStartUpTest {
         JUnitUtil.waitFor(() -> {
             return smm.getSignalMast("South To East").getAspect().equals("Clear");
         }, "Signal South To East now Clear");
-        Assert.assertTrue("3 West To South  Green", smm.getSignalMast("West To South").getAspect().equals("Clear"));
-        Assert.assertTrue("3 South To East Signal Green",
-                smm.getSignalMast("South To East").getAspect().equals("Clear"));
-        Assert.assertTrue("3 East End Throat Signal Approach",
-                smm.getSignalMast("East End Throat").getAspect().equals("Approach"));
+        assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("3 West To South  Green").isEqualTo("Clear");
+        assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("3 South To East Signal Green").isEqualTo("Clear");
+        assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("3 East End Throat Signal Approach").isEqualTo("Approach");
         speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
-        Assert.assertEquals(0.15, speed, 0.01);
+        assertThat(speed).isBetween(0.14f,0.16f);
 
         sm.getSensor("Occ South Block").setState(Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return smm.getSignalMast("West To South").getAspect().equals("Stop");
         }, "Signal Just passed West To South now stop");
-        Assert.assertTrue("4 West End Div Signal Red", smm.getSignalMast("West End Div").getAspect().equals("Stop"));
-        Assert.assertTrue("4 West To South  Red", smm.getSignalMast("West To South").getAspect().equals("Stop"));
-        Assert.assertTrue("4 South To East Signal Green",
-                smm.getSignalMast("South To East").getAspect().equals("Clear"));
-        Assert.assertTrue("4 East End Throat Signal Green",
-                smm.getSignalMast("East End Throat").getAspect().equals("Approach"));
+        assertThat(smm.getSignalMast("West End Div").getAspect()).withFailMessage("4 West End Div Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("4 West To South  Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("4 South To East Signal Green").isEqualTo("Clear");
+        assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("4 East End Throat Signal Green").isEqualTo("Approach");
         speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
-        Assert.assertEquals(0.60, speed, 0.01);
+        assertThat(speed).isBetween(0.59f,0.61f);
 
         sm.getSensor("Occ West Block").setState(Sensor.INACTIVE);
         sm.getSensor("Occ East Block").setState(Sensor.ACTIVE);
@@ -127,55 +117,50 @@ public class LoadAtStartUpTest {
         JUnitUtil.waitFor(() -> {
             return smm.getSignalMast("South To East").getAspect().equals("Stop");
         }, "Signal Just passed south to east now stop");
-        Assert.assertTrue("5 West End Div Signal Green", smm.getSignalMast("West End Div").getAspect().equals("Stop"));
-        Assert.assertTrue("5 West To South  Red", smm.getSignalMast("West To South").getAspect().equals("Stop"));
-        Assert.assertTrue("5 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
-        Assert.assertTrue("5 East End Throat Signal yellow",
-                smm.getSignalMast("East End Throat").getAspect().equals("Approach"));
+        assertThat(smm.getSignalMast("West End Div").getAspect()).withFailMessage("5 West End Div Signal Green").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("5 West To South  Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("5 South To East Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("5 East End Throat Signal yellow").isEqualTo("Approach");
         speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
-        Assert.assertEquals(0.15, speed, 0.01);
+        assertThat(speed).isBetween(0.14f,0.16f);
 
         sm.getSensor("Occ South Block").setState(Sensor.INACTIVE);
         sm.getSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return smm.getSignalMast("East End Throat").getAspect().equals("Stop");
         }, "Signal Just passed east end throat now stop");
-        Assert.assertTrue("6 West End Div Signal Red", smm.getSignalMast("West End Div").getAspect().equals("Stop"));
-        Assert.assertTrue("6 West To South  Red", smm.getSignalMast("West To South").getAspect().equals("Stop"));
-        Assert.assertTrue("6 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
-        Assert.assertTrue("6 East End Throat Signal Red",
-                smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
+        assertThat(smm.getSignalMast("West End Div").getAspect()).withFailMessage("6 West End Div Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("6 West To South  Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("6 South To East Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("6 East End Throat Signal Red").isEqualTo("Stop");
         speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
-        Assert.assertEquals(0.15, speed, 0.01);
+        assertThat(speed).isBetween(0.14f,0.16f);
 
         sm.getSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
         // No change
-        Assert.assertTrue("7 West End Div Signal Red", smm.getSignalMast("West End Div").getAspect().equals("Stop"));
-        Assert.assertTrue("7 West To South  Red", smm.getSignalMast("West To South").getAspect().equals("Stop"));
-        Assert.assertTrue("7 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
-        Assert.assertTrue("7 East End Throat Signal Red",
-                smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
+        assertThat(smm.getSignalMast("West End Div").getAspect()).withFailMessage("7 West End Div Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("7 West To South  Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("7 South To East Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("7 East End Throat Signal Red").isEqualTo("Stop");
         speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
-        Assert.assertEquals(0.15, speed, 0.01);
+        assertThat(speed).isBetween(0.14f,0.16f);
 
         sm.getSensor("Occ South Platform").setState(Sensor.ACTIVE);
         // signals no change, speed changes
-        Assert.assertTrue("8 West End Div Signal Red", smm.getSignalMast("West End Div").getAspect().equals("Stop"));
-        Assert.assertTrue("8 West To South  Red", smm.getSignalMast("West To South").getAspect().equals("Stop"));
-        Assert.assertTrue("8 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
-        Assert.assertTrue("8 East End Throat Signal Red",
-                smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
+        assertThat(smm.getSignalMast("West End Div").getAspect()).withFailMessage("8 West End Div Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("8 West To South  Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("8 South To East Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("8 East End Throat Signal Red").isEqualTo("Stop");
         speed = (float) m.getThrottleInfo(addr, Throttle.SPEEDSETTING);
-        Assert.assertEquals(0.15, speed, 0.01);
+        assertThat(speed).isBetween(0.14f,0.16f);
 
         sm.getSensor("Occ East Block").setState(Sensor.INACTIVE);
         sm.getSensor("Occ East Platform Switch").setState(Sensor.INACTIVE);
         // signals no change, speed changes to stop
-        Assert.assertTrue("9 West End Div Signal Red", smm.getSignalMast("West End Div").getAspect().equals("Stop"));
-        Assert.assertTrue("9 West To South  Red", smm.getSignalMast("West To South").getAspect().equals("Stop"));
-        Assert.assertTrue("9 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
-        Assert.assertTrue("9 East End Throat Signal Red",
-                smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
+        assertThat(smm.getSignalMast("West End Div").getAspect()).withFailMessage("9 West End Div Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("West To South").getAspect()).withFailMessage("9 West To South  Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("South To East").getAspect()).withFailMessage("9 South To East Signal Red").isEqualTo("Stop");
+        assertThat(smm.getSignalMast("East End Throat").getAspect()).withFailMessage("9 East End Throat Signal Red").isEqualTo("Stop");
 
         // train slows to stop
         JUnitUtil.waitFor(() -> {
@@ -186,7 +171,7 @@ public class LoadAtStartUpTest {
         JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
         bo.push();
 
-        Assert.assertTrue("All trains terminated", (d.getActiveTrainsList().isEmpty()));
+        assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
 
         JFrameOperator aw = new JFrameOperator("AutoTrains");
 
