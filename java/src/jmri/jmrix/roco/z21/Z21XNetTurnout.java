@@ -140,6 +140,11 @@ public class Z21XNetTurnout extends XNetTurnout {
         return state;
     }
 
+    @Override
+    protected synchronized void sendOffMessage() {
+       sendOffMessage(getCommandedState());
+    }
+
     protected synchronized void sendOffMessage(int state) {
         // We need to tell the turnout to shut off the output.
         if (log.isDebugEnabled()) {
@@ -151,7 +156,7 @@ public class Z21XNetTurnout extends XNetTurnout {
         newKnownState(getCommandedState());
         internalState = IDLE;
         // Then send the message.
-        tc.sendXNetMessage(msg, null);  // reply sent through loconet
+        tc.sendXNetMessage(msg, this);  // reply sent through loconet
     }
 
     protected synchronized XNetMessage getOffMessage(boolean state) {
