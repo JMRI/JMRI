@@ -371,9 +371,6 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     void updateItem() {
-        if (!_itemPanel.oktoUpdate()) {
-            return;
-        }
         _saveMap = _iconMap;  // setSignalHead() clears _iconMap. We need a copy for setIcons()
         setSignalHead(_itemPanel.getTableSelection().getSystemName());
         setFamily(_itemPanel.getFamilyName());

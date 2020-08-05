@@ -94,8 +94,8 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "second");
+    protected String getDisplayKey() {
+        return "second";
     }
 
     @Override
@@ -146,12 +146,6 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
                 _selectionModel.setSelectionInterval(positions[i], positions[i]);
             }
         }
-    }
-
-    @Override
-    protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
-        closeDialogs();
-        _dialog = new MultiSensorIconDialog(type, family, this, iconMap);
     }
 
     /*
@@ -228,6 +222,9 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
             }
             if (size > POSITION.length) {
                 size = POSITION.length;
+            }
+            if (size < 0) {
+                size = 0;
             }
             _positions = new int[size];
             for (int i = 0; i < size; i++) {
@@ -309,10 +306,9 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
         return new IconDragJLabel(flavor, map, icon);
     }
 
-    @Override
     public boolean oktoUpdate() {
         ArrayList<Sensor> selections = _selectionModel.getSelections();
-        if (selections == null) {
+        if (selections == null || selections.isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;

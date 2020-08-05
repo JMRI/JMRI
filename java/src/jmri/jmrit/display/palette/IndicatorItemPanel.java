@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
@@ -21,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for for Indicating track blocks.
+ * @author Pete Cressman Copyright (c) 2010, 2020
  */
 public class IndicatorItemPanel extends FamilyItemPanel {
 
@@ -41,13 +40,9 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         if (!_initialized) {
             super.init();
             _detectPanel = new DetectionPanel(this);
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.add(Box.createVerticalGlue());
-            panel.add(_detectPanel);
-            add(panel, 0);
-            hideIcons();
+            add(_detectPanel, 1);
         }
+        hideIcons();
     }
 
     /**
@@ -62,11 +57,12 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * Init for conversion of plain track to indicator track by CircuitBuilder.
+     * CircuitBuilder init for conversion of plain track to indicator track.
      */
     @Override
-    public void init(ActionListener doneAction) {
-        super.init(doneAction);
+    public void init(JPanel bottomPanel) {
+        super.init(bottomPanel);
+        add(_iconFamilyPanel, 0);
     }
 
     @Override
@@ -77,8 +73,8 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "ClearTrack");
+    protected String getDisplayKey() {
+        return "ClearTrack";
     }
 
     /**
@@ -92,15 +88,6 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     public void setShowTrainName(boolean show) {
         _detectPanel.setShowTrainName(show);
     }
-    /*
-     public String getErrSensor() {
-     return _detectPanel.getErrSensor();
-     }
-
-     public void setErrSensor(String name) {
-     _detectPanel.setErrSensor(name);
-     }
-     */
 
     public String getOccSensor() {
         return _detectPanel.getOccSensor();
