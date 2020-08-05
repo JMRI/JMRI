@@ -968,6 +968,9 @@
         <li>Joe Salemi, who contributed the Atlas 345 decoder
         definition and updated the TCS Tx definition.</li>
 
+        <li>Bruno Sanches, <!-- bcsanches -->
+        who fixed a bug in the DCC++ throttle implementation.
+        
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adsand47+">Dave Sand</a>, <!-- dsand47 -->
         who's worked on Layout Editor, Logix, 
         Entry/Exit signaling and other things.</li>
