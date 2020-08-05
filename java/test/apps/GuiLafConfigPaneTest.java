@@ -1,30 +1,29 @@
 package apps;
 
+import jmri.swing.PreferencesPanelTestBase;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class GuiLafConfigPaneTest {
+public class GuiLafConfigPaneTest extends PreferencesPanelTestBase<GuiLafConfigPane> {
 
-    @Test
-    public void testCTor() {
-        GuiLafConfigPane t = new GuiLafConfigPane();
-        Assert.assertNotNull("exists",t);
-    }
-
+    @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        prefsPanel = new GuiLafConfigPane();
     }
 
-    @AfterEach
-    public void tearDown() {
-        JUnitUtil.tearDown();
+    @Override
+    @Test
+    public void isPersistant() {
+        assertThat(prefsPanel.isPersistant()).isTrue();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(GuiLafConfigPaneTest.class);
