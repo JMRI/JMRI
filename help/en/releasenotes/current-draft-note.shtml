@@ -344,6 +344,17 @@
         <ul>
              <li></li>
         </ul>
+          
+   <h3>Dispatcher System</h3>
+        <a id="Dispatcher_System" name="Dispatcher_System"></a>
+        <ul>
+             <li>Jython based System which automates the build of a Dispatcher system</li>
+             <li>Requirement: Start with a Panel with track, signals, signal logic built with</li>
+             <li>automatic signal logic, sections built with automatic section builder</li>
+             <li>Provides Gui to: Modify xml of panel to provide icons to setup dispatch</li>
+             <li>between stops, Generate Transits and TrainInfo files required by dispatcher</li>
+             <li>Provides a runtime system to operate the system</li>
+        </ul>       
 
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
