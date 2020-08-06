@@ -228,6 +228,11 @@ abstract public class AbstractPortController implements PortAdapter {
 
     static protected class Option {
 
+        public enum Type {
+            JCOMBOBOX,
+            TEXT
+        }
+        
         String currentValue = null;
         
         /** 
@@ -239,17 +244,28 @@ abstract public class AbstractPortController implements PortAdapter {
         
         String displayText;
         String[] options;
-        Boolean advancedOption = true;
+        Type type;
+        
+        Boolean advancedOption = true;  // added options in advanced section by default
+
+        public Option(String displayText, String[] options, boolean advanced, Type type) {
+            this.displayText = displayText;
+            System.arraycopy(options, 0, this.options, 0, options.length);
+            this.advancedOption = advanced;
+            this.type = type;
+            
+        }
 
         public Option(String displayText, String[] options, boolean advanced) {
-            this(displayText, options);
-            this.advancedOption = advanced;
+            this(displayText, options, advanced, Type.JCOMBOBOX);
+        }
+
+        public Option(String displayText, String[] options, Type type) {
+            this(displayText, options, true, type);
         }
 
         public Option(String displayText, String[] options) {
-            this.displayText = displayText;
-            this.options = new String[options.length];
-            System.arraycopy(options, 0, this.options, 0, options.length);
+            this(displayText, options, true, Type.JCOMBOBOX);
         }
 
         void configure(String value) {

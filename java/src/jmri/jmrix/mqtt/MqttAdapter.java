@@ -31,13 +31,13 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         super(new MqttSystemConnectionMemo());
         log.debug("Doing ctor...");
         option2Name = "MQTTchannel";
-        options.put(option2Name, new Option("MQTT channel :", new String[]{baseTopic}));
-        options.put("10", new Option("Turnout topic :", new String[]{"turnout"}));
-        options.put("11", new Option("Sensor topic :", new String[]{"sensor"}));
-        options.put("12", new Option("Light topic :", new String[]{"light"}));
-        options.put("13", new Option("Reporter topic :", new String[]{"reporter"}));
-        options.put("14", new Option("Signal Head topic :", new String[]{"signalhead"}));
-        options.put("15", new Option("Signal Mast topic :", new String[]{"signalmast"}));
+        options.put(option2Name, new Option("MQTT channel :", new String[]{baseTopic}, Option.Type.TEXT));
+        options.put("10", new Option("Turnout topic :", new String[]{"track/turnout"}, Option.Type.TEXT));
+        options.put("11", new Option("Sensor topic :", new String[]{"track/sensor"}, Option.Type.TEXT));
+        options.put("12", new Option("Light topic :", new String[]{"track/light"}, Option.Type.TEXT));
+        options.put("13", new Option("Reporter topic :", new String[]{"track/reporter"}, Option.Type.TEXT));
+        options.put("14", new Option("Signal Head topic :", new String[]{"track/signalhead"}, Option.Type.TEXT));
+        options.put("15", new Option("Signal Mast topic :", new String[]{"track/signalmast"}, Option.Type.TEXT));
         allowConnectionRecovery = true;
     }
 
