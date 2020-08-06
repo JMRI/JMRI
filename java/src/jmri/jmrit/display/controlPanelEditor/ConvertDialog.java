@@ -38,6 +38,7 @@ class ConvertDialog extends JDialog {
         DisplayFrame _filler;
 
         ConvertDialog(CircuitBuilder cb, PositionableLabel pos, OBlock block) {
+            
             super(cb._editor, true);
             _parent = cb;
             _pos = pos;
@@ -85,16 +86,11 @@ class ConvertDialog extends JDialog {
                 };
                 updateAction = (ActionEvent a) -> convertSeg(block);
             }
-            _panel.init(updateAction);
-            
-            JPanel buttonPanel = _panel.getBottomPanel();
-            _panel.getUpdateButton().setText(Bundle.getMessage("convert"));
-            JButton button = new JButton(Bundle.getMessage("skip"));
-            button.addActionListener((ActionEvent a) -> dispose());
-            buttonPanel.add(button);
+
             JPanel p = new JPanel();
-             p.add(new JLabel(Bundle.getMessage("notIndicatorIcon")));
-            _panel.add(p, 0);
+            p.add(new JLabel(Bundle.getMessage("notIndicatorIcon")));
+            _panel.add(p);
+            _panel.init(makeBottomPanel(updateAction, block));
             Dimension dim = _panel.getPreferredSize();
 
             javax.swing.JScrollPane sp = new javax.swing.JScrollPane(_panel);
@@ -108,6 +104,17 @@ class ConvertDialog extends JDialog {
              setVisible(true);
         }
 
+        private JPanel makeBottomPanel(ActionListener updateAction, OBlock block) {
+            JPanel panel = new JPanel();
+            JButton button = new JButton(Bundle.getMessage("convert"));
+            button.addActionListener(updateAction);
+            panel.add(button);
+            
+            button = new JButton(Bundle.getMessage("skip"));
+            button.addActionListener((ActionEvent a) -> dispose());
+            panel.add(button);
+            return panel;
+        }
         /*
          * Do for dialog what FamilyItemPanel, ItemPanel and DisplayFrame 
          * need to do for reSizeDisplay and reSize

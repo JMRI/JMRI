@@ -166,7 +166,9 @@
       <p>Loaded JMRI panels can be used in a modern web browser on
       computers, smart phones, and tablets. A list of the loaded
       panels is at <a href=
-      "http://localhost:12080/panel">http://localhost:12080/panel</a>.</p>
+      "http://localhost:12080/panel">http://localhost:12080/panel</a>.
+      <a href="/help/en/html/web/PanelServlet.shtml">[More details]</a></p>
+      </p>
 
       <h3><a id="roster" name="roster">Roster</a></h3>
       <!-- rosterServlet intro -->
@@ -174,14 +176,17 @@
       <p>The web roster at <a href=
       "http://localhost:12080/roster">http://localhost:12080/roster</a>
       provides a list of roster entries. Clicking on an entry will
-      open the web throttle for that entry.</p>
+      open the web throttle for that entry. The Roster page also includes
+      an "Upload Roster Files" button. 
+      <a href="/help/en/html/web/RosterServlet.shtml">[More details]</a></p>
 
       <h3><a id="throttle" name="throttle">Throttles</a></h3>
       <!-- webThrottle intro -->
 
       <p>JMRI supports using a modern browser on a smart phone,
       tablet, or other computer as a throttle device at <a href=
-      "http://localhost:12080/web/webThrottle.html">http://localhost:12080/web</a>
+      "http://localhost:12080/web/webThrottle.html">
+      http://localhost:12080/web/webThrottle.html</a>
       (see <a href=
       "../../package/jmri/jmrit/webThrottle/webThrottle.shtml">Web
       Throttle Help</a>).</p>
@@ -192,9 +197,8 @@
 
       <p>Operations services at <a href=
       "http://localhost:12080/operations">http://localhost:12080/operations</a>
-      are at the proof of concept stage. Currently the conductor
-      view is complete, but other operations views are missing or
-      are works in progress.</p>
+      include Trains, Conductor and Manifest functions.
+      <a href="/help/en/html/web/Operations.shtml">[More details]</a></p>
 
       <h3><a id="frames" href="FrameServlet.shtml" name=
       "frames">Windows</a></h3><!-- frameServlet intro -->

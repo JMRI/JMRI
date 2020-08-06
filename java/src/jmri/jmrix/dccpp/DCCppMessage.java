@@ -449,54 +449,54 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         switch (getOpCodeChar()) {
             case DCCppConstants.THROTTLE_CMD:
                 text = "Throttle Cmd: ";
-                text += "\n\tRegister: " + getRegisterString();
-                text += "\n\tAddress: " + getAddressString();
-                text += "\n\tSpeed: " + getSpeedString();
-                text += "\n\t:Direction: " + getDirectionString();
+                text += "Register: " + getRegisterString();
+                text += ", Address: " + getAddressString();
+                text += ", Speed: " + getSpeedString();
+                text += ", Direction: " + getDirectionString();
                 break;
             case DCCppConstants.FUNCTION_CMD:
                 text = "Function Cmd: ";
-                text += "\n\tAddress: " + getFuncAddressString();
-                text += "\n\tByte 1: " + getFuncByte1String();
-                text += "\n\tByte 2: " + getFuncByte2String();
-                text += "\n\t(No Reply Expected)";
+                text += "Address: " + getFuncAddressString();
+                text += ", Byte 1: " + getFuncByte1String();
+                text += ", Byte 2: " + getFuncByte2String();
+                text += ", (No Reply Expected)";
                 break;
             case DCCppConstants.ACCESSORY_CMD:
                 text = "Accessory Decoder Cmd: ";
-                text += "\n\tAddress: " + getAccessoryAddrString();
-                text += "\n\tSubaddr: " + getAccessorySubString();
-                text += "\n\tState: " + getAccessoryStateString();
+                text += "Address: " + getAccessoryAddrString();
+                text += ", Subaddr: " + getAccessorySubString();
+                text += ", State: " + getAccessoryStateString();
                 break;
             case DCCppConstants.TURNOUT_CMD:
                 if (isTurnoutAddMessage()) {
                     text = "Add Turnout: ";
-                    text += "\n\tT/O ID: " + getTOIDString();
-                    text += "\n\tAddress: " + getTOAddressString();
-                    text += "\n\tSubaddr: " + getTOSubAddressString();
+                    text += "T/O ID: " + getTOIDString();
+                    text += ", Address: " + getTOAddressString();
+                    text += ", Subaddr: " + getTOSubAddressString();
                 } else if (isTurnoutDeleteMessage()) {
                     text = "Delete Turnout: ";
-                    text += "\n\tT/O ID: " + getTOIDString();
+                    text += "T/O ID: " + getTOIDString();
                 } else if (isListTurnoutsMessage()) {
                     text = "List Turnouts...";
                 } else {
                     text = "Turnout Cmd: ";
-                    text += "\n\tT/O ID: " + getTOIDString();
-                    text += "\n\tState: " + getTOStateString();
+                    text += "T/O ID: " + getTOIDString();
+                    text += ", State: " + getTOStateString();
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:
                 if (isOutputCmdMessage()) {
                     text = "Output Cmd: ";
-                    text += "\n\tOutput ID: " + getOutputIDString();
-                    text += "\n\tState: " + getOutputStateString();
+                    text += "Output ID: " + getOutputIDString();
+                    text += ", State: " + getOutputStateString();
                 } else if (isOutputAddMessage()) {
                     text = "Add Output: ";
-                    text += "\n\tOutput ID: " + getOutputIDString();
-                    text += "\n\tPin: " + getOutputPinString();
-                    text += "\n\tIFlag: " + getOutputIFlagString();
+                    text += "Output ID: " + getOutputIDString();
+                    text += ", Pin: " + getOutputPinString();
+                    text += ", IFlag: " + getOutputIFlagString();
                 } else if (isOutputDeleteMessage()) {
                     text = "Delete Output: ";
-                    text += "\n\tOutput ID: " + getOutputIDString();
+                    text += "Output ID: " + getOutputIDString();
                 } else if (isListOutputsMessage()) {
                     text = "List Outputs...";
                 } else {
@@ -506,12 +506,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.SENSOR_CMD:
                 if (isSensorAddMessage()) {
                     text = "Add Sensor: ";
-                    text += "\n\tSensor ID: " + getSensorIDString();
-                    text += "\n\tPin: " + getSensorPinString();
-                    text += "\n\tPullup: " + getSensorPullupString();
+                    text += "Sensor ID: " + getSensorIDString();
+                    text += ", Pin: " + getSensorPinString();
+                    text += ", Pullup: " + getSensorPullupString();
                 } else if (isSensorDeleteMessage()) {
                     text = "Delete Sensor: ";
-                    text += "\n\tSensor ID: " + getSensorIDString();
+                    text += "Sensor ID: " + getSensorIDString();
                 } else if (isListSensorsMessage()) {
                     text = "List Sensors...";
                 } else {
@@ -519,39 +519,39 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 }
                 break;
             case DCCppConstants.OPS_WRITE_CV_BYTE:
-                text = "Ops Write Byte Cmd: \n"; // <w cab cv val>
-                text += "\tAddress: " + getOpsWriteAddrString() + "\n";
-                text += "\tCV: " + getOpsWriteCVString() + "\n";
-                text += "\tValue: " + getOpsWriteValueString();
+                text = "Ops Write Byte Cmd: "; // <w cab cv val>
+                text += "Address: " + getOpsWriteAddrString() + ", ";
+                text += "CV: " + getOpsWriteCVString() + ", ";
+                text += "Value: " + getOpsWriteValueString();
                 break;
             case DCCppConstants.OPS_WRITE_CV_BIT: // <b cab cv bit val>
-                text = "Ops Write Bit Cmd: \n";
-                text += "\tAddress: " + getOpsWriteAddrString() + "\n";
-                text += "\tCV: " + getOpsWriteCVString() + "\n";
-                text += "\tBit: " + getOpsWriteBitString() + "\n";
-                text += "\tValue: " + getOpsWriteValueString();
+                text = "Ops Write Bit Cmd: ";
+                text += "Address: " + getOpsWriteAddrString() + ", ";
+                text += "CV: " + getOpsWriteCVString() + ", ";
+                text += "Bit: " + getOpsWriteBitString() + ", ";
+                text += "Value: " + getOpsWriteValueString();
                 break;
             case DCCppConstants.PROG_WRITE_CV_BYTE:
                 text = "Prog Write Byte Cmd: ";
-                text += "\n\tCV : " + getCVString();
-                text += "\n\tValue: " + getProgValueString();
-                text += "\n\tCallback Num: " + getCallbackNumString();
-                text += "\n\tCallback Sub: " + getCallbackSubString();
+                text += "CV : " + getCVString();
+                text += ", Value: " + getProgValueString();
+                text += ", Callback Num: " + getCallbackNumString();
+                text += ", Callback Sub: " + getCallbackSubString();
                 break;
 
             case DCCppConstants.PROG_WRITE_CV_BIT:
                 text = "Prog Write Bit Cmd: ";
-                text += "\n\tCV : " + getCVString();
-                text += "\n\tBit : " + getBitString();
-                text += "\n\tValue: " + getProgValueString();
-                text += "\n\tCallback Num: " + getCallbackNumString();
-                text += "\n\tCallback Sub: " + getCallbackSubString();
+                text += "CV : " + getCVString();
+                text += ", Bit : " + getBitString();
+                text += ", Value: " + getProgValueString();
+                text += ", Callback Num: " + getCallbackNumString();
+                text += ", Callback Sub: " + getCallbackSubString();
                 break;
             case DCCppConstants.PROG_READ_CV:
                 text = "Prog Read Cmd: ";
-                text += "\n\tCV: " + getCVString();
-                text += "\n\tCallback Num: " + getCallbackNumString();
-                text += "\n\tCallback Sub: " + getCallbackSubString();
+                text += "CV: " + getCVString();
+                text += ", Callback Num: " + getCallbackNumString();
+                text += ", Callback Sub: " + getCallbackSubString();
                 break;
             case DCCppConstants.TRACK_POWER_ON:
                 text = "Track Power ON Cmd ";
@@ -567,13 +567,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;
             case DCCppConstants.WRITE_DCC_PACKET_MAIN:
                 text = "Write DCC Packet Main Cmd: ";
-                text += "\n\tRegister: " + getRegisterString();
-                text += "\n\tPacket:" + getPacketString();
+                text += "Register: " + getRegisterString();
+                text += ", Packet:" + getPacketString();
                 break;
             case DCCppConstants.WRITE_DCC_PACKET_PROG:
                 text = "Write DCC Packet Prog Cmd: ";
-                text += "\n\tRegister: " + getRegisterString();
-                text += "\n\tPacket:" + getPacketString();
+                text += "Register: " + getRegisterString();
+                text += ", Packet:" + getPacketString();
                 break;
             case DCCppConstants.GET_FREE_MEMORY:
                 text = "Get Free Memory Cmd: ";

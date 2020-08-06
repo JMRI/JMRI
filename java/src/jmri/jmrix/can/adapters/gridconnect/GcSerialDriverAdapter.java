@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         options.put(option1Name, new Option(Bundle.getMessage("ConnectionProtocol"),
                 jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
+        allowConnectionRecovery = true;
     }
 
     /**
@@ -50,6 +53,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         options.put(option1Name, new Option(Bundle.getMessage("ConnectionProtocol"),
                 jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         this.manufacturerName = jmri.jmrix.merg.MergConnectionTypeList.MERG;
+        allowConnectionRecovery = true;
     }
 
     /**
@@ -132,6 +136,47 @@ public class GcSerialDriverAdapter extends GcPortController {
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
     }
+    
+    /**
+     * {@inheritDoc}
+     * Reconnects to Traffic Controller.
+     * Updates connection status.
+     */
+    @Override
+    protected void resetupConnection() {
+        if (!getSystemConnectionMemo().getTrafficController().status()) {
+            getSystemConnectionMemo().getTrafficController().connectPort(this);
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), 
+                ((getSystemConnectionMemo().getTrafficController().status() && status()) ? ConnectionStatus.CONNECTION_UP : ConnectionStatus.CONNECTION_DOWN));
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * Closes serial streams.
+     */
+    @Override
+    protected void closeConnection(){
+        log.info("Closing connection {}.",getCurrentPortName());        
+        try {
+            if (serialStream!=null) {
+                serialStream.close();
+            }
+            serialStream = null;
+            if (bufferedStream!=null) {
+                bufferedStream.close();
+            }
+            bufferedStream = null;
+        }
+        catch ( IOException e ) {
+            log.error("unable to close {}",this.activeSerialPort.getName());
+        }
+        if (activeSerialPort!=null) {
+            activeSerialPort.close();
+        }
+        activeSerialPort = null;
+    }
 
     /**
      * Make a new GC Traffic Controller.
@@ -153,6 +198,8 @@ public class GcSerialDriverAdapter extends GcPortController {
      */
     private static class AsyncBufferInputStream extends FilterInputStream {
 
+        private boolean active;
+        
         /**
          * Create new AsyncBufferInputStream.
          * @param inputStream Input Stream.
@@ -161,6 +208,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         AsyncBufferInputStream(InputStream inputStream, String portName) {
             super(inputStream);
             this.portName = portName;
+            active = true;
             Thread rt = jmri.util.ThreadingUtil.newThread(this::readThreadBody);
             rt.setName("GcSerialPort InputBufferThread " + portName);
             rt.setDaemon(true);
@@ -192,6 +240,10 @@ public class GcSerialDriverAdapter extends GcPortController {
                 } else {
                     log.warn("Error reading serial port {}", portName, e);
                 }
+            } 
+            catch (purejavacomm.PureJavaIllegalStateException e) {
+                log.error("PureJavaIllegalStateException Illegal State, closing read thread.");
+                return null;
             }
             return tail;
         }
@@ -201,7 +253,7 @@ public class GcSerialDriverAdapter extends GcPortController {
          */
         private void readThreadBody() {
             BufferEntry tail;
-            while (true) {
+            while (active) {
                 // Try to read one byte to block the thread.
                 tail = tryRead(1);
                 if (tail == null) {
@@ -305,6 +357,12 @@ public class GcSerialDriverAdapter extends GcPortController {
         int headOfs = 0;
         // How many of the last consecutive read attempts have resulted in an exception.
         int errorCount = 0;
+        
+        @Override
+        public void close() throws IOException {
+            active = false;
+            super.close();
+        }
     }
 
     /**
@@ -339,14 +397,6 @@ public class GcSerialDriverAdapter extends GcPortController {
             log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean status() {
-        return opened;
     }
 
     /**
@@ -391,7 +441,6 @@ public class GcSerialDriverAdapter extends GcPortController {
     }
 
     // private control members
-    private boolean opened = false;
     InputStream serialStream = null;
     // Stream wrapper that buffers the input bytes.
     private InputStream bufferedStream = null;

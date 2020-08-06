@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
@@ -17,6 +18,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.Portal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +41,8 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     private boolean _hide = false; // true when arrow should NOT show entry into ToBlock
 
     public PortalIcon(Editor editor) {
-        // super ctor call to make sure this is an icon label
         super(editor);
-        initMap();
+        makeIconMap();
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -49,10 +50,26 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         setPortal(portal);
     }
 
-    public void initMap() {
-        ControlPanelEditor ed = (ControlPanelEditor) _editor;
+    static public HashMap<String, NamedIcon> getPaletteMap() {
+        HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps("Portal");
+        if (families.keySet().isEmpty()) {
+            ItemPalette.loadMissingItemType("Portal");
+            families = ItemPalette.getFamilyMaps("Portal");
+        }
+        HashMap<String, NamedIcon> iconMap = families.get("Standard");
+        if (iconMap == null) {
+            for (HashMap<String, NamedIcon> map : families.values()) {
+                iconMap = map;
+                break;
+            }
+        }
+        // Don't return ItemPalette's map!
+        return cloneMap(iconMap, null);
+    }
+    
+    public void makeIconMap() {
+        _iconMap = ((ControlPanelEditor)_editor).getPortalIconMap();
         int deg = getDegrees();
-        _iconMap = PositionableIcon.cloneMap(ed.getPortalIconMap(), this);
         if (!_regular) {
             NamedIcon a = _iconMap.get(TO_ARROW);
             NamedIcon b = _iconMap.get(FROM_ARROW);
@@ -64,6 +81,10 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         setIcon(_iconMap.get(HIDDEN));
     }
 
+    protected void setMap(HashMap<String, NamedIcon> map) {
+        _iconMap = map;
+    }
+
     @Override
     public Positionable deepClone() {
         PortalIcon pos = new PortalIcon(_editor, getPortal());
@@ -71,14 +92,13 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
 
     protected Positionable finishClone(PortalIcon pos) {
-        pos._iconMap = cloneMap(_iconMap, pos);
         pos._regular = _regular;
         pos._hide = _hide;
         pos._status = _status;
         return super.finishClone(pos);
     }
 
-    protected void setIcon(String name, NamedIcon ic) {
+    public void setIcon(String name, NamedIcon ic) {
         if (log.isDebugEnabled()) {
             log.debug("Icon {} put icon key= \"{}\" icon= {}", getPortal().getName(), name, ic);
         }

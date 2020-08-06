@@ -5,7 +5,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- Headlight [1] Mode -->
-    <variable label="Headlight [1] Mode" CV="16.0.259" default="1" item="ESU V4 Function Output HL-1 effect generated" mask="XXXVVVVV">
+    <variable label="Headlight [1] Mode" CV="16.0.259" default="1" item="ESU V4 Function Output HL-1 effect generated">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
         <!--label xml:lang="de">Licht vorn - 1</label-->
     </variable>
@@ -89,8 +89,33 @@
     <variable label="Coupler Force" CV="16.0.262" default="31" item="ESU V4 Function Output HL-1 Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>Headlight [1] Mode</variableref>
-            <relation>eq</relation>
+            <relation>ge</relation>
             <value>28</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>29</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>30</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>31</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>32</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [1] Mode</variableref>
+            <relation>le</relation>
+            <value>33</value>
         </qualifier>
         <decVal max="31"/>
         <label xml:lang="de">Stärke des Kupplers</label>
@@ -287,7 +312,7 @@
         <decVal max="127"/>
     </variable>
     <!-- Rearlight [1] Mode -->
-    <variable label="Rearlight [1] Mode" CV="16.0.267" default="1" item="ESU V4 Function Output RL-1 effect generated" mask="XXXVVVVV">
+    <variable label="Rearlight [1] Mode" CV="16.0.267" default="1" item="ESU V4 Function Output RL-1 effect generated">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.268" default="0" item="ESU V4 Function Output RL-1 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -370,8 +395,33 @@
     <variable label="Coupler Force" CV="16.0.270" default="31" item="ESU V4 Function Output RL-1 Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>Rearlight [1] Mode</variableref>
-            <relation>eq</relation>
+            <relation>ge</relation>
             <value>28</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>29</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>30</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>31</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>32</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [1] Mode</variableref>
+            <relation>le</relation>
+            <value>33</value>
         </qualifier>
         <decVal max="31"/>
         <label xml:lang="de">Stärke des Kupplers</label>
@@ -568,7 +618,7 @@
         <decVal max="127"/>
     </variable>
     <!-- AUX1 [1] Mode -->
-    <variable label="AUX1 [1] Mode" CV="16.0.275" default="1" item="ESU V4 Function Output A1-1 effect generated" mask="XXXVVVVV">
+    <variable label="AUX1 [1] Mode" CV="16.0.275" default="1" item="ESU V4 Function Output A1-1 effect generated">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.276" default="0" item="ESU V4 Function Output A1-1 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -651,8 +701,33 @@
     <variable label="Coupler Force" CV="16.0.278" default="31" item="ESU V4 Function Output A1-1 Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>AUX1 [1] Mode</variableref>
-            <relation>eq</relation>
+            <relation>ge</relation>
             <value>28</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>29</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>30</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>31</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>32</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [1] Mode</variableref>
+            <relation>le</relation>
+            <value>33</value>
         </qualifier>
         <decVal max="31"/>
         <label xml:lang="de">Stärke des Kupplers</label>
@@ -849,7 +924,7 @@
         <decVal max="127"/>
     </variable>
     <!-- AUX2 [1] Mode -->
-    <variable label="AUX2 [1] Mode" CV="16.0.283" default="1" item="ESU V4 Function Output A2-1 effect generated" mask="XXXVVVVV">
+    <variable label="AUX2 [1] Mode" CV="16.0.283" default="1" item="ESU V4 Function Output A2-1 effect generated">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.284" default="0" item="ESU V4 Function Output A2-1 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -932,8 +1007,33 @@
     <variable label="Coupler Force" CV="16.0.286" default="31" item="ESU V4 Function Output A2-1 Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>AUX2 [1] Mode</variableref>
-            <relation>eq</relation>
+            <relation>ge</relation>
             <value>28</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>29</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>30</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>31</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [1] Mode</variableref>
+            <relation>ne</relation>
+            <value>32</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [1] Mode</variableref>
+            <relation>le</relation>
+            <value>33</value>
         </qualifier>
         <decVal max="31"/>
         <label xml:lang="de">Stärke des Kupplers</label>
@@ -1131,7 +1231,7 @@
     </variable>
     <variables exclude="Essential Sound Unit">
         <!-- AUX3 Mode -->
-        <variable label="AUX3 Mode" CV="16.0.291" default="1" item="ESU V4 Function Output A3 effect generated" mask="XXXVVVVV">
+        <variable label="AUX3 Mode" CV="16.0.291" default="1" item="ESU V4 Function Output A3 effect generated">
             <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
         </variable>
         <variable label="Function Switch On Delay" CV="16.0.292" default="0" item="ESU V4 Function Output A3 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -1214,8 +1314,33 @@
         <variable label="Coupler Force" CV="16.0.294" default="31" item="ESU V4 Function Output A3 Slider 7" mask="XXXVVVVV">
             <qualifier>
                 <variableref>AUX3 Mode</variableref>
-                <relation>eq</relation>
+                <relation>ge</relation>
                 <value>28</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX3 Mode</variableref>
+                <relation>ne</relation>
+                <value>29</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX3 Mode</variableref>
+                <relation>ne</relation>
+                <value>30</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX3 Mode</variableref>
+                <relation>ne</relation>
+                <value>31</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX3 Mode</variableref>
+                <relation>ne</relation>
+                <value>32</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX3 Mode</variableref>
+                <relation>le</relation>
+                <value>33</value>
             </qualifier>
             <decVal max="31"/>
             <label xml:lang="de">Stärke des Kupplers</label>
@@ -1412,7 +1537,7 @@
             <decVal max="127"/>
         </variable>
         <!-- AUX4 Mode -->
-        <variable label="AUX4 Mode" CV="16.0.299" default="1" item="ESU V4 Function Output A4 effect generated" mask="XXXVVVVV">
+        <variable label="AUX4 Mode" CV="16.0.299" default="1" item="ESU V4 Function Output A4 effect generated">
             <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
         </variable>
         <variable label="Function Switch On Delay" CV="16.0.300" default="0" item="ESU V4 Function Output A4 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -1495,8 +1620,33 @@
         <variable label="Coupler Force" CV="16.0.302" default="31" item="ESU V4 Function Output A4 Slider 7" mask="XXXVVVVV">
             <qualifier>
                 <variableref>AUX4 Mode</variableref>
-                <relation>eq</relation>
+                <relation>ge</relation>
                 <value>28</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX4 Mode</variableref>
+                <relation>ne</relation>
+                <value>29</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX4 Mode</variableref>
+                <relation>ne</relation>
+                <value>30</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX4 Mode</variableref>
+                <relation>ne</relation>
+                <value>31</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX4 Mode</variableref>
+                <relation>ne</relation>
+                <value>32</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX4 Mode</variableref>
+                <relation>le</relation>
+                <value>33</value>
             </qualifier>
             <decVal max="31"/>
             <label xml:lang="de">Stärke des Kupplers</label>
@@ -1693,7 +1843,7 @@
             <decVal max="127"/>
         </variable>
         <!-- AUX5 Mode -->
-        <variable label="AUX5 Mode" CV="16.0.307" default="1" item="ESU V4 Function Output A5 effect generated" mask="XXXVVVVV">
+        <variable label="AUX5 Mode" CV="16.0.307" default="1" item="ESU V4 Function Output A5 effect generated">
             <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
         </variable>
         <variable label="Function Switch On Delay" CV="16.0.308" default="0" item="ESU V4 Function Output A5 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -1776,8 +1926,33 @@
         <variable label="Coupler Force" CV="16.0.310" default="31" item="ESU V4 Function Output A5 Slider 7" mask="XXXVVVVV">
             <qualifier>
                 <variableref>AUX5 Mode</variableref>
-                <relation>eq</relation>
+                <relation>ge</relation>
                 <value>28</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX5 Mode</variableref>
+                <relation>ne</relation>
+                <value>29</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX5 Mode</variableref>
+                <relation>ne</relation>
+                <value>30</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX5 Mode</variableref>
+                <relation>ne</relation>
+                <value>31</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX5 Mode</variableref>
+                <relation>ne</relation>
+                <value>32</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX5 Mode</variableref>
+                <relation>le</relation>
+                <value>33</value>
             </qualifier>
             <decVal max="31"/>
             <label xml:lang="de">Stärke des Kupplers</label>
@@ -1974,7 +2149,7 @@
             <decVal max="127"/>
         </variable>
         <!-- AUX6 Mode -->
-        <variable label="AUX6 Mode" CV="16.0.315" default="1" item="ESU V4 Function Output A6 effect generated" mask="XXXVVVVV">
+        <variable label="AUX6 Mode" CV="16.0.315" default="1" item="ESU V4 Function Output A6 effect generated">
             <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
         </variable>
         <variable label="Function Switch On Delay" CV="16.0.316" default="0" item="ESU V4 Function Output A6 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -2057,8 +2232,33 @@
         <variable label="Coupler Force" CV="16.0.318" default="31" item="ESU V4 Function Output A6 Slider 7" mask="XXXVVVVV">
             <qualifier>
                 <variableref>AUX6 Mode</variableref>
-                <relation>eq</relation>
+                <relation>ge</relation>
                 <value>28</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX6 Mode</variableref>
+                <relation>ne</relation>
+                <value>29</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX6 Mode</variableref>
+                <relation>ne</relation>
+                <value>30</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX6 Mode</variableref>
+                <relation>ne</relation>
+                <value>31</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX6 Mode</variableref>
+                <relation>ne</relation>
+                <value>32</value>
+            </qualifier>
+            <qualifier>
+                <variableref>AUX6 Mode</variableref>
+                <relation>le</relation>
+                <value>33</value>
             </qualifier>
             <decVal max="31"/>
             <label xml:lang="de">Stärke des Kupplers</label>
@@ -2256,7 +2456,7 @@
         </variable>
         <variables exclude="LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC">
             <!-- AUX7 Mode -->
-            <variable label="AUX7 Mode" CV="16.0.323" default="1" item="ESU V4 Function Output A7 effect generated" mask="XXXVVVVV">
+            <variable label="AUX7 Mode" CV="16.0.323" default="1" item="ESU V4 Function Output A7 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.324" default="0" item="ESU V4 Function Output A7 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -2339,8 +2539,33 @@
             <variable label="Coupler Force" CV="16.0.326" default="31" item="ESU V4 Function Output A7 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX7 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX7 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX7 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX7 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX7 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX7 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -2537,7 +2762,7 @@
                 <decVal max="127"/>
             </variable>
             <!-- AUX8 Mode -->
-            <variable label="AUX8 Mode" CV="16.0.331" default="1" item="ESU V4 Function Output A8 effect generated" mask="XXXVVVVV">
+            <variable label="AUX8 Mode" CV="16.0.331" default="1" item="ESU V4 Function Output A8 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.332" default="0" item="ESU V4 Function Output A8 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -2620,8 +2845,33 @@
             <variable label="Coupler Force" CV="16.0.334" default="31" item="ESU V4 Function Output A8 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX8 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX8 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX8 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX8 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX8 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX8 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -2818,7 +3068,7 @@
                 <decVal max="127"/>
             </variable>
             <!-- AUX9 Mode -->
-            <variable label="AUX9 Mode" CV="16.0.339" default="1" item="ESU V4 Function Output A9 effect generated" mask="XXXVVVVV">
+            <variable label="AUX9 Mode" CV="16.0.339" default="1" item="ESU V4 Function Output A9 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.340" default="0" item="ESU V4 Function Output A9 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -2901,8 +3151,33 @@
             <variable label="Coupler Force" CV="16.0.342" default="31" item="ESU V4 Function Output A9 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX9 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX9 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX9 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX9 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX9 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX9 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -3099,7 +3374,7 @@
                 <decVal max="127"/>
             </variable>
             <!-- AUX10 Mode -->
-            <variable label="AUX10 Mode" CV="16.0.347" default="1" item="ESU V4 Function Output A10 effect generated" mask="XXXVVVVV">
+            <variable label="AUX10 Mode" CV="16.0.347" default="1" item="ESU V4 Function Output A10 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.348" default="0" item="ESU V4 Function Output A10 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -3182,8 +3457,33 @@
             <variable label="Coupler Force" CV="16.0.350" default="31" item="ESU V4 Function Output A10 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX10 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX10 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX10 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX10 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX10 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX10 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -3380,7 +3680,7 @@
                 <decVal max="127"/>
             </variable>
             <!-- AUX11 Mode -->
-            <variable label="AUX11 Mode" CV="16.0.355" default="1" item="ESU V4 Function Output A11 effect generated" mask="XXXVVVVV">
+            <variable label="AUX11 Mode" CV="16.0.355" default="1" item="ESU V4 Function Output A11 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
                 <!--label xml:lang="de">Licht vorn - 2</label-->
             </variable>
@@ -3449,8 +3749,33 @@
             <variable label="Coupler Force" CV="16.0.358" default="31" item="ESU V4 Function Output A11 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX11 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX11 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX11 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX11 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX11 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX11 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -3681,7 +4006,7 @@
                 <decVal max="63"/>
             </variable>
             <!-- AUX12 Mode -->
-            <variable label="AUX12 Mode" CV="16.0.363" default="1" item="ESU V4 Function Output A12 effect generated" mask="XXXVVVVV">
+            <variable label="AUX12 Mode" CV="16.0.363" default="1" item="ESU V4 Function Output A12 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.364" default="0" item="ESU V4 Function Output A12 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -3749,8 +4074,33 @@
             <variable label="Coupler Force" CV="16.0.366" default="31" item="ESU V4 Function Output A12 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX12 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX12 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX12 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX12 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX12 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX12 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -3981,7 +4331,7 @@
                 <decVal max="63"/>
             </variable>
             <!-- AUX13 Mode -->
-            <variable label="AUX13 Mode" CV="16.0.371" default="1" item="ESU V4 Function Output A13 effect generated" mask="XXXVVVVV">
+            <variable label="AUX13 Mode" CV="16.0.371" default="1" item="ESU V4 Function Output A13 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.372" default="0" item="ESU V4 Function Output A13 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -4064,8 +4414,33 @@
             <variable label="Coupler Force" CV="16.0.374" default="31" item="ESU V4 Function Output A13 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX13 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX13 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX13 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX13 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX13 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX13 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -4262,7 +4637,7 @@
                 <decVal max="127"/>
             </variable>
             <!-- AUX14 Mode -->
-            <variable label="AUX14 Mode" CV="16.0.379" default="1" item="ESU V4 Function Output A14 effect generated" mask="XXXVVVVV">
+            <variable label="AUX14 Mode" CV="16.0.379" default="1" item="ESU V4 Function Output A14 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.380" default="0" item="ESU V4 Function Output A14 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -4345,8 +4720,33 @@
             <variable label="Coupler Force" CV="16.0.382" default="31" item="ESU V4 Function Output A14 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX14 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX14 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX14 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX14 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX14 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX14 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -4543,7 +4943,7 @@
                 <decVal max="127"/>
             </variable>
             <!-- AUX15 Mode -->
-            <variable label="AUX15 Mode" CV="16.0.387" default="1" item="ESU V4 Function Output A15 effect generated" mask="XXXVVVVV">
+            <variable label="AUX15 Mode" CV="16.0.387" default="1" item="ESU V4 Function Output A15 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.388" default="0" item="ESU V4 Function Output A15 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -4611,8 +5011,33 @@
             <variable label="Coupler Force" CV="16.0.390" default="31" item="ESU V4 Function Output A15 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX15 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX15 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX15 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX15 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX15 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX15 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -4843,7 +5268,7 @@
                 <decVal max="63"/>
             </variable>
             <!-- AUX16 Mode -->
-            <variable label="AUX16 Mode" CV="16.0.395" default="1" item="ESU V4 Function Output A16 effect generated" mask="XXXVVVVV">
+            <variable label="AUX16 Mode" CV="16.0.395" default="1" item="ESU V4 Function Output A16 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.396" default="0" item="ESU V4 Function Output A16 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -4911,8 +5336,33 @@
             <variable label="Coupler Force" CV="16.0.398" default="31" item="ESU V4 Function Output A16 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX16 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX16 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX16 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX16 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX16 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX16 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -5143,7 +5593,7 @@
                 <decVal max="63"/>
             </variable>
             <!-- AUX17 Mode -->
-            <variable label="AUX17 Mode" CV="16.0.403" default="1" item="ESU V4 Function Output A17 effect generated" mask="XXXVVVVV">
+            <variable label="AUX17 Mode" CV="16.0.403" default="1" item="ESU V4 Function Output A17 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.404" default="0" item="ESU V4 Function Output A17 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -5211,8 +5661,33 @@
             <variable label="Coupler Force" CV="16.0.406" default="31" item="ESU V4 Function Output A17 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX17 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX17 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX17 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX17 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX17 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX17 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -5443,7 +5918,7 @@
                 <decVal max="63"/>
             </variable>
             <!-- AUX18 Mode -->
-            <variable label="AUX18 Mode" CV="16.0.411" default="1" item="ESU V4 Function Output A18 effect generated" mask="XXXVVVVV">
+            <variable label="AUX18 Mode" CV="16.0.411" default="1" item="ESU V4 Function Output A18 effect generated">
                 <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
             </variable>
             <variable label="Function Switch On Delay" CV="16.0.412" default="0" item="ESU V4 Function Output A18 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -5511,8 +5986,33 @@
             <variable label="Coupler Force" CV="16.0.414" default="31" item="ESU V4 Function Output A18 Slider 7" mask="XXXVVVVV">
                 <qualifier>
                     <variableref>AUX18 Mode</variableref>
-                    <relation>eq</relation>
+                    <relation>ge</relation>
                     <value>28</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX18 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>29</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX18 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>30</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX18 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>31</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX18 Mode</variableref>
+                    <relation>ne</relation>
+                    <value>32</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>AUX18 Mode</variableref>
+                    <relation>le</relation>
+                    <value>33</value>
                 </qualifier>
                 <decVal max="31"/>
                 <label xml:lang="de">Stärke des Kupplers</label>
@@ -5745,7 +6245,7 @@
         </variables>
     </variables>
     <!-- Headlight [2] Mode -->
-    <variable label="Headlight [2] Mode" CV="16.0.419" default="1" item="ESU V4 Function Output HL-2 effect generated" mask="XXXVVVVV">
+    <variable label="Headlight [2] Mode" CV="16.0.419" default="1" item="ESU V4 Function Output HL-2 effect generated">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
         <!--label xml:lang="de">Licht vorn - 2</label-->
     </variable>
@@ -5829,8 +6329,33 @@
     <variable label="Coupler Force" CV="16.0.422" default="31" item="ESU V4 Function Output HL-2 Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>Headlight [2] Mode</variableref>
-            <relation>eq</relation>
+            <relation>ge</relation>
             <value>28</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>29</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>30</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>31</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>32</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Headlight [2] Mode</variableref>
+            <relation>le</relation>
+            <value>33</value>
         </qualifier>
         <decVal max="31"/>
         <label xml:lang="de">Stärke des Kupplers</label>
@@ -6027,7 +6552,7 @@
         <decVal max="127"/>
     </variable>
     <!-- Rearlight [2] Mode -->
-    <variable label="Rearlight [2] Mode" CV="16.0.427" default="1" item="ESU V4 Function Output RL-2 effect generated" mask="XXXVVVVV">
+    <variable label="Rearlight [2] Mode" CV="16.0.427" default="1" item="ESU V4 Function Output RL-2 effect generated">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.428" default="0" item="ESU V4 Function Output RL-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -6110,8 +6635,33 @@
     <variable label="Coupler Force" CV="16.0.430" default="31" item="ESU V4 Function Output RL-2 Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>Rearlight [2] Mode</variableref>
-            <relation>eq</relation>
+            <relation>ge</relation>
             <value>28</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>29</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>30</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>31</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>32</value>
+        </qualifier>
+        <qualifier>
+            <variableref>Rearlight [2] Mode</variableref>
+            <relation>le</relation>
+            <value>33</value>
         </qualifier>
         <decVal max="31"/>
         <label xml:lang="de">Stärke des Kupplers</label>
@@ -6308,7 +6858,7 @@
         <decVal max="127"/>
     </variable>
     <!-- AUX1 [2] Mode -->
-    <variable label="AUX1 [2] Mode" CV="16.0.435" default="1" item="ESU V4 Function Output A1-2 effect generated" mask="XXXVVVVV">
+    <variable label="AUX1 [2] Mode" CV="16.0.435" default="1" item="ESU V4 Function Output A1-2 effect generated">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.436" default="0" item="ESU V4 Function Output A1-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -6391,8 +6941,33 @@
     <variable label="Coupler Force" CV="16.0.438" default="31" item="ESU V4 Function Output A1-2 Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>AUX1 [2] Mode</variableref>
-            <relation>eq</relation>
+            <relation>ge</relation>
             <value>28</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>29</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>30</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>31</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>32</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX1 [2] Mode</variableref>
+            <relation>le</relation>
+            <value>33</value>
         </qualifier>
         <decVal max="31"/>
         <label xml:lang="de">Stärke des Kupplers</label>
@@ -6589,7 +7164,7 @@
         <decVal max="127"/>
     </variable>
     <!-- AUX2 [2] Mode -->
-    <variable label="AUX2 [2] Mode" CV="16.0.443" default="1" item="ESU V4 Function Output A2-2 effect generated" mask="XXXVVVVV">
+    <variable label="AUX2 [2] Mode" CV="16.0.443" default="1" item="ESU V4 Function Output A2-2 effect generated">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.444" default="0" item="ESU V4 Function Output A2-2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
@@ -6672,8 +7247,33 @@
     <variable label="Coupler Force" CV="16.0.446" default="31" item="ESU V4 Function Output A2-2 Slider 7" mask="XXXVVVVV">
         <qualifier>
             <variableref>AUX2 [2] Mode</variableref>
-            <relation>eq</relation>
+            <relation>ge</relation>
             <value>28</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>29</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>30</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>31</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [2] Mode</variableref>
+            <relation>ne</relation>
+            <value>32</value>
+        </qualifier>
+        <qualifier>
+            <variableref>AUX2 [2] Mode</variableref>
+            <relation>le</relation>
+            <value>33</value>
         </qualifier>
         <decVal max="31"/>
         <label xml:lang="de">Stärke des Kupplers</label>

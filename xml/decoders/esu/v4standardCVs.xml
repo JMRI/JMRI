@@ -705,7 +705,7 @@
         <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
-    <variables include="ESU LokSound V4.0">
+    <variables include="ESU LokSound V4.0,LokSound Select direct / micro">
         <xi:include href="http://jmri.org/xml/decoders/esu/susiMapCVs.xml"/>
     </variables>
 </variables>

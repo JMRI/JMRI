@@ -1815,7 +1815,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     if (s != null) {
                         // update sensor system name in case it changed
                         sensorName = s.getSystemName();
-                        sensor1Box.setSelectedItem(sensorName);
+                        sensor1Box.setSelectedItem(s);
                     }
                 }
             }
@@ -1891,7 +1891,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                         if (t != null) {
                             // update turnout system name in case it changed
                             turnoutName = t.getSystemName();
-                            turnoutBox.setSelectedItem(turnoutName);
+                            turnoutBox.setSelectedItem(t);
                         }
                     }
                 }
@@ -1930,7 +1930,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     if (s != null) {
                         // update sensor system name in case it changed
                         triggerSensorName = s.getSystemName();
-                        sensorOnBox.setSelectedItem(triggerSensorName);
+                        sensorOnBox.setSelectedItem(s);
                     }
                 }
             }
@@ -1966,7 +1966,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     if (s != null) {
                         // update sensor system name in case it changed
                         sensorName = s.getSystemName();
-                        sensor1Box.setSelectedItem(sensorName);
+                        sensor1Box.setSelectedItem(s);
                     }
                 }
                 s2 = InstanceManager.sensorManagerInstance().
@@ -1978,7 +1978,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     if (s2 != null) {
                         // update sensor system name in case it changed
                         sensor2Name = s2.getSystemName();
-                        sensor2Box.setSelectedItem(sensor2Name);
+                        sensor2Box.setSelectedItem(s2);
                     }
                 }
             }
@@ -2094,7 +2094,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         switch (ctType) {
             case Light.SENSOR_CONTROL:
                 setUpControlType(Light.SENSOR_CONTROL);
-                sensor1Box.setSelectedItem(lc.getControlSensorName());
+                sensor1Box.setSelectedItemByName(lc.getControlSensorName());
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 if (lc.getControlSensorSense() == Sensor.INACTIVE) {
                     stateBox.setSelectedIndex(sensorInactiveIndex);
@@ -2113,7 +2113,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 break;
             case Light.TURNOUT_STATUS_CONTROL:
                 setUpControlType(Light.TURNOUT_STATUS_CONTROL);
-                turnoutBox.setSelectedItem(lc.getControlTurnoutName());
+                turnoutBox.setSelectedItemByName(lc.getControlTurnoutName());
                 stateBox.setSelectedIndex(turnoutClosedIndex);
                 if (lc.getControlTurnoutState() == Turnout.THROWN) {
                     stateBox.setSelectedIndex(turnoutThrownIndex);
@@ -2122,13 +2122,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
             case Light.TIMED_ON_CONTROL:
                 setUpControlType(Light.TIMED_ON_CONTROL);
                 int duration = lc.getTimedOnDuration();
-                sensorOnBox.setSelectedItem(lc.getControlTimedOnSensorName());
+                sensorOnBox.setSelectedItemByName(lc.getControlTimedOnSensorName());
                 timedOnSpinner.setValue(duration);
                 break;
             case Light.TWO_SENSOR_CONTROL:
                 setUpControlType(Light.TWO_SENSOR_CONTROL);
-                sensor1Box.setSelectedItem(lc.getControlSensorName());
-                sensor2Box.setSelectedItem(lc.getControlSensor2Name());
+                sensor1Box.setSelectedItemByName(lc.getControlSensorName());
+                sensor2Box.setSelectedItemByName(lc.getControlSensor2Name());
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 if (lc.getControlSensorSense() == Sensor.INACTIVE) {
                     stateBox.setSelectedIndex(sensorInactiveIndex);
