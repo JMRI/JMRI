@@ -197,7 +197,6 @@ public class FrmMainForm extends JFrame {
 
         _mPresentlyDefinedColumns.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         _mPresentlyDefinedColumns.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 _mPresentlyDefinedColumnsValueChanged(evt);
             }
@@ -206,7 +205,6 @@ public class FrmMainForm extends JFrame {
 
         addButton.setText(Bundle.getMessage("ButtonAdd"));
         addButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
             }
@@ -214,7 +212,6 @@ public class FrmMainForm extends JFrame {
 
         deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
             }
@@ -222,7 +219,6 @@ public class FrmMainForm extends JFrame {
 
         _mSIDI_Enabled.setText(Bundle.getMessage("LabelEnabled"));
         _mSIDI_Enabled.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSIDI_EnabledActionPerformed(evt);
             }
@@ -230,7 +226,6 @@ public class FrmMainForm extends JFrame {
 
         _mEdit_SIDI.setText(Bundle.getMessage("ButtonEdit"));
         _mEdit_SIDI.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_SIDIActionPerformed(evt);
             }
@@ -242,7 +237,6 @@ public class FrmMainForm extends JFrame {
 
         _mSIDL_Enabled.setText(Bundle.getMessage("LabelEnabled"));
         _mSIDL_Enabled.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSIDL_EnabledActionPerformed(evt);
             }
@@ -250,7 +244,6 @@ public class FrmMainForm extends JFrame {
 
         _mEdit_SIDL.setText(Bundle.getMessage("ButtonEdit"));
         _mEdit_SIDL.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_SIDLActionPerformed(evt);
             }
@@ -260,7 +253,6 @@ public class FrmMainForm extends JFrame {
 
         _mSWDI_Enabled.setText(Bundle.getMessage("LabelEnabled"));
         _mSWDI_Enabled.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSWDI_EnabledActionPerformed(evt);
             }
@@ -268,7 +260,6 @@ public class FrmMainForm extends JFrame {
 
         _mEdit_SWDI.setText(Bundle.getMessage("ButtonEdit"));
         _mEdit_SWDI.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_SWDIActionPerformed(evt);
             }
@@ -278,7 +269,6 @@ public class FrmMainForm extends JFrame {
 
         _mSWDL_Enabled.setText(Bundle.getMessage("LabelEnabled"));
         _mSWDL_Enabled.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSWDL_EnabledActionPerformed(evt);
             }
@@ -286,7 +276,6 @@ public class FrmMainForm extends JFrame {
 
         _mEdit_SWDL.setText(Bundle.getMessage("ButtonEdit"));
         _mEdit_SWDL.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_SWDLActionPerformed(evt);
             }
@@ -296,7 +285,6 @@ public class FrmMainForm extends JFrame {
 
         _mCO_Enabled.setText(Bundle.getMessage("LabelEnabled"));
         _mCO_Enabled.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCO_EnabledActionPerformed(evt);
             }
@@ -304,7 +292,6 @@ public class FrmMainForm extends JFrame {
 
         _mEdit_CO.setText(Bundle.getMessage("ButtonEdit"));
         _mEdit_CO.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_COActionPerformed(evt);
             }
@@ -314,7 +301,6 @@ public class FrmMainForm extends JFrame {
 
         _mTUL_Enabled.setText(Bundle.getMessage("LabelEnabled"));
         _mTUL_Enabled.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mTUL_EnabledActionPerformed(evt);
             }
@@ -322,7 +308,6 @@ public class FrmMainForm extends JFrame {
 
         _mEdit_TUL.setText(Bundle.getMessage("ButtonEdit"));
         _mEdit_TUL.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_TULActionPerformed(evt);
             }
@@ -332,7 +317,6 @@ public class FrmMainForm extends JFrame {
 
         _mIL_Enabled.setText(Bundle.getMessage("LabelEnabled"));
         _mIL_Enabled.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mIL_EnabledActionPerformed(evt);
             }
@@ -340,7 +324,6 @@ public class FrmMainForm extends JFrame {
 
         _mEdit_IL.setText(Bundle.getMessage("ButtonEdit"));
         _mEdit_IL.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_ILActionPerformed(evt);
             }
@@ -348,7 +331,6 @@ public class FrmMainForm extends JFrame {
 
         reapplyPatternsButton.setText(Bundle.getMessage("ButtonReapplyItem"));
         reapplyPatternsButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reapplyPatternsButtonActionPerformed(evt);
             }
@@ -358,7 +340,6 @@ public class FrmMainForm extends JFrame {
 
         _mTRL_Enabled.setText(Bundle.getMessage("LabelEnabled"));
         _mTRL_Enabled.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mTRL_EnabledActionPerformed(evt);
             }
@@ -366,7 +347,6 @@ public class FrmMainForm extends JFrame {
 
         _mEdit_TRL.setText(Bundle.getMessage("ButtonEdit"));
         _mEdit_TRL.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_TRLActionPerformed(evt);
             }
@@ -376,7 +356,6 @@ public class FrmMainForm extends JFrame {
 
         _mEdit_CB.setText(Bundle.getMessage("ButtonEdit"));
         _mEdit_CB.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_CBActionPerformed(evt);
             }
@@ -386,7 +365,6 @@ public class FrmMainForm extends JFrame {
 
         changeNumbersButton.setText(Bundle.getMessage("ButtonChange"));
         changeNumbersButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeNumbersButtonActionPerformed(evt);
             }
@@ -394,7 +372,6 @@ public class FrmMainForm extends JFrame {
 
         _mButtonWriteXMLFiles.setText(Bundle.getMessage("ButtonXmlFiles"));
         _mButtonWriteXMLFiles.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mButtonWriteXMLFilesActionPerformed(evt);
             }
@@ -402,7 +379,6 @@ public class FrmMainForm extends JFrame {
 
         _mMoveUp.setText(Bundle.getMessage("ButtonMoveUp"));
         _mMoveUp.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mMoveUpActionPerformed(evt);
             }
@@ -410,7 +386,6 @@ public class FrmMainForm extends JFrame {
 
         _mMoveDown.setText(Bundle.getMessage("ButtonMoveDown"));
         _mMoveDown.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mMoveDownActionPerformed(evt);
             }
@@ -418,7 +393,6 @@ public class FrmMainForm extends JFrame {
 
         _mCheckEverythingWithJMRI.setText(Bundle.getMessage("ButtonCheck"));
         _mCheckEverythingWithJMRI.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCheckEverythingWithJMRIActionPerformed(evt);
             }
@@ -434,7 +408,6 @@ public class FrmMainForm extends JFrame {
         _mNew.setAccelerator(getAccelerator(KeyEvent.VK_N));
         _mNew.setText(Bundle.getMessage("MenuNew"));
         _mNew.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mNewActionPerformed(evt);
             }
@@ -444,7 +417,6 @@ public class FrmMainForm extends JFrame {
         _mSave.setAccelerator(getAccelerator(KeyEvent.VK_S));
         _mSave.setText(Bundle.getMessage("MenuSave"));
         _mSave.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveActionPerformed(evt);
             }
@@ -454,7 +426,6 @@ public class FrmMainForm extends JFrame {
         _mQuitWithoutSaving.setAccelerator(getAccelerator(KeyEvent.VK_E));
         _mQuitWithoutSaving.setText(Bundle.getMessage("MenuExit"));
         _mQuitWithoutSaving.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mQuitWithoutSavingActionPerformed(evt);
             }
@@ -468,7 +439,6 @@ public class FrmMainForm extends JFrame {
         _mFindAndReplace.setAccelerator(getAccelerator(KeyEvent.VK_F));
         _mFindAndReplace.setText(Bundle.getMessage("MenuFind"));
         _mFindAndReplace.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mFindAndReplaceActionPerformed(evt);
             }
@@ -477,7 +447,6 @@ public class FrmMainForm extends JFrame {
 
         _mFixErrors.setText(Bundle.getMessage("MenuFix"));
         _mFixErrors.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mFixErrorsActionPerformed(evt);
             }
@@ -490,7 +459,6 @@ public class FrmMainForm extends JFrame {
 
         _mDebugging.setText(Bundle.getMessage("MenuDebugging"));
         _mDebugging.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDebuggingActionPerformed(evt);
             }
@@ -499,7 +467,6 @@ public class FrmMainForm extends JFrame {
 
         _mDefaults.setText(Bundle.getMessage("MenuDefaults"));
         _mDefaults.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDefaultsActionPerformed(evt);
             }
@@ -508,7 +475,6 @@ public class FrmMainForm extends JFrame {
 
         _mFleeting.setText(Bundle.getMessage("MenuFleeting"));
         _mFleeting.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mFleetingActionPerformed(evt);
             }
@@ -517,7 +483,6 @@ public class FrmMainForm extends JFrame {
 
         _mPatterns.setText(Bundle.getMessage("MenuPatterns"));
         _mPatterns.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mPatternsActionPerformed(evt);
             }
@@ -526,7 +491,6 @@ public class FrmMainForm extends JFrame {
 
         _mGUIDesign.setText(Bundle.getMessage("MenuDesign"));
         _mGUIDesign.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mGUIDesignActionPerformed(evt);
             }
@@ -539,7 +503,6 @@ public class FrmMainForm extends JFrame {
 
         _mHelpAbout.setText(Bundle.getMessage("MenuAbout"));
         _mHelpAbout.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mHelpAboutActionPerformed(evt);
             }
@@ -619,10 +582,11 @@ public class FrmMainForm extends JFrame {
                                     .addComponent(_mButtonWriteXMLFiles)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(deleteButton)
-                                                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(4, 4, 4)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(_mCheckEverythingWithJMRI))
                                         .addComponent(changeNumbersButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(reapplyPatternsButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
