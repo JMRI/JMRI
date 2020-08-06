@@ -58,7 +58,11 @@ public class ProjectsCommonSubs {
     static public String constructSSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, ProjectsCommonSubs.SSV_SEPARATOR); }
     static private String constructSeparatorStringFromArray(ArrayList<String> list, char separator) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator).withRecordSeparator(null))) {
+=======
+        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator))) {
+>>>>>>> parent of c9e18652c5... GB Finally learned how to configure CVSPrinter and CSVParser to not use
 =======
         try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator))) {
 >>>>>>> parent of c9e18652c5... GB Finally learned how to configure CVSPrinter and CSVParser to not use
