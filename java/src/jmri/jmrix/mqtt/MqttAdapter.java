@@ -74,7 +74,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             if (clientID.length() > 23) {
                 clientID = clientID.substring(clientID.length() - 23);
             }
-            String tempdirName = jmri.util.FileUtil.getExternalFilename("profile:");
+            String tempdirName = jmri.util.FileUtil.getExternalFilename(jmri.util.FileUtil.PROFILE);
             log.debug("will use {} as temporary directory", tempdirName);
             
             mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), 
