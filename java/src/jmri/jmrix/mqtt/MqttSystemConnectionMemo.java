@@ -27,8 +27,8 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
 
         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
         jmri.InstanceManager.setSensorManager(getSensorManager());
+        jmri.InstanceManager.setLightManager(getLightManager());
 
-//        jmri.InstanceManager.setLightManager(getLightManager());
 //        jmri.InstanceManager.setReporterManager(getReporterManager());
 
         register();
@@ -65,6 +65,18 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
                     MqttSensorManager t = new MqttSensorManager(this);
                     t.setSendTopicPrefix(getMqttAdapter().getOptionState("11.3"));
                     t.setRcvTopicPrefix(getMqttAdapter().getOptionState("11.5"));
+                    return t;
+                });
+    }
+
+    public MqttLightManager getLightManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (MqttLightManager) classObjectMap.computeIfAbsent(LightManager.class,(Class c) -> {
+                    MqttLightManager t = new MqttLightManager(this);
+                    t.setSendTopicPrefix(getMqttAdapter().getOptionState("12.3"));
+                    t.setRcvTopicPrefix(getMqttAdapter().getOptionState("12.5"));
                     return t;
                 });
     }
