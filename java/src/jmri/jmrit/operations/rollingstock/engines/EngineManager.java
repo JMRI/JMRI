@@ -106,7 +106,9 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
             Consist newConsist = newConsist(newName);
             // keep the lead engine
             Engine leadEngine = oldConsist.getLead();
-            leadEngine.setConsist(newConsist);
+            if (leadEngine != null) {
+                leadEngine.setConsist(newConsist);
+            }
             for (Engine engine : oldConsist.getEngines()) {
                 engine.setConsist(newConsist);
             }

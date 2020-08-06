@@ -136,12 +136,12 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editRoadButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.ROAD, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.ROAD, f.carAttributeEditFrame._attribute);
 
         // now change to car type
         JemmyUtil.enterClickAndLeave(f.editTypeButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -156,7 +156,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editTypeButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -171,7 +171,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editColorButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.COLOR, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.COLOR, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -186,7 +186,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editLengthButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.LENGTH, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.LENGTH, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -201,7 +201,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editOwnerButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.OWNER, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.OWNER, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -216,7 +216,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editGroupButton);
         Assert.assertTrue(f.carAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", CarAttributeEditFrame.KERNEL, f.carAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.KERNEL, f.carAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.carAttributeEditFrame);
         JUnitUtil.dispose(f);

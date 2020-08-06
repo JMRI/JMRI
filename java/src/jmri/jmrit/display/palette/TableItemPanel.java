@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DragSourceDropEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -21,12 +22,21 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jmri.NamedBean;
+import jmri.jmrit.beantable.AbstractTableAction;
+import jmri.jmrit.beantable.TurnoutTableAction;
+import jmri.jmrit.beantable.SensorTableAction;
+import jmri.jmrit.beantable.LightTableAction;
+import jmri.jmrit.beantable.ReporterTableAction;
+import jmri.jmrit.beantable.SignalHeadTableAction;
+import jmri.jmrit.beantable.SignalMastTableAction;
+import jmri.jmrit.beantable.MemoryTableAction;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LightIcon;
 import jmri.jmrit.display.SensorIcon;
+import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.TurnoutIcon;
 import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
@@ -45,6 +55,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
 
     protected JTable _table;
     protected PickListModel<E> _model;
+    AbstractTableAction<E> _tableAction;
 
     JScrollPane _scrollPane;
     JDialog _addTableDialog;
@@ -61,9 +72,11 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
      * @param family      icon family
      * @param model       list model
      */
+    @SuppressWarnings("unchecked")
     public TableItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<E> model) {
         super(parentFrame, type, family);
         _model = model;
+        _tableAction = (AbstractTableAction<E>)getTableAction(type);
     }
 
     /**
@@ -74,7 +87,6 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
         if (!_initialized) {
             super.init();
             add(initTablePanel(_model), 0); // top of Panel
-            _buttonPosition = 1;
         }
         hideIcons();
     }
@@ -85,17 +97,33 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
      */
     @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
-        add(initTablePanel(_model), 0);
-        _buttonPosition = 1;
         super.init(doneAction, iconMap);
+        add(initTablePanel(_model), 0);
     }
 
+    private AbstractTableAction<?> getTableAction(String type) {
+        if (type.equals("Turnout") || type.equals("IndicatorTO")) {
+            return new TurnoutTableAction(Bundle.getMessage("CreateNewItem"));
+        } else if (type.equals("Sensor") || type.equals("MultiSensor")) {
+            return new SensorTableAction(Bundle.getMessage("CreateNewItem"));
+        } else if (type.equals("SignalHead")) {
+            return new SignalHeadTableAction(Bundle.getMessage("CreateNewItem"));
+        } else if (type.equals("SignalMast")) {
+            return new SignalMastTableAction(Bundle.getMessage("CreateNewItem"));
+        } else if (type.equals("Memory")) {
+            return new MemoryTableAction(Bundle.getMessage("CreateNewItem"));
+        } else if (type.equals("Light")) {
+            return new LightTableAction(Bundle.getMessage("CreateNewItem"));
+        } else if (type.equals("Reporter")) {
+            return new ReporterTableAction(Bundle.getMessage("CreateNewItem"));
+        }
+        return null;
+    }
     /*
      * Top Panel.
      */
     protected JPanel initTablePanel(PickListModel<E> model) {
         _table = model.makePickTable();
-        _table.getSelectionModel().addListSelectionListener(this);
         ROW_HEIGHT = _table.getRowHeight();
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -108,7 +136,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
 
         JPanel panel = new JPanel();
         _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
-        _addTableButton.addActionListener(a -> makeAddToTableWindow());
+        _addTableButton.addActionListener(_tableAction);
         _addTableButton.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
         panel.add(_addTableButton);
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
@@ -119,6 +147,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
         clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
+        _table.getSelectionModel().addListSelectionListener(this);
         _table.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         _scrollPane.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
@@ -241,15 +270,34 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
     }
 
     protected E getDeviceNamedBean() {
-        if (_table == null) {
-            return null;
-        }
         int row = _table.getSelectedRow();
         log.debug("getDeviceNamedBean: from table \"{}\" at row {}", _itemType, row);
         if (row < 0) {
             return null;
         }
         return _model.getBySystemName((String) _table.getValueAt(row, 0));
+    }
+
+    @Override
+    protected String getDisplayKey() {
+        if (_itemType.equals("Turnout")) {
+            return "TurnoutStateClosed";
+        }
+        if (_itemType.equals("Sensor")) {
+            return "SensorStateActive";
+        }
+        if (_itemType.equals("Light")) {
+            return "StateOn";
+        }
+        return null;
+    }
+
+    @Override
+    public void dispose() {
+        if (_tableAction != null) {
+            _tableAction.dispose();
+        }
+        super.dispose();
     }
 
     /** {@inheritDoc} */
@@ -289,6 +337,7 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
             if (bean == null) {
                 return null;
             }
+//            jmri.NamedBeanHandle<E> bh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(bean.getDisplayName(), bean);
 
             Editor editor = _frame.getEditor();
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
@@ -311,6 +360,11 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
                     s.setFamily(_family);
                     s.setLevel(Editor.SENSORS);
                     return s;
+                } else if (_itemType.equals("SignalMast")) {
+                    SignalMastIcon sm = new SignalMastIcon(_frame.getEditor());
+                    sm.setSignalMast(bean.getDisplayName());
+                    sm.setLevel(Editor.SIGNALS);
+                    return sm;
                 } else if (_itemType.equals("Light")) {
                     LightIcon l = new LightIcon(editor);
                     l.setOffIcon(iMap.get("StateOff"));
@@ -333,5 +387,4 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
     }
 
     private final static Logger log = LoggerFactory.getLogger(TableItemPanel.class);
-
 }
