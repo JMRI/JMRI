@@ -40,10 +40,10 @@
 
       <p>This help page describes the overall structure. There
       are separate pages for <a href="LocoNetClock.shtml">LocoNet
-      clocks</a> and <a href=
+      clocks</a>, <a href=
       "../../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">
-      NCE clocks</a>. As yet, we don't have interfaces for clocks
-      in other DCC systems.</p>
+      NCE clocks</a> and <a href=
+      "../../../html/hardware/can/cbus/CbusFastClock.shtml">MERG CBUS clocks</a>.</p>
 
       <p>There are two different parts to consider: A "Timebase"
       provides the basic time information, while one or more
@@ -67,13 +67,13 @@
       <h2>Fast Clock Display</h2>
 
       <p>Once you have created a timebase by configuring it in that
-      window, you can open clocks that will display on your screen.
-      Currently, JMRI has three types available:</p>
+      window, you can open clocks that will display on your screen,
+      all with an optional pause/run button.</p>
 
       <ul>
         <li>Analog clock - the traditional circular clock with
         hands. You can resize it by dragging the window edges.
-        There's also a pause/run button.</li>
+        </li>
         <li>Nixie clock - a digital clock that looks like the
         old-style Nixie tubes</li>
         <li>Panel clock - you can also embed a clock in a panel
