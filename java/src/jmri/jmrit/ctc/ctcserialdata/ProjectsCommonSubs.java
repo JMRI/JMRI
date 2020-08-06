@@ -6,10 +6,7 @@ import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.ListIterator;
-
 import javax.swing.ButtonGroup;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -21,24 +18,20 @@ import org.apache.commons.csv.CSVPrinter;
 
 public class ProjectsCommonSubs {
     static final public char SSV_SEPARATOR = ';';
-    static final public char CSV_SEPARATOR = ',';   // What "CSVFormat.DEFAULT.getDelimiter()" would return.
     
-    static public ArrayList<String> getArrayListFromCSV(String csvString) {
-        ArrayList<String> result = helper1(csvString, CSV_SEPARATOR);
-        return result;
-    }
+    static public ArrayList<String> getArrayListFromCSV(String csvString) { return helper1(csvString, CSVFormat.DEFAULT.getDelimiter());}
     static public ArrayList<String> getArrayListFromSSV(String ssvString) { return helper1(ssvString, SSV_SEPARATOR); }
     static private ArrayList<String> helper1(String ssvString, char separator) {
         ArrayList<String> list = new ArrayList<>();
-        try (CSVParser parser = new CSVParser(new StringReader(ssvString), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator).withRecordSeparator(null))) {
+        try (CSVParser parser = new CSVParser(new StringReader(ssvString), CSVFormat.DEFAULT.withQuote('"').withDelimiter(separator).withRecordSeparator(null))) {
             parser.getRecords().forEach(record -> record.forEach(item -> list.add(item)));
         } catch (IOException ex) {
             log.error("Unable to parse {}", ssvString, ex);
         }
         return list;
     }
-    
-//  Returns an ArrayList guaranteed to have A MINIMUM of "returnArrayListSize" entries (too many is OK!),
+
+//  Returns an ArrayList guaranteed to have exactly "returnArrayListSize" entries,
 //  and if the passed "csvString" has too few entries, then those missing end values are set to "":
     static public ArrayList<String> getFixedArrayListSizeFromCSV(String csvString, int returnArrayListSize) {
         ArrayList<String> returnArray = getArrayListFromCSV(csvString);
@@ -52,20 +45,10 @@ public class ProjectsCommonSubs {
         return returnValue;
     }
 
-    static public String constructCSVStringFromArrayList(ArrayList<String> stringArrayList) { 
-        return constructSeparatorStringFromArray(stringArrayList, ProjectsCommonSubs.CSV_SEPARATOR);
-    }
+    static public String constructCSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, CSVFormat.DEFAULT.getDelimiter()); }
     static public String constructSSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, ProjectsCommonSubs.SSV_SEPARATOR); }
     static private String constructSeparatorStringFromArray(ArrayList<String> list, char separator) {
-<<<<<<< HEAD
-<<<<<<< HEAD
         try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator).withRecordSeparator(null))) {
-=======
-        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator))) {
->>>>>>> parent of c9e18652c5... GB Finally learned how to configure CVSPrinter and CSVParser to not use
-=======
-        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator))) {
->>>>>>> parent of c9e18652c5... GB Finally learned how to configure CVSPrinter and CSVParser to not use
             printer.printRecord(list);
             return printer.getOut().toString().replace("\r\n","");
         } catch (IOException ex) {

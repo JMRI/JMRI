@@ -13,7 +13,7 @@ import jmri.jmrit.ctc.topology.TopologyInfo;
 public class TrafficLockingEntry {
     public String _mUserRuleNumber;
     public String _mRuleEnabled;
-    public String _mDestinationSignalOrComment;
+    public final String _mDestinationSignalOrComment;
     public String _mUserText1;
     public final String _mSwitchAlignment1;
     public String _mUserText2;
@@ -24,17 +24,17 @@ public class TrafficLockingEntry {
     public final String _mSwitchAlignment4;
     public String _mUserText5;
     public final String _mSwitchAlignment5;
-    public String _mOccupancyExternalSensor1;
-    public String _mOccupancyExternalSensor2;
-    public String _mOccupancyExternalSensor3;
-    public String _mOccupancyExternalSensor4;
-    public String _mOccupancyExternalSensor5;
-    public String _mOccupancyExternalSensor6;
-    public String _mOccupancyExternalSensor7;
-    public String _mOccupancyExternalSensor8;
-    public String _mOccupancyExternalSensor9;
-    public String _mOptionalExternalSensor1;
-    public String _mOptionalExternalSensor2;
+    public final String _mOccupancyExternalSensor1;
+    public final String _mOccupancyExternalSensor2;
+    public final String _mOccupancyExternalSensor3;
+    public final String _mOccupancyExternalSensor4;
+    public final String _mOccupancyExternalSensor5;
+    public final String _mOccupancyExternalSensor6;
+    public final String _mOccupancyExternalSensor7;
+    public final String _mOccupancyExternalSensor8;
+    public final String _mOccupancyExternalSensor9;
+    public final String _mOptionalExternalSensor1;
+    public final String _mOptionalExternalSensor2;
     public String _mUniqueID1;
     public String _mUniqueID2;
     public String _mUniqueID3;
@@ -74,7 +74,7 @@ public class TrafficLockingEntry {
     private static final int UNIQUE_ID4_INDEX = 29;
     private static final int UNIQUE_ID5_INDEX = 30;
     private static final int ARRAY_SIZE = 31;
-    
+
     public TrafficLockingEntry(String csvString) {
         ArrayList<String> arrayListOfStrings = ProjectsCommonSubs.getFixedArrayListSizeFromCSV(csvString, ARRAY_SIZE);
         _mUserRuleNumber = arrayListOfStrings.get(USER_RULE_NUMBER_INDEX);
@@ -252,35 +252,5 @@ public class TrafficLockingEntry {
         newValueArrayList.set(UNIQUE_ID4_INDEX, _mUniqueID4);
         newValueArrayList.set(UNIQUE_ID5_INDEX, _mUniqueID5);
         return ProjectsCommonSubs.constructCSVStringFromArrayList(newValueArrayList);
-    }
-    
-    public void convertNonEscapeToEscape() {
-        _mDestinationSignalOrComment = EscapeSupport.convertNonEscapeToEscape(_mDestinationSignalOrComment);
-        _mOccupancyExternalSensor1 = EscapeSupport.convertNonEscapeToEscape(_mOccupancyExternalSensor1);
-        _mOccupancyExternalSensor2 = EscapeSupport.convertNonEscapeToEscape(_mOccupancyExternalSensor2);
-        _mOccupancyExternalSensor3 = EscapeSupport.convertNonEscapeToEscape(_mOccupancyExternalSensor3);
-        _mOccupancyExternalSensor4 = EscapeSupport.convertNonEscapeToEscape(_mOccupancyExternalSensor4);
-        _mOccupancyExternalSensor5 = EscapeSupport.convertNonEscapeToEscape(_mOccupancyExternalSensor5);
-        _mOccupancyExternalSensor6 = EscapeSupport.convertNonEscapeToEscape(_mOccupancyExternalSensor6);
-        _mOccupancyExternalSensor7 = EscapeSupport.convertNonEscapeToEscape(_mOccupancyExternalSensor7);
-        _mOccupancyExternalSensor8 = EscapeSupport.convertNonEscapeToEscape(_mOccupancyExternalSensor8);
-        _mOccupancyExternalSensor9 = EscapeSupport.convertNonEscapeToEscape(_mOccupancyExternalSensor9);
-        _mOptionalExternalSensor1 = EscapeSupport.convertNonEscapeToEscape(_mOptionalExternalSensor1);
-        _mOptionalExternalSensor2 = EscapeSupport.convertNonEscapeToEscape(_mOptionalExternalSensor2);
-    }
-    
-    public void convertEscapeToNonEscape() {
-        _mDestinationSignalOrComment = EscapeSupport.convertEscapeToNonEscape(_mDestinationSignalOrComment);
-        _mOccupancyExternalSensor1 = EscapeSupport.convertEscapeToNonEscape(_mOccupancyExternalSensor1);
-        _mOccupancyExternalSensor2 = EscapeSupport.convertEscapeToNonEscape(_mOccupancyExternalSensor2);
-        _mOccupancyExternalSensor3 = EscapeSupport.convertEscapeToNonEscape(_mOccupancyExternalSensor3);
-        _mOccupancyExternalSensor4 = EscapeSupport.convertEscapeToNonEscape(_mOccupancyExternalSensor4);
-        _mOccupancyExternalSensor5 = EscapeSupport.convertEscapeToNonEscape(_mOccupancyExternalSensor5);
-        _mOccupancyExternalSensor6 = EscapeSupport.convertEscapeToNonEscape(_mOccupancyExternalSensor6);
-        _mOccupancyExternalSensor7 = EscapeSupport.convertEscapeToNonEscape(_mOccupancyExternalSensor7);
-        _mOccupancyExternalSensor8 = EscapeSupport.convertEscapeToNonEscape(_mOccupancyExternalSensor8);
-        _mOccupancyExternalSensor9 = EscapeSupport.convertEscapeToNonEscape(_mOccupancyExternalSensor9);
-        _mOptionalExternalSensor1 = EscapeSupport.convertEscapeToNonEscape(_mOptionalExternalSensor1);
-        _mOptionalExternalSensor2 = EscapeSupport.convertEscapeToNonEscape(_mOptionalExternalSensor2);
     }
 }

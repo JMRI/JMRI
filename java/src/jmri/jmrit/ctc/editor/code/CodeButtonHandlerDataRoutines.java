@@ -1,8 +1,6 @@
 package jmri.jmrit.ctc.editor.code;
 
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import static jmri.jmrit.ctc.ctcserialdata.EscapeSupport.convertNonEscapeToEscape;
-import static jmri.jmrit.ctc.ctcserialdata.EscapeSupport.convertEscapeToNonEscape;
 
 /**
  *
@@ -11,7 +9,6 @@ import static jmri.jmrit.ctc.ctcserialdata.EscapeSupport.convertEscapeToNonEscap
  * The purpose of this module is to support patterned information
  * in CodeButtonHandlerData objects.  It is also a "factory" to produce
  * new CodeButtonHandlerData objects from those patterns..
- * It also handles Escape Support for all fields for specific forms.
  */
 public class CodeButtonHandlerDataRoutines {
     public static CodeButtonHandlerData createNewCodeButtonHandlerData(int newUniqueID, int newSwitchNumber, int newSignalEtcNumber, int newGUIColumnNumber, ProgramProperties programProperties) {
@@ -104,18 +101,6 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mTUL_DispatcherInternalSensorLockToggle = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mTUL_DispatcherInternalSensorLockTogglePattern);
         returnValue._mTUL_DispatcherInternalSensorUnlockedIndicator = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mTUL_DispatcherInternalSensorUnlockedIndicatorPattern);
         return returnValue;
-    }
-    
-    public static void convertNonEscapeToEscape_CB(CodeButtonHandlerData codeButtonHandlerData) {
-        codeButtonHandlerData._mCodeButtonInternalSensor = convertNonEscapeToEscape(codeButtonHandlerData._mCodeButtonInternalSensor);
-        codeButtonHandlerData._mOSSectionOccupiedExternalSensor = convertNonEscapeToEscape(codeButtonHandlerData._mOSSectionOccupiedExternalSensor);
-        codeButtonHandlerData._mOSSectionOccupiedExternalSensor2 = convertNonEscapeToEscape(codeButtonHandlerData._mOSSectionOccupiedExternalSensor2);
-    }
-    
-    public static void convertEscapeToNonEscape_CB(CodeButtonHandlerData codeButtonHandlerData) {
-        codeButtonHandlerData._mCodeButtonInternalSensor = convertEscapeToNonEscape(codeButtonHandlerData._mCodeButtonInternalSensor);
-        codeButtonHandlerData._mOSSectionOccupiedExternalSensor = convertEscapeToNonEscape(codeButtonHandlerData._mOSSectionOccupiedExternalSensor);
-        codeButtonHandlerData._mOSSectionOccupiedExternalSensor2 = convertEscapeToNonEscape(codeButtonHandlerData._mOSSectionOccupiedExternalSensor2);
     }
     
 /*  This is the "heart" of the pattern match system: It substitutes the passed
