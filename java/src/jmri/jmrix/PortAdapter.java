@@ -136,6 +136,13 @@ public interface PortAdapter {
     public String[] getOptionChoices(String option);
 
     /**
+     * Should this option be represented by a text field
+     * (as opposed to a JCombobox)
+     * @return true for text representation preferred
+     */
+    public default boolean isOptionTypeText(String option) { return false; }
+    
+    /**
      * Get the system manufacturer's name.
      *
      * @return manufacturer's name
