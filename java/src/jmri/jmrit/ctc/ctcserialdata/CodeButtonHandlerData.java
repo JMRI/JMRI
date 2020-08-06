@@ -322,7 +322,7 @@ at the top for "automatic" JMRI object verification.
      * by this change in the Java library.  The result was lines like:
      * Hurricane X-over Track 1 West,LEFTTRAFFIC,Flashing Red,,Hurricane Track 1,IS5:SWNI,IS3:SWNI,IS1:SWNI,,,;;;;Hurricane X-over Track 1 West,LEFTTRAFFIC,Flashing Red,,Hurricane Track 2,IS5:SWNI,IS3:SWNI,IS1:SWRI,,,;;;;Hurricane X-over Track 1 East,RIGHTTRAFFIC,Flashing Red,,East Hurricane Track 1,IS1:SWNI,IS3:SWNI,IS5:SWNI,,,;;;;Hurricane X-over Track 1 East,RIGHTTRAFFIC,Flashing Red,,East Hurricane Track 2,IS1:SWNI,IS3:SWNI,IS5:SWRI,IS7:SWNI,,
      * You'll notice here (and other places in the line) that there are multiple ;;;; in a row                ^^^^ ...-> also
-     * caused by this library problem.  What I will do here is fix any multiple ;;;; to a single ;:
+     * caused by this.  What I will do here is fix any multiple ;;;; to a single ;:
      * @param filename The .xml file to convert from version 5 format to version 6 format.
      */
     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")

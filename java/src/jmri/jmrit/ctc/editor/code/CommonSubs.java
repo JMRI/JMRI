@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Vector;
+
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
+
 import jmri.InstanceManager;
 import jmri.BlockManager;
 import jmri.SensorManager;
@@ -27,6 +29,8 @@ import jmri.TurnoutManager;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
+import static jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs.convertNonEscapeToEscape;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
@@ -87,9 +91,9 @@ public class CommonSubs {
                 }
             }
         }
-        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT)) {
+        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(ProjectsCommonSubs.CSV_SEPARATOR).withRecordSeparator(null))) {
             printer.printRecord(entries);
-            return printer.getOut().toString().replace("\r\n","");
+            return ProjectsCommonSubs.convertEscapeToNonEscape(printer.getOut().toString());
         } catch (IOException ex) {
             log.error("Unable to create CSV", ex);
             return "";
