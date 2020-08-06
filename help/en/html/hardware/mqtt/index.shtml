@@ -85,6 +85,15 @@
         save your changes and restart the program; the program
         won't continue to operate normally after changing the base prefix
         until you restart it.
+        <p>Note that the default value of "/trains/" is the default for 
+        all JMRI instances.  If you use a common broker (like the
+        http://test.mosquitto.org test server mentioned below) keeping
+        that default prefix will show you traffic from every other JMRI 
+        instance connected to that broker.  You should probably
+        change that default to something like your own railroad name.
+        You might also want to omit the leading slash; it's present in the
+        default for historical reasons, but the MQTT authorities
+        recommend not having a slash there.
         
         <p>
         You can change the type-specific part of the prepended string using
