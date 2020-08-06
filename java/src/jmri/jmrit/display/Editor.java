@@ -24,7 +24,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
@@ -74,7 +73,6 @@ import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
-import jmri.jmrit.display.palette.DecoratorPanel;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.Roster;
@@ -2820,78 +2818,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         if (log.isDebugEnabled()) {
             log.debug("modifySelectionGroup: size= {}, selection {}", _selectionGroup.size(), (removed ? "removed" : "added"));
-        }
-    }
-
-    protected boolean setTextAttributes(Positionable p, JPopupMenu popup) {
-        if (p.getPopupUtility() == null) {
-            return false;
-        }
-        popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
-            Positionable comp;
-            Editor ed;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                (new TextAttrDialog(comp, ed)).setVisible(true);
-            }
-
-            AbstractAction init(Positionable pos, Editor e) { // e unused?
-                comp = pos;
-                ed = e;
-                return this;
-            }
-        }.init(p, this));
-        return true;
-    }
-
-    public class TextAttrDialog extends DisplayFrame {
-
-        public Positionable _pos;
-        public DecoratorPanel _decorator;
-
-        public TextAttrDialog(Positionable p, Editor ed) {
-            super(Bundle.getMessage("TextAttributes"), ed);
-            _pos = p;
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _decorator = new DecoratorPanel(this);
-            _decorator.initDecoratorPanel(_pos);
-            panel.add(_decorator);
-            panel.add(makeDoneButtonPanel());
-            Dimension dim = panel.getPreferredSize();
-            JScrollPane sp = new JScrollPane(panel);
-            dim = new Dimension(dim.width +10, dim.height + 10);
-            sp.setPreferredSize(dim);
-            setContentPane(sp);
-            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_pos.getEditor(), (Component)_pos, this);
-            pack();
-        }
-
-        protected JPanel makeDoneButtonPanel() {
-            JPanel panel0 = new JPanel();
-            panel0.setLayout(new FlowLayout());
-            JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
-            doneButton.addActionListener(a -> {
-                PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
-                _decorator.setAttributes(_pos);
-                if (_selectionGroup != null) {
-                    setSelectionsAttributes(util, _pos);
-                } else {
-                    setAttributes(util, _pos);
-                }
-                _decorator.close();
-               dispose();
-            });
-            panel0.add(doneButton);
-
-            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-            cancelButton.addActionListener(a -> {
-                _decorator.close();
-                dispose();
-            });
-            panel0.add(cancelButton);
-            return panel0;
         }
     }
 

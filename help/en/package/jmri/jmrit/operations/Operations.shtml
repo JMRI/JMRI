@@ -225,6 +225,8 @@
         <li><a href="#ChangeTrackType">Change Track Type</a></li>
 
         <li><a href="#ShowTrainsServicingThisTrack">Show Trains Servicing this track</a></li>
+        
+        <li><a href="#ShowCars">Show Cars</a></li>
        </ul></li>
 
       <li><a href="#LocationsTools">Locations Tools</a>
@@ -293,6 +295,7 @@
 
        <ul>
         <li><a href="#LocomotiveModels">Locomotive Models</a></li>
+        
         <li><a href="#LocomotiveConsists">Locomotive Consists</a></li>
        </ul></li>
 
@@ -344,12 +347,24 @@
         <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
 
         <li><a href="#TrainScripts">Scripts</a></li>
+        
+        <li><a href="#CopyTrain">Copy Train</a></li>
+        
+        <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced (Diagnostic Tool)</a></li>
 
         <li><a href="#TrainConductor">Train Conductor</a></li>
+        
+        <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a></li>
        </ul>
       <li><a href="#TrainsTools">Trains Tools</a>
 
        <ul>
+        <li><a href="#SettingsOptions">Options</a>
+        
+        <li><a href="#PrintOptions">Manifest Print Options</a>
+        
+        <li><a href="#BuildReportDetails">Build Report Options</a></li>
+
         <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
 
         <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced (Diagnostic Tool)</a></li>
@@ -361,10 +376,20 @@
         <li><a href="#TrainSchedules">Train Schedules</a></li>
 
         <li><a href="#Automation">Automation</a></li>
+        
+        <li><a href="#TrainsCopyTrain">Copy Train</a></li>
+        
+        <li><a href="#TrainsScripts">Scripts</a></li>
+        
+        <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a></li>
 
         <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
+        
+        <li><a href="#ExportTrains">Export to File</a></li>
 
-        <li><a href="#ExportTimetable">Export Timetable</a></li>
+        <li><a href="#ExportTimetable">Export Timetable Data</a></li>
+        
+        <li><a href="#ExportTrainLineups">Export Train Lineups</a></li>
        </ul></li>
 
       <li><a href="#SwitcherService">Switcher Service (Local)</a></li>
@@ -5011,6 +5036,16 @@
 
    <p>This is the end of the automation section.</p>
 
+   <a name="TrainsCopyTrain" id="TrainsCopyTrain"></a>
+   <h4>Copy Train</h4>
+   This tool allows you to copy an existing train. Enter a new name for the train you wish to copy,
+   then select the train you want to copy, then press the "Copy" button.
+   
+   <a name="TrainsScripts" id="TrainScripts"></a>
+   <h4>Scripts</h4>
+   You can run a script when starting and / or shutting down OperationsPro. Use the "Add Script" buttons to
+   select the scripts you want to run. 
+   
    <a name="PrintSavedTrainManifests" id="PrintSavedTrainManifests"></a>
    <h4>Print or Preview Saved Train Manifests</h4>
    <p>
@@ -5042,10 +5077,14 @@
     Creator)". You must also enable the creation of CSV switch list files, see <a
      href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more information.
    </p>
+   
+   <a name="ExportTrains" id="ExportTrains"></a>
+   <h4>Export Trains</h4>
+   The export Trains tool produces a comma separated values (.csv) file for the trains selected in the "Build" column.
 
    <a name="ExportTimetable" id="ExportTimetable"></a>
-   <h4>Export Timetable</h4>
-   The export Timetable tool produces comma separated values (.csv) file for the Timetable application. You can also use
+   <h4>Export Timetable Data</h4>
+   The export Timetable tool produces a comma separated values (.csv) file for the Timetable application. You can also use
    the "Import from OperationsPro..." found in the Timetable application to create and import in one step. The
    OperationsPro&trade; export creates a "Segment" called "Locations" based on an alphabetical list of location names, or if
    you create a route named "Timetable", produces a segment of locations based on the route's location order. 
@@ -5060,6 +5099,11 @@
     between 1 and 4 minutes.
    </p>
 
+   <a name="ExportTrainLineups" id="ExportTrainLineups"></a>
+   <h4>Export Train Lineups</h4>
+   The export Trains Lineups tool produces a comma separated values (.csv) file for built trains
+   that are also selected in the "Build" column. 
+   
    <a name="SwitcherService" id="SwitcherService"></a>
    <h3>Switcher Service (Local)</h3>
    Many operators assign a locomotive to a location to do the local switching. Using the location's

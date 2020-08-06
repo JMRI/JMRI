@@ -40,6 +40,7 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor.TargetPane;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.IndicatorTrack;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
@@ -219,6 +220,10 @@ public class CircuitBuilder {
         });
         _todoMenu = new JMenu(Bundle.getMessage("circuitErrorsItem"));
         _circuitMenu.add(_todoMenu);
+
+        editItem = makePortalIconMenu();
+        _circuitMenu.add(editItem);
+
         JMenuItem helpItem = new JMenuItem(Bundle.getMessage("AboutCircuitBuilder"));
         HelpUtil.getGlobalHelpBroker().enableHelpOnButton(helpItem, "package.jmri.jmrit.display.CircuitBuilder", null);
         _circuitMenu.add(helpItem);
@@ -238,6 +243,32 @@ public class CircuitBuilder {
         _darkTrack.remove(pos);
         // if (log.isDebugEnabled()) log.debug("addIcon: block "+block.getDisplayName()+" has "+icons.size()+" icons.");
     }
+
+    private JMenu makePortalIconMenu() {
+        JMenu familyMenu = new JMenu(Bundle.getMessage("portalIconSet"));
+        ActionListener portalIconAction = (ActionEvent event) -> {
+            String family = event.getActionCommand();
+            if (!family.equals(_editor.getPortalIconFamily())) {
+                closeCBWindow();
+                _editor.setPortalIconFamily(family);
+                for (Positionable pos : _editor.getContents()) {
+                    if (pos instanceof PortalIcon) {
+                        PortalIcon pIcon = (PortalIcon) pos;
+                        pIcon.setMap(_editor.getPortalIconMap());
+                    }
+                }
+            }
+        };
+        HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps("Portal");
+        for (String family : familyMap.keySet()) {
+            JMenuItem mi = new JMenuItem(family);
+            mi.setActionCommand(family);
+            mi.addActionListener(portalIconAction);
+            familyMenu.add(mi);
+        }
+        return familyMenu; 
+    }
+
 
     // Rebuild after any edit change
     private void makeToDoMenu() {
@@ -1489,6 +1520,9 @@ public class CircuitBuilder {
     protected void closeCBWindow() {
         if (_cbFrame !=null) {
             _cbFrame.dispose();
+        }
+        if (_editFrame != null) {
+            _editFrame.closingEvent(true, null);
         }
     }
     
