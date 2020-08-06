@@ -7,18 +7,15 @@ import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- *
  * @author Paul Bender Copyright (C) 2017
  */
 public class PortalManagerTest {
@@ -65,10 +62,9 @@ public class PortalManagerTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testChangeNames() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -80,7 +76,6 @@ public class PortalManagerTest {
 
         Warrant warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant("WestToEast");
         assertThat(warrant).withFailMessage("warrant").isNotNull();
-//        List<BlockOrder> orders = warrant.getBlockOrders();
         BlockOrder order =  warrant.getBlockOrders().get(3);
         OBlock blockOB6 = order.getBlock();
         Portal portal = _portalMgr.getPortal("MidWestToMiddle");
@@ -106,12 +101,10 @@ public class PortalManagerTest {
         NXFrameTest.setAndConfirmSensorAction(sensor1, Sensor.ACTIVE, _OBlockMgr.getBySystemName("OB1"));
         // WarrantTable.runTrain() returns a string that is not null if the 
         // warrant can't be started 
-        Assert.assertNull("Warrant starts",
-              tableFrame.runTrain(warrant, Warrant.MODE_RUN)); // start run
+        assertThat(tableFrame.runTrain(warrant, Warrant.MODE_RUN)).withFailMessage("Warrant starts").isNull(); // start run
 
-        Warrant w = warrant;
         jmri.util.JUnitUtil.waitFor(() -> {
-            String m =  w.getRunningMessage();
+            String m =  warrant.getRunningMessage();
             return m.endsWith("Cmd #8.");
         }, "Train starts to move at 8th command");
 

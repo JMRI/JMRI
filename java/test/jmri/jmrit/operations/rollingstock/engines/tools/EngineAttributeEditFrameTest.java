@@ -1,16 +1,16 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.text.MessageFormat;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the Operations Engines GUI class
@@ -112,7 +112,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeave(f.addButton);
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorEngineLength"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }
@@ -138,7 +138,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         // should cause error dialog to appear
         JemmyUtil.enterClickAndLeave(f.addButton);
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorEngineLength"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorRsLength"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }
@@ -154,7 +154,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("A");
         JemmyUtil.enterClickAndLeave(f.addButton);
 
-        jmri.util.JUnitAppender.assertErrorMessage("length not an integer");
+        jmri.util.JUnitAppender.assertErrorMessage("length (A) is not an integer");
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
 
         // check for the value "A" 
@@ -166,7 +166,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         f.addTextBox.setText("-1");
         JemmyUtil.enterClickAndLeave(f.addButton);
 
-        jmri.util.JUnitAppender.assertErrorMessage("engine length has to be a positive number");
+        jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
 
         // check for the value "-1" 

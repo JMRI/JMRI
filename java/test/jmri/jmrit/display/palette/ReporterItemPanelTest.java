@@ -26,6 +26,7 @@ public class ReporterItemPanelTest {
         JUnitUtil.dispose(df);
     }
 
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,6 +35,7 @@ public class ReporterItemPanelTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
