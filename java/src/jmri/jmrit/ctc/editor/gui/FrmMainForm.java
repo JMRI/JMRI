@@ -13,7 +13,6 @@ Set look and feel at design:
 https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
 At runtime (dynamic):
 https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html#dynamic
-
 */
 package jmri.jmrit.ctc.editor.gui;
 
