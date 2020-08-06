@@ -76,6 +76,9 @@
 
         <h4>MQTT</h4>
             <ul>
+                <li>The MQTT temporary directory has been moved to the current profile directory.
+                    This will allow JMRI to have MQTT connections even when JMRI is installed
+                    in a protected location.
                 <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
                 <li>When status UNKNOWN or INCONSISTENT is received from MQTT and the turnout operating mode is MONITORING or EXACT, the layout is now updated with this status</li>
                 <li>When EXACT feedback mode is selected, two different MQTT topics will be used - one for commands and one for state</li>
@@ -336,7 +339,15 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>The DecoderPro programming/editing screens now have a Find operation!
+                <p>
+                Ctrl-F or Cmd-F will open a small find bar at the bottom of the pane
+                where you can enter a search string.  Hitting Return will find the first 
+                occurrence. There are right and left arrows to find the next occurrence forward
+                and backwards respectively.  Ctrl-G or Cmd-G will also find the next forward
+                occurance. The "Done" button will dismiss the 
+                bar, but you can leave it up without it interferring.
+            </li>
         </ul>
 
    <h3>Dispatcher</h3>
