@@ -1209,7 +1209,7 @@
                 <label xml:lang="it">Frequenza oscillazione</label>
                 <label xml:lang="cs">Rozkladová frekvence</label>
                 <tooltip xml:lang="it">Valori da 1 (alto) a 10 (basso)</tooltip>
-                <tooltip xml:lang="cs">Meze od 1 (vyská) do 10 (nízká)</tooltip>
+                <tooltip xml:lang="cs">Meze od 1 (vysoká) do 10 (nízká)</tooltip>
             </variable>
             <variable CV="57" default="10" item="Dither option" tooltip="Practical range is 5 (low) to 50 (high)">
                 <decVal/>

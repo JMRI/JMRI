@@ -25,7 +25,7 @@ public class MultiSensorIconDialogTest {
         EditorScaffold editor = new EditorScaffold("ED");
         DisplayFrame df = new DisplayFrame("Indicator TO Icon Dialog Test", editor); // NOI18N
         MultiSensorItemPanel mip = new MultiSensorItemPanel(df,"IS01","",tableModel);
-        MultiSensorIconDialog t = new MultiSensorIconDialog("MultiSensor","MultiSensor",mip,null); // NOI18N
+        MultiSensorIconDialog t = new MultiSensorIconDialog("MultiSensor","MultiSensor",mip); // NOI18N
         Assert.assertNotNull("exists",t); // NOI18N
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);

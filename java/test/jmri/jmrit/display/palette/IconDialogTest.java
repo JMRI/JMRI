@@ -25,7 +25,7 @@ public class IconDialogTest {
         EditorScaffold editor = new EditorScaffold("Editor");
         DisplayFrame df = new DisplayFrame("Icon Dialog Test", editor);
         TableItemPanel<Turnout> tip = new TableItemPanel<>(df,"IS01","",tableModel);
-        IconDialog t = new IconDialog("Icon","Icon",tip,null);
+        IconDialog t = new IconDialog("Icon","Icon",tip);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);

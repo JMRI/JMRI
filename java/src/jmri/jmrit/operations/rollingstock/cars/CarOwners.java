@@ -39,7 +39,7 @@ public class CarOwners extends RollingStockAttribute implements InstanceManagerA
     public void replaceName(String oldName, String newName) {
         super.addName(newName);
         setDirtyAndFirePropertyChange(CAROWNERS_NAME_CHANGED_PROPERTY, oldName, newName);
-        super.deleteName(newName);
+        super.deleteName(oldName);
     }
 
     /**

@@ -116,7 +116,8 @@ which checks the dates of the control files to make sure they've benen updated w
 - from https://github.com/networknt/json-schema-validator/releases
 
 ##### mqtt-client-0.4.0.jar
-starting in JMRI 4.11.5
+ - Eclipse Paho library  https://www.eclipse.org/paho/
+ - starting in JMRI 4.11.5
 
 ##### BlueCove access to bluetooth
 bluecove-2.1.1-SNAPSHOT.jar

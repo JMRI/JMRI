@@ -108,7 +108,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip>Read-Only, 42 = Digirails/Digikeijs</tooltip>
             </variable>
             <!-- CV29 via nmra include in line 79 -->
-            <variable item="Presets4018" CV="47" mask="XXXXXXVV" writeOnly="yes" default="0" include="4018">
+            <variable item="Presets4018" CV="47" mask="XXXXVVVV" writeOnly="yes" default="0" include="4018">
                 <enumVal>
                     <enumChoice choice="0">
                         <choice>8x Solenoid Turnout</choice>
