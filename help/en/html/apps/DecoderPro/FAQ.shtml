@@ -32,7 +32,9 @@
 
       <p>This page is the JMRI DecoderPro "frequently asked
       questions" list. Items get listed here if they're asked a
-      lot, even if they're also available somewhere else.</p>
+      lot, even if they're also available somewhere else.
+      See also the <a href="../../FAQ.shtml">JMRI general FAQ.</a>
+      </p>
 
       <dl class="faq">
         <dt class="on" id="newdecoder">How
