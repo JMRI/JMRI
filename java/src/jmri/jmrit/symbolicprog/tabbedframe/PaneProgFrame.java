@@ -362,7 +362,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
    
-   // Search succeeded, go to the result
+    // Search didn't find anything at all
+    protected void searchDidNotFind() {
+         java.awt.Toolkit.getDefaultToolkit().beep(); 
+    }
+    
+    // Search succeeded, go to the result
     protected void searchGoesTo(SearchPair result) {
         tabPane.setSelectedComponent(result.tab);
         if (result.label != null) {
@@ -414,7 +419,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 nextSearchTarget++;
             }
             
-            // not found, wrap
+            // end reached, wrap
             nextSearchTarget = 0;
             while (nextSearchTarget < startingSearchTarget) {
                 if ( checkSearchTarget(nextSearchTarget, target)) {
@@ -424,7 +429,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                 }
                 nextSearchTarget++;
             }
-            
+            // not found
+            searchDidNotFind();            
         }
     };
     
@@ -450,7 +456,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 nextSearchTarget--;
             }
             
-            // not found, wrap
+            // start reached, wrap
             nextSearchTarget = searchTargetList.size()-1;
             while (nextSearchTarget > startingSearchTarget) {
                 if ( checkSearchTarget(nextSearchTarget, target)) {
@@ -460,14 +466,15 @@ abstract public class PaneProgFrame extends JmriJFrame
                 }
                 nextSearchTarget--;
             }
-            
+            // not found
+            searchDidNotFind();
         }
     };
 
-    // Invoked when search is done
+    // Invoked when search bar Done is pressed
     private Runnable searchDoneTask = new Runnable() {
         public void run() {
-            log.debug("done search");
+            log.debug("done with search bar");
             searchBar.setVisible(false);
         }
     };
