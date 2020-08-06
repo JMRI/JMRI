@@ -251,13 +251,6 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
         return Bundle.getMessage("BeanNameRoute");
     }
 
-    @Override
-    protected void showPopup(MouseEvent e) {
-    /*Routes do not get references by other parts of the code, we therefore
-     do not need to worry about controlling how the username is changed
-     */
-    }
-
     private static final Logger log = LoggerFactory.getLogger(RouteTableDataModel.class);
 
 }

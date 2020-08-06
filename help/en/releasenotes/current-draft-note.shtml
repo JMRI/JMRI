@@ -70,11 +70,15 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>When the connection is lost to a GridConnect Serial Device ( eg. CANUSB4 losing power /
+                Windows Sleep Modes ), JMRI will periodically attempt to reconnect to the device.</li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
+                <li>The MQTT temporary directory has been moved to the current profile directory.
+                    This will allow JMRI to have MQTT connections even when JMRI is installed
+                    in a protected location.
                 <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
                 <li>When status UNKNOWN or INCONSISTENT is received from MQTT and the turnout operating mode is MONITORING or EXACT, the layout is now updated with this status</li>
                 <li>When EXACT feedback mode is selected, two different MQTT topics will be used - one for commands and one for state</li>
@@ -335,7 +339,15 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>The DecoderPro programming/editing screens now have a Find operation!
+                <p>
+                Ctrl-F or Cmd-F will open a small find bar at the bottom of the pane
+                where you can enter a search string.  Hitting Return will find the first 
+                occurrence. There are right and left arrows to find the next occurrence forward
+                and backwards respectively.  Ctrl-G or Cmd-G will also find the next forward
+                occurance. The "Done" button will dismiss the 
+                bar, but you can leave it up without it interferring.
+            </li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -398,14 +410,44 @@
             </ul>
         <h4>Palette</h4>
             <a id="CPE-P" name="CPE-P"></a>
+            Some minor changes are made to the user interface.
             <ul>
-                <li></li>
+                <li>
+                  For the tabs having icon sets, i.e. turnouts, sensors, etc., should all icon sets be deleted,
+                  a 'Restore Default' button is displayed to reinstall the default icons.
+                </li><li>
+                  The above restoration feature can be done at any time by holding keys CNTL A down while 
+                  clicking the 'New Icons' button.  All customized icon sets defined by the user are retained
+                  and any missing default icons are added.
+                </li><li>
+                  The unused functions to create, delete, or restore the status states of Indicator Turnouts 
+                  are now only displayable by holding keys CNTL A down while clicking the 'Edit Icons' button.
+                </li><li>
+                  Several new checks and alerts will inform users when duplicate names are used for 
+                  icon sets or when duplicate icon sets are found with different names.
+                </li><li>
+                  The fixed set of Portal icons may be redefined by the user under the 'Portal' tab.
+                  Portal icon sets created by the user may be selected for panels by a new menu item, 
+                  'Change Portal Icon Set' in Circuit Builder. The new set is then used for Warrant displays.
+                </li><li>
+                  The drag and drop of icons under the 'Icon' and 'Background' tabs no longer requires naming 
+                  the icon first. The drop from the Icon catalog can be done directly into the panel.
+                </li><li>
+				  The tabs having tables now display the element's actual table editing window when the 
+				  'Add New Table Item' button is pressed.
+                </li><li>
+                  Editing an icon set for an Indicator Turnout now follows the same paradigm as the rest of 
+                  the tabs having icon sets.
+                </li>
             </ul>
    
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>When a hardware connection fails, some hardware types may attempt to reconnect.<br>
+            The interval between reconnection attempts and the maximum number of reconnection attempts
+            can now be changed by saving your profile, then editing the profile.xml file.<br>
+            The reconnectMaxInterval is in seconds, reconnectMaxAttempts is infinite if -1, else the value.</li>
         </ul>
 
     <h3>Resources</h3>
