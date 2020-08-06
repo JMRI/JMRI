@@ -138,6 +138,7 @@ public interface PortAdapter {
     /**
      * Should this option be represented by a text field
      * (as opposed to a JCombobox)
+     * @param option Name of the option to check
      * @return true for text representation preferred
      */
     public default boolean isOptionTypeText(String option) { return false; }
