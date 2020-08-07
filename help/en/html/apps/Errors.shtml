@@ -36,8 +36,7 @@
       lists the error message that can result, and describes what
       they mean.</p>
 
-      <h2><a href="../html/setup/Errors.shtml">JMRI Error
-      Codes</a></h2>
+      <h2>JMRI Error Codes</h2>
 
       <dl>
         <dt><strong>301 - no locomotive detected</strong></dt>
