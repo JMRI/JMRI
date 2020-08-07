@@ -257,9 +257,9 @@ public class CTCMain {
         }
         
 //  Finally, display errors to the user:
-        if (!_mCTCExceptionBuffer.isEmpty()) {
-            //!!!!
-        }
+//        if (!_mCTCExceptionBuffer.isEmpty()) {
+//            //!!!!
+//        }
     }
 
 //  One shot routine:
