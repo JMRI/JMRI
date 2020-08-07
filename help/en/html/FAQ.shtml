@@ -166,7 +166,7 @@
         <dd>
         Yes.  You can have multiple connections to multiple DCC controllers, to networks of accessory controllers, etc.  See 
         <a href="../package/apps/TabbedPreferences.shtml#Connection">here </a>for
-        information on how to set up multiple connections. For a complete list of all hardware supported, see here.
+        information on how to set up multiple connections. For a complete list of all hardware supported, see<a href="hardware/index.shtml"> here</a>.
         </dd>
 
         <dt id="problem">What if I have a problem using JMRI?</dt>
