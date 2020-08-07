@@ -141,7 +141,7 @@ public interface PortAdapter {
      * @param option Name of the option to check
      * @return true for text representation preferred
      */
-    public default boolean isOptionTypeText(String option) { return false; }
+    public boolean isOptionTypeText(String option);
     
     /**
      * Get the system manufacturer's name.

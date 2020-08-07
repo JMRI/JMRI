@@ -42,7 +42,6 @@ public abstract class AbstractPortControllerTestBase {
 
     public static class AbstractPortControllerScaffold extends AbstractPortController {
 
-
         public AbstractPortControllerScaffold(SystemConnectionMemo memo) {
             super(memo);
         }
