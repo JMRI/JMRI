@@ -72,7 +72,7 @@ public class ProgramProperties {
     private static final String NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS = "_mCodeButtonDelayTime";// NOI18N
     private static final String NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT = Integer.toString(0);
     public int _mCodeButtonDelayTime = Integer.parseInt(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
-
+            
     public ProgramProperties() {
         try {
             File file = CTCFiles.getFile(PROPERTIES_FILENAME);

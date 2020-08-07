@@ -71,21 +71,22 @@ public class TrafficLocking {
             if (!_mRuleEnabled) return false;    // If disabled, treat as invalid so we skip this rule and try the next rule.
 //  6/22/2020 Bug Fix: Occupancy IS NOT a requirement, since it prevents a follow on move, either thru dispatcher recoding the same
 //                     route again, or with fleeting on.  Besides, the "Vital Relay Logic" signal system prevents problems anyways.
+//  8/?/2020 Bug Fix: Need to consider fleeting enabled.
 //  For all of these, ONLY unoccupied(INACTIVE) is "valid".  ACTIVE, INCONSISTENT and UNKNOWN all are considered occupied (ACTIVE):
             if (!fleetingEnabled) {
-                if (_mOccupancyExternalSensor1.getKnownState() != Sensor.INACTIVE) return false;
-                if (_mOccupancyExternalSensor2.getKnownState() != Sensor.INACTIVE) return false;
-                if (_mOccupancyExternalSensor3.getKnownState() != Sensor.INACTIVE) return false;
-                if (_mOccupancyExternalSensor4.getKnownState() != Sensor.INACTIVE) return false;
-                if (_mOccupancyExternalSensor5.getKnownState() != Sensor.INACTIVE) return false;
-                if (_mOccupancyExternalSensor6.getKnownState() != Sensor.INACTIVE) return false;
-                if (_mOccupancyExternalSensor7.getKnownState() != Sensor.INACTIVE) return false;
-                if (_mOccupancyExternalSensor8.getKnownState() != Sensor.INACTIVE) return false;
-                if (_mOccupancyExternalSensor9.getKnownState() != Sensor.INACTIVE) return false;
+                if (_mOccupancyExternalSensor1.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor2.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor3.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor4.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor5.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor6.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor7.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor8.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor9.getKnownState() != Sensor.INACTIVE) return false;
             }
-            if (!_mSwitchIndicatorsRoute.isRouteSelected()) return false;
-            if (!isOptionalSensorActive(_mOptionalSensor1)) return false;
-            if (!isOptionalSensorActive(_mOptionalSensor2)) return false;
+            if (!_mSwitchIndicatorsRoute.isRouteSelected()
+            || !isOptionalSensorActive(_mOptionalSensor1)
+            || !isOptionalSensorActive(_mOptionalSensor2)) return false;
             return true;
         }
 

@@ -45,6 +45,13 @@
       layout. As you may already know, CTC is just a layer on top of ABS.
       </p>
 
+      <p>
+      <strong>Important</strong>: System and User names for JMRI table items
+      used by the CTC system, such as Sensors, Turnouts, Blocks, Signals, etc.,
+      cannot have comma or semi-colon characters in the name.  You will need to
+      rename such objects in JMRI tables editors before continuing.
+      </p>
+      
       <h2>Overview</h2>
       <p>
       The CTC system consists of three main components.  The first one is the
