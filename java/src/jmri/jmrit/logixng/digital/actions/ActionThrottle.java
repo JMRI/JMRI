@@ -106,13 +106,6 @@ public class ActionThrottle extends AbstractDigitalAction
                 
                 _throttleListener =  new ThrottleListener() {
                     @Override
-                    @Deprecated
-                    public void notifyStealThrottleRequired(LocoAddress address) {
-//                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
-                        log.warn("Loco {} cannot be aquired. Decision required.", address.getNumber());
-                    }
-
-                    @Override
                     public void notifyThrottleFound(DccThrottle t) {
                         _throttle = t;
                         executeConditionalNG();

@@ -739,12 +739,6 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         }
         
         @Override
-        @Deprecated
-        public void notifyStealThrottleRequired(LocoAddress address) {
-            log.error("Loco {} cannot be aquired. Decision required.", address.getNumber());
-        }
-
-        @Override
         public void notifyThrottleFound(DccThrottle t) {
             _myThrottleRef.set(t);
         }
