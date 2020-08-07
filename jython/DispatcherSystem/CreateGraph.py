@@ -2,7 +2,7 @@
 import sys
 import jmri
 import os
-my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython\DispatcherSystem\jars\jgrapht.jar')
+my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
 sys.path.append(my_path_to_jars) # add the jar to your path
 ##http://www.java2s.com/Code/Jar/j/Downloadjgraphtjar.htm
 from org.jgrapht.graph import DefaultEdge

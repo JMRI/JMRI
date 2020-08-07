@@ -151,37 +151,41 @@ class processXML():
         return True
             
     def check_all_blocks_have_sensors(self):
+        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         list_of_errors = []
         success = True
         for block in blocks.getNamedBeanSet():
             if block.getSensor() == None:
-                if block.getUserName() != None:
-                    msg = "block {} does not have a sensor".format(block.getUserName())
-                else:
-                    msg = "block {} does not have a sensor".format(block.getSystemName())
-                    msg = msg + "\nblock {} does not have a username".format(block.getSystemName())
-                list_of_errors.append(msg)
-                self.msg = ""
-                for message in list_of_errors:
-                    self.msg = self.msg +"\n" + message
-                success = False
+                if LayoutBlockManager.getLayoutBlock(block) != None:    #only include blocks included in a layout panel
+                    if block.getUserName() != None:                     #all layout blocks have usernames, should not need this check
+                        msg = "block {} does not have a sensor".format(block.getUserName())
+                    else:
+                        msg = "block {} does not have a sensor".format(block.getSystemName())
+                        msg = msg + "\nblock {} does not have a username".format(block.getSystemName())
+                    list_of_errors.append(msg)
+                    self.msg = ""
+                    for message in list_of_errors:
+                        self.msg = self.msg +"\n" + message
+                    success = False
         return success
         
     def check_no_blocks_have_same_sensor(self):
+        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         dict = {}
         success = True
         for block in blocks.getNamedBeanSet():
-            if block.getUserName() != None:
-                block_name = block.getUserName()
-            else:
-                block_name = block.getSystemName()
-            sensor = block.getSensor()
-            if sensor != None:
-                if sensor.getUserName() != None:
-                    sensor_name = sensor.getUserName()  
+            if LayoutBlockManager.getLayoutBlock(block) != None:    #only include blocks included in a layout panel
+                if block.getUserName() != None:                     #all layout blocks have usernames, should not need this check
+                    block_name = block.getUserName()
                 else:
-                    sensor_name = sensor.getSystemName()
-                dict[block_name] = sensor_name
+                    block_name = block.getSystemName()
+                sensor = block.getSensor()
+                if sensor != None:
+                    if sensor.getUserName() != None:
+                        sensor_name = sensor.getUserName()  
+                    else:
+                        sensor_name = sensor.getSystemName()
+                    dict[block_name] = sensor_name
 
         list_of_errors = self.get_duplicate_values_in_dict(dict)
         print list_of_errors
@@ -216,23 +220,25 @@ class processXML():
         return result
 
     def check_sufficient_number_of_blocks(self):
+        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         list_of_stops = []
         list_of_blocks = []
         for block in blocks.getNamedBeanSet():
-            if block.getUserName() != None:
-                block_name = block.getUserName()
-            else:
-                block_name = block.getSystemName()
-            comment = str(block.getComment())
-            if comment !=None:
-                if "stop" in comment.lower():
-                    list_of_stops.append("block " + block_name + " has a stop")
-                    print list_of_stops
+            if LayoutBlockManager.getLayoutBlock(block) != None:    #only include blocks included in a layout panel
+                if block.getUserName() != None:                     #all layout blocks have usernames, should not need this check
+                    block_name = block.getUserName()
+                else:
+                    block_name = block.getSystemName()
+                comment = str(block.getComment())
+                if comment !=None:
+                    if "stop" in comment.lower():
+                        list_of_stops.append("block " + block_name + " has a stop")
+                        print list_of_stops
+                    else:
+                        list_of_blocks.append("block " + block_name + " has no stop")
+                        print list_of_blocks
                 else:
                     list_of_blocks.append("block " + block_name + " has no stop")
-                    print list_of_blocks
-            else:
-                list_of_blocks.append("block " + block_name + " has no stop")
         #countthe number of blocks in dictionary
         no_stops = len(list_of_stops)
         print "no_stops", no_stops
@@ -257,17 +263,19 @@ class processXML():
         return success    
             
     def check_all_blocks_have_lengths(self):
+        LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         list_of_errors = []
         success = True
         for block in blocks.getNamedBeanSet():
-            if block.getLengthMm() < 0.01:
-                if block.getUserName() != None:
-                    msg = "block {} does not have a length".format(block.getUserName())
-                else:
-                    msg = "block {} does not have a length".format(block.getSystemName())
-                    msg = msg + "\nblock {} does not have a username".format(block.getSystemName())
-                list_of_errors.append(msg) 
-                success = False
+            if LayoutBlockManager.getLayoutBlock(block) != None:     #only include blocks included in a layout panel
+                if block.getLengthMm() < 0.01:  
+                    if block.getUserName() != None:                 #all layout blocks have usernames, should not need this check
+                        msg = "block {} does not have a length".format(block.getUserName())
+                    else:
+                        msg = "block {} does not have a length".format(block.getSystemName())
+                        msg = msg + "\nblock {} does not have a username".format(block.getSystemName())
+                    list_of_errors.append(msg) 
+                    success = False
         self.msg5 = " - "
         self.msg5 = self.msg5 + '\n - '.join(list_of_errors)               
         

@@ -27,7 +27,7 @@ directory = ""
 #*****************
 # Set Program locations, and include code
 #*****************
-CreateIcons = jmri.util.FileUtil.getExternalFilename('program:jython\DispatcherSystem/CreateIcons.py')
+CreateIcons = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateIcons.py')
 execfile(CreateIcons)
 
 #*****************
@@ -71,8 +71,6 @@ def btnpanelLocation_action(event):
     global run_file
     global start_file
     #print "clicked"
-    #chooser = JFileChooser("Z:\\WallRunDevl.jmri\\dispatcher\\Panels")
-    #print "getUserFilesPath",jmri.util.FileUtil.getUserFilesPath()
     chooser = jmri.configurexml.LoadStoreBaseAction.getUserFileChooser()
     returnVal = chooser.showOpenDialog(frame)
     current_file = str(chooser.getSelectedFile())
@@ -85,18 +83,18 @@ def btnpanelLocation_action(event):
     if "run" not in old_filename and "icons" not in old_filename:
         #print "run not in filepath"
         start_file = current_file
-        icons_file = filepath + "\\" + old_filename + "_icons" + filetype
-        run_file = filepath + "\\" + old_filename + "_run" + filetype
+        icons_file = filepath + "/" + old_filename + "_icons" + filetype
+        run_file = filepath + "/" + old_filename + "_run" + filetype
     else:
         stripped_filename = strip_end(old_filename,"_icons")
         stripped_filename = strip_end(stripped_filename,"_run")
-        start_file = filepath + "\\" + stripped_filename + filetype
-        icons_file = filepath + "\\" + stripped_filename + "_icons" + filetype
-        run_file = filepath + "\\" + stripped_filename + "_run" + filetype
+        start_file = filepath + "/" + stripped_filename + filetype
+        icons_file = filepath + "/" + stripped_filename + "_icons" + filetype
+        run_file = filepath + "/" + stripped_filename + "_run" + filetype
     label_panel_location.text = start_file
     #row13b2.text = icons_file
     row11b2.text = run_file
-    #os.rename(r'filepath\old_filename.file type',r'file path\NEW file name.file type')    
+    #os.rename(r'filepath/old_filename.file type',r'file path/NEW file name.file type')    
    
 row0 = JPanel()
 row0.setLayout(BoxLayout(row0, BoxLayout.X_AXIS))
@@ -284,8 +282,6 @@ def initialise_panel_location():
     global start_filename
     global loaded_filename
     #print "clicked"
-    #chooser = JFileChooser("Z:\\WallRunDevl.jmri\\dispatcher\\Panels")
-    #print "getUserFilesPath",jmri.util.FileUtil.getUserFilesPath()
     chooser = jmri.configurexml.LoadStoreBaseAction.getUserFileChooser()
 
     robot = java.awt.Robot()
@@ -317,8 +313,8 @@ def initialise_panel_location():
     if "run" not in old_filename and "icons" not in old_filename:
         #print "run not in filepath"
         start_file = current_file
-        icons_file = filepath + "\\" + old_filename + "_icons" + filetype
-        run_file = filepath + "\\" + old_filename + "_run" + filetype
+        icons_file = filepath + "/" + old_filename + "_icons" + filetype
+        run_file = filepath + "/" + old_filename + "_run" + filetype
         start_filename = old_filename
         loaded_filename = old_filename
         stage_to_run = "Stage 1"
@@ -326,9 +322,9 @@ def initialise_panel_location():
         stripped_filename = strip_end(old_filename,"_icons")
         stripped_filename = strip_end(stripped_filename,"_run")
         start_filename = stripped_filename
-        start_file = filepath + "\\" + stripped_filename + filetype
-        icons_file = filepath + "\\" + stripped_filename + "_icons" + filetype
-        run_file = filepath + "\\" + stripped_filename + "_run" + filetype
+        start_file = filepath + "/" + stripped_filename + filetype
+        icons_file = filepath + "/" + stripped_filename + "_icons" + filetype
+        run_file = filepath + "/" + stripped_filename + "_run" + filetype
         if "icons" in old_filename:
             loaded_filename = stripped_filename + "_icons"
             stage_to_run = "Stage 2"

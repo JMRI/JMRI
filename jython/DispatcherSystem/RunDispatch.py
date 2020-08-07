@@ -702,12 +702,13 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             
     ##
     # Loads a train into the Dispatcher from a traininfo file, overriding
-    # dccaddress
+    # trainlength to allow train to stop near buffer
     #
     # @param traininfoFileName  the file name of a traininfo file.
     # @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
     # @param overRideValue  "" , dccAddress, RosterEntryName or Operations
     #            trainname.
+    # @param overRideMaxTrainLen
     # @return 0 good, -1 create failure, -2 -3 file errors, -9 bother.
     #
     
