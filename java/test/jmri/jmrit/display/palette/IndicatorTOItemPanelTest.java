@@ -34,6 +34,7 @@ public class IndicatorTOItemPanelTest {
     
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

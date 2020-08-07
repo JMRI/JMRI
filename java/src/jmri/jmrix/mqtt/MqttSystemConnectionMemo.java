@@ -48,14 +48,23 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (MqttTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> new MqttTurnoutManager(this));
+        return (MqttTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> {
+                    MqttTurnoutManager t = new MqttTurnoutManager(this);
+                    t.setTopicPrefix(getMqttAdapter().getOptionState("10"));
+                    return t;
+                });
+                
     }
 
     public MqttSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        return (MqttSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,(Class c) -> new MqttSensorManager(this));
+        return (MqttSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,(Class c) -> {
+                    MqttSensorManager t = new MqttSensorManager(this);
+                    t.setTopicPrefix(getMqttAdapter().getOptionState("11"));
+                    return t;
+                });
     }
 
     void setMqttAdapter(MqttAdapter ma) {

@@ -12,6 +12,8 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +27,7 @@ import org.slf4j.LoggerFactory;
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
 
     private final static String PROTOCOL = "tcp://";
-    private final static String DEFAULT_BASETOPIC = "/trains/";
+    private final static String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
     
     /**
      * Otherwise known as "Channel", this is prepended to the 
@@ -44,14 +46,14 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     public MqttAdapter() {
         super(new MqttSystemConnectionMemo());
         log.debug("Doing ctor...");
-        option2Name = "MQTTchannel";
-        options.put(option2Name, new Option("MQTT channel :", new String[]{baseTopic}));
-        options.put("10", new Option("Turnout topic :", new String[]{"turnout"}));
-        options.put("11", new Option("Sensor topic :", new String[]{"sensor"}));
-        options.put("12", new Option("Light topic :", new String[]{"light"}));
-        options.put("13", new Option("Reporter topic :", new String[]{"reporter"}));
-        options.put("14", new Option("Signal Head topic :", new String[]{"signalhead"}));
-        options.put("15", new Option("Signal Mast topic :", new String[]{"signalmast"}));
+        option2Name = "0 MQTTchannel"; // 0 to get it to the front of the list
+        options.put(option2Name, new Option("MQTT channel: ", new String[]{baseTopic}, Option.Type.TEXT));
+        options.put("10", new Option("Turnout topic :",     new String[]{Bundle.getMessage("TopicTurnout")},  Option.Type.TEXT));
+        options.put("11", new Option("Sensor topic :",      new String[]{Bundle.getMessage("TopicSensor")},   Option.Type.TEXT));
+        options.put("12", new Option("Light topic :",       new String[]{Bundle.getMessage("TopicLight")},    Option.Type.TEXT));
+        options.put("13", new Option("Reporter topic :",    new String[]{Bundle.getMessage("TopicReporter")}, Option.Type.TEXT));
+        options.put("14", new Option("Signal Head topic :", new String[]{Bundle.getMessage("TopicSignalHead")}, Option.Type.TEXT));
+        options.put("15", new Option("Signal Mast topic :", new String[]{Bundle.getMessage("TopicSignalMast")}, Option.Type.TEXT));
         allowConnectionRecovery = true;
     }
 
@@ -68,18 +70,18 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @Override
     @API(status=API.Status.INTERNAL)
     public void connect() throws IOException {
-        log.debug("Doing connect with MQTTchannel = \"{}\"", getOptionState("MQTTchannel"));
+        log.debug("Doing connect with MQTTchannel = \"{}\"", getOptionState(option2Name));
         
         
         try {
-            if (! getOptionState("MQTTchannel").trim().isEmpty()) {
-                baseTopic = getOptionState("MQTTchannel");
+            if ( getOptionState(option2Name)!= null && ! getOptionState(option2Name).trim().isEmpty()) {
+                baseTopic = getOptionState(option2Name);
             }
 
             // have to make that a valid choice, overriding the original above. This
             // is ugly and temporary.
             if (! DEFAULT_BASETOPIC.equals(baseTopic)) {
-                options.put(option2Name, new Option("MQTT channel :", new String[]{baseTopic, DEFAULT_BASETOPIC}));
+                options.put(option2Name, new Option("MQTT channel: ", new String[]{baseTopic, DEFAULT_BASETOPIC}));
             }
 
             //generate a unique client ID based on the network ID and the system prefix of the MQTT connection.
@@ -91,7 +93,12 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             if (clientID.length() > 23) {
                 clientID = clientID.substring(clientID.length() - 23);
             }
-            mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), clientID);
+            String tempdirName = jmri.util.FileUtil.getExternalFilename(jmri.util.FileUtil.PROFILE);
+            log.debug("will use {} as temporary directory", tempdirName);
+            
+            mqttClient = new MqttClient(PROTOCOL + getCurrentPortName(), 
+                                        clientID,
+                                        new MqttDefaultFilePersistence(tempdirName));
             mqttClient.connect();
         } catch (MqttException ex) {
             throw new IOException("Can't create MQTT client", ex);

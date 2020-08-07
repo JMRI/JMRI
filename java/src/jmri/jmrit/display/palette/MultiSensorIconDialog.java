@@ -1,12 +1,9 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
-import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.CatalogTreeManager;
-import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,46 +19,46 @@ public class MultiSensorIconDialog extends IconDialog {
      * Constructor for existing family to change icons, add/delete icons, or to
      * delete the family.
      */
-    public MultiSensorIconDialog(String type, String family, FamilyItemPanel parent,
-            HashMap<String, NamedIcon> iconMap) {
-        super(type, family, parent, iconMap);
+    public MultiSensorIconDialog(String type, String family, FamilyItemPanel parent) {
+        super(type, family, parent);
     }
 
     protected String getIconName() {
         return MultiSensorItemPanel.POSITION[_iconMap.size() - 3];
     }
 
-    /**
+    /*
      * Add/delete icon. For Multisensor, it adds another sensor position.
      */
     @Override
-    protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
+    protected void makeDoneButtonPanel(JPanel buttonPanel, String text) {
+        super.makeDoneButtonPanel(buttonPanel, text);
         JPanel panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
         JButton addSensor = new JButton(Bundle.getMessage("addIcon"));
         addSensor.addActionListener(a -> {
             if (addNewIcon(getIconName())) {
-                InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-                _iconEditPanel.removeAll();
-                makeIconPanel(_iconMap, _iconEditPanel);
-                pack();
+                finishAddDelete();
             }
         });
-        addSensor.setToolTipText(Bundle.getMessage(addTip));
+        addSensor.setToolTipText(Bundle.getMessage("ToolTipAddPosition"));
         panel2.add(addSensor);
 
         JButton deleteSensor = new JButton(Bundle.getMessage("deleteIcon"));
         deleteSensor.addActionListener(a -> {
             if (deleteIcon()) {
-                InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-                _iconEditPanel.removeAll();
-                makeIconPanel(_iconMap, _iconEditPanel);
-                pack();
+                finishAddDelete();
             }
         });
-        deleteSensor.setToolTipText(Bundle.getMessage(deleteTip));
+        deleteSensor.setToolTipText(Bundle.getMessage("ToolTipDeletePosition"));
         panel2.add(deleteSensor);
         buttonPanel.add(panel2);
+    }
+
+    private void finishAddDelete() {
+        _iconEditPanel.removeAll();
+        _parent.addIconsToPanel(_iconMap, _iconEditPanel, true);
+        pack();
     }
 
     @Override

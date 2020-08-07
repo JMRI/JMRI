@@ -127,8 +127,6 @@ from thread import start_new_thread
 
 # JMRI imports
 
-from apps import Apps
-
 from jmri import Block
 from jmri import DccThrottle
 from jmri import InstanceManager
