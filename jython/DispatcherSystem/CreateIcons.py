@@ -8,7 +8,7 @@ from javax.swing import JOptionPane
 
 class processXML():
 
-
+    loglevel = 0
 
     # doc = None
     # doc_moveTo_sensor = None
@@ -19,26 +19,26 @@ class processXML():
     output = None
 
     def __init__(self,filename,finalPanelFilename):
-        print "filename",filename
+        if self.loglevel > 0: print "filename",filename
         self.doc = ET.parse(filename)
          
         if self.perform_initial_checks() == True:
             self.remove_old_sensors_and_icons()
             self.remove_old_memories()
             self.remove_old_transits()
-            # print "removed oldsensors"
+            # if self.loglevel > 0: print "removed oldsensors"
             self.get_list_of_stopping_points()
-            # print "got stopping points"
+            # if self.loglevel > 0: print "got stopping points"
             self.add_required_sensors_and_icons()
-            # print "about to add_required_logix1"
+            # if self.loglevel > 0: print "about to add_required_logix1"
             self.add_required_logix()
-            # print "got add_required_logix1"
+            # if self.loglevel > 0: print "got add_required_logix1"
             self.add_required_memories()
-            # print "added sensors and icons"
+            # if self.loglevel > 0: print "added sensors and icons"
             self.associate_blocks_with_memories()
             self.write(finalPanelFilename)
-            print "wrote panel",finalPanelFilename
-            msg = "Wrote panel to:\n" + finalPanelFilename + "\nPlease \n - restart JMRI and \n - load the file just created in Stage 1\n - and run Stage 2 of the Dispatcher System to set up the transits"
+            if self.loglevel > 0: print "wrote panel",finalPanelFilename
+            msg = "Wrote panel to:\n" + finalPanelFilename + "\nPlease \n - restart JMRI and \n - load the file " + finalPanelFilename + "\n - instead of " + filename + "\n - and run Stage 2 of the Dispatcher System to set up the transits"
             JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
         
     # **************************************************
@@ -75,7 +75,7 @@ class processXML():
                 JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
                 return False
             elif myAnswer == JOptionPane.CLOSED_OPTION:
-                print "You closed the window. How rude!"
+                if self.loglevel > 0: print "You closed the window. How rude!"
         else:
             Message = "All blocks have sensors"
             JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
@@ -83,7 +83,7 @@ class processXML():
         if self.check_no_blocks_have_same_sensor() == False:
             self.msg1 = self.msg1 + "\n***********************\n Do you wish to continue\n***********************"
             myAnswer = JOptionPane.showConfirmDialog(None, self.msg1)
-            print(1)
+            if self.loglevel > 0: print(1)
             if myAnswer == JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
                 pass
@@ -96,15 +96,15 @@ class processXML():
                 JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
                 return False
             elif myAnswer == JOptionPane.CLOSED_OPTION:
-                print "You closed the window. How rude!"
+                if self.loglevel > 0: print "You closed the window. How rude!"
         else:
             Message = "no two blocks have the same sensor\nPassed check OK"
             JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
-            print(2)
+            if self.loglevel > 0: print(2)
             
         if self.check_sufficient_number_of_blocks() == False:
             self.msg2 = "There are insufficient stopping points for Dispatcher to work\n" + self.msg2 + "\n***********************\n Do you wish to continue? You are advised to stop as the current stage cannot perfom correctly\n***********************"
-            print(3)
+            if self.loglevel > 0: print(3)
             myAnswer = JOptionPane.showConfirmDialog(None, self.msg2)
             if myAnswer == JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
@@ -118,16 +118,16 @@ class processXML():
                 JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
                 return False
             elif myAnswer == JOptionPane.CLOSED_OPTION:
-                print "You closed the window. How rude!"
+                if self.loglevel > 0: print "You closed the window. How rude!"
         else:
-            print("4a")
+            if self.loglevel > 0: print("4a")
             Message = "The following blocks have been specified as stopping points\n" + self.msg2 + "\n there are sufficient blocks set up"
             JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
-            print(4)
+            if self.loglevel > 0: print(4)
             
         if self.check_all_blocks_have_lengths() == False:
             self.msg5 = "Not all blocks have lengths\n" + self.msg5 + "\n***********************\n Do you wish to continue? Trains will not run correctly.\n***********************"
-            print(3)
+            if self.loglevel > 0: print(3)
             myAnswer = JOptionPane.showConfirmDialog(None, self.msg5)
             if myAnswer == JOptionPane.YES_OPTION:
                 JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
@@ -141,12 +141,12 @@ class processXML():
                 JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
                 return False
             elif myAnswer == JOptionPane.CLOSED_OPTION:
-                print "You closed the window. How rude!"
+                if self.loglevel > 0: print "You closed the window. How rude!"
         else:
-            print("4a")
+            if self.loglevel > 0: print("4a")
             Message = "All blocks have lengths\n OK to continue \nNote that trains should also be set up with a speed profile to stop correctly"
             JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
-            print(4)
+            if self.loglevel > 0: print(4)
             
         return True
             
@@ -188,7 +188,7 @@ class processXML():
                     dict[block_name] = sensor_name
 
         list_of_errors = self.get_duplicate_values_in_dict(dict)
-        print list_of_errors
+        if self.loglevel > 0: print list_of_errors
         if list_of_errors == []:
             success = True
         else:
@@ -201,8 +201,8 @@ class processXML():
         
         
     def get_duplicate_values_in_dict(self, dict):  
-        # printing initial_dictionary 
-        #print("initial_dictionary", str(dict)) 
+        # if self.loglevel > 0: printing initial_dictionary 
+        #if self.loglevel > 0: print("initial_dictionary", str(dict)) 
           
         # finding duplicate values 
         # from dictionary 
@@ -215,7 +215,7 @@ class processXML():
         result = ["blocks " +', '.join(values) + " have the same sensor " + str( key) for key, values in rev_dict.items() 
                                       if len(values) > 1] 
           
-        # printing result 
+        # if self.loglevel > 0: printing result 
         #msg = (', '.join(result))
         return result
 
@@ -233,17 +233,17 @@ class processXML():
                 if comment !=None:
                     if "stop" in comment.lower():
                         list_of_stops.append("block " + block_name + " has a stop")
-                        print list_of_stops
+                        if self.loglevel > 0: print list_of_stops
                     else:
                         list_of_blocks.append("block " + block_name + " has no stop")
-                        print list_of_blocks
+                        if self.loglevel > 0: print list_of_blocks
                 else:
                     list_of_blocks.append("block " + block_name + " has no stop")
         #countthe number of blocks in dictionary
         no_stops = len(list_of_stops)
-        print "no_stops", no_stops
+        if self.loglevel > 0: print "no_stops", no_stops
         no_blocks = len(list_of_blocks)
-        print "no blocks", no_blocks
+        if self.loglevel > 0: print "no blocks", no_blocks
         if no_stops < 2:
             success = False
         else:
@@ -252,12 +252,12 @@ class processXML():
         self.msg2 = self.msg2 + '\n - '.join(list_of_stops)
         # for message in list_of_stops:
             # self.ms2 = self.msg2 +"\n" + message
-        print self.msg2
+        if self.loglevel > 0: print self.msg2
         self.msg3 = ""
         self.msg3 = '\n - '.join(list_of_blocks)
         # for message in list_of_blocks:
             # self.ms3 = self.msg3 +"\n" + message
-        print self.msg3
+        if self.loglevel > 0: print self.msg3
         if no_stops == 0:
             self.msg2 = " - there are no stops"
         return success    
@@ -318,7 +318,7 @@ class processXML():
     def remove_icons_with_string_in_name(self, string_to_look_for ):
         for LayoutEditor in self.doc.findall('LayoutEditor'):
             for sensoricon in LayoutEditor.findall('sensoricon'):
-                #print sensor
+                #if self.loglevel > 0: print sensor
                 sensor = sensoricon.get('sensor')
                 if string_to_look_for in sensor:
                     LayoutEditor.remove(sensoricon)
@@ -367,7 +367,7 @@ class processXML():
             self.list_of_stopping_points = ["block6","block5"]
         else:
             BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
-            print "Block"
+            if self.loglevel > 0: print "Block"
             for block in BlockManager.getNamedBeanSet():
                 comment = block.getComment()
                 if comment != None:
@@ -383,14 +383,14 @@ class processXML():
         index=0
         for block_name in self.list_of_stopping_points:
             # track_segment_ident = p.get_track_segments(block_name)
-            print "block_name " ,block_name 
+            if self.loglevel > 0: print "block_name " ,block_name 
             
             #, "track_segment_ident = ", track_segment_ident
             
             block_coordinate = self.get_block_coordinates(block_name)
-            print "block_coordinate = ", block_coordinate
+            if self.loglevel > 0: print "block_coordinate = ", block_coordinate
             if block_coordinate != None:
-                print "block_coordinate = ", block_coordinate
+                if self.loglevel > 0: print "block_coordinate = ", block_coordinate
                 self.set_up_all_icons(block_name,block_coordinate,index)
                 self.set_up_all_sensors(block_name, index)
                 index+=1
@@ -401,14 +401,14 @@ class processXML():
             if block_name != None:
                 if block_name not in self.list_of_stopping_points:
                     # track_segment_ident = p.get_track_segments(block_name)
-                    print "!!!!!!!block_name " ,block_name 
+                    if self.loglevel > 0: print "!!!!!!!block_name " ,block_name 
                     
                     #, "track_segment_ident = ", track_segment_ident
                     
                     block_coordinate = self.get_block_coordinates(block_name)
-                    print "block_coordinate = ", block_coordinate
+                    if self.loglevel > 0: print "block_coordinate = ", block_coordinate
                     if block_coordinate != None:
-                        print "block_coordinate = ", block_coordinate
+                        if self.loglevel > 0: print "block_coordinate = ", block_coordinate
                         self.set_up_all_block_icons(block_name,block_coordinate,index)
                         index+=1
                     
@@ -416,10 +416,10 @@ class processXML():
         self.set_up_control_items()
         
     def add_required_logix(self):
-        print "about to setup_Logix"
+        if self.loglevel > 0: print "about to setup_Logix"
         self.set_up_logix_code()
         self.set_up_conditionals_code()
-        print "about to insert_logix"
+        if self.loglevel > 0: print "about to insert_logix"
         self.insert_logixandconditionals()
 
         
@@ -433,15 +433,15 @@ class processXML():
         index=0
         #for block in blocks:
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
-        #print "Block"
+        #if self.loglevel > 0: print "Block"
         for block in BlockManager.getNamedBeanSet():
             #exclude blocks with no sensors
             if block.getSensor() != None:
                 block_name = block.getUserName()
-                print "block_name = ", block_name
+                if self.loglevel > 0: print "block_name = ", block_name
                 block_coordinate = self.get_block_coordinates(block_name)
                 if block_coordinate != None:
-                    print "block_coordinate = ", block_coordinate
+                    if self.loglevel > 0: print "block_coordinate = ", block_coordinate
                     self.set_up_all_memory_icons(block_name,block_coordinate,index)
                     self.set_up_all_memories(block_name, index)
                 
@@ -476,14 +476,14 @@ class processXML():
             # type1 = mid_element.get("type1")
             # connect2 = mid_element.get("connect2name")
             # type2 = mid_element.get("type2")
-            # print "connect1 = ",connect1
-            # print "connect2 = ",connect2
+            # if self.loglevel > 0: print "connect1 = ",connect1
+            # if self.loglevel > 0: print "connect2 = ",connect2
             # x1,y1 = self.get_positionable_point_coordinate(connect1,type1)
             # x2,y2 = self.get_positionable_point_coordinate(connect2,type2)
             # x_button = int((float(x1)+float(x2))/2.0)
             # y_button = int((float(y1)+float(y2))/2.0)-10      #-10 to raise the button up a bit on the track
             # button_coordinates = [x_button,y_button]
-            # print "button coordinate = " , button_coordinates
+            # if self.loglevel > 0: print "button coordinate = " , button_coordinates
             # return button_coordinates 
 
     # def hop_distance(self, from_track_segment,to_track_segment):
@@ -492,7 +492,7 @@ class processXML():
             
     def get_block_coordinates(self, block_name):
     
-        print "getting block coordinates ", block_name
+        if self.loglevel > 0: print "getting block coordinates ", block_name
     
         # get the first track segmant we get to for the block
         # it would look more aestheticlly pleasing if we got the middle track segment of the block
@@ -509,28 +509,28 @@ class processXML():
                 i+=1
         if len(ident_list) >0:  # there may be some unused blocks
             required_track_segment_index = int(len(ident_list)/2)
-            print "required_track_segment_index = ", required_track_segment_index
+            if self.loglevel > 0: print "required_track_segment_index = ", required_track_segment_index
             # now with the mid track index it might just work
             
             iter=self.doc.getiterator('tracksegment')
             for element in iter:
-                #print element.get("blockname"), element.get("ident"), required_track_segment_index, ident_list[required_track_segment_index]
+                #if self.loglevel > 0: print element.get("blockname"), element.get("ident"), required_track_segment_index, ident_list[required_track_segment_index]
                 if element.get("blockname") == block_name and element.get("ident") == ident_list[required_track_segment_index]:
-                    #print "got here"
+                    #if self.loglevel > 0: print "got here"
                     ident = element.attrib["ident"]
-                    print "ident = ",  ident
+                    if self.loglevel > 0: print "ident = ",  ident
                     connect1 = element.get("connect1name")
                     type1 = element.get("type1")
                     connect2 = element.get("connect2name")
                     type2 = element.get("type2")
-                    print "connect1 = ",connect1
-                    print "connect2 = ",connect2
+                    if self.loglevel > 0: print "connect1 = ",connect1
+                    if self.loglevel > 0: print "connect2 = ",connect2
                     x1,y1 = self.get_positionable_point_coordinate(connect1,type1)
                     x2,y2 = self.get_positionable_point_coordinate(connect2,type2)
                     x_button = int((float(x1)+float(x2))/2.0)
                     y_button = int((float(y1)+float(y2))/2.0)-10      #-10 to raise the button up a bit on the track
                     button_coordinates = [x_button,y_button]
-                    print "button coordinate = " , button_coordinates
+                    if self.loglevel > 0: print "button coordinate = " , button_coordinates
                     return button_coordinates
         else:
             #check for turnouts
@@ -544,16 +544,16 @@ class processXML():
                     
             if len(ident_list) >0:  # there may be some unused blocks
                 required_turnout_index = int(len(ident_list)/2)
-                print "required_turnout_index = ", required_turnout_index
+                if self.loglevel > 0: print "required_turnout_index = ", required_turnout_index
                 # now with the mid track index it might just work
                 
                 iter=self.doc.getiterator('layoutturnout')
                 for element in iter:
-                    #print element.get("blockname"), element.get("ident"), required_turnout_index, ident_list[required_turnout_index]
+                    #if self.loglevel > 0: print element.get("blockname"), element.get("ident"), required_turnout_index, ident_list[required_turnout_index]
                     if element.get("blockname") == block_name and element.get("ident") == ident_list[required_turnout_index]:
-                        #print "got here"
+                        #if self.loglevel > 0: print "got here"
                         ident = element.attrib["ident"]
-                        print "ident = ",  ident
+                        if self.loglevel > 0: print "ident = ",  ident
                         xcen = element.get("xcen")
                         ycen = element.get("ycen")
                         #x1,y1 = self.get_positionable_point_coordinate(connect1,type1)
@@ -561,7 +561,7 @@ class processXML():
                         x_button = int(float(xcen))
                         y_button = int(float(ycen))-10      #-10 to raise the button up a bit on the track
                         button_coordinates = [x_button,y_button]
-                        print "button coordinate = " , button_coordinates
+                        if self.loglevel > 0: print "button coordinate = " , button_coordinates
                         return button_coordinates
         
         return None
@@ -585,15 +585,15 @@ class processXML():
             y_ident="y"
         else: 
             raise NameError('Unsupported track type, need to modify code for X-overs:' + type)
-        # print "connection " , connection
+        # if self.loglevel > 0: print "connection " , connection
         iter=self.doc.getiterator(connection)
         for element in iter:
             if element.get("ident") == connection_name:
-                # print "here"
+                # if self.loglevel > 0: print "here"
                 x = element.get(x_ident)
                 y = element.get(y_ident)
                 coordinates = [x,y]
-                # print coordinates
+                # if self.loglevel > 0: print coordinates
                 return coordinates
         return None
         
@@ -602,14 +602,14 @@ class processXML():
     # **************************************************
                  
     def set_up_memory_icon_code(self, icon_memory_name, icon_tooltip, icon_coordinates, element_tree):
-        print "set_up_memory_icon_code"
-        print element_tree
-        print icon_coordinates
-        print icon_memory_name
+        if self.loglevel > 0: print "set_up_memory_icon_code"
+        if self.loglevel > 0: print element_tree
+        if self.loglevel > 0: print icon_coordinates
+        if self.loglevel > 0: print icon_memory_name
         
         
         x,y = icon_coordinates
-        print x,y
+        if self.loglevel > 0: print x,y
         iter = element_tree.getiterator('memoryicon')     
         for element in iter:
             element.set("memory", icon_memory_name)
@@ -618,15 +618,15 @@ class processXML():
             for child in element.getchildren():
                 if child.tag == "tooltip": child.text = icon_tooltip   
         # except Exception as e:
-            # print e
+            # if self.loglevel > 0: print e
             
-        print "end set_up_memory_icon_code"
+        if self.loglevel > 0: print "end set_up_memory_icon_code"
             
           
             
     def set_up_all_memory_icon_codes(self, block_name, icon_coordinates, index):
     
-        print "icon_coordinates" , icon_coordinates == None
+        if self.loglevel > 0: print "icon_coordinates" , icon_coordinates == None
         icon_memory_name = "M_"+block_name.replace(" ","_") 
         memory_location = "IM99"+str(index).zfill(4)  
         icon_tooltip = icon_memory_name + "("+memory_location+")"
@@ -666,12 +666,12 @@ class processXML():
     # **************************************************    
 
     def set_up_all_memory_icons(self, block_name, button_coordinate, index):
-        print "********mem icon set up*****************"
+        if self.loglevel > 0: print "********mem icon set up*****************"
         self.set_up_all_memory_icon_codes(block_name, button_coordinate, index)       #stores the code temporarily
-        print "********mem icon code set up finished*****************"
+        if self.loglevel > 0: print "********mem icon code set up finished*****************"
         self.insert_all_memory_icon_codes()
-        print "icon set up", block_name
-        print "*************************"
+        if self.loglevel > 0: print "icon set up", block_name
+        if self.loglevel > 0: print "*************************"
            
     # **************************************************
     # Create XML code for Icons, and store temporarily
@@ -682,7 +682,7 @@ class processXML():
         try:
             x,y = icon_coordinates
         except Exception as e:
-            print e
+            if self.loglevel > 0: print e
         
         iter = element_tree.getiterator('positionablelabel')     
         for element in iter:
@@ -700,7 +700,7 @@ class processXML():
                 element.set("x",str(x))
                 element.set("y",str(y))
         except Exception as e:
-            print e
+            if self.loglevel > 0: print e
         
         
     
@@ -714,7 +714,7 @@ class processXML():
                 element.set("x",str(x))
                 element.set("y",str(y))            
         except Exception as e:
-            print e
+            if self.loglevel > 0: print e
                 
     def set_up_wide_icon_code(self, icon_text, icon_sensor_name, icon_tooltip, icon_coordinates, element_tree):
         try:
@@ -726,7 +726,7 @@ class processXML():
                 element.set("x",str(x))
                 element.set("y",str(y))
                 for child in element.getchildren():
-                    #print child, child.tag
+                    #if self.loglevel > 0: print child, child.tag
                     
                     if child.tag == "tooltip": child.text = icon_tooltip
                     if child.tag == "activeText": child.set("text", icon_sensor_name)
@@ -734,7 +734,7 @@ class processXML():
                     if child.tag == "unknownText": child.set("text", icon_sensor_name)
                     if child.tag == "inconsistentText": child.set("text", icon_sensor_name)    
         except Exception as e:
-            print e
+            if self.loglevel > 0: print e
             
     def set_up_all_icon_codes(self, block_name, icon_coordinates, index):
     
@@ -796,13 +796,13 @@ class processXML():
         iter=self.doc.getiterator('tracksegment')
         for element in iter:
             ident = element.attrib["ident"]
-            print "ident = ",  ident
+            if self.loglevel > 0: print "ident = ",  ident
             connect1 = element.get("connect1name")
             type1 = element.get("type1")
             connect2 = element.get("connect2name")
             type2 = element.get("type2")
-            print "connect1 = ",connect1
-            print "connect2 = ",connect2
+            if self.loglevel > 0: print "connect1 = ",connect1
+            if self.loglevel > 0: print "connect2 = ",connect2
             x1,y1 = self.get_positionable_point_coordinate(connect1,type1)
             x2,y2 = self.get_positionable_point_coordinate(connect2,type2)
             x1 = int(float(x1))
@@ -816,7 +816,7 @@ class processXML():
             max_y = max(max_y, y1, y2)
             min_y = min(min_y, y1 ,y2)
             
-        print ("min_x ", min_x,"max_x ", max_x,"min_y ", min_y,"max_y ", max_y)
+        if self.loglevel > 0: print ("min_x ", min_x,"max_x ", max_x,"min_y ", min_y,"max_y ", max_y)
             
         x_coord =  max_x + 30       # put a bit to the right of the tracks near the top
         y_coord =  30
@@ -1003,7 +1003,7 @@ class processXML():
         self.doc = self.insert_label_code(self.doc, self.doc_sound_label)
         
     def insert_logixandconditionals(self):
-        print "insert_logix"
+        if self.loglevel > 0: print "insert_logix"
         self.doc = self.insert_logix_code(self.doc, self.doc_logix)
         self.doc = self.insert_conditionals_code(self.doc, self.doc_conditionals)
         
@@ -1062,36 +1062,36 @@ class processXML():
                 
     def insert_all_memory_codes(self):
         # MoveToxx_stored sensor
-        print "insert_all_memory_codes"
+        if self.loglevel > 0: print "insert_all_memory_codes"
         self.doc = self.insert_memory_code(self.doc, self.doc_memory)
-        print "end insert_all_memory_codes"
+        if self.loglevel > 0: print "end insert_all_memory_codes"
         
     def associate_blocks_with_memories(self):
-        print "associate_blocks_with_memories"
+        if self.loglevel > 0: print "associate_blocks_with_memories"
         # need to associate layout blocks with memory system name           
         layoutblocks_iter = self.doc.getiterator('layoutblocks')
         for layoutblocks1 in layoutblocks_iter:
             layoutblock_iter = layoutblocks1.getiterator('layoutblock')     
             for layoutblock in layoutblock_iter:
-                print layoutblock.tag   #prints 'layoutblock'
+                if self.loglevel > 0: print layoutblock.tag   #if self.loglevel > 0: prints 'layoutblock'
                 block_system_name = layoutblock.get("systemName")
-                print block_system_name
+                if self.loglevel > 0: print block_system_name
 
                 lblock =layoutblocks.getLayoutBlock(block_system_name)
                 block_user_name = lblock.getBlock().getUserName()
                 memory_name = "M_"+block_user_name.replace(" ","_")
                 layoutblock.set("memory", memory_name)
                 memory = layoutblock.get("memory")
-                print memory
+                if self.loglevel > 0: print memory
 
                 
             # block_system_name = layoutblock.get('systemName').text
             # if block_system_name != None:
-                # print block_system_name
+                # if self.loglevel > 0: print block_system_name
                 # fred=layoutblocks.getLayoutBlock(block_system_name)
-                # print fred
+                # if self.loglevel > 0: print fred
                 # block_name = fred.getBlock().getUserName()
-                # print block_name
+                # if self.loglevel > 0: print block_name
                 # memory_name = "M_"+block_name.replace(" ","_")
                 # element.set("memory", memory_name)
  
@@ -1182,7 +1182,7 @@ class processXML():
     def insert_sensor_code(self, data, data1):
         #read in the the button code#
         #data = self.output
-        # print "insert_sensor_code","data",data
+        # if self.loglevel > 0: print "insert_sensor_code","data",data
         iter=data.getiterator('sensors')
         #or iter = data.iter('sensors')
         for result in iter:
@@ -1207,7 +1207,7 @@ class processXML():
                 
     def insert_all_sensor_codes(self):
         # MoveToxx_stored sensor
-        # print "insert_all_sensor_codes","self.doc",self.doc
+        # if self.loglevel > 0: print "insert_all_sensor_codes","self.doc",self.doc
         self.doc = self.insert_sensor_code(self.doc, self.doc_moveTo_sensor_stored)
         # MoveToxx icon
         self.doc = self.insert_sensor_code(self.doc, self.doc_moveTo_sensor)
@@ -1278,7 +1278,7 @@ if __name__ == "__main__":
         JOptionPane.showMessageDialog(None, msg, 'Stopping', JOptionPane.WARNING_MESSAGE)
         
     elif myAnswer == JOptionPane.CLOSED_OPTION:
-        print "You closed the window. How rude!"
+        if self.loglevel > 0: print "You closed the window. How rude!"
 
     
 

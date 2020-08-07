@@ -337,13 +337,13 @@ def initialise_panel_location():
     msg = "Panel Directory: " + str(directory) 
     row12b2.text = msg
     row42b2.text = start_filename + filetype
-    row32b2.text = "Produce: " + start_filename + "_icons" + filetype + " (from " + start_filename + filetype + ")"
-    row42b2.text = "Produce: " + start_filename + "_run" + filetype + " (from " + start_filename + "_icons" + filetype + ")"
+    row32b2.text = "Produces: " + start_filename + "_icons" + filetype + " (from " + start_filename + filetype + ")"
+    row42b2.text = "Produces: " + start_filename + "_run" + filetype + " (from " + start_filename + "_icons" + filetype + ")"
     row62b1.text = "You have " + loaded_filename + filetype + " loaded. You may run " + stage_to_run
     row62b1.setFont(row62b1.getFont().deriveFont(Font.BOLD, 13));
     
-    row15b1.text = "You need to restart JMRI and load the file created in Stage1: " + start_filename + "_icons" + filetype 
-    row45b1.text = "You need to restart JMRI and load the file created in Stage2: " + start_filename + "_run" + filetype 
+    row15b1.text = "When finished you need to restart JMRI and load the file created in Stage1: " + start_filename + "_icons" + filetype + " instead of " + start_filename + filetype
+    row45b1.text = "When finished you need to restart JMRI and load the file created in Stage2: " + start_filename + "_run" + filetype + " instead of " + start_filename + "_icons" + filetype 
    
    
 row1 = JPanel()
@@ -407,7 +407,7 @@ def CreateTransits_action(event):
 
     global g
     global le
-    #initialPanelFilename = icons_file
+    initialPanelFilename = icons_file
     finalPanelFilename = run_file
     print "Setting up Graph"
     my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
@@ -422,7 +422,7 @@ def CreateTransits_action(event):
     CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
     exec(open (CreateTransits).read())
     print "about to run CreateTransits"
-    t = CreateTransits(run_file)
+    t = CreateTransits(icons_file, run_file)
     print "ran CreateTransits"
 
 

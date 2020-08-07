@@ -14,7 +14,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
     loglevel = 0
 
-    def __init__(self, filename_run):
+    def __init__(self, filename_icon, filename_run):
         if self.loglevel > 0: print "will store new panel in filename" , filename_run
         self.msg = "About to create all transits and train info files\nrequired for dispatcher operation"
         self.msg = self.msg + "\n***********************\n Do you wish to continue\n***********************"
@@ -33,7 +33,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         elif myAnswer == JOptionPane.CLOSED_OPTION:
             if self.loglevel > 0: print "You closed the window. How rude!"
         self.process_panels()
-        msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\nRestart JMRI and load above panel\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system"
+        filename_icon = filename_run.replace("run","icon")
+        msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\n - Restart JMRI and \n - load the file " + filename_run + "\n - instead of " + filename_icon + "\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system from the panel"
         self.displayMessage(msg)
         self.store_panel(filename_run)
         #msg = "Result stored in \n" + filename_run+ "\nrestart JMRI with above panel loaded"
@@ -794,4 +795,3 @@ if __name__ == '__main__':
     instanceList.append(Transits())        
     #if instanceList[idx].setup(None):     # Compile the train actions
     instanceList[-1].start()
-
