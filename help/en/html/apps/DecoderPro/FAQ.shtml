@@ -121,7 +121,7 @@
         Error 301 means that DecoderPro doesn't see a locomotive on the programming track when it is trying to program a decoder.  If you do have an
         engine on the track (only one!), clean the wheels and the track and try again.  Error 306 means that JMRI is not getting the expected signal
         from the command station.  If this happens when you are first setting things up, check your wiring, connections, and com port selection.  
-        This<a href="../setup/Errors.shtml">list of all error messages </a>also provides some suggestions about how to clear them.
+        This<a href="../Errors.shtml">list of all error messages </a>also provides some suggestions about how to clear them.
         </dd>
         
       
