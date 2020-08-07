@@ -29,4 +29,13 @@ public class MqttTurnoutManagerTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
+    @Test
+    public void setCommandTopicSuffix()
+    {
+        MqttSystemConnectionMemo memo = new MqttSystemConnectionMemo();
+        MqttTurnoutManager tm = new MqttTurnoutManager(memo);
+        tm.setTopicCommandSuffix("test");
+        Assert.assertEquals("topicSuffix", tm.topicCommandSuffix, "/test");
+    }
 }

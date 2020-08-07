@@ -13,41 +13,28 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
     private final MqttAdapter mqttAdapter;
     private final String topic;
-    private final static String stateTopicPrefix = "state/";
-    private final static String commandTopicPrefix = "command/";
+    private final String commandTopicSuffix;
 
     /**
      * Requires, but does not check, that the system name and topic be consistent
      * @param ma Adapter to reference for connection
      * @param systemName System name of turnout
      * @param topic MQTT topic being used
+     * @param topicCommandSuffix MQTT topic suffix for turnout commands
      */
-    MqttTurnout(MqttAdapter ma, String systemName, String topic) {
+    MqttTurnout(MqttAdapter ma, String systemName, String topic, String topicCommandSuffix) {
         super(systemName);
         this.topic = topic;
+        this.commandTopicSuffix = topicCommandSuffix;
         mqttAdapter = ma;
-        mqttAdapter.subscribe(getStateTopicPrefix() + topic, this);
+        mqttAdapter.subscribe(topic, this);
         _validFeedbackNames = new String[] {"DIRECT", "ONESENSOR", "TWOSENSOR", "DELAYED", "MONITORING", "EXACT"};
         _validFeedbackModes = new int[] {DIRECT, ONESENSOR, TWOSENSOR, DELAYED, MONITORING, EXACT};
         _validFeedbackTypes = DIRECT | ONESENSOR | TWOSENSOR | DELAYED | MONITORING;
     }
 
-    private String getStateTopicPrefix() {
-        return (getFeedbackMode() == EXACT ? stateTopicPrefix : "");
-    }
-
-    private String getCommandTopicPrefix() {
-        return (getFeedbackMode() == EXACT ? commandTopicPrefix : "");
-    }
-
-    @Override
-    public void setFeedbackMode(int mode) throws IllegalArgumentException {
-        mqttAdapter.unsubscribe(getStateTopicPrefix() + topic, this);
-        try {
-            super.setFeedbackMode(mode);
-        } finally {
-            mqttAdapter.subscribe(getStateTopicPrefix() + topic, this);
-        }
+    private String getCommandTopicSuffix() {
+        return commandTopicSuffix;
     }
 
     public void setParser(MqttContentParser<Turnout> parser) {
@@ -134,7 +121,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     }
 
     private void sendMessage(String c) {
-        mqttAdapter.publish(getCommandTopicPrefix() + this.topic, c.getBytes());
+        mqttAdapter.publish(this.topic + getCommandTopicSuffix(), c.getBytes());
     }
 
     @Override
@@ -143,7 +130,10 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
             log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, topic);
             return;
         }
-        
+        if (getCommandTopicSuffix().startsWith("/") && receivedTopic.endsWith(getCommandTopicSuffix())) {
+            log.debug("Got a command message for {} this, not a state {}", receivedTopic, topic);
+            return;
+        }
         parser.beanFromPayload(this, message, receivedTopic);
     }
 

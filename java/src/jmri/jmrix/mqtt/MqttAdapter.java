@@ -28,6 +28,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     private final static String PROTOCOL = "tcp://";
     private final static String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
+    public final static String OPTION_TURNOUT_COMMAND_TOPIC = "17";
     
     /**
      * Otherwise known as "Channel", this is prepended to the 
@@ -54,6 +55,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         options.put("13", new Option("Reporter topic :",    new String[]{Bundle.getMessage("TopicReporter")}, Option.Type.TEXT));
         options.put("14", new Option("Signal Head topic :", new String[]{Bundle.getMessage("TopicSignalHead")}, Option.Type.TEXT));
         options.put("15", new Option("Signal Mast topic :", new String[]{Bundle.getMessage("TopicSignalMast")}, Option.Type.TEXT));
+        options.put(OPTION_TURNOUT_COMMAND_TOPIC, new Option("Turnout command topic :", new String[]{Bundle.getMessage("TopicTurnoutCommand")}, Option.Type.TEXT));
         allowConnectionRecovery = true;
     }
 

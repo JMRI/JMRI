@@ -44,6 +44,15 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     @Nonnull
     public String topicPrefix = "track/turnout/"; // for constructing topic; public for script access
 
+    public void setTopicCommandSuffix(@Nonnull String topicCommandSuffix) {
+        this.topicCommandSuffix = topicCommandSuffix;
+        // Need to make sure that the suffix begins with a '/' to follow MQTT topic naming standards.
+        if (this.topicCommandSuffix.length() != 0 && !this.topicCommandSuffix.startsWith("/")) {
+            this.topicCommandSuffix = "/" + this.topicCommandSuffix;
+        }
+    }
+    @Nonnull
+    public String topicCommandSuffix = "";
     /**
      * {@inheritDoc}
      * <p>
@@ -60,7 +69,7 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         String suffix = systemName.substring(getSystemNamePrefix().length());
         String topic = topicPrefix + suffix;
 
-        t = new MqttTurnout(getMemo().getMqttAdapter(), systemName, topic);
+        t = new MqttTurnout(getMemo().getMqttAdapter(), systemName, topic, topicCommandSuffix);
         t.setUserName(userName);
 
         if (parser != null) {
