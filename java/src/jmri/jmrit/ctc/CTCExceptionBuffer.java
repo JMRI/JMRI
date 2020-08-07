@@ -2,7 +2,6 @@ package jmri.jmrit.ctc;
 
 import java.util.ArrayList;
 
-import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 
 
@@ -23,9 +22,63 @@ import jmri.InstanceManagerAutoDefault;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
 public class CTCExceptionBuffer implements InstanceManagerAutoDefault {
-    ArrayList<String> _mArrayListOfStrings = new ArrayList<>();
+//  All MUST be 6 characters long:    
+    private static final String INFO_TEXT  = "INFO  ";
+    private static final String WARN_TEXT  = "WARN  ";
+    private static final String ERROR_TEXT = "ERROR ";
+    
+    public enum ExceptionBufferRecordSeverity {
+        INFO(0), WARN(1), ERROR(2);     // Order: The more severe, the HIGHER the number.  See function "getHighestExceptionBufferRecordSeverity" for why.
+        private final int _mSeverity;
+        ExceptionBufferRecordSeverity(int severity) { this._mSeverity = severity; }
+        public int getSeverity() { return _mSeverity; }
+    }
+    private static class ExceptionBufferRecord {
+        public final ExceptionBufferRecordSeverity _mExceptionBufferRecordSeverity;
+        public final String _mMessage;
+        public ExceptionBufferRecord(ExceptionBufferRecordSeverity exceptionBufferRecordSeverity, String message) {
+            _mExceptionBufferRecordSeverity = exceptionBufferRecordSeverity;
+            switch(exceptionBufferRecordSeverity) {
+                case ERROR:
+                    _mMessage = ERROR_TEXT + message;
+                    break;
+                case WARN:
+                    _mMessage = WARN_TEXT + message;
+                    break;
+                default:    // INFO too
+                    _mMessage = INFO_TEXT + message;
+                    break;
+            }
+        }
+    }
+    ArrayList<ExceptionBufferRecord> _mArrayListOfExceptionBufferRecords = new ArrayList<>();
     public CTCExceptionBuffer() {}
-    public boolean isEmpty() { return _mArrayListOfStrings.isEmpty(); }
-    public void clear() { _mArrayListOfStrings.clear(); }
-    public void logString(String string) { _mArrayListOfStrings.add(string); }
+    public void logString(ExceptionBufferRecordSeverity exceptionBufferRecordSeverity, String string) { _mArrayListOfExceptionBufferRecords.add(new ExceptionBufferRecord(exceptionBufferRecordSeverity, string)); }
+    public boolean isEmpty() { return _mArrayListOfExceptionBufferRecords.isEmpty(); }
+    public void clear() { _mArrayListOfExceptionBufferRecords.clear(); }
+    /**
+     * You SHOULD call "isEmpty()" first, because this routine returns by default "INFO"
+     * IF there are NO entries in the list.
+     * 
+     * It's purpose is to give the user an idea of the worst case scenario in the errors.
+     * 
+     * @return The highest level of severity in our list.
+     */
+    public ExceptionBufferRecordSeverity getHighestExceptionBufferRecordSeverity() {
+        ExceptionBufferRecordSeverity highestExceptionBufferRecordSeverityEncountered = ExceptionBufferRecordSeverity.INFO; // Start with lowest, in case there are none
+        for (ExceptionBufferRecord exceptionBufferRecord : _mArrayListOfExceptionBufferRecords) {
+            if (exceptionBufferRecord._mExceptionBufferRecordSeverity.getSeverity() > highestExceptionBufferRecordSeverityEncountered.getSeverity()) {
+                highestExceptionBufferRecordSeverityEncountered = exceptionBufferRecord._mExceptionBufferRecordSeverity;
+            }
+        }
+        return highestExceptionBufferRecordSeverityEncountered;
+    }
+    public String getAllMessages() {
+        String returnString = "<html>";
+        for (ExceptionBufferRecord exceptionBufferRecord : _mArrayListOfExceptionBufferRecords) {
+            returnString = returnString + exceptionBufferRecord._mMessage + "<br>";
+        }
+        return returnString + "</html>";
+    }
 }
+

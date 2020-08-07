@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import javax.swing.JOptionPane;
+
 import jmri.*;
 import jmri.jmrit.ctc.Bundle;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
@@ -257,9 +259,26 @@ public class CTCMain {
         }
         
 //  Finally, display errors to the user:
-//        if (!_mCTCExceptionBuffer.isEmpty()) {
-//            //!!!!
-//        }
+        if (!_mCTCExceptionBuffer.isEmpty()) {
+            CTCExceptionBuffer.ExceptionBufferRecordSeverity exceptionBufferRecordSeverity2 = _mCTCExceptionBuffer.getHighestExceptionBufferRecordSeverity();
+            int messageType;
+            String title;
+            switch (exceptionBufferRecordSeverity2) {
+                case ERROR:
+                    messageType = JOptionPane.ERROR_MESSAGE;
+                    title = "Errors encountered";
+                    break;
+                case WARN:
+                    messageType = JOptionPane.WARNING_MESSAGE;
+                    title = "Warnings encountered";
+                    break;
+                default:    // And INFO
+                    title = "Information listing";
+                    messageType = JOptionPane.INFORMATION_MESSAGE;
+                    break;
+            }
+            JOptionPane.showMessageDialog(null, _mCTCExceptionBuffer.getAllMessages(), title, messageType);
+        }
     }
 
 //  One shot routine:

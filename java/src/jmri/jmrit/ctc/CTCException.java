@@ -21,9 +21,9 @@ public class CTCException extends Exception {
         _mReason = reason;
     }
     public String getExceptionString() { return _mModule + ", " + _mUserIdentifier + _mParameter + ", " + _mReason; }
-    public void logError() { String exceptionString = getExceptionString(); org.slf4j.LoggerFactory.getLogger(CTCException.class).error(exceptionString); InstanceManager.getDefault(CTCExceptionBuffer.class).logString("ERROR " + exceptionString); }
-    public void logWarning() { String exceptionString = getExceptionString(); org.slf4j.LoggerFactory.getLogger(CTCException.class).warn(exceptionString); InstanceManager.getDefault(CTCExceptionBuffer.class).logString("WARN  " + exceptionString); }
-    static public void logError(String string) { org.slf4j.LoggerFactory.getLogger(CTCException.class).error(string); InstanceManager.getDefault(CTCExceptionBuffer.class).logString("ERROR " + string); }
-    static public void logWarning(String string) { org.slf4j.LoggerFactory.getLogger(CTCException.class).warn(string); InstanceManager.getDefault(CTCExceptionBuffer.class).logString("WARN  " + string); }
-    static public void logInfo(String string) { org.slf4j.LoggerFactory.getLogger(CTCException.class).info(string); InstanceManager.getDefault(CTCExceptionBuffer.class).logString("INFO  " + string); }
+    public void logError() { String exceptionString = getExceptionString(); org.slf4j.LoggerFactory.getLogger(CTCException.class).error(exceptionString); InstanceManager.getDefault(CTCExceptionBuffer.class).logString(CTCExceptionBuffer.ExceptionBufferRecordSeverity.ERROR, exceptionString); }
+    public void logWarning() { String exceptionString = getExceptionString(); org.slf4j.LoggerFactory.getLogger(CTCException.class).warn(exceptionString); InstanceManager.getDefault(CTCExceptionBuffer.class).logString(CTCExceptionBuffer.ExceptionBufferRecordSeverity.WARN, exceptionString); }
+    static public void logError(String string) { org.slf4j.LoggerFactory.getLogger(CTCException.class).error(string); InstanceManager.getDefault(CTCExceptionBuffer.class).logString(CTCExceptionBuffer.ExceptionBufferRecordSeverity.ERROR, string); }
+    static public void logWarning(String string) { org.slf4j.LoggerFactory.getLogger(CTCException.class).warn(string); InstanceManager.getDefault(CTCExceptionBuffer.class).logString(CTCExceptionBuffer.ExceptionBufferRecordSeverity.WARN, string); }
+    static public void logInfo(String string) { org.slf4j.LoggerFactory.getLogger(CTCException.class).info(string); InstanceManager.getDefault(CTCExceptionBuffer.class).logString(CTCExceptionBuffer.ExceptionBufferRecordSeverity.INFO, string); }
 }
