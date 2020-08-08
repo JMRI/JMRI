@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.annotation.Nonnull;
+
+import org.apiguardian.api.API;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -15,23 +18,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Adapts to an MQTT connection 
- * <p>
- * Note that this puts the MQTT temporary directory in the profile: directory by default.
- * 
+ * Communications adapter for Mqtt communications links.
+ *
  * @author Lionel Jeanson
+ * @author Bob Jacobsen   Copyright (c) 2091, 2029
  */
+@API(status=API.Status.MAINTAINED)
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
 
     private final static String PROTOCOL = "tcp://";
     private final static String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
     
+    /**
+     * Otherwise known as "Channel", this is prepended to the 
+     * topic for all JMRI inward and outward communications.
+     * Typically set by preferences at startup.  Changing it
+     * after startup might have no or bad effect.
+     */
+    @API(status=API.Status.MAINTAINED)
     public String baseTopic = DEFAULT_BASETOPIC;
 
     HashMap<String, ArrayList<MqttEventListener>> mqttEventListeners;
 
     MqttClient mqttClient;
 
+    @API(status=API.Status.INTERNAL)
     public MqttAdapter() {
         super(new MqttSystemConnectionMemo());
         log.debug("Doing ctor...");
@@ -47,6 +58,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     }
 
     @Override
+    @API(status=API.Status.INTERNAL)
     public void configure() {
         log.debug("Doing configure...");
         mqttEventListeners = new HashMap<>();
@@ -56,6 +68,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     }
 
     @Override
+    @API(status=API.Status.INTERNAL)
     public void connect() throws IOException {
         log.debug("Doing connect with MQTTchannel = \"{}\"", getOptionState(option2Name));
         
@@ -93,10 +106,12 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     }
     
     @Override
+    @API(status=API.Status.MAINTAINED)
     public MqttSystemConnectionMemo getSystemConnectionMemo() {
         return (MqttSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
+    @API(status=API.Status.MAINTAINED)
     public void subscribe(String topic, MqttEventListener mel) {
         if (mqttEventListeners == null || mqttClient == null) {
             jmri.util.LoggingUtil.warnOnce(log, "Trying to subscribe before connect/configure is done");
@@ -120,6 +135,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         }
     }
 
+    @API(status=API.Status.MAINTAINED)
     public void unsubscribe(String topic, MqttEventListener mel) {
         String fullTopic = baseTopic + topic;
         if (mqttEventListeners == null || mqttClient == null) {
@@ -138,13 +154,20 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         }
     }
 
+    @API(status=API.Status.MAINTAINED)
     public void unsubscribeall(MqttEventListener mel) {
         mqttEventListeners.keySet().forEach((t) -> {
             unsubscribe(t, mel);
         });
     }
 
-    public void publish(String topic, byte[] payload) {
+    /**
+     * Send a message over the existing link to a broker.
+     * @param topic The topic, which follows the channel and precedes the payload in the message
+     * @param payload The payload makes up the final part of the message
+     */
+    @API(status=API.Status.MAINTAINED)
+    public void publish(@Nonnull String topic, @Nonnull byte[] payload) {
         try {
             String fullTopic = baseTopic + topic;
             mqttClient.publish(fullTopic, payload, 2, true);
@@ -153,11 +176,22 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         }
     }
 
+    /**
+     * Send a message over the existing link to a broker.
+     * @param topic The topic, which follows the channel and precedes the payload in the message
+     * @param payload The payload makes up the final part of the message
+     */
+    @API(status=API.Status.MAINTAINED)
+    public void publish(@Nonnull String topic, @Nonnull String payload) {
+        publish(topic, payload.getBytes());
+    }
+
     public MqttClient getMQttClient() {
         return (mqttClient);
     }
 
     @Override
+    @API(status=API.Status.INTERNAL)
     public void connectionLost(Throwable thrwbl) {
         log.warn("Lost MQTT broker connection...");
         if (this.allowConnectionRecovery) {
@@ -177,6 +211,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     }
 
     @Override
+    @API(status=API.Status.INTERNAL)
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
         log.debug("Message received, topic : {}", topic);
         if (!mqttEventListeners.containsKey(topic)) {
@@ -189,6 +224,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     }
 
     @Override
+    @API(status=API.Status.INTERNAL)
     public void deliveryComplete(IMqttDeliveryToken imdt) {
         log.debug("Message delivered");
     }
