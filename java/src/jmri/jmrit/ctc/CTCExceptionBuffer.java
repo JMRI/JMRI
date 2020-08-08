@@ -74,11 +74,12 @@ public class CTCExceptionBuffer implements InstanceManagerAutoDefault {
         return highestExceptionBufferRecordSeverityEncountered;
     }
     public String getAllMessages() {
-        String returnString = "<html>";
+        StringBuilder returnStringBuilder = new StringBuilder("<html>");
         for (ExceptionBufferRecord exceptionBufferRecord : _mArrayListOfExceptionBufferRecords) {
-            returnString = returnString + exceptionBufferRecord._mMessage + "<br>";
+            returnStringBuilder.append(exceptionBufferRecord._mMessage + "<br>");
         }
-        return returnString + "</html>";
+        returnStringBuilder.append("</html>");
+        return returnStringBuilder.toString();
     }
 }
 
