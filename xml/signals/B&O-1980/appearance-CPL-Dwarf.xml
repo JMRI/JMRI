@@ -22,7 +22,13 @@
         <date>2016-07-28</date>
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
+	<revision>
+        <revnumber>2</revnumber>
+        <date>2019-09-26</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Added Stop and Proceed and Stop and Proceed Medium to possible appearances.  Changed the permissive specific appearance to Stop and Proceed.</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
@@ -130,6 +136,24 @@
       <reference>Page 137</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-290-dwarf.gif</imagelink>
     </appearance>
+	
+	<appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 140</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-291-dwarf.gif</imagelink>
+    </appearance>
+	
+	<appearance>
+      <aspectname>Stop and Proceed Medium</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 140</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-291-m-dwarf.gif</imagelink>
+    </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
@@ -141,7 +165,7 @@
     </appearance>
 	
 	<appearance>
-	  <aspectname>unlit</aspectname>
+	  <aspectname>Unlit</aspectname>
 	  <show>dark</show>
 	  <show>dark</show>
 	  <show>dark</show>
@@ -157,7 +181,7 @@
     </danger>
 	
 	<permissive>
-	  <aspect>Restricting</aspect>
+	  <aspect>Stop and Proceed</aspect>
 	</permissive>
 	
     <held>
@@ -165,7 +189,7 @@
     </held>
 	
 	<dark>
-	  <aspect>unlit</aspect>
+	  <aspect>Unlit</aspect>
 	</dark>
 	
   </specificappearances>

@@ -23,6 +23,12 @@
         <date>2016-07-28</date>
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-09-26</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Removed spaces from folder and icon names.  Added permissive to the specific appearances.</revremark>
     </revision>    
   </revhistory>
 
@@ -37,14 +43,14 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Page 128</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 1 Arm/B-281-1 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_1_Arm/B-281-1_Arm.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Page 133</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 1 Arm/B-285-1 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_1_Arm/B-285-1_Arm.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -52,7 +58,7 @@
       <show>red</show>
       <reference>Page 138</reference>
       <comment>Normal speed route appearance</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 1 Arm/B-291-1 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_1_Arm/B-291-1_Arm.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -61,6 +67,9 @@
     <danger>
       <aspect>Stop and Proceed</aspect>
     </danger>
+	<permissive>
+      <aspect>Stop and Proceed</aspect>
+    </permissive>
     <held>
       <aspect>Stop and Proceed</aspect>
     </held>

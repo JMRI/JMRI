@@ -24,6 +24,27 @@
         <authorinitials>GPM</authorinitials>
         <revremark>Initial version</revremark>
     </revision>
+	
+	<revision>
+        <revnumber>2</revnumber>
+        <date>2019-09-26</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Corrected the comments on the use of Stop and Proceed Medium.</revremark>
+    </revision>
+	
+	<revision>
+        <revnumber>3</revnumber>
+        <date>2020-07-09</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Added masts with short block in their name to allow for Approach Medium aspect in advance of Approach for use in areas where there is short braking distance prior to the next signal</revremark>
+    </revision>
+	
+	<revision>
+        <revnumber>4</revnumber>
+        <date>2020-08-06</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Changed all of the route fields from normal or diverging to either to make the system rely soley on block and turnout speeds for aspect selection.  This will bring the system in line with the B&amp;O 2009 system.</revremark>
+    </revision>
   </revhistory>
   
   <aspects>
@@ -35,7 +56,7 @@
       <reference>Page 128</reference>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
-      <route>Normal</route>
+      <route>Either</route>
       <dccAspect>15</dccAspect>
     </aspect>
 	
@@ -47,7 +68,7 @@
       <comment>Signal is identical to Approach Medium except for the addition of a triangle flag on signal mast</comment>
       <speed>Normal</speed>
       <speed2>Limited</speed2>
-      <route>Normal</route>
+      <route>Either</route>
       <dccAspect>14</dccAspect>
     </aspect>
 	
@@ -58,7 +79,7 @@
       <reference>Page 129</reference>
       <speed>Normal</speed>
       <speed2>Medium</speed2>
-      <route>Normal</route>
+      <route>Either</route>
       <dccAspect>12</dccAspect>
     </aspect>
 	
@@ -70,7 +91,7 @@
       <comment>Signal is identical to Medium Clear except for the addition of a triangle flag on signal mast</comment>
       <speed>Limited</speed>
       <speed2>Normal</speed2>
-      <route>Diverging</route>
+      <route>Either</route>
       <dccAspect>13</dccAspect>
     </aspect>
 	
@@ -81,7 +102,7 @@
       <reference>Page 130</reference>
       <speed>Medium</speed>
       <speed2>Normal</speed2>
-      <route>Diverging</route>
+      <route>Either</route>
       <dccAspect>11</dccAspect>
     </aspect>
 	
@@ -92,7 +113,7 @@
       <reference>Page 131</reference>
       <speed>Medium</speed>
       <speed2>Medium</speed2>
-      <route>Diverging</route>
+      <route>Either</route>
       <dccAspect>10</dccAspect>
     </aspect>
 	
@@ -103,7 +124,7 @@
       <reference>Page 131</reference>
       <speed>Medium</speed>
       <speed2>Slow</speed2>
-      <route>Diverging</route>
+      <route>Either</route>
       <dccAspect>9</dccAspect>
     </aspect>
 	
@@ -114,7 +135,7 @@
       <reference>Page 132</reference>
       <speed>Normal</speed>
       <speed2>Slow</speed2>
-      <route>Normal</route>
+      <route>Either</route>
       <dccAspect>8</dccAspect>
     </aspect>
 	
@@ -125,7 +146,7 @@
       <reference>Page 133</reference>
       <speed>Normal</speed>
       <speed2>Slow</speed2>
-      <route>Normal</route>
+      <route>Either</route>
       <dccAspect>7</dccAspect>
     </aspect>
 	
@@ -136,7 +157,7 @@
       <reference>Page 134</reference>
       <speed>Medium</speed>
       <speed2>Slow</speed2>
-      <route>Diverging</route>
+      <route>Either</route>
       <dccAspect>6</dccAspect>
     </aspect>
 	
@@ -189,7 +210,7 @@
       <rule>Rule B-291-medium</rule>
       <indication>Stop; then proceed at restricted speed on medium speed route.</indication>
       <reference>Page 138</reference>
-      <comment>Unofficial Rule and Aspect Name to allow for optional appearance.  Only example I have seen of this aspect was on the Ohio River Subdivsion in a non CTC area.  The only other aspect available on the mast was Restricting.</comment>
+      <comment>Stop and Proceed Medium can be substituted for Stop and Proceed when there is diverging route through an interlocking.  To use, create a logix that states when the signal displays stop and proceed and the turnout is lined for the diverging route, set signal to stop and proceed medium.</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Diverging</route>
@@ -206,17 +227,30 @@
       <dccAspect>0</dccAspect>
     </aspect>
 	
+	<aspect>
+      <name>Unlit</name>
+      <indication>Unlit</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
+	
   </aspects>
   
   <appearancefiles>
     <appearancefile href="appearance-CPL-High.xml"/>
+	<appearancefile href="appearance-CPL-High-shortblock.xml"/>
 	<appearancefile href="appearance-CPL-High-permissive.xml"/>
+	<appearancefile href="appearance-CPL-High-permissive-shortblock.xml"/>
 	<appearancefile href="appearance-CPL-Dwarf.xml"/>
+	<appearancefile href="appearance-CPL-Dwarf-shortblock.xml"/>
 	<appearancefile href="appearance-Semaphore-3Arm.xml"/>
 	<appearancefile href="appearance-Semaphore-2Arm.xml"/>
 	<appearancefile href="appearance-Semaphore-1Arm.xml"/>
 	<appearancefile href="appearance-Semaphore-1Armwithmarker.xml"/>
 	<appearancefile href="appearance-Semaphore-1ArmDwarf.xml"/>
 	<appearancefile href="appearance-CPL-High-NJInternational.xml"/>
+	<appearancefile href="appearance-CPL-High-NJInternational-shortblock.xml"/>
   </appearancefiles>
 </aspecttable>

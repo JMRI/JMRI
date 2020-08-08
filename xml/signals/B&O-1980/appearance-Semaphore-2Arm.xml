@@ -23,6 +23,12 @@
         <date>2016-07-28</date>
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-09-26</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Removed spaces from folder and icon names.</revremark>
     </revision>    
   </revhistory>
 
@@ -38,7 +44,7 @@
       <show>green</show>
 	  <show>red</show>
       <reference>Page 128</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-281-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-281-2_Arm.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -46,7 +52,7 @@
       <show>yellow</show>
 	  <show>red</show>
       <reference>Page 133</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-285-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-285-2_Arm.gif</imagelink>
     </appearance>
 	
 	<appearance>
@@ -54,7 +60,7 @@
       <show>red</show>
       <show>green</show>
       <reference>Page 135</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-287-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-287-2_Arm.gif</imagelink>
     </appearance>
 	
 	<appearance>
@@ -62,7 +68,7 @@
       <show>red</show>
       <show>lunar</show>
       <reference>Page 137</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-290-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-290-2_Arm.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -71,7 +77,7 @@
 	  <show>red</show>
       <reference>Page 138</reference>
       <comment>Normal speed route appearance</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 2 Arm/B-292-2 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-292-2_Arm.gif</imagelink>
     </appearance>
 
   </appearances>
