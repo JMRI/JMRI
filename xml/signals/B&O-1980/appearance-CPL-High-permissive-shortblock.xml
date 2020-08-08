@@ -26,183 +26,183 @@
     </revision>
     <revision>
         <revnumber>2</revnumber>
-        <date>2019-09-26</date>
+        <date>2020-07-09</date>
         <authorinitials>GM</authorinitials>
-        <revremark>Removed spaces from folder and icon names.</revremark>
+        <revremark>Configured to allow for Approach Medium aspect in advance of Approach for use in areas where there is short braking distance prior to the next signal</revremark>
     </revision>
   </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
-  <name>Double Arm Semaphore High Signal</name>
+  <name>Color Position Light Permissive High Signals-Short Block</name>
   <reference>As described in the 1980 version of the Chessie System Operating Rules.</reference>
-  <description>Appearances for B&amp;O two arm semaphore mast signals.</description>
+  <description>Appearances for B&amp;O permissive color position light mast signals.  Use this mast when you need a permissive signal that will display Approach Medium with the next signal is Approach.</description>
 
   <appearances>
 
    <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-	  <show>red</show>
+      <show>green</show>
+      <show>dark</show>
       <reference>Page 128</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-281-2_Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Limited</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 129</reference>
+	  <comment>Signal is identical to Approach Medium except for the addition of a triangle flag on signal mast</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-282.gif</imagelink>
+    </appearance>
+
+	<appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 129</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-282A.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Slow</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 132</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-284.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
-      <show>yellow</show>
-	  <show>red</show>
-      <reference>Page 133</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-285-2_Arm.gif</imagelink>
-    </appearance>
-
-	<appearance>
-      <aspectname>Slow Approach Slow</aspectname>
-      <show>red</show>
       <show>green</show>
-      <reference>Page 135</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-287-2_Arm.gif</imagelink>
-    </appearance>
-
-	<appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>lunar</show>
-      <reference>Page 137</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-290-2_Arm.gif</imagelink>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Page 133</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Stop</aspectname>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>green</show>
       <show>red</show>
-	  <show>red</show>
+      <show>dark</show>
       <reference>Page 138</reference>
-      <comment>Normal speed route appearance</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_2_Arm/B-292-2_Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/rule-291.gif</imagelink>
+    </appearance>
+
+    <appearance>
+	  <aspectname>Unlit</aspectname>
+	  <show>dark</show>
+	  <show>dark</show>
+	  <show>dark</show>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High-Permissive/unlit.gif</imagelink>
     </appearance>
 
   </appearances>
 
   <specificappearances>
-    <danger>
-      <aspect>Stop</aspect>
+
+	<danger>
+      <aspect>Stop and Proceed</aspect>
     </danger>
 
 	<permissive>
-      <aspect>Restricting</aspect>
+      <aspect>Stop and Proceed</aspect>
     </permissive>
 
     <held>
-      <aspect>Stop</aspect>
+      <aspect>Stop and Proceed</aspect>
     </held>
+
+	<dark>
+	  <aspect>Unlit</aspect>
+	</dark>
+
   </specificappearances>
 
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
-	  <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
 	<aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Limited Clear</advancedAspect>
-      <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Approach Limited</ourAspect>
     </aspectMapping>
 
 	<aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
-      <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+      <ourAspect>Approach Medium</ourAspect>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
-      <ourAspect>Approach</ourAspect>
-      <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
 	<aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
-      <ourAspect>Approach</ourAspect>
-	  <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
-    </aspectMapping>
+      <ourAspect>Approach Medium</ourAspect>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
-      <ourAspect>Approach</ourAspect>
-      <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach Slow</advancedAspect>
-      <ourAspect>Approach</ourAspect>
-      <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Approach Slow</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
-      <ourAspect>Approach</ourAspect>
-      <ourAspect>Slow Approach Slow</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
+      <ourAspect>Approach Slow</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
 	<aspectMapping>
       <advancedAspect>Stop and Proceed Medium</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
   </aspectMappings>

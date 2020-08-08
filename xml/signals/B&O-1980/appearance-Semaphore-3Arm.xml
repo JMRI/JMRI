@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
         <email>gpmccartney@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -29,14 +29,14 @@
         <date>2019-09-26</date>
         <authorinitials>GM</authorinitials>
         <revremark>Removed spaces from folder and icon names.</revremark>
-    </revision>    
+    </revision>
   </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
   <name>Three Arm Semaphore High Signal</name>
   <reference>As described in the 1980 version of the Chessie System Operating Rules.</reference>
   <description>Appearances for B&amp;O three arm semaphore mast signals.</description>
-  
+
   <appearances>
 
     <appearance>
@@ -47,7 +47,7 @@
       <reference>Page 128</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_3_Arm/B-281-3_Arm.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Medium Clear</aspectname>
       <show>red</show>
@@ -65,7 +65,7 @@
       <reference>Page 133</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_3_Arm/B-285-3_Arm.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Medium Approach</aspectname>
       <show>red</show>
@@ -74,7 +74,7 @@
       <reference>Page 134</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_3_Arm/B-286-3_Arm.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Slow Approach Slow</aspectname>
       <show>red</show>
@@ -83,7 +83,7 @@
       <reference>Page 135</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_3_Arm/B-287-3_Arm.gif</imagelink>
     </appearance>
-	
+
 	<appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
@@ -109,11 +109,11 @@
     <danger>
       <aspect>Stop</aspect>
     </danger>
-	
+
 	<permissive>
       <aspect>Restricting</aspect>
     </permissive>
-	
+
     <held>
       <aspect>Stop</aspect>
     </held>
@@ -135,7 +135,7 @@
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -151,7 +151,7 @@
 	  <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -167,7 +167,7 @@
 	  <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -227,7 +227,7 @@
       <ourAspect>Medium Approach</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Stop and Proceed Medium</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
@@ -243,5 +243,5 @@
     </aspectMapping>
 
   </aspectMappings>
-  
-</appearancetable>  
+
+</appearancetable>
