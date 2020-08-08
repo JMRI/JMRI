@@ -1,7 +1,6 @@
 package jmri.jmrit.ctc;
 
 import jmri.InstanceManager;
-import jmri.jmrit.ctc.CTCExceptionBuffer;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020

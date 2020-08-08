@@ -74,11 +74,12 @@ public class FrmMainForm extends JFrame {
         checkPanelStatus.actionPerformed(null);
         new javax.swing.Timer(5000, checkPanelStatus).start();
 //  Before we "start up the editor", let's warn the user about using "," and ";" if they haven't seen it before:
-        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-            showInfoMessage(Bundle.getMessage("ReminderTitle"),
-                            Bundle.getMessage("CTCNamesMessage"), // NOI18N
-                            "FrmMainForm",  // NOI18N
-                            "ctcNamesMessage"); // NOI18N
+        if (!_mProgramProperties._mNoMoreReservedCharactersWarning) {
+            Object[] options = { Bundle.getMessage("CTCNamesMessageOK"), Bundle.getMessage("CTCNamesMessageDontShowThisAgain") }; // NOI18N
+            if (1 == JOptionPane.showOptionDialog(this, Bundle.getMessage("CTCNamesMessage"), Bundle.getMessage("ReminderTitle"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0])) {
+                _mProgramProperties._mNoMoreReservedCharactersWarning = true;
+            }
+        }
     }
 
     /**

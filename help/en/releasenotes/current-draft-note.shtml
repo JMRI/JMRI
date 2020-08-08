@@ -387,7 +387,11 @@
             my opinion, Layout Editor looks very close to an actual CTC panel if drawn correctly.</li>
             <li>There is a reminder dialog that was added to remind users of the CTC system that using "," (Comma) and
             ";" (Semi-colon) in ANY of the System and User names for items used by the CTC system is <strong>not</strong>
-            supported, and may cause problems in the program.</li>
+            supported, and may cause problems in the program.  The reminder can be silenced permanently too by the user.</li>
+            <li>When CTC Runtime starts (Run CTC Logic), if there are any problem(s), warning(s) or informational
+            message(s), it will now popup a dialog box to inform the user.  Previously, I relied on the System Console
+            for the logging of those messages (which still happens), but the System Console screen may not be
+            visible, ergo the need for this new feature.</li>
             <li>Bug Fix: It was possible (though technically wrong) for a user to specify a single turnout as locked
             in two (or more) <strong>different</strong> O.S. sections.  If this was specified, the runtime program would
             fight itself and eventually cause a stack overflow.  This is now prevented during user entry from occurring.

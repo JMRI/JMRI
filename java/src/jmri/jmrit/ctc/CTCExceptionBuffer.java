@@ -22,11 +22,6 @@ import jmri.InstanceManagerAutoDefault;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
 public class CTCExceptionBuffer implements InstanceManagerAutoDefault {
-//  All MUST be 6 characters long:    
-    private static final String INFO_TEXT  = "INFO  ";
-    private static final String WARN_TEXT  = "WARN  ";
-    private static final String ERROR_TEXT = "ERROR ";
-    
     public enum ExceptionBufferRecordSeverity {
         INFO(0), WARN(1), ERROR(2);     // Order: The more severe, the HIGHER the number.  See function "getHighestExceptionBufferRecordSeverity" for why.
         private final int _mSeverity;
@@ -40,13 +35,13 @@ public class CTCExceptionBuffer implements InstanceManagerAutoDefault {
             _mExceptionBufferRecordSeverity = exceptionBufferRecordSeverity;
             switch(exceptionBufferRecordSeverity) {
                 case ERROR:
-                    _mMessage = ERROR_TEXT + message;
+                    _mMessage = Bundle.getMessage("CTCExceptionBufferERROR") + message;  // NOI18N
                     break;
                 case WARN:
-                    _mMessage = WARN_TEXT + message;
+                    _mMessage = Bundle.getMessage("CTCExceptionBufferWARN") + message;  // NOI18N
                     break;
                 default:    // INFO too
-                    _mMessage = INFO_TEXT + message;
+                    _mMessage = Bundle.getMessage("CTCExceptionBufferINFO") + message;  // NOI18N
                     break;
             }
         }
@@ -74,11 +69,11 @@ public class CTCExceptionBuffer implements InstanceManagerAutoDefault {
         return highestExceptionBufferRecordSeverityEncountered;
     }
     public String getAllMessages() {
-        StringBuilder returnStringBuilder = new StringBuilder("<html>");
+        StringBuilder returnStringBuilder = new StringBuilder("<html>");  // NOI18N
         for (ExceptionBufferRecord exceptionBufferRecord : _mArrayListOfExceptionBufferRecords) {
-            returnStringBuilder.append(exceptionBufferRecord._mMessage + "<br>");
+            returnStringBuilder.append(exceptionBufferRecord._mMessage + "<br>");  // NOI18N
         }
-        returnStringBuilder.append("</html>");
+        returnStringBuilder.append("</html>");  // NOI18N
         return returnStringBuilder.toString();
     }
 }
