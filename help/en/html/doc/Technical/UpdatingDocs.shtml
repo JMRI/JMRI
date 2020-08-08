@@ -28,7 +28,7 @@
 <body>
   <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
-    <!--#include virtual="../Sidebar.shtml" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>How to update the JMRI Documentation</h1>
@@ -104,7 +104,7 @@
       distro doesn't already have a default application that
       supports the use of the &lt;<code>Print Screen></code>&gt; and
       &lt;<code>Alt + Print Screen</code>&gt; keys you can install
-      <a href="http://www.kde.org/">KSnapshot</a> or your favorite
+      <a href="http://www.kde.org/" target="_blank">KSnapshot</a> or your favorite
       application to do your screen grabbing.
 
       <h3>For macOS</h3>
@@ -117,12 +117,12 @@
 
       <h3>Using a Third-Party Application</h3>
       <p>On macOS we nowadays often use Evernote
-      <a href="https://evernote.com/intl/nl/products/skitch">Skitch</a>
+      <a href="https://evernote.com/intl/nl/products/skitch" target="_blank">Skitch</a>
       to grab and touch up screen shots. Here's an example of that style:<br>
-      <img src="../images/GitHubPencil.png" width="285" height="101">
+      <img src="../images/GitHubPencil.png" width="285" height="101" alt="GitHub Pencil">
       </p>
       <p>We also love <a href=
-      "http://www.irfanview.com">IrFanView</a>
+      "http://www.irfanview.com" target="_blank">IrFanView</a>
       for screenshots, and it is free. With it, you can also
       include your mouse cursor in your snapshot. You can also take
       a series of shots easily, and even make a slideshow of them.
@@ -170,10 +170,10 @@
       <h3>Send to GitHub</h3>
 
       <p>You can view the current <a href=
-      "https://github.com/JMRI/JMRI">JMRI repository on GitHub</a>.
+      "https://github.com/JMRI/JMRI" target="_blank">JMRI repository on GitHub</a>.
       To learn how to make changes to connect to GitHub and
       contribute your changes, please read <a href=
-      "../getgitcode.shtml">Using Git</a>.
+      "getgitcode.shtml">Using Git</a>.
       </p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
