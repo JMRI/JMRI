@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 - 2016 -->
 
-  <title>JMRI Setup - Error Messages and Codes</title>
+  <title>JMRI Applications - Error Messages and Codes</title>
 
   <!--#include virtual="/Style.shtml" -->
 
@@ -20,7 +20,7 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h1>JMRI Setup: Error Messages and Codes</h1>
+      <h1>JMRI Applications: Error Messages and Codes</h1>
       <!-- THIS WILL BE THE MASTER COPY: In process of removing copies from help/en/manual/DecoderPro3/Error.shtml and help/en/html/tools/programmer/ 
       and help/en/html/setup/Errors.shtml   @jerryg2003 08/07/2020 -->
 
