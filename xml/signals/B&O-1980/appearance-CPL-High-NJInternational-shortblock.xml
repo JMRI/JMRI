@@ -234,7 +234,6 @@
     <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-	  <ourAspect>Approach Slow</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
@@ -264,14 +263,12 @@
 
     <aspectMapping>
       <advancedAspect>Slow Approach Slow</advancedAspect>
-      <ourAspect>Approach Slow</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
-      <ourAspect>Approach Slow</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
