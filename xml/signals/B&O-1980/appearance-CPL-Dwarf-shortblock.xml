@@ -3,8 +3,7 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
->
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd">
 
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
@@ -24,18 +23,24 @@
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
     </revision>
-    <revision>
+	<revision>
         <revnumber>2</revnumber>
         <date>2019-09-26</date>
         <authorinitials>GM</authorinitials>
         <revremark>Added Stop and Proceed and Stop and Proceed Medium to possible appearances.  Changed the permissive specific appearance to Stop and Proceed.</revremark>
     </revision>
-   </revhistory>
+	<revision>
+        <revnumber>3</revnumber>
+        <date>2020-07-09</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Configured to allow for Approach Medium aspect in advance of Approach for use in areas where there is short braking distance prior to the next signal</revremark>
+    </revision>
+  </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
-  <name>Color Position Light High Signal</name>
+  <name>Color Position Light Dwarf Signal-Short Block</name>
   <reference>As described in the 1980 version of the Chessie System Operating Rules.</reference>
-  <description>Appearances for B&amp;O color position light mast signals.</description>
+  <description>Appearances for B&amp;O color position light dwarf signals.  Use this mast when you need a permissive signal that will display Approach Medium with the next signal is Approach.</description>
 
   <appearances>
 
@@ -45,27 +50,7 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 128</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-281.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Approach Limited</aspectname>
-      <show>yellow</show>
-      <show>green</show>
-      <show>dark</show>
-      <reference>Page 129</reference>
-      <comment>Signal is identical to Approach Medium except for the addition of a triangle flag on signal mast</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-282.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Limited Clear</aspectname>
-      <show>dark</show>
-      <show>green</show>
-      <show>green</show>
-      <reference>Page 130</reference>
-      <comment>Signal is identical to Medium Clear except for the addition of a triangle flag on signal mast</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-283.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-281-dwarf.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -74,7 +59,7 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 129</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-282A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-282-A-dwarf.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -83,16 +68,16 @@
       <show>green</show>
       <show>green</show>
       <reference>Page 130</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-283A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-283-A-dwarf.gif</imagelink>
     </appearance>
 
-    <appearance>
+	<appearance>
       <aspectname>Medium Approach Medium</aspectname>
       <show>dark</show>
       <show>green</show>
       <show>yellow</show>
       <reference>Page 131</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-283B.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-283-B-dwarf.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -101,7 +86,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Page 131</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-283C.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-283-C-dwarf.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -110,7 +95,7 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 132</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-284.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-284-dwarf.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -119,7 +104,7 @@
       <show>yellow</show>
       <show>dark</show>
       <reference>Page 133</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-285-dwarf.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -128,7 +113,7 @@
       <show>yellow</show>
       <show>green</show>
       <reference>Page 134</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-286.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-286-dwarf.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -137,7 +122,7 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 135</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-287.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-287-dwarf.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -146,7 +131,7 @@
       <show>yellow</show>
       <show>dark</show>
       <reference>Page 136</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-288.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-288-dwarf.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -155,16 +140,16 @@
       <show>lunar</show>
       <show>dark</show>
       <reference>Page 137</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-290.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-290-dwarf.gif</imagelink>
     </appearance>
 
-    <appearance>
+	<appearance>
       <aspectname>Stop and Proceed</aspectname>
       <show>green</show>
       <show>red</show>
       <show>dark</show>
       <reference>Page 140</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-291.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-291-dwarf.gif</imagelink>
     </appearance>
 
 	<appearance>
@@ -173,16 +158,16 @@
       <show>red</show>
       <show>green</show>
       <reference>Page 140</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-291-medium.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-291-m-dwarf.gif</imagelink>
     </appearance>
 
-	<appearance>
+    <appearance>
       <aspectname>Stop</aspectname>
       <show>dark</show>
       <show>red</show>
       <show>dark</show>
       <reference>Page 140</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/B-292-dwarf.gif</imagelink>
     </appearance>
 
 	<appearance>
@@ -190,7 +175,7 @@
 	  <show>dark</show>
 	  <show>dark</show>
 	  <show>dark</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-High/unlit.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-Dwarf/unlit-dwarf.gif</imagelink>
 	</appearance>
 
   </appearances>
@@ -201,9 +186,9 @@
       <aspect>Stop</aspect>
     </danger>
 
-    <permissive>
-      <aspect>Stop and Proceed</aspect>
-    </permissive>
+	<permissive>
+	  <aspect>Stop and Proceed</aspect>
+	</permissive>
 
     <held>
       <aspect>Stop</aspect>
@@ -220,7 +205,6 @@
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
-	  <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
@@ -229,7 +213,6 @@
     <aspectMapping>
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
-	  <ourAspect>Limited Clear</ourAspect>
 	  <ourAspect>Medium Clear</ourAspect>
 	  <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
@@ -238,7 +221,6 @@
     <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
-	  <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
@@ -246,8 +228,7 @@
 
     <aspectMapping>
       <advancedAspect>Limited Clear</advancedAspect>
-      <ourAspect>Approach Limited</ourAspect>
-	  <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
 	  <ourAspect>Medium Approach Medium</ourAspect>
 	  <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
@@ -281,7 +262,6 @@
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
@@ -289,9 +269,9 @@
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
-      <ourAspect>Clear</ourAspect>
-      <ourAspect>Limited Clear</ourAspect>
-      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Approach Medium</ourAspect>
+      <ourAspect>Medium Approach Slow</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>

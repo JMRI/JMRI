@@ -30,12 +30,18 @@
         <authorinitials>GM</authorinitials>
         <revremark>Added Stop and Proceed and Stop and Proceed Medium to possible appearances.  Changed the permissive specific appearance to Stop and Proceed.</revremark>
     </revision>
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2020-07-09</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Configured to allow for Approach Medium aspect in advance of Approach for use in areas where there is short braking distance prior to the next signal</revremark>
+    </revision>
    </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
-  <name>Color Position Light High Signal</name>
+  <name>Color Position Light High Signal-Short Block</name>
   <reference>As described in the 1980 version of the Chessie System Operating Rules.</reference>
-  <description>Appearances for B&amp;O color position light mast signals.</description>
+  <description>Appearances for B&amp;O color position light mast signals for short braking distances.  Use this mast when you need a permissive signal that will display Approach Medium with the next signal is Approach.</description>
 
   <appearances>
 
@@ -289,9 +295,9 @@
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
-      <ourAspect>Clear</ourAspect>
-      <ourAspect>Limited Clear</ourAspect>
-      <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Medium Approach Medium</ourAspect>
+      <ourAspect>Medium Approach Slow</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
