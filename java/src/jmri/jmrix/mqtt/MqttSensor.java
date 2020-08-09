@@ -20,7 +20,8 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
      * Requires, but does not check, that the system name and topic be consistent
      * @param ma Adapter to specific connection
      * @param systemName System Name for this Sensor
-     * @param topic Topic string to be used in communications
+     * @param sendTopic Topic string to be used when sending from JMRI
+     * @param rcvTopic Topic string to be used when receiving by JMRI
      */
     MqttSensor(MqttAdapter ma, String systemName, String sendTopic, String rcvTopic) {
         super(systemName);
