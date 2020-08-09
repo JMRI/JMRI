@@ -27,10 +27,17 @@ public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
         return (MqttSystemConnectionMemo) memo;
     }
 
-    public void setTopicPrefix(@Nonnull String topicPrefix) {
-        this.topicPrefix = topicPrefix;
+    public void setSendTopicPrefix(@Nonnull String sendTopicPrefix) {
+        this.sendTopicPrefix = sendTopicPrefix;
     }
-    @Nonnull public String topicPrefix = "track/sensor/"; // for constructing topic; public for script access
+    public void setRcvTopicPrefix(@Nonnull String rcvTopicPrefix) {
+        this.rcvTopicPrefix = rcvTopicPrefix;
+    }
+
+    @Nonnull
+    public String sendTopicPrefix = "track/turnout/"; // for constructing topic; public for script access
+    @Nonnull
+    public String rcvTopicPrefix = "track/turnout/"; // for constructing topic; public for script access
     
     /** {@inheritDoc} */
     @Override
@@ -58,9 +65,16 @@ public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
     protected Sensor createNewSensor(String systemName, String userName) {
         MqttSensor s;
         String suffix = systemName.substring(getSystemPrefix().length() + 1);
-        String topic = topicPrefix+suffix;
 
-        s = new MqttSensor(getMemo().getMqttAdapter(), systemName, topic);
+
+        String sendTopic = java.text.MessageFormat.format(
+                            sendTopicPrefix.contains("{0}") ? sendTopicPrefix : sendTopicPrefix+"{0}",
+                            suffix);
+        String rcvTopic = java.text.MessageFormat.format(
+                            rcvTopicPrefix.contains("{0}") ? rcvTopicPrefix : rcvTopicPrefix+"{0}",
+                            suffix);
+
+        s = new MqttSensor(getMemo().getMqttAdapter(), systemName, sendTopic, rcvTopic);
         s.setUserName(userName);
 
         if (parser != null) s.setParser(parser);

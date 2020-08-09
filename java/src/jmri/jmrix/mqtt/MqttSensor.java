@@ -13,7 +13,8 @@ import jmri.implementation.AbstractSensor;
 public class MqttSensor extends AbstractSensor implements MqttEventListener {
 
     private final MqttAdapter mqttAdapter;
-    private final String topic;
+    private final String sendTopic;
+    private final String rcvTopic;
 
     /**
      * Requires, but does not check, that the system name and topic be consistent
@@ -21,11 +22,12 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
      * @param systemName System Name for this Sensor
      * @param topic Topic string to be used in communications
      */
-    MqttSensor(MqttAdapter ma, String systemName, String topic) {
+    MqttSensor(MqttAdapter ma, String systemName, String sendTopic, String rcvTopic) {
         super(systemName);
-        this.topic = topic;
+        this.sendTopic = sendTopic;
+        this.rcvTopic  = rcvTopic;
         mqttAdapter = ma;
-        mqttAdapter.subscribe(this.topic, this);
+        mqttAdapter.subscribe(rcvTopic, this);  // only receive receive topic, not send one
     }
 
     public void setParser(MqttContentParser<Sensor> parser) {
@@ -97,13 +99,13 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
     }
 
     private void sendMessage(String c) {
-        mqttAdapter.publish(topic, c.getBytes());
+        mqttAdapter.publish(sendTopic, c);
     }
 
     @Override
     public void notifyMqttMessage(String receivedTopic, String message) {
-        if (!receivedTopic.endsWith(topic)) {
-            log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, topic);
+        if (! ( receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic) ) ) {
+            log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, rcvTopic);
             return;
         }
         

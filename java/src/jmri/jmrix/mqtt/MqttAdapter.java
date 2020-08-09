@@ -57,8 +57,10 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                 new String[]{Bundle.getMessage("TopicTurnoutRcv")},  Option.Type.TEXT));
         
         
-        options.put("11", new Option(Bundle.getMessage("NameTopicSensor"),
-                                            new String[]{Bundle.getMessage("TopicSensor")},   Option.Type.TEXT));
+        options.put("11.3", new Option(Bundle.getMessage("NameTopicSensorSend"),
+                                            new String[]{Bundle.getMessage("TopicSensorSend")},   Option.Type.TEXT));
+        options.put("11.5", new Option(Bundle.getMessage("NameTopicSensorRcv"),
+                                            new String[]{Bundle.getMessage("TopicSensorRcv")},   Option.Type.TEXT));
                                             
         options.put("12", new Option("Light topic :",       new String[]{Bundle.getMessage("TopicLight")},    Option.Type.TEXT));
         options.put("13", new Option("Reporter topic :",    new String[]{Bundle.getMessage("TopicReporter")}, Option.Type.TEXT));

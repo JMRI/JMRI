@@ -63,7 +63,8 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         }
         return (MqttSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,(Class c) -> {
                     MqttSensorManager t = new MqttSensorManager(this);
-                    t.setTopicPrefix(getMqttAdapter().getOptionState("11"));
+                    t.setSendTopicPrefix(getMqttAdapter().getOptionState("11.3"));
+                    t.setRcvTopicPrefix(getMqttAdapter().getOptionState("11.5"));
                     return t;
                 });
     }

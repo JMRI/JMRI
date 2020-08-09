@@ -63,7 +63,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         public void beanFromPayload(@Nonnull Turnout bean, @Nonnull String payload, @Nonnull String topic) {
             int state = stateFromString(payload);
             
-            boolean couldBeSendMessage = topic.endsWith(sendTopic);
+            boolean couldBeSendMessage = topic.endsWith(sendTopic); // not listening for send messages, but can get them anyway
             boolean couldBeRcvMessage = topic.endsWith(rcvTopic);
             
             if (couldBeSendMessage) {
