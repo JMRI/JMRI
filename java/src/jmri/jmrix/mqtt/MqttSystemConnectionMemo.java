@@ -50,7 +50,8 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         }
         return (MqttTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> {
                     MqttTurnoutManager t = new MqttTurnoutManager(this);
-                    t.setTopicPrefix(getMqttAdapter().getOptionState("10"));
+                    t.setSendTopicPrefix(getMqttAdapter().getOptionState("10.3"));
+                    t.setRcvTopicPrefix(getMqttAdapter().getOptionState("10.5"));
                     return t;
                 });
                 
