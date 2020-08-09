@@ -50,10 +50,7 @@ def OnClick(event):
     subprocess.Popen(help_command)
     label_panel_location.text = event.getActionCommand()
 
-file = JMenu("Help")
-
-def OnClick1(event):
-    webbrowser.open('http://localhost:8080/Dispatcher%20System')
+file = JMenu("Help (only on windows)")
 
 
 newfile = JMenuItem("Window Help",actionPerformed = OnClick)
@@ -64,10 +61,13 @@ file.add(newfile)
 file.add(newfile1)
 bar = JMenuBar()
 # help_path = "package.jmri.jmrit.dispatcher.DispatcherSystem"
-jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcher.Dispatcher' , False)
+
+jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcher.Dispatcher' , True)
+jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcherSystem.DispatcherSystem' , False)    # does not work
+jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcher.Dispatcher-OLD' , False)    # does not work
 bar.add(file)
 frame.setJMenuBar(bar)
-
+#
 
 
 
