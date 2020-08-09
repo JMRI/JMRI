@@ -8,7 +8,7 @@ from javax.swing import JOptionPane
 
 class processXML():
 
-    loglevel = 0
+    loglevel = 1
 
     # doc = None
     # doc_moveTo_sensor = None
@@ -35,7 +35,7 @@ class processXML():
             # if self.loglevel > 0: print "got add_required_logix1"
             self.add_required_memories()
             # if self.loglevel > 0: print "added sensors and icons"
-            self.associate_blocks_with_memories()
+            #self.associate_blocks_with_memories()
             self.write(finalPanelFilename)
             if self.loglevel > 0: print "wrote panel",finalPanelFilename
             msg = "Wrote panel to:\n" + finalPanelFilename + "\nPlease \n - restart JMRI and \n - load the file " + finalPanelFilename + "\n - instead of " + filename + "\n - and run Stage 2 of the Dispatcher System to set up the transits"
@@ -292,11 +292,19 @@ class processXML():
         #icons
         for LayoutEditor in self.doc.findall('LayoutEditor'):
             for memoryicon in LayoutEditor.findall('memoryicon'):
-                LayoutEditor.remove(memoryicon)                 
+                LayoutEditor.remove(memoryicon)   
+
+    def remove_blockcontent(self):
+        
+        #icons
+        for LayoutEditor in self.doc.findall('LayoutEditor'):
+            for blockcontenticon in LayoutEditor.findall('BlockContentsIcon'):
+                LayoutEditor.remove(blockcontenticon)  
                     
     def remove_old_memories(self):
         #moveToxx and MoveToxx_stored sensors
-        self.remove_memories()  
+        self.remove_memories()
+        self.remove_blockcontent()
 
     # **************************************************
     # remove existing transits
@@ -442,8 +450,9 @@ class processXML():
                 block_coordinate = self.get_block_coordinates(block_name)
                 if block_coordinate != None:
                     if self.loglevel > 0: print "block_coordinate = ", block_coordinate
-                    self.set_up_all_memory_icons(block_name,block_coordinate,index)
-                    self.set_up_all_memories(block_name, index)
+                    #self.set_up_all_memory_icons(block_name,block_coordinate,index)
+                    #self.set_up_all_memories(block_name, index)
+                    self.set_up_all_blockcontent_icons(block_name,block_coordinate,index)
                 
                 index+=1             
                 
@@ -600,6 +609,41 @@ class processXML():
     # **************************************************
     # Create XML code for Icons, and store temporarily
     # **************************************************
+    
+    def set_up_blockcontent_icon_code(self, icon_blockcontent_name, icon_tooltip, icon_coordinates, element_tree):
+        if self.loglevel > 0: print "set_up_blockcontent_icon_code"
+        if self.loglevel > 0: print element_tree
+        if self.loglevel > 0: print icon_coordinates
+        if self.loglevel > 0: print icon_blockcontent_name
+        
+        
+        x,y = icon_coordinates
+        if self.loglevel > 0: print x,y
+        iter = element_tree.getiterator('BlockContentsIcon')     
+        for element in iter:
+            element.set("blockcontents", icon_blockcontent_name)
+            element.set("x",str(x))
+            element.set("y",str(y))
+            for child in element.getchildren():
+                if child.tag == "tooltip": child.text = icon_tooltip   
+        # except Exception as e:
+            # if self.loglevel > 0: print e
+            
+        if self.loglevel > 0: print "end set_up_blockcontent_icon_code"
+            
+          
+            
+    def set_up_all_blockcontent_icon_codes(self, block_name, icon_coordinates, index):
+    
+        if self.loglevel > 0: print "icon_coordinates" , icon_coordinates == None
+        icon_blockcontent_name = block_name
+        blockcontent_location = blocks.getBlock(block_name).getSystemName() 
+        icon_tooltip = icon_blockcontent_name + "("+blockcontent_location+")"
+        blockcontent_icon_xml = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/sensorsAndIcons/blockcontent_icon.xml')
+        self.doc_blockcontent = ElementTree(file=blockcontent_icon_xml)
+        icon_offset = [-5,-30]
+        icon_coordinates_withoffset = [a + b for a, b in zip(icon_coordinates, icon_offset)]
+        self.set_up_blockcontent_icon_code(icon_blockcontent_name, icon_tooltip, icon_coordinates_withoffset, self.doc_blockcontent)
                  
     def set_up_memory_icon_code(self, icon_memory_name, icon_tooltip, icon_coordinates, element_tree):
         if self.loglevel > 0: print "set_up_memory_icon_code"
@@ -640,6 +684,28 @@ class processXML():
     # Insert the above XML code for the icons in the main document
     # **************************************************
     
+    def insert_blockcontent_icon_code(self, main_document_element_tree, icon_element_tree):
+
+        # find the insertion point in main document
+        print "inserting bloccontent code"
+        iter=main_document_element_tree.getiterator('LayoutEditor')
+        for result in iter:
+            xml_element_tree = main_document_element_tree 
+            insertion_point = xml_element_tree.findall("./LayoutEditor")[0]
+                        
+        # now we have found the insetion point, insert the button data
+        iter_icon = icon_element_tree.getiterator('LayoutEditor')
+        for result in iter_icon:
+            insertion_point.extend(result) 
+        #self.output = xml_element_tree
+        return xml_element_tree    
+
+   
+        
+    def insert_all_blockcontent_icon_codes(self):
+        #blockcontent icon
+        self.doc = self.insert_blockcontent_icon_code(self.doc, self.doc_blockcontent)
+    
     def insert_memory_icon_code(self, main_document_element_tree, icon_element_tree):
 
         # find the insertion point in main document
@@ -670,6 +736,14 @@ class processXML():
         self.set_up_all_memory_icon_codes(block_name, button_coordinate, index)       #stores the code temporarily
         if self.loglevel > 0: print "********mem icon code set up finished*****************"
         self.insert_all_memory_icon_codes()
+        if self.loglevel > 0: print "icon set up", block_name
+        if self.loglevel > 0: print "*************************"
+        
+    def set_up_all_blockcontent_icons(self, block_name, button_coordinate, index):
+        if self.loglevel > 0: print "********mem icon set up*****************"
+        self.set_up_all_blockcontent_icon_codes(block_name, button_coordinate, index)       #stores the code temporarily
+        if self.loglevel > 0: print "********mem icon code set up finished*****************"
+        self.insert_all_blockcontent_icon_codes()
         if self.loglevel > 0: print "icon set up", block_name
         if self.loglevel > 0: print "*************************"
            

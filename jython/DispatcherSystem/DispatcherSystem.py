@@ -19,6 +19,7 @@ from org.jgrapht.graph import DefaultEdge
 from org.jgrapht.graph import DirectedMultigraph
 import threading
 import time
+import webbrowser
 
 start_file = ""
 run_file = ""
@@ -50,13 +51,25 @@ def OnClick(event):
     label_panel_location.text = event.getActionCommand()
 
 file = JMenu("Help")
+
+def OnClick1(event):
+    webbrowser.open('http://localhost:8080/Dispatcher%20System')
+
+
 newfile = JMenuItem("Window Help",actionPerformed = OnClick)
+newfile1 = JMenuItem("Window Help1",actionPerformed = OnClick1)
 #openfile = JMenuItem("Open",actionPerformed = OnClick)
 #savefile = JMenuItem("Save",actionPerformed = OnClick)
 file.add(newfile)
+file.add(newfile1)
 bar = JMenuBar()
+# help_path = "package.jmri.jmrit.dispatcher.DispatcherSystem"
+jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcher.Dispatcher' , False)
 bar.add(file)
 frame.setJMenuBar(bar)
+
+
+
 
 ###info
 import os

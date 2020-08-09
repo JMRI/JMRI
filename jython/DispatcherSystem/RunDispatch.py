@@ -12,7 +12,7 @@ from javax.swing import JOptionPane, JFrame, JLabel, JButton, JTextField, JFileC
 # my_dir = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateGraph.py')
 # execfile(my_dir)
 import sys
-my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython\DispatcherSystem\jars\jgrapht.jar')
+my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
 sys.path.append(my_path_to_jars) # add the jar to your path
 from org.jgrapht.alg import DijkstraShortestPath
 from org.jgrapht.graph import DefaultEdge
@@ -133,7 +133,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                     #if new_train_flag == True :
                         #self.create_new_train_thread(new_train_name)
                     self.add_to_train_list_and_set_new_train_location(new_train_name, station_block_name)
-                    self.set_memory(station_block_name, new_train_name)
+                    self.set_blockcontents(station_block_name, new_train_name)
             else:
                 #allow operator to verify the train
                 all_trains = self.get_all_roster_entries_with_speed_profile()
@@ -147,7 +147,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if new_train_name not in trains_allocated:
                     trains_allocated.append(new_train_name)
                 self.add_to_train_list_and_set_new_train_location(new_train_name, station_block_name)
-                self.set_memory(station_block_name, new_train_name)
+                self.set_blockcontents(station_block_name, new_train_name)
                 
         else:
             if self.logLevel > 0: print "about to show message no new train in siding"
@@ -264,7 +264,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         
     def set_train_in_block(self, block_name, train_name):
         mem_val = train_name
-        self.set_memory(block_name, mem_val)
+        self.set_blockcontents(block_name, mem_val)
         
     def check_new_train_in_siding(self):
 
@@ -273,32 +273,32 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         
         for station_block_name in g.station_block_list:
         
-            #get a True if the block memory has the train name in it
-            block_memory_name = self.get_memory(station_block_name)
-            if self.logLevel > 0: print " a trains_allocated:", trains_allocated, ": block_memory_name", block_memory_name
+            #get a True if the block block_value has the train name in it
+            block_value = self.get_blockcontents(station_block_name)
+            if self.logLevel > 0: print " a trains_allocated:", trains_allocated, ": block_value", block_value
             
                
-            if block_memory_name != None:
-                if self.is_roster_entry(block_memory_name):
-                    if self.logLevel > 0: print block_memory_name.getId()
-                    block_memory_name = block_memory_name.getId()
+            # if block_value != None:
+                # if self.is_roster_entry(block_value):
+                    # if self.logLevel > 0: print block_value.getId()
+                    # block_value = block_value.getId()
             #get a True if the block is occupied
             block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
             
-            if self.logLevel > 0: print ("station block name {} : memory {}". format(station_block_name, str(block_memory_name)))
+            if self.logLevel > 0: print ("station block name {} : block_value {}". format(station_block_name, str(block_value)))
             
             #check if the block is occupied and has the required train in it  
-            if (block_memory_name == None or block_memory_name == "" or block_memory_name == "none") and block_occupied_state == True:
+            if (block_value == None or block_value == "" or block_value == "none") and block_occupied_state == True:
                 return [station_block_name, None]
-            elif block_occupied_state == True and (block_memory_name != None and block_memory_name != "" and block_memory_name != "none"):
+            elif block_occupied_state == True and (block_value != None and block_value != "" and block_value != "none"):
                 #check if there is already a thread for the train
                 #check if the train has already been allocated
-                #if self.new_train_thread_required(block_memory_name):
-                if block_memory_name not in trains_allocated:
-                    return [station_block_name, block_memory_name]
+                #if self.new_train_thread_required(block_value):
+                if block_value not in trains_allocated:
+                    return [station_block_name, block_value]
                 else:
-                    if self.logLevel > 0: print "block_memory_name in trains_allocated"
-                    if self.logLevel > 0: print "b trains_allocated:", trains_allocated, ": block_memory_name", block_memory_name
+                    if self.logLevel > 0: print "block_value in trains_allocated"
+                    if self.logLevel > 0: print "b trains_allocated:", trains_allocated, ": block_value", block_value
                     pass
             else:
                 pass
@@ -332,26 +332,16 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         #if instanceList[idx].setup():               # Compile the train actions
         instanceList[idx].start()               # Compile was successful
         
-
-    def get_memory(self, block_name):
-        layoutBlock = layoutblocks.getLayoutBlock(block_name)
-        #if self.logLevel > 0: print "layoutNlock =", layoutBlock
-        mem = layoutBlock.getMemory()
-        if mem != None:
-            mem_val = mem.getValue()
-        else:
-            mem_val = None
-        return mem_val 
         
-    def set_memory(self, block_name, value):
-        layoutBlock = layoutblocks.getLayoutBlock(block_name)
-        #if self.logLevel > 0: print "layoutNlock =", layoutBlock
-        mem = layoutBlock.getMemory()
-        if mem != None:
-            mem.setValue(value)
-        else:
-            pass
-         
+    def get_blockcontents(self, block_name):
+        block = blocks.getBlock(block_name)
+        value =  block.getValue()
+        return value
+        
+    def set_blockcontents(self, block_name, value):
+        block = blocks.getBlock(block_name)
+        value =  block.setValue(value)
+        
 
     def check_sensor_state_given_block_name(self, station_block_name):
         #if self.logLevel > 0: print("station block name {}".format(station_block_name))
@@ -948,10 +938,11 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.logLevel = 1
         global trains_dispatched
         trains_dispatched = []
-        #initialise all memory variables
-        MemoryManager = jmri.InstanceManager.getDefault(jmri.MemoryManager)
-        for memory in MemoryManager.getNamedBeanSet():
-            memory.setValue(None)                                
+        #initialise all block_value variables
+        for block in blocks.getNamedBeanSet():
+            LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+            if LayoutBlockManager.getLayoutBlock(block) != None:
+                block.setValue(None)                                
     
     def init(self):
         if self.logLevel > 0: print 'Create DispatchMaster Thread'
@@ -1035,9 +1026,9 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             ## Check the pressed button
             for station_block_name in g.station_block_list:
                 if self.logLevel > 0: print "station_block_name", station_block_name
-                #get a True if the block memory has the train name in it
-                block_memory_state = self.check_train_in_block(station_block_name, train_to_move)
-                if self.logLevel > 0: print "block_memory_state= ",block_memory_state
+                #get a True if the block block_value has the train name in it
+                block_value_state = self.check_train_in_block(station_block_name, train_to_move)
+                if self.logLevel > 0: print "block_value_state= ",block_value_state
                 #get a True if the block is occupied
                 block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
                 if self.logLevel > 0: print "block_occupied_state= ",block_occupied_state
@@ -1045,7 +1036,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # do not attempt to move to where you are
                 button_pressed_in_occupied_station = (button_station_name == station_block_name)
                 #check if the block is occupied and has the required train in it  
-                if block_memory_state == True and block_occupied_state == True and button_pressed_in_occupied_station == False:
+                if block_value_state == True and block_occupied_state == True and button_pressed_in_occupied_station == False:
                     #move from station_block_Name to button_name_station
 
                     express = self.get_express_flag()   # flag determining whether want to stop at all stations or not stop
@@ -1153,19 +1144,14 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         else:
             express_flag = False
         return express_flag
-
-    def get_memory(self, block_name):
-        layoutBlock = layoutblocks.getLayoutBlock(block_name)
-        #if self.logLevel > 0: print "layoutNlock =", layoutBlock
-        mem = layoutBlock.getMemory()
-        if mem != None:
-            mem_val = mem.getValue()
-        else:
-            mem_val = None
-        return mem_val 
+        
+    def get_blockcontents(self, block_name):
+        block = blocks.getBlock(block_name)
+        value =  block.getValue()
+        return value
 
     def check_train_in_block(self, block_name, train_name):
-        mem_val = self.get_memory(block_name)
+        mem_val = self.get_blockcontents(block_name)
         if train_name == mem_val:
             return True
         else:
