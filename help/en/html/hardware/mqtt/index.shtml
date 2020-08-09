@@ -105,8 +105,7 @@
         "track/turnout/" for MT123 will result in a topic of "/trains/track/turnout/123".
         If you include "{0}" in the string, the suffix will be expanded there, which 
         allows you to do things like enter  "track/turnout/{0}/state" and 
-        have that expand to "track/turnout/123/state".
-        
+        have that expand to "track/turnout/123/state".s
         Save the preferences
         and restart JMRI to put changes into effect.
         <p>
