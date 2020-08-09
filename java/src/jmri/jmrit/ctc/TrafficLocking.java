@@ -67,23 +67,26 @@ public class TrafficLocking {
         }
 
         public boolean isEnabled() { return _mRuleEnabled; }
-        public boolean isValid() {
+        public boolean isValid(boolean fleetingEnabled) {
             if (!_mRuleEnabled) return false;    // If disabled, treat as invalid so we skip this rule and try the next rule.
 //  6/22/2020 Bug Fix: Occupancy IS NOT a requirement, since it prevents a follow on move, either thru dispatcher recoding the same
 //                     route again, or with fleeting on.  Besides, the "Vital Relay Logic" signal system prevents problems anyways.
+//  8/?/2020 Bug Fix: Need to consider fleeting enabled.
 //  For all of these, ONLY unoccupied(INACTIVE) is "valid".  ACTIVE, INCONSISTENT and UNKNOWN all are considered occupied (ACTIVE):
-//          if (_mOccupancyExternalSensor1.getKnownState() != Sensor.INACTIVE) return false;
-//          if (_mOccupancyExternalSensor2.getKnownState() != Sensor.INACTIVE) return false;
-//          if (_mOccupancyExternalSensor3.getKnownState() != Sensor.INACTIVE) return false;
-//          if (_mOccupancyExternalSensor4.getKnownState() != Sensor.INACTIVE) return false;
-//          if (_mOccupancyExternalSensor5.getKnownState() != Sensor.INACTIVE) return false;
-//          if (_mOccupancyExternalSensor6.getKnownState() != Sensor.INACTIVE) return false;
-//          if (_mOccupancyExternalSensor7.getKnownState() != Sensor.INACTIVE) return false;
-//          if (_mOccupancyExternalSensor8.getKnownState() != Sensor.INACTIVE) return false;
-//          if (_mOccupancyExternalSensor9.getKnownState() != Sensor.INACTIVE) return false;
-            if (!_mSwitchIndicatorsRoute.isRouteSelected()) return false;
-            if (!isOptionalSensorActive(_mOptionalSensor1)) return false;
-            if (!isOptionalSensorActive(_mOptionalSensor2)) return false;
+            if (!fleetingEnabled) {
+                if (_mOccupancyExternalSensor1.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor2.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor3.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor4.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor5.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor6.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor7.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor8.getKnownState() != Sensor.INACTIVE
+                || _mOccupancyExternalSensor9.getKnownState() != Sensor.INACTIVE) return false;
+            }
+            if (!_mSwitchIndicatorsRoute.isRouteSelected()
+            || !isOptionalSensorActive(_mOptionalSensor1)
+            || !isOptionalSensorActive(_mOptionalSensor2)) return false;
             return true;
         }
 
@@ -177,12 +180,12 @@ public class TrafficLocking {
         }
     }
 
-    public TrafficLockingInfo valid(int presentSignalDirectionLever) {
-        if (presentSignalDirectionLever == CTCConstants.LEFTTRAFFIC) return validForTraffic(_mLeftTrafficLockingRulesArrayList, false);
-        return validForTraffic(_mRightTrafficLockingRulesArrayList, true);
+    public TrafficLockingInfo valid(int presentSignalDirectionLever, boolean fleetingEnabled) {
+        if (presentSignalDirectionLever == CTCConstants.LEFTTRAFFIC) return validForTraffic(_mLeftTrafficLockingRulesArrayList, false, fleetingEnabled);
+        return validForTraffic(_mRightTrafficLockingRulesArrayList, true, fleetingEnabled);
     }
 
-    private TrafficLockingInfo validForTraffic(ArrayList<TrafficLockingRecord> trafficLockingRecordArrayList, boolean rightTraffic) {
+    private TrafficLockingInfo validForTraffic(ArrayList<TrafficLockingRecord> trafficLockingRecordArrayList, boolean rightTraffic, boolean fleetingEnabled) {
         TrafficLockingInfo returnValue = new TrafficLockingInfo(true);          // ASSUME valid return status
         if (trafficLockingRecordArrayList.isEmpty()) return returnValue; // No rules, OK all of the time.
 //  If ALL are disabled, then treat as if nothing in there, always allow, otherwise NONE would be valid!
@@ -194,7 +197,7 @@ public class TrafficLocking {
 
         for (int index = 0; index < trafficLockingRecordArrayList.size(); index++) {
             TrafficLockingRecord trafficLockingRecord = trafficLockingRecordArrayList.get(index);
-            if (trafficLockingRecord.isValid()) {
+            if (trafficLockingRecord.isValid(fleetingEnabled)) {
 //  Ah, we found a rule that matches the route.  See if that route
 //  is in conflict with any other routes presently in effect:
                 String ruleNumber = Integer.toString(index+1);
