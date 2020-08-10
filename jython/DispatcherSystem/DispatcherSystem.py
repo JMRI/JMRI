@@ -43,29 +43,29 @@ frame.add(panel)
 
 #*****Menu*******
 
-def OnClick(event):
-    
-    help_path = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/help/Dispatcher System.chm')
-    help_command = 'hh.exe "'+ help_path + '"'
-    subprocess.Popen(help_command)
-    label_panel_location.text = event.getActionCommand()
-
-file = JMenu("Help (only on windows)")
-
-
-newfile = JMenuItem("Window Help",actionPerformed = OnClick)
-newfile1 = JMenuItem("Window Help1",actionPerformed = OnClick1)
+# def OnClick(event):
+#
+#     help_path = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/help/Dispatcher System.chm')
+#     help_command = 'hh.exe "'+ help_path + '"'
+#     subprocess.Popen(help_command)
+#     label_panel_location.text = event.getActionCommand()
+#
+# file = JMenu("Help (only on windows)")
+#
+#
+# newfile = JMenuItem("Window Help",actionPerformed = OnClick)
+# newfile1 = JMenuItem("Window Help1",actionPerformed = OnClick1)
 #openfile = JMenuItem("Open",actionPerformed = OnClick)
 #savefile = JMenuItem("Save",actionPerformed = OnClick)
-file.add(newfile)
-file.add(newfile1)
+# file.add(newfile)
+# file.add(newfile1)
 bar = JMenuBar()
 # help_path = "package.jmri.jmrit.dispatcher.DispatcherSystem"
 
-jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcher.Dispatcher' , True)
-jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcherSystem.DispatcherSystem' , False)    # does not work
-jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcher.Dispatcher-OLD' , False)    # does not work
-bar.add(file)
+jmri.util.HelpUtil.helpMenu(bar, 'html.apps.DispatcherSystem.DispatcherSystem' , True)
+# jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcherSystem.DispatcherSystem' , False)    # does not work
+# jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcher.Dispatcher-OLD' , False)    # does not work
+# bar.add(file)
 frame.setJMenuBar(bar)
 #
 
@@ -78,7 +78,7 @@ def strip_end(text, suffix):
     if not text.endswith(suffix):
         return text
     return text[:len(text)-len(suffix)]
-    
+
 def btnpanelLocation_action(event):
     global icons_file
     global run_file
@@ -90,7 +90,7 @@ def btnpanelLocation_action(event):
     #print current_file
     filepath = os.path.dirname(current_file)
     root = os.path.splitext(os.path.basename(current_file))
-    old_filename = root[0] 
+    old_filename = root[0]
     filetype  = root[1]
     #print old_filename
     if "run" not in old_filename and "icons" not in old_filename:
@@ -107,8 +107,8 @@ def btnpanelLocation_action(event):
     label_panel_location.text = start_file
     #row13b2.text = icons_file
     row11b2.text = run_file
-    #os.rename(r'filepath/old_filename.file type',r'file path/NEW file name.file type')    
-   
+    #os.rename(r'filepath/old_filename.file type',r'file path/NEW file name.file type')
+
 row0 = JPanel()
 row0.setLayout(BoxLayout(row0, BoxLayout.X_AXIS))
 txt = JTextField(140)
@@ -130,7 +130,7 @@ row12.setLayout(BoxLayout(row12, BoxLayout.X_AXIS))
 row12b1 = JLabel("Dispatcher System: Modifies panels to produce a running system")
 row12b1.add( Box.createHorizontalGlue() );
 row12b1.setAlignmentX( row12b1.LEFT_ALIGNMENT )
-msg = "" 
+msg = ""
 row12b2 = JLabel(msg)
 row12b2.setAlignmentX( row12b1.RIGHT_ALIGNMENT )
 
@@ -265,9 +265,9 @@ def CreateIcons_action(event):
     initialPanelFilename = start_file
     finalPanelFilename = icons_file
 
-    msg = "About to create file " + finalPanelFilename + "\n from " + initialPanelFilename 
+    msg = "About to create file " + finalPanelFilename + "\n from " + initialPanelFilename
     msg = msg + "\n  *****************************************************"
-    msg = msg + "\nPanel " + initialPanelFilename + " should be open for this stage to work" 
+    msg = msg + "\nPanel " + initialPanelFilename + " should be open for this stage to work"
     msg = msg + "\n  *****************************************************"
     msg = msg + "\nContinue?"
     myAnswer = JOptionPane.showConfirmDialog(None, msg)
@@ -285,7 +285,7 @@ def CreateIcons_action(event):
         #print "You closed the window. How rude!"
         return
     p = processXML(initialPanelFilename, finalPanelFilename )
-    
+
 
 def initialise_panel_location():
     global icons_file
@@ -302,15 +302,15 @@ def initialise_panel_location():
     KeyEvent = java.awt.event.KeyEvent
     #button.requestFocus();
     #robot.delay(1000)
-    robot.keyPress(KeyEvent.VK_TAB)       
+    robot.keyPress(KeyEvent.VK_TAB)
     robot.delay(10)
     robot.keyRelease(KeyEvent.VK_TAB)
     robot.delay(10)
-    robot.keyPress(KeyEvent.VK_SPACE)       
+    robot.keyPress(KeyEvent.VK_SPACE)
     robot.delay(10)
     robot.keyRelease(KeyEvent.VK_SPACE)
-    robot.delay(10)    
-    robot.keyPress(KeyEvent.VK_ENTER)       
+    robot.delay(10)
+    robot.keyPress(KeyEvent.VK_ENTER)
     robot.delay(10)
     robot.keyRelease(KeyEvent.VK_ENTER)
     robot.delay(10)
@@ -320,7 +320,7 @@ def initialise_panel_location():
     filepath = os.path.dirname(current_file)
     directory = filepath
     root = os.path.splitext(os.path.basename(current_file))
-    old_filename = root[0] 
+    old_filename = root[0]
     filetype  = root[1]
     #print old_filename
     if "run" not in old_filename and "icons" not in old_filename:
@@ -346,19 +346,19 @@ def initialise_panel_location():
             stage_to_run = "Stage 3 then operate the trains"
     label_panel_location.text = start_file
     #row13b2.text = icons_file
-    row11b2.text = run_file 
-    msg = "Panel Directory: " + str(directory) 
+    row11b2.text = run_file
+    msg = "Panel Directory: " + str(directory)
     row12b2.text = msg
     row42b2.text = start_filename + filetype
     row32b2.text = "Produces: " + start_filename + "_icons" + filetype + " (from " + start_filename + filetype + ")"
     row42b2.text = "Produces: " + start_filename + "_run" + filetype + " (from " + start_filename + "_icons" + filetype + ")"
     row62b1.text = "You have " + loaded_filename + filetype + " loaded. You may run " + stage_to_run
     row62b1.setFont(row62b1.getFont().deriveFont(Font.BOLD, 13));
-    
+
     row15b1.text = "When finished you need to restart JMRI and load the file created in Stage1: " + start_filename + "_icons" + filetype + " instead of " + start_filename + filetype
-    row45b1.text = "When finished you need to restart JMRI and load the file created in Stage2: " + start_filename + "_run" + filetype + " instead of " + start_filename + "_icons" + filetype 
-   
-   
+    row45b1.text = "When finished you need to restart JMRI and load the file created in Stage2: " + start_filename + "_run" + filetype + " instead of " + start_filename + "_icons" + filetype
+
+
 row1 = JPanel()
 row1.setLayout(BoxLayout(row1, BoxLayout.X_AXIS))
 row1b1 = JLabel("Insert Icons:           Runs file CreateIcons.py")
@@ -415,7 +415,7 @@ initialise_panel_location()
 robot = java.awt.Robot()
 KeyEvent = java.awt.event.KeyEvent
 
-        
+
 def CreateTransits_action(event):
 
     global g
@@ -439,7 +439,7 @@ def CreateTransits_action(event):
     print "ran CreateTransits"
 
 
-    
+
 def show_options_message(msg):
     JOptionPane.showMessageDialog(None, msg);
 
@@ -454,38 +454,38 @@ def show_options_pane():
     robot.keyPress(KeyEvent.VK_WINDOWS)
     robot.keyPress(KeyEvent.VK_F10)
     robot.delay(10)
-    robot.keyRelease(KeyEvent.VK_F10)    
+    robot.keyRelease(KeyEvent.VK_F10)
     robot.delay(10)
     robot.keyRelease(KeyEvent.VK_WINDOWS)
     robot.delay(10)
     robot.keyPress(KeyEvent.VK_DOWN)
     robot.delay(10)
-    robot.keyRelease(KeyEvent.VK_DOWN)    
+    robot.keyRelease(KeyEvent.VK_DOWN)
     robot.delay(10)
     robot.keyPress(KeyEvent.VK_DOWN)
     robot.delay(10)
-    robot.keyRelease(KeyEvent.VK_DOWN)    
-    robot.delay(10) 
+    robot.keyRelease(KeyEvent.VK_DOWN)
+    robot.delay(10)
     robot.keyPress(KeyEvent.VK_DOWN)
     robot.delay(10)
-    robot.keyRelease(KeyEvent.VK_DOWN)    
-    robot.delay(10) 
+    robot.keyRelease(KeyEvent.VK_DOWN)
+    robot.delay(10)
     robot.keyPress(KeyEvent.VK_SPACE)
     robot.delay(10)
-    robot.keyRelease(KeyEvent.VK_SPACE)    
-    robot.delay(10)    
+    robot.keyRelease(KeyEvent.VK_SPACE)
+    robot.delay(10)
 
 
 
 def ChangeOptions_action(event):
-    
+
     y = threading.Timer(0.1, function = show_options_pane)
     y.start()
-    
+
     msg = "You need to set the following: \n\n Use connectivity from Layout panels\n Trains from Roster\n Layout has block detection hardware\n Automatically allocate Sections to Active Trains\n Automatically set turnouts when a Section is allocated\n\n You also need to set SignalMasts/SML (top RH)\n and the Layout scale\n\nSave your Options in the Menu in the Dispatcher Frame after checking.\n "
     x = threading.Timer(2.0, function=show_options_message, args=(msg,))
     x.start()
-      
+
 row2 = JPanel()
 row2.setLayout(BoxLayout(row2, BoxLayout.X_AXIS))
 row2b1 = JLabel("Create Transits and TrainInfo Fies:           Runs file CreateTransits.py")
