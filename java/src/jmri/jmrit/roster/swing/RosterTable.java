@@ -75,7 +75,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                 // clear sorted cache
                 sortedRosterEntries = null;
             }
-        });;
+        });
         dataTable = new JTable(dataModel);
         dataTable.setRowSorter(sorter);
         dataScroll = new JScrollPane(dataTable);
