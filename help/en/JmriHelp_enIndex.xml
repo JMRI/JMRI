@@ -224,6 +224,8 @@
   <indexitem text="Requirements " target="package.jmri.jmrit.dispatcher.Dispatcher_requirements"/>
 
  </indexitem>
+ <indexitem text="Dispatcher System (Python Extension) " target="html.apps.DispatcherSystem.DispatcherSystem"/>
+
  <indexitem text="Dropbox (Profile Sharing) " target="html.setup.Dropbox"/>
 
  <indexitem text="EasyDCC - Hardware, Connection, Tools " target="html.hardware.easydcc.EasyDCC"/>
