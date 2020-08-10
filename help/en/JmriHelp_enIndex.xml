@@ -282,6 +282,8 @@
 
  <indexitem text="iPhone/iPod, Connecting to (Hardware) " target="html.tools.throttle.AdvancedThrottleControl_iphone"/>
 
+ <indexitem text="Issue Reporter " target="package.apps.util.issuereporter.swing/IssueReporter"/>
+
  <indexitem text="Javadoc (Developers) " target="html.doc.Technical.Javadoc"/>
 
  <indexitem text="JavaHelp (Developers) " target="html.doc.Technical.Help"/>
@@ -709,8 +711,6 @@
 
  </indexitem>
  <indexitem text="Uhlenbrock Intelllibox - Hardware, Connection, Tools " target="html.hardware.loconet.Uhlenbrock"/>
-
- <indexitem text="Upload Debugging Information " target="package.jmri.jmrit.mailreport.Report"/>
 
  <indexitem text="US&amp;S CTC Tools " target="html.tools.uss.index">
   <indexitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>
