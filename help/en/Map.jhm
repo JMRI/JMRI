@@ -178,8 +178,6 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_SwitchListByLocation" url="package/jmri/jmrit/operations/Operations.shtml#SwitchListByLocation"/>
 
-<mapID target="package.jmri.jmrit.dispatcherSystem.DispatcherSystem" url="package/jmri/jmrit/dispatcherSystem/DispatcherSystem.shtml"/>
-
 <mapID target="manual.DecoderPro.Main_Throttle_FrameProperties" url="manual/DecoderPro/Main_Throttle_FrameProperties.shtml"/>
 
 <mapID target="manual.DecoderPro.Comp_Speed_Talble_Top" url="manual/DecoderPro/Comp_Speed_Talble.shtml#Top"/>
@@ -855,8 +853,6 @@
 <mapID target="package.jmri.jmrit.display.IconAdder" url="package/jmri/jmrit/display/IconAdder.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_Speed" url="manual/DecoderPro3/Comp_Speed.shtml"/>
-
-<mapID target="package.jmri.jmrit.dispatcherSystem.DispatcherSystem_welcome" url="package/jmri/jmrit/dispatcherSystem/DispatcherSystem.shtml#welcome"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_controlPanel" url="manual/DecoderPro3/dp3_Main_Throttle_controlPanel.shtml"/>
 
@@ -2068,11 +2064,8 @@
 
 <mapID target="html.apps.StoringYourWork_autosave" url="html/apps/StoringYourWork.shtml#autosave"/>
 
-<<<<<<< HEAD
 <mapID target="package.apps.util.issuereporter.swing.IssueReporter" url="package/apps/util/issuereporter/swing/IssueReporter.shtml"/>
 
-=======
->>>>>>> master
 <mapID target="html.apps.DecoderPro.FileUpdate_after236" url="html/apps/DecoderPro/FileUpdate.shtml#after236"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_file_print_entry_Top" url="manual/DecoderPro3/dp3_Main_file_print_entry.shtml#Top"/>
@@ -2822,8 +2815,6 @@
 <mapID target="manual.DecoderPro3.index_BasicProgrammer" url="manual/DecoderPro3/index.shtml#BasicProgrammer"/>
 
 <mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml"/>
-
-<mapID target="html.apps.DispatcherSystem.DispatcherSystem_welcome" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#welcome"/>
 
 <mapID target="html.hardware.bachrus.index_documentation" url="html/hardware/bachrus/index.shtml#documentation"/>
 
@@ -4057,13 +4048,8 @@
 
 <mapID target="manual.DecoderPro3.Start_DecoderPro_Top" url="manual/DecoderPro3/Start_DecoderPro.shtml#Top"/>
 
-<<<<<<< HEAD
-=======
-<mapID target="html.doc.Technical.webupdate.UpdatingDocs" url="html/doc/Technical/webupdate/UpdatingDocs.shtml"/>
-
 <mapID target="html.apps.DispatcherSystem.DispatcherSystem_steps" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#steps"/>
 
->>>>>>> master
 <mapID target="html.hardware.loconet.PR4" url="html/hardware/loconet/PR4.shtml"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_List" url="manual/DecoderPro3/dp3_Main_Throttle_List.shtml"/>
@@ -4213,6 +4199,8 @@
 <mapID target="html.hardware.grapevine.Names_connecting" url="html/hardware/grapevine/Names.shtml#connecting"/>
 
 <mapID target="html.doc.Technical.index_buildyourcopy" url="html/doc/Technical/index.shtml#buildyourcopy"/>
+
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_introduction" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#introduction"/>
 
 <mapID target="manual.DecoderPro3.Comp_LightFX_Top" url="manual/DecoderPro3/Comp_LightFX.shtml#Top"/>
 
