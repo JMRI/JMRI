@@ -45,6 +45,7 @@
             works with GitHub repositories, Issues and releases.</li>
       </ul>
       
+      <a name="merge" id="merge"></a>
       <h2>Merging a PR</h2>
       
       Except in exceptional circumstances (which should probably be discussed in the PR itself),
@@ -76,17 +77,29 @@
         <li>Set the current milestone on the PR.</li>
       </ul>
       
-      <h2>How we use "Teams"</h2>
+      <a name="teams" id="teams"></a>
+      <h2>How we use GitHub teams</h2>
       
-      <p>What each team does
+      <p>GitHub provides support for teams to control access to various GitHub features.
+        We use two different ones:
+        <dl>
+            <dt>Developers</dt><dd>Have the "Triage" permissions, which allows
+                    editing of PRs, including adding/changing labels, releases, 
+                    and other properties.</dd>
+            <dt>Maintainers</dt><dd>In addition to "Triage" permissions also has
+                    "Write" permissions which allows merging PRs (subject to other
+                    rules and restrictions)</dd>
+        </dl>
+                    
       
-      <p>Terms for adding people to developer status
+      <p>Terms for adding people to developer team - still being developed
         <ul>
         <li>Have to have a real name on their GitHub account?</li>
         <li>Have to subscribe (and stay subscribed) to jmri-developers?</li>
         <li>Have to have worked on something other than their own projects?</li>
       </ul>
       
+      <a name="branches" id="branches"></a>
       <h2>Branches</h2>
       
       What do we keep as

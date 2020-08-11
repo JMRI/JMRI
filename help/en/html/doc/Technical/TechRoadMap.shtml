@@ -8,21 +8,7 @@
   <title>JMRI: Technology Road Map</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code road map">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -204,22 +190,30 @@
           <td>8</td>
         </tr>
 
-
         <tr>
-          <td>4.20.1<br>4.21.1<br>5.0.0</td>
+          <td>4.22</td>
 
-          <td>During Fall 2020, we'll be transitioning to a 
-              <a href="ReleaseProcess.md">new release model</a>
-              based on "updates", "minor releases"
-              and "major releases", replacing the
-              "test" and "production" releases we're used to.</td>
+          <td>Production version, culmination of Fall 2020 series</td>
 
-          <td></td>
+          <td>December 2020</td>
 
           <td>8</td>
 
           <td>8</td>
         </tr>
+
+        <tr>
+          <td>4.24 or perhaps 5.0</td>
+
+          <td>Production version, culmination of Spring 2021 series</td>
+
+          <td>June 2021</td>
+
+          <td>?</td>
+
+          <td>?</td>
+        </tr>
+
 
       </table>
 
@@ -228,7 +222,7 @@
       The 4.1.* series of test
       releases in Fall 2015 started the requirement for Java 8.
       This has continued through the following release series.
-      Java 8 will continue to be the requirement through at least Fall ow 2020.
+      Java 8 will continue to be the requirement through at least Fall of 2020.
       This involves doing development, test and production release
       builds using Java 1.8.0_181. (We also 
       <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%208u151/">test on Jenkins with Java 1.8_0_151</a>
