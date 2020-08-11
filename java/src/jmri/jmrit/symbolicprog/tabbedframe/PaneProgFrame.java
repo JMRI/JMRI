@@ -269,13 +269,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         addHelp();
     }
 
-    void setProgrammingGui(JPanel pane) {
+    void setProgrammingGui(JPanel bottom) {
         // see if programming mode is available
         modePane = getModePane();
         if (modePane != null) {
             // if so, configure programming part of GUI
-            JPanel bottom = new JPanel();
-            bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
             // add buttons
             JPanel bottomButtons = new JPanel();
             bottomButtons.setLayout(new BoxLayout(bottomButtons, BoxLayout.X_AXIS));
@@ -291,31 +289,23 @@ abstract public class PaneProgFrame extends JmriJFrame
             JPanel temp = new JPanel();
             bottom.add(temp);
             temp.add(modePane);
-
-            // add programming status message
-            bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-            progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-            bottom.add(progStatus);
-            pane.add(bottom, BorderLayout.SOUTH);
-            
         }
+        
+        // add add space for (programming) status message
+        bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        bottom.add(progStatus);
     }
 
     // ================== Search section ==================
     
     // create and add the Search GUI
-    void setSearchGui(JPanel pane) {
-        JPanel bottom = new JPanel();
-        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
-        pane.add(bottom, BorderLayout.SOUTH);
-
+    void setSearchGui(JPanel bottom) {
         // search field
         searchBar = new jmri.util.swing.SearchBar(searchForwardTask, searchBackwardTask, searchDoneTask);
         searchBar.setVisible(false); // start not visible
         searchBar.configureKeyModifiers(this);
         bottom.add(searchBar);
-
-        pane.add(bottom, BorderLayout.SOUTH);
     }
     
     jmri.util.swing.SearchBar searchBar;
@@ -663,11 +653,15 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+        tempPane.add(bottom, BorderLayout.SOUTH);
+
         // now that programmer is configured, set the programming GUI
-        setProgrammingGui(tempPane);        
+        setProgrammingGui(bottom);        
 
         // add the search GUI
-        setSearchGui(tempPane);
+        setSearchGui(bottom);
         
         pack();
 

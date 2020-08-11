@@ -87,7 +87,7 @@ public class CommonSubs {
                 }
             }
         }
-        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT)) {
+        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withRecordSeparator(null))) {
             printer.printRecord(entries);
             return printer.getOut().toString();
         } catch (IOException ex) {

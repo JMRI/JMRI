@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
+
 import javax.annotation.Nonnull;
+
+import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.profile.Profile;
@@ -15,6 +18,7 @@ import jmri.spi.PreferencesManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.openide.util.lookup.ServiceProvider;
@@ -112,10 +116,11 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                 this.actions.stream().filter(action -> action.isValid()).forEachOrdered(action -> {
                     try {
                         action.performAction();
-                    } catch (Exception ex) {
+                    } catch (JmriException ex) {
                         this.addInitializationException(profile, ex);
                     }
                 });
+                ServiceLoader.load(StartupRunnable.class).forEach(Runnable::run);
             }
             this.isDirty = false;
             this.restartRequired = false;

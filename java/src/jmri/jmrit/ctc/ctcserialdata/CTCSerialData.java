@@ -1,6 +1,7 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
@@ -12,7 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+
+import jmri.Turnout;
 import jmri.jmrit.ctc.CTCFiles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,11 +26,23 @@ import org.slf4j.LoggerFactory;
  */
 public class CTCSerialData {
 
-    public final static String CTCVersion = "V1.04";
+    public final static String CTCVersion = "V1.05";
     private OtherData _mOtherData;
     private ArrayList<CodeButtonHandlerData> _mCodeButtonHandlerDataArrayList;
     private final static Logger log = LoggerFactory.getLogger(CTCSerialData.class);
 
+    /**
+     * "Return" value from function "getCTCTurnoutData":
+     */
+    public static class CTCTurnoutData {
+        public final String   _mOSSectionText;
+        public final int      _mUniqueID;
+        public CTCTurnoutData(String OSSectionText, int uniqueID) {
+            _mOSSectionText = OSSectionText;
+            _mUniqueID = uniqueID;
+        }
+    }
+    
     public CTCSerialData() {
         _mOtherData = new OtherData();
         _mCodeButtonHandlerDataArrayList = new ArrayList<>();
@@ -202,10 +218,57 @@ public class CTCSerialData {
         }
         return returnValue;
     }
+    
+    /**
+     * Routine to search our _mCodeButtonHandlerDataArrayList for the O.S. section
+     * that contains the passed turnout.
+     * 
+     * @param turnout   The turnout to search for in our table.
+     * @return          CTCTurnoutData, else if turnout not found, null.
+     */
+    public CTCTurnoutData getCTCTurnoutData(Turnout turnout) {
+        String turnoutUserName = turnout.getDisplayName();  // Same routime as called in CommonSubs/populateJComboBoxWithBeans
+        for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
+            if (codeButtonHandlerData._mSWDI_Enabled) { // Only if it has one:
+                if (codeButtonHandlerData._mSWDI_ExternalTurnout.equals(turnoutUserName)) { // Ah match, this is us:
+                    return new CTCTurnoutData(codeButtonHandlerData.myShortStringNoComma(), codeButtonHandlerData._mUniqueID);
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * This routine is used to support FrmTUL.java.  It generates a HashSet (which
+     * prevents duplicate strings) of all such locked turnouts, EXCLUDING the
+     * passed "excludedOne", since that one will be handled locally in the calling
+     * code.
+     * 
+     * @param excludedOne The one to NOT include in the returned information.
+     * @return All locked turnouts NOT INCLUDING excludedOne.
+     */
+    
+    public HashSet<String> getHashSetOfAllLockedTurnoutsExcludingPassedOne(CodeButtonHandlerData excludedOne) {
+        HashSet<String> lockedTurnouts = new HashSet<>();
+        for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
+            if (codeButtonHandlerData != excludedOne) { // Process this one:
+                if (shouldAdd(codeButtonHandlerData._mTUL_ExternalTurnout)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_ExternalTurnout); }
+                if (shouldAdd(codeButtonHandlerData._mTUL_AdditionalExternalTurnout1)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout1); }
+                if (shouldAdd(codeButtonHandlerData._mTUL_AdditionalExternalTurnout2)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout2); }
+                if (shouldAdd(codeButtonHandlerData._mTUL_AdditionalExternalTurnout3)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout3); }
+            }
+        }
+        return lockedTurnouts;
+    }
+
+//  Quick and dirty routine for above:
+    private boolean shouldAdd(String aString) {
+        return null != aString && !aString.isEmpty();
+    }
 
     @SuppressWarnings("unchecked") // See below comments:
     public boolean readDataFromXMLFile(String filename) {
-        CodeButtonHandlerData.preprocessingUpgradeSelf(filename);
+        CodeButtonHandlerData.preprocessingUpgradeSelf(filename);   // WHOLE FILE operations FIRST.
         boolean returnValue = false;    // Assume error
         try {
             try (XMLDecoder xmlDecoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)))) {
