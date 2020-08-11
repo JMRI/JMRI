@@ -73,6 +73,13 @@ public class FrmMainForm extends JFrame {
         newOrOpenFile(true);
         checkPanelStatus.actionPerformed(null);
         new javax.swing.Timer(5000, checkPanelStatus).start();
+//  Before we "start up the editor", let's warn the user about using "," and ";" if they haven't seen it before:
+        if (!_mProgramProperties._mNoMoreReservedCharactersWarning) {
+            Object[] options = { Bundle.getMessage("CTCNamesMessageOK"), Bundle.getMessage("CTCNamesMessageDontShowThisAgain") }; // NOI18N
+            if (1 == JOptionPane.showOptionDialog(this, Bundle.getMessage("CTCNamesMessage"), Bundle.getMessage("ReminderTitle"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0])) {
+                _mProgramProperties._mNoMoreReservedCharactersWarning = true;
+            }
+        }
     }
 
     /**
@@ -619,10 +626,11 @@ public class FrmMainForm extends JFrame {
                                     .addComponent(_mButtonWriteXMLFiles)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(deleteButton)
-                                                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(4, 4, 4)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(_mCheckEverythingWithJMRI))
                                         .addComponent(changeNumbersButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(reapplyPatternsButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -755,11 +763,12 @@ public class FrmMainForm extends JFrame {
     private void _mPresentlyDefinedColumnsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event__mPresentlyDefinedColumnsValueChanged
         if (!evt.getValueIsAdjusting()) { // returns false is FINAL in chain.
             int selectedIndex = _mPresentlyDefinedColumns.getSelectedIndex();
-//  Who designed this steaming pile of XXXX called Swing?  I guess at some level this makes sense:
+//  I guess at some level this makes sense:
 //  It seems that "_mDefaultListModel.clear();" and "_mDefaultListModel.addElement..." BOTH
 //  causes this routine to be called repeatedly with a -1 each time for selectedIndex.  In fact, for EACH
 //  "_mDefaultListModel.addElement..." it calls us with -1.  Go figure!  Why -1 in that case?
 //  Isn't one being added that makes sense at a value >= 0?  Then why call us at all?  Sigh......
+//  I'm used to other languages (C, C++, C#) that don't do this.
             _mColumns.setEntrySelected(selectedIndex);
         }
     }//GEN-LAST:event__mPresentlyDefinedColumnsValueChanged
@@ -889,7 +898,7 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
-        FrmTUL dialog = new FrmTUL(_mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
+        FrmTUL dialog = new FrmTUL(_mAwtWindowProperties, _mCTCSerialData, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {

@@ -19,7 +19,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Randall Wood
  */
 @WebServlet(name = "DenialServlet",
-        urlPatterns = {"/prefs/networkServices"})
+        urlPatterns = {"/prefs/networkServices", "/settings/preferences"})
 @ServiceProvider(service = HttpServlet.class)
 public class DenialServlet extends HttpServlet {
 
