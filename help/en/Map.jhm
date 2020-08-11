@@ -1354,6 +1354,8 @@
 
 <mapID target="html.hardware.openlcb.index_documentation" url="html/hardware/openlcb/index.shtml#documentation"/>
 
+<mapID target="html.apps.index_addapp" url="html/apps/index.shtml#addapp"/>
+
 <mapID target="manual.DecoderPro.Comp_GlobalCVs" url="manual/DecoderPro/Comp_GlobalCVs.shtml"/>
 
 <mapID target="package.jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame" url="package/jmri/jmrix/ieee802154/swing/nodeconfig/EditNodeFrame.shtml"/>
