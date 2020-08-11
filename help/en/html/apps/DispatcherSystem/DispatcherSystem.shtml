@@ -32,7 +32,7 @@
 
       <div class="toc">
         <ul>
-          <li><a href="#welcome">Welcome</a>
+          <li><a href="#introduction">Introduction</a>
             <ul>
               <li><a href="#steps">Steps in setting up the system</a></li>
               <li><a href="#requirements">System Requirements</a></li>
@@ -51,8 +51,8 @@
         </ul>
       </div>
 
-      <a name="welcome" id="welcome"></a>
-      <h2>Welcome</h2>
+      <a name="introduction" id="introduction"></a>
+      <h2>Introduction</h2>
       <p>This is an automated system designed to enable you to run trains using the Dispatcher
       system between locations (normally sidings or stations, but really any set of blocks)
       designated by yourself.</p>
@@ -122,12 +122,13 @@
         <li>Provision is made for a station announcement to be made when a train departs from a station.</li>
         <li>If the block name is unpronounceable, a good stop name can be entered in the comments field for the departure announcements</li>
         <li>Typical blocks comments would be</li>
+        <li><img src="images/NewItem31.png" alt="" /></li>
       </ul>
 
       <a name="stage1" id="stage1"></a>
       <h2>Running Stage1 &mdash; Editing the panel</h2>
 
-      <p>Run DispatcherSystem.py in main jython directory. Get something like this:</p>
+      <p>Run DispatcherSystem.py in the main jython directory. You will get something like this:</p>
       <p><img alt="" style="padding : 1px;" src="images/NewItem3.png"></p>
       <p>You are prompted to run Stage1 which adds all the icons required to run the system on a new panel.</p>
       <p>if the old panel name was WR.xml, the new panel will be WR_icons.xml</p>
@@ -141,8 +142,13 @@
         <li>all blocks have lengths</li>
       </ul>
       <p>If no trains are present in the roster with speed profiles, this will be picked up, and can be corrected at run time.</p>
-      <p>When the icons file is produced, a message similar to the following will be produced</p>
-      <p><img alt="" style="padding : 1px;" src="images/NewItem5.png"></p>
+      <p>When the icons file is produced, a message similar to the following will be produced:</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem34.png"></p>
+      <p>A new panel has been created. You should close down and load the new panel, instead of the original.</p>
+      <p>Note:</p>
+      <p>The panel will have been created by loading the original xml file (in this case WR.ml), editing the details and saving to a new file (WR_icons.xml). </p>
+      <p>If there were any unsaved edits in the original file these will not be present in the new file, but you will not loose them provided you save them either to the original file or another file once Stage1 has completed. We advise saving all edits before running Stage1, so they are picked up.</p>
+
 
       <a name="stage2" id="stage2"></a>
       <h2>Running Stage2 Producing the transits</h2>
@@ -161,8 +167,8 @@
       are physically possible to travel. Train-info files are produced for forward and reverse operation,
       so there can be quite a number produced.</p>
       <p>Once the transits and train-info files are produced we get a message:</p>
-      <p><img alt="" style="padding : 1px;" src="images/NewItem10.png"></p>
-      <p>You should then restart JMRI and load the run panel, in this example WR_run.xml</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem35.png"></p>
+      <p>You should then restart JMRI and load the run panel instead of the icons panel, in this example WR_run.xml</p>
 
       <a name="stage3" id="stage3"></a>
       <h2>Running Stage3 Final Checks</h2>
@@ -177,7 +183,8 @@
       <p><img alt="" style="padding : 1px;" src="images/NewItem13.png"></p>
       <p>Set the required option and we get a message reminding you to save the changed options</p>
       <p><img alt="" style="padding : 1px;" src="images/NewItem14.png"></p>
-      <p>Open the dispatcher window and </p>
+      <p>Select the dispatcher window that has opened automatically and click Options =&gt; Save Options</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem32.png"></p>
 
       <a name="running" id="running"></a>
       <h2>Running the Program</h2>
@@ -203,7 +210,7 @@
       <li>At another stop we have to indicate which way we are talking about and we highlight one direction</li>
       </ul>
       <p>suppose we have the following layout</p>
-      <p><img width="893" height="203" alt="" style="padding : 1px;" src="images/NewItem16.png"></p>
+      <p><img width="617" height="140" alt="" style="padding : 1px;" src="images/NewItem16.png"></p>
       <p>Choosing the Train</p>
       <p>We click SetupTrain in siding</p>
       <p>If the train is siding 1b as indicated one gets the following message</p>
@@ -215,7 +222,7 @@
       <p><img alt="" style="padding : 1px;" src="images/NewItem18.png"></p>
       <p>Select the correct direction and click OK.</p>
       <p>The train will appear in the memory location for the block</p>
-      <p><img width="929" height="206" alt="" style="padding : 1px;" src="images/NewItem20.png"></p>
+      <p><img width="629" height="140"  alt="" style="padding : 1px;" src="images/NewItem20.png"></p>
 
       <a name="dispatch" id="dispatch"></a>
       <h3>Set up a dispatch</h3>
@@ -224,13 +231,13 @@
       <p>Clicking a red button will allow a dispatch to be set up to that location.</p>
       <p>Suppose one has the following layout with a train in siding1. Click the Passing Loop button
       as indicated to set up a dispatch to Passing Loop.</p>
-      <p><img alt="" style="padding : 1px;" src="images/NewItem24.png"></p>
+      <p><img alt="" width="681" height="304" style="padding : 1px;" src="images/NewItem24.png"></p>
       <p>There is an express icon. If set the train type will default to express (moves
       without stopping at intermediate stations), If unset, will default to stopping as shown.</p>
       <p><img alt="" style="padding : 1px;" src="images/NewItem26.png"></p>
       <p><img alt="" style="padding : 1px;" src="images/NewItem25.png"></p>
       <p>Select the required train from the drop down, and a dispatch will be set up to the next stop (Siding1A).</p>
-      <p><img alt="" style="padding : 1px;" src="images/NewItem27.png"></p>
+      <p><img alt="" width="692" height="157" style="padding : 1px;" src="images/NewItem27.png"></p>
       <p>The train will start moving, and the speed indicated in the Auto trains window.</p>
       <p><img alt="" style="padding : 1px;" src="images/NewItem28.png"></p>
       <p>The train will move to Siding1B, stop and the dispatch will terminate, another dispatch
@@ -239,21 +246,19 @@
       <a name="logic" id="logic"></a>
       <h2>Editing the Signal Logic</h2>
 
-      <p>Automatic Signal Logic is not perfect. I works well when there is one turnout per section,
+      <p>Automatic Signal Logic is not perfect. It works well when there is one turnout per section,
       but when there are more it may get one or more routes in a section wrong.</p>
-      <p>This can be overcome by editing the signal logic. You can see whether logic is wrong
+      <p>This can be overcome by editing the signal logic. You can see whether the logic is wrong
       either by attempting to run a train over the route, or by setting the turnouts along
       the route and seeing whether the signals are green</p>
-      <p>In the set rout from goods siding and back one can see that the automatic signal logic failed.</p>
-      <p><img alt="" style="padding : 1px;" src="images/NewItem29.png"><span class="rvts8">.</p>
-      <p>Right click on the signal mast and bring up the signal mast logic edito</p>
-      <p><img alt="" style="padding : 1px;" src="images/NewItem30.png"></p>
-      <p>You can see that for the route Board2toPT11 (the route from the bootomto top) only 2
-      turnouts instead of 4 are shown. The Dispatch will not work.</p>
-      <p>Delete the route, Press Add Signal Logic. And add a new route.</p>
-      <p>Ensure Use Layout Paths, Use Turnout Details from Layout Editor and Use Block Details
-      from Layout Editor are ticked (this will ensure that the transits already produced will
-      not get broken, and set up the transit. Save the panel and restert</p>
+      <p>In the set route from goods siding and back one can see that the automatic signal logic failed.</p>
+      <p><img alt="" style="padding : 1px;" src="images/NewItem22.png"><span class="rvts8">.</p>
+      <p>Right click on the signal mast and bring up the signal mast logic editor.for one of the routes (Board2toPT11) we get when we press the edit button:</p>
+      <p><img style="padding : 1px;" src="images/NewItem37.png" alt="" width="667" height="495" /></p>
+      <p>You can see that for this route Board2toPT11 (the route from the bottom to top) only 2 turnouts instead of 4 are shown, and also one of the aspects is closed instead of thrown. The Dispatch will not work. </p>
+      <p>Note that the essential thing to note is that all the turnouts used in the route should be present in the signal logic, and that they should have the correct aspect. If that isn't the case we should delete and replace.</p>
+      <p>Delete the route, Press Add Signal Logic. And add a new route. </p>
+      <p>Ensure Use Layout Paths, Use Turnout Details from Layout Editor and Use Block Details from Layout Editor are ticked (this will ensure that the transits already produced will not get broken, and set up the transit. Save the panel and restart.</p>
       <p>Dispatcher should now run along the route.</p>
 
       <!--#include virtual="/Footer.shtml" -->
