@@ -32,7 +32,9 @@
 
       <p>This page is the JMRI DecoderPro "frequently asked
       questions" list. Items get listed here if they're asked a
-      lot, even if they're also available somewhere else.</p>
+      lot, even if they're also available somewhere else.
+      See also the <a href="../../FAQ.shtml">JMRI general FAQ.</a>
+      </p>
 
       <dl class="faq">
         <dt class="on" id="newdecoder">How
@@ -111,8 +113,19 @@
           join the group</a> to be able to download the files.
         </dd>
 
-        <dt id="lb-xp">Why does my
-        LocoBuffer-II not work in Windows XP?</dt>
+
+        <dt id="errormsg">What does it mean to get Error 301 or Error 306 or any other errors?</dt>
+
+        <dd>
+        JMRI will display various errors when it finds something wrong in attempting to communicate with your DCC command station.  In particular,
+        Error 301 means that DecoderPro doesn't see a locomotive on the programming track when it is trying to program a decoder.  If you do have an
+        engine on the track (only one!), clean the wheels and the track and try again.  Error 306 means that JMRI is not getting the expected signal
+        from the command station.  If this happens when you are first setting things up, check your wiring, connections, and com port selection.  
+        This<a href="../Errors.shtml">list of all error messages </a>also provides some suggestions about how to clear them.
+        </dd>
+        
+      
+        <dt id="lb-xp">Why does my LocoBuffer-II not work in Windows XP?</dt>
 
         <dd>
           With Windows XP, your serial port parameters might not

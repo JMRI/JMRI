@@ -746,6 +746,11 @@
         <li>Peter Mansvelder, who contributed Fleischmann decoder
         definitions</li>
 
+        <li>Francesc Pinyol Margalef, <!-- cescp -->
+        who provided a fix for the
+        Digikeijs DR4018 (accessory DCC decoder) definition
+        and helped with the Z21XpressNet interface.
+        
         <li>Mark Marowicz, who provided the CT Elektronik SL 51
         decoder definition</li>
 
@@ -778,6 +783,10 @@
         <li>David McGowan, who handled many aspects of JMRI legal
         defense against Matt Katzer</li>
 
+        <li>Elmer McKay, who provided a nice <a href=
+        "html/tools/signaling/IntroToSignalingYourMRR.html">help
+        file on how to start signaling your layout</a>.</li>
+
         <li>Randy McKenzie, who contributed some CTC panel
         background images</li>
 
@@ -787,6 +796,9 @@
         <li>John McMasters, who provided definitions for his
         Digitrax Sound projects</li>
 
+        <li>Dave McMorran, <!-- davemc8992 -->
+        who worked on the MQTT JSON coding</li>
+        
         <li>Larry Meaney provided decoder ID for the Digitrax
         DN163K0b decoder</li>
 
@@ -816,13 +828,6 @@
         let us use their excellent Installer Vise to build our
         early Windows installers.</li>
 
-        <li>Elmer McKay, who provided a nice <a href=
-        "html/tools/signaling/IntroToSignalingYourMRR.html">help
-        file on how to start signaling your layout</a>.</li>
-
-        <li>Dave McMorran, <!-- davemc8992 -->
-        who worked on the MQTT JSON coding</li>
-        
         <li>Mike Moir, who provided a lot of information on how
         <a href="http://www.protrak.cc/">Grapevine</a> works.</li>
 
@@ -963,6 +968,9 @@
         <li>Joe Salemi, who contributed the Atlas 345 decoder
         definition and updated the TCS Tx definition.</li>
 
+        <li>Bruno Sanches, <!-- bcsanches -->
+        who fixed a bug in the DCC++ throttle implementation.
+        
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adsand47+">Dave Sand</a>, <!-- dsand47 -->
         who's worked on Layout Editor, Logix, 
         Entry/Exit signaling and other things.</li>
