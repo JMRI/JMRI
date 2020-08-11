@@ -203,15 +203,15 @@
         </tr>
 
         <tr>
-          <td>4.24 or perhaps 5.0</td>
+          <td>(Probably) 5.0</td>
 
           <td>Production version, culmination of Spring 2021 series</td>
 
           <td>June 2021</td>
 
-          <td>?</td>
+          <td>11</td>
 
-          <td>?</td>
+          <td>11</td>
         </tr>
 
 
@@ -258,28 +258,13 @@
       jlink from Java 9 or later.
 
       <p>
-      While we don't know yet when JMRI development will move past Java 8, 
-      we do know that the earliest that will happen  is after Fall 2020.
-      Allowing for migration and
-      development time, and depending on development plans, 
-      some future JMRI major release (with a number of 5.0.0 or later)
-      will require Java 11 or later.  JMRI updates and minor releases would stay with 
-      Java 8 for a little while after that, but eventually would have go shift over.
+      While we don't know with certainty when JMRI development will move past Java 8, 
+      we expect that it will be during the Spring 2021 development releases, 
+      leading to the June 2021 production releases requiring Java 11 and 
+      therefore being called JMRI 5.0.
+      There might be one or two JMRI updates and minor releases early
+      in Spring that would still work with Java 8.
       
-      <p>
-      It's slightly possible that, as an intermediate step,
-      JMRI development will move to a later Java SDK version
-      without requiring that JMRI users move to a later Java JRE version.  
-      For example, it's remotely possible that JMRI will require a Java 11 SDK
-      to compile and build distributions, which would still be able to
-      work on Java 8.  We prefer to do that to keep older hardware working,
-      but it's not always possible. 
-      (Note:  Here, we're talking about using the Java 11 SDK, not about
-      using Java 11 language features. Java 9 through 11 SDKs 
-      require setting their source version and runtime version to the same
-      value;  you can't compile i.e. Java 11 source code for a Java 8 runtime)
-
-
       <h4>Java Release and Operating System Support</h4>More
       information on Java releases and the operating systems that
       support them is on a <a href="JVMCapabilities.shtml">separate
