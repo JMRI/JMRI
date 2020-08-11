@@ -3,7 +3,7 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable-no-check.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -23,7 +23,13 @@
         <date>2016-07-28</date>
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-09-26</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Added Stop and Proceed and Stop and Proceed Medium to possible appearances.  Changed the permissive specific appearance to Stop and Proceed.</revremark>
+    </revision>
    </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
@@ -116,6 +122,22 @@
     </appearance>
 	
     <appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 140</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-291.gif</imagelink>
+    </appearance>
+	
+	<appearance>
+      <aspectname>Stop and Proceed Medium</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 140</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/rule-291-medium.gif</imagelink>
+    </appearance>
+	
+	<appearance>
       <aspectname>Stop</aspectname>
       <show>dark</show>
       <show>red</show>
@@ -124,7 +146,7 @@
     </appearance>
 	
 	<appearance>
-	  <aspectname>unlit</aspectname>
+	  <aspectname>Unlit</aspectname>
 	  <show>dark</show>
 	  <show>dark</show>
 	  <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/CPL-NJInternational/unlit.gif</imagelink>
@@ -139,7 +161,7 @@
     </danger>
 	
     <permissive>
-      <aspect>Restricting</aspect>
+      <aspect>Stop and Proceed</aspect>
     </permissive>
 	
     <held>
@@ -147,7 +169,7 @@
     </held>
 	
 	<dark>
-	  <aspect>unlit</aspect>
+	  <aspect>Unlit</aspect>
 	</dark>
 	
   </specificappearances>
@@ -206,7 +228,6 @@
     <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-	  <ourAspect>Approach Slow</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
@@ -223,8 +244,8 @@
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Limited Clear</ourAspect>
-      <ourAspect>Medium Clear</ourAspect>
+	  <ourAspect>Limited Clear</ourAspect>
+	  <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
@@ -238,14 +259,12 @@
 	
     <aspectMapping>
       <advancedAspect>Slow Approach Slow</advancedAspect>
-      <ourAspect>Approach Slow</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 	
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
-      <ourAspect>Approach Slow</ourAspect>
       <ourAspect>Slow Approach Slow</ourAspect>
 	  <ourAspect>Restricting</ourAspect>
     </aspectMapping>
@@ -285,3 +304,4 @@
   </aspectMappings>
   
 </appearancetable>
+

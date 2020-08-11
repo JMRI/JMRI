@@ -112,6 +112,8 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertEquals("state", Turnout.UNKNOWN, t.getKnownState());
         ((MqttTurnout)t).notifyMqttMessage("track/turnout/2", "INCONSISTENT");
         Assert.assertEquals("state", Turnout.INCONSISTENT, t.getKnownState());
+
+        JUnitAppender.assertWarnMessage("Trying to unsubscribe before connect/configure is done");
     }
     
     
@@ -127,4 +129,25 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertEquals("topic", "CLOSED", new String(savePayload));
     }
 
+
+    @Override
+    @Test
+    public void testRequestUpdate() throws jmri.JmriException {
+        super.testRequestUpdate();
+        JUnitAppender.assertWarnMessage("Trying to unsubscribe before connect/configure is done");
+    }
+
+    @Override
+    @Test
+    public void testOneSensorFeedback() throws jmri.JmriException {
+        super.testOneSensorFeedback();
+        JUnitAppender.assertWarnMessage("Trying to unsubscribe before connect/configure is done");
+    }
+
+    @Override
+    @Test
+    public void testTwoSensorFeedback() throws jmri.JmriException {
+        super.testTwoSensorFeedback();
+        JUnitAppender.assertWarnMessage("Trying to unsubscribe before connect/configure is done");
+    }
 }
