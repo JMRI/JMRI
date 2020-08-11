@@ -47,9 +47,21 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         super(new MqttSystemConnectionMemo());
         log.debug("Doing ctor...");
         option2Name = "0 MQTTchannel"; // 0 to get it to the front of the list
-        options.put(option2Name, new Option("MQTT channel: ", new String[]{baseTopic}, Option.Type.TEXT));
-        options.put("10", new Option("Turnout topic :",     new String[]{Bundle.getMessage("TopicTurnout")},  Option.Type.TEXT));
-        options.put("11", new Option("Sensor topic :",      new String[]{Bundle.getMessage("TopicSensor")},   Option.Type.TEXT));
+        
+        options.put(option2Name, new Option(Bundle.getMessage("NameTopicBase"), 
+                                            new String[]{baseTopic}, Option.Type.TEXT));
+                                            
+        options.put("10.3", new Option(Bundle.getMessage("NameTopicTurnoutSend"),    
+                new String[]{Bundle.getMessage("TopicTurnoutSend")},  Option.Type.TEXT));
+        options.put("10.5", new Option(Bundle.getMessage("NameTopicTurnoutRcv"),     
+                new String[]{Bundle.getMessage("TopicTurnoutRcv")},  Option.Type.TEXT));
+        
+        
+        options.put("11.3", new Option(Bundle.getMessage("NameTopicSensorSend"),
+                                            new String[]{Bundle.getMessage("TopicSensorSend")},   Option.Type.TEXT));
+        options.put("11.5", new Option(Bundle.getMessage("NameTopicSensorRcv"),
+                                            new String[]{Bundle.getMessage("TopicSensorRcv")},   Option.Type.TEXT));
+                                            
         options.put("12", new Option("Light topic :",       new String[]{Bundle.getMessage("TopicLight")},    Option.Type.TEXT));
         options.put("13", new Option("Reporter topic :",    new String[]{Bundle.getMessage("TopicReporter")}, Option.Type.TEXT));
         options.put("14", new Option("Signal Head topic :", new String[]{Bundle.getMessage("TopicSignalHead")}, Option.Type.TEXT));

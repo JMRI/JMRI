@@ -98,7 +98,15 @@
         
         <p>You can change the type-specific
         part of the prepended string using the other fields
-        in the preferences.  Save the preferences
+        in the preferences.  There are separate fields
+        for specifying what JMRI should send (the "transmit" field)
+        and what JMRI should recognize back from the layout (the "receive" field).
+        If you enter a string, the suffix of the Turnout's system name will be appended:
+        "track/turnout/" for MT123 will result in a topic of "/trains/track/turnout/123".
+        If you include "{0}" in the string, the suffix will be expanded there, which 
+        allows you to do things like enter  "track/turnout/{0}/state" and 
+        have that expand to "track/turnout/123/state".s
+        Save the preferences
         and restart JMRI to put changes into effect.
         <p>
         You can also change the type-specific part of the prepended string using
