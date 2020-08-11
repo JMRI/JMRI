@@ -3,7 +3,9 @@ package jmri.jmrit.operations.trains;
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
@@ -66,7 +68,7 @@ public class TrainIconTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         if(!GraphicsEnvironment.isHeadless()){
@@ -76,7 +78,7 @@ public class TrainIconTest extends OperationsTestCase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         if(editor!=null){
            JUnitUtil.dispose(editor);

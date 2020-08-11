@@ -2,10 +2,9 @@ package jmri.jmrix.maple;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the Maple SerialSensorManager class.
@@ -47,7 +46,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // replace SerialSensorManager to make sure nodes start
@@ -62,7 +61,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 //        SerialNode n2 = new SerialNode(2,0);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

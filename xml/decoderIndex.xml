@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.19.7ish+jake+20200530T2247Z+R3a3dc5c2bc on Sat May 30 15:48:38 PDT 2020-->
-  <decoderIndex version="1008">
+  <!--Written by JMRI version 4.19.8ish+jake+20200616T1804Z+R0e5345596e on Tue Jun 16 11:04:57 PDT 2020-->
+  <decoderIndex version="1012">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -234,7 +234,7 @@
         </model>
       </family>
       <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="36" highVersionID="36" comment="Factory installed decoders in Atlas N scale locomotives. NCE and Lenz rebranded by Atlas (changed Manufucturer ID to Atlas) http://www.atlasrr.com/pdf/Atlas_N-Scale_Decoder_Applications.pdf" file="Atlas_NCE_N.xml">
-        <model model="AN12A0 by NCE (Part #518299)" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+        <model model="AN12A0 by NCE (Part #518299)" numOuts="4" numFns="8" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
           <size length="2.65" width="0.37" height="0.12" units="inches" />
@@ -14835,9 +14835,71 @@
       </family>
       <family name="MTH HO Expanded PS3" mfg="MTH Electric Trains, Inc." file="MTH_Expanded.xml">
         <model model="MTH HO Expanded PS3" lowVersionID="1" highVersionID="2" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Start up - Shutdown</functionlabel>
+          <functionlabel num="4" lockable="true">PFA</functionlabel>
+          <functionlabel num="5" lockable="true">Lights</functionlabel>
+          <functionlabel num="6" lockable="true">Master Volume</functionlabel>
+          <functionlabel num="7" lockable="true">Front Coupler</functionlabel>
+          <functionlabel num="8" lockable="true">Rear Coupler</functionlabel>
+          <functionlabel num="9" lockable="true">Forward Signal</functionlabel>
+          <functionlabel num="10" lockable="true">Reverse Signal</functionlabel>
+          <functionlabel num="11" lockable="true">Grade Crossing Signal</functionlabel>
+          <functionlabel num="12" lockable="true">Clickety Clack</functionlabel>
+          <functionlabel num="13" lockable="true">Idle Sequence 4</functionlabel>
+          <functionlabel num="14" lockable="true">Idle Sequence 3</functionlabel>
+          <functionlabel num="15" lockable="true">Idle Sequence 2</functionlabel>
+          <functionlabel num="16" lockable="true">Idle Sequence 1</functionlabel>
+          <functionlabel num="17" lockable="true">Extended Start Up</functionlabel>
+          <functionlabel num="18" lockable="true">Extended Shut Down</functionlabel>
+          <functionlabel num="19" lockable="true">Rev Up</functionlabel>
+          <functionlabel num="20" lockable="true">Rev Down</functionlabel>
+          <functionlabel num="21" lockable="true">One Shot Doopler</functionlabel>
+          <functionlabel num="22" lockable="true">Coupler Slack</functionlabel>
+          <functionlabel num="23" lockable="true">Coupler Close</functionlabel>
+          <functionlabel num="24" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="25" lockable="true">Engine Sounds</functionlabel>
+          <functionlabel num="26" lockable="true">Brake Sounds</functionlabel>
+          <functionlabel num="27" lockable="true">Cab Chatter</functionlabel>
+          <functionlabel num="28" lockable="true">Feature Reset</functionlabel>
+        </functionlabels>
       </family>
       <family name="MTH HO Full PS3 Definition" mfg="MTH Electric Trains, Inc." file="MTH_PS3_Full.xml">
         <model model="MTH HO Full PS3 Definition" lowVersionID="1" highVersionID="2" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Start up - Shutdown</functionlabel>
+          <functionlabel num="4" lockable="true">PFA</functionlabel>
+          <functionlabel num="5" lockable="true">Lights</functionlabel>
+          <functionlabel num="6" lockable="true">Master Volume</functionlabel>
+          <functionlabel num="7" lockable="true">Front Coupler</functionlabel>
+          <functionlabel num="8" lockable="true">Rear Coupler</functionlabel>
+          <functionlabel num="9" lockable="true">Forward Signal</functionlabel>
+          <functionlabel num="10" lockable="true">Reverse Signal</functionlabel>
+          <functionlabel num="11" lockable="true">Grade Crossing Signal</functionlabel>
+          <functionlabel num="12" lockable="true">Clickety Clack</functionlabel>
+          <functionlabel num="13" lockable="true">Idle Sequence 4</functionlabel>
+          <functionlabel num="14" lockable="true">Idle Sequence 3</functionlabel>
+          <functionlabel num="15" lockable="true">Idle Sequence 2</functionlabel>
+          <functionlabel num="16" lockable="true">Idle Sequence 1</functionlabel>
+          <functionlabel num="17" lockable="true">Extended Start Up</functionlabel>
+          <functionlabel num="18" lockable="true">Extended Shut Down</functionlabel>
+          <functionlabel num="19" lockable="true">Rev Up</functionlabel>
+          <functionlabel num="20" lockable="true">Rev Down</functionlabel>
+          <functionlabel num="21" lockable="true">One Shot Doopler</functionlabel>
+          <functionlabel num="22" lockable="true">Coupler Slack</functionlabel>
+          <functionlabel num="23" lockable="true">Coupler Close</functionlabel>
+          <functionlabel num="24" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="25" lockable="true">Engine Sounds</functionlabel>
+          <functionlabel num="26" lockable="true">Brake Sounds</functionlabel>
+          <functionlabel num="27" lockable="true">Cab Chatter</functionlabel>
+          <functionlabel num="28" lockable="true">Feature Reset</functionlabel>
+        </functionlabels>
       </family>
       <family name="Champex-Linden" mfg="Massoth Elektronik, GmbH" file="Massoth_CL_63000.xml">
         <model model="Sound Module 63000" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" numOuts="0" numFns="0" formFactor="G" connector="other" />
@@ -19406,6 +19468,25 @@
             <functionlabel num="5" lockable="true">Beacon</functionlabel>
           </functionlabels>
         </model>
+        <model model="ALCO PA-PB" numOuts="3" numFns="14" connector="other" productID="ALCO-PA">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="FX6|Rule 17" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="RPM" label="+" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="RPM" label="-" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Mars light</functionlabel>
+          </functionlabels>
+        </model>
         <model model="ES44AC" numOuts="3" numFns="14" connector="other" productID="ES">
           <versionCV lowVersionID="82" />
           <output name="3" label="  FX5  " />
@@ -19423,6 +19504,25 @@
           <output name="RPM" label="-" />
           <functionlabels>
             <functionlabel num="5" lockable="true">Ditch</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="F7A-B" numOuts="3" numFns="14" connector="other" productID="F7A-B">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="FX6|Rule 17" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="Reserved" />
+          <output name="Short" label="Horn">
+            <label xml:lang="it">Tromba</label>
+          </output>
+          <output name="Reserved" />
+          <output name="RPM" label="+" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="RPM" label="-" />
+          <functionlabels>
+            <functionlabel num="5" lockable="true">Beacon</functionlabel>
           </functionlabels>
         </model>
         <model model="GP15" numOuts="3" numFns="14" connector="other" productID="GP15">

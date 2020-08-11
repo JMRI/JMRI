@@ -1,11 +1,12 @@
 package jmri.util.usb;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import javax.usb.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +32,13 @@ public class UsbBrowserPanelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         hub = new UsbHubScaffold();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         hub = null;
         JUnitUtil.tearDown();

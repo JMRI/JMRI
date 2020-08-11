@@ -1,8 +1,8 @@
 package jmri.jmrix.easydcc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -12,7 +12,7 @@ public class EasyDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProg
 
     private EasyDccSystemConnectionMemo _memo;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -22,7 +22,7 @@ public class EasyDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProg
         programmer = p;
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         _memo.getTrafficController().terminateThreads();

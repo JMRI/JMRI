@@ -1,32 +1,20 @@
 package jmri.util;
 
-import java.awt.Container;
-import java.awt.Frame;
-import java.awt.Window;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 
-import org.apache.log4j.Level;
-import org.junit.Assert;
-import org.netbeans.jemmy.FrameWaiter;
-import org.netbeans.jemmy.TestOut;
-import org.netbeans.jemmy.operators.AbstractButtonOperator;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import apps.SystemConsole;
-import java.util.concurrent.Callable;
-import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -35,29 +23,20 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
-import jmri.jmrix.internal.InternalReporterManager;
-import jmri.jmrix.internal.InternalSensorManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.jmrix.internal.*;
 import jmri.managers.*;
-import jmri.profile.NullProfile;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
+import jmri.profile.*;
 import jmri.progdebugger.DebugProgrammerManager;
-import jmri.util.managers.InternalLightManagerThrowExceptionScaffold;
-import jmri.util.managers.MemoryManagerThrowExceptionScaffold;
-import jmri.util.managers.OBlockManagerThrowExceptionScaffold;
-import jmri.util.managers.RouteManagerThrowExceptionScaffold;
-import jmri.util.managers.SensorManagerThrowExceptionScaffold;
-import jmri.util.managers.SignalHeadManagerThrowExceptionScaffold;
-import jmri.util.managers.SignalMastManagerThrowExceptionScaffold;
-import jmri.util.managers.TurnoutManagerThrowExceptionScaffold;
-import jmri.util.managers.WarrantManagerThrowExceptionScaffold;
-import jmri.util.prefs.InitializationException;
-import jmri.util.prefs.JmriConfigurationProvider;
-import jmri.util.prefs.JmriPreferencesProvider;
-import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
+import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.managers.*;
+import jmri.util.prefs.*;
 import jmri.util.zeroconf.MockZeroConfServiceManager;
 import jmri.util.zeroconf.ZeroConfServiceManager;
+
+import org.apache.log4j.Level;
+import org.junit.Assert;
+import org.netbeans.jemmy.*;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Common utility methods for working with JUnit.
@@ -186,11 +165,7 @@ public class JUnitUtil {
             // init logging if needed
             isLoggingInitialized = true;
             String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
-            Log4JUtil.initLogging(filename);
-        }
-
-        if (SystemConsole.isCreated()) {
-            SystemConsole.getInstance().open();
+            TestingLoggerConfiguration.initLogging(filename);
         }
 
         // need to do this each time
@@ -198,10 +173,10 @@ public class JUnitUtil {
             JUnitAppender.start();
 
             // reset warn _only_ once logic to make tests repeatable
-            Log4JUtil.restartWarnOnce();
+            JUnitLoggingUtil.restartWarnOnce();
             // ensure logging of deprecated method calls;
             // individual tests can turn off as needed
-            Log4JUtil.setDeprecatedLogging(true);
+            JUnitLoggingUtil.setDeprecatedLogging(true);
 
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
@@ -356,10 +331,6 @@ public class JUnitUtil {
         // Optionally, check that the Swing queue is idle
         //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
-        // remove SystemConsole log appenders so test framework output is not included
-        if (SystemConsole.isCreated()) {
-            SystemConsole.getInstance().close();
-        }
     }
 
     /**
@@ -514,10 +485,8 @@ public class JUnitUtil {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            return;
         } catch (Exception ex) {
             log.error("Exception in waitFor condition.", ex);
-            return;
         }
     }
 
@@ -948,9 +917,11 @@ public class JUnitUtil {
      * End any running BlockBossLogic (Simple Signal Logic) objects
      */
     public static void clearBlockBossLogic() {
-        jmri.jmrit.blockboss.BlockBossLogic.stopAllAndClear();
+        if(InstanceManager.containsDefault(BlockBossLogicProvider.class)) {
+            InstanceManager.getDefault(BlockBossLogicProvider.class).dispose();
+        }
     }
-    
+
     /**
      * Leaves ShutDownManager, if any, in place,
      * but removes its contents.  Instead of using this,
@@ -1008,7 +979,7 @@ public class JUnitUtil {
         while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
             log.error("Test {} left ShutDownTask registered: {} (of type {})", getTestClassName(), task.getName(), task.getClass(), 
-                        Log4JUtil.shortenStacktrace(new Exception("traceback")));
+                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
         }
@@ -1016,7 +987,7 @@ public class JUnitUtil {
         while (!callables.isEmpty()) {
             Callable<Boolean> callable = callables.get(0);
             log.error("Test {} left registered shutdown callable of type {}", getTestClassName(), callable.getClass(), 
-                        Log4JUtil.shortenStacktrace(new Exception("traceback")));
+                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(callable);
             callables = sm.getCallables(); // avoid ConcurrentModificationException
         }
@@ -1024,7 +995,7 @@ public class JUnitUtil {
         while (!runnables.isEmpty()) {
             Runnable runnable = runnables.get(0);
             log.error("Test {} left registered shutdown runnable of type {}", getTestClassName(), runnable.getClass(), 
-                        Log4JUtil.shortenStacktrace(new Exception("traceback")));
+                        LoggingUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(runnable);
             runnables = sm.getRunnables(); // avoid ConcurrentModificationException
         }
@@ -1098,20 +1069,6 @@ public class JUnitUtil {
     }
 
     /*
-     * Use reflection to reset the apps.AppsBase instance
-     */
-    public static void resetAppsBase() {
-        try {
-            Class<?> c = apps.AppsBase.class;
-            Field f = c.getDeclaredField("preInit");
-            f.setAccessible(true);
-            f.set(null, false);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            log.error("Failed to reset apps.AppsBase static preInit field", x);
-        }
-    }
-
-    /*
      * Use reflection to reset the jmri.util.node.NodeIdentity instance
      */
     public static void resetNodeIdentity() {
@@ -1159,7 +1116,7 @@ public class JUnitUtil {
      * @Rule
      * public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
      *
-     * @Before
+     * @BeforeEach
      * public void setUp() {
      *     resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
      * }
@@ -1180,18 +1137,18 @@ public class JUnitUtil {
             // reset UI provider
             Field providers = JmriUserInterfaceConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
-            ((HashMap<?, ?>) providers.get(null)).clear();
+            ((Map<?, ?>) providers.get(null)).clear();
             // reset XML storage provider
             providers = JmriConfigurationProvider.class.getDeclaredField("PROVIDERS");
             providers.setAccessible(true);
-            ((HashMap<?, ?>) providers.get(null)).clear();
+            ((Map<?, ?>) providers.get(null)).clear();
             // reset java.util.prefs.Preferences storage provider
             Field shared = JmriPreferencesProvider.class.getDeclaredField("SHARED_PROVIDERS");
             Field privat = JmriPreferencesProvider.class.getDeclaredField("PRIVATE_PROVIDERS");
             shared.setAccessible(true);
-            ((HashMap<?, ?>) shared.get(null)).clear();
+            ((Map<?, ?>) shared.get(null)).clear();
             privat.setAccessible(true);
-            ((HashMap<?, ?>) privat.get(null)).clear();
+            ((Map<?, ?>) privat.get(null)).clear();
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
             log.error("Unable to reset preferences providers", ex);
         }
@@ -1465,7 +1422,19 @@ public class JUnitUtil {
     public static void closeAllPanels() {
         InstanceManager.getOptionalDefault(EditorManager.class)
                 .ifPresent(m -> m.getAll()
-                        .forEach(e -> new EditorFrameOperator(e).closeFrameWithConfirmations()));
+                        .forEach(e -> {
+                            if(e.isVisible()){
+                               e.requestFocus();
+                               try {
+                                   EditorFrameOperator editorFrameOperator = new EditorFrameOperator(e.getTargetFrame());
+                                   editorFrameOperator.closeFrameWithConfirmations();
+                               } catch (TimeoutExpiredException timeoutException ) {
+                                   log.error("Failed to close panel {} with exception {}",e.getTitle(),
+                                           timeoutException.getMessage(),
+                                           LoggingUtil.shortenStacktrace(timeoutException));
+                               }
+                            }
+                        }));
     }
 
     /* GraphicsEnvironment utility methods */
@@ -1495,6 +1464,6 @@ public class JUnitUtil {
         return button;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JUnitUtil.class);
 
 }

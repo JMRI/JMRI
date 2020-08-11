@@ -12,8 +12,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
@@ -32,12 +34,10 @@ import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
-import org.junit.After;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -45,23 +45,19 @@ import org.junit.rules.TemporaryFolder;
  */
 public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHttpService> {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    @Before
-    @Override
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws Exception {
         super.setUp();
         service = new JsonUtilHttpService(mapper);
         JUnitUtil.resetWindows(true, false); // list open windows when running tests
         JUnitUtil.resetNodeIdentity();
-        JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", folder.newFolder(Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", folder));
         JUnitUtil.initConnectionConfigManager();
         JUnitUtil.initZeroConfServiceManager();
     }
 
     @SuppressWarnings("deprecation")
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();

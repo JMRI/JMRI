@@ -142,12 +142,12 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
     /**
      * Constructor for LayoutEditorToolBarPanel.
-     * 
-     * Note an unusual design feature: Since this calls the 
+     *
+     * Note an unusual design feature: Since this calls the
      * {@link #setupComponents()} and {@link #layoutComponents()}
      * non-final methods in the constructor, any subclass
-     * reimplementing those must provide versions that 
-     * will work before the subclasses own initializers and constructor 
+     * reimplementing those must provide versions that
+     * will work before the subclasses own initializers and constructor
      * is run.
      *
      * @param layoutEditor the layout editor that this is for
@@ -404,6 +404,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 } else {
                     blockSensorComboBox.setSelectedItem(null);
                 }
+            } else {
+                blockSensorComboBox.setSelectedItem(null);
             }
         });
 
@@ -614,7 +616,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 }   // if KEY_PRESSED event
             }   // if no modifier keys pressed
         }   // if is in edit mode
-    } 
+    }
 
     //initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolBarPanel.class);

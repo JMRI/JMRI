@@ -175,7 +175,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             } else {
                 iName = 16 * board + channel - 16;
             }
-            jmri.util.Log4JUtil.warnOnce(log, 
+            jmri.util.LoggingUtil.warnOnce(log, 
                     "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '{}' format is deprecated as of JMRI 4.17.4 and will be removed in a future JMRI release.  Use the curAddress format '{}' instead.",
                     curAddress, iName);
         } else {

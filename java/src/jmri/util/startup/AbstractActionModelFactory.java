@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.util.ConnectionNameFromSystemName;
 

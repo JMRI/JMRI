@@ -2,7 +2,9 @@ package jmri.jmrit.pragotronclock;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -82,7 +84,7 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
     /**
      * Clock started paused.
      */
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -97,7 +99,7 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if(clock!=null){

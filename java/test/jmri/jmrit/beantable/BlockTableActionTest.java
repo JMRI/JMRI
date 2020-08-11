@@ -11,7 +11,9 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -299,7 +301,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         return Bundle.getMessage("TitleEditBlock") + " IB1";
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -315,7 +317,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         a = new BlockTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;

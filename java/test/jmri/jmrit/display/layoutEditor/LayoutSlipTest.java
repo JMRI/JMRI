@@ -6,7 +6,9 @@ import java.awt.geom.*;
 import jmri.JmriException;
 import jmri.util.*;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutSlip
@@ -172,7 +174,7 @@ public class LayoutSlipTest {
     }
 
     @Test
-    @Ignore("No Test yet")
+    @Disabled("No Test yet")
     @ToDo("finish initialization of test and write code to test activation of turnouts")
     public void testActivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -184,7 +186,7 @@ public class LayoutSlipTest {
     }
 
     @Test
-    @Ignore("No Test yet")
+    @Disabled("No Test yet")
     @ToDo("finish initialization of test and write code to test deactivation of turnouts")
     public void testDeactivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -661,7 +663,7 @@ public class LayoutSlipTest {
     }
 
     // from here down is testing infrastructure
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -670,7 +672,7 @@ public class LayoutSlipTest {
         }
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
@@ -680,7 +682,7 @@ public class LayoutSlipTest {
         JUnitUtil.tearDown();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -689,7 +691,7 @@ public class LayoutSlipTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (lts != null) {
             lts.remove();

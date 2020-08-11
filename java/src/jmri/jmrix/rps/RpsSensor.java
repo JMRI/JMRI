@@ -119,6 +119,7 @@ public class RpsSensor extends AbstractSensor
     @Override
     public void dispose() {
         Model.instance().removeRegion(region);
+        super.dispose();
     }
 
     @Override

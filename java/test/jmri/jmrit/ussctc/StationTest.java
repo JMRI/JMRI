@@ -1,7 +1,9 @@
 package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Station classes in the jmri.jmrit.ussctc package
@@ -105,7 +107,7 @@ public class StationTest {
     CodeLine codeline;
     CodeButton button;
         
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -118,7 +120,7 @@ public class StationTest {
         button = new CodeButton("IS21", "IS22");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

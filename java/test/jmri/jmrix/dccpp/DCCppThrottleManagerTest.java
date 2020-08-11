@@ -1,8 +1,8 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * DCCppThrottleManagerTest.java
@@ -15,7 +15,7 @@ import org.junit.Before;
 public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         DCCppCommandStation cs = new DCCppCommandStation();
@@ -24,7 +24,7 @@ public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleMana
         tm = new DCCppThrottleManager(new DCCppSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

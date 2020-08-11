@@ -1,8 +1,8 @@
 package jmri.implementation;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,7 +10,7 @@ import org.junit.Before;
  */
 public class DccConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase  {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -18,7 +18,7 @@ public class DccConsistManagerTest extends jmri.implementation.AbstractConsistMa
         cm = new DccConsistManager(jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

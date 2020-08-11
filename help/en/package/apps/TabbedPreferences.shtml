@@ -109,6 +109,9 @@
           and consists, 
           while using a different one (SPROG in the figure) for the 
           service mode programming track.</p>
+      <p>For most Layout objects there is no default connection.
+          Every time you create a Turnout, Signal or Sensor, 
+          you can choose which system ( eg. LocoNet or MERG ) it belongs to.</p>
       <p>The Internal connection can be selected as a default. 
           To avoid a common mis-configuration, JMRI applications will notify you if the
           Internal connection is selected across all the columns. 

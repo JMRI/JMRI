@@ -9,7 +9,8 @@ import jmri.InstanceManager;
 import jmri.util.*;
 
 import org.jdom2.JDOMException;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmrit.roster.RosterEntry class.
@@ -468,14 +469,14 @@ public class RosterEntryTest {
                 .getChild("value").getText());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

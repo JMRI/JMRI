@@ -39,7 +39,6 @@ public class CbusThrottle extends AbstractThrottle {
             log.error("{} is not a DccLocoAddress",address);
             return;
         }
-        log.debug("Throttle created");
         cs = (CbusCommandStation) adapterMemo.get(jmri.CommandStation.class);
         _handle = handle;
         _isStolen = false;
@@ -50,21 +49,9 @@ public class CbusThrottle extends AbstractThrottle {
         // Functions 0-28 default to false
         this.dccAddress = (DccLocoAddress) address;
         this.isForward = true;
-
-//        switch(slot.decoderType())
-//        {
-//            case CbusConstants.DEC_MODE_128:
-//            case CbusConstants.DEC_MODE_128A: this.speedIncrement = 1; break;
-//            case CbusConstants.DEC_MODE_28:
-//            case CbusConstants.DEC_MODE_28A:
-//            case CbusConstants.DEC_MODE_28TRI: this.speedIncrement = 4; break;
-//            case CbusConstants.DEC_MODE_14: this.speedIncrement = 8; break;
-//        }
-        // Only 128 speed step supported at the moment
         this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
 
-        // start periodically sending keep alives, to keep this
-        // attached
+        // start periodically sending keep alives, to keep this attached
         log.debug("Start Throttle refresh");
         startRefresh();
 
@@ -91,16 +78,20 @@ public class CbusThrottle extends AbstractThrottle {
      * setSpeedStepMode - set the speed step value.
      * <p>
      * Overridden to capture mode changes to be forwarded to the hardware.
-     * New throttles default to 128 step mode
+     * New throttles default to 128 step mode.
+     * CBUS Command stations also default to 128SS so this does not
+     * need to be sent if unchanged.
      *
      * @param Mode the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
     @Override
     public void setSpeedStepMode(SpeedStepMode Mode) {
+        if (speedStepMode==Mode){
+            return;
+        }
+        super.setSpeedStepMode(Mode);
         int mode;
-        speedStepMode = Mode;
-        super.setSpeedStepMode(speedStepMode);
         switch (speedStepMode) {
             case NMRA_DCC_28:
                 mode = CbusConstants.CBUS_SS_28;
@@ -132,8 +123,7 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Send the CBUS message to set the state of locomotive direction and
-     * functions F0, F1, F2, F3, F4
+     * Send the CBUS message to set the state of functions F0, F1, F2, F3, F4.
      */
     @Override
     protected void sendFunctionGroup1() {
@@ -141,7 +131,7 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Send the CBUS message to set the state of functions F5, F6, F7, F8
+     * Send the CBUS message to set the state of functions F5, F6, F7, F8.
      */
     @Override
     protected void sendFunctionGroup2() {
@@ -149,7 +139,7 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Send the CBUS message to set the state of functions F9, F10, F11, F12
+     * Send the CBUS message to set the state of functions F9, F10, F11, F12.
      */
     @Override
     protected void sendFunctionGroup3() {
@@ -222,6 +212,7 @@ public class CbusThrottle extends AbstractThrottle {
         }
     }
     
+    // TODO - use intSpeed( speedSetting, SPEED_STEPS )
     // following a speed or direction change, sends to layout
     private void sendToLayout(){
         int new_spd = intSpeed(this.speedSetting);

@@ -1,8 +1,8 @@
 package jmri.jmrix.dcc4pc.swing.packetgen;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of PacketGenPanel
@@ -11,7 +11,7 @@ import org.junit.Before;
  */
 public class PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -20,7 +20,7 @@ public class PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
         helpTarget="package.jmri.jmrix.dcc4pc.swing.packetgen.PacketGenFrame";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {        JUnitUtil.tearDown();    }
 }

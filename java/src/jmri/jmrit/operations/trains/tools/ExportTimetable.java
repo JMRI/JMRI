@@ -227,7 +227,7 @@ public class ExportTimetable extends XmlFile {
                     distance,
                     "No",
                     "0",
-                    location.isStaging() ? location.getTrackList().size() : "0");
+                    location.isStaging() ? location.getTracksList().size() : "0");
         }
     }
 

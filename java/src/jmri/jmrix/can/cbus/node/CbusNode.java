@@ -93,6 +93,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
         
         if ( ( ( _flags >> 2 ) & 1 ) == 0 ){
             getNodeBackupManager().setNodeInSlim();
+            getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0
         }
         
         if ( ( ( _flags >> 5 ) & 1 ) == 1 ){

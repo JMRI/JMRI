@@ -2,8 +2,8 @@ package jmri.jmrix.loconet;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the LocoNetSystemConnectionMemo class
@@ -13,7 +13,7 @@ import org.junit.Before;
 public class LocoNetSystemConnectionMemoTest extends SystemConnectionMemoTestBase<LocoNetSystemConnectionMemo> {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new LocoNetSystemConnectionMemo();
@@ -24,7 +24,7 @@ public class LocoNetSystemConnectionMemoTest extends SystemConnectionMemoTestBas
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.dispose();
         JUnitUtil.tearDown();

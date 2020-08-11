@@ -1,10 +1,9 @@
 package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogCSTurnout.
@@ -41,7 +40,7 @@ public class SprogCSTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -59,7 +58,7 @@ public class SprogCSTurnoutTest extends jmri.implementation.AbstractTurnoutTestB
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m.getSlotThread().interrupt();
         stcs.dispose();

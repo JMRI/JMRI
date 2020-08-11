@@ -14,20 +14,22 @@ import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
 
     @Test
     @Override
-    @Ignore("Elite behavior is unknown for this sequence")
+    @Disabled("Elite behavior is unknown for this sequence")
     @ToDo("investigate proper sequence and reimplement test")
     public void testWriteHighCvSequence() throws JmriException {
     }
 
     @Test
     @Override
-    @Ignore("Elite behavior is unknown for this sequence")
+    @Disabled("Elite behavior is unknown for this sequence")
     @ToDo("investigate proper sequence and reimplement test")
     public void testReadHighCvSequence() throws JmriException {
     }
@@ -80,9 +82,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(() -> {
-            return l.getRcvdInvoked() != 0;
-        }, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
 
     }
 
@@ -137,9 +137,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(() -> {
-            return l.getRcvdInvoked() != 0;
-        }, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
 
     }
@@ -194,9 +192,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(() -> {
-            return l.getRcvdInvoked() != 0;
-        }, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 48, l.getRcvdValue());
 
     }
@@ -254,16 +250,14 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
         // failure in this test occurs with the next line.
-        JUnitUtil.waitFor(() -> {
-            return l.getRcvdInvoked() != 0;
-        }, "Receive Called by Programmer");
+        JUnitUtil.waitFor(() -> l.getRcvdInvoked() != 0, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
 
     }
 
     // The minimal setup is for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -273,7 +267,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.terminateThreads();
         t = null;

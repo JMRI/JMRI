@@ -1,11 +1,11 @@
 package jmri.jmrit.vsdecoder.swing;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import javax.swing.JPanel;
+
 import java.awt.GraphicsEnvironment;
 
 /**
@@ -22,12 +22,12 @@ public class VSDOptionsDialogTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.resetWindows(false,false);
         jmri.util.JUnitUtil.tearDown();

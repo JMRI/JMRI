@@ -1,9 +1,7 @@
 package jmri.util;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * This is here so that SpotBugs can check proper static performance.
@@ -81,12 +79,12 @@ public class NonNullArrayListTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

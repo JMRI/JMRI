@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.swing.console;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -8,10 +9,9 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CbusConsolePane
@@ -62,7 +62,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
     private TrafficControllerScaffold tc;
     private CbusConsolePane cbPanel;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -74,7 +74,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         title="CBUS Console";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         

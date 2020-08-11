@@ -148,7 +148,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                             && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) != 0)
                             && (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
                             .getTrainDirections()) != 0))
-                            && (_track == null || _track.acceptsPickupTrain(train))) {
+                            && (_track == null || _track.isPickupTrainAccepted(train))) {
                         pickup = true;
                     }
                     if (rl.isDropAllowed()
@@ -159,7 +159,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                             && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) != 0)
                             && (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
                             .getTrainDirections()) != 0)) 
-                            && (_track == null || _track.acceptsDropTrain(train))) {
+                            && (_track == null || _track.isDropTrainAccepted(train))) {
                         setout = true;
                     }
                     // now display results
@@ -217,7 +217,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
             if (_location != null && !_location.acceptsTypeName(type)) {
                 typeComboBox.removeItem(type);
             }
-            if (_track != null && !_track.acceptsTypeName(type)) {
+            if (_track != null && !_track.isTypeNameAccepted(type)) {
                 typeComboBox.removeItem(type);
             }
         }

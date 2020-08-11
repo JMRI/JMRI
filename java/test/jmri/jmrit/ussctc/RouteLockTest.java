@@ -1,9 +1,12 @@
 package jmri.jmrit.ussctc;
 
 import java.util.*;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for RouteLock class in the jmri.jmrit.ussctc package
@@ -133,7 +136,7 @@ public class RouteLockTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -141,7 +144,7 @@ public class RouteLockTest {
         JUnitUtil.initInternalSignalHeadManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

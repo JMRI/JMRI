@@ -13,11 +13,11 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
@@ -71,7 +71,7 @@ public class PointDetailsTest {
         Assert.assertEquals("Button is active", nxState, EntryExitPairs.NXBUTTONINACTIVE);  // NOI18N
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
 
@@ -86,7 +86,7 @@ public class PointDetailsTest {
         sm = InstanceManager.getDefault(SensorManager.class);
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         JUnitUtil.deregisterBlockManagerShutdownTask();

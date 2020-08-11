@@ -24,7 +24,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
      * Constructor.
      * @param memo system connection.
      */
-    public DebugThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
+    public DebugThrottleManager(jmri.SystemConnectionMemo memo) {
         super(memo);
     }
 

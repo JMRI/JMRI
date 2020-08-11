@@ -11,6 +11,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,9 +29,7 @@ import jmri.util.JUnitUtil;
 import jmri.web.servlet.ServletUtil;
 import jmri.util.JUnitAppender;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletConfig;
@@ -396,7 +395,7 @@ public class JsonServletTest {
         JUnitAppender.assertWarnMessage("Requested type 'invalid-type' unknown.");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -412,7 +411,7 @@ public class JsonServletTest {
         request.setCharacterEncoding(ServletUtil.UTF8);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

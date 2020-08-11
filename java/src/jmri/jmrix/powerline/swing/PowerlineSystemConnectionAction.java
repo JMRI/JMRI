@@ -3,7 +3,7 @@ package jmri.jmrix.powerline.swing;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.swing.AbstractSystemConnectionAction;
 

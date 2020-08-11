@@ -505,7 +505,7 @@ public class Transit extends AbstractNamedBean {
      */
     @Deprecated // for removal 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
     public int validateConnectivity(LayoutEditor panel) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "validateConnectivity");
+        jmri.util.LoggingUtil.deprecationWarning(log, "validateConnectivity");
         if (panel == null) {
             log.error("validateConnectivity called with a null LayoutEditor panel");
             return -1;

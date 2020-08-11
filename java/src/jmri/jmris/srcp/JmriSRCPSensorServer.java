@@ -9,7 +9,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmris.AbstractSensorServer;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * SRCP Server interface between the JMRI Sensor manager and a network

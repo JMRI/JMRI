@@ -1,8 +1,10 @@
 package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
+
 import org.jdom2.Element;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the NotchTrigger class
@@ -133,12 +135,12 @@ public class NotchTriggerTest {
         Assert.assertEquals("xml action", Trigger.TargetAction.PLAY, uut.getTargetAction());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

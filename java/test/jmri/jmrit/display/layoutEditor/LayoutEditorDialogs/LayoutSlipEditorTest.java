@@ -2,10 +2,8 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.GraphicsEnvironment;
 
-import jmri.jmrit.display.layoutEditor.*;
-import jmri.util.*;
-
-import org.junit.*;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutSlipEditor.

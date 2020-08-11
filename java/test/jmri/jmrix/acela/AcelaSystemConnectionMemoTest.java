@@ -2,10 +2,9 @@ package jmri.jmrix.acela;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the AcelaSystemConnectionMemo class.
@@ -26,7 +25,7 @@ public class AcelaSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         AcelaTrafficController tc = new AcelaTrafficControlScaffold();
@@ -34,7 +33,7 @@ public class AcelaSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

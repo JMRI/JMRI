@@ -103,11 +103,16 @@ public class CodeButtonHandlerDataRoutines {
         return returnValue;
     }
     
-/*  This is the "heart" of the pattern match system: It substitutes the passed
-    value whereever it see a single "#" in the passed template.  It does not
-    support escapes, it will fix ALL "#" with that number in the passed template.
-    It is indescriminate.
-*/
+    /**
+     * This is the "heart" of the pattern match system: It substitutes the passed
+     * value where ever it see a single "#" in the passed template.  It does not
+     * support escapes, it will fix ALL "#" with that number in the passed template.
+     * It is indiscriminate.
+     * 
+     * @param value     The "number" that will be substituted where the template parameter is
+     * @param template  The pattern used to generate the result.
+     * @return          Modified string.  ALL locations modified indiscriminately.
+     */
     private static String substituteValueForPoundSigns(int value, String template) {
         int indexOf;
         while (-1 != (indexOf = template.indexOf('#'))) { template = template.substring(0, indexOf) + Integer.toString(value) + template.substring(indexOf+1); }

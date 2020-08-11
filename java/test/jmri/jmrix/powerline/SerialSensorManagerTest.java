@@ -8,7 +8,8 @@ import jmri.util.junit.annotations.*;
 
 import java.beans.PropertyVetoException;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialSensorManager class.
@@ -87,7 +88,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Override
-    @Ignore("ignoring this test due to the system name format, needs to be properly coded")
+    @Disabled("ignoring this test due to the system name format, needs to be properly coded")
     @Test
     @ToDo("modify system name format, then remove this overriden test so that the test in the parent class can run")
     public void testUpperLower() {
@@ -132,7 +133,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // replace the SerialTrafficController to get clean reset
@@ -156,7 +157,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

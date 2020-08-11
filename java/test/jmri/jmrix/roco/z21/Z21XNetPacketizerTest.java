@@ -2,9 +2,9 @@ package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.XNetPortControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * <p>
@@ -16,7 +16,7 @@ import org.junit.Before;
  */
 public class Z21XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -33,7 +33,7 @@ public class Z21XNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc.terminateThreads();

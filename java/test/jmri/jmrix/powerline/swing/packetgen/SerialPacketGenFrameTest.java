@@ -1,9 +1,11 @@
 package jmri.jmrix.powerline.swing.packetgen;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.powerline.SerialTrafficControlScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of SerialPacketGenFrame
@@ -14,7 +16,7 @@ public class SerialPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private SerialTrafficControlScaffold tc = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -24,7 +26,7 @@ public class SerialPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc = null;

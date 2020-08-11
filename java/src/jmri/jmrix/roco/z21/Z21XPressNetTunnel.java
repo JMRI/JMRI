@@ -28,7 +28,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null; // feed pout
-    private Z21SystemConnectionMemo _memo = null;
+    private Z21SystemConnectionMemo _memo;
     private Thread sourceThread;
 
     /**

@@ -1,11 +1,3 @@
-/**
- * XNetConsist.java
- *
- * This is the Consist definition for a consist on an XPresNet system. it uses
- * the XpressNet specific commands to build a consist.
- *
- * @author Paul Bender Copyright (C) 2004-2010
- */
 package jmri.jmrix.lenz;
 
 import jmri.Consist;
@@ -14,6 +6,14 @@ import jmri.DccLocoAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * XNetConsist.java
+ *
+ * This is the Consist definition for a consist on an XPresNet system. it uses
+ * the XpressNet specific commands to build a consist.
+ *
+ * @author Paul Bender Copyright (C) 2004-2010
+ */
 public class XNetConsist extends jmri.implementation.DccConsist implements XNetListener {
 
     // We need to wait for replies before completing consist
@@ -27,7 +27,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     private DccLocoAddress _locoAddress = null; // address for the last request
     private boolean _directionNormal = false; // direction of the last request
 
-    protected XNetTrafficController tc = null; // hold the traffic controller associated with this consist.
+    protected XNetTrafficController tc; // hold the traffic controller associated with this consist.
 
     /**
      * Initialize a consist for the specific address.
@@ -63,7 +63,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                 this);
     }
 
-    XNetSystemConnectionMemo systemMemo;
+    final XNetSystemConnectionMemo systemMemo;
 
     /**
      * Clean Up local storage, and remove the XNetListener.
@@ -109,11 +109,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      */
     @Override
     public boolean isAddressAllowed(DccLocoAddress address) {
-        if (address.getNumber() != 0) {
-            return (true);
-        } else {
-            return (false);
-        }
+        return address.getNumber() != 0;
     }
 
     /**

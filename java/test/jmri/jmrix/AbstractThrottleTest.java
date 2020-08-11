@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
@@ -13,15 +14,15 @@ import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitAppender;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -31,7 +32,7 @@ public class AbstractThrottleTest {
         
     protected AbstractThrottle instance = null;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         InstanceManager.setThrottleManager(new AbstractThrottleManager() {
@@ -58,13 +59,10 @@ public class AbstractThrottleTest {
         instance = new AbstractThrottleImpl();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
-    
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
 
     /**
      * Test of getSpeedSetting method, of class AbstractThrottle.
@@ -1607,9 +1605,9 @@ public class AbstractThrottleTest {
      * Test of starting and stopping the time logging.
      */
     @Test
-    public void testLogsSpeedToBasicRosterEntry() throws java.io.IOException {
+    public void testLogsSpeedToBasicRosterEntry(@TempDir File folder) throws java.io.IOException {
         
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         
         // create Element
         org.jdom2.Element eOld = new org.jdom2.Element("locomotive")

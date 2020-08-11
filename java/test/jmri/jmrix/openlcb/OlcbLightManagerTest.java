@@ -3,7 +3,9 @@ package jmri.jmrix.openlcb;
 
 import jmri.Light;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.openlcb.*;
 
 /**
@@ -110,18 +112,18 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         l = new OlcbLightManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         l = null;
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -147,7 +149,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
-    @AfterClass
+    @AfterAll
     public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();

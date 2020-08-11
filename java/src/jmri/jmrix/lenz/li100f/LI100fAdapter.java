@@ -109,7 +109,12 @@ public class LI100fAdapter extends XNetSerialPortController {
         // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     // base class methods for the XNetSerialPortController interface
@@ -188,8 +193,8 @@ public class LI100fAdapter extends XNetSerialPortController {
         return Arrays.copyOf(validOption1, validOption1.length);
     }
 
-    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"), Bundle.getMessage("LIBaud19200")};
-    protected int[] validSpeedValues = new int[]{9600, 19200};
+    protected final String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"), Bundle.getMessage("LIBaud19200")};
+    protected final int[] validSpeedValues = new int[]{9600, 19200};
 
     @Override
     public int defaultBaudIndex() {
@@ -197,7 +202,7 @@ public class LI100fAdapter extends XNetSerialPortController {
     }
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
+    protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
     private boolean opened = false;
     InputStream serialStream = null;

@@ -5,20 +5,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.Collection;
+import java.util.stream.Stream;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.provider.Arguments;
 
 /**
  * Base for testing load-and-store of configuration files.
@@ -29,26 +28,22 @@ import org.junit.runners.Parameterized;
  * "loadref" directory, or against the original file itself. A minimal test
  * class is:
  <pre>
-   @RunWith(Parameterized.class)
    public class LoadAndStoreTest extends LoadAndStoreTestBase {
  
-     @Parameterized.Parameters(name = "{0} (pass={1})")
-     public static Iterable<Object[]> data() { 
+     public static Stream&amp;Arguments&amp; data() { 
        return getFiles(new File("java/test/jmri/configurexml"), false, true); 
      }
   
-     public LoadAndStoreTest(File file, boolean pass) { super(file, pass); }
+     @ParameterizedTest
+     @MethodSource("data")
+     public void loadAndStoreTest(File file, boolean pass) { super.validate(file, pass); }
    }
 </pre>
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
  */
-@RunWith(Parameterized.class)
 public class LoadAndStoreTestBase {
-
-    // allows code reuse when building the parameter collection in getFiles()
-    protected final File file;
 
     public enum SaveType {
         All, Config, Prefs, User, UserPrefs
@@ -61,16 +56,14 @@ public class LoadAndStoreTestBase {
      * Get all XML files in a directory and validate the ability to load and
      * store them.
      *
-     * @param file      the file to be tested
-     * @param pass      if true, successful validation will pass; if false,
-     *                  successful validation will fail
-     * @param saveType  the type (i.e. level) of ConfigureXml information being saved
-     * @param isGUI     true for files containing GUI elements, i.e. panels.  These
-     *                  can only be loaded once (others can be loaded twice, and that's
-     *                  tested when this is false), and can't be loaded when running headless.
+     * @param saveType the type (i.e. level) of ConfigureXml information being
+     *                 saved
+     * @param isGUI    true for files containing GUI elements, i.e. panels.
+     *                 These can only be loaded once (others can be loaded
+     *                 twice, and that's tested when this is false), and can't
+     *                 be loaded when running headless.
      */
-    public LoadAndStoreTestBase(File file, boolean pass, SaveType saveType, boolean isGUI) {
-        this.file = file;
+    public LoadAndStoreTestBase(SaveType saveType, boolean isGUI) {
         this.saveType = saveType;
         this.guiOnly = isGUI;
     }
@@ -84,11 +77,11 @@ public class LoadAndStoreTestBase {
      * @param recurse   if true, will recurse into subdirectories
      * @param pass      if true, successful validation will pass; if false,
      *                  successful validation will fail
-     * @return a collection of Object arrays, where each array contains the
+     * @return a stream of {@link Arguments}, where each Argument contains the
      *         {@link java.io.File} to validate and a boolean matching the pass
      *         parameter
      */
-    public static Collection<Object[]> getFiles(File directory, boolean recurse, boolean pass) {
+    public static Stream<Arguments> getFiles(File directory, boolean recurse, boolean pass) {
         // since this method gets the files to test, but does not trigger any
         // tests itself, we can use SchemaTestBase.getFiles() by adding "load"
         // to the directory to test
@@ -109,7 +102,7 @@ public class LoadAndStoreTestBase {
      *         validate and a boolean matching the pass parameter
      * @throws IllegalArgumentException if directory is a file
      */
-    public static Collection<Object[]> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
+    public static Stream<Arguments> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
         // since this method gets the files to test, but does not trigger any
         // tests itself, we can use SchemaTestBase.getDirectories() by adding "load"
         // to the directory to test
@@ -182,27 +175,30 @@ public class LoadAndStoreTestBase {
                 if (line1.contains("  <LayoutEditor")) {
                     // if either line contains a windowheight attribute
                     String windowheight_regexe = "( windowheight=\"[^\"]*\")";
-                    String[] splits1 = line1.split(windowheight_regexe);
-                    if (splits1.length == 2) {  // (yes) remove it
-                        line1 = splits1[0] + splits1[1];
-                    }
-                    String[] splits2 = line2.split(windowheight_regexe);
-                    if (splits2.length == 2) {  // (yes) remove it
-                        line2 = splits2[0] + splits2[1];
-                    }
+                    line1 = filterLineUsingRegEx(line1, windowheight_regexe);
+                    line2 = filterLineUsingRegEx(line2, windowheight_regexe);
                     // if either line contains a windowheight attribute
                     String windowwidth_regexe = "( windowwidth=\"[^\"]*\")";
-                    splits1 = line1.split(windowwidth_regexe);
-                    if (splits1.length == 2) {  // (yes) remove it
-                        line1 = splits1[0] + splits1[1];
-                    }
-                    splits2 = line2.split(windowwidth_regexe);
-                    if (splits2.length == 2) {  // (yes) remove it
-                        line2 = splits2[0] + splits2[1];
-                    }
+                    line1 = filterLineUsingRegEx(line1, windowwidth_regexe);
+                    line2 = filterLineUsingRegEx(line2, windowwidth_regexe);
                 }
             }
-            
+
+            // window positions will sometimes differ based on window decorations.
+            if (!match) {
+                if (line1.contains("  <LayoutEditor") ||
+                    line1.contains(" <switchboardeditor")) {
+                    // if either line contains a y position attribute
+                    String yposition_regexe = "( y=\"[^\"]*\")";
+                    line1 = filterLineUsingRegEx(line1, yposition_regexe);
+                    line2 = filterLineUsingRegEx(line2, yposition_regexe);
+                    // if either line contains an x position attribute
+                    String xposition_regexe = "( x=\"[^\"]*\")";
+                    line1 = filterLineUsingRegEx(line1, xposition_regexe);
+                    line2 = filterLineUsingRegEx(line2, xposition_regexe);
+                }
+            }
+
             // Time will vary when written out
             if (!match) {
                 String memory_value = "<memory value";
@@ -213,7 +209,7 @@ public class LoadAndStoreTestBase {
                     }
                 }
             }
-            
+
             // Dates can vary when written out
             String date_string = "<date>";
             if (!match && line1.contains(date_string) && line2.contains(date_string)) {
@@ -223,16 +219,10 @@ public class LoadAndStoreTestBase {
             if (!match) {
                 // if either line contains a fontname attribute
                 String fontname_regexe = "( fontname=\"[^\"]*\")";
-                String[] splits1 = line1.split(fontname_regexe);
-                if (splits1.length == 2) {  // (yes) remove it
-                    line1 = splits1[0] + splits1[1];
-                }
-                String[] splits2 = line2.split(fontname_regexe);
-                if (splits2.length == 2) {  // (yes) remove it
-                    line2 = splits2[0] + splits2[1];
-                }
+                line1 = filterLineUsingRegEx(line1, fontname_regexe);
+                line2 = filterLineUsingRegEx(line2, fontname_regexe);
             }
-            
+
             if (!match && !line1.equals(line2)) {
                 log.error("match failed in LoadAndStoreTest:");
                 log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
@@ -247,6 +237,14 @@ public class LoadAndStoreTestBase {
 
         fileStream1.close();
         fileStream2.close();
+    }
+
+    private static String filterLineUsingRegEx(String line, String regexe) {
+        String[] splits = line.split(regexe);
+        if (splits.length == 2) {  // (yes) remove it
+            line = splits[0] + splits[1];
+        }
+        return line;
     }
 
     // load file
@@ -297,58 +295,62 @@ public class LoadAndStoreTestBase {
         return outFile;
     }
 
-    @Test
-    public void loadLoadStoreFileCheck() throws Exception {
+    public void loadLoadStoreFileCheck(File file) throws Exception {
         if (guiOnly) {
             Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         }
 
-        log.debug("Start check file {}", this.file.getCanonicalPath());
+        log.debug("Start check file {}", file.getCanonicalPath());
 
-        loadFile(this.file);
+        loadFile(file);
         // Panel sub-classes (with GUI) will fail if you try to load them twice.
         // (So don't!)
         if (!guiOnly) {
-            loadFile(this.file);
+            loadFile(file);
         }
 
         // find comparison files
-        File compFile = new File(this.file.getCanonicalFile().getParentFile().
-                getParent() + "/loadref/" + this.file.getName());
+        File compFile = new File(file.getCanonicalFile().getParentFile().
+                getParent() + "/loadref/" + file.getName());
         if (!compFile.exists()) {
-            compFile = this.file;
+            compFile = file;
         }
         log.debug("   Chose comparison file {}", compFile.getCanonicalPath());
 
         postLoadProcessing();
-        
-        File outFile = storeFile(this.file, this.saveType);
+
+        File outFile = storeFile(file, this.saveType);
         checkFile(compFile, outFile);
-        
+
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
-    
-    /**
-     * If anything, i.e. typically a delay,
-     * is needed after loading the file,
-     * it can be added by override here.
-     */
-    protected void postLoadProcessing(){}
 
-    @Before
+    /**
+     * If anything, i.e. typically a delay, is needed after loading the file, it
+     * can be added by override here.
+     */
+    protected void postLoadProcessing() {
+        // by default do nothing
+    }
+
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initMemoryManager();
+        JUnitUtil.clearBlockBossLogic();
         System.setProperty("jmri.test.no-dialogs", "true");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.closeAllPanels();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();

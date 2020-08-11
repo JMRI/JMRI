@@ -75,7 +75,7 @@ public class Z21CanBusAddress {
     } 
 
     private static int parseEncoderAddress(String addressWithoutPrefix,int start, int end) {
-       int encoderAddress = -1;
+       int encoderAddress;
        try {
           encoderAddress = Integer.parseInt(addressWithoutPrefix.substring(start,end));
        } catch (NumberFormatException ex) {
@@ -179,7 +179,7 @@ public class Z21CanBusAddress {
         }
         // check for a Reporter 
         if (systemName.charAt(prefix.length() + 1) == 'R') {
-            jmri.Reporter r = null;
+            jmri.Reporter r;
             r = jmri.InstanceManager.getDefault(ReporterManager.class).getBySystemName(systemName);
             if (r != null) {
                 return r.getUserName();
@@ -189,7 +189,7 @@ public class Z21CanBusAddress {
         } 
         // check for a Sensor 
         if (systemName.charAt(prefix.length() + 1) == 'S') {
-            jmri.Sensor s = null;
+            jmri.Sensor s;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
                 return s.getUserName();

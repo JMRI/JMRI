@@ -2,7 +2,8 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -14,12 +15,12 @@ public class Ib2ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
 
     @Test
     @Override
-    @Ignore("parent class test requires further setup")
+    @Disabled("parent class test requires further setup")
     @ToDo("finish initialization and remove this overriden test so that the parent class test can run")
     public void testGetThrottleInfo() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -27,7 +28,7 @@ public class Ib2ThrottleManagerTest extends jmri.managers.AbstractThrottleManage
         tm = new Ib2ThrottleManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         ((Ib2ThrottleManager)tm).dispose();
         memo.dispose();

@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -65,7 +66,8 @@ import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrit.display.PositionableJPanel;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
-import jmri.jmrit.display.SensorIcon;
+import jmri.jmrit.display.ReporterIcon;
+import jmri.jmrit.display.RpsPositionIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ColorDialog;
@@ -121,9 +123,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
     private boolean _disablePortalSelection = true;  // only select PortalIcon in CircuitBuilder
+    private String _portalIconFamily;
+    private HashMap<String, NamedIcon> _portalIconMap;
 
     private final JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
-//    private final JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(Bundle.getMessage("CloseEditor"));
     private final JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
     private final JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private final JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
@@ -228,6 +231,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     protected void makeCircuitMenu(boolean edit) {
         if (edit) {
             if (_circuitMenu == null) {
+                ItemPalette.loadIcons();
                 _circuitMenu = _circuitBuilder.makeMenu();
                 int idx = _menuBar.getComponentIndex(_warrantMenu);
                 _menuBar.add(_circuitMenu, ++idx);
@@ -255,6 +259,44 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void setShapeSelect(boolean set) {
         _disableShapeSelection = !set;
         disableShapeSelect.setSelected(_disableShapeSelection);
+    }
+
+    public String getPortalIconFamily() {
+        return _portalIconFamily;
+    }
+
+    public void setPortalIconFamily(String family) {
+        if (family != null && !family.equals(_portalIconFamily)) {
+            _portalIconMap = null;
+        }
+        _portalIconFamily = family;
+    }
+
+    @Nonnull
+    public HashMap<String, NamedIcon> getPortalIconMap() {
+        if (_portalIconMap == null) {
+            ItemPalette.loadIcons();
+            _portalIconMap = ItemPalette.getIconMap("Portal", _portalIconFamily);
+            if (_portalIconMap == null) {
+                HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps("Portal");
+                _portalIconMap = familyMap.get("Standard");
+                if (_portalIconMap == null) {
+                    _portalIconMap = new HashMap<>();
+                    _portalIconMap.put(PortalIcon.HIDDEN, 
+                            new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
+                    _portalIconMap.put(PortalIcon.PATH, 
+                            new NamedIcon("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
+                    _portalIconMap.put(PortalIcon.VISIBLE, 
+                            new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
+                    _portalIconMap.put(PortalIcon.TO_ARROW, 
+                            new NamedIcon("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
+                    _portalIconMap.put(PortalIcon.FROM_ARROW, 
+                            new NamedIcon("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
+                }
+            }
+        }
+        // Don't return ItemPalette's map!
+        return PositionableIcon.cloneMap(_portalIconMap, null);
     }
 
     public ShapeDrawer getShapeDrawer() {
@@ -297,10 +339,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 makeCircuitMenu(true);
 //                openCircuitWindow();
             });
-        } else {
-            makeCircuitMenu(edit);
         }
         if (edit) {
+            makeCircuitMenu(edit);
             JMenuItem item = new JMenuItem(Bundle.getMessage("OpenCircuitMenu"));
             _warrantMenu.add(item);
             item.addActionListener((ActionEvent event) -> _circuitBuilder.openCBWindow());
@@ -1573,26 +1614,20 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (p instanceof PositionableLabel) {
                 PositionableLabel pl = (PositionableLabel) p;
-                if (!pl.isIcon()) {
-                    setColorMenu(popup, pl, ColorDialog.BORDER);
-                    setColorMenu(popup, pl, ColorDialog.MARGIN);
-                    setColorMenu(popup, pl, ColorDialog.FONT);
-                    setColorMenu(popup, pl, ColorDialog.TEXT);
-//                    popupSet |= p.setTextEditMenu(popup);
-                    popupSet |= setTextAttributes(p, popup);
-                } else if (p instanceof SensorIcon) {
-                    popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
-                    if (pl.isText()) {
-                        setColorMenu(popup, (JComponent) p, ColorDialog.BORDER);
-                        popupSet |= setTextAttributes(p, popup);
-//                        popupSet |= pl.setEditTextMenu(popup);
+                if (pl.isText()) {
+                    setColorMenu(popup, (JComponent) p, ColorDialog.BORDER);
+                    setColorMenu(popup, (JComponent) p, ColorDialog.MARGIN);
+                    setColorMenu(popup, (JComponent) p, ColorDialog.FONT);
+                    if (!(pl instanceof ReporterIcon) && !(pl instanceof RpsPositionIcon)) {
+                        popupSet |= pl.setEditTextItemMenu(popup);
                     }
                 }
             } else if (p instanceof PositionableJPanel) {
                 setColorMenu(popup, (JComponent) p, ColorDialog.BORDER);
                 setColorMenu(popup, (JComponent) p, ColorDialog.MARGIN);
                 setColorMenu(popup, (JComponent) p, ColorDialog.FONT);
-                popupSet |= setTextAttributes(p, popup);
+                PositionableJPanel pj = (PositionableJPanel) p;
+                popupSet |= pj.setEditTextItemMenu(popup);
             }
             if (p instanceof LinkingObject) {
                 ((LinkingObject) p).setLinkMenu(popup);
@@ -1651,45 +1686,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         popup.add(edit);
     }
 
-    private HashMap<String, NamedIcon> _portalIconMap;
-
-    private void makePortalIconMap() {
-        _portalIconMap = new HashMap<>();
-        _portalIconMap.put(PortalIcon.VISIBLE,
-                new NamedIcon("resources/icons/throttles/RoundRedCircle20.png", "resources/icons/throttles/RoundRedCircle20.png"));
-        _portalIconMap.put(PortalIcon.PATH,
-                new NamedIcon("resources/icons/greenSquare.gif", "resources/icons/greenSquare.gif"));
-        _portalIconMap.put(PortalIcon.HIDDEN,
-                new NamedIcon("resources/icons/Invisible.gif", "resources/icons/Invisible.gif"));
-        _portalIconMap.put(PortalIcon.TO_ARROW,
-                new NamedIcon("resources/icons/track/toArrow.gif", "resources/icons/track/toArrow.gif"));
-        _portalIconMap.put(PortalIcon.FROM_ARROW,
-                new NamedIcon("resources/icons/track/fromArrow.gif", "resources/icons/track/fromArrow.gif"));
-    }
-
-    protected NamedIcon getPortalIcon(String name) {
-        if (_portalIconMap == null) {  // set defaults
-            makePortalIconMap();
-        }
-        return _portalIconMap.get(name);
-    }
-
-    public HashMap<String, NamedIcon> getPortalIconMap() {
-        if (_portalIconMap == null) {  // set defaults
-            makePortalIconMap();
-        }
-        return _portalIconMap;
-    }
-
-    public void setDefaultPortalIcons(HashMap<String, NamedIcon> map) {
-        _portalIconMap = map;
-        for (Positionable pos : _contents) {
-            if (pos instanceof PortalIcon) {
-                ((PortalIcon) pos).initMap();
-            }
-        }
-    }
-
     /**
      * ******************* Circuitbuilder ***********************************
      */
@@ -1739,7 +1735,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     protected void setSelectionGroup(ArrayList<Positionable> group) {
         _highlightcomponent = null;
-//        _currentSelection = null;  need non-null for Portal dragging in CircuitBuilder
         _selectionGroup = group;
         repaint();
     }
@@ -1752,7 +1747,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * ************************** DnD *************************************
      */
     protected void makeDataFlavors() {
-//        _targetPanel.setTransferHandler(new DnDIconHandler(this));
         try {
             _positionableDataFlavor = new DataFlavor(POSITIONABLE_FLAVOR);
             _namedIconDataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);

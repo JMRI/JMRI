@@ -1,8 +1,8 @@
 package jmri.util;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,7 +10,7 @@ import org.junit.Before;
  */
 public class JmriJFrameTest extends JmriJFrameTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -20,7 +20,7 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

@@ -5,7 +5,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -12,6 +12,11 @@
  * project technical info</a>
  * </ul>
  *
+ *    <p><em>Note:</em> The class diagram below has been trimmed to <u>not</u>
+ *        show some redundant (to a superpackage of a superpackage) or
+ *        patterned (connecting a .configurexml package by convention)
+ *        to make it more readable.
+ *
  * <!-- Put @see and @since tags down here. -->
  *
  * @see jmri.managers

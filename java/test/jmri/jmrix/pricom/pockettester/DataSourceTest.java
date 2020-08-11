@@ -2,7 +2,9 @@ package jmri.jmrix.pricom.pockettester;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the DataSource class
@@ -41,7 +43,7 @@ public class DataSourceTest {
     }
 
     // avoid spurious error messages
-    @Before
+    @BeforeEach
     public void setup() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -49,7 +51,7 @@ public class DataSourceTest {
         DataSource.existingInstance = null;
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

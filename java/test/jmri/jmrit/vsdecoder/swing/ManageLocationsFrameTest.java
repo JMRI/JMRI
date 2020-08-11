@@ -2,6 +2,7 @@ package jmri.jmrit.vsdecoder.swing;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.ReporterManager;
@@ -9,7 +10,8 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -17,7 +19,7 @@ import org.junit.*;
  */
 public class ManageLocationsFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -38,7 +40,7 @@ public class ManageLocationsFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();

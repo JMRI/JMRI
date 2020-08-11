@@ -110,11 +110,7 @@ public class LenzCommandStation implements jmri.CommandStation {
      * @return true if CS type 1 or 2, else false.
      */
     public boolean isOpsModePossible() {
-        if (cmdStationType == 0x01 || cmdStationType == 0x02) {
-            return false;
-        } else {
-            return true;
-        }
+        return cmdStationType != 0x01 && cmdStationType != 0x02;
     }
 
     // A few utility functions
@@ -175,7 +171,7 @@ public class LenzCommandStation implements jmri.CommandStation {
             return (AL);
         } else {
             /* This must be a long address */
-            int address = 0;
+            int address;
             address = ((AH * 256) & 0xFF00);
             address += (AL & 0xFF);
             address -= 0xC000;

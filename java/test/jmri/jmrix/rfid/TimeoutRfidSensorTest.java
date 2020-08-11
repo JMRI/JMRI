@@ -1,10 +1,9 @@
 package jmri.jmrix.rfid;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * TimeoutRfidSensorTest.java
@@ -34,14 +33,14 @@ public class TimeoutRfidSensorTest extends jmri.implementation.AbstractSensorTes
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
         JUnitUtil.setUp();
         t = new TimeoutRfidSensor("FSA");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         JUnitUtil.tearDown();

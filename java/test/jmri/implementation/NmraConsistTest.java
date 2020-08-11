@@ -5,10 +5,9 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.ConsistPreferencesManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of NmraConsist
@@ -31,7 +30,7 @@ public class NmraConsistTest extends AbstractConsistTestBase {
         Assert.assertNotNull(c);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -42,7 +41,7 @@ public class NmraConsistTest extends AbstractConsistTestBase {
         c = new NmraConsist(new DccLocoAddress(12, true), InstanceManager.getDefault(CommandStation.class));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

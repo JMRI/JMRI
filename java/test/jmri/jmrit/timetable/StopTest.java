@@ -1,16 +1,19 @@
 package jmri.jmrit.timetable;
 
+import java.io.File;
+import java.io.IOException;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for the Stop Class
  * @author Dave Sand Copyright (C) 2018
  */
 public class StopTest {
-
-    @Rule
-    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     @Test
     public void testCreate() {
@@ -81,15 +84,15 @@ public class StopTest {
         Assert.assertEquals("2 :: New Station", stop.toString());  // NOI18N
     }
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
        // use reflection to reset the static file location.
        try {

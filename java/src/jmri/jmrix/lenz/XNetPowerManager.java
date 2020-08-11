@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetPowerManager extends AbstractPowerManager<XNetSystemConnectionMemo> implements XNetListener {
 
-    XNetTrafficController tc = null;
+    XNetTrafficController tc;
 
     public XNetPowerManager(XNetSystemConnectionMemo memo) {
         super(memo);
@@ -57,7 +57,7 @@ public class XNetPowerManager extends AbstractPowerManager<XNetSystemConnectionM
 
     // to free resources when no longer used
     @Override
-    public void dispose() throws JmriException {
+    public void dispose() {
         tc.removeXNetListener(XNetInterface.CS_INFO, this);
         tc = null;
     }

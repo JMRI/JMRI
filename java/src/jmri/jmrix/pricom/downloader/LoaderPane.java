@@ -39,18 +39,18 @@ public class LoaderPane extends javax.swing.JPanel {
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
-    JComboBox<String> portBox = new JComboBox<String>();
-    JButton openPortButton = new JButton();
-    JTextArea traffic = new JTextArea();
+    final JComboBox<String> portBox = new JComboBox<>();
+    final JButton openPortButton = new JButton();
+    final JTextArea traffic = new JTextArea();
 
-    JFileChooser chooser = jmri.jmrit.XmlFile.userFileChooser();
-    JButton fileButton;
-    JLabel inputFileName = new JLabel("");
-    JTextArea comment = new JTextArea();
+    final JFileChooser chooser = jmri.jmrit.XmlFile.userFileChooser();
+    final JButton fileButton;
+    final JLabel inputFileName = new JLabel("");
+    final JTextArea comment = new JTextArea();
 
-    JButton loadButton;
-    JProgressBar bar;
-    JLabel status = new JLabel("");
+    final JButton loadButton;
+    final JProgressBar bar;
+    final JLabel status = new JLabel("");
 
     PdiFile pdiFile;
 
@@ -67,16 +67,11 @@ public class LoaderPane extends javax.swing.JPanel {
 
         openPortButton.setText(Bundle.getMessage("ButtonOpen"));
         openPortButton.setToolTipText(Bundle.getMessage("TipOpenPort"));
-        openPortButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    openPortButtonActionPerformed(evt);
-                    //} catch (jmri.jmrix.SerialConfigException ex) {
-                    //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
-                } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port. Did you select the right one?\n{}", ex);
-                }
+        openPortButton.addActionListener(evt -> {
+            try {
+                openPortButtonActionPerformed(evt);
+            } catch (UnsatisfiedLinkError ex) {
+                log.error("Error while opening port. Did you select the right one?\n{}", ex);
             }
         });
 
@@ -128,19 +123,19 @@ public class LoaderPane extends javax.swing.JPanel {
             ostream.write(startbyte);
 
             // send the rest of the bytes
-            for (int i = 0; i < bytes.length; i++) {
+            for (byte aByte : bytes) {
                 // expand as needed
-                switch (bytes[i]) {
+                switch (aByte) {
                     case 0x01:
                     case 0x02:
                     case 0x03:
                     case 0x06:
                     case 0x15:
                         ostream.write(0x01);
-                        ostream.write(bytes[i] + 64);
+                        ostream.write(aByte + 64);
                         break;
                     default:
-                        ostream.write(bytes[i]);
+                        ostream.write(aByte);
                         break;
                 }
             }
@@ -171,19 +166,19 @@ public class LoaderPane extends javax.swing.JPanel {
             try {
                 nibbleIncomingData();            // remove any pending chars in queue
             } catch (java.io.IOException e) {
-                log.warn("nibble: Exception: {}", e.toString());
+                log.warn("nibble: Exception: {}", e);
             }
             while (true) {   // loop permanently, stream close will exit via exception
                 try {
                     handleIncomingData();
                 } catch (java.io.IOException e) {
-                    log.warn("run: Exception: {}", e.toString());
+                    log.warn("run: Exception: {}", e);
                 }
             }
         }
 
         static final int maxMsg = 80;
-        byte inBuffer[];
+        byte[] inBuffer;
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
                                             justification="this is for skip-chars while loop: no matter how many, we're skipping")
@@ -265,12 +260,7 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             // update progress bar via the queue to ensure synchronization
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    updateGUI();
-                }
-            };
+            Runnable r = this::updateGUI;
             javax.swing.SwingUtilities.invokeLater(r);
 
             // get the next message
@@ -289,12 +279,7 @@ public class LoaderPane extends javax.swing.JPanel {
             sendBytes(outBuffer);
 
             // signal end to GUI via the queue to ensure synchronization
-            r = new Runnable() {
-                @Override
-                public void run() {
-                    enableGUI();
-                }
-            };
+            r = this::enableGUI;
             javax.swing.SwingUtilities.invokeLater(r);
 
             // stop this thread
@@ -355,7 +340,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 message = jmri.util.StringUtil.hexStringFromBytes(temp);
             }
 
-            String message;
+            final String message;
 
             /**
              * when invoked, format and display the message
@@ -393,7 +378,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
+        portNameVector = new Vector<>();
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
@@ -640,10 +625,7 @@ public class LoaderPane extends javax.swing.JPanel {
         if (buffer[3] != 00) {
             return false;
         }
-        if (!((buffer[4] == 44) || (buffer[4] == 45))) {
-            return false;
-        }
-        return true;
+        return (buffer[4] == 44) || (buffer[4] == 45);
     }
 
     /**

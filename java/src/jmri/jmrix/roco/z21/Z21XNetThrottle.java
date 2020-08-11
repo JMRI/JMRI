@@ -81,7 +81,6 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
         // traffic controller to do this for us.
         // now, we queue the message for sending to the command station
         queueMessage(msg, THROTTLESTATSENT);
-        return;
     }
 
     /**

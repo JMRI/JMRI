@@ -4,7 +4,9 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
-import org.junit.*;
+
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -49,7 +51,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         });
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -60,7 +62,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

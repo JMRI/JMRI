@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;

@@ -1,8 +1,8 @@
 package jmri.jmrix.acela;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,14 +10,14 @@ import org.junit.Before;
  */
 public class AcelaMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = new AcelaMessage();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

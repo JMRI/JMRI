@@ -9,7 +9,9 @@ import jmri.TimebaseRateException;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the LightControl class.
@@ -823,7 +825,7 @@ public class LightControlTest {
     private Light l;
     private LightControl lc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -835,7 +837,7 @@ public class LightControlTest {
         lc = new LightControl(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         

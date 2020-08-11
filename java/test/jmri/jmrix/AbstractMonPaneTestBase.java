@@ -1,14 +1,16 @@
 package jmri.jmrix;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+
 import org.assertj.swing.edt.GuiActionRunner;
-import org.junit.After;
+
 import jmri.util.JUnitUtil;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -29,13 +31,13 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
     protected AbstractMonPane pane = null;
 
     // implementing classes must override setUp to set pane
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         pane = null;

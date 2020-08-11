@@ -21,7 +21,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
         super(new ProgDebugger());
     }
 
-    public DebugProgrammerManager(jmri.jmrix.SystemConnectionMemo memo) {
+    public DebugProgrammerManager(jmri.SystemConnectionMemo memo) {
         super(new ProgDebugger(), memo);
     }
 

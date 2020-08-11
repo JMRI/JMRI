@@ -3,8 +3,7 @@ package jmri.jmrix.xpa;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.xpa.XpaTurnoutManager class
@@ -27,7 +26,7 @@ public class XpaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
     }
 
     @Override
-    @Before 
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new XpaSystemConnectionMemo();

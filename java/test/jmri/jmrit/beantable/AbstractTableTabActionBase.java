@@ -6,7 +6,9 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -34,7 +36,7 @@ public abstract class AbstractTableTabActionBase {
     }
 
     @Test
-    @Ignore("test causes an NPE while executing a.actionPerformed")
+    @Disabled("test causes an NPE while executing a.actionPerformed")
     @ToDo("The underlying class under test inherits the actionPerformed method from AbstractTableAction, which expects a model to be set by createModel(), which doesn't happen for AbstractTableTabAction classes")
     public void testExecute() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -87,13 +89,13 @@ public abstract class AbstractTableTabActionBase {
     /**
      * Derived classes should use this method to set a.
      */
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
     /**
      * Derived classes should use this method to clean up after tests.
      */
-    @After
+    @AfterEach
     abstract public void tearDown();
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractTableTabActionBase.class);

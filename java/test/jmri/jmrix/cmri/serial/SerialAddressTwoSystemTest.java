@@ -3,10 +3,9 @@ package jmri.jmrix.cmri.serial;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the serial address functions in memo1.
@@ -31,7 +30,7 @@ public class SerialAddressTwoSystemTest {
     SerialNode k10;
     SerialNode k20;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
 
@@ -83,7 +82,7 @@ public class SerialAddressTwoSystemTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         if (stcs1 != null) stcs1.terminateThreads();
         stcs1 = null;

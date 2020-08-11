@@ -1,13 +1,17 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.DefaultSignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the SignalMastIcon.
@@ -71,7 +75,7 @@ public class SignalMastIconTest extends PositionableIconTest {
         JUnitUtil.dispose(jf);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -109,7 +113,7 @@ public class SignalMastIconTest extends PositionableIconTest {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         to = null;

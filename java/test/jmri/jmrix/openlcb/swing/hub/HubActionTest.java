@@ -4,11 +4,11 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import jmri.jmrix.can.TestTrafficController;
 /**
  * @author Bob Jacobsen Copyright 2013
@@ -26,7 +26,7 @@ public class HubActionTest {
         Assert.assertNotNull("Action object non-null", h);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -37,7 +37,7 @@ public class HubActionTest {
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class,memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         memo = null;

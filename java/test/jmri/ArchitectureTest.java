@@ -1,12 +1,12 @@
 package jmri;
 
-import org.junit.*;
-import org.junit.runner.*;
+import org.junit.jupiter.api.*;
 
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+import com.tngtech.archunit.library.freeze.FreezingArchRule;
 
 /**
  * Check the architecture of the JMRI library
@@ -27,8 +27,6 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
  * @author Bob Jacobsen 2019
  */
  
-@RunWith(ArchUnitRunner.class)  // Remove this for JUnit 5
- 
 // Pick up all classes from the target/classes directory, which is just the main (not test) code
 @AnalyzeClasses(packages = {"target/classes"}) // "jmri","apps"
 
@@ -36,11 +34,11 @@ public class ArchitectureTest {
 
     // want these statics first in class, to initialize
     // logging before various static items are constructed
-    @BeforeClass  // tests are static
+    @BeforeAll  // tests are static
     static public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
-    @AfterClass
+    @AfterAll
     static public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
@@ -50,9 +48,9 @@ public class ArchitectureTest {
      */
     @ArchTest // Initially 50 flags in JMRI 4.17.4 - see archunit_ignore_patterns.txt
     public static final ArchRule checkStandardStreams = noClasses().that()
-                                // classes with permitted access
+                                // classes with permitted access (temporary violations go in archunit_ignore_patterns.txt)
                                 .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.decoderdefn.DecoderIndexBuilder").and()
+                                .doNotHaveFullyQualifiedName("apps.jmrit.decoderdefn.DecoderIndexBuilder").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
@@ -186,6 +184,16 @@ public class ArchitectureTest {
     public static final ArchRule checkJmriPackageJdom = noClasses()
         .that().resideInAPackage("jmri")
         .should().dependOnClassesThat().resideInAPackage("org.jdom2..");
+
+    /**
+     * jmri (but not apps) should not reference org.apache.log4j to allow jmri
+     * to be used as library in applications that choose not to use Log4J.
+     */
+    @ArchTest
+    public static final ArchRule noLog4JinJmri = noClasses()
+            .that().resideInAPackage("jmri..")
+            .and().areNotAnnotatedWith(Deprecated.class)
+            .should().dependOnClassesThat().resideInAPackage("org.apache.log4j");
 
     /**
      * (Try to) confine JDOM to configurexml packages.

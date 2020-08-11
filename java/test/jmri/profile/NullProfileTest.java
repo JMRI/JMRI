@@ -1,13 +1,12 @@
 package jmri.profile;
 
 import java.io.File;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -15,22 +14,19 @@ import org.junit.rules.TemporaryFolder;
  */
 public class NullProfileTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     @Test
-    public void testCTor() throws java.io.IOException {
-        File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
+    public void testCTor(@TempDir File folder) throws java.io.IOException {
+        File profileFolder = new File(folder, "test");
         NullProfile instance = new NullProfile("test", "test", profileFolder);
         Assert.assertNotNull("exists",instance);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

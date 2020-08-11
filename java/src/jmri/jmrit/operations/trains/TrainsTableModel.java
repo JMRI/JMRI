@@ -161,8 +161,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ID_COLUMN), _sort == SORTBYID);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), _sort == SORTBYTIME);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), trainManager.hasRoadRestrictions());
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), trainManager.hasLoadRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), trainManager.isRoadRestricted());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), trainManager.isLoadRestricted());
     }
 
     @Override

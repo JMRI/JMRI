@@ -47,7 +47,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
         super(pProgrammer);
     }
 
-    public OlcbProgrammerManager(Programmer pProgrammer, jmri.jmrix.SystemConnectionMemo memo) {
+    public OlcbProgrammerManager(Programmer pProgrammer, jmri.SystemConnectionMemo memo) {
         super(pProgrammer, memo);
     }
 

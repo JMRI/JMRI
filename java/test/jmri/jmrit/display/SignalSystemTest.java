@@ -9,11 +9,10 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test signal system via a specific layout file
@@ -177,7 +176,7 @@ public class SignalSystemTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -189,7 +188,7 @@ public class SignalSystemTest {
         JUnitUtil.initMemoryManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

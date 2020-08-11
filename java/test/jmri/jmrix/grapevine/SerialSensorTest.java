@@ -1,8 +1,8 @@
 package jmri.jmrix.grapevine;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialSensor class.
@@ -26,7 +26,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     @Override
     public void checkStatusRequestMsgSent() {}
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -37,7 +37,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     // reset objects
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         t.dispose();

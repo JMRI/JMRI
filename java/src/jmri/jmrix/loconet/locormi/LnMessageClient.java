@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet.locormi;
 
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnTrafficRouter;
 import jmri.jmrix.loconet.LocoNetException;

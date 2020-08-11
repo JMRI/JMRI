@@ -83,11 +83,6 @@ public class RfidSensor extends AbstractSensor
     }
 
     @Override
-    public void dispose() {
-//        Model.instance().removeRegion(region);
-    }
-
-    @Override
     public void requestUpdateFromLayout() {
     }
 

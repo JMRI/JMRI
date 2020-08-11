@@ -9,7 +9,9 @@ import javax.swing.Timer;
 import jmri.*;
 import jmri.jmrit.Sound;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the DefaultConditional implementation class
@@ -802,7 +804,7 @@ public class DefaultConditionalTest {
     
     // from here down is testing infrastructure
 
-    @Before
+    @BeforeEach
     public void setUp(){
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -814,7 +816,7 @@ public class DefaultConditionalTest {
         JUnitUtil.initIdTagManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();

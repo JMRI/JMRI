@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;

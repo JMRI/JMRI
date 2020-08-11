@@ -1,7 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * This class provides tests for the Z21ReporterManager's ability to create
@@ -32,7 +34,7 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
        Assert.assertNotNull("Reporter Created via message", zr.getReporter("ZR1"));
    }
 
-   @Before
+   @BeforeEach
     @Override
    public void setUp() {
         JUnitUtil.setUp();
@@ -45,7 +47,7 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
         l = new Z21ReporterManager(memo);
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         l = null;
         tc.terminateThreads();

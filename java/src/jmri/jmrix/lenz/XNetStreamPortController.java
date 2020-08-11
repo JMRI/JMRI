@@ -30,7 +30,12 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
 
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .setTimeout(30000)
+                .versionCheck()
+                .init();
     }
 
     @Override

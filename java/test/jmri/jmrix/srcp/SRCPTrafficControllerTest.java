@@ -1,8 +1,8 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * SRCPTrafficControllerTest.java
@@ -14,14 +14,14 @@ import org.junit.Before;
 public class SRCPTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new SRCPTrafficController();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

@@ -4,10 +4,9 @@ import jmri.Manager.NameValidity;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * CbusReporterManagerTest.java
@@ -65,7 +64,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -75,7 +74,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         l = new CbusReporterManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
         tcis.terminateThreads();

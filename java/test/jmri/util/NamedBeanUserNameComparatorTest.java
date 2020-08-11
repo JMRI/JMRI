@@ -1,10 +1,9 @@
 package jmri.util;
 
 import java.util.TreeSet;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.*;
 
@@ -192,13 +191,13 @@ public class NamedBeanUserNameComparatorTest {
         Assert.assertTrue(hit);
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

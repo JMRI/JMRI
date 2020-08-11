@@ -2,10 +2,9 @@ package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * ConcentratorSystemConnectionMemoTest.java
@@ -13,7 +12,9 @@ import org.junit.Test;
  * Test for the ConcentratorSystemConnectionMemo class
  *
  * @author Paul Bender Copyright(C) 2016
+ * @deprecated since 4.21.1 test of deprecated {@link ConcentratorSystemConnectionMemo}
  */
+@Deprecated
 public class ConcentratorSystemConnectionMemoTest extends SystemConnectionMemoTestBase<ConcentratorSystemConnectionMemo> {
 
     @Override
@@ -23,7 +24,7 @@ public class ConcentratorSystemConnectionMemoTest extends SystemConnectionMemoTe
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new ConcentratorSystemConnectionMemo();
@@ -41,11 +42,12 @@ public class ConcentratorSystemConnectionMemoTest extends SystemConnectionMemoTe
             }
         };
         scm.setRfidTrafficController(tc);
-        scm.configureManagers(null, null);
+        scm.setSystemPrefix("F");
+        scm.configureManagers(new ConcentratorSensorManager(scm),new ConcentratorReporterManager(scm));
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

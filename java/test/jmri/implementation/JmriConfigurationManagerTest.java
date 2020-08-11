@@ -40,7 +40,7 @@ public class JmriConfigurationManagerTest {
      *
      * @throws jmri.JmriException in unexpected circumstances
      */
-    @org.junit.jupiter.api.Test
+    @Test
     public void testInitializeProviders() throws JmriException {
         InstanceManager.getDefault().clear(PreferencesManager.class);
         PMA pma = new PMA();

@@ -1,7 +1,9 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -28,7 +30,7 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
                 tnis.outbound.elementAt(tnis.outbound.size() - 1).toString());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -37,7 +39,7 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t = new TamsTurnout(5,memo.getSystemPrefix(),tnis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

@@ -2604,17 +2604,22 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_INTERCHANGE)) != null) {
                 String enable = a.getValue();
-                log.debug("noLocalInterchange: {}", enable);
+                log.debug("allowLocalInterchangeMoves: {}", enable);
                 setLocalInterchangeMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_SPUR)) != null) {
                 String enable = a.getValue();
-                log.debug("noLocalSpur: {}", enable);
+                log.debug("allowLocalSpurMoves: {}", enable);
+                setLocalSpurMovesEnabled(enable.equals(Xml.TRUE));
+            }
+            else if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_SIDING)) != null) {
+                String enable = a.getValue();
+                log.debug("allowLocalSidingMoves: {}", enable);
                 setLocalSpurMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_YARD)) != null) {
                 String enable = a.getValue();
-                log.debug("noLocalYard: {}", enable);
+                log.debug("allowLocalYardMoves: {}", enable);
                 setLocalYardMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_RESTRICTION_ENABLED)) != null) {

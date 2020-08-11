@@ -3,11 +3,10 @@ package jmri.jmrix.loconet.duplexgroup.swing;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of LnIPLImplementation
@@ -1638,7 +1637,7 @@ public class LnIPLImplementationTest {
         iplImplementation = new LnIPLImplementation(memo);
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -1656,7 +1655,7 @@ public class LnIPLImplementationTest {
         iplImplementation = new LnIPLImplementation(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         JUnitUtil.tearDown();

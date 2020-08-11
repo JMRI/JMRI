@@ -1,8 +1,8 @@
 package jmri.jmrix.tams;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the TamsSystemConnectionMemo class
@@ -13,7 +13,7 @@ import org.junit.Before;
 public class TamsSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase<TamsSystemConnectionMemo> {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new TamsSystemConnectionMemo(new TamsInterfaceScaffold());
@@ -21,7 +21,7 @@ public class TamsSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

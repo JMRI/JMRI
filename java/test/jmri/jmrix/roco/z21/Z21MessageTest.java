@@ -1,10 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21Message class
@@ -227,14 +226,14 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor String", "Z21 RM Bus Program Module to Address 0", msg.toMonitorString());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new Z21Message("0D 00 04 00 12 34 AB 3 19 6 B B1");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         m = msg = null;
         JUnitUtil.tearDown();

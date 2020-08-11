@@ -19,7 +19,6 @@ public class NcePowerManager extends AbstractPowerManager<NceSystemConnectionMem
         super(tc.getAdapterMemo());
         // connect to the TrafficManager
         this.tc = tc;
-        this.prefix = p;
         tc.addNceListener(this);
     }
 
@@ -64,7 +63,6 @@ public class NcePowerManager extends AbstractPowerManager<NceSystemConnectionMem
     }
 
     NceTrafficController tc = null;
-    String prefix = "";
 
     // to listen for status changes from NCE system
     @Override

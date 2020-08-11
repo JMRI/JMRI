@@ -2,7 +2,9 @@ package jmri.jmrix.openlcb;
 
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.openlcb.*;
 
 /**
@@ -55,17 +57,17 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         l = new OlcbTurnoutManager(memo);
     }
  
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -91,7 +93,7 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
-    @AfterClass
+    @AfterAll
     public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
             memo.getInterface().dispose();

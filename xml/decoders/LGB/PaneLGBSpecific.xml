@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for MFX v3 decoder -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>LGB Specific</name>
+  <name xml:lang="it">Specifiche LGB</name>
+  <name xml:lang="cs">LGB zvláštnosti</name>
+  <name xml:lang="de">LGB Spezifisch</name>
+  <column>
+    <display item="Alternative Formats Analog AC"/>
+    <display item="Alternative Formats Analog DC"/>
+    <display item="Alternative Formats Analog MM"/>
+    <display item="Alternative Formats Analog mfx"/>
+    <separator/>
+    <display item="Multi-Station Annoucement Number of Stations"/>
+    <display item="Multi-Station Annoucement Last"/>
+    <display item="Multi-Station Annoucement Direction"/>
+    <display item="Multi-Station Annoucement Start"/>
+  </column>
+</pane>

@@ -1,9 +1,12 @@
 package jmri.jmrit.ussctc;
 
 import java.util.*;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for TimeLock class in the jmri.jmrit.ussctc package
@@ -129,14 +132,14 @@ public class TimeLockTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

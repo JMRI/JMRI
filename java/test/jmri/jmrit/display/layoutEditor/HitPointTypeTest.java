@@ -1,8 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.util.*;
-import org.junit.*;
-import org.junit.Test;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of HitPointType.
@@ -13,12 +14,12 @@ import org.junit.Test;
  */
 public class HitPointTypeTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -37,14 +38,14 @@ public class HitPointTypeTest {
         Assert.assertEquals(63, HitPointType.TURNTABLE_RAY_63.turntableTrackIndex());        
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTturntableTrackIndexBad1() {
-        HitPointType.POS_POINT.turntableTrackIndex();
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.POS_POINT.turntableTrackIndex());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTturntableTrackIndexBad2() {
-        HitPointType.SHAPE_POINT_9.turntableTrackIndex();
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.SHAPE_POINT_9.turntableTrackIndex());
     }
 
     @Test
@@ -58,14 +59,14 @@ public class HitPointTypeTest {
         Assert.assertEquals(HitPointType.TURNTABLE_RAY_63, HitPointType.turntableTrackIndexedValue(63));
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTturntableTrackIndexedValueBad1() throws IllegalArgumentException {
-        HitPointType.turntableTrackIndexedValue(-1);
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.turntableTrackIndexedValue(-1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTturntableTrackIndexedValueBad2() {
-        HitPointType.turntableTrackIndexedValue(64);
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.turntableTrackIndexedValue(64));
     }
 
     @Test
@@ -98,14 +99,14 @@ public class HitPointTypeTest {
         Assert.assertEquals(9, HitPointType.SHAPE_POINT_9.shapePointIndex());        
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTshapePointIndexBad1() {
-        HitPointType.POS_POINT.shapePointIndex();
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.POS_POINT.shapePointIndex());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTshapePointIndexBad2() {
-        HitPointType.TURNTABLE_RAY_0.shapePointIndex();
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.TURNTABLE_RAY_0.shapePointIndex());
     }
 
     @Test
@@ -119,14 +120,14 @@ public class HitPointTypeTest {
         Assert.assertEquals(HitPointType.SHAPE_POINT_9, HitPointType.shapePointIndexedValue(9));
     }
     
-    @Test(expected = IllegalArgumentException.class)
-    public void testHPTshapePointIndexedValueBad1() throws IllegalArgumentException {
-        HitPointType.shapePointIndexedValue(-1);
+    @Test
+    public void testHPTshapePointIndexedValueBad1() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.shapePointIndexedValue(-1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTshapePointIndexedValueBad2() {
-        HitPointType.shapePointIndexedValue(10);
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.shapePointIndexedValue(10));
     }
 
     @Test
@@ -159,14 +160,14 @@ public class HitPointTypeTest {
         Assert.assertEquals(8, HitPointType.BEZIER_CONTROL_POINT_8.bezierPointIndex());        
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTbezierPointIndexBad1() {
-        HitPointType.POS_POINT.bezierPointIndex();
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.POS_POINT.bezierPointIndex());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTbezierPointIndexBad2() {
-        HitPointType.TURNTABLE_RAY_0.bezierPointIndex();
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.TURNTABLE_RAY_0.bezierPointIndex());
     }
 
     @Test
@@ -180,14 +181,14 @@ public class HitPointTypeTest {
         Assert.assertEquals(HitPointType.BEZIER_CONTROL_POINT_8, HitPointType.bezierPointIndexedValue(8));
     }
     
-    @Test(expected = IllegalArgumentException.class)
-    public void testHPTbezierPointIndexedValueBad1() throws IllegalArgumentException {
-        HitPointType.bezierPointIndexedValue(-1);
+    @Test
+    public void testHPTbezierPointIndexedValueBad1() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.bezierPointIndexedValue(-1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testHPTbezierPointIndexedValueBad2() {
-        HitPointType.bezierPointIndexedValue(9);
+        Assert.assertThrows(IllegalArgumentException.class, () -> HitPointType.bezierPointIndexedValue(9));
     }
     
         // *****************************************************************

@@ -2,13 +2,14 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Shape;
+
 import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponentTest;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -35,7 +36,7 @@ public class PositionableShapeTest extends PositionableJComponentTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {

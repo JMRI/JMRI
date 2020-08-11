@@ -175,6 +175,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         List<Element> sectionList = sharedSections.getChildren("section");
         log.debug("Found {} Sections", sectionList.size());
         SectionManager sctm = InstanceManager.getDefault(jmri.SectionManager.class);
+        sctm.setPropertyChangesSilenced("beans", true);
         
         for (Element s : sectionList) {
             String sysName = getSystemName(s);
@@ -244,6 +245,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                 }
             }
         }
+        sctm.setPropertyChangesSilenced("beans", false);
     }
 
     @Override

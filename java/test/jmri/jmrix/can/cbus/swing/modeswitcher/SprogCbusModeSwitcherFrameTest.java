@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.swing.modeswitcher;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.GlobalProgrammerManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -8,10 +9,8 @@ import jmri.jmrix.can.cbus.CbusDccProgrammer;
 import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the ModeSwitcherPane class
@@ -24,7 +23,7 @@ public class SprogCbusModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase
     CbusDccProgrammer prog;
     jmri.jmrix.can.TrafficController tc;
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -42,7 +41,7 @@ public class SprogCbusModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         prog = null;

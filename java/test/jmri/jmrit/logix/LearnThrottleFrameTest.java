@@ -1,8 +1,10 @@
 package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -12,7 +14,7 @@ public class LearnThrottleFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private WarrantFrame wf;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -24,7 +26,7 @@ public class LearnThrottleFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (wf != null) {

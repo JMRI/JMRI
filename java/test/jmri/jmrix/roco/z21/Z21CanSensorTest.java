@@ -1,7 +1,9 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21CanSensor class.
@@ -64,7 +66,7 @@ public class Z21CanSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -75,7 +77,7 @@ public class Z21CanSensorTest extends jmri.implementation.AbstractSensorTestBase
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         znis = null;

@@ -2,10 +2,9 @@ package jmri.jmrix.ieee802154.swing.mon;
 
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of IEEE802154MonPane
@@ -22,7 +21,7 @@ public class IEEE802154MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         Assert.assertNotNull(f);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,7 +33,7 @@ public class IEEE802154MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         title = Bundle.getMessage("MonFrameTitle");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         panel = pane = null;

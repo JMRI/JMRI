@@ -4,8 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
     @Test
-    @Ignore("Test disabled until threading can be resolved")
+    @Disabled("Test disabled until threading can be resolved")
     public void testSendAscii() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
@@ -54,7 +57,7 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     }
 
     @Test
-    @Ignore("Test disabled until threading can be resolved")
+    @Disabled("Test disabled until threading can be resolved")
     public void testSendBinary() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
@@ -90,7 +93,7 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     }
 
     @Test
-    @Ignore("Test disabled until threading can be resolved")
+    @Disabled("Test disabled until threading can be resolved")
     public void testMonitor() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
@@ -133,7 +136,7 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     }
 
     @Test
-    @Ignore("Test disabled until threading can be resolved")
+    @Disabled("Test disabled until threading can be resolved")
     public void xtestRcvReply() throws Exception {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
@@ -286,14 +289,14 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     static DataInputStream istream;  // so the traffic controller can read from this
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new NceTrafficController();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

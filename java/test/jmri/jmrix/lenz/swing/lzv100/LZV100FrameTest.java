@@ -1,11 +1,13 @@
 package jmri.jmrix.lenz.swing.lzv100;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * LZV100FrameTest.java
@@ -18,7 +20,7 @@ public class LZV100FrameTest extends jmri.util.JmriJFrameTestBase {
         
     private XNetInterfaceScaffold tc;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -29,7 +31,7 @@ public class LZV100FrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc = null;

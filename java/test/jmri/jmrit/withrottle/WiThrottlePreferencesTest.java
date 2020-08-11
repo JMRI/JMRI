@@ -1,10 +1,9 @@
 package jmri.jmrit.withrottle;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of WiThrottlePreferences
@@ -69,7 +68,7 @@ public class WiThrottlePreferencesTest {
         Assert.assertFalse("Use Momentary F2",prefs.isUseMomF2());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         prefs = new WiThrottlePreferences();
@@ -137,7 +136,7 @@ public class WiThrottlePreferencesTest {
     }
     
     
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

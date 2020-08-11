@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.Icon;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionNamedPaneAction;
 import jmri.util.swing.JmriPanel;

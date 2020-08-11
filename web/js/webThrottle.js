@@ -663,7 +663,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
 					img.attr('src', '/roster/' + encodeURIComponent(loco.name) + '/' + (icon ? 'icon' : 'image') + '?maxHeight=' + $cellHeightRef);
 				}
 				$locoAddress = '' + loco.dccAddress;
-				$jmri.setJMRI('throttle', $locoAddress, {"address":loco.dccAddress});
+                $jmri.setJMRI('throttle', $locoAddress, {"rosterEntry":loco.name});
 			} else smoothAlert('Loco \'' + $paramLocoName + '\' doesn\'t exist.\nReopen the web page with a valid loco name.');
 			break;
 		case 'turnouts':

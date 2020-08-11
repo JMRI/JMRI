@@ -1,17 +1,17 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import com.digi.xbee.api.XBeeNetwork;
 import com.digi.xbee.api.XBeeDevice;
+
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * XBeeConnectionMemoTest.java
@@ -20,7 +20,7 @@ import jmri.util.JUnitUtil;
  *
  * @author Paul Bender Copyright (C) 2012,2016
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class XBeeConnectionMemoTest extends SystemConnectionMemoTestBase<XBeeConnectionMemo> {
 
     @Mock
@@ -36,7 +36,7 @@ public class XBeeConnectionMemoTest extends SystemConnectionMemoTestBase<XBeeCon
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -58,7 +58,7 @@ public class XBeeConnectionMemoTest extends SystemConnectionMemoTestBase<XBeeCon
         scm.configureManagers();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

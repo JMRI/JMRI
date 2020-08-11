@@ -23,7 +23,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     private String systemName;
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     public XNetSensor(String systemName, String userName, XNetTrafficController controller, String prefix) {
         super(systemName, userName);

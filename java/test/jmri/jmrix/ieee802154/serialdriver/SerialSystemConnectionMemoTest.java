@@ -2,10 +2,9 @@ package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the
@@ -22,14 +21,14 @@ public class SerialSystemConnectionMemoTest extends SystemConnectionMemoTestBase
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new SerialSystemConnectionMemo();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm = null;
         JUnitUtil.tearDown();

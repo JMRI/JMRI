@@ -2,10 +2,9 @@ package jmri.jmrix.loconet.pr4;
 
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -35,12 +34,12 @@ public class PR4AdapterTest {
             
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

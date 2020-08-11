@@ -111,6 +111,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     @Override
     public void dispose() {
         Model.instance().removeRegion(region);
+        super.dispose();
     }
 
     // Methods to support PhysicalLocationReporter interface

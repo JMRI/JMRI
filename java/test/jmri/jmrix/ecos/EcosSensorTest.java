@@ -1,8 +1,8 @@
 package jmri.jmrix.ecos;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -23,14 +23,14 @@ public class EcosSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void checkStatusRequestMsgSent() {}
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         t = new EcosSensor("US1","Test");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         JUnitUtil.tearDown();

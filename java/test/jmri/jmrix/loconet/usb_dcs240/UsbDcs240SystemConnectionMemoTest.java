@@ -4,8 +4,8 @@ import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -14,7 +14,7 @@ import org.junit.Before;
 public class UsbDcs240SystemConnectionMemoTest extends SystemConnectionMemoTestBase<UsbDcs240SystemConnectionMemo> {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new UsbDcs240SystemConnectionMemo();
@@ -25,7 +25,7 @@ public class UsbDcs240SystemConnectionMemoTest extends SystemConnectionMemoTestB
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.dispose();
         JUnitUtil.tearDown();

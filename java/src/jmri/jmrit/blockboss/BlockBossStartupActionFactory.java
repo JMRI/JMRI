@@ -14,7 +14,7 @@ import org.openide.util.lookup.ServiceProvider;
 public final class BlockBossStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
-    public String getTitle(Class<?> clazz, Locale locale) throws IllegalArgumentException {
+    public String getTitle(Class<?> clazz, Locale locale) {
         if (clazz.equals(BlockBossAction.class)) {
             return Bundle.getMessage(locale, "StartupBlockBossAction");
         }

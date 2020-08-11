@@ -1,8 +1,8 @@
 package jmri.jmrix.powerline.cp290;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SpecificReply class.
@@ -14,7 +14,7 @@ public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     private SpecificTrafficController tc = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -25,7 +25,7 @@ public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc = null;
         m = null;

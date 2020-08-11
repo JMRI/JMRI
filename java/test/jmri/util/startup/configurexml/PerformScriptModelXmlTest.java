@@ -1,10 +1,9 @@
 package jmri.util.startup.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * PerformScriptModelXmlTest.java
@@ -20,12 +19,12 @@ public class PerformScriptModelXmlTest {
       Assert.assertNotNull("PerformScriptModelXml constructor",new PerformScriptModelXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

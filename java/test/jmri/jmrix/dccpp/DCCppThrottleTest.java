@@ -2,10 +2,9 @@ package jmri.jmrix.dccpp;
 
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * DCCppThrottleTest.java
@@ -392,7 +391,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
@@ -402,7 +401,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

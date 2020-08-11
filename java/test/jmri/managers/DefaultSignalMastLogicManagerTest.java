@@ -3,7 +3,9 @@ package jmri.managers;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -18,23 +20,23 @@ public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<j
 
     @Test
     @Override
-    @Ignore("makeSystemName is not currently supported")
+    @Disabled("makeSystemName is not currently supported")
     public void testMakeSystemName() {
     }
 
-    @Ignore("This managers doesn't support auto system names")
+    @Disabled("This managers doesn't support auto system names")
     @Test
     @Override
     public void testAutoSystemNames() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         l = new DefaultSignalMastLogicManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
         JUnitUtil.tearDown();

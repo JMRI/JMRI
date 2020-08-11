@@ -2,10 +2,9 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import jmri.util.StringUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
@@ -592,12 +591,12 @@ public class LocoNetMessageTest {
         Assert.assertTrue(m.checkParity());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

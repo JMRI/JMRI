@@ -10,7 +10,9 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -78,7 +80,7 @@ public class LRouteTableActionTest {
     }
 
     @Test
-    @Ignore("Commented out in JUnit 3")
+    @Disabled("Commented out in JUnit 3")
     public void testPrompt() {
         assertNotNull("LRouteTableAction is null!", _lRouteTable); // test has begun
         _lRouteTable.addPressed(null);
@@ -106,7 +108,7 @@ public class LRouteTableActionTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
 
@@ -156,7 +158,7 @@ public class LRouteTableActionTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         // now close action window
         if (_lRouteTable.f != null) {

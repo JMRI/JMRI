@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 
@@ -24,13 +26,13 @@ public class LayoutTrackExpectedStateTest {
         JUnitUtil.dispose(le);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

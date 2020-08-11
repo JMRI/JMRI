@@ -4,13 +4,13 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JPanel;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -38,7 +38,7 @@ public class PaneSetTest {
         pc.dispatchEvent(new WindowEvent(pc, WindowEvent.WINDOW_CLOSING));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -46,7 +46,7 @@ public class PaneSetTest {
         JUnitUtil.initDebugProgrammerManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

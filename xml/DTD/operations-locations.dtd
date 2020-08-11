@@ -52,6 +52,7 @@
 <!ATTLIST track id				CDATA #IMPLIED>          
 <!ATTLIST track name			CDATA #IMPLIED>
 <!ATTLIST track locType			CDATA #IMPLIED>       
+<!ATTLIST track trackType		CDATA #IMPLIED>
 <!ATTLIST track dir				CDATA #IMPLIED> 
 <!ATTLIST track carTypes		CDATA #IMPLIED> 
 <!ATTLIST track carRoadOperation	CDATA #IMPLIED> 

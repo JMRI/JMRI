@@ -2,10 +2,9 @@ package jmri.managers;
 
 import jmri.IdTag;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -121,7 +120,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -133,7 +132,7 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         l = getManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         l = null;

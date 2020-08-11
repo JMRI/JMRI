@@ -8,24 +8,23 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.*;
 import java.util.Map.Entry;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.Sensor;
+
+import jmri.*;
 import jmri.beans.VetoableChangeSupport;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +43,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
+public class EntryExitPairs extends VetoableChangeSupport implements Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
         PropertyChangeListener {
 
     public LayoutBlockConnectivityTools.Metric routingMethod = LayoutBlockConnectivityTools.Metric.METRIC;
@@ -53,6 +52,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
     public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
     private final SystemConnectionMemo memo;
+    private final Map<String, Boolean> silencedProperties = new HashMap<>();
 
     private int settingTimer = 2000;
 
@@ -124,9 +124,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
      */
     public EntryExitPairs() {
         memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
-        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
-            InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
-        }
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerUser(this));
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
 
         glassPane.setOpaque(false);
@@ -1381,6 +1379,21 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
     @Override
     public Class<DestinationPoints> getNamedBeanClass() {
         return DestinationPoints.class;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean silenced) {
+        if (!"beans".equals(propertyName)) {
+            throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
+        }
+        silencedProperties.put(propertyName, silenced);
+        if (propertyName.equals("beans") && !silenced) {
+            fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);
+        }
     }
 
     /** {@inheritDoc} */

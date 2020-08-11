@@ -22,7 +22,7 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
      * Constructor.
      * @param memo system connection memo
      */
-    public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
+    public OlcbThrottleManager(jmri.SystemConnectionMemo memo) {
         super(memo);
     }
 

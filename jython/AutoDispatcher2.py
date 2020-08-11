@@ -127,8 +127,6 @@ from thread import start_new_thread
 
 # JMRI imports
 
-from apps import Apps
-
 from jmri import Block
 from jmri import DccThrottle
 from jmri import InstanceManager
@@ -144,6 +142,7 @@ from jmri.jmrit import XmlFile
 
 from jmri.jmrit.consisttool import ConsistToolFrame
 
+# is this next import necessary?
 from jmri.implementation import AbstractShutDownTask
 
 # from jmri.jmrit.operations.locations import LocationManager

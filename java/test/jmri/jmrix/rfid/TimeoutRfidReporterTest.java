@@ -1,6 +1,7 @@
 package jmri.jmrix.rfid;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * TimeoutRfidReporterTest.java
@@ -19,14 +20,14 @@ public class TimeoutRfidReporterTest extends RfidReporterTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         r = new TimeoutRfidReporter("FRA", "Test");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         r = null;
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

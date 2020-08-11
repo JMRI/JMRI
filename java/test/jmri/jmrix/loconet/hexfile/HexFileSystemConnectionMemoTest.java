@@ -3,8 +3,8 @@ package jmri.jmrix.loconet.hexfile;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -13,7 +13,7 @@ import org.junit.Before;
 public class HexFileSystemConnectionMemoTest extends SystemConnectionMemoTestBase<HexFileSystemConnectionMemo> {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new HexFileSystemConnectionMemo();
@@ -24,7 +24,7 @@ public class HexFileSystemConnectionMemoTest extends SystemConnectionMemoTestBas
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.dispose();
         JUnitUtil.tearDown();

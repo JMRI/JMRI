@@ -19,6 +19,7 @@ import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.*;
 import jmri.jmrit.signalling.SignallingGuiTools;
@@ -1456,7 +1457,7 @@ final public class LayoutEditorTools {
         if (logic == null) {
             return;
         }
-        logic.retain();
+        InstanceManager.getDefault(BlockBossLogicProvider.class).register(logic);
         logic.start();
         logic = null;
     }

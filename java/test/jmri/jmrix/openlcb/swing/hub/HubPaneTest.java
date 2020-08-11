@@ -2,9 +2,9 @@ package jmri.jmrix.openlcb.swing.hub;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.can.TestTrafficController;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +25,7 @@ public class HubPaneTest {
         //hub.initContext(memo);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -37,7 +37,7 @@ public class HubPaneTest {
         hub = new HubPane();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         hub.stopHubThread();
         hub = null;

@@ -2,17 +2,17 @@
 package jmri.jmrix.loconet.locomon;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
+
 import org.assertj.swing.edt.GuiActionRunner;
-import org.junit.After;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -112,7 +112,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     jmri.ReporterManager r;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -142,7 +142,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         pane.dispose();
         panel = pane = null;

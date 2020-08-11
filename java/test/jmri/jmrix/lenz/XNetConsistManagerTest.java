@@ -2,10 +2,8 @@ package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XNetConsistManagerTest.java
@@ -16,7 +14,7 @@ import org.junit.Test;
  */
 public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -24,7 +22,7 @@ public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistM
         cm = new XNetConsistManager(new XNetSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         cm = null;

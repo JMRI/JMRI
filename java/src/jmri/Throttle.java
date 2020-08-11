@@ -33,10 +33,19 @@ import jmri.beans.PropertyChangeProvider;
 public interface Throttle extends PropertyChangeProvider {
 
     /**
+     * Constant used in getThrottleInfo.
+     */
+    public static final String SPEEDSTEPMODE = "SpeedStepsMode"; // speed steps NOI18N
+    
+    /**
      * Properties strings sent to property change listeners
      */
+    
+    /**
+     * Constant sent by Throttle on Property Change.
+     */
     public static final String SPEEDSTEPS = "SpeedSteps"; // speed steps NOI18N
-    public static final String SPEEDSTEPMODE = "SpeedStepsMode"; // speed steps NOI18N
+    
     public static final String SPEEDSETTING = "SpeedSetting"; // speed setting NOI18N
     public static final String ISFORWARD = "IsForward"; // direction setting NOI18N
     public static final String SPEEDINCREMENT = "SpeedIncrement"; // direction setting NOI18N

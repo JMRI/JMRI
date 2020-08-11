@@ -230,8 +230,9 @@
         <li>Stuart Brorson, who provided the decoder definition for the 
             SDD-001 from BNM Hobbies</li>
         
-        <li>Andy Brown, who helped solve a problem with NX
-        entry/exit pairs.</li>
+        <li>Andy Brown,  <!-- andybadshot -->
+        who helped solve a problem with NX
+        entry/exit pairs and fixed a problem with memory icons.</li>
 
         <li>Bill Brown, whose layout was used for the first NCE
         tests</li>
@@ -396,13 +397,18 @@
         debugging</li>
 
         <li>Michael Dunn, who provided a decoder definition for the
-        MRC 1645 decoder <a name="E" id="E"></a></li>
+        MRC 1645 decoder</li>
 
         <li>Mike Dunston, <!-- atanisoft -->
             who provided 
             <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aatanisoft+">several updates</a> 
-            for the DCC++ code</li>
+            for the DCC++ code
+        <a name="E" id="E"></a></li>
 
+        
+        <li>Frederik Elestedt, <!--elestedt -->
+            who improved the MQTT support.</li>
+            
         <li>Joe Ellis provided the DecoderPro configuration files
         for the Lenz LE077XF decoder and has done a fantastic job
         on the manual</li>
@@ -740,6 +746,11 @@
         <li>Peter Mansvelder, who contributed Fleischmann decoder
         definitions</li>
 
+        <li>Francesc Pinyol Margalef, <!-- cescp -->
+        who provided a fix for the
+        Digikeijs DR4018 (accessory DCC decoder) definition
+        and helped with the Z21XpressNet interface.
+        
         <li>Mark Marowicz, who provided the CT Elektronik SL 51
         decoder definition</li>
 
@@ -754,8 +765,10 @@
         <a href="https://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk and Western signal definition</a>, 
         the <a href=
         "https://jmri.org/xml/signals/B&amp;O-1980/index.shtml">B&amp;O
-        1980 signal definition</a>, and the
-        <a href="https://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>.
+        1980 signal definition</a>, the
+        <a href="https://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>,
+        and
+        the <a href="https:/jmri.org/xml/signals/C&O-1980/index.shtml">C&O 1980 system</a>.
         </li>
 
         <li>Bob McCown, who helped with the migration of the jmriusers list to 
@@ -770,6 +783,10 @@
         <li>David McGowan, who handled many aspects of JMRI legal
         defense against Matt Katzer</li>
 
+        <li>Elmer McKay, who provided a nice <a href=
+        "html/tools/signaling/IntroToSignalingYourMRR.html">help
+        file on how to start signaling your layout</a>.</li>
+
         <li>Randy McKenzie, who contributed some CTC panel
         background images</li>
 
@@ -779,6 +796,9 @@
         <li>John McMasters, who provided definitions for his
         Digitrax Sound projects</li>
 
+        <li>Dave McMorran, <!-- davemc8992 -->
+        who worked on the MQTT JSON coding</li>
+        
         <li>Larry Meaney provided decoder ID for the Digitrax
         DN163K0b decoder</li>
 
@@ -808,13 +828,6 @@
         let us use their excellent Installer Vise to build our
         early Windows installers.</li>
 
-        <li>Elmer McKay, who provided a nice <a href=
-        "html/tools/signaling/IntroToSignalingYourMRR.html">help
-        file on how to start signaling your layout</a>.</li>
-
-        <li>Dave McMorran, <!-- davemc8992 -->
-        who worked on the MQTT JSON coding</li>
-        
         <li>Mike Moir, who provided a lot of information on how
         <a href="http://www.protrak.cc/">Grapevine</a> works.</li>
 
@@ -872,6 +885,9 @@
 
         <li>Bob Phillips provided an MRC decoder definition</li>
 
+        <li>Alger Plke, <!-- AlgerP572 -->
+        who provided programmer fixes for the Zimo MX1 and MXULF</li>
+
         <li>Ronnie Pinkerton, who worked on a throttle update</li>
 
         <li>Martin Pischky improved the LocoNet firmware downloader
@@ -879,7 +895,7 @@
 
         <li>Rob Plevier, who provided instructions for running JMRI
         on OpenSUSE GNU/Linux</li>
-
+        
         <li>John Plocher, who make good suggestions on XML DTD
         items, created the infrastructure for this web site, lead
         the construction of the demo layout for the JavaOne show,
@@ -952,6 +968,9 @@
         <li>Joe Salemi, who contributed the Atlas 345 decoder
         definition and updated the TCS Tx definition.</li>
 
+        <li>Bruno Sanches, <!-- bcsanches -->
+        who fixed a bug in the DCC++ throttle implementation.
+        
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adsand47+">Dave Sand</a>, <!-- dsand47 -->
         who's worked on Layout Editor, Logix, 
         Entry/Exit signaling and other things.</li>

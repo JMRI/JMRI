@@ -1,8 +1,8 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -23,14 +23,14 @@ public class Dcc4PcSensorTest extends jmri.implementation.AbstractSensorTestBase
     public void checkStatusRequestMsgSent() {}
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         t = new Dcc4PcSensor("DS0:1","test");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         JUnitUtil.tearDown();

@@ -3,7 +3,7 @@ package jmri.jmrix.tams.swing;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.util.swing.JmriPanel;

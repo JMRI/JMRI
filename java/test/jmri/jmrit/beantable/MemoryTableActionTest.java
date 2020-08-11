@@ -6,7 +6,9 @@ import javax.swing.JTextField;
 
 import jmri.Memory;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -70,12 +72,12 @@ public class MemoryTableActionTest extends AbstractTableActionBase<Memory> {
     }
 
     @Test
-    @Ignore("no Edit button in memory Table")
+    @Disabled("no Edit button in memory Table")
     @Override
     public void testEditButton() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -85,7 +87,7 @@ public class MemoryTableActionTest extends AbstractTableActionBase<Memory> {
         a = new MemoryTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

@@ -561,7 +561,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         notifyProgListenerEnd(temp,value, status);
     }
 
-    XNetTrafficController _controller = null;
+    XNetTrafficController _controller;
 
     protected XNetTrafficController controller() {
         return _controller;

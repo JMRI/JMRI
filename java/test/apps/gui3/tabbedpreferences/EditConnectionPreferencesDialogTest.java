@@ -3,11 +3,10 @@ package apps.gui3.tabbedpreferences;
 import java.awt.GraphicsEnvironment;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -21,7 +20,7 @@ public class EditConnectionPreferencesDialogTest {
         Assert.assertNotNull("exists",d);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -31,7 +30,7 @@ public class EditConnectionPreferencesDialogTest {
         jmri.InstanceManager.setDefault(TabbedPreferences.class, new TabbedPreferences());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

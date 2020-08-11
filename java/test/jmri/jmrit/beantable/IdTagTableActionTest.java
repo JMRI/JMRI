@@ -6,7 +6,9 @@ import javax.swing.JTextField;
 
 import jmri.IdTag;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -69,12 +71,12 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
     }
 
     @Test
-    @Ignore("IdTag table has no Edit button")
+    @Disabled("IdTag table has no Edit button")
     @Override
     public void testEditButton() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -84,7 +86,7 @@ public class IdTagTableActionTest extends AbstractTableActionBase<IdTag> {
         a = new IdTagTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         jmri.util.JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions

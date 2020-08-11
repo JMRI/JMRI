@@ -2,6 +2,8 @@ package jmri.jmrit.catalog;
 
 import java.util.Set;
 import jmri.CatalogTree;
+import jmri.CatalogTreeLeaf;
+import jmri.CatalogTreeNode;
 import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;

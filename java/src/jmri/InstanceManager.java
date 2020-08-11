@@ -28,8 +28,8 @@ import jmri.util.ThreadingUtil;
  * Provides methods for locating various interface implementations. These form
  * the base for locating JMRI objects, including the key managers.
  * <p>
- * The structural goal is to have the jmri package not depend on the lower
- * jmri.jmrit and jmri.jmrix packages, with the implementations still available
+ * The structural goal is to have the jmri package not depend on lower
+ * packages, with the implementations still available
  * at run-time through the InstanceManager.
  * <p>
  * To retrieve the default object of a specific type, do

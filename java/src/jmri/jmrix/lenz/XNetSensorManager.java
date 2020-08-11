@@ -26,7 +26,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     /**
      * {@inheritDoc}
@@ -188,8 +188,8 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     @Nonnull
     synchronized public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        int encoderAddress = 0;
-        int input = 0;
+        int encoderAddress;
+        int input;
 
         if (curAddress.contains(":")) {
             // Address format passed is in the form of encoderAddress:input or T:turnout address
@@ -222,7 +222,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     synchronized public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);

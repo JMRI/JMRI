@@ -1,13 +1,13 @@
 package jmri.jmrix.secsi.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of SecsiComponentFactory
@@ -27,14 +27,14 @@ public class SecsiComponentFactoryTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         m = new SecsiSystemConnectionMemo();
         // tc = new SerialTrafficControlScaffold(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         // tc = null;

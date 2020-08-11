@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import jmri.jmrit.display.layoutEditor.LayoutShape.LayoutShapeType;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutShape
@@ -173,7 +175,7 @@ public class LayoutShapeTest {
     }
 
     // from here down is testing infrastructure
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -182,7 +184,7 @@ public class LayoutShapeTest {
         }
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
@@ -192,7 +194,7 @@ public class LayoutShapeTest {
         JUnitUtil.tearDown();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -203,7 +205,7 @@ public class LayoutShapeTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (ls != null) {
             ls.remove();

@@ -43,7 +43,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
             Bundle.getMessage("ColumnLabelSetState")};
     private static final String SET_TO_ACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateActive");
     private static final String SET_TO_INACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateInactive");
-    private static final String SET_TO_TOGGLE = Bundle.getMessage("Set") + " " + Bundle.getMessage("Toggle");
+    static final String SET_TO_TOGGLE = Bundle.getMessage("Set") + " " + Bundle.getMessage("Toggle");
     private static final String[] sensorInputModes = new String[]{
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateActive"),
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateInactive"),
@@ -65,9 +65,9 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     // the start of buildModel() above.  This is done to prevent
     // invoking the TurnoutManager at class construction time,
     // when it hasn't been configured yet
-    private static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
+    static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateClosed");
-    private static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
+    static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateThrown");
     private static String[] turnoutInputModes = new String[]{
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),

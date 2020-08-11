@@ -7,7 +7,9 @@ import jmri.util.JUnitUtil;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -25,7 +27,7 @@ public class LayoutTrackDrawingOptionsDialogTest {
         le.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -35,7 +37,7 @@ public class LayoutTrackDrawingOptionsDialogTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if(le!=null){
             EditorFrameOperator efo = new EditorFrameOperator(le);

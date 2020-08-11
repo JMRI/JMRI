@@ -2,10 +2,9 @@ package jmri.managers;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Overall tests of Logix operation, including operation of 
@@ -54,7 +53,7 @@ public class LogixSystemTest {
         Assert.assertTrue("IT2", oldIt2 != it2.getState());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -64,7 +63,7 @@ public class LogixSystemTest {
         JUnitUtil.initIdTagManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

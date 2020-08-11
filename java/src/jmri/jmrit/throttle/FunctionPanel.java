@@ -61,7 +61,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     /**
      * Get notification that a function has changed state.
      *
-     * @param functionNumber The function that has changed (0-9).
+     * @param functionNumber The function that has changed.
      * @param isSet          True if the function is now active (or set).
      */
     @Override
@@ -378,11 +378,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        for (int i = 0; i < mThrottle.getFunctions().length; i++) {
-            if (e.getPropertyName().equals(Throttle.getFunctionString(i))) {
-                setButtonByFuncNumber(i,false,(Boolean) e.getNewValue());
-            } else if (e.getPropertyName().equals(Throttle.getFunctionMomentaryString(i))) {
-                setButtonByFuncNumber(i,true,!(Boolean) e.getNewValue());
+        if (mThrottle!=null){
+            for (int i = 0; i < mThrottle.getFunctions().length; i++) {
+                if (e.getPropertyName().equals(Throttle.getFunctionString(i))) {
+                    setButtonByFuncNumber(i,false,(Boolean) e.getNewValue());
+                } else if (e.getPropertyName().equals(Throttle.getFunctionMomentaryString(i))) {
+                    setButtonByFuncNumber(i,true,!(Boolean) e.getNewValue());
+                }
             }
         }
     }

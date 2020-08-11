@@ -1,6 +1,8 @@
 package jmri.jmrix.rfid;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import jmri.IdTag;
 
 /**
@@ -47,14 +49,14 @@ public class RfidReporterTest extends jmri.implementation.AbstractReporterTestBa
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         r = new RfidReporter("FRA", "Test");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         r = null;
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

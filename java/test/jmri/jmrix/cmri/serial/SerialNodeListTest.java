@@ -1,9 +1,8 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialNodeList class.
@@ -21,7 +20,7 @@ public class SerialNodeListTest {
     private SerialTrafficControlScaffold stcs = null;
     private SerialNode n2 = null;
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // replace the SerialTrafficController
@@ -41,7 +40,7 @@ public class SerialNodeListTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (stcs != null) stcs.terminateThreads();
         stcs = null;

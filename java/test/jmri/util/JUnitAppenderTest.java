@@ -1,12 +1,9 @@
 package jmri.util;
 
 import org.apache.log4j.Level;
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,7 +161,7 @@ public class JUnitAppenderTest {
     }
 
     @Test
-    @Ignore("last line was commented out under JUnit 3, ignoring under JUnit 4")
+    @Disabled("last line was commented out under JUnit 3, ignoring under JUnit 4")
     public void testExpectedMessageAsInfo() {
         // info is usually turned off, so this doesn't pass in most cases
         Assume.assumeTrue(log.isInfoEnabled());
@@ -174,7 +171,7 @@ public class JUnitAppenderTest {
     }
 
     @Test
-    @Ignore("last line was commented out under JUnit 3, ignoring under JUnit 4")
+    @Disabled("last line was commented out under JUnit 3, ignoring under JUnit 4")
     public void testExpectedMessageAsDebug() {
         // debug is usually turned off, so this doesn't pass in most cases
         Assume.assumeTrue(log.isDebugEnabled());
@@ -283,12 +280,12 @@ public class JUnitAppenderTest {
         Assert.assertFalse(JUnitAppender.verifyNoBacklog());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 
         jmri.util.JUnitUtil.tearDown();     

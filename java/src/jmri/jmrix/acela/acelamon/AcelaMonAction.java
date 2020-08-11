@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import jmri.jmrix.swing.AbstractSystemConnectionAction;
 import org.slf4j.Logger;

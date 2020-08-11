@@ -1,7 +1,7 @@
 package jmri.jmrix.swing;
 
 import javax.swing.AbstractAction;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Base for {@link AbstractAction}s that need to be associated with a specific

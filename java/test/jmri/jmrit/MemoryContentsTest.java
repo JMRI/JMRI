@@ -2,13 +2,12 @@ package jmri.jmrit;
 
 import java.io.File;
 import java.io.IOException;
+
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -836,12 +835,12 @@ public class MemoryContentsTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
 

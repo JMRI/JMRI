@@ -1,7 +1,6 @@
 package jmri;
 
-import org.junit.*;
-import org.junit.runner.*;
+import org.junit.jupiter.api.*;
 
 import com.tngtech.archunit.junit.*;
 import com.tngtech.archunit.lang.*;
@@ -31,8 +30,6 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
  * @author Bob Jacobsen 2019
  */
  
-@RunWith(ArchUnitRunner.class)  // Remove this for JUnit 5
- 
 // Pick up all classes from the target/classes directory, which is just the main (not test) code
 @AnalyzeClasses(packages = {"target/classes"}) // "jmri","apps"
 
@@ -40,11 +37,11 @@ public class ArchitectureCheck extends ArchitectureTest {
 
     // want these statics first in class, to initialize
     // logging before various static items are constructed
-    @BeforeClass  // tests are static
+    @BeforeAll  // tests are static
     static public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
-    @AfterClass
+    @AfterAll
     static public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
@@ -105,7 +102,7 @@ public class ArchitectureCheck extends ArchitectureTest {
                 .resideInAPackage("jmri.util..")
             .should().dependOnClassesThat()
                     .resideOutsideOfPackages("jmri", "jmri.util..",
-                                             "java..", "javax..", "org..") // swing et al imported
+                                             "java..", "javax..", "org..", "edu.umd..") // swing et al imported
         );
         
     /**
@@ -122,5 +119,11 @@ public class ArchitectureCheck extends ArchitectureTest {
             .that().resideInAPackage("jmri.jmris")
             .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..")
         );
-            
+
+    /**
+     * jmri (but not apps) should not reference org.apache.log4j to allow jmri
+     * to be used as library in applications that choose not to use Log4J.
+     */
+    @ArchTest
+    public static final ArchRule checkLog4J = FreezingArchRule.freeze(ArchitectureTest.noLog4JinJmri);
 }

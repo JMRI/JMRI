@@ -1,13 +1,15 @@
 package jmri.jmrix.loconet;
 
 import jmri.ProgListenerScaffold;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
+
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 
 import jmri.ProgrammerException;
+
 import org.mockito.Mockito;
 
 /**
@@ -1463,7 +1465,7 @@ public class CsOpSwAccessTest {
     private LocoNetSystemConnectionMemo memo;
     private ProgListenerScaffold pl;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         lnis = new LocoNetInterfaceScaffold();
@@ -1475,7 +1477,7 @@ public class CsOpSwAccessTest {
         sm.setSystemConnectionMemo(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo= null;
         sm.dispose();

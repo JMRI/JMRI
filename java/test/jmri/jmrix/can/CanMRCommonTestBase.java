@@ -1,8 +1,8 @@
 package jmri.jmrix.can;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Common tests for the jmri.jmrix.can.CanMessage and CanReply classes.
@@ -12,13 +12,13 @@ import org.junit.Before;
 public abstract class CanMRCommonTestBase extends jmri.jmrix.AbstractMessageTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

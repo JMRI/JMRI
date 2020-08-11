@@ -9,7 +9,9 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -122,7 +124,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
     }
 
     @Test
-    @Ignore("needs further setup")
+    @Disabled("needs further setup")
     @ToDo("To Edit, the signal group needs a mast added to it")
     @Override
     public void testEditButton() {
@@ -152,7 +154,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
         JUnitUtil.dispose(f);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -163,7 +165,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
         a = new SignalGroupTableAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;

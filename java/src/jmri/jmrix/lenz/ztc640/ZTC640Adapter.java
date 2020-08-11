@@ -103,7 +103,12 @@ public class ZTC640Adapter extends XNetSerialPortController {
         packets.connectPort(this);
 
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     // base class methods for the XNetSerialPortController interface
@@ -171,8 +176,8 @@ public class ZTC640Adapter extends XNetSerialPortController {
         return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
-    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200")};
-    protected int[] validSpeedValues = new int[]{19200};
+    protected final String[] validSpeeds = new String[]{Bundle.getMessage("Baud19200")};
+    protected final int[] validSpeedValues = new int[]{19200};
 
     @Override
     public int defaultBaudIndex() {
@@ -180,7 +185,7 @@ public class ZTC640Adapter extends XNetSerialPortController {
     }
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
+    protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNoRecomm"), Bundle.getMessage("FlowOptionHw")};
 
     InputStream serialStream = null;
 

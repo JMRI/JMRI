@@ -3,10 +3,9 @@ package jmri.jmrix.loconet;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,7 +106,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -121,7 +120,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         jmri.InstanceManager.setSensorManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         lnis = null;

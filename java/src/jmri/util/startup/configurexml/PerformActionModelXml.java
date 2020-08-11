@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import jmri.util.startup.PerformActionModel;
 import jmri.util.startup.StartupActionsManager;
 import jmri.InstanceManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.swing.SystemConnectionAction;
 
 /**

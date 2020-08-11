@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetConsistManager extends AbstractConsistManager {
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
     private boolean requestingUpdate = false;
 
     /**
@@ -28,7 +28,7 @@ public class XNetConsistManager extends AbstractConsistManager {
         tc = systemMemo.getXNetTrafficController();
         this.systemMemo = systemMemo;
     }
-    XNetSystemConnectionMemo systemMemo;
+    final XNetSystemConnectionMemo systemMemo;
 
     /**
      * This implementation does command station consists, so return true.

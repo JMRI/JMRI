@@ -63,7 +63,10 @@ import javax.swing.plaf.basic.BasicSliderUI;
  *
  * @author Michael Kneebone Copyright (c) 2007, 2011
  * @author Matthew Harris Copyright (c) 2011
+ * @deprecated since 4.21.1 without direct replacement as uses illegal
+ * reflective access
  */
+@Deprecated
 public class SliderSnap extends BasicSliderUI {
 
     /**

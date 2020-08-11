@@ -2,10 +2,9 @@ package jmri.jmrix.oaktree;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the OakTreeSystemConnectionMemo class
@@ -22,7 +21,7 @@ public class OakTreeSystemConnectionMemoTest extends SystemConnectionMemoTestBas
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new OakTreeSystemConnectionMemo();
@@ -43,7 +42,7 @@ public class OakTreeSystemConnectionMemoTest extends SystemConnectionMemoTestBas
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

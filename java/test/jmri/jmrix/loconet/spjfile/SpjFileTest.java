@@ -1,9 +1,8 @@
 package jmri.jmrix.loconet.spjfile;
 
 import jmri.jmrit.Sound;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
@@ -58,12 +57,12 @@ public class SpjFileTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

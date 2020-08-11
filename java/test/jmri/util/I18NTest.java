@@ -2,7 +2,7 @@ package jmri.util;
 
 import java.io.IOException;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -50,12 +50,12 @@ public class I18NTest {
      }
      */
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

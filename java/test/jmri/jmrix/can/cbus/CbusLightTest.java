@@ -6,10 +6,9 @@ import jmri.jmrix.can.CanReply;
 import jmri.Light;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -536,7 +535,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -544,7 +543,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         t = new CbusLight("ML", "+N456E321",tcis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         tcis.terminateThreads();

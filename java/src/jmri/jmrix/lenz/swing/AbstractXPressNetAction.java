@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
@@ -16,7 +16,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  */
 public abstract class AbstractXPressNetAction extends AbstractAction implements jmri.jmrix.swing.SystemConnectionAction {
 
-    protected XNetSystemConnectionMemo _memo = null;
+    protected XNetSystemConnectionMemo _memo;
 
     public AbstractXPressNetAction(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super(s);
@@ -28,7 +28,7 @@ public abstract class AbstractXPressNetAction extends AbstractAction implements 
     }
 
     /**
-     * Get the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
+     * Get the {@link SystemConnectionMemo} this action is bound to.
      *
      * @return the SystemConnectionMemo or null if not bound
      */
@@ -39,7 +39,7 @@ public abstract class AbstractXPressNetAction extends AbstractAction implements 
     }
 
     /**
-     * Set the {@link jmri.jmrix.SystemConnectionMemo} this action is bound to.
+     * Set the {@link SystemConnectionMemo} this action is bound to.
      * <p>
      * Implementing classes may throw an IllegalArgumentException if the
      * implementing class requires a specific subclass of SystemConnectionMemo.
@@ -59,7 +59,7 @@ public abstract class AbstractXPressNetAction extends AbstractAction implements 
     }
 
     /**
-     * Get a list of {@link jmri.jmrix.SystemConnectionMemo} subclasses that the
+     * Get a list of {@link SystemConnectionMemo} subclasses that the
      * implementing class accepts.
      * <p>
      * If the implementing class is a subclass of a class that does accept

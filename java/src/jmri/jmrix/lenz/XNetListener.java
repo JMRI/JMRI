@@ -22,7 +22,7 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
      * @param msg The received XNet message. Note that this same object may be
      *            presented to multiple users. It should not be modified here.
      */
-    public void message(XNetReply msg);
+    void message(XNetReply msg);
 
     /**
      * Member function that will be invoked by an XNetInterface implementation to
@@ -32,7 +32,7 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
      * @param msg The received XNet message. Note that this same object may be
      *            presented to multiple users. It should not be modified here.
      */
-    public void message(XNetMessage msg);
+    void message(XNetMessage msg);
 
     /**
      * Member function invoked by an XNetInterface implementation to notify a
@@ -40,7 +40,7 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
      * queue.
      * @param msg message which has timed out.
      */
-    public void notifyTimeout(XNetMessage msg);
+    void notifyTimeout(XNetMessage msg);
 
 }
 

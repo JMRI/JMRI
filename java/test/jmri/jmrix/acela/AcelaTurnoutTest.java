@@ -1,7 +1,9 @@
 package jmri.jmrix.acela;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +37,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     }
 
     @Test
-    @Ignore("Copied verbatim from Lenz, probably isn't correct")
+    @Disabled("Copied verbatim from Lenz, probably isn't correct")
     public void checkIncoming() {
         // notify the object that somebody else changed it...
         AcelaReply m = new AcelaReply();
@@ -57,7 +59,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     // AcelaTurnout test for incoming status message
     @Test
-    @Ignore("Copied verbatim from Lenz, probably isn't correct")
+    @Disabled("Copied verbatim from Lenz, probably isn't correct")
     public void testAcelaTurnoutStatusMsg() {
         // prepare an interface
         // set closed
@@ -81,7 +83,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 
     AcelaNode a0, a1, a2, a3;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -124,7 +126,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         t = new AcelaTurnout("AT11",memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

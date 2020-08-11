@@ -1,12 +1,12 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BootloaderPane class
@@ -39,7 +39,7 @@ public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -53,7 +53,7 @@ public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
         title="CBUS Firmware Update";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         

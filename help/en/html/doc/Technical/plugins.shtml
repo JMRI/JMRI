@@ -39,7 +39,6 @@
       <ul>
         <li><a href="#script">Script JMRI</a></li>
         <li><a href="#service">Implement a Service Provider</a></li>
-        <li><a href="#jmriPlugin">Override jmri.JmriPlugin</a></li>
       </ul>
 
         See also the separate pages on
@@ -282,19 +281,6 @@
             JMRI web server can be specified by providing a service that
             implements this.</dd>
       </dl>
-
-        
-      <h2 id="jmriPlugin">Override jmri.JmriPlugin</h2>
-
-      <p>The first instance of
-        <a href="https://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">JmriPlugin</a>
-        will have its
-        <a href="https://jmri.org/JavaDoc/doc/jmri/JmriPlugin.html#start-javax.swing.JFrame-javax.swing.JMenuBar-">start</a>
-        method called while the JMRI application launches. This makes it
-        possible to allow the application's main window and main menu to be
-        extended. Use of this mechanism is limiting because JmriPlugin can only
-        be overridden once. Generally, the mechanisms further up are better.
-      </p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

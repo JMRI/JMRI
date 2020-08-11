@@ -13,6 +13,8 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
     private final MqttAdapter mqttAdapter;
     private final String topic;
+    private final static String stateTopicPrefix = "state/";
+    private final static String commandTopicPrefix = "command/";
 
     /**
      * Requires, but does not check, that the system name and topic be consistent
@@ -24,7 +26,28 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         super(systemName);
         this.topic = topic;
         mqttAdapter = ma;
-        mqttAdapter.subscribe(this.topic, this);
+        mqttAdapter.subscribe(getStateTopicPrefix() + topic, this);
+        _validFeedbackNames = new String[] {"DIRECT", "ONESENSOR", "TWOSENSOR", "DELAYED", "MONITORING", "EXACT"};
+        _validFeedbackModes = new int[] {DIRECT, ONESENSOR, TWOSENSOR, DELAYED, MONITORING, EXACT};
+        _validFeedbackTypes = DIRECT | ONESENSOR | TWOSENSOR | DELAYED | MONITORING;
+    }
+
+    private String getStateTopicPrefix() {
+        return (getFeedbackMode() == EXACT ? stateTopicPrefix : "");
+    }
+
+    private String getCommandTopicPrefix() {
+        return (getFeedbackMode() == EXACT ? commandTopicPrefix : "");
+    }
+
+    @Override
+    public void setFeedbackMode(int mode) throws IllegalArgumentException {
+        mqttAdapter.unsubscribe(getStateTopicPrefix() + topic, this);
+        try {
+            super.setFeedbackMode(mode);
+        } finally {
+            mqttAdapter.subscribe(getStateTopicPrefix() + topic, this);
+        }
     }
 
     public void setParser(MqttContentParser<Turnout> parser) {
@@ -34,6 +57,18 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
         private final static String closedText = "CLOSED";
         private final static String thrownText = "THROWN";
+        private final static String unknownText = "UNKNOWN";
+        private final static String inconsistentText = "INCONSISTENT";
+        private final static String movingText = "MOVING";
+
+        private void setExtraWithCheck(int newMode, String payload) {
+            if (getFeedbackMode() == MONITORING || getFeedbackMode() == EXACT) {
+                newKnownState(newMode);
+            } else {
+                log.warn("Received state is not valid in current operating mode: {}", payload);
+            }
+        }
+
         @Override
         public void beanFromPayload(@Nonnull Turnout bean, @Nonnull String payload, @Nonnull String topic) {
             switch (payload) {
@@ -42,6 +77,13 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
                     break;
                 case thrownText:
                     newKnownState(THROWN);
+                    break;
+                case unknownText:
+                    setExtraWithCheck(UNKNOWN, payload);
+                    break;
+                case movingText:
+                case inconsistentText:
+                    setExtraWithCheck(INCONSISTENT, payload);
                     break;
                 default:
                     log.warn("Unknown state : {}", payload);
@@ -92,7 +134,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     }
 
     private void sendMessage(String c) {
-        mqttAdapter.publish(topic, c.getBytes());
+        mqttAdapter.publish(getCommandTopicPrefix() + this.topic, c.getBytes());
     }
 
     @Override

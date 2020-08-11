@@ -275,7 +275,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
                 Element ea = new Element(aspect.replaceAll("[ ()]", "")); //create element for aspect after removing invalid chars
                 String url = signalMast.getAppearanceMap().getImageLink(aspect, imgset);  // use correct imageset
                 if (!url.contains("preference:")) {
-                    url = "program:" + url.substring(url.indexOf("resources"));
+                    url = "/" + url.substring(url.indexOf("resources"));
                 }
                 ea.setAttribute(JSON.ASPECT, aspect);
                 ea.setAttribute("url", url);
@@ -284,7 +284,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             String url = signalMast.getAppearanceMap().getImageLink("$held", imgset);  //add "Held" aspect if defined
             if (!url.isEmpty()) {
                 if (!url.contains("preference:")) {
-                    url = "program:" + url.substring(url.indexOf("resources"));
+                    url = "/" + url.substring(url.indexOf("resources"));
                 }
                 Element ea = new Element(JSON.ASPECT_HELD);
                 ea.setAttribute(JSON.ASPECT, JSON.ASPECT_HELD);
@@ -294,7 +294,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             url = signalMast.getAppearanceMap().getImageLink("$dark", imgset);  //add "Dark" aspect if defined
             if (!url.isEmpty()) {
                 if (!url.contains("preference:")) {
-                    url = "program:" + url.substring(url.indexOf("resources"));
+                    url = "/" + url.substring(url.indexOf("resources"));
                 }
                 Element ea = new Element(JSON.ASPECT_DARK);
                 ea.setAttribute(JSON.ASPECT, JSON.ASPECT_DARK);
@@ -303,7 +303,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             }
             Element ea = new Element(JSON.ASPECT_UNKNOWN);
             ea.setAttribute(JSON.ASPECT, JSON.ASPECT_UNKNOWN);
-            ea.setAttribute("url", "program:resources/icons/misc/X-red.gif");  //add icon for unknown state
+            ea.setAttribute("url", "/resources/icons/misc/X-red.gif");  //add icon for unknown state
             icons.addContent(ea);
         }
         return icons;

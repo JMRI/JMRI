@@ -2,7 +2,9 @@ package jmri.jmrix.nce;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnoutTestBase;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.nce.NceTurnout class
@@ -13,7 +15,7 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     private NceTrafficControlScaffold tcis = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
@@ -23,7 +25,7 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
         t = new NceTurnout(tcis, "NT", 4);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         // prepare an interface

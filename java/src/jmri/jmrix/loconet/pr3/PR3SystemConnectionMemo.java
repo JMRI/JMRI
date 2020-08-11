@@ -2,6 +2,7 @@ package jmri.jmrix.loconet.pr3;
 
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.PowerManager;
 import jmri.ThrottleManager;
 import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;
@@ -111,10 +112,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (mode == MS100MODE) {
             return super.getThrottleManager();
         }
-        if (throttleManager == null) {
-            throttleManager = new jmri.jmrix.loconet.LnPr2ThrottleManager(this);
-        }
-        return throttleManager;
+        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,(Class c) -> new jmri.jmrix.loconet.LnPr2ThrottleManager(this));
     }
 
     @Override
@@ -158,10 +156,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (mode == MS100MODE) {
             return super.getPowerManager();
         }
-        if (powerManager == null) {
-            powerManager = new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this);
-        }
-        return powerManager;
+        return (LnPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,(Class c) -> new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this));
     }
 
     /**

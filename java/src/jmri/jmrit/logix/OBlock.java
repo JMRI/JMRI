@@ -939,7 +939,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         List<NamedBeanUsageReport> report = new ArrayList<>();
         List<NamedBean> duplicateCheck = new ArrayList<>();
         if (bean != null) {
-            log.debug("oblock: {}, sensor = {}", getDisplayName(), getSensor().getDisplayName());  // NOI18N
+            if (log.isDebugEnabled()) {
+                Sensor s = getSensor();
+                log.debug("oblock: {}, sensor = {}", getDisplayName(), (s==null?"Dark OBlock":s.getDisplayName()));  // NOI18N
+            }
             if (bean.equals(getSensor())) {
                 report.add(new NamedBeanUsageReport("OBlockSensor"));  // NOI18N
             }

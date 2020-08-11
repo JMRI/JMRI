@@ -1,7 +1,8 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the rps.Analytic_AAlgorithm class.
@@ -17,28 +18,28 @@ public class Analytic_AAlgorithmTest extends AbstractAlgorithmTestBase {
     }
 
     @Test
-    @Ignore("fails for unknown reasons")
+    @Disabled("fails for unknown reasons")
     @Override
     public void testCalc4() {
         super.testCalc4();
     }
 
     @Test
-    @Ignore("fails for unknown reasons")
+    @Disabled("fails for unknown reasons")
     @Override
     public void testCalc5() {
         super.testCalc5();
     }
 
     @Test
-    @Ignore("fails for unknown reasons")
+    @Disabled("fails for unknown reasons")
     @Override
     public void testCalc6() {
         super.testCalc6();
     }
 
     @Test
-    @Ignore("fails for unknown reasons")
+    @Disabled("fails for unknown reasons")
     @Override
     public void testCalc7() {
         super.testCalc7();

@@ -99,7 +99,7 @@
         <li>Configure the new VSDecoder
 
           <ul>
-            <li>Select a loco from the Roster or enter an address
+            <li>Select a locomotive from the Roster or enter an address
             Manually</li>
 
             <li>Click <em>Load VSD File</em> and load the
@@ -199,6 +199,8 @@
       <ul>
         <li>Digitrax Transponding (tested)</li>
 
+        <li>Occupancy Sensors and JMRI Blocks (tested)</li>
+
         <li>ESU ECoS (not tested)</li>
 
         <li>RFID (not tested)</li>
@@ -214,11 +216,7 @@
       "https://groups.io/g/jmriusers">JMRI users Groups.io group</a>.
       More systems will be added in the future.</p>
 
-      <p>For details on setting up Location Following, see the
-      <a href="VSD_LocationsMgr.shtml">Manage VSD Locations</a>
-      instructions.</p>
-
-      <p>When you have followed the above setup steps, launch a
+      <p>When you have setup the location following, launch a
       VSDecoder window, assign a locomotive and run it. As your
       locomotive moves around the layout, the sound will follow the
       locomotive's reported position.</p>
@@ -226,7 +224,18 @@
       <p><em>Note:</em> The sound will appear to "jump" from
       location to location as the locomotive's reported location
       changes. This effect will be smaller with additional and more
-      closely spaced reporters.</p>
+      closely spaced reporters or sensors.</p>
+
+      <h5>Location Following using Occupancy Sensors and JMRI Blocks</h5>
+
+      <p>Since JMRI Test Release 4.21.1 the "Location Following"
+      with JMRI Blocks and occupancy sensors is available.<br>
+      When you provide a locomotive address as a numeric Block value, then the 
+      sound follows the locations as the locomotive moves from
+      block to block.<br>
+      For more details, see the
+      <a href="VSD_LocationsMgr.shtml">Manage VSD Locations</a>
+      instructions.</p>
 
       <h5>Location Following using JMRI Operations</h5>
 
@@ -237,12 +246,9 @@
       <p>To set the Operations locations:</p>
 
       <ol>
-        <li>Select Operations-&gt;Settings</li>
+        <li>Select Tools-&gt;Operations-&gt;Locations</li>
 
-        <li>Select Tools-&gt;Options</li>
-
-        <li>Check the "Enable physical locations for Virtual Sound
-        Decoder" option, and save the changes.</li>
+        <li>Create Operations Locations within JMRI Operations</li>
 
         <li>Follow the directions in <a href=
         "VSD_LocationsMgr.shtml">Manage VSD Locations</a> to assign
@@ -265,9 +271,9 @@
 
       <p>Since JMRI Test Release 4.13.2 the "Advanced Location
       Following" is available. The Advanced Location Following
-      calculates the position of a loco within a location and
+      calculates the position of a locomotive within a location and
       sets the sound position continuously. This lets the sound
-      following the loco smoothly without a "jump".</p>
+      following the locomotive smoothly without a "jump".</p>
 
       <p>For details on setting up Advanced Location Following,
       see the

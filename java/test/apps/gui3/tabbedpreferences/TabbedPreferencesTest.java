@@ -1,8 +1,8 @@
 package apps.gui3.tabbedpreferences;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,7 +10,7 @@ import org.junit.Before;
  */
 public class TabbedPreferencesTest extends jmri.util.swing.JmriPanelTest {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -23,7 +23,7 @@ public class TabbedPreferencesTest extends jmri.util.swing.JmriPanelTest {
         title = Bundle.getMessage("TitlePreferences");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();

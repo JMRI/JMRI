@@ -1,9 +1,12 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.Reporter;
 import jmri.ReporterManager;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Abstract Base Class for ReporterManager tests in specific jmrix packages. This
@@ -22,7 +25,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
     protected int maxN() { return 100; }
 
     // implementing classes must provide these abstract members:
-    abstract public void setUp(); // load l with actual object; create scaffolds as needed, tag @Before
+    abstract public void setUp(); // load l with actual object; create scaffolds as needed, tag @BeforeEach
 
     abstract public String getSystemName(String i);
 
@@ -71,14 +74,10 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         Assert.assertTrue("provided same object ", t == t2);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testProvideFailure() {
-        try {
-            l.provideReporter("");
-        } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"" + l.getSystemNamePrefix() + "\".");
-          throw ex;
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideReporter(""));
+        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -181,7 +180,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
 
-    @Ignore("Reporter managers doesn't support auto system names")
+    @Disabled("Reporter managers doesn't support auto system names")
     @Test
     @Override
     public void testAutoSystemNames() {

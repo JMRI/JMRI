@@ -215,12 +215,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
     // and to read/write/hear parameter changes.
     @Override
     public String getValueString() {
-        return "" + _value.getSelectedIndex();
+        return Integer.toString(getIntValue());
     }
 
     @Override
     public void setIntValue(int i) {
-        selectValue(i);
+        // needs to fire Value property as well, as per suggestion by Svata Dedic.
+        setValue(i);
     }
 
     @Override

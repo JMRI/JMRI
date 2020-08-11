@@ -3,10 +3,8 @@ package jmri.jmrit.operations.trains;
 import java.io.BufferedReader;
 import java.io.File;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -531,7 +529,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         // setup new managers
@@ -572,7 +570,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
     }

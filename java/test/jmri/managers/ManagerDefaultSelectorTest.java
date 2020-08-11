@@ -11,11 +11,10 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.JUnitUtil;
 import jmri.util.prefs.InitializationException;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of ManagerDefaultSelector
@@ -24,7 +23,7 @@ import org.junit.Test;
  */
 public class ManagerDefaultSelectorTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -33,7 +32,7 @@ public class ManagerDefaultSelectorTest {
         JUnitUtil.initInternalLightManager();  // start proxies, which start internal
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
@@ -74,6 +73,7 @@ public class ManagerDefaultSelectorTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        memo.configureManagers();
         return memo;
     }
 

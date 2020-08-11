@@ -1,6 +1,6 @@
 package jmri.jmrit.tracker;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jmri.Block;
 

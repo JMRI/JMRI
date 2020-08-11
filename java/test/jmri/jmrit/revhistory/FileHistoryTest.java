@@ -1,10 +1,9 @@
 package jmri.jmrit.revhistory;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmrit.revhistory package & jmrit.revhistory.FileHistory class.
@@ -87,12 +86,12 @@ public class FileHistoryTest{
         Assert.assertEquals(expected, result);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

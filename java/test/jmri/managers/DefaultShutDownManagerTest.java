@@ -8,10 +8,8 @@ import java.awt.GraphicsEnvironment;
 import java.lang.reflect.Field;
 import java.util.concurrent.Callable;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
@@ -200,14 +198,14 @@ public class DefaultShutDownManagerTest {
         assertThat(InstanceManager.getNullableDefault(ShutDownManager.class)).isNotNull();
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         dsdm = new DefaultShutDownManager();
         runs = 0;
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         try {
             Class<?> c = jmri.managers.DefaultShutDownManager.class;

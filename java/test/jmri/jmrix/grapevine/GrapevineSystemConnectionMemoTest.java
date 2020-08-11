@@ -2,10 +2,9 @@ package jmri.jmrix.grapevine;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the GrapevineSystemConnectionMemo class.
@@ -21,7 +20,7 @@ public class GrapevineSystemConnectionMemoTest extends SystemConnectionMemoTestB
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         scm = new GrapevineSystemConnectionMemo();
@@ -30,7 +29,7 @@ public class GrapevineSystemConnectionMemoTest extends SystemConnectionMemoTestB
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         scm.getTrafficController().terminateThreads();
         scm.dispose();

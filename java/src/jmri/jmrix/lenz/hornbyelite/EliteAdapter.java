@@ -5,9 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetSerialPortController;
-import jmri.jmrix.lenz.XNetTrafficController;
+
+import jmri.jmrix.lenz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
@@ -103,8 +102,15 @@ public class EliteAdapter extends XNetSerialPortController {
 
         // start operation
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-
-        new EliteXNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .powerManager(XNetPowerManager.class)
+                .throttleManager(EliteXNetThrottleManager.class)
+                .programmer(EliteXNetProgrammer.class)
+                .programmerManager(XNetProgrammerManager.class)
+                .turnoutManager(EliteXNetTurnoutManager.class)
+                .lightManager(XNetLightManager.class)
+                .init();
     }
 
     // base class methods for the XNetSerialPortController interface
@@ -177,10 +183,10 @@ public class EliteAdapter extends XNetSerialPortController {
     /**
      * validOption1 controls flow control option.
      */
-    protected String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
+    protected final String[] validSpeeds = new String[]{Bundle.getMessage("Baud9600"),
             Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
             Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
-    protected int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
+    protected final int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
 
     @Override
     public int defaultBaudIndex() {
@@ -188,7 +194,7 @@ public class EliteAdapter extends XNetSerialPortController {
     }
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo"), Bundle.getMessage("FlowOptionHw")};
+    protected final String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo"), Bundle.getMessage("FlowOptionHw")};
 
     InputStream serialStream = null;
 

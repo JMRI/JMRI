@@ -55,7 +55,7 @@ public class CbusNodeConstants {
                 || node.getNodeParamManager().getParameter(3) == 12 // or CANBC
             ) { 
                 if ( node.getNodeParamManager().getParameter(7) == 4 ) { // v4 Firmware
-                    node.getNodeEventManager().resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
+                    node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
                     node.setStatResponseFlagsAccurate(false);
                 }
             }

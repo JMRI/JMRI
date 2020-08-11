@@ -2,16 +2,15 @@ package jmri.web.servlet;
 
 import java.util.Date;
 import java.util.Locale;
+
 import javax.servlet.http.HttpServletResponse;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
@@ -20,13 +19,13 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public class ServletUtilTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

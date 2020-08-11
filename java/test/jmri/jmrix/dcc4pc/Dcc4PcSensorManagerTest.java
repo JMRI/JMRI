@@ -1,7 +1,9 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -77,7 +79,7 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Test
-    @Ignore("it appears this packet is not yet decoded")
+    @Disabled("it appears this packet is not yet decoded")
     public void checkReceiveCookedRailComData() {
         // Cooked RailCom message copied from section 9.4 of the 
         // DCC4PC omnibus specification.
@@ -98,7 +100,7 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -113,7 +115,7 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         rm = memo.getReporterManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         l = null;

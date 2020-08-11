@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
 public class XNetSimulatorAdapter extends XNetSimulatorPortController implements Runnable {
 
     private boolean outputBufferEmpty = true;
-    private boolean checkBuffer = true;
 
     private int csStatus;
     // status flags from the XpressNet Documentation.
@@ -112,6 +111,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
      */
     @Override
     public boolean okToSend() {
+        boolean checkBuffer = true;
         if (checkBuffer) {
             log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty && super.okToSend());
@@ -141,7 +141,12 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         sourceThread = new Thread(this);
         sourceThread.start();
 
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     // Base class methods for the XNetSimulatorPortController interface
@@ -458,8 +463,8 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         XNetReply reply = new XNetReply();
         reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);
         reply.setElement(1, XNetConstants.CS_SOFTWARE_VERSION);
-        reply.setElement(2, 0x36 & 0xff); // indicate we are version 3.6
-        reply.setElement(3, 0x00 & 0xff); // indicate we are an LZ100
+        reply.setElement(2, 0x36); // indicate we are version 3.6
+        reply.setElement(3, 0x00 ); // indicate we are an LZ100
         reply.setElement(4, 0x00); // set the parity byte to 0
         reply.setParity();
         return reply;

@@ -15,7 +15,9 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -451,16 +453,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         public void notifyFailedThrottleRequest(LocoAddress address, String reason){
             // throttleNotFoundResult = true;
         }
-       
-        /**
-         * {@inheritDoc}
-         * @deprecated since 4.15.7; use #notifyDecisionRequired
-         */
-        @Override
-        @Deprecated
-        public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-            notifyDecisionRequired(address,DecisionType.STEAL);
-        }
 
         @Override
         public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
@@ -486,14 +478,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(LocoAddress address){
             }
 
             @Override
@@ -538,14 +522,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(LocoAddress address){
             }
 
             @Override
@@ -633,14 +609,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(LocoAddress address){
-            }
 
             @Override
             public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
@@ -706,14 +674,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(LocoAddress address){
             }
 
             @Override
@@ -788,14 +748,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
             }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(LocoAddress address){
-            }
 
             @Override
             public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
@@ -861,14 +813,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 log.error("Throttle request failed for {} because {}", address, reason);
                 failedThrottleRequest = true;
-            }
-            
-            /**
-             * @deprecated since 4.15.7; use #notifyDecisionRequired
-             */
-            @Deprecated
-            @Override
-            public void notifyStealThrottleRequired(LocoAddress address){
             }
 
             @Override
@@ -1061,7 +1005,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     private boolean failedThrottleRequest = false;
     private TrafficControllerScaffold tc;
     
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -1074,7 +1018,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         InstanceManager.setThrottleManager( tm );
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         CbusThrottleManager dtm = (CbusThrottleManager)tm;
         dtm.dispose();

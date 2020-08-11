@@ -6,10 +6,8 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicator class
@@ -131,7 +129,7 @@ public class OsIndicatorTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
 
@@ -140,7 +138,7 @@ public class OsIndicatorTest {
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

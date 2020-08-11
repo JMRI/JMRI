@@ -7,11 +7,8 @@ import jmri.Turnout;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * JUnit tests for the AcelaNode class
@@ -82,7 +79,7 @@ public class AcelaNodeTest {
     }
 
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testMarkChangesInitial() {
         /* TODO: what kind of sensor does the Acela support,
                 or are these tests copied from somewhere else that should be removed?
@@ -105,7 +102,7 @@ public class AcelaNodeTest {
     }
 
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testMarkChangesDebounce() {
         /* TODO: what kind of sensor does the Acela support,
                 or are these tests copied from somewhere else that should be removed?
@@ -167,7 +164,7 @@ public class AcelaNodeTest {
     Sensor s1, s2, s3, s4, s5;
     Light l1, l2, l3;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -204,7 +201,7 @@ public class AcelaNodeTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

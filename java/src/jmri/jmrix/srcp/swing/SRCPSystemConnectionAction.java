@@ -3,7 +3,7 @@ package jmri.jmrix.srcp.swing;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
 import jmri.jmrix.swing.AbstractSystemConnectionAction;
 

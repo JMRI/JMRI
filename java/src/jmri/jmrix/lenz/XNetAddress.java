@@ -51,7 +51,7 @@ public class XNetAddress {
         }
         // name must be in the Xtnnnnn or XSmm:pp format (X is user 
         // configurable)
-        int num = 0;
+        int num;
         try {
             String curAddress = systemName.substring(prefix.length() + 1);
             if( ( systemName.charAt(prefix.length())=='S' ||
@@ -115,7 +115,7 @@ public class XNetAddress {
         }
         // check for a sensor
         if (systemName.charAt(prefix.length() + 1) == 'S') {
-            jmri.Sensor s = null;
+            jmri.Sensor s;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
                 return s.getUserName();
@@ -124,7 +124,7 @@ public class XNetAddress {
             }
         } // check for a turnout
         else if (systemName.charAt(prefix.length() + 1) == 'T') {
-            jmri.Turnout t = null;
+            jmri.Turnout t;
             t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(systemName);
             if (t != null) {
                 return t.getUserName();
@@ -133,7 +133,7 @@ public class XNetAddress {
             }
         } // check for a light
         else if (systemName.charAt(prefix.length() + 1) == 'L') {
-            jmri.Light lgt = null;
+            jmri.Light lgt;
             lgt = jmri.InstanceManager.lightManagerInstance().getBySystemName(systemName);
             if (lgt != null) {
                 return lgt.getUserName();

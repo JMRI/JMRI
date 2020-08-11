@@ -179,10 +179,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
         if (groupComboBox.getSelectedItem() != null) {
             if (groupComboBox.getSelectedItem().equals(EngineManager.NONE)) {
                 engine.setConsist(null);
-                if (engine.isBunit())
-                    engine.setBlocking(Engine.B_UNIT_BLOCKING);
-                else
-                    engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
+                engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
             } else if (!engine.getConsistName().equals(groupComboBox.getSelectedItem())) {
                 engine.setConsist(engineManager.getConsistByName((String) groupComboBox.getSelectedItem()));
                 if (engine.getConsist() != null) {
@@ -199,8 +196,8 @@ public class EngineEditFrame extends RollingStockEditFrame {
                 Integer.parseInt(hpTextField.getText());
                 engine.setHp(hpTextField.getText());
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("engineHorsepower"), Bundle
-                        .getMessage("engineCanNotHp"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("engineHorsepower"),
+                        Bundle.getMessage("engineCanNotHp"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }

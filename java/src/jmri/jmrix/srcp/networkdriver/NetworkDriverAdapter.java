@@ -28,7 +28,6 @@ public class NetworkDriverAdapter extends SRCPPortController {
         SRCPTrafficController control = new SRCPTrafficController();
         control.connectPort(this);
         this.getSystemConnectionMemo().setTrafficController(control);
-        this.getSystemConnectionMemo().configureManagers();
         this.getSystemConnectionMemo().configureCommandStation();
     }
 

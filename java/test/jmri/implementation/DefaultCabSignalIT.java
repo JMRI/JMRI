@@ -16,7 +16,9 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -167,7 +169,7 @@ public class DefaultCabSignalIT {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -182,7 +184,7 @@ public class DefaultCabSignalIT {
         cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;

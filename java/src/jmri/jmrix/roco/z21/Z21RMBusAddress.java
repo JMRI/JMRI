@@ -46,7 +46,7 @@ public class Z21RMBusAddress {
             log.error("invalid character in header field of Z21 RM Bus system name: {}", systemName);
             return (-1);
         }
-        int num = 0;
+        int num;
         try {
             String curAddress = systemName.substring(prefix.length() + 1);
             num = Integer.parseInt(curAddress);
@@ -120,7 +120,7 @@ public class Z21RMBusAddress {
         }
         // check for a sensor
         if (systemName.charAt(prefix.length() + 1) == 'S') {
-            jmri.Sensor s = null;
+            jmri.Sensor s;
             s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
             if (s != null) {
                 return s.getUserName();

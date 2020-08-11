@@ -12,11 +12,11 @@ import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
@@ -96,7 +96,7 @@ public class EntryExitPairsTest {
         t.start();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void before() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -111,7 +111,7 @@ public class EntryExitPairsTest {
         tm = InstanceManager.getDefault(TurnoutManager.class);
     }
 
-    @AfterClass
+    @AfterAll
     public static void after() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         eep = null;

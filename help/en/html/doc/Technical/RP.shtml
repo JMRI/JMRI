@@ -208,10 +208,7 @@
             modify the direct tests of the deprecated method; see
             the 
             <a href="JUnit.shtml#deprecationWarning">instructions on the JUnit page</a>.
-
-        <a href="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">
-            <img src="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=PRIORITY" align="right" width="250" height="100">
-        </a></li>
+        </li>
         <li>As soon as you can, remove all JMRI uses of these deprecated classes and/or methods
             until the deprecations report is clean. 
             (Until you do this, warnings will be showing up in the logs)
@@ -251,16 +248,7 @@
         JMRI still has to compile under Java 8 so please don't use that; see the 
         <a href="TechRoadMap.shtml">release roadmap</a>
         for background)
-        
-      <p>You may want to work with the deprecation checks "on"
-      during compilation. To do that, change this line of
-      build.xml:</p>
-<pre style="font-family: monospace;">
-&lt;property name="deprecation" value="on" /&gt;
-</pre>
-      <p>This lets you pay attention to new deprecation warnings as
-      you code.</p>
-    
+            
     <a id="exception" name="exception"></a>
     <h2>Exceptions</h2>
     
@@ -311,7 +299,7 @@ This is an example of two problems:
 
 Let's discuss those separately:
 
-<h3><a id="catch" name="catch">Catching the Exception class</a></h3>
+<h4><a id="catch" name="catch">Catching the Exception class</a></h4>
 
 There are two subcases here:
 <ul>
@@ -341,7 +329,7 @@ so the clean way to do this is to catch that:
 </pre>
 </ul>
 
-<h3><a id="empty" name="empty">Empty catch block</a></h3>
+<h4><a id="empty" name="empty">Empty catch block</a></h4>
 
 What's an empty <code>catch</code> block trying to say?
 
@@ -388,6 +376,22 @@ you should add an annotation so that others know why it's OK and don't have to w
     justification = "(Something about why this is OK)")
 </pre>
 </ul>
+
+<a id="Optional" name="Optional"></a>
+<h2>Use of Optional</h2>
+
+The 
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a>
+class is the right way to provide 
+"a method return type where there is a clear need to represent 'no result,' and where using <code>null</code> is likely to cause errors".
+There's some good background on use of Optional in an
+<a href="https://blogs.oracle.com/javamagazine/12-recipes-for-using-the-optional-class-as-its-meant-to-be-used">introductory Java Magazine article</a>.
+There's more info about how <code>null</code> makes errors likely is dicussed in a 
+<a href="https://www.oracle.com/technical-resources/articles/java/java8-optional.html">related article</a>.
+As Tony Hoare - one of the giants of computer science - wrote, "I call it my billion-dollar mistake. 
+    It was the invention of the null reference in 1965. 
+    I couldn't resist the temptation to put in a null reference, 
+    simply because it was so easy to implement."
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

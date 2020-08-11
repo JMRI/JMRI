@@ -4,7 +4,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
 import jmri.*;
 import jmri.util.*;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LayoutTurnout.
@@ -1075,7 +1077,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
     }
 
     // from here down is testing infrastructure
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -1088,7 +1090,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         }
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
@@ -1098,7 +1100,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         JUnitUtil.tearDown();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -1124,7 +1126,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (ltRH != null) {
             ltRH.remove();

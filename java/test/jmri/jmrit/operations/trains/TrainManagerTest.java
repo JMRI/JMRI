@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -293,6 +293,5 @@ public class TrainManagerTest extends OperationsTestCase {
         Assert.assertFalse(train2.isBuilt());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
 }

@@ -1,11 +1,11 @@
 package jmri.jmrix.loconet.hexfile;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.*;
-import org.junit.After;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -36,14 +36,14 @@ public class HexFileFrameTest {
         f.dispose();   
  }   
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

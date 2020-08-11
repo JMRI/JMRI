@@ -2,10 +2,9 @@ package jmri.jmrix.qsi;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the QsiSystemConnectionMemo class
@@ -22,7 +21,7 @@ public class QsiSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Qs
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // new QsiTrafficControlScaffold();
@@ -30,7 +29,7 @@ public class QsiSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Qs
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

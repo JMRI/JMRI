@@ -2,10 +2,9 @@ package jmri.jmrix.xpa;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.xpa.XpaSystemConnectionMemo class.
@@ -39,7 +38,7 @@ public class XpaSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Xp
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         XpaTrafficController tc = new XpaTrafficControlScaffold();
@@ -48,7 +47,7 @@ public class XpaSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Xp
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

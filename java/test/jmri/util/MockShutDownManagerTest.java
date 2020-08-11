@@ -3,10 +3,8 @@ package jmri.util;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -83,12 +81,12 @@ public class MockShutDownManagerTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

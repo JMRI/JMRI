@@ -1,13 +1,13 @@
 package jmri.jmrix.dcc4pc.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -26,7 +26,7 @@ public class Dcc4PcNamedPaneActionTest {
         jf.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -34,7 +34,7 @@ public class Dcc4PcNamedPaneActionTest {
         memo = new Dcc4PcSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,6 +1,8 @@
 package jmri.jmrit.catalog;
 
 import java.util.HashMap;
+import jmri.CatalogTreeNode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

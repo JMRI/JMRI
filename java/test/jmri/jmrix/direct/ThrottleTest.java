@@ -1,10 +1,9 @@
 package jmri.jmrix.direct;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -358,7 +357,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -373,7 +372,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance = new Throttle(new jmri.DccLocoAddress(5, false), cs);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         jmri.util.JUnitAppender.suppressWarnMessage("Only single transmissions currently available");

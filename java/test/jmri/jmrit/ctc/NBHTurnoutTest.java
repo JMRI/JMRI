@@ -2,11 +2,14 @@ package jmri.jmrit.ctc;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import jmri.Turnout;
 import jmri.jmrit.ctc.setup.CreateTestObjects;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /*
 * Tests for the NBHTurnout Class
@@ -71,14 +74,14 @@ public class NBHTurnoutTest {
         turnout.removePropertyChangeListener(_testListener);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // stop any BlockBossLogic threads created
         JUnitUtil.clearBlockBossLogic();

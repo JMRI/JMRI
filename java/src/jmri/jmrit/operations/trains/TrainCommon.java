@@ -232,7 +232,7 @@ public class TrainCommon {
             printSetoutHeader = true;
             printLocalMoveHeader = true;
         }
-        List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+        List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         clearUtilityCarTypes(); // list utility cars by quantity
         boolean isOnlyPassenger = train.isOnlyPassengerCars();
@@ -382,7 +382,7 @@ public class TrainCommon {
             List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
         index = 0;
         int lineLength = getLineLength(isManifest);
-        List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+        List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         clearUtilityCarTypes(); // list utility cars by quantity
         if (printHeader) {
@@ -482,7 +482,7 @@ public class TrainCommon {
     protected void blockCarsByTrackNameTwoColumn(PrintWriter file, List<Car> carList,
             List<RouteLocation> routeList, RouteLocation rl, boolean printHeader, boolean isManifest) {
         index = 0;
-        List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+        List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         doneCars.clear();
         clearUtilityCarTypes(); // list utility cars by quantity
@@ -561,7 +561,7 @@ public class TrainCommon {
     protected void printTrackComments(PrintWriter file, RouteLocation rl, List<Car> carList, boolean isManifest) {
         Location location = rl.getLocation();
         if (location != null) {
-            List<Track> tracks = location.getTrackByNameList(null);
+            List<Track> tracks = location.getTracksByNameList(null);
             for (Track track : tracks) {
                 if (isManifest && !track.isPrintManifestCommentEnabled() ||
                         !isManifest && !track.isPrintSwitchListCommentEnabled()) {

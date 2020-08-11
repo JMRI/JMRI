@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.setup;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.jmrit.operations.OperationsTestCase;
 

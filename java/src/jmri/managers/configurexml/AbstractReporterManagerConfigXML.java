@@ -81,6 +81,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         List<Element> reporterList = reporters.getChildren("reporter");
         log.debug("Found {} reporters", reporterList.size());
         ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
+        tm.setPropertyChangesSilenced("beans", true);
 
         for (Element e : reporterList) {
             String sysName = getSystemName(e);
@@ -96,6 +97,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             Reporter r = tm.newReporter(sysName, userName);
             loadCommon(r, e);
         }
+        tm.setPropertyChangesSilenced("beans", false);
         return result;
     }
 

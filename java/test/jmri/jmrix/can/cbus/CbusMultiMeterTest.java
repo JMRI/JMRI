@@ -7,10 +7,9 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -22,7 +21,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -33,7 +32,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         mm = new CbusMultiMeter(memo);
     }
     
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         mm = null;

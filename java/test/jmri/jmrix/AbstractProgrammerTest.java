@@ -4,7 +4,9 @@ import java.util.List;
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the AbstractProgrammer class
@@ -61,7 +63,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
         }
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -96,7 +98,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
         };
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

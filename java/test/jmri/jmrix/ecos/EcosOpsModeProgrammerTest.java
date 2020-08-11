@@ -1,10 +1,9 @@
 package jmri.jmrix.ecos;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -19,7 +18,7 @@ public class EcosOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         Assert.assertTrue("can read", programmer.getCanRead());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -28,7 +27,7 @@ public class EcosOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         programmer = t;
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

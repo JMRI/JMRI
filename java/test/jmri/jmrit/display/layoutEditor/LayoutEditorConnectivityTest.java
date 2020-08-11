@@ -2,17 +2,17 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.Turnout;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Swing tests for the LayoutEditor
@@ -295,7 +295,7 @@ public class LayoutEditorConnectivityTest {
         to.closeFrameWithConfirmations();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -305,7 +305,7 @@ public class LayoutEditorConnectivityTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         cm = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();

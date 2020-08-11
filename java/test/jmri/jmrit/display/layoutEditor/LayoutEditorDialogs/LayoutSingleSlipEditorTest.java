@@ -3,19 +3,18 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
+
 import javax.swing.*;
-import jmri.*;
+
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
-import jmri.util.junit.rules.RetryRule;
-import jmri.util.swing.JemmyUtil;
-import org.junit.*;
-import org.junit.rules.Timeout;
+
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.operators.Operator.StringComparator;
-import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  * Test simple functioning of LayoutSingleSlipEditor.
@@ -94,7 +93,7 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
     private LayoutEditor layoutEditor = null;
     private LayoutSlip singleLayoutSlip = null;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         JUnitUtil.resetProfileManager();
@@ -117,7 +116,7 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (singleLayoutSlip != null) {
             singleLayoutSlip.remove();

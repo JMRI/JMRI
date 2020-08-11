@@ -2,6 +2,7 @@ package jmri.jmrit.ctc;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
@@ -10,7 +11,9 @@ import jmri.SensorManager;
 import jmri.jmrit.ctc.setup.CreateTestObjects;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /*
 * Tests for the NBHSensor Class
@@ -79,14 +82,14 @@ public class NBHSensorTest {
         sensor.removePropertyChangeListener(_testListener);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // stop any BlockBossLogic threads created
         JUnitUtil.clearBlockBossLogic();

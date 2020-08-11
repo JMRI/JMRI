@@ -2,10 +2,9 @@ package jmri.jmrix.xpa;
 
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -209,7 +208,7 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new XpaTrafficController();
@@ -219,7 +218,7 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         tc = null;

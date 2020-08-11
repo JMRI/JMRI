@@ -23,7 +23,7 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
 
     private String systemName;
 
-    protected Z21TrafficController tc = null;
+    protected Z21TrafficController tc;
 
     public Z21RMBusSensor(String systemName, String userName, Z21TrafficController controller, String prefix) {
         super(systemName, userName);
@@ -118,7 +118,6 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
              setOwnState(Sensor.INACTIVE);
            }
         }
-        return;
     }
 
     /**

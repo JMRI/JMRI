@@ -4,10 +4,9 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * IEEE802154TrafficControllerTest.java
@@ -151,7 +150,7 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
         Assert.assertNotNull("node not found", n);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -187,7 +186,7 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
         };
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

@@ -1,10 +1,9 @@
 package jmri.jmrit.revhistory.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * FileHistoryXmlTest.java
@@ -20,12 +19,12 @@ public class FileHistoryXmlTest {
       Assert.assertNotNull("FileHistoryXml constructor",new FileHistoryXml());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

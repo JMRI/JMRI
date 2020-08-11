@@ -129,7 +129,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
             Location location = (Location) locationBox.getSelectedItem();
             // check to see if there are cars scheduled for pickup or set out
             if (moveRollingStockCheckBox.isSelected()) {
-                for (Track track : location.getTrackList()) {
+                for (Track track : location.getTracksList()) {
                     if (track.getPickupRS() > 0) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("FoundRollingStockPickUp"), new Object[]{track.getPickupRS()}),
@@ -152,7 +152,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 
             // does the user want the cars to also move to the new tracks?
             if (moveRollingStockCheckBox.isSelected()) {
-                for (Track track : location.getTrackList()) {
+                for (Track track : location.getTracksList()) {
                     moveRollingStock(track, newLocation.getTrackByName(track.getName(), null));
                     if (deleteTrackCheckBox.isSelected()) {
                         location.deleteTrack(track);

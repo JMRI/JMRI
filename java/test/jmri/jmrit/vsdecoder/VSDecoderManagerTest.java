@@ -2,10 +2,9 @@ package jmri.jmrit.vsdecoder;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -22,12 +21,12 @@ public class VSDecoderManagerTest {
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

@@ -3,10 +3,9 @@ package jmri.jmrix.cmri.serial;
 import jmri.Manager.NameValidity;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialSensorManager class.
@@ -87,7 +86,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -109,7 +108,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         if (stcs != null) stcs.terminateThreads();

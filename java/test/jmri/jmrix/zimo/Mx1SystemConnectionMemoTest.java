@@ -2,10 +2,9 @@ package jmri.jmrix.zimo;
 
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the Mx1SystemConnectionMemo class
@@ -22,7 +21,7 @@ public class Mx1SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Mx
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         Mx1TrafficController tc = new Mx1TrafficController() {
@@ -40,7 +39,7 @@ public class Mx1SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Mx
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

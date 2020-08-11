@@ -3,10 +3,8 @@ package jmri.jmrix.cmri.serial;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnoutTestBase;
@@ -30,7 +28,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     }
     
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -47,7 +45,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertNotNull("turnout exists", t);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (tcis != null) tcis.terminateThreads();
         tcis = null;

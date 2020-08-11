@@ -1,9 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -272,13 +269,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         addHelp();
     }
 
-    void setProgrammingGui(JPanel pane) {
+    void setProgrammingGui(JPanel bottom) {
         // see if programming mode is available
         modePane = getModePane();
         if (modePane != null) {
             // if so, configure programming part of GUI
-            JPanel bottom = new JPanel();
-            bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
             // add buttons
             JPanel bottomButtons = new JPanel();
             bottomButtons.setLayout(new BoxLayout(bottomButtons, BoxLayout.X_AXIS));
@@ -294,15 +289,188 @@ abstract public class PaneProgFrame extends JmriJFrame
             JPanel temp = new JPanel();
             bottom.add(temp);
             temp.add(modePane);
-
-            // add programming status message
-            bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-            progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-            bottom.add(progStatus);
-            pane.add(bottom, BorderLayout.SOUTH);
         }
+        
+        // add add space for (programming) status message
+        bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        bottom.add(progStatus);
     }
 
+    // ================== Search section ==================
+    
+    // create and add the Search GUI
+    void setSearchGui(JPanel bottom) {
+        // search field
+        searchBar = new jmri.util.swing.SearchBar(searchForwardTask, searchBackwardTask, searchDoneTask);
+        searchBar.setVisible(false); // start not visible
+        searchBar.configureKeyModifiers(this);
+        bottom.add(searchBar);
+    }
+    
+    jmri.util.swing.SearchBar searchBar;
+    static class SearchPair {
+        WatchingLabel label;
+        JPanel tab;
+        SearchPair(WatchingLabel label, @Nonnull JPanel tab) {
+            this.label = label;
+            this.tab = tab;
+        }
+    }
+    
+    ArrayList<SearchPair> searchTargetList;
+    int nextSearchTarget = 0;
+    
+    // Load the array of search targets
+    protected void loadSearchTargets() {
+        if (searchTargetList != null) return;
+        
+        searchTargetList = new ArrayList<>();
+        
+        for (JPanel p : getPaneList()) {
+            for (Component c : p.getComponents()) {
+                loadJPanel(c, p);
+            }
+        }
+        
+        // add the panes themselves
+        for (JPanel tab : getPaneList()) {
+            searchTargetList.add( new SearchPair( null, tab ));
+        }        
+    }
+    
+    // Recursive load of possible search targets
+    protected void loadJPanel(Component c, JPanel tab) {
+        if (c instanceof JPanel) {
+            for (Component d : ((JPanel)c).getComponents()) {
+                loadJPanel(d, tab);
+            }
+        } else if (c instanceof JScrollPane) {
+            loadJPanel( ((JScrollPane)c).getViewport().getView(), tab);
+        } else if (c instanceof WatchingLabel) {
+            searchTargetList.add( new SearchPair( (WatchingLabel)c, tab));
+        }
+    }
+   
+    // Search didn't find anything at all
+    protected void searchDidNotFind() {
+         java.awt.Toolkit.getDefaultToolkit().beep(); 
+    }
+    
+    // Search succeeded, go to the result
+    protected void searchGoesTo(SearchPair result) {
+        tabPane.setSelectedComponent(result.tab);
+        if (result.label != null) {
+            SwingUtilities.invokeLater(() -> result.label.getWatched().requestFocus());
+        } else {
+            log.trace("search result set to tab {}", result.tab);
+        }
+    }
+    
+    
+    // Check a single case to see if it's search match
+    private boolean checkSearchTarget(int index, String target) {
+        boolean result = false;
+        if (searchTargetList.get(index).label != null ) {
+            // match label text
+            result = searchTargetList.get(index).label.getText().toUpperCase().contains(target.toUpperCase() );
+        } else {
+            // Match pane label.
+            // Finding the tab requires a search here.  Could have passed
+            // a clue along in SwingUtilities
+            for (int i = 0; i < tabPane.getTabCount(); i++) {
+                if (tabPane.getComponentAt(i) == searchTargetList.get(index).tab) {
+                    result = tabPane.getTitleAt(i).toUpperCase().contains(target.toUpperCase());
+                }
+            }
+        }
+        return result;
+    }
+    
+    // Invoked by forward search operation
+    private Runnable searchForwardTask = new Runnable() {
+        public void run() {
+            log.trace("start forward");
+            loadSearchTargets();
+            String target = searchBar.getSearchString();
+            
+            nextSearchTarget++;
+            if (nextSearchTarget < 0 ) nextSearchTarget = 0;
+            if (nextSearchTarget >= searchTargetList.size() ) nextSearchTarget = 0;
+            
+            int startingSearchTarget = nextSearchTarget;
+            
+            while (nextSearchTarget < searchTargetList.size()) {
+                if ( checkSearchTarget(nextSearchTarget, target)) {
+                    // hit!
+                    searchGoesTo(searchTargetList.get(nextSearchTarget));
+                    return;
+                }
+                nextSearchTarget++;
+            }
+            
+            // end reached, wrap
+            nextSearchTarget = 0;
+            while (nextSearchTarget < startingSearchTarget) {
+                if ( checkSearchTarget(nextSearchTarget, target)) {
+                    // hit!
+                    searchGoesTo(searchTargetList.get(nextSearchTarget));
+                    return;
+                }
+                nextSearchTarget++;
+            }
+            // not found
+            searchDidNotFind();            
+        }
+    };
+    
+    // Invoked by backward search operation
+    private Runnable searchBackwardTask = new Runnable() {
+        public void run() {
+            log.trace("start backward");
+            loadSearchTargets();
+            String target = searchBar.getSearchString();
+            
+            nextSearchTarget--;
+            if (nextSearchTarget < 0 ) nextSearchTarget = searchTargetList.size()-1;
+            if (nextSearchTarget >= searchTargetList.size() ) nextSearchTarget = searchTargetList.size()-1;
+            
+            int startingSearchTarget = nextSearchTarget;
+            
+            while (nextSearchTarget > 0) {
+                if ( checkSearchTarget(nextSearchTarget, target)) {
+                    // hit!
+                    searchGoesTo(searchTargetList.get(nextSearchTarget));
+                    return;
+                }
+                nextSearchTarget--;
+            }
+            
+            // start reached, wrap
+            nextSearchTarget = searchTargetList.size()-1;
+            while (nextSearchTarget > startingSearchTarget) {
+                if ( checkSearchTarget(nextSearchTarget, target)) {
+                    // hit!
+                    searchGoesTo(searchTargetList.get(nextSearchTarget));
+                    return;
+                }
+                nextSearchTarget--;
+            }
+            // not found
+            searchDidNotFind();
+        }
+    };
+
+    // Invoked when search bar Done is pressed
+    private Runnable searchDoneTask = new Runnable() {
+        public void run() {
+            log.debug("done with search bar");
+            searchBar.setVisible(false);
+        }
+    };
+
+    // =================== End of search section ==================
+    
     public List<JPanel> getPaneList() {
         return paneList;
     }
@@ -485,9 +653,16 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
-        // now that programmer is configured, set the programming GUI
-        setProgrammingGui(tempPane);        
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+        tempPane.add(bottom, BorderLayout.SOUTH);
 
+        // now that programmer is configured, set the programming GUI
+        setProgrammingGui(bottom);        
+
+        // add the search GUI
+        setSearchGui(bottom);
+        
         pack();
 
         if (log.isDebugEnabled()) {  // because size elements take time

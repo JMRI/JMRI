@@ -16,6 +16,8 @@
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- ver1 made from the ESU_LokPilotV4_0 file -->
     <version author="Dave Heap" version="1" lastUpdated="20200410"/>
+    <!-- ver2 refactor and add Fx micro Next18 variants -->
+    <version author="Dave Heap" version="2" lastUpdated="20200726"/>
     <decoder>
         <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokPilot 5" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600">
@@ -59,6 +61,7 @@
                 <output name="2,18" label="|"/> <!-- suppress unused item -->
                 <output name="2,19" label="|"/> <!-- suppress unused item -->
                 <output name="2,20" label="|"/> <!-- suppress unused item -->
+                <output name="4,1" label="|"/> <!-- suppress unused item -->
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
             <model model="LokPilot 5 Fx micro DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554612">
@@ -78,6 +81,23 @@
                 <output name="2,18" label="|"/> <!-- suppress unused item -->
                 <output name="2,19" label="|"/> <!-- suppress unused item -->
                 <output name="2,20" label="|"/> <!-- suppress unused item -->
+                <output name="4,1" label="|"/> <!-- suppress unused item -->
+                <size length="51.0" width="40.0" height="14.0" units="mm"/>
+            </model>
+            <model model="LokPilot 5 Fx micro Next18" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554616">
+                <output name="1,37" label="|"/> <!-- suppress unused item -->
+                <output name="1,38" label="|"/> <!-- suppress unused item -->
+                <output name="1,39" label="|"/> <!-- suppress unused item -->
+                <output name="1,40" label="|"/> <!-- suppress unused item -->
+                <output name="4,1" label="|"/> <!-- suppress unused item -->
+                <size length="51.0" width="40.0" height="14.0" units="mm"/>
+            </model>
+            <model model="LokPilot 5 Fx micro Next18 DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554617">
+                <output name="1,37" label="|"/> <!-- suppress unused item -->
+                <output name="1,38" label="|"/> <!-- suppress unused item -->
+                <output name="1,39" label="|"/> <!-- suppress unused item -->
+                <output name="1,40" label="|"/> <!-- suppress unused item -->
+                <output name="4,1" label="|"/> <!-- suppress unused item -->
                 <size length="51.0" width="40.0" height="14.0" units="mm"/>
             </model>
             <model model="LokPilot 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">

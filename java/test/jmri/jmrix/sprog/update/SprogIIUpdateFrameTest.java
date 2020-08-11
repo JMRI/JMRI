@@ -1,10 +1,12 @@
 package jmri.jmrix.sprog.update;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -15,7 +17,7 @@ public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
     private SprogTrafficControlScaffold stcs = null;
     private SprogSystemConnectionMemo m = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -28,7 +30,7 @@ public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (frame!=null) ((SprogIIUpdateFrame)frame).stopTimer();

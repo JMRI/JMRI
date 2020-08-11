@@ -5,10 +5,9 @@ import jmri.AudioException;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of DefaultAudioManager
@@ -102,7 +101,7 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
         Assert.assertEquals("Verify that we get two buffers & one listener", expResult, result);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         l = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
@@ -110,7 +109,7 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
         JUnitUtil.waitFor(()->{return l.isInitialised();});
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.cleanup();
         JUnitUtil.waitFor(()->{return !l.isInitialised();});

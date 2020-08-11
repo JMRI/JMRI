@@ -6,10 +6,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -172,7 +171,7 @@ public class CbusDummyCSTest {
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -182,7 +181,7 @@ public class CbusDummyCSTest {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         tc.terminateThreads();
         memo.dispose();

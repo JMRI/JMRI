@@ -1,10 +1,9 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -51,7 +50,7 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     }
 
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -61,7 +60,7 @@ public class SRCPTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t = new SRCPTurnout(1, memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

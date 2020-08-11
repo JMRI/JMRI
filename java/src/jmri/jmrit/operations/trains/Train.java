@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
@@ -1579,7 +1580,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 || isLocalSwitcher())) {
 
                 if (((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher()) ||
-                        !car.getTrack().acceptsPickupTrain(this)) {
+                        !car.getTrack().isPickupTrainAccepted(this)) {
                     addLine(buildReport,
                             MessageFormat.format(Bundle.getMessage("trainCanNotServiceCarFrom"),
                                     new Object[] { getName(), car.toString(), car.getLocationName(), car.getTrackName(),
@@ -1641,7 +1642,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) != 0 ||
                             isLocalSwitcher()) &&
                     (!Setup.isCheckCarDestinationEnabled() ||
-                            car.getTrack().acceptsDestination(car.getDestination()))) {
+                            car.getTrack().isDestinationAccepted(car.getDestination()))) {
                 // found a destination, now check destination track
                 if (car.getDestinationTrack() != null) {
                     if (!isServicableTrack(buildReport, car, rldest, car.getDestinationTrack())) {
@@ -1671,13 +1672,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     }
                     // determine if there's a destination track that is willing to accept this car
                     String status = "";
-                    List<Track> tracks = rldest.getLocation().getTrackList();
+                    List<Track> tracks = rldest.getLocation().getTracksList();
                     for (Track track : tracks) {
                         if (!isServicableTrack(buildReport, car, rldest, track)) {
                             continue;
                         }
                         // will the track accept this car?
-                        status = track.accepts(car);
+                        status = track.isRollingStockAccepted(car);
                         if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
                             if (debugFlag) {
                                 log.debug("Found track ({}) for car ({})", track.getName(), car.toString());
@@ -1800,7 +1801,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     new Object[] { track.getName() }));
             return false;
         }
-        if (!track.acceptsDropTrain(this)) {
+        if (!track.isDropTrainAccepted(this)) {
             addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"),
                     new Object[] { car.toString(), getName(), track.getTrackTypeName(), track.getName() }));
             return false;
@@ -3054,16 +3055,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _printed;
     }
 
-    /**
-     * Deprecated, kept for user scripts. Use isPrinted()
-     *
-     * @return true if the train manifest was printed.
-     */
-    @Deprecated
-    public boolean getPrinted() {
-        return isPrinted();
-    }
-
     protected RouteLocation _trainIconRl = null; // saves the icon current route
                                                  // location
 
@@ -3340,8 +3331,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             _trainIcon.remove();
         }
         // if there's a panel specified, get it and place icon
-        if (!Setup.getPanelName().equals(Setup.NONE)) {
-            Editor editor = InstanceManager.getDefault(EditorManager.class).get(Setup.getPanelName());
+        if (!Setup.getPanelName().isEmpty()) {
+            Editor editor = null;
+            Set<Editor> panelList = InstanceManager.getDefault(EditorManager.class).getAll();
+            for (Editor panelEditor : panelList) {
+                if (panelEditor.getTitle().equals(Setup.getPanelName()) ||
+                        panelEditor.getTargetFrame().getTitle().equals(Setup.getPanelName())) {
+                    editor = panelEditor;
+                    break;
+                }
+            }
             if (editor != null) {
                 _trainIcon = editor.addTrainIcon(getIconName());
                 _trainIcon.setTrain(this);

@@ -1,8 +1,8 @@
 package jmri.jmrix.loconet.cmdstnconfig;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -12,7 +12,7 @@ public class CmdStnConfigPaneTest extends jmri.util.swing.JmriPanelTest {
 
     
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         panel = new CmdStnConfigPane();
@@ -21,7 +21,7 @@ public class CmdStnConfigPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

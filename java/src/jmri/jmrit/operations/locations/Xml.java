@@ -56,6 +56,7 @@ public class Xml {
 
     // Track.java
     static final String LOC_TYPE = "locType"; // NOI18N
+    static final String TRACK_TYPE = "trackType"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
     static final String MOVES = "moves"; // NOI18N
     static final String BLOCKING_ORDER = "blockingOrder"; // NOI18N
