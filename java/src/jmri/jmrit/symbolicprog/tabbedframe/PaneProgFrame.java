@@ -289,12 +289,12 @@ abstract public class PaneProgFrame extends JmriJFrame
             JPanel temp = new JPanel();
             bottom.add(temp);
             temp.add(modePane);
-
-            // add programming status message
-            bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-            progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-            bottom.add(progStatus);
         }
+        
+        // add add space for (programming) status message
+        bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        bottom.add(progStatus);
     }
 
     // ================== Search section ==================
