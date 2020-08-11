@@ -3,6 +3,7 @@
 <properties>
 <comment>ProgramProperties.xml</comment>
 <entry key="_mSIDL_NormalInternalSensorPattern">IS#:NL</entry>
+<entry key="_mNoMoreReservedCharactersWarning">true</entry>
 <entry key="_mTUL_DispatcherInternalSensorUnlockedIndicatorPattern">IS#:UNLOCKEDIND</entry>
 <entry key="_mSIDI_RightInternalSensorPattern">IS#:RK</entry>
 <entry key="_mCodeButtonDelayTime">0</entry>

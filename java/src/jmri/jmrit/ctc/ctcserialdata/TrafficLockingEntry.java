@@ -3,6 +3,9 @@ package jmri.jmrit.ctc.ctcserialdata;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import jmri.jmrit.ctc.editor.gui.FrmTRL_Rules;
+import jmri.jmrit.ctc.topology.TopologyInfo;
+
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -10,6 +13,7 @@ import java.util.Arrays;
 public class TrafficLockingEntry {
     public String _mUserRuleNumber;
     public String _mRuleEnabled;
+    public final String _mDestinationSignalOrComment;
     public String _mUserText1;
     public final String _mSwitchAlignment1;
     public String _mUserText2;
@@ -39,7 +43,8 @@ public class TrafficLockingEntry {
 
     private static final int USER_RULE_NUMBER_INDEX = 0;
     private static final int RULE_ENABLED_INDEX = 1;
-//  Unused indexes 2,3 (was terminating O.S. section info)
+    private static final int DESTINATION_SIGNAL_OR_COMMENT_INDEX = 2;
+//  Unused index 3 (was terminating O.S. section info)
     private static final int USER_TEXT1_INDEX = 4;
     private static final int SWITCH_ALIGNMENT1_INDEX = 5;
     private static final int USER_TEXT2_INDEX = 6;
@@ -74,6 +79,7 @@ public class TrafficLockingEntry {
         ArrayList<String> arrayListOfStrings = ProjectsCommonSubs.getFixedArrayListSizeFromCSV(csvString, ARRAY_SIZE);
         _mUserRuleNumber = arrayListOfStrings.get(USER_RULE_NUMBER_INDEX);
         _mRuleEnabled = arrayListOfStrings.get(RULE_ENABLED_INDEX);
+        _mDestinationSignalOrComment = arrayListOfStrings.get(DESTINATION_SIGNAL_OR_COMMENT_INDEX);
         _mUserText1 = arrayListOfStrings.get(USER_TEXT1_INDEX);
         _mSwitchAlignment1 = arrayListOfStrings.get(SWITCH_ALIGNMENT1_INDEX);
         _mUserText2 = arrayListOfStrings.get(USER_TEXT2_INDEX);
@@ -101,7 +107,9 @@ public class TrafficLockingEntry {
         _mUniqueID4 = arrayListOfStrings.get(UNIQUE_ID4_INDEX);
         _mUniqueID5 = arrayListOfStrings.get(UNIQUE_ID4_INDEX);
     }
+    
     public TrafficLockingEntry( String ruleEnabled,
+                                String destinationSignalOrComment,
                                 String switchAlignment1,
                                 String switchAlignment2,
                                 String switchAlignment3,
@@ -120,6 +128,7 @@ public class TrafficLockingEntry {
                                 String optionalExternalSensor2) {
 // Any uninitialized are null, and thats OK for "constructCSVStringFromArrayList":
         _mRuleEnabled = ruleEnabled;
+        _mDestinationSignalOrComment = destinationSignalOrComment;
         _mSwitchAlignment1 = switchAlignment1;
         _mSwitchAlignment2 = switchAlignment2;
         _mSwitchAlignment3 = switchAlignment3;
@@ -141,6 +150,7 @@ public class TrafficLockingEntry {
     public TrafficLockingEntry(TrafficLockingEntry sourceTrafficLockingEntry) { // "Deep" Copy constructor (copying immutable strings makes it so):
         _mUserRuleNumber = sourceTrafficLockingEntry._mUserRuleNumber;
         _mRuleEnabled= sourceTrafficLockingEntry._mRuleEnabled;
+        _mDestinationSignalOrComment = sourceTrafficLockingEntry._mDestinationSignalOrComment;
         _mUserText1= sourceTrafficLockingEntry._mUserText1;
         _mSwitchAlignment1= sourceTrafficLockingEntry._mSwitchAlignment1;
         _mUserText2= sourceTrafficLockingEntry._mUserText2;
@@ -168,11 +178,53 @@ public class TrafficLockingEntry {
         _mUniqueID4= sourceTrafficLockingEntry._mUniqueID4;
         _mUniqueID5= sourceTrafficLockingEntry._mUniqueID5;
     }
+    
+
+    /**
+     * Constructor to take a TopologyInfo entry and create a properly formed "this".
+     * 
+     * @param ruleNumber    Rule # (just an integer, starting with 1)
+     * @param destinationSignalMast String representation of the destination signal mast so user can see on the form.
+     * @param topologyInfo  Source of data.
+     */
+    
+    public TrafficLockingEntry(int ruleNumber, String destinationSignalMast, TopologyInfo topologyInfo) {
+        _mUserRuleNumber = FrmTRL_Rules.getRuleNumberString(ruleNumber);
+        _mRuleEnabled = FrmTRL_Rules.getRuleEnabledString();
+        _mDestinationSignalOrComment = topologyInfo.getDestinationSignalMast();
+        _mUserText1 = topologyInfo.getOSSectionText(0);
+        _mSwitchAlignment1 = topologyInfo.getNormalReversed(0);
+        _mUserText2 = topologyInfo.getOSSectionText(1);
+        _mSwitchAlignment2 = topologyInfo.getNormalReversed(1);
+        _mUserText3 = topologyInfo.getOSSectionText(2);
+        _mSwitchAlignment3 = topologyInfo.getNormalReversed(2);
+        _mUserText4 = topologyInfo.getOSSectionText(3);
+        _mSwitchAlignment4 = topologyInfo.getNormalReversed(3);
+        _mUserText5 = topologyInfo.getOSSectionText(4);
+        _mSwitchAlignment5 = topologyInfo.getNormalReversed(4);
+        _mOccupancyExternalSensor1 = topologyInfo.getSensorDisplayName(0);
+        _mOccupancyExternalSensor2 = topologyInfo.getSensorDisplayName(1);
+        _mOccupancyExternalSensor3 = topologyInfo.getSensorDisplayName(2);
+        _mOccupancyExternalSensor4 = topologyInfo.getSensorDisplayName(3);
+        _mOccupancyExternalSensor5 = topologyInfo.getSensorDisplayName(4);
+        _mOccupancyExternalSensor6 = topologyInfo.getSensorDisplayName(5);
+        _mOccupancyExternalSensor7 = topologyInfo.getSensorDisplayName(6);
+        _mOccupancyExternalSensor8 = topologyInfo.getSensorDisplayName(7);
+        _mOccupancyExternalSensor9 = topologyInfo.getSensorDisplayName(8);
+        _mOptionalExternalSensor1 = "";
+        _mOptionalExternalSensor2 = "";
+        _mUniqueID1 = topologyInfo.getUniqueID(0);
+        _mUniqueID2 = topologyInfo.getUniqueID(1);
+        _mUniqueID3 = topologyInfo.getUniqueID(2);
+        _mUniqueID4 = topologyInfo.getUniqueID(3);
+        _mUniqueID5 = topologyInfo.getUniqueID(4);
+    }
 
     public String toCSVString() {
         ArrayList<String> newValueArrayList = new ArrayList<>(Arrays.asList(new String[ARRAY_SIZE]));
         newValueArrayList.set(USER_RULE_NUMBER_INDEX, _mUserRuleNumber);
         newValueArrayList.set(RULE_ENABLED_INDEX, _mRuleEnabled);
+        newValueArrayList.set(DESTINATION_SIGNAL_OR_COMMENT_INDEX, _mDestinationSignalOrComment);
         newValueArrayList.set(USER_TEXT1_INDEX, _mUserText1);
         newValueArrayList.set(SWITCH_ALIGNMENT1_INDEX, _mSwitchAlignment1);
         newValueArrayList.set(USER_TEXT2_INDEX, _mUserText2);

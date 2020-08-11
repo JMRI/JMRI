@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
         <email>gpmccartney@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,28 +23,34 @@
         <date>2016-07-28</date>
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-09-26</date>
+        <authorinitials>GM</authorinitials>
+        <revremark>Removed spaces from folder and icon names.  Added permissive to the specific appearances.</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
   <name>Single Arm Semaphore Mast Signal</name>
   <reference>As described in the 1980 version of the Chessie System Operating Rules.</reference>
   <description>Appearances for B&amp;O permissive single arm semaphore mast signals.</description>
-  
+
   <appearances>
 
    <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Page 128</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 1 Arm/B-281-1 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_1_Arm/B-281-1_Arm.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Page 133</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 1 Arm/B-285-1 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_1_Arm/B-285-1_Arm.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -52,7 +58,7 @@
       <show>red</show>
       <reference>Page 138</reference>
       <comment>Normal speed route appearance</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore 1 Arm/B-291-1 Arm.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/B&amp;O-1980/Semaphore_1_Arm/B-291-1_Arm.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -61,6 +67,9 @@
     <danger>
       <aspect>Stop and Proceed</aspect>
     </danger>
+	<permissive>
+      <aspect>Stop and Proceed</aspect>
+    </permissive>
     <held>
       <aspect>Stop and Proceed</aspect>
     </held>
@@ -76,7 +85,7 @@
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
@@ -86,7 +95,7 @@
       <advancedAspect>Limited Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -96,7 +105,7 @@
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach</ourAspect>
@@ -136,7 +145,7 @@
       <advancedAspect>Stop and Proceed</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
     </aspectMapping>
-	
+
 	<aspectMapping>
       <advancedAspect>Stop and Proceed Medium</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
@@ -148,5 +157,5 @@
     </aspectMapping>
 
   </aspectMappings>
-  
-</appearancetable>  
+
+</appearancetable>
