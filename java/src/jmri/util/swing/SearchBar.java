@@ -129,9 +129,20 @@ public class SearchBar extends javax.swing.JPanel {
         });
 
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-            KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "forwardSearch");
+            KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()|java.awt.event.InputEvent.SHIFT_DOWN_MASK), "forwardSearch");
         
         rootPane.getActionMap().put("forwardSearch", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+            
+                // same as button
+                leftButton.doClick();
+                }
+        });
+
+        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+            KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()), "backwardSearch");
+        
+        rootPane.getActionMap().put("backwardSearch", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
             
                 // same as button

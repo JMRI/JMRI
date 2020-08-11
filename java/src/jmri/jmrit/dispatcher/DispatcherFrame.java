@@ -2322,7 +2322,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param min the minute to test against (0-59)
      * @return true if fast clock time and tested time are the same
      */
-    protected boolean isFastClockTimeGE(int hr, int min) {
+    public boolean isFastClockTimeGE(int hr, int min) {
         Calendar now = Calendar.getInstance();
         now.setTime(fastClock.getTime());
         int nowHours = now.get(Calendar.HOUR_OF_DAY);
