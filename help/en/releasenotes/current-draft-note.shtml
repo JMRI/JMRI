@@ -361,8 +361,9 @@
                 where you can enter a search string.  Hitting Return will find the first 
                 occurrence. There are right and left arrows to find the next occurrence forward
                 and backwards respectively.  Ctrl-G or Cmd-G will also find the next forward
-                occurance. The "Done" button will dismiss the 
-                bar, but you can leave it up without it interferring.
+                occurance. Shift-Ctrl-G or Shift-Cmd-G will find the next occurrence going backwards.
+                The "Done" button will dismiss the 
+                bar, but you can leave it up without it interferring with anything.
             </li>
         </ul>
 
