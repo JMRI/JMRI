@@ -178,6 +178,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_SwitchListByLocation" url="package/jmri/jmrit/operations/Operations.shtml#SwitchListByLocation"/>
 
+<mapID target="package.jmri.jmrit.dispatcherSystem.DispatcherSystem" url="package/jmri/jmrit/dispatcherSystem/DispatcherSystem.shtml"/>
+
 <mapID target="manual.DecoderPro.Main_Throttle_FrameProperties" url="manual/DecoderPro/Main_Throttle_FrameProperties.shtml"/>
 
 <mapID target="manual.DecoderPro.Comp_Speed_Talble_Top" url="manual/DecoderPro/Comp_Speed_Talble.shtml#Top"/>
@@ -189,6 +191,8 @@
 <mapID target="package.jmri.jmrit.ToolsMenu" url="package/jmri/jmrit/ToolsMenu.shtml"/>
 
 <mapID target="parts.SidebarInstallNew" url="parts/SidebarInstallNew.shtml"/>
+
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_running" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#running"/>
 
 <mapID target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame_highlighter" url="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#highlighter"/>
 
@@ -851,6 +855,8 @@
 <mapID target="package.jmri.jmrit.display.IconAdder" url="package/jmri/jmrit/display/IconAdder.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_Speed" url="manual/DecoderPro3/Comp_Speed.shtml"/>
+
+<mapID target="package.jmri.jmrit.dispatcherSystem.DispatcherSystem_welcome" url="package/jmri/jmrit/dispatcherSystem/DispatcherSystem.shtml#welcome"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_controlPanel" url="manual/DecoderPro3/dp3_Main_Throttle_controlPanel.shtml"/>
 
@@ -1542,7 +1548,13 @@
 
 <mapID target="html.hardware.loconet.Digitrax_Debugging" url="html/hardware/loconet/Digitrax.shtml#Debugging"/>
 
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_stage1" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#stage1"/>
+
 <mapID target="manual.DecoderPro3.dp3_rosterTable" url="manual/DecoderPro3/dp3_rosterTable.shtml"/>
+
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_stage3" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#stage3"/>
+
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_stage2" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#stage2"/>
 
 <mapID target="html.hardware.USBtoSerial_hardware" url="html/hardware/USBtoSerial.shtml#hardware"/>
 
@@ -1866,6 +1878,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Cars_Menu" url="manual/JMRI_OPS_UsersGuide/Ops_Cars_Menu.shtml"/>
 
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_register" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#register"/>
+
 <mapID target="html.doc.Technical.JUnit" url="html/doc/Technical/JUnit.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_DeleteUnusedAttributes" url="package/jmri/jmrit/operations/Operations.shtml#DeleteUnusedAttributes"/>
@@ -2020,6 +2034,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_AlternateTrack" url="package/jmri/jmrit/operations/Operations.shtml#AlternateTrack"/>
 
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_dispatch" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#dispatch"/>
+
 <mapID target="html.apps.DecoderPro.index_decoderlisting" url="html/apps/DecoderPro/index.shtml#decoderlisting"/>
 
 <mapID target="html.hardware.XPressNet.index_connectXpa" url="html/hardware/XPressNet/index.shtml#connectXpa"/>
@@ -2052,8 +2068,11 @@
 
 <mapID target="html.apps.StoringYourWork_autosave" url="html/apps/StoringYourWork.shtml#autosave"/>
 
+<<<<<<< HEAD
 <mapID target="package.apps.util.issuereporter.swing.IssueReporter" url="package/apps/util/issuereporter/swing/IssueReporter.shtml"/>
 
+=======
+>>>>>>> master
 <mapID target="html.apps.DecoderPro.FileUpdate_after236" url="html/apps/DecoderPro/FileUpdate.shtml#after236"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_file_print_entry_Top" url="manual/DecoderPro3/dp3_Main_file_print_entry.shtml#Top"/>
@@ -2492,6 +2511,8 @@
 
 <mapID target="html.hardware.dccpp.Sidebar" url="html/hardware/dccpp/Sidebar.shtml"/>
 
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem" url="html/apps/DispatcherSystem/DispatcherSystem.shtml"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditTrain" url="manual/JMRI_OPS_UsersGuide/Ops_EditTrain.shtml"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_sneakpaths" url="html/hardware/loconet/StandaloneLocoNet.shtml#sneakpaths"/>
@@ -2736,6 +2757,8 @@
 
 <mapID target="html.hardware.loconet.Addressing_CommandStationOpSw" url="html/hardware/loconet/Addressing.shtml#CommandStationOpSw"/>
 
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_logic" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#logic"/>
+
 <mapID target="html.tools.TimeTable_station" url="html/tools/TimeTable.shtml#station"/>
 
 <mapID target="html.hardware.cmri.CMRI_iobits" url="html/hardware/cmri/CMRI.shtml#iobits"/>
@@ -2799,6 +2822,8 @@
 <mapID target="manual.DecoderPro3.index_BasicProgrammer" url="manual/DecoderPro3/index.shtml#BasicProgrammer"/>
 
 <mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml"/>
+
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_welcome" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#welcome"/>
 
 <mapID target="html.hardware.bachrus.index_documentation" url="html/hardware/bachrus/index.shtml#documentation"/>
 
@@ -2881,6 +2906,8 @@
 <mapID target="package.jmri.jmrit.signalling.AddEditSignalingLogic" url="package/jmri/jmrit/signalling/AddEditSignalingLogic.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrainLoadOptions" url="package/jmri/jmrit/operations/Operations.shtml#TrainLoadOptions"/>
+
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_requirements" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#requirements"/>
 
 <mapID target="html.hardware.tams.index_connecting" url="html/hardware/tams/index.shtml#connecting"/>
 
@@ -4030,6 +4057,13 @@
 
 <mapID target="manual.DecoderPro3.Start_DecoderPro_Top" url="manual/DecoderPro3/Start_DecoderPro.shtml#Top"/>
 
+<<<<<<< HEAD
+=======
+<mapID target="html.doc.Technical.webupdate.UpdatingDocs" url="html/doc/Technical/webupdate/UpdatingDocs.shtml"/>
+
+<mapID target="html.apps.DispatcherSystem.DispatcherSystem_steps" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#steps"/>
+
+>>>>>>> master
 <mapID target="html.hardware.loconet.PR4" url="html/hardware/loconet/PR4.shtml"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_List" url="manual/DecoderPro3/dp3_Main_Throttle_List.shtml"/>
