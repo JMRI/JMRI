@@ -31,8 +31,8 @@
       <h2>Introduction to JMRI Fast Clocks</h2>
       <p>JMRI provides a fast
       clock that can get its time from an internal fast clock or a
-      selected hardware fast clock if one exists on your DCC
-      system. This dialog (reached from <b>Set up Fast Clock</b> in
+      selected hardware fast clock if one exists on your layout.
+      This dialog (reached from <b>Set up Fast Clock</b> in
       the <b>Clocks</b> submenu under the <b>Tools</b> menu)
       provides for setting options for this fast clock system.
       Information you set up here is saved when you save your
@@ -42,7 +42,7 @@
       stand-alone dialogs or on a PanelPro panel.</p>
       <a href="images/Fast_Clock_Setup_432x573.png"><img
       src="images/Fast_Clock_Setup_432x573.png" width="432" height="573"
-      alt="Fast Clock Setup config pane" align="right"></a>
+      alt="Fast Clock Setup config pane" style="float:right"></a>
 
       <h3>Setting up your Time Source</h3>
 
@@ -145,7 +145,7 @@
       if you don't have any panels.)
       <a href="images/FastClockSetupSave.png">
       <img src="images/FastClockSetupSave.png" width="333" height="140"
-      alt="Fast Clock Setup config pane" align="right"></a>
+      alt="Fast Clock Setup config pane" style="float:right"></a>
       <b>Store</b> options may be found in the <b>File</b> menu
       while working on the Fast Clock Setup. A prompt will give
       you the option to save either form when you close the
@@ -174,54 +174,7 @@
       When the fast clock is restarted after having been stopped,
       the fast clock time continues where it left off.</p>
 
-      <h2>Supported Hardware Clocks</h2>
-
-      <ul>
-        <li>
-          <p><b>LocoNet Fast Clock</b> - A Digitrax LocoNet can
-          contain it's own fast clock, driven by the DCS100,
-          DCS200, or DCS50 command stations. A separate LocoNet
-          fast clock is available from Logic Rail Technologies.
-          JMRI can work with any of these, or with any clock that
-          uses the standard Digitrax method to control fast clocks.
-          The recommended settings for running with these clocks
-          is: set <b>Time Source</b> to <b>Internal Computer
-          Clock</b>, and check both the <b>Synchronize...</b> and
-          <b>Correct...</b> options. However you can try other
-          settings. If you use the internal computer clock as the
-          time source, you will not be able to change the fast
-          clock rate or the fast clock time from a throttle.</p>
-
-          <p>If you use a Logic Rail Technologies fast clock, it
-          should be set up as a slave clock, not as a master. You
-          may notice that the Logic Rail Technologies fast clock
-          lags behind by one fast clock minute. Be assured that the
-          correct commands are being sent by JMRI. This lag, if
-          present, is just an artifact of the Logic Rail clock's
-          internal programming.</p>
-        </li>
-
-        <li>
-          <p><b>NCE Fast Clock</b> - The NCE fast clock can be
-          either a source of fast time or can be commanded to
-          follow the internal clock. The best synchronization is
-          when the NCE clock is the master source. It works by
-          adjusting the internal clock ratio so the fast minutes
-          will be the same. The provides for the clocks to be
-          basically in sync all the time. Adjustments are made
-          about every 20 fast seconds.</p>
-
-          <p>You may also have the internal clock drive the NCE
-          fast clock. However, this requires some number of seconds
-          to be added or skipped in the NCE fast clock so the
-          minutes will roll over at the same time. That minute roll
-          over is critical for the NCE as that is when the time is
-          sent to all the Pro cabs. Due to limited adjustments in
-          the NCE fast clock this method causes the clock to run
-          fast for part of the minute and slow for the other part
-          of the minute so the minute roll over is correct.</p>
-        </li>
-      </ul>
+      
 
       <h2>Clock-related Sensor and Memory</h2>
       <p>When a clock is
@@ -241,6 +194,19 @@
       for this is available <a href=
       "https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html">
       here</a>.</p>
+      
+      <h2>Further Clock Support</h2>
+      
+      <a href="../../../../html/tools/fastclock/index.shtml">JMRI Fast Clocks</a>
+      
+      
+       <p>There are separate pages for:</p>
+      <ul>
+      <li><a href="../../../../html/tools/fastclock/LocoNetClock.shtml">LocoNet clocks</a></li>
+      <li><a href="../../../../html/hardware/can/cbus/CbusFastClock.shtml">MERG CBUS clocks</a></li>
+      <li><a href="../../../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">NCE clocks</a></li>
+      </ul>
+      
 
       <!--#include virtual="/Footer.shtml" -->
     </div>
