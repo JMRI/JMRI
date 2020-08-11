@@ -403,11 +403,22 @@ public class Transit extends AbstractNamedBean {
             }
         }
         ArrayList<Block> internalBlocks = getInternalBlocksList();
-        for (int i = internalBlocks.size(); i > 0; i--) {
-            if (blockSecSeqList.get(i - 1) > startSeq) {
-                // could stop in this block, keep it
-                list.add(internalBlocks.get(i - 1));
-                destBlocksSeqList.add(blockSecSeqList.get(i - 1));
+        //allow for transits of length 1
+        if (startInTransit) {
+            for (int i = internalBlocks.size(); i > 0; i--) {
+                if (blockSecSeqList.get(i - 1) > startSeq) {
+                    // could stop in this block, keep it
+                    list.add(internalBlocks.get(i - 1));
+                    destBlocksSeqList.add(blockSecSeqList.get(i - 1));
+                }
+            }
+        } else {
+            for (int i = internalBlocks.size(); i > 0; i--) {
+                if (blockSecSeqList.get(i - 1) >= startSeq) {
+                    // could stop in this block, keep it
+                    list.add(internalBlocks.get(i - 1));
+                    destBlocksSeqList.add(blockSecSeqList.get(i - 1));
+                }
             }
         }
         return list;

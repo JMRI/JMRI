@@ -16,7 +16,7 @@ public class Fleeting {
     
     public void removeAllListeners() {}   // None done.
     
-    public boolean isFleetingEnabled () {
+    public boolean isFleetingEnabled() {
         if (_mFleetingToggleInternalSensor.valid()) return _mFleetingToggleInternalSensor.getKnownState() == Sensor.ACTIVE;
         return _mDefaultFleetingEnabled;
     }

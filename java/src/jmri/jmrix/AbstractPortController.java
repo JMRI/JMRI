@@ -169,8 +169,11 @@ abstract public class AbstractPortController implements PortAdapter {
      */
     @Override
     public void setOptionState(String option, String value) {
+        log.trace("setOptionState({},{})", option, value);
         if (options.containsKey(option)) {
             options.get(option).configure(value);
+        } else {
+            log.warn("Couldn't find option \"{}\", can't set to \"{}\"", option, value);
         }
     }
 
@@ -206,6 +209,15 @@ abstract public class AbstractPortController implements PortAdapter {
         return null;
     }
 
+
+    public boolean isOptionTypeText(String option) {
+        if (options.containsKey(option)) {
+            return options.get(option).getType() == Option.Type.TEXT;
+        }
+        log.error("did not find option {} for type", option);
+        return false;
+    }
+    
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "availability was checked before, should never get here")
@@ -228,6 +240,11 @@ abstract public class AbstractPortController implements PortAdapter {
 
     static protected class Option {
 
+        public enum Type {
+            JCOMBOBOX,
+            TEXT
+        }
+        
         String currentValue = null;
         
         /** 
@@ -239,21 +256,34 @@ abstract public class AbstractPortController implements PortAdapter {
         
         String displayText;
         String[] options;
-        Boolean advancedOption = true;
+        Type type;
+        
+        Boolean advancedOption = true;  // added options in advanced section by default
+
+        public Option(String displayText, @Nonnull String[] options, boolean advanced, Type type) {
+            this.displayText = displayText;
+            this.options = java.util.Arrays.copyOf(options, options.length);
+            this.advancedOption = advanced;
+            this.type = type;            
+        }
 
         public Option(String displayText, String[] options, boolean advanced) {
-            this(displayText, options);
-            this.advancedOption = advanced;
+            this(displayText, options, advanced, Type.JCOMBOBOX);
+        }
+
+        public Option(String displayText, String[] options, Type type) {
+            this(displayText, options, true, type);
         }
 
         public Option(String displayText, String[] options) {
-            this.displayText = displayText;
-            this.options = new String[options.length];
-            System.arraycopy(options, 0, this.options, 0, options.length);
+            this(displayText, options, true, Type.JCOMBOBOX);
         }
 
         void configure(String value) {
-            if (configuredValue == null ) configuredValue = value;
+            log.trace("Option.configure({}) with \"{}\", \"{}\"", value, configuredValue, currentValue);
+            if (configuredValue == null ) {
+                configuredValue = value;
+            }
             currentValue = value;
         }
 
@@ -266,6 +296,10 @@ abstract public class AbstractPortController implements PortAdapter {
 
         String[] getOptions() {
             return options;
+        }
+
+        Type getType() {
+            return type;
         }
 
         String getDisplayText() {

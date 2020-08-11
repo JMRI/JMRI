@@ -9,16 +9,8 @@
   <title>JMRI: Git FAQ</title>
     <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git FAQ">
-  <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+
+ <!--#include virtual="/Style.shtml" -->
 
   <!-- FAQ-Head -->
   <script type="text/javascript">
@@ -27,6 +19,7 @@
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
   media="screen">
   <!-- /FAQ-Head -->
+  
 </head>
 
 <body>
@@ -39,6 +32,8 @@
 
       <p>This is a list of Frequently Asked Questions for Git,
       particularly regarding how we use it with JMRI.<br>
+      
+      
       Click on a question to open the answer.</p>
 
       <p>There's a <a href="getgitcode.shtml">separate JMRI Help
@@ -47,6 +42,8 @@
 
       <p>See also the <a href="index.shtml">Technical index</a> for
       more information on maintaining JMRI code.</p>
+      
+     <p>See also the <a href="../../FAQ.shtml">JMRI general FAQ.</a></p>
 
       <h2>Common User Topics</h2>
 
@@ -62,12 +59,12 @@
 
           <ul>
             <li>Get it from the <a href=
-            "http://git-scm.com/downloads">Git download
+            "http://git-scm.com/downloads" target="_blank">Git download
             page</a>.</li>
 
             <li>It comes with the GitHub Desktop application,
             available from the <a href=
-            "https://desktop.github.com">Git desktop download
+            "https://desktop.github.com" target="_blank">Git desktop download
             page</a> (OS X and Windows only).</li>
 
             <li>On the Mac, it's included when you <a href=

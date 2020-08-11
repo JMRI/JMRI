@@ -3,10 +3,8 @@ package jmri.jmrix.mqtt;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
+import jmri.*;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.TurnoutManager;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
@@ -24,7 +22,15 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
     }
 
     public void configureManagers() {
-        InstanceManager.setTurnoutManager(getTurnoutManager());
+//        setPowerManager(new jmri.jmrix.jmriclient.JMRIClientPowerManager(this));
+//        jmri.InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
+
+        jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
+        jmri.InstanceManager.setSensorManager(getSensorManager());
+
+//        jmri.InstanceManager.setLightManager(getLightManager());
+//        jmri.InstanceManager.setReporterManager(getReporterManager());
+
         register();
     }
 
@@ -42,14 +48,30 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (MqttTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> new MqttTurnoutManager(this));
+        return (MqttTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> {
+                    MqttTurnoutManager t = new MqttTurnoutManager(this);
+                    t.setTopicPrefix(getMqttAdapter().getOptionState("10"));
+                    return t;
+                });
+                
+    }
+
+    public MqttSensorManager getSensorManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (MqttSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,(Class c) -> {
+                    MqttSensorManager t = new MqttSensorManager(this);
+                    t.setTopicPrefix(getMqttAdapter().getOptionState("11"));
+                    return t;
+                });
     }
 
     void setMqttAdapter(MqttAdapter ma) {
         mqttAdapter = ma;
     }
 
-    MqttAdapter getMqttAdapter() {
+    public MqttAdapter getMqttAdapter() {
         return mqttAdapter;
     }
 }

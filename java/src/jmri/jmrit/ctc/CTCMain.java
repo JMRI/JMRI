@@ -1,6 +1,5 @@
 /**
- *  @author Gregory J. Bedlek Copyright (C) 2018, 2019
- * 
+ *  @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
 
 package jmri.jmrit.ctc;
@@ -10,11 +9,14 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import jmri.Sensor;
-import jmri.Turnout;
+
+import javax.swing.JOptionPane;
+
+import jmri.*;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +33,7 @@ public class CTCMain {
     private final HashMap<Integer, CodeButtonHandler> _mCBHashMap = new HashMap<>();                    // "Const" after initialization completes.
     private final LockedRoutesManager _mLockedRoutesManager = new LockedRoutesManager();
     private javax.swing.Timer _mLockTurnoutsTimer = null;
+    private final CTCExceptionBuffer _mCTCExceptionBuffer = new CTCExceptionBuffer();
 
 //  So that external python script can set locks on all of the lockable turnouts:
     public void externalLockTurnout() {
@@ -40,7 +43,9 @@ public class CTCMain {
     }
 
     private String _mFilenameRead = null;
-    public CTCMain() {}
+    public CTCMain() {
+        InstanceManager.store(_mCTCExceptionBuffer, CTCExceptionBuffer.class);
+    }
     public void readDataFromXMLFile(String filename) {
         _mFilenameRead = filename;
         startup();
@@ -249,6 +254,24 @@ public class CTCMain {
             _mLockTurnoutsTimer = new javax.swing.Timer(otherData._mTUL_SecondsToLockTurnouts * 1000, lockTurnoutsTimerTicked);
             _mLockTurnoutsTimer.setRepeats(false);
             _mLockTurnoutsTimer.start();
+        }
+        
+//  Finally, display errors to the user:
+        if (!_mCTCExceptionBuffer.isEmpty()) {
+            CTCExceptionBuffer.ExceptionBufferRecordSeverity exceptionBufferRecordSeverity2 = _mCTCExceptionBuffer.getHighestExceptionBufferRecordSeverity();
+            int messageType;
+            switch (exceptionBufferRecordSeverity2) {
+                case ERROR:
+                    messageType = JOptionPane.ERROR_MESSAGE;
+                    break;
+                case WARN:
+                    messageType = JOptionPane.WARNING_MESSAGE;
+                    break;
+                default:    // And INFO
+                    messageType = JOptionPane.INFORMATION_MESSAGE;
+                    break;
+            }
+            JOptionPane.showMessageDialog(null, _mCTCExceptionBuffer.getAllMessages(), Bundle.getMessage("CTCMainRuntimeStartupIssues"), messageType);  // NOI18N
         }
     }
 

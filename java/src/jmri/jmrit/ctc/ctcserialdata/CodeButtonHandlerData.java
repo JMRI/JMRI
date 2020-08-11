@@ -26,7 +26,7 @@ import javax.swing.ButtonGroup;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class CodeButtonHandlerData implements Serializable, Comparable<CodeButtonHandlerData> {
-    private final static int FILE_VERSION = 5;
+    private final static int FILE_VERSION = 6;
     public static final int SWITCH_NOT_SLAVED = -1;
 
     public enum LOCK_IMPLEMENTATION {
@@ -230,7 +230,7 @@ at the top for "automatic" JMRI object verification.
                     _mTRL_LeftTrafficLockingRulesSSVList = "";
                     _mTRL_RightTrafficLockingRulesSSVList = "";
                     break;
-                default:
+                default:    // 4->5, 5->6: Do NOTHING!
                     break;
             }
         }
@@ -273,6 +273,9 @@ at the top for "automatic" JMRI object verification.
             case 4:
                 upgradeVersion4FileTo5(filename);
                 break;
+            case 5:
+                upgradeVersion5FileTo6(filename);
+                break;
             default:
                 break;
         }
@@ -311,6 +314,43 @@ at the top for "automatic" JMRI object verification.
         } catch (IOException e) {}  // Any other error(s) just cleans up:
         (new File(temporaryFilename)).delete();        // If we get here, just clean up.
     }
+    
+    /**
+     * This routine was written because CSVPrinter at some point began putting "\r\n" at the
+     * end of lines returned by "toString()" based upon the version of the Java Library that
+     * was present.  This corrupted my data internally, and a user out in the field got caught
+     * by this change in the Java library.  The result was lines like:
+     * Hurricane X-over Track 1 West,LEFTTRAFFIC,Flashing Red,,Hurricane Track 1,IS5:SWNI,IS3:SWNI,IS1:SWNI,,,;;;;Hurricane X-over Track 1 West,LEFTTRAFFIC,Flashing Red,,Hurricane Track 2,IS5:SWNI,IS3:SWNI,IS1:SWRI,,,;;;;Hurricane X-over Track 1 East,RIGHTTRAFFIC,Flashing Red,,East Hurricane Track 1,IS1:SWNI,IS3:SWNI,IS5:SWNI,,,;;;;Hurricane X-over Track 1 East,RIGHTTRAFFIC,Flashing Red,,East Hurricane Track 2,IS1:SWNI,IS3:SWNI,IS5:SWRI,IS7:SWNI,,
+     * You'll notice here (and other places in the line) that there are multiple ;;;; in a row                ^^^^ ...-> also
+     * caused by this.  What I will do here is fix any multiple ;;;; to a single ;:
+     * @param filename The .xml file to convert from version 5 format to version 6 format.
+     */
+    @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
+    static private void upgradeVersion5FileTo6(String filename) {
+        String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
+        (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
+        boolean hadAChange = false;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename)); BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename))) {
+            String aLine = null;
+            while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
+                if ((aLine = checkFileVersion(bufferedReader, bufferedWriter, aLine, "5", "6")) == null) { hadAChange = true; continue; } // Was processed.
+                if ((aLine = checkForMultipleSemiColons(bufferedWriter, aLine)) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                writeLine(bufferedWriter, aLine);
+            }
+//  Regarding commented out code (due to SpotBugs):
+//  I'm a safety "nut".  I will do such things in case other code is someday inserted
+//  between the above "check for != null" and here.  But to satisfy SpotBugs:
+            if (/*aLine == null && */hadAChange) { // Do the two step:
+                bufferedReader.close();
+                bufferedWriter.close();
+                File oldFile = new File(filename);
+                oldFile.delete();                   // Delete existing old file.
+                (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
+            }
+        } catch (IOException e) {}  // Any other error(s) just cleans up:
+        (new File(temporaryFilename)).delete();        // If we get here, just clean up.
+    }
+    
 
 /*
     Returns:    null if we processed it or it was the wrong format, and in either case WROTE the line(s) out indicating that we handled it.
@@ -348,6 +388,22 @@ at the top for "automatic" JMRI object verification.
         }
         return aLine;
     }
+    
+    static private String checkForMultipleSemiColons(BufferedWriter bufferedWriter, String aLine) throws IOException {
+        int intStart = aLine.indexOf(STRING_START_STRING);
+        int intEnd = aLine.indexOf(STRING_END_STRING);
+        if (intStart >=0 && intEnd >=0 && intStart < intEnd) { // Insure a line we might look at:
+           while (aLine.contains(";;")) {
+               aLine= aLine.replace(";;", ";");
+           }
+        }
+        if (intStart >= 0) { // Found, replace:
+            writeLine(bufferedWriter, aLine);
+            return null;
+        }
+        return aLine;
+    }
+    
 
     static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
         bufferedWriter.write(aLine); bufferedWriter.newLine();
