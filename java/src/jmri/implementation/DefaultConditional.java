@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.script.ScriptException;
 import javax.swing.BoxLayout;
@@ -20,22 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import jmri.Audio;
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.ConditionalManager;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Light;
-import jmri.Logix;
-import jmri.Memory;
-import jmri.NamedBean;
-import jmri.Route;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.jmrit.Sound;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
@@ -44,6 +32,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.ScriptOutput;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -848,7 +837,11 @@ public class DefaultConditional extends AbstractNamedBean
                                 if (value < 0) {
                                     break;
                                 }
-                                lgt.setTargetIntensity((value) / 100.0);
+                                if (lgt instanceof VariableLight) {
+                                    ((VariableLight)lgt).setTargetIntensity((value) / 100.0);
+                                } else {
+                                    lgt.setState(value > 0.5 ? Light.ON : Light.OFF);
+                                }
                                 actionCount++;
                             } catch (IllegalArgumentException e) {
                                 errorList.add("Exception in set light intensity action - " + action.getDeviceName());  // NOI18N
@@ -865,7 +858,9 @@ public class DefaultConditional extends AbstractNamedBean
                                 if (value < 0) {
                                     break;
                                 }
-                                lgt.setTransitionTime(value);
+                                if (lgt instanceof VariableLight) {
+                                    ((VariableLight)lgt).setTransitionTime(value);
+                                }
                                 actionCount++;
                             } catch (IllegalArgumentException e) {
                                 errorList.add("Exception in set light transition time action - " + action.getDeviceName());  // NOI18N

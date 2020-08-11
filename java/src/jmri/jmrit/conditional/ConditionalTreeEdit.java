@@ -6,58 +6,25 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import javax.swing.JTree;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.tree.TreePath;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.tree.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
-import jmri.Audio;
-import jmri.Conditional;
+
+import jmri.*;
 import jmri.Conditional.Operator;
-import jmri.ConditionalAction;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Logix;
-import jmri.Route;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.Turnout;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
@@ -4330,7 +4297,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     if (lgtx == null) {
                         return false;
                     }
-                    if (!lgtx.isIntensityVariable()) {
+                    if (!(lgtx instanceof VariableLight)) {
                         JOptionPane.showMessageDialog(_editLogixFrame,
                                 Bundle.getMessage("Error45", name), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),
@@ -4347,7 +4314,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     if (lgtx == null) {
                         return false;
                     }
-                    if (!lgtx.isTransitionAvailable()) {
+                    if ( !(lgtx instanceof VariableLight)
+                            || !((VariableLight)lgtx).isTransitionAvailable()) {
                         JOptionPane.showMessageDialog(_editLogixFrame,
                                 Bundle.getMessage("Error40", name), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),
