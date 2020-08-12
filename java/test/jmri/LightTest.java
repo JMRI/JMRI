@@ -1,6 +1,11 @@
 package jmri;
 
+import jmri.implementation.AbstractLight;
+
+import org.junit.Before;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 
 /**
@@ -30,4 +35,15 @@ public class LightTest {
         Assert.assertTrue("TRANSITIONINGLOWER overlap", (Light.TRANSITIONINGLOWER & Light.TRANSITIONING) != 0);
         Assert.assertTrue("TRANSITIONINGTOFULLOFF overlap", (Light.TRANSITIONINGTOFULLOFF & Light.TRANSITIONING) != 0);
     }
+    
+    @Before
+    public void setUp() {
+          jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+          jmri.util.JUnitUtil.tearDown();
+    }
+
 }

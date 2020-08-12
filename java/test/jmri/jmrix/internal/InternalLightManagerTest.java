@@ -1,8 +1,6 @@
 package jmri.jmrix.internal;
 
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
+import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -57,7 +55,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         // ask for a Light, and check type
         LightManager lm = jmri.InstanceManager.lightManagerInstance();
 
-        Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
+        Assert.assertTrue(lm.newLight("IL21", "my name") instanceof VariableLight);
     }
 
     @BeforeEach
