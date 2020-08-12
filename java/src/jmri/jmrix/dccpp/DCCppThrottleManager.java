@@ -91,12 +91,12 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     }
 
     /**
-     * Address 127 and below is a short address
+     * Address between 1 and 127 is a short address
      *
      */
     @Override
     public boolean canBeShortAddress(int address) {
-        return !isLongAddress(address);
+        return (address >= 1 && !isLongAddress(address));
     }
 
     /**
