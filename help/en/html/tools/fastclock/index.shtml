@@ -73,33 +73,32 @@
 
       <ul>
         <li>
-        <p>PanelPro > Tools > Clocks > 
+        <p>Tools > Clocks > 
         Analog clock - The traditional circular clock with hands.</p>
         <a href="images/analog-clock-513x567.png"><img 
         src="images/analog-clock-513x567.png" width="245" height="271"
         alt="Analog Clock"></a>
         </li>
         
-        <li><p>PanelPro > Tools > Clocks > LCD clock - a digital clock.</p>
+        <li><p>Tools > Clocks > LCD clock - a digital clock.</p>
         <a href="images/lcd-clock-928x286.png"><img 
         src="images/lcd-clock-928x286.png" width="879" height="271"
         alt="LCD Clock"></a>
         </li>
         
-        <li><p>PanelPro > Tools > Clocks > Nixie clock - a digital clock that looks like the
+        <li><p>Tools > Clocks > Nixie clock - a digital clock that looks like the
         old-style Nixie tubes</p>
         <a href="images/nixie-clock-1085x380.jpg"><img 
         src="images/nixie-clock-1085x380.jpg" width="774" height="271"
         alt="Nixie Clock"></a>
         </li>
         
-        <li><p>PanelPro > Tools > Clocks > Pragotron clock - flip clock used in net Czechoslovak State Railways &ndash; &#268;SD 
+        <li><p>Tools > Clocks > Pragotron clock - flip clock used in net Czechoslovak State Railways &ndash; &#268;SD 
             <span class="since">since 4.19.2</span></p>
             <a href="images/pragotron-clock-854x271.jpg"><img 
         src="images/pragotron-clock-854x271.jpg" width="854" height="271"
         alt="Nixie Clock"></a>
-            
-            </li>
+        </li>
             
             
         <li><p>Panel clock - you can also embed a clock in a panel
