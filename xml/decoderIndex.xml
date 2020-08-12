@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.19.8ish+jake+20200616T1804Z+R0e5345596e on Tue Jun 16 11:04:57 PDT 2020-->
-  <decoderIndex version="1012">
+  <!--Written by JMRI version 4.21.1ish+jake+20200811T0554Z+R61d8d8735f on Mon Aug 10 22:54:17 PDT 2020-->
+  <decoderIndex version="1014">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7734,6 +7734,8 @@
           <!-- suppress unused item -->
           <output name="2,20" label="|" />
           <!-- suppress unused item -->
+          <output name="4,1" label="|" />
+          <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
         <model model="LokPilot 5 Fx micro DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554612">
@@ -7768,6 +7770,34 @@
           <output name="2,19" label="|" />
           <!-- suppress unused item -->
           <output name="2,20" label="|" />
+          <!-- suppress unused item -->
+          <output name="4,1" label="|" />
+          <!-- suppress unused item -->
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 Fx micro Next18" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554616">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="4,1" label="|" />
+          <!-- suppress unused item -->
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 Fx micro Next18 DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554617">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="4,1" label="|" />
           <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
@@ -8233,6 +8263,16 @@
           <output name="12" label="Virtual|Sound" />
           <size length="25.5" width="15.5" height="4.5" units="mm" />
           <!-- connector="NEM651, 21MTC, Plux12, wires" -->
+        </model>
+        <model model="Pullman Silberling" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777378">
+          <output name="1" label="Head|Lights" />
+          <output name="2" label="Red|Light" />
+          <output name="3" label="Cab|Light" />
+          <output name="4" label="Destination|Light" />
+          <output name="5" label="Panel|Light" />
+          <output name="6" label="High|Beam" />
+          <output name="7" label="Cargo|Light" />
+          <output name="8" label="Interior|Light" />
         </model>
         <model model="MBW Silberling" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777360">
           <output name="1" label="|White" />
@@ -11856,6 +11896,11 @@
           <output name="4" label="D - Marron" />
         </model>
       </family>
+      <family name="LGB MFX decoder" mfg="LGB" file="LGB_v3_MFX.xml">
+        <model model="LGB MFX 27-pin sound decoder." lowVersionID="3" highVersionID="3" maxInputVolts="24V" maxMotorCurrent="2.0A, peak=2.5A" maxTotalCurrent="0.8A" formFactor="LGB" numOuts="0" numFns="32" productID="199">
+          <size length="25" width="11" height="2" units="mm" />
+        </model>
+      </family>
       <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="06" file="LaisDcc.xml">
         <!--           old models not showing anymore  -->
         <model show="no" model="860010/LaisDcc-Z2" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
@@ -15409,6 +15454,13 @@
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
           <size length="0.70" width="0.34" height="0.12" units="inches" />
         </model>
+        <model model="N12SR 4 function" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <output name="3" label="Pad 3" connection="wire" maxcurrent="40 mA" />
+          <output name="4" label="Pad 4" connection="wire" maxcurrent="40 mA" />
+          <size length="0.60" width="0.34" height="0.11" units="inches" />
+        </model>
         <model model="N12SRP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
@@ -15434,6 +15486,13 @@
           <output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA" />
           <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
           <size length="1.15" width="0.34" height="0.12" units="inches" />
+        </model>
+        <model model="Next18" numOuts="4" numFns="8" maxMotorCurrent=".75A (peak=1.2A)" formFactor="Next18">
+          <output name="1" label="Pin 8" connection="plug" />
+          <output name="2" label="Pin 17" connection="plug" />
+          <output name="3" label="Pin 3" connection="plug" />
+          <output name="4" label="Pin 12" connection="plug" />
+          <size length=".595" width="0.390" units="inches" />
         </model>
         <model model="N12A0" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale GP40-2, U25B, U23B, B23-7, 30-7, 36-7, GP38, SD25, Trainmaster &amp; many others">
           <output name="1" label="LED 1" connection="solder" />
@@ -15463,6 +15522,18 @@
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
           <size length="2.65" width="0.37" height="0.12" units="inches" />
+        </model>
+        <model model="N14A0" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas GP40-2, CW40-8, U25B, U23B, B23-7, 30-7, 36-7, GP38, SD25, TRAINMASTER">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <output name="3" label="Pad 3" connection="solder" />
+          <output name="4" label="Pad 4" connection="solder" />
+        </model>
+        <model model="N14A3" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas GP39-2, Intermountain SD40-2">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <output name="3" label="Pad 3" connection="solder" />
+          <output name="4" label="Pad 4" connection="solder" />
         </model>
         <model model="N14K1" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Ath F45,FP45,kato ES44,AC4400,C30-7,SD40-2,SD40,SD45,SD70MAC">
           <output name="1" label="LED 1" connection="solder" />

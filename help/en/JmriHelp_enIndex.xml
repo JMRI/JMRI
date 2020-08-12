@@ -11,7 +11,7 @@
  <indexitem text="Additional Applications with connections to JMRI " target="html.apps.index_addapp"/>
 
  <indexitem text="Anyma DMX " target="html.hardware.anyma.index"/>
- 
+
  <indexitem text="AnyRail " target="html.apps.index_addapp"/>
 
  <indexitem text="AppleScript " target="html.tools.scripting.AppleScript"/>
@@ -43,7 +43,7 @@
 
  </indexitem>
  <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
- 
+
  <indexitem text="CATS (Crandic Automated Traffic System) " target="html.apps.index_addapp"/>
 
  <indexitem text="C/MRI - Hardware, Connection, Tools " target="html.hardware.cmri.CMRI">
@@ -54,7 +54,7 @@
   <indexitem text="Configure Nodes " target="package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame"/>
 
   <indexitem text="Diagnostics " target="package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame"/>
-  
+
   <indexitem text="Byte Communications using Arduinos " target="html.hardware.arduino.ArduinoCMRIByteComm"/>
 
  </indexitem>
@@ -170,7 +170,6 @@
   <indexitem text="Manual " target="manual.index"/>
 
  </indexitem>
- 
  <indexitem text="Digikeijs (Digirails) - Hardware, Connection, Tools " target="html.hardware.digirails.index"/>
 
  <indexitem text="DigiTrainsPro (Throttle for Android) " target="html.apps.index_addapp"/>
@@ -280,7 +279,7 @@
  <indexitem text="Grapevine - Hardware, Connection, Tools " target="html.hardware.grapevine.index"/>
 
  <indexitem text="Hardware, Connecting to " target="html.hardware.index"/>
- 
+
  <indexitem text="Hornby Elite " target="html.hardware.XPressNet.index"/>
 
  <indexitem text="ID Tag " target="html.tools.IdTags"/>
@@ -296,9 +295,8 @@
  <indexitem text="Install JMRI, How To " target="html.setup.index"/>
 
  <indexitem text="InstallTest (Setup on Windows) " target="package.apps.InstallTest.InstallTest"/>
- 
- <indexitem text="Insteon " target="html.hardware.powerline.index"/>
 
+ <indexitem text="Insteon " target="html.hardware.powerline.index"/>
 
  <indexitem text="IntelliJ IDE (Developers) " target="html.doc.Technical.IntelliJ"/>
 
@@ -326,11 +324,11 @@
 
  <indexitem text="Lights " target="html.tools.Lights">
   <indexitem text="What are Lights? " target="html.tools.Lights_what"/>
- 
+
   <indexitem text="Add/Edit a Light " target="package.jmri.jmrit.beantable.LightAddEdit"/>
 
   <indexitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
-  
+
   <indexitem text="Variable Intensity Lights " target="html.tools.Lights_variablelight"/>
 
  </indexitem>
@@ -397,8 +395,6 @@
 
  </indexitem>
  <indexitem text="LRoute " target="html.tools.LRoutes">
-
-                           
   <indexitem text="Add/Edit LRoute " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
 
   <indexitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
@@ -576,7 +572,7 @@
   <indexitem text="RPS Sensors " target="html.hardware.rps.sensors"/>
 
   <indexitem text="Sound Speed Control " target="package.jmri.jmrix.rps.swing.soundset.SoundSetFrame"/>
-  
+
   <indexitem text="Storing Your Work " target="html.apps.StoringYourWork"/>
 
   <indexitem text="Tracking Display " target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame"/>
@@ -757,7 +753,7 @@
  <indexitem text="USB Port " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
  <indexitem text="USB-to-Serial Adapter (Hardware) " target="html.hardware.USBtoSerial"/>
- 
+
  <indexitem text="Variable Intensity Lights " target="html.tools.Lights_variablelight"/>
 
  <indexitem text="Virtual Sound Decoder (VSD) " target="package.jmri.jmrit.vsdecoder.VSDecoderFrame"/>
