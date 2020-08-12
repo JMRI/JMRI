@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.beans.PropertyChangeListener;
 
 import jmri.Light;
+import jmri.LightControl;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -135,14 +136,14 @@ public abstract class AbstractLightTestBase {
     public void testAddLightControls() {
 
         Assert.assertEquals("0 controls attached", 0, t.getLightControlList().size());
-        jmri.implementation.LightControl lc = new jmri.implementation.LightControl(t);
+        LightControl lc = new jmri.implementation.DefaultLightControl(t);
         lc.setControlType(Light.SENSOR_CONTROL);
         t.addLightControl(lc);
         Assert.assertEquals("1 control attached", 1, t.getLightControlList().size());
         t.addLightControl(lc);
         Assert.assertEquals("1 control attached", 1, t.getLightControlList().size());
         Assert.assertEquals("control attached", lc, t.getLightControlList().get(0));
-        t.addLightControl(new jmri.implementation.LightControl(t));
+        t.addLightControl(new jmri.implementation.DefaultLightControl(t));
         Assert.assertEquals("2 controls attached", 2, t.getLightControlList().size());
         Assert.assertNotEquals("2 controls attached", t.getLightControlList().get(0),
                 t.getLightControlList().get(1));

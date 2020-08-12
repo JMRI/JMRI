@@ -37,7 +37,7 @@ public class MqttSensorTest extends jmri.implementation.AbstractSensorTestBase {
                     savePayload = payload;
                 }
             };
-        t = new MqttSensor(a, "MS1", "track/sensor/1");
+        t = new MqttSensor(a, "MS1", "track/sensor/1", "track/sensor/1");
         JUnitAppender.assertWarnMessage("Trying to subscribe before connect/configure is done");
     }
 

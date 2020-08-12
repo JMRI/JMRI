@@ -12,48 +12,18 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.*;
+
+import jmri.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.Audio;
-import jmri.Conditional;
 import jmri.Conditional.Operator;
 import jmri.Conditional.State;
-import jmri.ConditionalAction;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Logix;
-import jmri.NamedBean;
-import jmri.Route;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.logix.OBlock;
@@ -3682,7 +3652,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (lgtx == null) {
                         return false;
                     }
-                    if (!lgtx.isIntensityVariable()) {
+                    if (!(lgtx instanceof VariableLight)) {
                         JOptionPane.showMessageDialog(_editConditionalFrame,
                                 Bundle.getMessage("Error45", name), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),
@@ -3699,7 +3669,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (lgtx == null) {
                         return false;
                     }
-                    if (!lgtx.isTransitionAvailable()) {
+                    if ( !(lgtx instanceof VariableLight) ||
+                            !((VariableLight)lgtx).isTransitionAvailable()) {
                         JOptionPane.showMessageDialog(_editConditionalFrame,
                                 Bundle.getMessage("Error40", name), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),
