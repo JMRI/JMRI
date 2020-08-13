@@ -39,22 +39,37 @@ public class Topology {
     private final String _mReverse;
     private final SignalMastLogicManager _mSignalMastLogicManager = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
     private final LayoutBlockManager _mLayoutBlockManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-    private Block _mStartingBlock = null;
+    private ArrayList<Block> _mStartingBlocks = new ArrayList<>();
     
-    public Topology() { // Temporary for test suite only
+    /**
+     * DO NOT USE, only for test suite!  Object will crash if anything referenced in it.
+     * This constructor will be replaced by something more useful to the test suite
+     * "someday" when the test suite it coded for it.
+     */
+    public Topology() {
         _mCTCSerialData = null;
         _mNormal = null;
         _mReverse = null; 
     }
-    public Topology(CTCSerialData CTCSerialData, String OSSectionOccupiedExternalSensor, String normal, String reverse) {
+    
+    
+    /**
+     * @param CTCSerialData                     The one and only.
+     * @param OSSectionOccupiedExternalSensors  List of sensors to start from.
+     * @param normal                            Bundle.getMessage("TLE_Normal")
+     * @param reverse                           Bundle.getMessage("TLE_Reverse")
+     */
+    public Topology(CTCSerialData CTCSerialData, ArrayList<String> OSSectionOccupiedExternalSensors, String normal, String reverse) {
         _mCTCSerialData = CTCSerialData;
         _mNormal = normal;
         _mReverse = reverse;
-        Sensor startingOSSectionSensor = InstanceManager.getDefault(SensorManager.class).getSensor(OSSectionOccupiedExternalSensor);
-        if (null != startingOSSectionSensor) { // Available:
-            LayoutBlock startingLayoutBlock = _mLayoutBlockManager.getBlockWithSensorAssigned(startingOSSectionSensor);
-            if (null != startingLayoutBlock) { // Available:
-                _mStartingBlock = startingLayoutBlock.getBlock();
+        for (String OSSectionOccupiedExternalSensor : OSSectionOccupiedExternalSensors) {
+            Sensor startingOSSectionSensor = InstanceManager.getDefault(SensorManager.class).getSensor(OSSectionOccupiedExternalSensor);
+            if (null != startingOSSectionSensor) { // Available:
+                LayoutBlock startingLayoutBlock = _mLayoutBlockManager.getBlockWithSensorAssigned(startingOSSectionSensor);
+                if (null != startingLayoutBlock) { // Available:
+                    _mStartingBlocks.add(startingLayoutBlock.getBlock());
+                }
             }
         }
     }
@@ -63,7 +78,7 @@ public class Topology {
     /**
      * @return boolean - true if available, else false.
      */
-    public boolean isTopologyAvailable() { return _mStartingBlock != null; }
+    public boolean isTopologyAvailable() { return !_mStartingBlocks.isEmpty(); }
     
     /**
      * 
@@ -81,14 +96,16 @@ public class Topology {
     
     public ArrayList<TopologyInfo> getTrafficLockingRules(boolean leftTraffic) {
         ArrayList<TopologyInfo> returnValue = new ArrayList<>();
-        for (Path path : _mStartingBlock.getPaths()) {
-            Block neighborBlock = path.getBlock();
-            if (inSameDirectionGenerally(getDirectionArrayListFrom(leftTraffic ? Path.EAST : Path.WEST), path.getToBlockDirection())) {
-                SignalMast facingSignalMast = _mLayoutBlockManager.getFacingSignalMast(neighborBlock, _mStartingBlock);
-                if (null != facingSignalMast) { // Safety
-                    SignalMastLogic facingSignalMastLogic = _mSignalMastLogicManager.getSignalMastLogic(facingSignalMast);
-                    if (null != facingSignalMastLogic) { // Safety
-                        processDestinations(returnValue, facingSignalMastLogic);
+        for (Block startingBlock: _mStartingBlocks) {
+            for (Path path : startingBlock.getPaths()) {
+                Block neighborBlock = path.getBlock();
+                if (inSameDirectionGenerally(getDirectionArrayListFrom(leftTraffic ? Path.EAST : Path.WEST), path.getToBlockDirection())) {
+                    SignalMast facingSignalMast = _mLayoutBlockManager.getFacingSignalMast(neighborBlock, startingBlock);
+                    if (null != facingSignalMast) { // Safety
+                        SignalMastLogic facingSignalMastLogic = _mSignalMastLogicManager.getSignalMastLogic(facingSignalMast);
+                        if (null != facingSignalMastLogic) { // Safety
+                            processDestinations(returnValue, facingSignalMastLogic);
+                        }
                     }
                 }
             }
