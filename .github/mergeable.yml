@@ -12,7 +12,7 @@ mergeable: # see https://github.com/mergeability/mergeable
       - do: checks
         status: 'success' # Supply the default actions, as if this passed.
         payload:
-          title: 'Mergeable Run have been Completed!'
+          title: 'Author assigned'
           summary: "All the validators have returned 'pass'! \n Here are some stats of the run: \n {{validationCount}} validations were ran"
   - when: pull_request.opened
     name: 'Check for release note if help, java/src, jython, resources, xml, or web'
@@ -39,7 +39,7 @@ mergeable: # see https://github.com/mergeability/mergeable
         payload:
           body: > 
             Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
-  - when: schedule.repository
+  - when: schedule.repository, pull_request.opened
     name: 'Allow merge after one day'
     validate:
       - do: stale
@@ -48,4 +48,15 @@ mergeable: # see https://github.com/mergeability/mergeable
     pass:
       - do: comment
         payload:
-          body: This is one day old, and can now be merged if CI approvals OK.
+          body: This is one day old, and can now be merged if CI and reviews allow.
+      - do: checks
+        status: 'success'
+        payload:
+          title: 'PR old enough'
+          summary: "PR over one day old, can be merged."
+    fail:
+      - do: checks
+        status: 'fail'
+        payload:
+          title: 'PR too young'
+          summary: "Waiting for the PR to be one day old."
