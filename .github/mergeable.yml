@@ -1,11 +1,14 @@
 version: 2
 mergeable: # see https://github.com/mergeability/mergeable
   - when: pull_request.opened
-    name: 'Ensure author assigned'
+    name: 'Attempt to assign author'
     validate:
       - do: assignee
         min:
           count: 1 # Should be assigned to somebody; if not, assign author
+    pass:
+      - do: checks
+        status: 'success'
     fail:
       - do: assign
         assignees: [ '@author' ] 
@@ -13,6 +16,12 @@ mergeable: # see https://github.com/mergeability/mergeable
         status: 'success' # Supply the default actions, as if this passed.
         payload:
           title: 'Author assigned'
+  - when: pull_request.opened
+    name: 'Author needs to be assigned'
+    validate:
+      - do: assignee
+        min:
+          count: 1 # Closest we can get to checking for author
   - when: pull_request.opened
     name: 'Check for release note if help, java/src, jython, resources, xml, or web'
     validate:
@@ -33,11 +42,16 @@ mergeable: # see https://github.com/mergeability/mergeable
                 regex: "^xml/"
           - must_include:
               regex: "help/en/releasenotes/current-draft-note.shtml"
+    pass:
+      - do: checks
+        status: 'success'
     fail:
       - do: comment
         payload:
           body: > 
             Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
+      - do: checks
+        status: 'success'
   - when: schedule.repository
     name: 'Allow merge after one day'
     validate:
@@ -45,7 +59,7 @@ mergeable: # see https://github.com/mergeability/mergeable
         days: 1
         type: pull_request
     pass:
-      - do: comment
+      - do: comment  # No initial event, can't actually block merge, so for now we're adding a comment.
         payload:
           body: This is one day old, and can now be merged if CI and reviews allow.
       - do: checks
@@ -60,7 +74,7 @@ mergeable: # see https://github.com/mergeability/mergeable
           title: 'PR too young'
           summary: "Waiting for the PR to be one day old."
   - when: pull_request.*, pull_request_review.*
-    name: 'Checking the approvals'
+    name: 'Approval received, no changes requested'
     validate:
       - do: approvals
         min:
