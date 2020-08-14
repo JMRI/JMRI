@@ -88,6 +88,7 @@ public class PaneProgFrameTest {
 
     @Test
     public void testLoadDecoderFileUpdateMaxFnNum() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create test Element
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
                 .setAttribute("id", "our id 4")
