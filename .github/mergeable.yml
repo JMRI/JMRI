@@ -1,6 +1,6 @@
 version: 2
 mergeable: # see https://github.com/mergeability/mergeable
-  - when: pull_request.opened
+  - when: pull_request.opened, pull_request.assigned, pull_request.unassiged
     name: 'Attempt to assign author'
     validate:
       - do: assignee
@@ -11,17 +11,11 @@ mergeable: # see https://github.com/mergeability/mergeable
         status: 'success'
     fail:
       - do: assign
-        assignees: [ '@author' ] 
+        assignees: [ '@author' ] # this is not assigning if author not a project member see mergeability/mergeable#359
       - do: checks
         status: 'success' # Supply the default actions, as if this passed.
         payload:
           title: 'Author assigned'
-  - when: pull_request.opened
-    name: 'Author needs to be assigned'
-    validate:
-      - do: assignee
-        min:
-          count: 1 # Closest we can get to checking for author
   - when: pull_request.opened
     name: 'Check for release note if help, java/src, jython, resources, xml, or web'
     validate:
@@ -86,3 +80,4 @@ mergeable: # see https://github.com/mergeability/mergeable
         #limit:
         #  teams: ['org/team_slug'] # when the option is present, only the approvals from the team members will count
         #  owners: true # Optional boolean. When true, the file .github/CODEOWNER is read and only owners approval will count
+
