@@ -39,3 +39,13 @@ mergeable: # see https://github.com/mergeability/mergeable
         payload:
           body: > 
             Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
+  - when: schedule.repository
+    name: 'Allow merge after one day'
+    validate:
+      - do: stale
+        days: 1
+        type: pull_request
+    pass:
+      - do: comment
+        payload:
+          body: This is one day old, and can now be merged if CI approvals OK.
