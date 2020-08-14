@@ -53,6 +53,10 @@ abstract public class PaneProgFrame extends JmriJFrame
     JPanel tempPane; // passed around during construction
 
     boolean _opsMode;
+    
+    boolean maxFnNumDirty = false;
+    String maxFnNumOld = "";
+    String maxFnNumNew = "";
 
     RosterEntry _rosterEntry = null;
     RosterEntryPane _rPane = null;
@@ -291,7 +295,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             temp.add(modePane);
         }
         
-        // add add space for (programming) status message
+        // add space for (programming) status message
         bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
         progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         bottom.add(progStatus);
@@ -897,6 +901,22 @@ abstract public class PaneProgFrame extends JmriJFrame
         // load sound names from model
         re.loadSounds(modelElem.getChild("soundlabels"), "model");
 
+        // load maxFnNum from model
+        Attribute a;
+        if ((a = modelElem.getAttribute("maxFnNum")) != null) {
+            maxFnNumOld = re.getMaxFnNum();
+            maxFnNumNew = a.getValue();
+            if (!maxFnNumOld.equals(maxFnNumNew)) {
+                maxFnNumDirty = true;
+                log.info("maxFnNum for \"{}\" changed from {} to {}", re.getId(), maxFnNumOld, maxFnNumNew);
+                String message = java.text.MessageFormat.format(
+                        SymbolicProgBundle.getMessage("StatusMaxFnNumUpdated"),
+                        re.getDecoderFamily(), re.getDecoderModel(), maxFnNumNew);
+                progStatus.setText(message);
+                re.setMaxFnNum(maxFnNumNew);
+            }
+        }
+
     }
 
     protected void loadProgrammerFile(RosterEntry r) {
@@ -954,7 +974,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @return true if file needs to be written
      */
     protected boolean checkDirtyFile() {
-        return (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry) || _flPane.guiChanged(_rosterEntry) || _rMPane.guiChanged(_rosterEntry));
+        return (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry) || _flPane.guiChanged(_rosterEntry) || _rMPane.guiChanged(_rosterEntry) || maxFnNumDirty);
     }
 
     protected void handleDirtyFile() {
@@ -999,6 +1019,9 @@ abstract public class PaneProgFrame extends JmriJFrame
                 // cancel requested
                 return; // without doing anything
             }
+        }
+        if(maxFnNumDirty && !maxFnNumOld.equals("")){ 
+            _rosterEntry.setMaxFnNum(maxFnNumOld);
         }
         // Check for a "<new loco>" roster entry; if found, remove it
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, Bundle.getMessage("LabelNewDecoder"));
@@ -1806,6 +1829,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // mark this as a success
         variableModel.setFileDirty(false);
+        maxFnNumDirty = false;
 
         // and store an updated roster file
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
