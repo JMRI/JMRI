@@ -119,7 +119,8 @@ public class Topology {
      * routine fills in "topologyInfo" with everything it finds from that point on.  Handles intermediate blocks also
      * (ABS, APB, etc.).  Goes until there is no more.
      * 
-     * @param topologyInfos             Entry(s) added to this ArrayList as they are encountered.
+     * @param topologyInfos             Entry(s) added to this ArrayList as they are encountered.  It is NOT cleared first,
+     *                                  as there may be entries from prior calls to this routine in here.
      * @param facingSignalMastLogic     Facing signal mast logic from O.S. section code.
      */
     
