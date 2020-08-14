@@ -907,12 +907,14 @@ abstract public class PaneProgFrame extends JmriJFrame
             maxFnNumOld = re.getMaxFnNum();
             maxFnNumNew = a.getValue();
             if (!maxFnNumOld.equals(maxFnNumNew)) {
-                maxFnNumDirty = true;
-                log.info("maxFnNum for \"{}\" changed from {} to {}", re.getId(), maxFnNumOld, maxFnNumNew);
-                String message = java.text.MessageFormat.format(
-                        SymbolicProgBundle.getMessage("StatusMaxFnNumUpdated"),
-                        re.getDecoderFamily(), re.getDecoderModel(), maxFnNumNew);
-                progStatus.setText(message);
+                if (!re.getId().equals(Bundle.getMessage("LabelNewDecoder"))) {
+                    maxFnNumDirty = true;
+                    log.info("maxFnNum for \"{}\" changed from {} to {}", re.getId(), maxFnNumOld, maxFnNumNew);
+                    String message = java.text.MessageFormat.format(
+                            SymbolicProgBundle.getMessage("StatusMaxFnNumUpdated"),
+                            re.getDecoderFamily(), re.getDecoderModel(), maxFnNumNew);
+                    progStatus.setText(message);
+                }
                 re.setMaxFnNum(maxFnNumNew);
             }
         }
