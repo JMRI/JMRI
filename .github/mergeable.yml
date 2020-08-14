@@ -39,7 +39,7 @@ mergeable: # see https://github.com/mergeability/mergeable
         payload:
           body: > 
             Thanks for the PR. Please consider adding a release note in the help/en/releasenotes/current-draft-note.shtml file.
-  - when: schedule.repository, pull_request.opened
+  - when: schedule.repository
     name: 'Allow merge after one day'
     validate:
       - do: stale
