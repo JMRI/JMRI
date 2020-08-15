@@ -369,11 +369,16 @@ abstract public class PaneProgFrame extends JmriJFrame
     
     
     // Check a single case to see if it's search match
+    // @return true for matched
     private boolean checkSearchTarget(int index, String target) {
         boolean result = false;
         if (searchTargetList.get(index).label != null ) {
             // match label text
-            result = searchTargetList.get(index).label.getText().toUpperCase().contains(target.toUpperCase() );
+            if ( ! searchTargetList.get(index).label.getText().toUpperCase().contains(target.toUpperCase() ) ) {
+                return false;
+            }
+            // only match if showing
+            return searchTargetList.get(index).label.isShowing();
         } else {
             // Match pane label.
             // Finding the tab requires a search here.  Could have passed
