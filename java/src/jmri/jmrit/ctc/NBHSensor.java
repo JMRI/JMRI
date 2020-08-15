@@ -103,7 +103,7 @@ public class NBHSensor {
         }
     }
     
-//????    
+//?????
 //  Use when something else has the thing we help with:
     public NBHSensor(NamedBeanHandle<Sensor> namedBeanHandleSensor) {
         _mUserIdentifier = Bundle.getMessage("Unknown");    // NOI18N
