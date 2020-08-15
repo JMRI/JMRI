@@ -213,7 +213,16 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Added LokPilot 5 Fx micro Next18 variants and Pullman Silberling.</li>
+            </ul>
+            <ul>
+                <li>Update for some new ESU firmware features.</li>
+            </ul>
+            <ul>
+                <li>Fix some errors.</li>
+            </ul>
+            <ul>
+                <li>F29-F31 now present in Function Labels pane for generation 5 decoders.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -364,6 +373,25 @@
                 occurance. Shift-Ctrl-G or Shift-Cmd-G will find the next occurrence going backwards.
                 The "Done" button will dismiss the 
                 bar, but you can leave it up without it interferring with anything.
+            </li>
+            <li>Added a new optional "maxFnNum" model-level attribute for Decoder Definitions.
+                <ul>
+                    <li>
+                        Specifies the highest F key supported by the decoder. The assumed default is "28".
+                    </li>
+                    <li>
+                        Note that `maxFnNum` is not to be confused with the existing `numFns`, a legacy attribute that limits the total number of function mapping lines displayed. Neither is derivable from the other.
+                    </li>
+                    <li>
+                        This value is currently used to build the Function Labels pane.
+                    </li>
+                   <li>
+                        This value is propagated to the Roster Index and intended to be used in future by throttles, etc.
+                    </li>
+                    <li>
+                        Example definitions are LokSound 5(uses F0-F31) and LokSound V3.5(uses only F0-F15).
+                    </li>
+                </ul>
             </li>
         </ul>
 
