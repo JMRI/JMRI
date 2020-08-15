@@ -77,6 +77,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String DECODER_MODEL = "decodermodel"; // NOI18N
     public static final String DECODER_FAMILY = "decoderfamily"; // NOI18N
     public static final String DECODER_COMMENT = "decodercomment"; // NOI18N
+    public static final String DECODER_MAXFNNUM = "decodermaxFnNum"; // NOI18N
+    public static final String DEFAULT_MAXFNNUM = "28"; // NOI18N
     public static final String IMAGE_FILE_PATH = "imagefilepath"; // NOI18N
     public static final String ICON_FILE_PATH = "iconfilepath"; // NOI18N
     public static final String URL = "url"; // NOI18N
@@ -107,6 +109,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _decoderModel = "";
     protected String _decoderFamily = "";
     protected String _decoderComment = "";
+    protected String _maxFnNum = DEFAULT_MAXFNNUM;
     protected String _dateUpdated = "";
     protected Date dateModified = null;
     protected int _maxSpeedPCT = 100;
@@ -117,13 +120,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @deprecated 4.17.1 to be removed in ??
      */
     @Deprecated
-    public static final int MAXFNNUM = 28;
+    public static final int MAXFNNUM = Integer.parseInt(DEFAULT_MAXFNNUM);
 
     /**
      * Get the highest valid Fn key number for this roster entry.
      * <dl>
-     * <dt>The default value (28) will eventually be able to be overridden in a
-     * decoder definition file:</dt>
+     * <dt>The default value (28) can be overridden by a "maxFnNum" attribute in
+     * the "model" element of a decoder definition file</dt>
      * <dd><ul>
      * <li>A European standard (RCN-212) extends NMRA S9.2.1 up to F68.</li>
      * <li>ESU LokSound 5 already uses up to F31.</li>
@@ -135,7 +138,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @see "http://normen.railcommunity.de/RCN-212.pdf"
      */
     public int getMAXFNNUM() {
-        return MAXFNNUM;
+        return Integer.parseInt(getMaxFnNum());
     }
 
     protected Map<Integer, String> functionLabels;
@@ -465,6 +468,16 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return _decoderComment;
     }
 
+    public void setMaxFnNum(String s) {
+        String old = _maxFnNum;
+        _maxFnNum = s;
+        firePropertyChange(RosterEntry.DECODER_MAXFNNUM, old, s);
+    }
+
+    public String getMaxFnNum() {
+        return _maxFnNum;
+    }
+
     @Override
     public DccLocoAddress getDccLocoAddress() {
         int n;
@@ -763,6 +776,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             if ((a = d.getAttribute("comment")) != null) {
                 _decoderComment = a.getValue();
             }
+            if ((a = d.getAttribute("maxFnNum")) != null) {
+                _maxFnNum = a.getValue();
+            }
         }
 
         loadFunctions(e.getChild("functionlabels"), "RosterEntry");
@@ -915,7 +931,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Set the label for a specific function
+     * Set the label for a specific function.
      *
      * @param fn    function number, starting with 0
      * @param label the label to use
@@ -1164,6 +1180,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         d.setAttribute("model", getDecoderModel());
         d.setAttribute("family", getDecoderFamily());
         d.setAttribute("comment", getDecoderComment());
+        d.setAttribute("maxFnNum", getMaxFnNum());
 
         e.addContent(d);
         if (_dccAddress.isEmpty()) {
@@ -1517,7 +1534,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param w the HardcopyWriter used to print
      */
     public void printEntryDetails(Writer w) {
-        if (!(w instanceof HardcopyWriter)){
+        if (!(w instanceof HardcopyWriter)) {
             throw new IllegalArgumentException("No HardcopyWriter instance passed");
         }
         int linesadded = -1;

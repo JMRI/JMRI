@@ -444,6 +444,14 @@
                     This optional attribute limits the total number of function mapping lines displayed. 
             </xs:documentation></xs:annotation>
           </xs:attribute>
+          <xs:attribute name="maxFnNum" type="xs:int" default="28">
+            <xs:annotation><xs:documentation>
+                This is the highest F key number that will appear in the Function Labels Pane and throttles:
+                    It was originally 28 as per NMRA standards. Many decoders didn't support the whole range F0-F28.
+                    European standards now allow up to 68, i.e. the range F0-F68.
+                Note that this is unrelated to "numFns", which limits the total number of function mapping lines displayed. 
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="numOuts" type="xs:int" >
             <xs:annotation><xs:documentation>
                 Number of physical outputs (wires) on the decoder.
