@@ -7370,6 +7370,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // which calls draw.
         // This is so the layout is drawn at level three
         // (above or below the Positionables)
+        g.setClip(MathUtil.zeroToInfinityRectangle2D);
     }
 
     // get selection rectangle
