@@ -43,21 +43,19 @@ class LayoutEditorComponent extends JComponent {
     @Override
     public void paint(Graphics g) {
         if (g instanceof Graphics2D) {
-            // layoutEditor.draw((Graphics2D) g);
-
             Graphics2D g2 = (Graphics2D) g;
 
-            if (clipBounds != null) {
-                if (!clipBounds.isEmpty()) {
-                    if ((clipBounds.getWidth() > 0) && (clipBounds.getHeight() > 0)) {
-                        if (!clipBounds.equals(g2.getClipBounds())) {
-                            //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
-                            //        clipBounds, g2.getClipBounds());
-                            g2.setClip(clipBounds);
-                        }
-                    }
+            if ((clipBounds != null) && (!clipBounds.isEmpty())) {
+                Rectangle2D oldClipBounds = g2.getClipBounds();
+                if (!clipBounds.equals(oldClipBounds)) {
+                    Rectangle2D newClipBounds = (Rectangle2D) oldClipBounds.clone();
+                    newClipBounds.add(clipBounds);
+                    //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}", newClipBounds: {}",
+                    //        clipBounds, oldClipBounds, newClipBounds);
+                    g2.setClip(newClipBounds);
                 }
             }
+
             // Optional antialising, to eliminate (reduce) staircase on diagonal lines
             if (layoutEditor.antialiasingOn) {
                 g2.setRenderingHints(antialiasing);
