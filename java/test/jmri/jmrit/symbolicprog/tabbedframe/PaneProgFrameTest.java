@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.DocType;
@@ -81,6 +83,105 @@ public class PaneProgFrameTest {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
+    }
+
+    @Test
+    public void testLoadDecoderFileUpdateMaxFnNum() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // create test Element
+        org.jdom2.Element e = new org.jdom2.Element("locomotive")
+                .setAttribute("id", "our id 4")
+                .setAttribute("fileName", "file here")
+                .setAttribute("roadNumber", "431")
+                .setAttribute("roadName", "SP")
+                .setAttribute("mfg", "Athearn")
+                .setAttribute("dccAddress", "1234")
+                .addContent(new org.jdom2.Element("decoder")
+                        .setAttribute("family", "91")
+                        .setAttribute("model", "33")
+                        .setAttribute("comment", "decoder comment")
+                ); // end create element
+
+        RosterEntry r = new RosterEntry(e) { // a temporary storage, need to override some methods
+            @Override
+            protected void warnShortLong(String s) {
+            }
+
+            @Override
+            public void loadFunctions(Element e3, String source) {
+            }
+
+            @Override
+            public void loadSounds(Element e3, String source) {
+            }
+
+            @Override
+            public void updateFile() {
+            }
+
+            @Override
+            public void writeFile(CvTableModel cvModel, VariableTableModel variableModel) {
+            }
+        };
+
+        org.jdom2.Element o = r.store();
+
+        // check test attributes are loaded
+        Assert.assertEquals("XML Element ", e.toString(), o.toString());
+        Assert.assertEquals("family ", "91", o.getChild("decoder").getAttribute("family").getValue());
+        Assert.assertEquals("model ", "33", o.getChild("decoder").getAttribute("model").getValue());
+        Assert.assertEquals("comment", "decoder comment", o.getChild("decoder").getAttribute("comment").getValue());
+        Assert.assertEquals("default maxFnNum is loaded", "28", o.getChild("decoder").getAttribute("maxFnNum").getValue());
+
+        // ugly, temporary way to load the decoder info
+        jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest();
+        t.setupDecoder();
+        DecoderFile df = new DecoderFile() { // a temporary storage, need to override some methods
+            @Override
+            public String getFileName() {
+                return "0NMRA_test.xml";
+            }
+
+            @Override
+            public String getProductID() {
+                return getModelElement().getAttributeValue("productID");
+            }
+
+            @Override
+            public Element getModelElement() {
+                return t.model;
+            }
+        };
+
+        setupDoc();
+        PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
+                "test frame", "programmers/Basic.xml",
+                new jmri.progdebugger.ProgDebugger(), false) {
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+
+            @Override
+            protected boolean checkDirtyDecoder() {
+                return false;
+            }
+
+            @Override
+            protected boolean checkDirtyFile() {
+                return false;
+            }
+        };
+
+        df.loadVariableModel(t.decoder, p.variableModel);
+        p.loadDecoderFile(df, r);
+        o = r.store();
+
+        Assert.assertEquals("model maxFnNum ", "31", t.model.getAttribute("maxFnNum").getValue());
+        Assert.assertEquals("roster entry maxFnNum ", "31", o.getChild("decoder").getAttribute("maxFnNum").getValue());
+
         p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
