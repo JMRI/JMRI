@@ -227,6 +227,111 @@ public class NmraPacketTest {
     }
 
     @Test
+    public void testF29F36A() {
+        // "typical packet" test, short address
+        byte[] ba = NmraPacket.function29Through36Packet(60, false, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0xD8, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x3C ^ 0xD8 ^ 0x55, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testF29F36B() {
+        // "typical packet" test, long address
+        byte[] ba = NmraPacket.function29Through36Packet(2065, true, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0xD8, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
+        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xD8 ^ 0x55, ba[4] & 0xFF);
+    }
+
+    @Test
+    public void testF37F44A() {
+        // "typical packet" test, short address
+        byte[] ba = NmraPacket.function37Through44Packet(60, false, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0xD9, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x3C ^ 0xD9 ^ 0x55, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testF37F44B() {
+        // "typical packet" test, long address
+        byte[] ba = NmraPacket.function37Through44Packet(2065, true, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0xD9, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
+        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xD9 ^ 0x55, ba[4] & 0xFF);
+    }
+
+    @Test
+    public void testF45F52A() {
+        // "typical packet" test, short address
+        byte[] ba = NmraPacket.function45Through52Packet(60, false, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0xDA, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x3C ^ 0xDA ^ 0x55, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testF45F52B() {
+        // "typical packet" test, long address
+        byte[] ba = NmraPacket.function45Through52Packet(2065, true, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0xDA, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
+        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xDA ^ 0x55, ba[4] & 0xFF);
+    }
+
+    @Test
+    public void testF53F60A() {
+        // "typical packet" test, short address
+        byte[] ba = NmraPacket.function53Through60Packet(60, false, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0xDB, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x3C ^ 0xDB ^ 0x55, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testF53F60B() {
+        // "typical packet" test, long address
+        byte[] ba = NmraPacket.function53Through60Packet(2065, true, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0xDB, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
+        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xDB ^ 0x55, ba[4] & 0xFF);
+    }
+
+    @Test
+    public void testF61F68A() {
+        // "typical packet" test, short address
+        byte[] ba = NmraPacket.function61Through68Packet(60, false, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0x3C, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0xDC, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0x55, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x3C ^ 0xDC ^ 0x55, ba[3] & 0xFF);
+    }
+
+    @Test
+    public void testF61F68B() {
+        // "typical packet" test, long address
+        byte[] ba = NmraPacket.function61Through68Packet(2065, true, true, false, true, false, true, false, true, false);
+        Assert.assertEquals("first byte ", 0xC8, ba[0] & 0xFF);
+        Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
+        Assert.assertEquals("third byte ", 0xDC, ba[2] & 0xFF);
+        Assert.assertEquals("fourth byte ", 0x55, ba[3] & 0xFF);
+        Assert.assertEquals("fifth byte ", 0xC8 ^ 0x11 ^ 0xDC ^ 0x55, ba[4] & 0xFF);
+    }
+
+    @Test
     public void testConsist1() {
         // "typical packet" test
         byte[] ba = NmraPacket.consistControl(60, false, 1, true);
@@ -1530,7 +1635,6 @@ public class NmraPacketTest {
         Assert.assertEquals("byte 4", 0x66, ba[4] & 0xFF);
         Assert.assertEquals("byte 5", 0x32, ba[5] & 0xFF);
     }
-
 
     @Test
     public void testExtractAddressTypeAcc() {
