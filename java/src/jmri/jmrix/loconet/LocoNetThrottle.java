@@ -40,12 +40,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     // so we must use our last send spd.
     protected int throt_spd;
 
-    // members to record the last known spd/dirf/snd bytes AS READ FROM THE LAYOUT!!
-    protected int throttle_spd;
-    protected int throttle_dirf;
-    protected int throttle_snd;
-    protected int throttle_stat1 = 0;
-  
     // slot status to be warned if slot released or dispatched
     protected int slotStatus;
     protected boolean isDisposing = false;
@@ -75,10 +69,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // in the new digitrax protocol, the throttle, with the right ID, is the authority, not the command station
         // speed and direction are sent in a single message, so you must sent the same direction or speed as was done last time
         throt_spd = slot.snd();
- 
+
         // cache settings
         this.speedSetting = floatSpeed(slot.speed());
-        
+      
         for (int i = 0; i < 29; i++) {
             super.updateFunction(i,slot.isFunction(i));
         }

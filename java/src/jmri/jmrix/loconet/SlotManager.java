@@ -310,7 +310,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             slot = _slots[i];
             if (!slot.isSystemSlot()) {
                 if ((slot.slotStatus() == LnConstants.LOCO_IN_USE || slot.slotStatus() == LnConstants.LOCO_COMMON)
-                        && (slot.getLastUpdateTime() <= staleTimeout)) {
+                    && (slot.getLastUpdateTime() <= staleTimeout)) {
                     sendReadSlot(i);
                     break; // only send the first one found
                 }
@@ -633,7 +633,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     return i;
                 }
                 break;
-
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:
             case LnConstants.OPC_EXP_SLOT_MOVE:
                 i = ( (m.getElement(1) & 0x03 ) *128) + m.getElement(2);
@@ -988,6 +987,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mProgEndSequence = value.getProgPowersOff();
         if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS240)) {
             numSlots = SLOTS_DCS240;
+            slotMap = Arrays.asList((new SlotMapEntry(0,432)));
         } else {
             numSlots = SLOTS_OTHER;
         }
@@ -1553,12 +1553,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(LnConstants.OPC_RQ_SL_DATA);
         m.setElement(1, slot & 0x7F);
+        // Slots greater than 127 are always expanded
         if (slot > 127) {
-            m.setElement(2, (slot / 128 ) & 0b00000111 );
-            // and se t expanded format wanted
-            m.setElement(2, m.getElement(2) | 0x40) ;
-        } else {
+            m.setElement(2, (slot / 128 ) & 0b00000111 | 0x40 );
+        // Unknown or protocal one are always short
+        // System slots less than 128 are always short slot requests
+        } else if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO || _slots[slot].isSystemSlot()) {
             m.setElement(2, 0);
+        // all else expanded
+        } else {
+            m.setElement(2, (slot / 128 ) & 0b00000111 | 0x40 );
         }
         tc.sendLocoNetMessage(m);
     }
@@ -1650,7 +1654,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public boolean getTranspondingAvailable() { return transpondingAvailable; }
 
     /**
-     * 
+     *
      * @param val If false then we only use protocol one.
      */
     public void setLoconetProtocolAutoDetect(boolean val) {

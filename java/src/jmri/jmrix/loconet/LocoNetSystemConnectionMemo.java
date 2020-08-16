@@ -140,8 +140,8 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
-            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
-            boolean mLoconetProtocolAutoDetect) {
+                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
+                                            boolean mLoconetProtocolAutoDetect) {
 
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
@@ -345,11 +345,11 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             tm.dispose();
             tm = null;
         }
-        if (sm != null) {
+        if (sm != null){
             sm.dispose();
             sm = null;
         }
-        if (lt != null) {
+        if (lt != null){
             lt.dispose();
             lt = null;
         }

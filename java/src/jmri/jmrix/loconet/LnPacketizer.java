@@ -456,7 +456,9 @@ public class LnPacketizer extends LnTrafficController {
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
-        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        if (xmtThread == null) {
+            xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        }
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);

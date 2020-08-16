@@ -4703,6 +4703,9 @@ public class LocoNetMessageInterpret {
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
                 hwType = "DCS210";
                 break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                hwType = "DCS52";
+                break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
                 hwType = "BXP88";
                 break;

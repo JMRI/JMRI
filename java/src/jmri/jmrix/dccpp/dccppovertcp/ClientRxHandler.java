@@ -133,7 +133,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         }
 
         InstanceManager.getDefault(Server.class).removeClient(this);
-        log.info("ClientRxHandler: Exiting");
+        //log.info("ClientRxHandler: Exiting");
     }
 
     public void close() {

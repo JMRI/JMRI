@@ -222,7 +222,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
                 slotForAddress.put(s.locoAddr(),s);
                 notifyStealRequest(s.locoAddr());
                 return;
-           }
+            }
         }
         commitToAcquireThrottle(s);
     }

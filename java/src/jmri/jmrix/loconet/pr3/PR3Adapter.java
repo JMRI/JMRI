@@ -78,7 +78,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mLoconetProtocolAutoDetect);  
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mLoconetProtocolAutoDetect);
             this.getSystemConnectionMemo().configureManagersPR2();
 
             // start operation

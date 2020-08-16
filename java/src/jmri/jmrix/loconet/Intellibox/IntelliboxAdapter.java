@@ -44,7 +44,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mLoconetProtocolAutoDetect);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable,false);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

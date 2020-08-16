@@ -74,7 +74,7 @@ public class LocoNetSlot {
     /**
      * Creates a slot object based on the contents of a LocoNet message.
      * The slot number is assumed to be found in byte 2 of the message if message is 0xE6 or bytes 2 and 3 for 0xE7
-     *
+     * <p>
      * @param l  a LocoNet message
      * @throws LocoNetException if the slot does not have an easily-found
      * slot number
@@ -945,13 +945,13 @@ public class LocoNetSlot {
                 if (slot != l.getElement(2)) {
                     log.error("Asked to handle message not for this slot ({}) {}", slot, l);
                 }
-                
+
                 if ((l.getElement(7) & 0b01000000) == 0b01000000) {
                     loconetProtocol = LnConstants.LOCONETPROTOCOL_TWO;
                 } else {
                     loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
                 }
-          
+
                 stat = l.getElement(3);
                 _pcmd = l.getElement(4);
                 addr = l.getElement(4) + 128 * l.getElement(9);
