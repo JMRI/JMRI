@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.dccpp.DCCppConstants;
-
 /**
  * Constants to represent values seen in LocoNet traffic.
  * <p>

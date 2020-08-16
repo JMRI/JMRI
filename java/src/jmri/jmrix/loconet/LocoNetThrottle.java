@@ -35,6 +35,17 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected int layout_snd;
     protected int layout_stat1 = 0;
 
+    // with extendedslots the slot may not have been updated by the time a direction change happens
+    // which causes the speed to be resent
+    // so we must use our last send spd.
+    protected int throt_spd;
+
+    // members to record the last known spd/dirf/snd bytes AS READ FROM THE LAYOUT!!
+    protected int throttle_spd;
+    protected int throttle_dirf;
+    protected int throttle_snd;
+    protected int throttle_stat1 = 0;
+  
     // slot status to be warned if slot released or dispatched
     protected int slotStatus;
     protected boolean isDisposing = false;
@@ -60,6 +71,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         layout_dirf = slot.dirf();
         layout_snd = slot.snd();
 
+        // save the last sent values for speed and direction
+        // in the new digitrax protocol, the throttle, with the right ID, is the authority, not the command station
+        // speed and direction are sent in a single message, so you must sent the same direction or speed as was done last time
+        throt_spd = slot.snd();
+ 
         // cache settings
         this.speedSetting = floatSpeed(slot.speed());
         
@@ -97,7 +113,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         slot.addSlotListener(this);
 
         network.sendLocoNetMessage(slot.writeNullMove());
-        
+
         // start periodically sending the speed, to keep this
         // attached
         startRefresh();
@@ -466,7 +482,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     /**
      * Send the LocoNet message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
-     * Unfortunately this is used by all throttles to send direction changes, but the expanded slots dont use this 
+     * Unfortunately this is used by all throttles to send direction changes, but the expanded slots dont use this
      * for direction changes, they use speed... And we don't know if the caller wants to send functions or direction.
      */
     @Override
@@ -643,7 +659,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (isForward ? 0x00 : 0x08));
         msg.setElement(2, slot.getSlot() & 0x7f);
         msg.setElement(3, (slot.id() & 0x7f));
-        msg.setElement(4, slot.speed());
+        msg.setElement(4, throt_spd);   // last sent speed. Cannot use slot as it may not be uptodate.
         network.sendLocoNetMessage(msg);
     }
     /**
@@ -703,9 +719,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // decide whether to send a new LocoNet message
         boolean sendLoconetMessage = false;
-        if (new_spd != layout_spd) {
+        if (new_spd != layout_spd || new_spd != throt_spd) {
             // the new speed is different - send a message
             sendLoconetMessage = true;
+            throt_spd = new_spd;       // save for a direction change before slot updated.
         } else if (allowDuplicates) {
             // calling method wants a new mesage sent regardless
             sendLoconetMessage = true;
@@ -720,12 +737,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 LocoNetMessage msg = new LocoNetMessage(4);
                 msg.setOpCode(LnConstants.OPC_LOCO_SPD);
                 msg.setElement(1, slot.getSlot());
-                log.debug(""setSpeedSetting: float speed: {} LocoNet speed: {}", speed, new_spd);
+                log.debug("setSpeedSetting: float speed: {} LocoNet speed: {}", speed, new_spd);
                 msg.setElement(2, new_spd);
                 network.sendLocoNetMessage(msg);
             } else {
                 LocoNetMessage msg = new LocoNetMessage(6);
                 msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+                // We cannot use the slot for direction, the slot may not yet be updated
                 msg.setElement(1, ((slot.getSlot() / 128) & 0x03) | (isForward ? 0x00 : 0x08));
                 msg.setElement(2, slot.getSlot() & 0x7f);
                 msg.setElement(3, (slot.id() & 0x7f));
@@ -765,9 +783,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         } else {
             sendExpSpeedAndDirection();
         }
-        if (old != this.isForward) {
-            notifyPropertyChangeListener(ISFORWARD, old, this.isForward);
-        }
+        firePropertyChange(ISFORWARD, old, this.isForward);
     }
 
     /**

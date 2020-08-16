@@ -196,9 +196,9 @@ public abstract class AbstractMonPane extends JmriPanel {
         } catch (NullPointerException e1) {
             // leave blank if previous value not retrieved
         }
-        //automatically uppercase input in filterField, and only accept spaces and valid hex characters
+        //automatically uppercase input in filterField, and only accept spaces, valid hex characters and  a singl;e exclamation mark for inversion.
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            final private static String PATTERN = "[0-9a-fA-F ]*+"; // typing inserts individual characters
+            final private static String PATTERN = "\\!?[0-9a-fA-F ]*+"; // typing inserts individual characters
 
             @Override
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,
@@ -502,16 +502,30 @@ public abstract class AbstractMonPane extends JmriPanel {
      */
     protected boolean isFiltered(String raw) {
         String checkRaw = getOpCodeForFilter(raw);
-        //don't bother to check filter if no raw value passed
+        // don't bother to check filter if no raw value passed
         if (raw != null) {
-            // if first bytes are in the skip list,  exit without adding to the Swing thread
+            // if first bytes are in the skip list, exit without adding to the
+            // Swing thread
             String[] filters = filterField.getText().toUpperCase().split(" ");
+            boolean negate = (filters[0].equals("!"));
 
             for (String s : filters) {
-                if (s.equals(checkRaw)) {
-                    linesBuffer.setLength(0);
-                    return true;
+                if (!s.equals("!")) {
+                    if (negate) {
+                        if (s.contains(checkRaw)) {
+                            return false;
+                        }
+                    } else {
+                        if (s.equals(checkRaw)) {
+                            linesBuffer.setLength(0);
+                            return true;
+                        }
+                    }
                 }
+            }
+            if (negate) {
+                linesBuffer.setLength(0);
+                return true;
             }
         }
         return false;

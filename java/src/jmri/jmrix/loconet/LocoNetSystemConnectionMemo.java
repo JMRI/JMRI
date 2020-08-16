@@ -85,8 +85,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      */
     public SlotManager getSlotManager() {
         if (sm == null) {
-            log.debug("slot manager is null, but there should always be a valid SlotManager",
-                    new Exception("Traceback"));
+            log.debug("slot manager is null, but there should always be a valid SlotManager", new Exception("Traceback"));
         }
         return sm;
     }
@@ -130,13 +129,15 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     /**
      * Configure the programming manager and "command station" objects.
      *
-     * @param type Command station type, used to configure various operations
-     * @param mTurnoutNoRetry Is the user configuration set for no turnout
-     *            operation retries?
+     * @param type               Command station type, used to configure various
+     *                           operations
+     * @param mTurnoutNoRetry    Is the user configuration set for no turnout
+     *                           operation retries?
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
      *                                  transopnding reports
+     * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
