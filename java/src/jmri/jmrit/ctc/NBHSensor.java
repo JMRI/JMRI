@@ -1,7 +1,10 @@
 package jmri.jmrit.ctc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -81,6 +84,7 @@ public class NBHSensor {
     private final String _mUserIdentifier;
     private final String _mParameter;
     private final boolean _mOptional;
+    private final ArrayList<PropertyChangeListener> _mArrayListOfPropertyChangeListeners = new ArrayList<>();
     public Sensor getBean() {
         if (valid()) return _mNamedBeanHandleSensor.getBean();
         return null;
@@ -159,11 +163,13 @@ public class NBHSensor {
     public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
         if (_mNamedBeanHandleSensor == null) return;
         _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(propertyChangeListener);
+        _mArrayListOfPropertyChangeListeners.add(propertyChangeListener);
     }
 
     public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
         if (_mNamedBeanHandleSensor == null) return;
         _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyChangeListener);
+        _mArrayListOfPropertyChangeListeners.remove(propertyChangeListener);
     }
     
 //  Support for "Grand Unification" (Editor support):
@@ -173,8 +179,8 @@ public class NBHSensor {
      * For Editor support:
      * @return The display name of the Sensor (getDisplayName()).
      */
-    public String getEditorDisplayName() {
-        return _mNamedBeanHandleSensor.getBean().getDisplayName();
+    public String getHandleName() {
+        return _mNamedBeanHandleSensor.getName();
     }
 
     /**
@@ -184,13 +190,12 @@ public class NBHSensor {
      * 
      * @param newName The new name of the object to use.
      */    
-    public void setEditorDisplayName(String newName) {
-        if (getEditorDisplayName().compareTo(newName) == 0) { // User changed their minds about which Sensor to use (NOT a rename!):
+    public void setHandleName(String newName) {
+        if (getHandleName().compareTo(newName) != 0) { // User changed their minds about which Sensor to use (NOT a rename!):
 
-//  Save and unlink the propertyChangeListeners from the old Sensor:            
-            PropertyChangeListener[] propertyChangeListeners = _mNamedBeanHandleSensor.getBean().getPropertyChangeListeners();      // Stash away all exiting listeners.
-            for (PropertyChangeListener propertyChangeListener : propertyChangeListeners) {  // Now remove ALL of them (probably only 1)
-                removePropertyChangeListener(propertyChangeListener);
+//  Save and unlink OUR propertyChangeListeners ONLY from the old Sensor:            
+            for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
+                _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyChangeListener);
             }
 
 //  Allocate and replace the existing sensor (away with thee old sensor!)            
@@ -201,10 +206,20 @@ public class NBHSensor {
                 _mNamedBeanHandleSensor = null;
             }
 
-//  Relink in the propertyChangeListeners to the NEW sensor:
-            for (PropertyChangeListener propertyChangeListener : propertyChangeListeners) {  // Now remove ALL of them (probably only 1)
-                addPropertyChangeListener(propertyChangeListener);
+//  Relink OUR registered propertyChangeListeners to the NEW sensor:
+            for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
+                _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(propertyChangeListener);
             }
         }
+    }
+    
+    
+    /**
+     * For Unit testing only.
+     * @return Returns the present number of property change listeners registered with us so far.
+     */    
+    
+    public int testingGetCountOfPropertyChangeListenersRegistered() {
+        return _mArrayListOfPropertyChangeListeners.size();
     }
 }
