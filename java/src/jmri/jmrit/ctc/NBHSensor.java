@@ -176,7 +176,6 @@ public class NBHSensor {
     
     
     /**
-     * For Editor support:
      * @return The display name of the Sensor (getDisplayName()).
      */
     public String getHandleName() {
@@ -184,8 +183,7 @@ public class NBHSensor {
     }
 
     /**
-     * For Editor support:
-     * Set the new name.  IF (and only if) the name changes, then we do EVERYTHING
+     * Set the new sensor name to use.  IF (and only if) the name changes, then we do EVERYTHING
      * required to support the name change.
      * 
      * @param newName The new name of the object to use.
