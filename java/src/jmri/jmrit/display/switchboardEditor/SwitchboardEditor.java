@@ -39,11 +39,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.NamedBeanUsageReport;
+import jmri.*;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -422,34 +418,18 @@ public class SwitchboardEditor extends Editor {
         log.debug("_hideUnconnected = {}", hideUnconnected());
         String name;
         BeanSwitch _switch;
-        NamedBean nb;
         log.debug("_manu = {}", manuPrefix);
-        String _insert = "";
-        if (manuPrefix.startsWith("M")) {
-            _insert = "+"; // for CANbus.MERG On event
-        }
-        for (int i = min; i <= max; i++) {
-            switch (beanType) {
-                case 0:
-                    name = manuPrefix + "T" + _insert + i;
-                    nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(name);
-                    break;
-                case 1:
-                    name = manuPrefix + "S" + _insert + i;
-                    nb = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
-                    break;
-                case 2:
-                    name = manuPrefix + "L" + _insert + i;
-                    nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
-                    break;
-                default:
-                    log.error("addSwitchRange: cannot parse bean name. manuPrefix = {}; i = {}", manuPrefix, i);
-                    return;
-            }
+
+        List<NamedBean> beans;
+        if (getNameFormat(beanType, min, manuPrefix)) beans = getNamedBeansByName(beanType, manuPrefix, min, max);
+        else beans = getNamedBeansInOrder(beanType, manuPrefix, min, max);
+        
+        int i = min;
+        for (NamedBean nb : beans) {
             if (nb == null && hideUnconnected()) {
                 continue; // skip i
             }
-            _switch = new BeanSwitch(i, nb, name, switchShape, this); // add button instance i
+            _switch = new BeanSwitch(i, nb, nb.getSystemName(), switchShape, this); // add button instance i
             if (nb == null) {
                 _switch.setEnabled(false); // not connected
             } else {
@@ -457,16 +437,115 @@ public class SwitchboardEditor extends Editor {
                 _switch.displayState(nb.getState());
             }
             switchboardLayeredPane.add(_switch);
-            switchlist.add(name); // add to total number of switches on JLayeredPane
-            log.debug("Added switch {}", name);
+            switchlist.add(nb.getSystemName()); // add to total number of switches on JLayeredPane
+            log.debug("Added switch {}", nb.getSystemName());
             // keep total number of switches below practical total of 400 (20 x 20 items)
             if (switchlist.size() >= unconnectedRangeLimit) {
                 log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
                 break;
             }
+            i++;
         }
     }
 
+    // check name validity
+    boolean getNameFormat(int beanType, int min, String manuPrefix) {
+        // we check the "min" case
+        String name;
+        try {
+            switch (beanType) {
+                // calls throw BadSystemNameException if not valid
+                case 0:
+                    name = manuPrefix + "T" + min;
+                    jmri.InstanceManager.turnoutManagerInstance().validateSystemNameFormat(name);
+                case 1:
+                    name = manuPrefix + "S" + min;
+                    jmri.InstanceManager.sensorManagerInstance().validateSystemNameFormat(name);
+                case 2:
+                    name = manuPrefix + "L" + min;
+                    jmri.InstanceManager.lightManagerInstance().validateSystemNameFormat(name);
+                default:
+                    log.debug("getNameFormat: didn't match or parse bean name. manuPrefix = {}", manuPrefix);
+                    return false;
+            }
+        } catch (NamedBean.BadSystemNameException e) {
+            return false;
+        }
+    }
+    
+    
+    // get a list from system names made with an int suffix
+    List<NamedBean> getNamedBeansByName(int beanType, String manuPrefix, int min, int max) {
+        ArrayList<NamedBean> retval = new ArrayList<>();
+        NamedBean nb;
+        String name;
+    
+        for (int i = min; i <= max; i++) {
+            switch (beanType) {
+                case 0:
+                    name = manuPrefix + "T" + i;
+                    nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(name);
+                    break;
+                case 1:
+                    name = manuPrefix + "S" + i;
+                    nb = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
+                    break;
+                case 2:
+                    name = manuPrefix + "L" + i;
+                    nb = jmri.InstanceManager.lightManagerInstance().getLight(name);
+                    break;
+                default:
+                    log.debug("addSwitchRange: didn't match or parse bean name. manuPrefix = {}; i = {}", manuPrefix, i);
+                    nb = null;
+            }
+            retval.add(nb);
+        }
+        return retval;
+    }
+
+    // just take the nth through mth that match the prefix
+    List<NamedBean> getNamedBeansInOrder(int beanType, String manuPrefix, int min, int max) {
+        ArrayList<NamedBean> retval = new ArrayList<>();
+        NamedBean nb;
+        int index = 0;
+        switch (beanType) {
+            case 0:
+                for (Turnout t : jmri.InstanceManager.turnoutManagerInstance().getNamedBeanSet()) {
+                    if (! t.getSystemName().startsWith(manuPrefix)) continue;
+                    index++; // one based
+                    if (min <= index) {
+                        retval.add(t);
+                    } 
+                    if (index>=max) break;
+                }
+                break;
+            case 1:
+                for (Sensor t : jmri.InstanceManager.sensorManagerInstance().getNamedBeanSet()) {
+                    if (! t.getSystemName().startsWith(manuPrefix)) continue;
+                    index++; // one based
+                    if (min <= index) {
+                        retval.add(t);
+                    } 
+                    if (index>=max) break;
+                }
+                break;
+            case 2:
+                for (Light t : jmri.InstanceManager.lightManagerInstance().getNamedBeanSet()) {
+                    if (! t.getSystemName().startsWith(manuPrefix)) continue;
+                    index++; // one based
+                    if (min <= index) {
+                        retval.add(t);
+                    } 
+                    if (index>=max) break;
+                }
+                break;
+            default:
+                log.debug("addSwitchRange: didn't match or parse bean name. manuPrefix = {}", manuPrefix);
+                nb = null;
+            }
+        return retval;
+    }
+    
     /**
      * Create the setup pane for the top of the frame. From layeredpane demo
      */

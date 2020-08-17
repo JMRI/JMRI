@@ -47,14 +47,20 @@
           <li>Key - the classic layout keyboard inspired by the M&auml;rklin hardware Keyboard</li>
           <li>Symbol - schematics like the traditional (Control) Panel</li>
         </ul></li>
-        <li>Set the number of rows of switches to be displayed (number of items per row is calculated)</li>
-        <li>Select Hide unconnected switches to only show switches for items connected to hardware</li>
+        <li>Number of rows - Set the number of rows of switches to be displayed (number of items per row is calculated)</li>
+        <li>Hide unconnected switches - if selected, only items connected to hardware (i.e. already in the table for that type: Turnout Table, 
+                Sensor Table, Light Table) will show in switches</li>
         <li>Auto Address Range (selected by default)<span class="since">since 4.13.4</span> makes it easy to use the left/right arrows on the pane to
-        jump to the next set of hardware addresses while keeping the number of items on the board the same.</li>
+                jump to the next set of hardware addresses while keeping the number of items on the board the same.</li>
+        <li>Optionally, change the background color for this Switchboard via the Options menu.
       </ul>
       <a href="images/Switchboard.png"><img src="images/Switchboard.png" width="276" height="221" align="right"></a>
-      <p>Optionally, change the background color for this Switchboard via the Options menu.
       To use the new settings, click [Update Switchboard] to replace all current items on the board.
+      <p>When finding items (Turnouts, Sensors or Lights) the switch board will first try numeric system names:
+        i.e. LT1 through LT24, XS1 through XS24 or NL1 through 24. If that doesn't work, then it will 
+        use the "From" and "up to" numbers to select from the sytem-name list:  The 1st through 24th turnout, sensor
+        or light defined.
+      <p>
       Note that hybrid Switchboards containing more than one bean type or connection are not saved to disk.
       You can create and save separate Switchboards for different connections, address ranges and object types like Turnouts.
       Change the name of this Switchboard by choosing Rename Switchboard... from the Edit menu while the Editor is open.</p>

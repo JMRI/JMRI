@@ -568,7 +568,10 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li></li>
+            <li>The way that Switchboard Editor finds items to
+                to display via their system names has improved.
+                For more details, see the 
+                <a href="/help/en/package/jmri/jmrit/display/SwitchboardEditor.shtml">help page</a>.</li>
         </ul>
 
     <h3>Throttle</h3>
