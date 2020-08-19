@@ -11,11 +11,8 @@ import jmri.VariableLight;
 import jmri.VariableLightManager;
 import jmri.SystemConnectionMemo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Abstract partial implementation of a VariableLightManager.
+ * Default implementation of a VariableLightManager.
  *
  * @author Bob Jacobsen       Copyright (C) 2004
  * @author Daniel Bergqvist   Copyright (C) 2020
@@ -122,6 +119,6 @@ public class DefaultVariableLightManager extends AbstractManager<VariableLight>
     }
 
 
-//    private final static Logger log = LoggerFactory.getLogger(DefaultVariableLightManager.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultVariableLightManager.class);
 
 }
