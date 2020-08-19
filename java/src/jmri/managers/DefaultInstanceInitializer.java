@@ -26,6 +26,7 @@ import jmri.SignalSystemManager;
 import jmri.StringIOManager;
 import jmri.Timebase;
 import jmri.TurnoutManager;
+import jmri.VariableLightManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
@@ -83,6 +84,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == LightManager.class) {
             return new ProxyLightManager();
+        }
+
+        if (type == VariableLightManager.class) {
+            return new DefaultVariableLightManager(memo).init();
         }
 
         if (type == LogixManager.class) {
@@ -182,6 +187,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 StringIOManager.class,
                 Timebase.class,
                 TurnoutManager.class,
+                VariableLightManager.class,
                 VSDecoderManager.class
         ));
         return set;

@@ -279,6 +279,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
 //        log.warn("AbstractProxyManager.register: {}, {}", s.getSystemName(), m);
         if (m != null) {
             m.register(s);
+        } else {
+            log.error("Unable to register {} in this proxy manager. No system specific manager supports this bean.", s.getSystemName());
         }
     }
 
