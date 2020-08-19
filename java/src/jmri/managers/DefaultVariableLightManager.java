@@ -122,6 +122,6 @@ public class DefaultVariableLightManager extends AbstractManager<VariableLight>
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultVariableLightManager.class);
+//    private final static Logger log = LoggerFactory.getLogger(DefaultVariableLightManager.class);
 
 }
