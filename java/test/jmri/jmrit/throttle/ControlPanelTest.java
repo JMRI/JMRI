@@ -156,9 +156,6 @@ public class ControlPanelTest {
               public void notifyDecisionRequired(LocoAddress address,
                   DecisionType question) {
               }
-              @Override
-              public void notifyStealThrottleRequired(LocoAddress address) {
-              }
             });
 
         Assert.assertTrue(throttle != null);
