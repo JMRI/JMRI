@@ -113,7 +113,7 @@
         <li>Add any assignments beyond the original submitter.  
             The original submitter may
             be assigned automatically through a github action, but if not please add them.
-            Developers, Approvers and Maintainers can be assigned to any PR, but 
+            Developers, Reviewers and Maintainers can be assigned to any PR, but 
             other people who create PRs can only be assigned to their own.
             By assigning the PR, we make it easy to find what non-developers 
             have contributed.</li>
