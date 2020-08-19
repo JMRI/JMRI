@@ -459,6 +459,9 @@
 	<imagetype type="ESP žčb"/>
 	<imagetype type="ESP žb"/>
 	
+	<imagetype type="JOP hlavní"/>
+	<imagetype type="JOP seřaďovací"/>
+        
   </imagetypes>
 
   <appearancefiles>
