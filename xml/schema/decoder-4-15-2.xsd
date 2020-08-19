@@ -200,6 +200,7 @@
         <xs:element name="pane"    type="PaneType" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="showEmptyPanes" type="yesNoType"/>
+      <xs:attribute name="allowResetDefaults" type="yesNoType"/>
     </xs:complexType>
   </xs:element>
   

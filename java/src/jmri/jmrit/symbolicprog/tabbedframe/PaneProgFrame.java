@@ -74,6 +74,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     String filename = null;
     String programmerShowEmptyPanes = "";
     String decoderShowEmptyPanes = "";
+    String decoderAllowResetDefaults = "";
 
     // GUI member declarations
     JTabbedPane tabPane = new JTabbedPane();
@@ -883,14 +884,21 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // get the showEmptyPanes attribute, if yes/no update our state
         if (decoderRoot.getAttribute("showEmptyPanes") != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("Found in decoder {}", decoderRoot.getAttribute("showEmptyPanes").getValue());
-            }
+            log.debug("Found in decoder showEmptyPanes={}", decoderRoot.getAttribute("showEmptyPanes").getValue());
             decoderShowEmptyPanes = decoderRoot.getAttribute("showEmptyPanes").getValue();
         } else {
             decoderShowEmptyPanes = "";
         }
         log.debug("decoderShowEmptyPanes={}", decoderShowEmptyPanes);
+
+        // get the allowResetDefaults attribute, if yes/no update our state
+        if (decoderRoot.getAttribute("allowResetDefaults") != null) {
+            log.debug("Found in decoder allowResetDefaults={}", decoderRoot.getAttribute("allowResetDefaults").getValue());
+            decoderAllowResetDefaults = decoderRoot.getAttribute("allowResetDefaults").getValue();
+        } else {
+            decoderAllowResetDefaults = "yes";
+        }
+        log.debug("decoderAllowResetDefaults={}", decoderAllowResetDefaults);
 
         // save the pointer to the model element
         modelElem = df.getModelElement();
@@ -1189,12 +1197,18 @@ abstract public class PaneProgFrame extends JmriJFrame
         // add the reset button
         JButton reset = new JButton(Bundle.getMessage("ButtonResetDefaults"));
         reset.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        reset.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                resetToDefaults();
-            }
-        });
+        if (decoderAllowResetDefaults.equals("no")) {
+            reset.setEnabled(false);
+            reset.setToolTipText(Bundle.getMessage("TipButtonResetDefaultsDisabled"));
+        } else {
+            reset.setToolTipText(Bundle.getMessage("TipButtonResetDefaults"));
+            reset.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    resetToDefaults();
+                }
+            });
+        }
 
         int sizeX = Math.max(reset.getPreferredSize().width, store.getPreferredSize().width);
         int sizeY = Math.max(reset.getPreferredSize().height, store.getPreferredSize().height);
