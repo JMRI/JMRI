@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" allowResetDefaults="no">
   <!-- made from the ESU_LokSoundV3_0.file -->
   <!-- ver2 CV213 defined multiple times, fixed to 219,222,225,228,231,234 -->
   <!-- also added CV52,121,122,123,124 -->
@@ -44,6 +44,8 @@
   <version author="Ronald Kuhn" version="14" lastUpdated="20171215"/>
     <!-- ver15 updates for F0-F15 -->
     <version author="Dave Heap" version="15" lastUpdated="20200807"/>
+    <!-- ver16 disable Reset to Defaults -->
+    <version author="Dave Heap" version="16" lastUpdated="20200818"/>
   <decoder>
     <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="81">
       <model model="LokSound V3.5" maxFnNum="15" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
