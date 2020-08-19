@@ -38,16 +38,22 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return (MqttSystemConnectionMemo) memo;
     }
 
-    public void setTopicPrefix(@Nonnull String topicPrefix) {
-        this.topicPrefix = topicPrefix;
+    public void setSendTopicPrefix(@Nonnull String sendTopicPrefix) {
+        this.sendTopicPrefix = sendTopicPrefix;
     }
+    public void setRcvTopicPrefix(@Nonnull String rcvTopicPrefix) {
+        this.rcvTopicPrefix = rcvTopicPrefix;
+    }
+
     @Nonnull
-    public String topicPrefix = "track/turnout/"; // for constructing topic; public for script access
+    public String sendTopicPrefix = "track/turnout/"; // for constructing topic; public for script access
+    @Nonnull
+    public String rcvTopicPrefix = "track/turnout/"; // for constructing topic; public for script access
 
     /**
      * {@inheritDoc}
      * <p>
-     * Accepts any string.
+     * Accepts any string as the "topicSuffix"
      */
     @Override
     public String createSystemName(@Nonnull String topicSuffix, @Nonnull String prefix) throws JmriException {
@@ -58,9 +64,15 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         MqttTurnout t;
         String suffix = systemName.substring(getSystemNamePrefix().length());
-        String topic = topicPrefix + suffix;
 
-        t = new MqttTurnout(getMemo().getMqttAdapter(), systemName, topic);
+        String sendTopic = java.text.MessageFormat.format(
+                            sendTopicPrefix.contains("{0}") ? sendTopicPrefix : sendTopicPrefix+"{0}",
+                            suffix);
+        String rcvTopic = java.text.MessageFormat.format(
+                            rcvTopicPrefix.contains("{0}") ? rcvTopicPrefix : rcvTopicPrefix+"{0}",
+                            suffix);
+
+        t = new MqttTurnout(getMemo().getMqttAdapter(), systemName, sendTopic, rcvTopic);
         t.setUserName(userName);
 
         if (parser != null) {
@@ -75,7 +87,7 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      */
     @Override
     public String getEntryToolTip() {
-        return "A string which will be appended to \"" + getMemo().getMqttAdapter().baseTopic + topicPrefix + "\"";
+        return "A string which will be inserted into \"" + sendTopicPrefix + "\" for transmission";
     }
 
     public void setParser(MqttContentParser<Turnout> parser) {

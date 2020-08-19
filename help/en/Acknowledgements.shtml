@@ -53,6 +53,9 @@
       <ul>
         <li style="list-style: none"><a name="A" id="A"></a></li>
 
+        <li>Phil Abernathy, <!-- Paelgin -->
+        who updated the AnyRail export-import documentation.</li>
+        
         <li>Sakae Akanuma provided a Japanese translation.</li>
 
         <li>Kerry Albrecht, who helped debug a problem loading
@@ -434,6 +437,11 @@
 
         <li>Don Fiehmann provided MRC decoders for testing</li>
 
+        <li>Bill Fitch, <!-- bill-fitch14; not it's his JMRI-1 repo -->
+        who created the 
+        <a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System</a>
+        tools for working with Dispatcher.</li>
+        
         <li>Marco Forcone, who sacrificed two turnouts motors to
         the cause of debugging XPressNet Turnout support</li>
 

@@ -44,17 +44,15 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         DCCppThrottle throttle;
-        if (log.isDebugEnabled()) {
-            log.debug("Requesting Throttle: {}", address);
-        }
+        log.debug("Requesting Throttle: {}", address);
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);
         } else {
             if (tc.getCommandStation().requestNewRegister(address.getNumber()) == DCCppConstants.NO_REGISTER_FREE) {
-            // TODO: Eventually add something more robust here.
-            log.error("No Register available for Throttle. Address = {}", address);
-            return;
-        }
+                failedThrottleRequest(address, "No Register available for Throttle. Address="+ address);
+                log.error("No Register available for Throttle. Address = {}", address);
+                return;
+            }
             throttle = new DCCppThrottle((DCCppSystemConnectionMemo) adapterMemo, address, tc);
             throttles.put(address, throttle);
             notifyThrottleKnown(throttle, address);
@@ -91,12 +89,12 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     }
 
     /**
-     * Address 127 and below is a short address
+     * Address between 1 and 127 is a short address
      *
      */
     @Override
     public boolean canBeShortAddress(int address) {
-        return !isLongAddress(address);
+        return (address >= 1 && !isLongAddress(address));
     }
 
     /**
