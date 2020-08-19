@@ -197,13 +197,13 @@ public class ProxyAnalogIOManagerTest {
         AnalogIOManager m = new MyAnalogIOManager();
         
         Throwable thrown = catchThrowable(() -> {
-            m.addBeanType(Light.class, InstanceManager.getDefault(LightManager.class));
+            m.addBeanType(VariableLight.class, InstanceManager.getDefault(VariableLightManager.class));
         });
         assertThat(thrown).isInstanceOf(UnsupportedOperationException.class)
                 .hasNoCause();
         
         thrown = catchThrowable(() -> {
-            m.removeBeanType(Light.class, InstanceManager.getDefault(LightManager.class));
+            m.removeBeanType(VariableLight.class, InstanceManager.getDefault(VariableLightManager.class));
         });
         assertThat(thrown).isInstanceOf(UnsupportedOperationException.class)
                 .hasNoCause();

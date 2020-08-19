@@ -10,7 +10,7 @@ import jmri.AnalogIO;
 import jmri.AnalogIOManager;
 import jmri.InstanceManager;
 import jmri.VariableLight;
-import jmri.LightManager;
+import jmri.VariableLightManager;
 import jmri.Manager;
 import jmri.NamedBean;
 
@@ -31,7 +31,7 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
 
     public ProxyAnalogIOManager init() {
         // Note that not all lights in LightManager are VariableLight.
-        addBeanType(VariableLight.class, InstanceManager.getDefault(LightManager.class));
+        addBeanType(VariableLight.class, InstanceManager.getDefault(VariableLightManager.class));
         return this;
     }
 
