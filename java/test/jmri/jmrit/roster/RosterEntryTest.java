@@ -245,6 +245,7 @@ public class RosterEntryTest {
                 .addContent(new org.jdom2.Element("decoder")
                         .setAttribute("family", "91")
                         .setAttribute("model", "33")
+                        .setAttribute("comment", "decoder comment")
                 ); // end create element
 
         RosterEntry r = new RosterEntry(e) {
@@ -258,6 +259,8 @@ public class RosterEntryTest {
         Assert.assertEquals("XML Element ", e.toString(), o.toString());
         Assert.assertEquals("family ", "91", o.getChild("decoder").getAttribute("family").getValue());
         Assert.assertEquals("model ", "33", o.getChild("decoder").getAttribute("model").getValue());
+        Assert.assertEquals("comment", "decoder comment", o.getChild("decoder").getAttribute("comment").getValue());
+        Assert.assertEquals("default maxFnNum ", "28", o.getChild("decoder").getAttribute("maxFnNum").getValue());
     }
 
     @Test
