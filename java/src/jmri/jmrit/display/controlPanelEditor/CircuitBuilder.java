@@ -940,7 +940,7 @@ public class CircuitBuilder {
         while (iter2.hasNext()) {
             _signalMap.put(iter2.next(), null);
         }
-        NamedBean m = null;
+
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
         for (OBlock block : oblocks) {
@@ -962,7 +962,6 @@ public class CircuitBuilder {
                             _unattachedMastIcon.remove(si);
                         }
                         _signalMap.put(mast, portal);
-                        m = mast;
                     }
                     if (log.isDebugEnabled()) {
                         log.debug("Portal {} in block {} has {} icons", portal.getName(), block.getDisplayName(), piArray.size());
