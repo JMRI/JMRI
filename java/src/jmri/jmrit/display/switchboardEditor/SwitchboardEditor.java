@@ -83,7 +83,6 @@ public class SwitchboardEditor extends Editor {
     protected JMenu _editMenu;
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
-    private ArrayList<Positionable> _secondSelectionGroup;
     private transient boolean panelChanged = false;
 
     // Switchboard items

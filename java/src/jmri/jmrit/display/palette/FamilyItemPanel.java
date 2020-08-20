@@ -304,7 +304,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 if (mapFamily.equals(fam)) {
                     if (_update) {
                         JOptionPane.showMessageDialog(_frame,
-                                Bundle.getMessage("DuplicateFamilyName", _itemType,
+                                Bundle.getMessage("DuplicateFamilyName", mapFamily, _itemType,
                                         Bundle.getMessage("CannotUseName", Bundle.getMessage("unNamed"))),
                                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                         mapFamily = null;

@@ -5,12 +5,15 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DragSourceDropEvent;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
@@ -44,7 +47,6 @@ import jmri.jmrit.beantable.SignalMastTableAction;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.SignalMastIcon;
@@ -125,7 +127,6 @@ public class EditSignalFrame extends EditFrame {
         _lengthPanel = new LengthPanel(_homeBlock, "entranceSpace");
         _lengthPanel.changeUnits();
         signalPanel.add(_lengthPanel);
-//        signalPanel.add(Box.createVerticalStrut(STRUT_SIZE /2));
 
         panel = new JPanel();
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddMast"));
@@ -148,18 +149,20 @@ public class EditSignalFrame extends EditFrame {
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JLabel l = new JLabel(Bundle.getMessage("configureSignal", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME)));
+        JLabel l = new JLabel(Bundle.getMessage("addSignalConfig"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
         l = new JLabel(Bundle.getMessage("selectSignalMast"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE / 2));
-        l = new JLabel(Bundle.getMessage("positionMast"));
+        l = new JLabel(Bundle.getMessage("pressConfigure", Bundle.getMessage("ButtonAddMast")));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
         panel.add(Box.createVerticalStrut(STRUT_SIZE / 2));
-        l = new JLabel(Bundle.getMessage("selectSignal"));
+        l = new JLabel(Bundle.getMessage("addSignalIcon"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        l = new JLabel(Bundle.getMessage("positionMast"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
         JPanel p = new JPanel();
@@ -448,18 +451,6 @@ public class EditSignalFrame extends EditFrame {
         _parent.putSignalPortal(newMast, portal);
         setDragIcon(newMast);
     }
-/*
-    private void setMastIcon(PositionableIcon icon, @Nonnull Portal portal) {
-        _parent._editor.highlight(icon);
-        icon.updateSize();
-        _parent._editor.putItem(icon);
-        List<PortalIcon> portalIcons = _parent.getPortalIcons(portal);
-        if (!portalIcons.isEmpty()) {
-            _portalIcon = portalIcons.get(0);
-            icon.setDisplayLevel(_portalIcon.getDisplayLevel());
-            icon.setLocation(_portalIcon.getLocation());
-        }
-    }*/
 
     private boolean addMast() {
         Portal portal = _portalList.getSelectedValue();
@@ -469,12 +460,11 @@ public class EditSignalFrame extends EditFrame {
             if (signal != null) {
                 if (replaceQuestion(signal, portal)) {
                     addMast(portal, signal);
-//                    setMastIcon(icon, portal);
                 }
             } else {
                 String name = _mastName.getText().trim();
                 if ( name.length()==0) {
-                    msg = Bundle.getMessage("selectSignalMast", Bundle.getMessage("mastName"));
+                    msg = Bundle.getMessage("selectSignalMast");
                 } else {
                     msg = Bundle.getMessage("NotFound", name);
                 }
@@ -698,43 +688,56 @@ public class EditSignalFrame extends EditFrame {
     }
 
     private NamedIcon setDragHeadIcon(SignalHead mast) {
-        SignalHeadIcon shIcon = null;
+        _dragHeadIcon = null;
         // find icon from other icons displaying this head, if any
         List<PositionableIcon> iArray = _parent.getSignalIconMap(mast);
         if (!iArray.isEmpty()) {
             PositionableIcon pos = iArray.get(0);
             if (pos instanceof SignalHeadIcon) {
-                shIcon = (SignalHeadIcon)pos;
+                _dragHeadIcon = (SignalHeadIcon)pos;
             }
         }
-        if (shIcon == null) { // find icon from icons of other heads on this panel
+        if (_dragHeadIcon == null) { // find icon from icons of other heads on this panel
             HashMap<NamedBean, ArrayList<PositionableIcon>> icons = _parent.getSignalIconMap();
             if (icons != null && !icons.isEmpty()) {
                 for (List<PositionableIcon> ia : icons.values()) {
                     if (!ia.isEmpty()) {
                         PositionableIcon pos = ia.get(0);
                         if (pos != null && pos instanceof SignalHeadIcon) {
-                            shIcon = (SignalHeadIcon)pos;
+                            _dragHeadIcon = (SignalHeadIcon)pos;
                             break;
                         }
                     }
                 }
             }
         }
-        if (shIcon == null) { // find icon from any set in ItemPalette
+        if (_dragHeadIcon == null) { // find icon from any set in ItemPalette
+            _dragHeadIcon = new SignalHeadIcon(_parent._editor);
+            _dragHeadIcon.setSignalHead(mast.getDisplayName());
             HashMap<String, HashMap<String, NamedIcon>> maps = ItemPalette.getFamilyMaps("SignalHead");
-            java.util.Collection<HashMap<String, NamedIcon>> sets = maps.values();
-            java.util.Iterator<HashMap<String, NamedIcon>> it = sets.iterator();
-            while (it.hasNext()) {
-                return it.next().get("SignalHeadStateRed");
+            if (maps.isEmpty()) {
+                log.error("SignalHead icon cannot be found for {}", mast.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));
+            } else {
+                java.util.Iterator<Map.Entry<String, HashMap<String, NamedIcon>>> iter = maps.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Map.Entry<String, HashMap<String, NamedIcon>> entry = iter.next();
+                    HashMap<String, NamedIcon> map = entry.getValue();
+                    for (Entry<String, NamedIcon> ent : map.entrySet()) {
+                        _dragHeadIcon.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                    }
+                    _dragHeadIcon.setFamily(entry.getKey());
+                    break;
+                }
             }
         } else {
-            return (NamedIcon)shIcon.getIcon();
+            _dragHeadIcon = (SignalHeadIcon)_dragHeadIcon.deepClone();
         }
-        log.error("SignalHead icon cannot be found for {}", mast.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));
-        return null;
+        _dragHeadIcon.setDisplayLevel(SignalHead.RED);
+        return (NamedIcon)_dragHeadIcon.getIcon();
     }
 
+    SignalHeadIcon _dragHeadIcon;
+    
     //////////////////////////// DnD ////////////////////////////
     protected JPanel makeDndIconPanel() { 
         JPanel dndPanel = new JPanel();
@@ -782,7 +785,7 @@ public class EditSignalFrame extends EditFrame {
                 } else {
                     String name = _mastName.getText().trim();
                     if ( name.length()==0) {
-                        msg = Bundle.getMessage("selectSignalMast", Bundle.getMessage("mastName"));
+                        msg = Bundle.getMessage("selectSignalMast");
                     } else {
                         msg = Bundle.getMessage("NotFound", name);
                     }
@@ -808,41 +811,29 @@ public class EditSignalFrame extends EditFrame {
             if (signal == null || _currentPortal == null) {
                 return null;
             }
-            addMast(_currentPortal, signal);
             PositionableIcon icon;
             if (signal instanceof SignalMast) {
                 icon = new SignalMastIcon(_parent._editor);
                 ((SignalMastIcon)icon).setSignalMast(signal.getDisplayName());
             } else if (signal instanceof SignalHead) {
-                icon = new SignalHeadIcon(_parent._editor);
-                ((SignalHeadIcon)icon).setSignalHead(signal.getDisplayName());
-            } else {
+                icon = _dragHeadIcon;
+           } else {
                 log.error("Signal icon cannot be created for {}", signal.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));
                 return null;
             }
-//            _parent.getCircuitIcons(_homeBlock).add(icon);
+            _parent.getCircuitIcons(_homeBlock).add(icon);
             List<PositionableIcon> siArray = _parent.getSignalIconMap(signal);
             siArray.add(icon);
-            ArrayList<Positionable> group = _parent.getCircuitIcons(_homeBlock);
-            group.add(icon);
-            _parent._editor.setSelectionGroup(group);
             _parent._editor.highlight(icon);
             icon.setLevel(Editor.SIGNALS);
-           
-        /*          String name = _portalName.getText();
-            Portal portal = _homeBlock.getPortalByName(name);
-            if (portal == null) {
-                PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
-                portal = portalMgr.createNewPortal(name);
-                portal.setFromBlock(_homeBlock, false);
-                _portalList.dataChange();
-            }
-            addSecondIcon = false;
-            PortalIcon icon = new PortalIcon(_parent._editor, portal);
-            icon.setLevel(Editor.MARKERS);
-            icon.setStatus(PortalIcon.VISIBLE);
-            return icon;*/
+            log.debug("getTransferData for {}", signal.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));
             return icon;
+        }
+
+        @Override
+        public void dragDropEnd(DragSourceDropEvent e) {
+            setMastNameAndIcon(signal, _currentPortal);
+            log.debug("DragJLabel.dragDropEnd ");
         }
     }
 

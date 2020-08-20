@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 
 import javax.annotation.Nonnull;
@@ -111,6 +112,9 @@ public class CircuitBuilder {
     
     // list of SignalMastIcon and SignalHeadicon not protecting a block
     private final ArrayList<PositionableIcon> _unattachedMastIcon = new ArrayList<>();
+    
+    // list of SignalMast and SignalHead not protecting a block
+    private final ArrayList<NamedBean> _unprotectingMast = new ArrayList<>();
 
     // map SignalMasts and SignalHeads to the Portal where it is configured
     private final HashMap<NamedBean, Portal> _signalMap = new HashMap<>();
@@ -445,16 +449,29 @@ public class CircuitBuilder {
         }
         _todoMenu.add(iconNeeds);   // #8
 
+        JMenu mastNeeds = new JMenu(Bundle.getMessage("UnprotectingMasts"));
+        if (!_unprotectingMast.isEmpty()) {
+//            mastNeeds.addActionListener((ActionEvent event) -> {
+                for (NamedBean sig : _unprotectingMast) {
+                    JMenuItem mi = new JMenuItem(sig.getDisplayName());
+                    mastNeeds.add(mi);
+                }
+//            });
+        } else {
+            mastNeeds.add(new JMenuItem(Bundle.getMessage("mastsInPlace")));
+        }
+        _todoMenu.add(mastNeeds);   // #9
+
         if (_unattachedMastIcon.size() > 0) {
             iconNeeds = new JMenuItem(Bundle.getMessage("UnattachedMasts"));
             iconNeeds.addActionListener((ActionEvent event) -> {
-                if (editingOK()) {
+//                if (editingOK()) {
                     ArrayList<Positionable> group = new ArrayList<>();
                     for (PositionableIcon pi : _unattachedMastIcon) {
                         group.add(pi);
                     }
                     _editor.setSelectionGroup(group);
-                }
+//                }
             });
         } else {
             if (_hasMastIcons) {
@@ -463,7 +480,7 @@ public class CircuitBuilder {
                 iconNeeds = new JMenuItem(Bundle.getMessage("NoMastIcons"));
             }
         }
-        _todoMenu.add(iconNeeds);   // #9
+        _todoMenu.add(iconNeeds);   // #10
 
         blockNeeds = new JMenu(Bundle.getMessage("portalNeedsIcon"));
         ActionListener editPortalAction = (ActionEvent event) -> {
@@ -480,7 +497,7 @@ public class CircuitBuilder {
         } else {
             blockNeeds.add(new JMenuItem(Bundle.getMessage("portalsHaveIcons")));
         }
-        _todoMenu.add(blockNeeds);  // #10
+        _todoMenu.add(blockNeeds);  // #11
 
         JMenuItem pError = new JMenuItem(Bundle.getMessage("CheckPortalPaths"));
         pError.addActionListener((ActionEvent event) -> {
@@ -498,7 +515,7 @@ public class CircuitBuilder {
                         javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
         });
-        _todoMenu.add(pError);      // #11
+        _todoMenu.add(pError);      // #12
 
     }
 
@@ -834,7 +851,6 @@ public class CircuitBuilder {
      * conversion Setup for main Frame - used in both initialization and close
      * of an editing frame Build Lists that are used to create menu items
      */
-    @SuppressWarnings("deprecation")
     private void checkCircuits() {
 
         _portalIconMap.clear();
@@ -912,6 +928,19 @@ public class CircuitBuilder {
         _noPortalIcon.clear();
         _noPortals.clear();
         _noPaths.clear();
+        _unprotectingMast.clear();
+        // initialize _signalMap
+        Iterator<jmri.SignalMast> iter1 =
+                InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().iterator();
+        while (iter1.hasNext()) {
+            _signalMap.put(iter1.next(), null);
+        }
+        Iterator<jmri.SignalHead> iter2 =
+                InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().iterator();
+        while (iter2.hasNext()) {
+            _signalMap.put(iter2.next(), null);
+        }
+        NamedBean m = null;
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
         for (OBlock block : oblocks) {
@@ -919,18 +948,6 @@ public class CircuitBuilder {
             if (portals.isEmpty()) {
                 _noPortals.add(block);
             } else {
-                // initialize _signalMap
-                @SuppressWarnings("deprecation")
-                Iterator<jmri.SignalMast> iter1 =
-                        InstanceManager.getDefault(SignalMastManager.class).getNamedBeanList().iterator();
-                while (iter1.hasNext()) {
-                    _signalMap.put(iter1.next(), null);
-                }
-                Iterator<jmri.SignalHead> iter2 =
-                        InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanList().iterator();
-                while (iter2.hasNext()) {
-                    _signalMap.put(iter2.next(), null);
-                }
                 // first add PortalIcons and SignalIcons to circuitMap 
                 for (Portal portal : portals) {
                     List<PortalIcon> piArray = getPortalIcons(portal);
@@ -945,12 +962,14 @@ public class CircuitBuilder {
                             _unattachedMastIcon.remove(si);
                         }
                         _signalMap.put(mast, portal);
+                        m = mast;
                     }
                     if (log.isDebugEnabled()) {
                         log.debug("Portal {} in block {} has {} icons", portal.getName(), block.getDisplayName(), piArray.size());
                     }
                 }
             }
+
             List<jmri.Path> paths = block.getPaths();
             float blkLen = block.getLengthMm();
             if (paths == null || paths.isEmpty()) {
@@ -1026,6 +1045,12 @@ public class CircuitBuilder {
                         _misplacedPortalIcon.add(icon);
                     }
                 }
+            }
+        }
+
+        for (Map.Entry<NamedBean, Portal> entry : _signalMap.entrySet()) {
+            if (entry.getValue() == null) {
+                _unprotectingMast.add(entry.getKey());
             }
         }
 
