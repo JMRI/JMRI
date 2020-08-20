@@ -1491,7 +1491,6 @@ public class CircuitBuilder {
                         }
                         editPortalError(block, portal, pos);
                     }
-                } else if (_selection instanceof SignalMastIcon || _selection instanceof SignalHeadIcon) {
                 }
             }
         }

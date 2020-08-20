@@ -254,12 +254,12 @@ public class EditSignalFrame extends EditFrame {
             if (portal != null) {
                 OBlock protectedBlock = portal.getProtectedBlock(mast);
                 if (_homeBlock.equals(protectedBlock)) {
+                    setMastNameAndIcon(mast, portal);
                 }
             }
             _portalList.setSelected(portal);
             _signalList.setSelected(portal);
-           _parent._editor.highlight(icon);
-            setMastNameAndIcon(mast, portal);
+            _parent._editor.highlight(icon);
         }
     }
     

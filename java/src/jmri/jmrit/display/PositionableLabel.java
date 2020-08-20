@@ -632,7 +632,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         paletteFrame.setVisible(true);
     }
 
-    class PaletteFrameCloser extends java.awt.event.WindowAdapter {
+    static class PaletteFrameCloser extends java.awt.event.WindowAdapter {
         ItemPanel ip;
         PaletteFrameCloser( @Nonnull ItemPanel itemPanel) {
             super();
