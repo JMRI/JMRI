@@ -678,5 +678,10 @@
                 GitHub account to do the final submission.
                 There's more info on the 
                 <a href="https://jmri.org/help/en/package/apps/util/issuereporter/swing/IssueReporter.shtml">help page</a>.
+            <li>The interface jmri.Light has been split into jmri.Light and jmri.VariableLight. Lights
+                that supports variable intensity must now implement the jmri.VariableLight interface.
+                All lights are still managed by the jmri.LightManager, but a new manager jmri.VariableLightManager
+                has been added that keeps a copy of the VariableLights. But register and deregister of
+                all lights must still be done thru the LightManager.</li>
         </ul>
 
