@@ -470,6 +470,9 @@
             contains all of the data was slightly corrupted due it.  By just running this new version of CTC Editor, those
             problems will <strong>automatically</strong> be fixed. You may then exit the CTC Editor even without saving,
             as the fix will have already been done. (internal file version 5 to 6)</li>
+            <li>Bug Fix: If an O.S. section did <strong>not</strong> have a Signal Lever defined, it was
+            possible (though wrong) to enable Traffic Locking and / or Call On.  Now it is impossible to define either
+            if there is no Signal Lever defined <strong>properly</strong>.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>

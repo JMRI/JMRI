@@ -55,11 +55,27 @@ public class FrmTRL extends javax.swing.JFrame {
         this.getRootPane().setDefaultButton(_mOK);
         updateRuleCounts();
         this.setTitle(Bundle.getMessage("TitleDlgTRL") + " " + codeButtonHandlerData.myShortStringNoComma());   // NOI18N
-        _mTopology = new Topology(_mCTCSerialData, codeButtonHandlerData._mOSSectionOccupiedExternalSensor, Bundle.getMessage("TLE_Normal"), Bundle.getMessage("TLE_Reverse"));  // NOI18N
+        ArrayList<String> listOfOSSectionOccupiedExternalSensors = getListOfExternalSensorsSlaved(codeButtonHandlerData, _mCTCSerialData.getCodeButtonHandlerDataArrayList());
+        _mTopology = new Topology(_mCTCSerialData, listOfOSSectionOccupiedExternalSensors, Bundle.getMessage("TLE_Normal"), Bundle.getMessage("TLE_Reverse"));  // NOI18N
         boolean topologyAvailable = _mTopology.isTopologyAvailable();
         _mAutoGenerate.setVisible(topologyAvailable);
         _mReverseLeftRight.setVisible(topologyAvailable);
         _mAutoGenerateWarning.setVisible(topologyAvailable);
+    }
+    
+    private ArrayList<String> getListOfExternalSensorsSlaved(   CodeButtonHandlerData currentCodeButtonHandlerData,
+                                                                ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
+        ArrayList<String> returnValue = new ArrayList<>();
+        returnValue.add(currentCodeButtonHandlerData._mOSSectionOccupiedExternalSensor);    // Put ours in there at least.
+        int currentUniqueID = currentCodeButtonHandlerData._mUniqueID;
+        for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
+            if (currentCodeButtonHandlerData != codeButtonHandlerData    // Don't check ourselves, we've already put us in the list.
+            && codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID != CodeButtonHandlerData.SWITCH_NOT_SLAVED   // It's referencing someone else:
+            && currentUniqueID == codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID) {  // And it's referening "us"/
+                returnValue.add(codeButtonHandlerData._mOSSectionOccupiedExternalSensor);
+            }
+        }
+        return returnValue;
     }
 
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
