@@ -96,6 +96,22 @@ public class CommonSubs {
         }
     }
 
+//  If the table model value is null, that is the same as "".  This also "compacts"
+//  the entries also (i.e. blank line(s) between entries are removed):
+    public static ArrayList<String> getStringArrayFromDefaultTableModel(DefaultTableModel defaultTableModel) {
+        ArrayList<String> entries = new ArrayList<>();
+        for (int sourceIndex = 0; sourceIndex < defaultTableModel.getRowCount(); sourceIndex++) {
+            Object object = defaultTableModel.getValueAt(sourceIndex, 0);
+            if (object != null) {
+                String entry = object.toString().trim();
+                if (!entry.isEmpty()) { // Do a "compact" on the fly:
+                    entries.add(entry);
+                }
+            }
+        }
+        return entries;
+    }
+
     public static int compactDefaultTableModel(DefaultTableModel defaultTableModel) {
         int destIndex = 0;
         int lastSourceIndexNonEmpty = -1;   // Indicate none found

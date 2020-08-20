@@ -37,6 +37,7 @@ import javax.swing.KeyStroke;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
@@ -57,7 +58,7 @@ public class FrmMainForm extends JFrame {
     private AwtWindowProperties _mAwtWindowProperties;
     private CheckJMRIObject _mCheckJMRIObject;
 
-    public boolean _mPanelLoaded = false;
+    public boolean _mPanelLoaded = true;
     private boolean _mAnySubFormOpen = false;   // For any BUT FrmTRL_Rules
     boolean _mTRL_RulesFormOpen = false; // for ONLY FrmTRL_Rules
 
@@ -65,10 +66,12 @@ public class FrmMainForm extends JFrame {
     public FrmMainForm() {
         super();
         InstanceManager.setDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class, this);
+        CtcManager ctcManager = InstanceManager.getDefault(CtcManager.class);
+        _mProgramProperties = ctcManager.getProgramProperties();
+        _mCTCSerialData = ctcManager.getCTCSerialData();
         initComponents();
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC", true);  // NOI18N
         _mAwtWindowProperties = new AwtWindowProperties(this, "AwtWindowProperties.txt", FORM_PROPERTIES); // NOI18N
-        _mProgramProperties = new ProgramProperties();
         _mCheckJMRIObject = new CheckJMRIObject();
         newOrOpenFile(true);
         checkPanelStatus.actionPerformed(null);
@@ -101,21 +104,21 @@ public class FrmMainForm extends JFrame {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            _mPanelLoaded = false;
+            _mPanelLoaded = true;
 
             // Are two specific sensors present
-            Sensor chkReload = sm.getSensor( _mCTCSerialData.getOtherData()._mCTCDebugSystemReloadInternalSensor);
-            Sensor chkDebug = sm.getSensor( _mCTCSerialData.getOtherData()._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor);
-
-            if (chkReload == null || chkDebug == null) {
-                // No CTC panel loaded
-                _mJMRIValidationStatus.setText("<html><font color='red'>" + Bundle.getMessage("LabelDisabled") + "</font></html>");     // NOI18N
-                _mCheckEverythingWithJMRI.setEnabled(false);
-            } else {
-                _mPanelLoaded = true;
-                _mJMRIValidationStatus.setText("<html><font color='green'>" + Bundle.getMessage("LabelEnabled") + "</font></html>");    // NOI18N
-                _mCheckEverythingWithJMRI.setEnabled(true);
-            }
+// DS            Sensor chkReload = sm.getSensor( _mCTCSerialData.getOtherData()._mCTCDebugSystemReloadInternalSensor);
+// DS            Sensor chkDebug = sm.getSensor( _mCTCSerialData.getOtherData()._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor);
+// DS
+// DS            if (chkReload == null || chkDebug == null) {
+// DS                // No CTC panel loaded
+// DS                _mJMRIValidationStatus.setText("<html><font color='red'>" + Bundle.getMessage("LabelDisabled") + "</font></html>");     // NOI18N
+// DS                _mCheckEverythingWithJMRI.setEnabled(false);
+// DS            } else {
+// DS                _mPanelLoaded = true;
+// DS                _mJMRIValidationStatus.setText("<html><font color='green'>" + Bundle.getMessage("LabelEnabled") + "</font></html>");    // NOI18N
+// DS                _mCheckEverythingWithJMRI.setEnabled(true);
+// DS            }
         }
     };
 
@@ -754,8 +757,8 @@ public class FrmMainForm extends JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (!validToSaveAtThisTime(Bundle.getMessage("FrmMainFormAutoSaveError1"), Bundle.getMessage("FrmMainFormAutoSaveError2"))) return; // NOI18N
-        _mCTCSerialData.writeDataToXMLFile(_mProgramProperties._mFilename);
-        _mProgramProperties.close();
+// DS        _mCTCSerialData.writeDataToXMLFile(_mProgramProperties._mFilename);
+// DS        _mProgramProperties.close();
         _mAwtWindowProperties.saveWindowStateAndClose(this, FORM_PROPERTIES);
         shutdown();
     }//GEN-LAST:event_formWindowClosing
@@ -1006,19 +1009,20 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event_changeNumbersButtonActionPerformed
 
     private void _mButtonWriteXMLFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mButtonWriteXMLFilesActionPerformed
-        CreateXMLFiles createTextFile = new CreateXMLFiles( _mCTCSerialData.getOtherData(), _mCTCSerialData.getCodeButtonHandlerDataArrayList());
-        createTextFile.createTextFiles(CommonSubs.getDirectoryOnly(_mProgramProperties._mFilename));
+// DS        CreateXMLFiles createTextFile = new CreateXMLFiles( _mCTCSerialData.getOtherData(), _mCTCSerialData.getCodeButtonHandlerDataArrayList());
+// DS        createTextFile.createTextFiles(CommonSubs.getDirectoryOnly(_mProgramProperties._mFilename));
         _mColumns.updateFrame();
     }//GEN-LAST:event__mButtonWriteXMLFilesActionPerformed
 
     private void newOrOpenFile(boolean openExisting) {
-        _mCTCSerialData = new CTCSerialData();
+// DS        _mCTCSerialData = new CTCSerialData();
         _mOriginalCopy = new OriginalCopy();
         if (openExisting) {
-            _mCTCSerialData.readDataFromXMLFile(_mProgramProperties._mFilename);
+// DS            _mCTCSerialData.readDataFromXMLFile(_mProgramProperties._mFilename);
             _mOriginalCopy.makeDeepCopy(_mCTCSerialData);
-        } else _mProgramProperties._mFilename = ProgramProperties.FILENAME_DEFAULT;
-        setTitle(Bundle.getMessage("TitleMainForm") + "   " + _mProgramProperties._mFilename );     // NOI18N
+        } // DS else _mProgramProperties._mFilename = ProgramProperties.FILENAME_DEFAULT;
+// DS        setTitle(Bundle.getMessage("TitleMainForm") + "   " + _mProgramProperties._mFilename );     // NOI18N
+        setTitle(Bundle.getMessage("TitleMainForm"));     // NOI18N
         _mDefaultListModel = new DefaultListModel<>();
         _mPresentlyDefinedColumns.setModel(_mDefaultListModel);
         _mColumns = new Columns(_mCTCSerialData, _mCheckJMRIObject, _mDefaultListModel,
@@ -1041,7 +1045,7 @@ public class FrmMainForm extends JFrame {
 
     private void _mSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveActionPerformed
         if (!validToSaveAtThisTime(Bundle.getMessage("MenuSave"), "")) return;  // NOI18N
-        _mCTCSerialData.writeDataToXMLFile(_mProgramProperties._mFilename);
+// DS        _mCTCSerialData.writeDataToXMLFile(_mProgramProperties._mFilename);
         _mOriginalCopy.makeDeepCopy(_mCTCSerialData);
     }//GEN-LAST:event__mSaveActionPerformed
 

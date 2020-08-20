@@ -126,6 +126,7 @@ public class Columns {
     public final void updateFrame() {
         _mDefaultListModel.clear();
         _mCTCSerialData.getCodeButtonHandlerDataArrayList().forEach((codeButtonHandlerData) -> {
+            log.info("updateFrame: {}", codeButtonHandlerData);
             _mDefaultListModel.addElement(constructSingleColumnDisplayLine(codeButtonHandlerData));
         });
         _mDeleteButton.setEnabled(false);    // None selected.
@@ -183,8 +184,8 @@ public class Columns {
         lazy1(_mEdit_SIDL_Prompt, FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_SWDI_Prompt, FrmSWDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_SWDL_Prompt, FrmSWDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
-        lazy1(_mEdit_CO_Prompt, FrmCO.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
-        lazy1(_mEdit_TRL_Prompt, FrmTRL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
+// DS        lazy1(_mEdit_CO_Prompt, FrmCO.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
+// DS        lazy1(_mEdit_TRL_Prompt, FrmTRL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_TUL_Prompt, FrmTUL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_IL_Prompt, FrmIL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         _mDefaultListModel.set(_mSelectedCodeButtonHandlerDataIndex, constructSingleColumnDisplayLine(_mSelectedCodeButtonHandlerData));
@@ -245,7 +246,7 @@ public class Columns {
         jCheckBox.setSelected(value);
         jButton.setEnabled(value);
     }
-    
+
     public void sidi_EnabledClicked(boolean newState) {
         _mSelectedCodeButtonHandlerData._mSIDI_Enabled = newState;
         lazy2(_mEdit_SIDI, newState);
@@ -331,14 +332,14 @@ public class Columns {
     }
 
     private void checkThisSSVList(int ourUniqueID, int otherUniqueID, String lr, String trafficLockingRulesSSVList, TreeSet<String> setOfUniqueIDs) {
-        for (String trafficLockingRulesSSV : ProjectsCommonSubs.getArrayListFromSSV(trafficLockingRulesSSVList)) {
-            TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(trafficLockingRulesSSV);
-            lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID1, setOfUniqueIDs);
-            lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID2, setOfUniqueIDs);
-            lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID3, setOfUniqueIDs);
-            lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID4, setOfUniqueIDs);
-            lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID5, setOfUniqueIDs);
-        }
+//  DS       for (String trafficLockingRulesSSV : ProjectsCommonSubs.getArrayListFromSSV(trafficLockingRulesSSVList)) {
+//  DS           TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(trafficLockingRulesSSV);
+//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID1, setOfUniqueIDs);
+//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID2, setOfUniqueIDs);
+//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID3, setOfUniqueIDs);
+//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID4, setOfUniqueIDs);
+//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID5, setOfUniqueIDs);
+//  DS       }
     }
 
     private void lazy3(int ourUniqueID, int otherUniqueID, String lr, String value, TreeSet<String> setOfUniqueIDs) {
@@ -379,8 +380,8 @@ public class Columns {
         if (!FrmSIDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmSWDI.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmSWDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
-        if (!FrmCO.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
-        if (!FrmTRL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
+// DS        if (!FrmCO.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
+// DS        if (!FrmTRL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmTUL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmIL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         return "";                              // No error (string)
@@ -396,9 +397,11 @@ public class Columns {
         displayString += generatePossibleErrorString(_mCheckJMRIObject, codeButtonHandlerData);
         return displayString;
     }
-    
+
     private boolean signalDirectionLeverEnabledAndValid() {
         if (!_mSelectedCodeButtonHandlerData._mSIDL_Enabled) return false;
         return FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData);
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Columns.class);
 }

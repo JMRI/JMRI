@@ -1,11 +1,13 @@
 package jmri.jmrit.ctc.editor.code;
 
+import java.util.ArrayList;
+import jmri.jmrit.ctc.NBHSignal;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- * 
+ *
  * The purpose of this module is to support patterned information
  * in CodeButtonHandlerData objects.  It is also a "factory" to produce
  * new CodeButtonHandlerData objects from those patterns..
@@ -22,8 +24,8 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mSIDI_Enabled = false;
         returnValue._mSIDI_CodingTimeInMilliseconds = programProperties._mSIDI_CodingTimeInMilliseconds;
         returnValue._mSIDI_TimeLockingTimeInMilliseconds = programProperties._mSIDI_TimeLockingTimeInMilliseconds;
-        returnValue._mSIDI_LeftRightTrafficSignalsCSVList = "";
-        returnValue._mSIDI_RightLeftTrafficSignalsCSVList = "";
+        returnValue._mSIDI_LeftRightTrafficSignals = new ArrayList<NBHSignal>();
+        returnValue._mSIDI_RightLeftTrafficSignals = new ArrayList<NBHSignal>();
         returnValue._mSIDL_Enabled = false;
         returnValue._mSWDI_Enabled = false;
         returnValue._mSWDI_ExternalTurnout = "";
@@ -54,7 +56,7 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mIL_ListOfCSVSignalNames = "";
         return returnValue;
     }
-    
+
     public static CodeButtonHandlerData updateExistingCodeButtonHandlerDataWithSubstitutedData(ProgramProperties programProperties, CodeButtonHandlerData returnValue) {
         uECBHDWSD_CodeButton(programProperties, returnValue);
         uECBHDWSD_SIDI(programProperties, returnValue);
@@ -65,7 +67,7 @@ public class CodeButtonHandlerDataRoutines {
         uECBHDWSD_TUL(programProperties, returnValue);
         return returnValue;
     }
-    
+
 //  uECBHDWSD is short for "updateExistingCodeButtonHandlerDataWithSubstitutedData"
     public static CodeButtonHandlerData uECBHDWSD_CodeButton(ProgramProperties programProperties, CodeButtonHandlerData returnValue) {
         returnValue._mCodeButtonInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mCodeButtonInternalSensorPattern);
@@ -96,19 +98,19 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mCO_CallOnToggleInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties. _mCO_CallOnToggleInternalSensorPattern);
         return returnValue;
     }
-    
+
     public static CodeButtonHandlerData uECBHDWSD_TUL(ProgramProperties programProperties, CodeButtonHandlerData returnValue) {
         returnValue._mTUL_DispatcherInternalSensorLockToggle = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mTUL_DispatcherInternalSensorLockTogglePattern);
         returnValue._mTUL_DispatcherInternalSensorUnlockedIndicator = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mTUL_DispatcherInternalSensorUnlockedIndicatorPattern);
         return returnValue;
     }
-    
+
     /**
      * This is the "heart" of the pattern match system: It substitutes the passed
      * value where ever it see a single "#" in the passed template.  It does not
      * support escapes, it will fix ALL "#" with that number in the passed template.
      * It is indiscriminate.
-     * 
+     *
      * @param value     The "number" that will be substituted where the template parameter is
      * @param template  The pattern used to generate the result.
      * @return          Modified string.  ALL locations modified indiscriminately.

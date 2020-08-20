@@ -94,7 +94,7 @@ public class FrmSIDI extends javax.swing.JFrame {
         _mSIDI_CodingAndResponseTime.setText(Integer.toString(_mCodeButtonHandlerData._mSIDI_CodingTimeInMilliseconds));
         _mSIDI_TimeLockingInterval.setText(Integer.toString(_mCodeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds));
         _mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel = (DefaultTableModel)_mSIDI_TableOfLeftToRightTrafficExternalSignalNames.getModel();
-        ArrayList<String> signalsArrayList1 = ProjectsCommonSubs.getArrayListFromCSV(_mCodeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList);
+        ArrayList<String> signalsArrayList1 = ProjectsCommonSubs.getArrayListOfSignalNames(_mCodeButtonHandlerData._mSIDI_LeftRightTrafficSignals);
         int signalsArrayListSize1 = signalsArrayList1.size();
         if (signalsArrayListSize1 > _mSIDI_TableOfLeftToRightTrafficExternalSignalNames.getRowCount()) { // Has more than default (100 as of this writing) rows:
             _mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel.setRowCount(signalsArrayListSize1);
@@ -103,7 +103,7 @@ public class FrmSIDI extends javax.swing.JFrame {
             _mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel.setValueAt(signalsArrayList1.get(index), index, 0);
         }
         _mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel = (DefaultTableModel)_mSIDI_TableOfRightToLeftTrafficExternalSignalNames.getModel();
-        ArrayList<String> signalsArrayList2 = ProjectsCommonSubs.getArrayListFromCSV(_mCodeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList);
+        ArrayList<String> signalsArrayList2 = ProjectsCommonSubs.getArrayListOfSignalNames(_mCodeButtonHandlerData._mSIDI_RightLeftTrafficSignals);
         int signalsArrayListSize2 = signalsArrayList2.size();
         if (signalsArrayListSize2 > _mSIDI_TableOfRightToLeftTrafficExternalSignalNames.getRowCount()) { // Has more than default (100 as of this writing) rows:
             _mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel.setRowCount(signalsArrayListSize2);
@@ -131,20 +131,20 @@ public class FrmSIDI extends javax.swing.JFrame {
         if (!codeButtonHandlerData._mSIDI_Enabled) return true; // Not enabled, can be no error!
 //  For interrelationship(s) checks:
         boolean leftInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_LeftInternalSensor);
-        boolean entriesInLeftRightTrafficSignalsCSVList = !codeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList.isEmpty();
+        boolean entriesInLeftRightTrafficSignals = !codeButtonHandlerData._mSIDI_LeftRightTrafficSignals.isEmpty();
         boolean rightInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_RightInternalSensor);
-        boolean entriesInRightLeftTrafficSignalsCSVList = !codeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList.isEmpty();
+        boolean entriesInRightLeftTrafficSignals = !codeButtonHandlerData._mSIDI_RightLeftTrafficSignals.isEmpty();
 //  Checks:
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_NormalInternalSensor)) return false;
         if (!leftInternalSensorPresent && !rightInternalSensorPresent) return false;
-        if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) return false;
-        if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) return false;
-        if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) return false;
-        if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) return false;
-        for (String signalName : ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList)) {
+        if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignals) return false;
+        if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignals) return false;
+        if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignals) return false;
+        if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignals) return false;
+        for (String signalName : ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mSIDI_LeftRightTrafficSignals)) {
             if (checkJMRIObject.checkSignal(signalName) == false) return false;
         }
-        for (String signalName : ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList)) {
+        for (String signalName : ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mSIDI_RightLeftTrafficSignals)) {
             if (checkJMRIObject.checkSignal(signalName) == false) return false;
         }
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
@@ -155,26 +155,17 @@ public class FrmSIDI extends javax.swing.JFrame {
         ArrayList<String> errors = new ArrayList<>();
 //  For interrelationship(s) checks:
         boolean leftInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDI_LeftInternalSensor);
-        boolean entriesInLeftRightTrafficSignalsCSVList = !CommonSubs.getCSVStringFromDefaultTableModel(_mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel).isEmpty();
+        boolean entriesInLeftRightTrafficSignals = _mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel.getRowCount() != 0;
         boolean rightInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDI_RightInternalSensor);
-        boolean entriesInRightLeftTrafficSignalsCSVList = !CommonSubs.getCSVStringFromDefaultTableModel(_mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel).isEmpty();
+        boolean entriesInRightLeftTrafficSignals = _mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel.getRowCount() != 0;
 //  Checks:
         CommonSubs.checkJTextFieldNotEmpty(_mSIDI_NormalInternalSensor, _mSIDI_NormalInternalSensorPrompt, errors);
-// <<<<<<< Updated upstream
         if (!leftInternalSensorPresent && !rightInternalSensorPresent) errors.add(Bundle.getMessage("OneOrBothOf") + " \"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("And") + " \"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("MustBePresent"));   // NOI18N
-        if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn") + " \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");    // NOI18N
-        if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn") + " \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");  // NOI18N
-        if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDINotDefinedWithEntriesIn") + " \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\""); // NOI18N
-        if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDINotDefinedWithEntriesIn") + " \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");   // NOI18N
+        if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignals) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn") + " \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");    // NOI18N
+        if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignals) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn") + " \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");  // NOI18N
+        if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignals) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDINotDefinedWithEntriesIn") + " \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\""); // NOI18N
+        if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignals) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDINotDefinedWithEntriesIn") + " \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");   // NOI18N
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
-// =======
-//         if (!leftInternalSensorPresent && !rightInternalSensorPresent) errors.add("One or both of \"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" and \"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" must be present.");
-//         if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" defined but no entries in \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");
-//         if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" defined but no entries in \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");
-//         if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" not defined with entries in \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");
-//         if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" not defined with entries in \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");
-//         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
-// >>>>>>> Stashed changes
         return errors;
     }
 
@@ -630,8 +621,8 @@ public class FrmSIDI extends javax.swing.JFrame {
         _mCodeButtonHandlerData._mSIDI_RightInternalSensor = _mSIDI_RightInternalSensor.getText();
         _mCodeButtonHandlerData._mSIDI_CodingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_CodingAndResponseTime);
         _mCodeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_TimeLockingInterval);
-        _mCodeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList = CommonSubs.getCSVStringFromDefaultTableModel(_mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel);
-        _mCodeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList = CommonSubs.getCSVStringFromDefaultTableModel(_mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel);
+        _mCodeButtonHandlerData._mSIDI_LeftRightTrafficSignals = ProjectsCommonSubs.getArrayListOfSignals(CommonSubs.getStringArrayFromDefaultTableModel(_mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel));
+        _mCodeButtonHandlerData._mSIDI_RightLeftTrafficSignals = ProjectsCommonSubs.getArrayListOfSignals(CommonSubs.getStringArrayFromDefaultTableModel(_mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel));
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();

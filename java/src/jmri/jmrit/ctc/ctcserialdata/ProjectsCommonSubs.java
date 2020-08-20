@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
+import jmri.*;
+import jmri.jmrit.ctc.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -18,7 +20,7 @@ import org.apache.commons.csv.CSVPrinter;
 
 public class ProjectsCommonSubs {
     static final public char SSV_SEPARATOR = ';';
-    
+
     static public ArrayList<String> getArrayListFromCSV(String csvString) { return helper1(csvString, CSVFormat.DEFAULT.getDelimiter());}
     static public ArrayList<String> getArrayListFromSSV(String ssvString) { return helper1(ssvString, SSV_SEPARATOR); }
     static private ArrayList<String> helper1(String ssvString, char separator) {
@@ -31,6 +33,26 @@ public class ProjectsCommonSubs {
         return list;
     }
 
+    static public ArrayList<String> getArrayListOfSignalNames(ArrayList<NBHSignal> array) {
+        ArrayList<String> stringList = new ArrayList<>();
+        array.forEach(row -> {
+            NamedBeanHandle handle = (NamedBeanHandle) row.getBeanHandle();
+            stringList.add(handle.getName());
+        });
+        return stringList;
+    }
+
+    static public ArrayList<NBHSignal> getArrayListOfSignals(ArrayList<String> signalNames) {
+        ArrayList<NBHSignal> newList = new ArrayList<>();
+        signalNames.forEach(name -> {
+            NBHSignal newSignal = new NBHSignal(name);
+            if (newSignal != null) {
+                newList.add(newSignal);
+            }
+        });
+        return newList;
+    }
+
 //  Returns an ArrayList guaranteed to have exactly "returnArrayListSize" entries,
 //  and if the passed "csvString" has too few entries, then those missing end values are set to "":
     static public ArrayList<String> getFixedArrayListSizeFromCSV(String csvString, int returnArrayListSize) {
@@ -38,7 +60,7 @@ public class ProjectsCommonSubs {
         while (returnArray.size() < returnArrayListSize) returnArray.add("");
         return returnArray;
     }
-    
+
     static public int getIntFromStringNoThrow(String aString, int defaultValueIfProblem) {
         int returnValue = defaultValueIfProblem;    // Default if error
         try { returnValue = Integer.parseInt(aString); } catch (NumberFormatException e) {}
@@ -52,14 +74,14 @@ public class ProjectsCommonSubs {
             printer.printRecord(list);
             return printer.getOut().toString();
         } catch (IOException ex) {
-            log.error("Unable to create list", ex); 
+            log.error("Unable to create list", ex);
             return "";
         }
     }
-    
+
     public static String removeFileExtension(String filename) {
         final int lastIndexOf = filename.lastIndexOf('.');
-        return lastIndexOf >= 1 ? filename.substring(0, lastIndexOf) : filename;  
+        return lastIndexOf >= 1 ? filename.substring(0, lastIndexOf) : filename;
     }
 
     public static String getFilenameOnly(String path) {
@@ -82,17 +104,17 @@ public class ProjectsCommonSubs {
 
     public static String changeExtensionTo(String path, String newExtension) {
         return addExtensionIfMissing(removeFileExtension(path), newExtension);
-    }    
-    
+    }
+
     public static boolean isNullOrEmptyString(String aString) {
         return aString == null || aString.trim().length() == 0;
     }
-    
+
     public static String getSafeTrimmedString(String aString) {
         if (aString == null) return "";
         return aString.trim();
     }
-    
+
 //  If you used "CommonSubs.numberButtonGroup" above to setup the button group, then
 //  you can call this routine to get the switch value as an int value,
 //  since exception "NumberFormatException" should NEVER be thrown!
@@ -103,7 +125,7 @@ public class ProjectsCommonSubs {
     public static String getButtonSelectedString(ButtonGroup buttonGroup) {
         return buttonGroup.getSelection().getActionCommand();
     }
-    
+
     public static ArrayList<Field> getAllPartialVariableNameStringFields(String partialVariableName, Field[] fields) {
         ArrayList <Field> stringFields = new ArrayList<>();
         for (Field field : fields) {

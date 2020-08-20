@@ -19,7 +19,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import javax.swing.ButtonGroup;
+import jmri.jmrit.ctc.*;
 
 /**
  *
@@ -172,8 +174,8 @@ at the top for "automatic" JMRI object verification.
     public String               _mSIDI_RightInternalSensor;
     public int                  _mSIDI_CodingTimeInMilliseconds;
     public int                  _mSIDI_TimeLockingTimeInMilliseconds;
-    public String               _mSIDI_LeftRightTrafficSignalsCSVList;
-    public String               _mSIDI_RightLeftTrafficSignalsCSVList;
+    public ArrayList<NBHSignal> _mSIDI_LeftRightTrafficSignals = new ArrayList<>();
+    public ArrayList<NBHSignal> _mSIDI_RightLeftTrafficSignals = new ArrayList<>();
 //  Signal Direction Lever:
     public boolean              _mSIDL_Enabled;
     public String               _mSIDL_LeftInternalSensor;
@@ -195,11 +197,14 @@ at the top for "automatic" JMRI object verification.
 //  Call On:
     public boolean              _mCO_Enabled;
     public String               _mCO_CallOnToggleInternalSensor;
+    public ArrayList<CallOnData> _mCO_GroupingsList = new ArrayList<>();
     public String               _mCO_GroupingsListString;
 //  Traffic Locking:
     public boolean              _mTRL_Enabled;
-    public String               _mTRL_LeftTrafficLockingRulesSSVList;
-    public String               _mTRL_RightTrafficLockingRulesSSVList;
+    public ArrayList<TrafficLockingData> _mTRL_LeftTrafficLockingRules = new ArrayList<>();      // new
+    public ArrayList<TrafficLockingData> _mTRL_RightTrafficLockingRules = new ArrayList<>();     // new
+    public String               _mTRL_LeftTrafficLockingRulesSSVList;                       // old
+    public String               _mTRL_RightTrafficLockingRulesSSVList;                      // old
 //  Turnout Locking:
     public boolean              _mTUL_Enabled;
     public String               _mTUL_DispatcherInternalSensorLockToggle;
@@ -209,15 +214,27 @@ at the top for "automatic" JMRI object verification.
     public boolean              _mTUL_NoDispatcherControlOfSwitch;
     public boolean              _mTUL_ndcos_WhenLockedSwitchStateIsClosed;
     public LOCK_IMPLEMENTATION  _mTUL_LockImplementation;
-    public String               _mTUL_AdditionalExternalTurnout1;
-    public boolean              _mTUL_AdditionalExternalTurnout1FeedbackDifferent;
-    public String               _mTUL_AdditionalExternalTurnout2;
-    public boolean              _mTUL_AdditionalExternalTurnout2FeedbackDifferent;
-    public String               _mTUL_AdditionalExternalTurnout3;
-    public boolean              _mTUL_AdditionalExternalTurnout3FeedbackDifferent;
+    public ArrayList<AdditionalTurnout> _mTUL_AdditionalExternalTurnouts = new ArrayList<>();    // new
+    public String               _mTUL_AdditionalExternalTurnout1;                           // old
+    public boolean              _mTUL_AdditionalExternalTurnout1FeedbackDifferent;          // old
+    public String               _mTUL_AdditionalExternalTurnout2;                           // old
+    public boolean              _mTUL_AdditionalExternalTurnout2FeedbackDifferent;          // old
+    public String               _mTUL_AdditionalExternalTurnout3;                           // old
+    public boolean              _mTUL_AdditionalExternalTurnout3FeedbackDifferent;          // old
 //  Indication Locking (Signals):
     public boolean              _mIL_Enabled;
-    public String               _mIL_ListOfCSVSignalNames;
+    public ArrayList<NBHSignal>      _mIL_Signals = new ArrayList<>();                           // new
+    public String               _mIL_ListOfCSVSignalNames;                                  // old
+
+    public static class AdditionalTurnout {
+        public String _mTUL_AdditionalExternalTurnout;
+        public boolean _mTUL_AdditionalExternalTurnoutFeedbackDifferent;
+
+        public AdditionalTurnout(String turnout, boolean feedback) {
+            _mTUL_AdditionalExternalTurnout = turnout;
+            _mTUL_AdditionalExternalTurnoutFeedbackDifferent = feedback;
+        }
+    }
 
     public void upgradeSelf() {
         for (int oldVersion = _mFileVersion; oldVersion < FILE_VERSION; oldVersion++) {
@@ -314,7 +331,7 @@ at the top for "automatic" JMRI object verification.
         } catch (IOException e) {}  // Any other error(s) just cleans up:
         (new File(temporaryFilename)).delete();        // If we get here, just clean up.
     }
-    
+
     /**
      * This routine was written because CSVPrinter at some point began putting "\r\n" at the
      * end of lines returned by "toString()" based upon the version of the Java Library that
@@ -350,7 +367,7 @@ at the top for "automatic" JMRI object verification.
         } catch (IOException e) {}  // Any other error(s) just cleans up:
         (new File(temporaryFilename)).delete();        // If we get here, just clean up.
     }
-    
+
 
 /*
     Returns:    null if we processed it or it was the wrong format, and in either case WROTE the line(s) out indicating that we handled it.
@@ -388,7 +405,7 @@ at the top for "automatic" JMRI object verification.
         }
         return aLine;
     }
-    
+
     static private String checkForMultipleSemiColons(BufferedWriter bufferedWriter, String aLine) throws IOException {
         int intStart = aLine.indexOf(STRING_START_STRING);
         int intEnd = aLine.indexOf(STRING_END_STRING);
@@ -403,7 +420,7 @@ at the top for "automatic" JMRI object verification.
         }
         return aLine;
     }
-    
+
 
     static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
         bufferedWriter.write(aLine); bufferedWriter.newLine();

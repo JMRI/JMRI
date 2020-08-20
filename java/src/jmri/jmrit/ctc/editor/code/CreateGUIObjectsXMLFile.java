@@ -184,7 +184,8 @@ public class CreateGUIObjectsXMLFile {
                         generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSIDI_RightInternalSensor, "green", false, printWriter);   // NOI18N
                     }
                     if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.ALL) {
-                        ArrayList<String> signalsArrayListLR = ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList);
+                        ArrayList<String> signalsArrayListLR = ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mSIDI_LeftRightTrafficSignals);
+
                         int x;
                         x = thisObjectHorizontalPosition + 10;
                         for (String signal : signalsArrayListLR) {
@@ -200,7 +201,7 @@ public class CreateGUIObjectsXMLFile {
                             }
                             x -= 11;
                         }
-                        ArrayList<String> signalsArrayListRL = ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList);
+                        ArrayList<String> signalsArrayListRL = ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mSIDI_RightLeftTrafficSignals);
                         x = thisObjectHorizontalPosition + 20;
                         for (String signal : signalsArrayListRL) {
                             switch(otherData._mSignalSystemType) {

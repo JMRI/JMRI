@@ -27,11 +27,11 @@ public class CreateVirtualSignalsXMLFile {
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
             if (codeButtonHandlerData._mSIDI_Enabled) { // Signal Indicators:
                 if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.ALL) {
-                    ArrayList<String> signalsArrayListLR = ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList);
+                    ArrayList<String> signalsArrayListLR = ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mSIDI_LeftRightTrafficSignals);
                     for (String signalHead : signalsArrayListLR) {
                         generateSignalHead(signalHead, printWriter);
                     }
-                    ArrayList<String> signalsArrayListRL = ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList);
+                    ArrayList<String> signalsArrayListRL = ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mSIDI_RightLeftTrafficSignals);
                     for (String signalHead : signalsArrayListRL) {
                         generateSignalHead(signalHead, printWriter);
                     }
@@ -42,7 +42,7 @@ public class CreateVirtualSignalsXMLFile {
         generateEpilogue(printWriter);
         printWriter.close();
     }
-    
+
     private static void generateSignalHead(String signalHead, PrintWriter printWriter) {
         printWriter.println("    <signalhead class=\"jmri.implementation.configurexml.VirtualSignalHeadXml\">");    // NOI18N
         printWriter.println("      <systemName>" + signalHead + "</systemName>");   // NOI18N

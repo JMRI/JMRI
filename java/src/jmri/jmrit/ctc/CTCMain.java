@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import jmri.*;
+import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 public class CTCMain {
     private final static Logger log = LoggerFactory.getLogger(CTCMain.class);
-    private final CTCSerialData _mCTCSerialData = new CTCSerialData();
+    private final CTCSerialData _mCTCSerialData;
     private final ArrayList<CodeButtonHandler> _mCodeButtonHandlersArrayList = new ArrayList<>();       // "Const" after initialization completes.
     private NBHSensor _mCTCDebugSystemReloadInternalSensor = null;
     private final PropertyChangeListener _mCTCDebugSystemReloadInternalSensorPropertyChangeListener = (PropertyChangeEvent e) -> { handleCTCDebugSystemReload(e); };
@@ -42,18 +43,17 @@ public class CTCMain {
         }
     }
 
-    private String _mFilenameRead = null;
     public CTCMain() {
+        CtcManager mgr = InstanceManager.getDefault(CtcManager.class);
+        _mCTCSerialData = mgr.getCTCSerialData();
         InstanceManager.store(_mCTCExceptionBuffer, CTCExceptionBuffer.class);
-    }
-    public void readDataFromXMLFile(String filename) {
-        _mFilenameRead = filename;
-        startup();
     }
 
     private void handleCTCDebugSystemReload(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.ACTIVE) {    // NOI18N
-            rereadXMLFile();
+            log.info(Bundle.getMessage("CTCMainShuttingDown"));          // NOI18N
+            shutdown();
+            startup();
         }
     }
 
@@ -65,20 +65,7 @@ public class CTCMain {
         }
     }
 
-    public void rereadXMLFile() {
-        if (_mFilenameRead != null) { // Safety check that someone loaded a file before.
-            log.info(Bundle.getMessage("CTCMainSuttingDown"));          // NOI18N
-            shutdown();
-            startup();
-            log.info("CTC {} {} {}", CTCSerialData.CTCVersion, Bundle.getMessage("CTCMainReloadedFile"), _mFilenameRead);   // NOI18N
-        }
-        else
-        {
-            log.warn(Bundle.getMessage("CTCMainNoFileLoaded")); // NOI18N
-        }
-    }
-
-//  Do this prior to rereadXMLFile().  This will insure all objects are disconnected from propertyChangeListeners:
+//  This will insure all objects are disconnected from propertyChangeListeners:
     private void shutdown() {
         for (CodeButtonHandler codeButtonHandler : _mCodeButtonHandlersArrayList) {
             codeButtonHandler.removeAllListeners();
@@ -88,13 +75,9 @@ public class CTCMain {
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.removePropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
     }
 
-    private void startup() {
+    void startup() {
         _mLockedRoutesManager.clearAllLockedRoutes();
         SignalDirectionIndicators.resetSignalsUsed();
-        if (!_mCTCSerialData.readDataFromXMLFile(_mFilenameRead)) {
-            CTCException e = new CTCException("CTCMain", "", "readDataFromXMLFile", Bundle.getMessage("CTCMainFailedToRead") + " " + _mFilenameRead);   // NOI18N
-            e.logError();
-        }
 
 //  One of's:
         OtherData otherData = _mCTCSerialData.getOtherData();
@@ -127,8 +110,8 @@ public class CTCMain {
                                                 codeButtonHandlerData._mSIDI_RightInternalSensor,
                                                 codeButtonHandlerData._mSIDI_CodingTimeInMilliseconds,
                                                 codeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds,
-                                                codeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList,
-                                                codeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList,
+                                                codeButtonHandlerData._mSIDI_LeftRightTrafficSignals,
+                                                codeButtonHandlerData._mSIDI_RightLeftTrafficSignals,
                                                 fleeting)
                 : new SignalDirectionIndicatorsNull();
             _mSIDIHashMap.put(codeButtonHandlerData._mUniqueID, signalDirectionIndicators);
@@ -197,10 +180,10 @@ public class CTCMain {
                                                                             otherData._mSignalSystemType);
                 }
             } else if (codeButtonHandlerData._mIL_Enabled) {
-                indicationLockingSignals = new IndicationLockingSignals(userIdentifier,
-                                                                        codeButtonHandlerData._mIL_ListOfCSVSignalNames,
-                                                                        codeButtonHandlerData._mSWDI_ExternalTurnout,
-                                                                        otherData._mSignalSystemType);
+// DS                indicationLockingSignals = new IndicationLockingSignals(userIdentifier,
+// DS                                                                        codeButtonHandlerData._mIL_ListOfCSVSignalNames,
+// DS                                                                        codeButtonHandlerData._mSWDI_ExternalTurnout,
+// DS                                                                        otherData._mSignalSystemType);
             }
 
 // Slave Switch: null
@@ -232,6 +215,7 @@ public class CTCMain {
             _mCodeButtonHandlersArrayList.add(codeButtonHandler);
             _mCBHashMap.put(codeButtonHandlerData._mUniqueID, codeButtonHandler);
         });
+
         _mCTCDebugSystemReloadInternalSensor = new NBHSensor("CTCMain", "", "_mCTCDebugSystemReloadInternalSensor", otherData._mCTCDebugSystemReloadInternalSensor, true);  // NOI18N
         _mCTCDebugSystemReloadInternalSensor.setKnownState(Sensor.INACTIVE);
         _mCTCDebugSystemReloadInternalSensor.addPropertyChangeListener(_mCTCDebugSystemReloadInternalSensorPropertyChangeListener);
@@ -240,7 +224,7 @@ public class CTCMain {
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.addPropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
 
         for (TrafficLocking trafficLocking : trafficLockingFileReadComplete) { // Call these routines to give them a chance to initialize:
-            trafficLocking.fileReadComplete(_mCBHashMap, _mSWDIHashMap);
+// DS            trafficLocking.fileReadComplete(_mCBHashMap, _mSWDIHashMap);
         }
 
 /*  As a final item, if the developer wants us to lock all of the lockable
@@ -255,7 +239,7 @@ public class CTCMain {
             _mLockTurnoutsTimer.setRepeats(false);
             _mLockTurnoutsTimer.start();
         }
-        
+
 //  Finally, display errors to the user:
         if (!_mCTCExceptionBuffer.isEmpty()) {
             CTCExceptionBuffer.ExceptionBufferRecordSeverity exceptionBufferRecordSeverity2 = _mCTCExceptionBuffer.getHighestExceptionBufferRecordSeverity();
@@ -273,6 +257,7 @@ public class CTCMain {
             }
             JOptionPane.showMessageDialog(null, _mCTCExceptionBuffer.getAllMessages(), Bundle.getMessage("CTCMainRuntimeStartupIssues"), messageType);  // NOI18N
         }
+        log.info("CTC {} {}", CTCSerialData.CTCVersion, Bundle.getMessage("CTCMainStarted"));   // NOI18N
     }
 
 //  One shot routine:
