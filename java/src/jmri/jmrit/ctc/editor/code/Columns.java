@@ -218,25 +218,34 @@ public class Columns {
             _mCB_EditAlwaysEnabled.setEnabled(true);
             updateCurrentlySelectedColumnErrorStatus();
             _mEdit_CB.setEnabled(true);
-            lazy1(_mSIDI_Enabled, _mEdit_SIDI, _mSelectedCodeButtonHandlerData._mSIDI_Enabled);
-            lazy1(_mSIDL_Enabled, _mEdit_SIDL, _mSelectedCodeButtonHandlerData._mSIDL_Enabled);
-            lazy1(_mSWDI_Enabled, _mEdit_SWDI, _mSelectedCodeButtonHandlerData._mSWDI_Enabled);
-            lazy1(_mSWDL_Enabled, _mEdit_SWDL, _mSelectedCodeButtonHandlerData._mSWDL_Enabled);
-            lazy1(_mCO_Enabled, _mEdit_CO, _mSelectedCodeButtonHandlerData._mCO_Enabled);
-            lazy1(_mTRL_Enabled, _mEdit_TRL, _mSelectedCodeButtonHandlerData._mTRL_Enabled);
-            lazy1(_mTUL_Enabled, _mEdit_TUL, _mSelectedCodeButtonHandlerData._mTUL_Enabled);
-            lazy1(_mIL_Enabled, _mEdit_IL, _mSelectedCodeButtonHandlerData._mIL_Enabled);
+            lazy1(_mSIDI_Enabled, _mEdit_SIDI, true, _mSelectedCodeButtonHandlerData._mSIDI_Enabled);
+            lazy1(_mSIDL_Enabled, _mEdit_SIDL, true, _mSelectedCodeButtonHandlerData._mSIDL_Enabled);
+            lazy1(_mSWDI_Enabled, _mEdit_SWDI, true, _mSelectedCodeButtonHandlerData._mSWDI_Enabled);
+            lazy1(_mSWDL_Enabled, _mEdit_SWDL, true, _mSelectedCodeButtonHandlerData._mSWDL_Enabled);
+            specialUpdateEnableCO_and_TRL();
+            lazy1(_mTUL_Enabled, _mEdit_TUL, true, _mSelectedCodeButtonHandlerData._mTUL_Enabled);
+            lazy1(_mIL_Enabled, _mEdit_IL, true, _mSelectedCodeButtonHandlerData._mIL_Enabled);
         } else {
             clearCurrentlySelectedColumnErrorStatus();
         }
     }
 
-    static private void lazy1(JCheckBox jCheckBox, JButton jButton, boolean value) {
-        jCheckBox.setEnabled(true);
+    private void specialUpdateEnableCO_and_TRL() {
+        boolean signalDirectionLeverEnabledAndValid = signalDirectionLeverEnabledAndValid();
+        if (!signalDirectionLeverEnabledAndValid()) {   // Force these, until user fixes it.
+            _mSelectedCodeButtonHandlerData._mCO_Enabled = false;
+            _mSelectedCodeButtonHandlerData._mTRL_Enabled = false;
+        }
+        lazy1(_mCO_Enabled, _mEdit_CO, signalDirectionLeverEnabledAndValid, _mSelectedCodeButtonHandlerData._mCO_Enabled);
+        lazy1(_mTRL_Enabled, _mEdit_TRL, signalDirectionLeverEnabledAndValid, _mSelectedCodeButtonHandlerData._mTRL_Enabled);
+    }
+
+    static private void lazy1(JCheckBox jCheckBox, JButton jButton, boolean enabled, boolean value) {
+        jCheckBox.setEnabled(enabled);
         jCheckBox.setSelected(value);
         jButton.setEnabled(value);
     }
-
+    
     public void sidi_EnabledClicked(boolean newState) {
         _mSelectedCodeButtonHandlerData._mSIDI_Enabled = newState;
         lazy2(_mEdit_SIDI, newState);
@@ -245,6 +254,7 @@ public class Columns {
     public void sidl_EnabledClicked(boolean newState) {
         _mSelectedCodeButtonHandlerData._mSIDL_Enabled = newState;
         lazy2(_mEdit_SIDL, newState);
+        specialUpdateEnableCO_and_TRL();
     }
 
     public void swdi_EnabledClicked(boolean newState) {
@@ -385,5 +395,10 @@ public class Columns {
         }
         displayString += generatePossibleErrorString(_mCheckJMRIObject, codeButtonHandlerData);
         return displayString;
+    }
+    
+    private boolean signalDirectionLeverEnabledAndValid() {
+        if (!_mSelectedCodeButtonHandlerData._mSIDL_Enabled) return false;
+        return FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData);
     }
 }
