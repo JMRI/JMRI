@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implements TurnoutManager {
+public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> implements TurnoutManager {
 
     public ProxyTurnoutManager() {
         super();
