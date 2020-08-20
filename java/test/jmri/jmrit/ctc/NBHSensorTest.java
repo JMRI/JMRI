@@ -2,18 +2,16 @@ package jmri.jmrit.ctc;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+import jmri.*;
 import jmri.jmrit.ctc.setup.CreateTestObjects;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.openide.util.Exceptions;
 
 /*
 * Tests for the NBHSensor Class
@@ -53,7 +51,48 @@ public class NBHSensorTest {
 
         JUnitAppender.suppressErrorMessage("Module, UserIdParameter, Sensor does not exist: IS94");
     }
+    
+    @Test
+    public void testHandleNameModification() {
+        
+/*  Next, test in NBHSensor the ability to dynmaically change the underlying sensor used
+    WITHOUT affecting registered PropertyChangeListeners....
+*/
+//  Create and initialize standard JMRI sensors:
+        InstanceManager.getDefault(SensorManager.class).newSensor("IS:FLEETING", "FLEETING");   // Create it if it doesn't exist.
+        Sensor sensorFleeting2 = InstanceManager.getDefault(SensorManager.class).newSensor("IS:FLEETING2", "FLEETING2");
+        try { sensorFleeting2.setKnownState(Sensor.INACTIVE); } catch (JmriException ex) {} // Shouldn't throw, since it's a standard JMRI object.
 
+//  Our initial NBHSensor, associate with "IS:FLEETING":
+        NBHSensor sensorFleetingNBH = new NBHSensor("Module", "UserId", "Parameter", "FLEETING", false);
+        Assert.assertEquals(0, sensorFleetingNBH.testingGetCountOfPropertyChangeListenersRegistered());     // Verify nothing registered yet.
+
+//  Setup for the test:        
+        PropertyChangeListener propertyChangeListener;
+        AtomicInteger booleanContainer = new AtomicInteger(0);
+        sensorFleetingNBH.setKnownState(Sensor.INACTIVE);
+        
+        sensorFleetingNBH.addPropertyChangeListener(propertyChangeListener = (PropertyChangeEvent e) -> { booleanContainer.incrementAndGet(); });
+        Assert.assertEquals(1, sensorFleetingNBH.testingGetCountOfPropertyChangeListenersRegistered());
+        sensorFleetingNBH.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals(1, booleanContainer.get());     // Make sure it works so far.
+        
+//  Simulate the user changing the sensor contained in the NBHSensor to something else:        
+        sensorFleetingNBH.setHandleName("FLEETING2");
+        Assert.assertEquals(1, sensorFleetingNBH.testingGetCountOfPropertyChangeListenersRegistered()); // We BETTER still be registered!
+
+// Simulate as if SOMETHING OTHER THAN OUR CODE changed the state of sensor FLEETING2:
+        try { sensorFleeting2.setKnownState(Sensor.ACTIVE); } catch (JmriException ex) {}   // Shouldn't throw, since it's a standard JMRI object.
+        
+//  Did our PropertyChangeEvent happen?
+//  This is what all this led up to, the REAL test!:        
+        Assert.assertEquals(2, booleanContainer.get());
+        
+//  Clean up, and make sure our bookkeeping worked fine:
+        sensorFleetingNBH.removePropertyChangeListener(propertyChangeListener);
+        Assert.assertEquals(0, sensorFleetingNBH.testingGetCountOfPropertyChangeListenersRegistered());
+    }
+    
     public void nullBean(NBHSensor sensor) {
         Sensor sbean = sensor.getBean();
         Assert.assertNull(sbean);
