@@ -37,7 +37,7 @@
       Related info on other pages:
       <ul>
         <li><a href="ContinuousIntegration.shtml">Continuous Integration</a>
-            - doesn't really talk about how GitHub is configured for this, now how the services
+            - doesn't really talk about how GitHub is configured for this, nor how the services
                 are configured</li>
         <li><a href="gitdeveloper.shtml">Labels on Issues/PRs</a></li>
         <li>The
@@ -54,8 +54,11 @@
         <li>There has been at least one review from a non-author JMRI developer that accepts the Pull Request</li>
         <li>There are no reviews requesting changes</li>
         <li>The Pull Request has been in-queue for at least a day to allow people to take a look at them</li>
-        <li>These rules apply to all members of the development team, including administrators</li>
         <li>The original author of the Pull Request has been assigned to the Pull Request</li>
+        <li>These rules apply to all members of the development team, including administrators, with the 
+            exception when CI tests do not report back correctly. In these situations, they are able to override
+            the otherwise blocked PR but should add a note mentioning this fact. Inappropriate use of this
+            override can be challenged by JMRI developers on the jmri-developers list.</li>
       </ul>
 
       <p>
@@ -110,7 +113,7 @@
         <li>Add any assignments beyond the original submitter.  
             The original submitter may
             be assigned automatically through a github action, but if not please add them.
-            Developers and maintainers can be assigned to any PR, but 
+            Developers, Reviewers and Maintainers can be assigned to any PR, but 
             other people who create PRs can only be assigned to their own.
             By assigning the PR, we make it easy to find what non-developers 
             have contributed.</li>
@@ -121,11 +124,15 @@
       <h2>How we use GitHub teams</h2>
       
       <p>GitHub provides support for teams to control access to various GitHub features.
-        We use two different ones:
+        We use three different ones:
         <dl>
             <dt>Developers</dt><dd>Have the "Triage" permissions, which allows
                     editing of PRs, including adding/changing labels, releases, 
                     and other properties.</dd>
+            <dt>Reviewers</dt><dd>In addition to "Triage" permissions also has
+                    "Write" permissions which allows reviewing of PRs, but are blocked
+                    from merging to the "master" branch (subject to other
+                    rules and restrictions)</dd>
             <dt>Maintainers</dt><dd>In addition to "Triage" permissions also has
                     "Write" permissions which allows merging PRs (subject to other
                     rules and restrictions)</dd>
