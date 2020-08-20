@@ -90,6 +90,11 @@ public class NBHSensor {
         return null;
     }
 
+    public NamedBeanHandle getBeanHandle() {
+        if (valid()) return _mNamedBeanHandleSensor;
+        return null;
+    }
+
     public boolean matchSensor(Sensor sensor) {
         if (valid()) return _mNamedBeanHandleSensor.getBean() == sensor;
         return false;
@@ -106,7 +111,7 @@ public class NBHSensor {
             _mNamedBeanHandleSensor = null;
         }
     }
-    
+
 //????
 //  Use when something else has the thing we help with:
     public NBHSensor(NamedBeanHandle<Sensor> namedBeanHandleSensor) {
@@ -171,12 +176,12 @@ public class NBHSensor {
         _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyChangeListener);
         _mArrayListOfPropertyChangeListeners.remove(propertyChangeListener);
     }
-    
+
 //  Support for "Grand Unification" (Editor support):
-    
-    
+
+
     /**
-     * @return The display name of the Sensor (getDisplayName()).
+     * @return The sensor's handle name.
      */
     public String getHandleName() {
         return _mNamedBeanHandleSensor.getName();
@@ -185,18 +190,18 @@ public class NBHSensor {
     /**
      * Set the new sensor name to use.  IF (and only if) the name changes, then we do EVERYTHING
      * required to support the name change.
-     * 
+     *
      * @param newName The new name of the object to use.
-     */    
+     */
     public void setHandleName(String newName) {
         if (getHandleName().compareTo(newName) != 0) { // User changed their minds about which Sensor to use (NOT a rename!):
 
-//  Save and unlink OUR propertyChangeListeners ONLY from the old Sensor:            
+//  Save and unlink OUR propertyChangeListeners ONLY from the old Sensor:
             for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
                 _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyChangeListener);
             }
 
-//  Allocate and replace the existing sensor (away with thee old sensor!)            
+//  Allocate and replace the existing sensor (away with thee old sensor!)
             Sensor tempSensor = _mOptional ? getSafeOptionalJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName) : getSafeExistingJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName); // NOI18N
             if (tempSensor != null) {
                 _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(newName, tempSensor);
@@ -210,13 +215,13 @@ public class NBHSensor {
             }
         }
     }
-    
-    
+
+
     /**
      * For Unit testing only.
      * @return Returns the present number of property change listeners registered with us so far.
-     */    
-    
+     */
+
     public int testingGetCountOfPropertyChangeListenersRegistered() {
         return _mArrayListOfPropertyChangeListeners.size();
     }

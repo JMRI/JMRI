@@ -75,6 +75,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/switchboardeditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/entryexitpair.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/ctcdata.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
 
   <xs:element name="layout-config">
@@ -372,6 +373,8 @@ signals - obsolete, EMPTY, never used
             </xs:keyref>
         </xs:element>
         <xs:element name="entryexitpairs" type="EntryExitPairType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="ctcdata" type="CtcDataType" minOccurs="0" maxOccurs="1" />
 
         <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />
 

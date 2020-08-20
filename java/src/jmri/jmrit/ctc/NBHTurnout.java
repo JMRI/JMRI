@@ -55,6 +55,12 @@ public class NBHTurnout {
         return null;
     }
 
+    public NamedBeanHandle getBeanHandle() {
+        if (valid()) return _mNamedBeanHandleTurnout;
+        return null;
+    }
+
+
     private static Turnout getSafeExistingJMRITurnout(String module, String userIdentifier, String parameter, String turnout) {
         try { return getExistingJMRITurnout(module, userIdentifier, parameter, turnout); } catch (CTCException e) { e.logError(); }
         return null;
@@ -100,9 +106,9 @@ public class NBHTurnout {
         _mNamedBeanHandleTurnout.getBean().removePropertyChangeListener(propertyChangeListener);
         _mArrayListOfPropertyChangeListeners.remove(propertyChangeListener);
     }
-    
+
     /**
-     * @return The display name of the Sensor (getDisplayName()).
+     * @return The turnout's handle name.
      */
     public String getHandleName() {
         return _mNamedBeanHandleTurnout.getName();
@@ -111,18 +117,18 @@ public class NBHTurnout {
     /**
      * Set the new turnout name to use.  IF (and only if) the name changes, then we do EVERYTHING
      * required to support the name change.
-     * 
+     *
      * @param newName The new name of the object to use.
-     */    
+     */
     public void setHandleName(String newName) {
         if (getHandleName().compareTo(newName) != 0) { // User changed their minds about which Sensor to use (NOT a rename!):
 
-//  Save and unlink OUR propertyChangeListeners ONLY from the old Sensor:            
+//  Save and unlink OUR propertyChangeListeners ONLY from the old Sensor:
             for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
                 _mNamedBeanHandleTurnout.getBean().removePropertyChangeListener(propertyChangeListener);
             }
 
-//  Allocate and replace the existing turnout (away with thee old turnout!)            
+//  Allocate and replace the existing turnout (away with thee old turnout!)
             Turnout tempTurnout = getSafeExistingJMRITurnout("NBHTurnout", _mUserIdentifier, _mParameter, newName); // NOI18N
             if (tempTurnout != null) {
                 _mNamedBeanHandleTurnout = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(newName, tempTurnout);
@@ -136,15 +142,14 @@ public class NBHTurnout {
             }
         }
     }
-    
-    
+
+
     /**
      * For Unit testing only.
      * @return Returns the present number of property change listeners registered with us so far.
-     */    
-    
+     */
     public int testingGetCountOfPropertyChangeListenersRegistered() {
         return _mArrayListOfPropertyChangeListeners.size();
     }
-    
+
 }

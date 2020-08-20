@@ -8,11 +8,12 @@ import jmri.jmrit.ctc.ctcserialdata.*;
 import jmri.jmrit.ctc.editor.code.*;
 
 /**
- * Start the CtcManager and register with the configuration manager.
+ * Start the CtcManager and register with the instance and configuration managers.
  * <p>
  * <ul>
  *   <li>Create/provide the ProgramProperties instance</li>
  *   <li>Create/provide the CTCSerialData instance</li>
+ *   <li>Provide the OtherData instance</li>
  * </ul>
  *
  * @author Dave Sand Copyright (C) 2020
@@ -27,7 +28,7 @@ public class CtcManager implements InstanceManagerAutoDefault {
         InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> {
             cm.registerConfig(this, getXMLOrder());
         });
-        log.info("CtcManager started");
+        log.debug("CtcManager started");
     }
 
     public ProgramProperties getProgramProperties() {
