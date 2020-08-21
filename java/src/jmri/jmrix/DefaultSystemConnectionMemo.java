@@ -23,9 +23,8 @@ import jmri.util.startup.StartupActionFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public abstract class DefaultSystemConnectionMemo extends Bean implements SystemConnectionMemo,Disposable {
+public abstract class DefaultSystemConnectionMemo extends Bean implements SystemConnectionMemo, Disposable {
 
-    public static final String INTERVAL = "OutputInterval";
     private boolean disabled = false;
     private Boolean disabledAsLoaded = null; // Boolean can be true, false, or null
     private String prefix;
