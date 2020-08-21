@@ -277,7 +277,7 @@ abstract public class SprogUpdateFrame
         if (retVal == JFileChooser.APPROVE_OPTION) {
             hexFile = new SprogHexFile(hexFileChooser.getSelectedFile().getPath());
             if (log.isDebugEnabled()) {
-                log.debug("hex file chosen: " + hexFile.getName());
+                log.debug("hex file chosen: {}", hexFile.getName());
             }
             if ((!hexFile.getName().contains("sprog"))) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("HexFileSelectDialogString"),

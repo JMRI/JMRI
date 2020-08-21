@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the AcelaTrafficController class.
  *
- * @author	Bob Coleman Copyright 2008
+ * @author Bob Coleman Copyright 2008
  */
 public class AcelaTrafficControlScaffold extends AcelaTrafficController {
 

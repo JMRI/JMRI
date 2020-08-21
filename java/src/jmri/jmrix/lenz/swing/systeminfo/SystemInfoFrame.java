@@ -1,8 +1,6 @@
 package jmri.jmrix.lenz.swing.systeminfo;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -34,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     public SystemInfoFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super(Bundle.getMessage("MenuItemXNetSystemInformation"));
@@ -81,23 +79,13 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         setCSVersionDisplay();
 
         // Add Get SystemInfo button handler
-        getSystemInfoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                getSystemInfo();
-            }
-        }
-        );
+        getSystemInfoButton.addActionListener(a -> getSystemInfo());
 
         // install close button handler
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                setVisible(false);
-                dispose();
-            }
-        }
-        );
+        closeButton.addActionListener(a -> {
+            setVisible(false);
+            dispose();
+        });
 
         if (tc != null) {
             tc.addXNetListener(~0, this);
@@ -109,15 +97,15 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 
     boolean read = false;
 
-    JLabel CSType = new JLabel("                ");
-    JLabel CSSoftwareVersion = new JLabel("");
-    JLabel CSStatus = new JLabel(Bundle.getMessage("BeanStateUnknown"));
-    JLabel LIType = new JLabel("       ");
-    JLabel LIHardwareVersion = new JLabel("");
-    JLabel LISoftwareVersion = new JLabel("");
+    final JLabel CSType = new JLabel("                ");
+    final JLabel CSSoftwareVersion = new JLabel("");
+    final JLabel CSStatus = new JLabel(Bundle.getMessage("BeanStateUnknown"));
+    final JLabel LIType = new JLabel("       ");
+    final JLabel LIHardwareVersion = new JLabel("");
+    final JLabel LISoftwareVersion = new JLabel("");
 
-    JToggleButton getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
-    JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+    final JToggleButton getSystemInfoButton = new JToggleButton(Bundle.getMessage("GetSystemInfoButtonLabel"));
+    final JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
 
     /**
      * Send Information request to LI100/LI101.
@@ -202,7 +190,7 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     @Override
     public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 
@@ -229,12 +217,6 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         } else {
             CSType.setText(Bundle.getMessage("StateUnknown")); // use shared key
         }
-    }
-
-    @Override
-    public void dispose() {
-        // take apart the JFrame
-        super.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(SystemInfoFrame.class);

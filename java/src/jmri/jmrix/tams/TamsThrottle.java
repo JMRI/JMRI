@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import jmri.util.StringUtil;
 import org.slf4j.Logger;
@@ -201,6 +200,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         tmq.add(tm);
 
         firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
+        record(speed);
     }
 
     @Override
@@ -225,6 +225,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         active = false;
         TamsMessage tm = TamsMessage.getXEvtLok();
         tc.removePollMessage(tm, this);
+        finishRecord();
     }
 
     @Override

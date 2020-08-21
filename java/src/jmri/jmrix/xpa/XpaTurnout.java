@@ -4,19 +4,25 @@ import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.concurrent.GuardedBy;
 
 /**
  * Xpa+Modem implementation of the Turnout interface.
  * <p>
  * Based on XNetTurnout.java
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public class XpaTurnout extends AbstractTurnout {
 
     // Private data member to keep track of what turnout we control
     private final int _number;
-    private XpaTrafficController tc = null;
+    private final XpaTrafficController tc;
+
+    @GuardedBy("this")
+    protected int _mThrown = Turnout.THROWN;
+    @GuardedBy("this")
+    protected int _mClosed = Turnout.CLOSED;
 
     /**
      * Xpa turnouts use any address allowed as an accessory decoder address on
@@ -42,24 +48,40 @@ public class XpaTurnout extends AbstractTurnout {
     synchronized protected void forwardCommandChangeToLayout(int newState) {
         XpaMessage m;
         // sort out states
-        if ((newState & Turnout.CLOSED) != 0) {
-            if (statesOk(newState)) {
-                // send a CLOSED command (or THROWN if inverted)
-                m = XpaMessage.getSwitchMsg(_number, getInverted());
-            } else {
+        if ((newState & _mClosed) != 0) {
+            // first look for the double case, which we can't handle
+            if ((newState & _mThrown ) != 0) {
+                // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN {}", newState);
                 return;
+            } else {
+                // send a CLOSED command
+                m = XpaMessage.getSwitchNormalMsg(_number);
             }
         } else {
             // send a THROWN command (or CLOSED if inverted)
-            m = XpaMessage.getSwitchMsg(_number, !getInverted());
+            m = XpaMessage.getSwitchReverseMsg(_number);
         }
         tc.sendXpaMessage(m, null);
     }
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        log.debug("Send command to {} Pushbutton {}", (_pushButtonLockout ? "Lock" : "Unlock"), getSystemName());
+        log.debug("Send command to {} Pushbutton PT{}", (_pushButtonLockout ? "Lock" : "Unlock", _number));
+    }
+
+    @Override
+    synchronized public void setInverted(boolean inverted) {
+        log.debug("Inverting Turnout State for turnout {}", getSystemName() );
+        _inverted = inverted;
+        if (inverted) {
+            _mThrown = Turnout.CLOSED;
+            _mClosed = Turnout.THROWN;
+        } else {
+            _mThrown = Turnout.THROWN;
+            _mClosed = Turnout.CLOSED;
+        }
+        super.setInverted(inverted);
     }
 
     @Override

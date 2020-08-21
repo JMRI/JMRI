@@ -8,7 +8,7 @@ import java.util.Comparator;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import javax.annotation.*;
@@ -27,7 +27,7 @@ import javax.annotation.*;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class TurnoutManagerScaffold implements TurnoutManager {
 
@@ -126,6 +126,11 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     @Nonnull
     public String makeSystemName(@Nonnull String s) {
         return null;
+    }
+
+    @Override
+    public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean muted) {
+        // do nothing
     }
 
     @Override

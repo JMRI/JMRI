@@ -73,10 +73,12 @@ public class SpeedUtil {
             _rosterEntry = Roster.getDefault().entryFromTitle(_rosterId);
         }
         if (_rosterEntry != null) {
-        	_dccAddress = _rosterEntry.getDccLocoAddress();           
+            _dccAddress = _rosterEntry.getDccLocoAddress();
         }
-        if (log.isTraceEnabled()) log.debug("getRosterEntry() _rosterId= {}, _dccAddress= {}, _rosterEntry {} null}",
-        		_rosterId, _dccAddress, (_rosterEntry!=null?"NOT":""));
+        if (log.isTraceEnabled()) {
+            log.debug("getRosterEntry() _rosterId= {}, _dccAddress= {}, _rosterEntry {} null}",
+                    _rosterId, _dccAddress, (_rosterEntry != null ? "NOT" : ""));
+        }
         return _rosterEntry;
     }
 
@@ -98,15 +100,17 @@ public class SpeedUtil {
      * @param id key to speedProfile
      */
     public void setRosterId(String id) {
-        if (log.isTraceEnabled()) log.debug("setRosterId({}) old= {}", id, _rosterId);
+        if (log.isTraceEnabled()) {
+            log.debug("setRosterId({}) old= {}", id, _rosterId);
+        }
         if (id == null) {
-        	_rosterEntry = null;
-        	return;
+            _rosterEntry = null;
+            return;
         }
         if (!id.equals(_rosterId)) {
-        	_rosterEntry = null;
+            _rosterEntry = null;
             _rosterId = id;
-            getRosterEntry();	// set _rosterEntry  and _dccAddress too
+            getRosterEntry(); // set _rosterEntry  and _dccAddress too
         }
     }
     
@@ -120,9 +124,9 @@ public class SpeedUtil {
     }
     
     protected String getAddress() {
-    	if (_dccAddress == null) {
-    		_dccAddress = getDccAddress();
-    	}
+        if (_dccAddress == null) {
+            _dccAddress = getDccAddress();
+        }
         if (_dccAddress != null) {
             return _dccAddress.toString();
         }
@@ -152,19 +156,21 @@ public class SpeedUtil {
      * @return true if address found for id
      */
     public boolean setDccAddress(String id) {
-        if (log.isTraceEnabled()) log.debug("setDccAddress(String) id= {}, _rosterId= {}", id, _rosterId);
-        if (id == null || id.trim().length()==0) {
+        if (log.isTraceEnabled()) {
+            log.debug("setDccAddress(String) id= {}, _rosterId= {}", id, _rosterId);
+        }
+        if (id == null || id.trim().length() == 0) {
             setRosterId(null);
-            _dccAddress = null;           
-           return false;
+            _dccAddress = null;
+            return false;
         }
-        if (_dccAddress !=null && id.equals(_dccAddress.toString())) {
-        	return false;
+        if (_dccAddress != null && id.equals(_dccAddress.toString())) {
+            return false;
         }
-        setRosterId(id);	// sets _rosterEntry too
+        setRosterId(id); // sets _rosterEntry too
         if (_rosterEntry == null) {
-        	_rosterId = null;
-           int index = id.indexOf('(');
+            _rosterId = null;
+            int index = id.indexOf('(');
             String numId;
             if (index >= 0) {
                 numId = id.substring(0, index);
@@ -180,13 +186,13 @@ public class SpeedUtil {
                 int num = Integer.parseInt(numId);
                 List<RosterEntry> l = Roster.getDefault().matchingList(null, null, numId, null, null, null, null);
                 if (!l.isEmpty()) {
-                	RosterEntry re = l.get(0);
+                    RosterEntry re = l.get(0);
                     if (num != 0) {
                         // In some systems, such as Maerklin MFX or ESU ECOS M4, the DCC address is always 0.
                         // That should not make us overwrite the _rosterId.
                         setRosterId(re.getId());
                     }
-                    setDccAddress(re.getDccLocoAddress());           
+                    setDccAddress(re.getDccLocoAddress());
                 } else {
                     boolean isLong = true;
                     if ((index + 1) < id.length()
@@ -194,12 +200,14 @@ public class SpeedUtil {
                         isLong = false;
                     }
                     setDccAddress(new DccLocoAddress(num, isLong));
-               }
+                }
             } catch (NumberFormatException e) {
-            	_dccAddress = null;
+                _dccAddress = null;
             }
         }
-        if (log.isTraceEnabled()) log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
+        if (log.isTraceEnabled()) {
+            log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}", _rosterId, _dccAddress);
+        }
         return true;
     }
 
@@ -212,8 +220,9 @@ public class SpeedUtil {
         }
         return _rampThrottleIncrement;
     }
+
     protected void setRampThrottleIncrement(float incr) {
-    	_rampThrottleIncrement = incr;
+        _rampThrottleIncrement = incr;
     }
 
     protected int getRampTimeIncrement() {
@@ -222,8 +231,9 @@ public class SpeedUtil {
         }
         return _rampTimeIncrement;
     }
+
     protected void setRampTimeIncrement(int incr) {
-    	_rampTimeIncrement = incr;
+        _rampTimeIncrement = incr;
     }
 
     /** ms momentum time to change speed for a throttle amount

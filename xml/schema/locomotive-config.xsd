@@ -178,6 +178,7 @@
     <xs:attribute name="family" type="xs:string" use="required"/>
     <xs:attribute name="model" type="xs:string" use="required"/>
     <xs:attribute name="comment" type="xs:string"/>
+    <xs:attribute name="maxFnNum" type="xs:int"/>
   </xs:complexType>
   
 
@@ -191,7 +192,6 @@
                   <xs:simpleType>
                     <xs:restriction base="xs:integer">
                       <xs:minInclusive value="0"/>
-                      <xs:maxInclusive value="28"/>
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:attribute>
@@ -215,7 +215,6 @@
                   <xs:simpleType>
                     <xs:restriction base="xs:integer">
                       <xs:minInclusive value="0"/>
-                      <xs:maxInclusive value="28"/>
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:attribute>

@@ -128,7 +128,7 @@ public class ExportTimetable extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -158,7 +158,7 @@ public class ExportTimetable extends XmlFile {
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
-            log.error("Can not open export timetable CSV file: " + file.getName());
+            log.error("Can not open export timetable CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
                             new Object[]{defaultOperationsFilename()}),
@@ -227,7 +227,7 @@ public class ExportTimetable extends XmlFile {
                     distance,
                     "No",
                     "0",
-                    location.isStaging() ? location.getTrackList().size() : "0");
+                    location.isStaging() ? location.getTracksList().size() : "0");
         }
     }
 

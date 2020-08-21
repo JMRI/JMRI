@@ -66,7 +66,7 @@ public class ExportLocations extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
@@ -120,7 +120,7 @@ public class ExportLocations extends XmlFile {
 
             List<Location> locations = locationManager.getLocationsByNameList();
             for (Location location : locations) {
-                for (Track track : location.getTrackByNameList(null)) {
+                for (Track track : location.getTracksByNameList(null)) {
 
                     StringBuilder trainDirections = new StringBuilder();
                     String[] directions = Setup.getDirectionStrings(

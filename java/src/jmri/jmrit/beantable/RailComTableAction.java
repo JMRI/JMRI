@@ -104,7 +104,7 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
                 if (col == CLEARCOL) {
                     RailCom t = getBySystemName(sysNameList.get(row));
                     if (log.isDebugEnabled()) {
-                        log.debug("Clear where & when last seen for " + t.getSystemName());
+                        log.debug("Clear where & when last seen for {}", t.getSystemName());
                     }
                     t.setWhereLastSeen(null);
                     fireTableRowsUpdated(row, row);

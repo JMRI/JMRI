@@ -76,12 +76,12 @@ public class RoutesTableFrame extends OperationsFrame {
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy")));
-        toolMenu.add(new SetTrainIconPositionAction(Bundle.getMessage("MenuSetTrainIcon")));
+        toolMenu.add(new RouteCopyAction());
+        toolMenu.add(new SetTrainIconPositionAction());
         toolMenu.add(new ExportRoutesAction());
         toolMenu.addSeparator();
-        toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPrint"), false));
-        toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPreview"), true));
+        toolMenu.add(new PrintRoutesAction(false));
+        toolMenu.add(new PrintRoutesAction(true));
 
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());

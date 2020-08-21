@@ -15,13 +15,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -563,7 +560,7 @@ public class JsonOperationsSocketServiceTest {
         assertThat(manager.getPropertyChangeListeners()).isEmpty();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initIdTagManager();
@@ -577,7 +574,7 @@ public class JsonOperationsSocketServiceTest {
     }
 
     @SuppressWarnings("deprecation")
-    @After
+    @AfterEach
     public void tearDown() {
         service.onClose();
         service = null;

@@ -7,10 +7,8 @@ import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -351,8 +349,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tc;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -362,7 +359,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         l = new CbusLightManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         tc.terminateThreads();

@@ -2,20 +2,21 @@ package jmri.jmrit.display;
 
 import java.awt.event.WindowListener;
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JPanel;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.JFrame;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Base class for tests for Positionable objects. 
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 abstract public class PositionableTestBase {
 
@@ -25,7 +26,7 @@ abstract public class PositionableTestBase {
     /**
      * Must call first in overriding method if overridden.
      */
-    @Before
+    @BeforeEach
     @OverridingMethodsMustInvokeSuper
     public void setUp() {
         JUnitUtil.setUp();
@@ -39,7 +40,7 @@ abstract public class PositionableTestBase {
     /**
      * Must call last in overriding method if overridden.
      */
-    @After
+    @AfterEach
     @OverridingMethodsMustInvokeSuper
     public void tearDown() {
         // now close panel window, if it exists
@@ -59,6 +60,7 @@ abstract public class PositionableTestBase {
         JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         editor = null;
         p = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

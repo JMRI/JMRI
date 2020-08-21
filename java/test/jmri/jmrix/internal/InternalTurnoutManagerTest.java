@@ -7,12 +7,14 @@ import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.internal.InternalTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2016
+ * @author Bob Jacobsen Copyright 2016
  */
 public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -164,9 +166,8 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
     }
 
     // from here down is testing infrastructure
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // create and register the manager object
@@ -175,7 +176,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         l = jmri.InstanceManager.turnoutManagerInstance();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

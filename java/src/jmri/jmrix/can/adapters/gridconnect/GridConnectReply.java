@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
  * Class for replies in a GridConnect based message/reply protocol.
  * <p>
  * The GridConnect protocol encodes messages as an ASCII string of up to 24
- * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; hhhh is the two byte (11
+ * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7;
+ * <p>
+ * hhhh is the two byte (11
  * useful bits) header The S indicates a standard CAN frame
  * :XhhhhhhhhNd0d1d2d3d4d5d6d7; The X indicates an extended CAN frame N or R
  * indicates a normal or remote frame, in position 6 or 10 d0 - d7 are the (up
@@ -23,12 +25,18 @@ public class GridConnectReply extends AbstractMRReply {
 
     static final int MAXLEN = 27;
 
-    // Creates a new instance of GridConnectReply
+    /**
+     * Creates a new instance of GridConnectReply.
+     */
     public GridConnectReply() {
         _nDataChars = 0;
         _dataChars = new int[MAXLEN];
     }
 
+    /**
+     * Creates a new GridConnectReply from String.
+     * @param s String to use as basis for the GCReply.
+     */
     public GridConnectReply(String s) {
         _nDataChars = s.length();
         for (int i = 0; i < s.length(); i++) {
@@ -36,6 +44,10 @@ public class GridConnectReply extends AbstractMRReply {
         }
     }
 
+    /**
+     * Create a CanReply from a GridConnectReply.
+     * @return new CanReply Outgoing message.
+     */
     public CanReply createReply() {
         CanReply ret = new CanReply();
 
@@ -70,13 +82,17 @@ public class GridConnectReply extends AbstractMRReply {
         return ret;
     }
 
+    /**
+     * Check if this GCReply contains an Extended or Standard flag.
+     * @return true if contains a flag, else false.
+     */
     protected boolean basicFormatCheck() {
-        if ((getElement(1) != 'X') && (getElement(1) != 'S')) {
-            return false;
-        }
-        return true;
+        return !((getElement(1) != 'X') && (getElement(1) != 'S'));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected int skipPrefix(int index) {
         while (_dataChars[index] == ':') {
@@ -85,21 +101,34 @@ public class GridConnectReply extends AbstractMRReply {
         return index;
     }
 
-    // accessors to the bulk data
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
 
+    /**
+     * Set Number of Data Elements.
+     * Max. length set by the MAXLEN constant.
+     * @param n Number Elements.
+     */
     public void setNumDataElements(int n) {
         _nDataChars = (n <= MAXLEN) ? n : MAXLEN;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setElement(int n, int v) {
         if (n < MAXLEN) {
@@ -108,20 +137,34 @@ public class GridConnectReply extends AbstractMRReply {
         }
     }
 
+    /**
+     * Get if the GridConnectReply is Extended.
+     * @return true if extended, else false.
+     */
     public boolean isExtended() {
         return (getElement(1) == 'X');
     }
 
+    /**
+     * Get if the GridConnectReply is RtR.
+     * @return true if RtR, else false.
+     */
     public boolean isRtr() {
         return (getElement(_RTRoffset) == 'R');
     }
 
-    // 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int maxSize() {
         return MAXLEN;
     }
 
+    /**
+     * Set the GridConnectReply data by Array.
+     * @param d data array.
+     */
     public void setData(int[] d) {
         int len = (d.length <= MAXLEN) ? d.length : MAXLEN;
         for (int i = 0; i < len; i++) {
@@ -133,8 +176,9 @@ public class GridConnectReply extends AbstractMRReply {
     int _RTRoffset = -1;
 
     /**
-     * Get the CAN header by using chars from 2 to up to 9 Right justify
-     * standard headers that had 4 digits
+     * Get the CAN header by using chars from 2 to up to 9.
+     * <p>
+     * Right justify standard headers that had 4 digits.
      *
      * @return the CAN header as an int
      */
@@ -154,9 +198,8 @@ public class GridConnectReply extends AbstractMRReply {
     }
 
     /**
-     * Get the number of data bytes
-     *
-     * @return int the number of bytes
+     * Get the number of data bytes.
+     * @return number of bytes in reply.
      */
     public int getNumBytes() {
         // subtract framing and ID bytes, etc and each byte is two ASCII hex digits
@@ -164,7 +207,7 @@ public class GridConnectReply extends AbstractMRReply {
     }
 
     /**
-     * Get a hex data byte from the message
+     * Get a hex data byte from the message.
      * <p>
      * Data bytes are encoded as two ASCII hex digits starting at byte 7 of the
      * message.

@@ -1,24 +1,24 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 
 /**
  * Test simple functioning of CbusNodeEventTablePane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeEventTablePaneTest {
@@ -98,13 +98,13 @@ public class CbusNodeEventTablePaneTest {
     private CanSystemConnectionMemo memo;
     private CbusNodeEventTableDataModel nodeModel;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         t = null;
         nodeModel = null;

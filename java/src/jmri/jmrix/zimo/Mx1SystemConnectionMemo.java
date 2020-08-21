@@ -2,9 +2,10 @@ package jmri.jmrix.zimo;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.NamedBean;
+
+import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
@@ -15,16 +16,16 @@ import jmri.util.NamedBeanComparator;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Kevin Dickerson Copyright (C) 2012
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Kevin Dickerson Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2020
  */
-public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class Mx1SystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public Mx1SystemConnectionMemo(Mx1TrafficController st) {
         super("Z", "MX-1");
         this.st = st;
-        register();
-        InstanceManager.store(this, Mx1SystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, Mx1SystemConnectionMemo.class);
         // create and register the ComponentFactory
         InstanceManager.store(componentFactory = new jmri.jmrix.zimo.swing.Mx1ComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
@@ -34,9 +35,8 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public Mx1SystemConnectionMemo() {
         super("Z", "MX-1");
-        register(); // registers general type
-        InstanceManager.store(this, Mx1SystemConnectionMemo.class); // also register as specific type
-
+        InstanceManager.store(this, Mx1SystemConnectionMemo.class);
+        // create and register the ComponentFactory
         InstanceManager.store(componentFactory = new jmri.jmrix.zimo.swing.Mx1ComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
     }
@@ -55,8 +55,6 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return connectionType;
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
-
     /**
      * Provide access to the TrafficController for this particular connection.
      *
@@ -72,92 +70,40 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private Mx1TrafficController st;
 
     /**
-     * Configure the programming manager and "command station" objects
+     * Configure the "command station" object
+     * @deprecated since 4.21.1 without replacement
      */
+    @Deprecated
     public void configureCommandStation() {
-
     }
 
     @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-        if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return getProgrammerManager().isGlobalProgrammerAvailable();
-        }
-        if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return getProgrammerManager().isAddressedModePossible();
-        }
-
-        if (type.equals(jmri.PowerManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.ThrottleManager.class)) {
-            return true;
-        }
-        if (getProtocol() == Mx1Packetizer.BINARY) {
-            if (type.equals(jmri.TurnoutManager.class)) {
-                return true;
-            }
-
-        }
-        return super.provides(type);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-
-        if (T.equals(jmri.PowerManager.class)) {
-            return (T) getPowerManager();
-        }
-        if (T.equals(jmri.ThrottleManager.class)) {
-            return (T) getThrottleManager();
-        }
-        if (getProtocol() == Mx1Packetizer.BINARY) {
-            if (T.equals(jmri.TurnoutManager.class)) {
-                return (T) getTurnoutManager();
-            }
-        }
-        /*if (T.equals(jmri.CommandStation.class))
-         return (T)commandStation;*/
-        return super.get(T);
-    }
-
-    /**
-     * Configure the common managers for Mx1 connections. This puts the common
-     * manager config in one place. This method is static so that it can be
-     * referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
-     */
     public void configureManagers() {
 
-        if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+        DefaultProgrammerManager programmerManager = getProgrammerManager();
+        store(programmerManager,DefaultProgrammerManager.class);
+        if (programmerManager.isAddressedModePossible()) {
+            store(programmerManager, AddressedProgrammerManager.class);
+            InstanceManager.store(programmerManager, AddressedProgrammerManager.class);
         }
-        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
-            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        if (programmerManager.isGlobalProgrammerAvailable()) {
+            store(programmerManager,GlobalProgrammerManager.class);
+            InstanceManager.store(programmerManager, GlobalProgrammerManager.class);
         }
 
-        powerManager = new jmri.jmrix.zimo.Mx1PowerManager(this);
-        jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
+        PowerManager powerManager = new Mx1PowerManager(this);
+        store(powerManager, PowerManager.class);
+        jmri.InstanceManager.store(powerManager, PowerManager.class);
 
-        throttleManager = new jmri.jmrix.zimo.Mx1ThrottleManager(this);
+        ThrottleManager throttleManager = new jmri.jmrix.zimo.Mx1ThrottleManager(this);
+        store(throttleManager,ThrottleManager.class);
         InstanceManager.setThrottleManager(throttleManager);
         if (getProtocol() == Mx1Packetizer.BINARY) {
-            turnoutManager = new Mx1TurnoutManager(this);
+            TurnoutManager turnoutManager = new Mx1TurnoutManager(this);
+            store(turnoutManager,TurnoutManager.class);
             InstanceManager.setTurnoutManager(turnoutManager);
         }
+        register(); // registers general type
     }
 
     boolean getProtocol() {
@@ -167,41 +113,44 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return Mx1Packetizer.ASCII;
     }
 
-    private DefaultProgrammerManager programmerManager;
-    private Mx1PowerManager powerManager;
-    private Mx1ThrottleManager throttleManager;
-    private Mx1TurnoutManager turnoutManager;
-
     public DefaultProgrammerManager getProgrammerManager() {
-        if (programmerManager == null) {
-            if (getProtocol() == Mx1Packetizer.BINARY) {
-                programmerManager = new Mx1ProgrammerManager(new Mx1Programmer(getMx1TrafficController()), this);
-            } else {
-                programmerManager = new DefaultProgrammerManager(new Mx1Programmer(getMx1TrafficController()), this);
-            }
+        return (DefaultProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class, (Class c) -> {
+            return generateDefaultProgrammerManagerForConnection();
+        });
+    }
+
+    private DefaultProgrammerManager generateDefaultProgrammerManagerForConnection() {
+        DefaultProgrammerManager programmerManager;
+        if (getProtocol() == Mx1Packetizer.BINARY) {
+            programmerManager = new Mx1ProgrammerManager(new Mx1Programmer(getMx1TrafficController()), this);
+        } else {
+            programmerManager = new DefaultProgrammerManager(new Mx1Programmer(getMx1TrafficController()), this);
         }
         return programmerManager;
     }
 
     public void setProgrammerManager(DefaultProgrammerManager p) {
-        programmerManager = p;
+        store(p,DefaultProgrammerManager.class);
     }
 
     public Mx1TurnoutManager getTurnoutManager() {
-        return turnoutManager;
+        return (Mx1TurnoutManager) classObjectMap.get(TurnoutManager.class);
     }
 
+    /**
+     * @param cs command station object to set
+     * @deprecated since 4.21.1 without replacement
+     */
+    @Deprecated
     public void setCommandStation(Mx1CommandStation cs) {
-        //commandStation=cs;
     }
 
-    //private Mx1CommandStation commandStation;
     public Mx1PowerManager getPowerManager() {
-        return powerManager;
+        return (Mx1PowerManager) classObjectMap.get(PowerManager.class);
     }
 
     public Mx1ThrottleManager getThrottleManager() {
-        return throttleManager;
+        return (Mx1ThrottleManager) classObjectMap.get(ThrottleManager.class);
     }
 
     @Override
@@ -218,10 +167,12 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void dispose() {
         st = null;
         InstanceManager.deregister(this, Mx1SystemConnectionMemo.class);
-        if (cf != null) {
-            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        if (componentFactory != null) {
+            InstanceManager.deregister(componentFactory, jmri.jmrix.swing.ComponentFactory.class);
         }
+        Mx1ThrottleManager throttleManager = (Mx1ThrottleManager) classObjectMap.get(ThrottleManager.class);
         if (throttleManager != null) {
+            deregister(throttleManager,ThrottleManager.class);
             InstanceManager.deregister(throttleManager, jmri.jmrix.zimo.Mx1ThrottleManager.class);
         }
         super.dispose();

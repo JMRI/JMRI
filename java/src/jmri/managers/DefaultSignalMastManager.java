@@ -4,19 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Manager;
-import jmri.SignalHeadManager;
-import jmri.SignalMast;
-import jmri.SignalMastManager;
-import jmri.implementation.SignalHeadSignalMast;
-import jmri.implementation.SignalMastRepeater;
+
+import jmri.*;
+import jmri.implementation.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a SignalMastManager.
@@ -24,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * Note that this does not enforce any particular system naming convention at
  * the present time. They're just names...
  *
- * @author Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009, 2020
  */
 public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         implements SignalMastManager {
@@ -81,7 +75,20 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     public SignalMast provideSignalMast(@Nonnull String name) {
         SignalMast m = getSignalMast(name);
         if (m == null) {
-            m = new SignalHeadSignalMast(name);
+            // this should be replaced by a Service based approach, 
+            // perhaps along the lines of SignalMastAddPane, but 
+            // for now we manually check types
+            if (name.startsWith("IF$shsm")) {
+                m = new SignalHeadSignalMast(name);
+            } else if (name.startsWith("IF$dsm")) {
+                m = new DccSignalMast(name);
+            } else if (name.startsWith("IF$vsm")) {
+                m = new VirtualSignalMast(name);
+            } else {
+                // didn't recognize name, so trying to make it virtual
+                log.warn("building stand-in VirtualSignalMast for {}", name);
+                m = new VirtualSignalMast(name);
+            }
             register(m);
         }
         return m;
@@ -201,5 +208,5 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
         return provideSignalMast(name);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalMastManager.class);
 }

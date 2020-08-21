@@ -22,7 +22,7 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
      * Constructor.
      * @param memo system connection memo
      */
-    public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
+    public OlcbThrottleManager(jmri.SystemConnectionMemo memo) {
         super(memo);
     }
 
@@ -34,7 +34,7 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
             return;
         }
         DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new debug throttle for " + address);
+        log.debug("new debug throttle for {}", address);
         notifyThrottleKnown(new OlcbThrottle(address, adapterMemo), a);
     }
 

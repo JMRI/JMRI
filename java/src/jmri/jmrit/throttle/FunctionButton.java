@@ -5,19 +5,17 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JToggleButton;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.*;
+import jmri.Throttle;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
+import jmri.util.swing.ToggleOrPressButtonModel;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,36 +34,44 @@ import org.slf4j.LoggerFactory;
  * @author Glen Oberhauser
  * @author Bob Jacobsen Copyright 2008
  */
-public class FunctionButton extends JToggleButton implements ActionListener {
+public class FunctionButton extends JToggleButton {
 
-    private ArrayList<FunctionListener> listeners = new ArrayList<FunctionListener>();
-    private int identity; // F0, F1, etc?
-    private boolean isOn;
-    private boolean isLockable = true;
+    private final ArrayList<FunctionListener> listeners;
+    private int identity; // F0, F1, etc
     private boolean isDisplayed = true;
     private boolean dirty = false;
     private boolean isImageOK = false;
     private boolean isSelectedImageOK = false;
     private int actionKey;
     private String buttonLabel;
-    private JPopupMenu popup;
+    private final JPopupMenu popup;
     private String iconPath;
     private String selectedIconPath;
+    private ToggleOrPressButtonModel _model;
+    private Throttle _throttle;
 
-    static int BUT_HGHT = 30;
-    static int BUT_WDTH = 56;
+    final static int BUT_HGHT;
+    final static int BUT_WDTH;
     final static int BUT_IMG_SIZE = 45;
 
     static {
         JButton sample = new JButton(" Light ");
-        BUT_HGHT = java.lang.Math.max(sample.getPreferredSize().height, BUT_HGHT);
-        BUT_WDTH = java.lang.Math.max(sample.getPreferredSize().width, BUT_WDTH);
+        BUT_HGHT = java.lang.Math.max(sample.getPreferredSize().height, 30);
+        BUT_WDTH = java.lang.Math.max(sample.getPreferredSize().width, 56);
     }
 
+    /**
+     * Get Button Height.
+     * @return height.
+     */
     public static int getButtonHeight() {
         return BUT_HGHT;
     }
 
+    /**
+     * Get the Button Width.
+     * @return width.
+     */
     public static int getButtonWidth() {
         return BUT_WDTH;
     }
@@ -74,15 +80,27 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * Construct the FunctionButton.
      */
     public FunctionButton() {
+        super();
         popup = new JPopupMenu();
-
+        listeners = new ArrayList<>();
+        init();
+    }
+    
+    final void init(){
+        
+        _model = new ToggleOrPressButtonModel(this, true);
+        setModel(_model);
+        
         JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
-        propertiesItem.addActionListener(this);
+        propertiesItem.addActionListener((ActionEvent e) -> {
+            FunctionButtonPropertyEditor editor = new FunctionButtonPropertyEditor();
+            editor.setFunctionButton(this);
+            editor.setLocation(this.getLocationOnScreen());
+            editor.setVisible(true);
+          });
         popup.add(propertiesItem);
-
         //Add listener to components that can bring up popup menus.
-        MouseListener popupListener = new PopupListener();
-        addMouseListener(popupListener);
+        addMouseListener(new PopupListener());
         setFont(new Font("Monospaced", Font.PLAIN, 12));
         setMargin(new Insets(2, 2, 2, 2));
         setRolloverEnabled(false);
@@ -90,18 +108,18 @@ public class FunctionButton extends JToggleButton implements ActionListener {
     }
 
     /**
-     * Set the function number this button will operate
+     * Set the function number this button will operate.
      *
-     * @param id An integer from 0 to 28.
+     * @param id An integer, minimum 0.
      */
     public void setIdentity(int id) {
         this.identity = id;
     }
 
     /**
-     * Get the function number this button operates
+     * Get the function number this button operates.
      *
-     * @return An integer from 0 to 28.
+     * @return An integer, minimum 0.
      */
     public int getIdentity() {
         return identity;
@@ -113,6 +131,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * Later, when a key is being processed, checkKeyCode will determine if
      * there's a match between the key that was pressed and the key for this
      * button
+     * @param key KeyCode value.
      */
     public void setKeyCode(int key) {
         actionKey = key;
@@ -122,6 +141,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * Check to see whether a particular KeyCode corresponds to this function
      * button.
      *
+     * @param keycode keycode to check against.
      * @return true if the button should respond to this key
      */
     public boolean checkKeyCode(int keycode) {
@@ -129,36 +149,40 @@ public class FunctionButton extends JToggleButton implements ActionListener {
     }
 
     /**
-     * Set the state of the function button. Does NOT notify any listeners
-     *
+     * Set the state of the function button.
+     * Does not send update to layout, just updates button status.
+     * <p>
+     * To update AND send to layout use setSelected(boolean).
+     * 
      * @param isOn True if the function should be active.
      */
     public void setState(boolean isOn) {
-        this.isOn = isOn;
-        this.setSelected(isOn);
+        super.setSelected(isOn);
+        _model.updateSelected(isOn);
     }
 
     /**
-     * get the state of the function
+     * Get the state of the function.
      *
      * @return true if the function is active.
      */
     public boolean getState() {
-        return isOn;
+        return isSelected();
     }
 
     /**
-     * Set the locking state of the button
+     * Set the locking state of the button.
+     * <p>
+     * Changes in this parameter are only be sent to the 
+     * listeners if the dirty bit is set.
      *
      * @param isLockable True if the a clicking and releasing the button changes
      *                   the function state. False if the state is changed back
      *                   when the button is released
      */
     public void setIsLockable(boolean isLockable) {
-        this.isLockable = isLockable;
+        _model.setLockable(isLockable);
         if (isDirty()) {
-            // Changes in this parameter should only be sent to the 
-            // listeners if the dirty bit is set.
             for (int i = 0; i < listeners.size(); i++) {
                 listeners.get(i).notifyFunctionLockableChanged(identity, isLockable);
             }
@@ -166,18 +190,18 @@ public class FunctionButton extends JToggleButton implements ActionListener {
     }
 
     /**
-     * Get the locking state of the function
+     * Get the locking state of the function.
      *
      * @return True if the a clicking and releasing the button changes the
      *         function state. False if the state is changed back when the
      *         button is released
      */
     public boolean getIsLockable() {
-        return isLockable;
+        return _model.getLockable();
     }
 
     /**
-     * Set the display state of the button
+     * Set the display state of the button.
      *
      * @param displayed True if the button exists False if the button has been
      *                  removed by the user
@@ -187,7 +211,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
     }
 
     /**
-     * Get the display state of the button
+     * Get the display state of the button.
      *
      * @return True if the button exists False if the button has been removed by
      *         the user
@@ -197,29 +221,42 @@ public class FunctionButton extends JToggleButton implements ActionListener {
     }
 
     /**
-     * True when function button has been modified by user.
+     * Set Function Button Dirty.
      *
+     * @param dirty True when button has been modified by user, else false.
      */
     public void setDirty(boolean dirty) {
         this.dirty = dirty;
     }
 
     /**
-     *
+     * Get if Button is Dirty.
      * @return true when function button has been modified by user.
      */
     public boolean isDirty() {
         return dirty;
     }
 
+    /**
+     * Get the Button Label.
+     * @return Button Label text.
+     */
     public String getButtonLabel() {
         return buttonLabel;
     }
 
+    /**
+     * Set the Button Label.
+     * @param label Label Text.
+     */
     public void setButtonLabel(String label) {
         buttonLabel = label;
     }
-
+    
+    /**
+     * Set Button Text.
+     * {@inheritDoc}
+     */
     @Override
     public void setText(String s) {
         if (s != null) {
@@ -235,64 +272,58 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         super.setText(null);
         if (buttonLabel != null) {
             setToolTipText(buttonLabel);
-            return;
         }
     }
 
     /**
-     * Decide if it should show the label or an image with text as tooltip
+     * Update Button Look and Feel.
+     * Decide if it should show the label or an image with text as tooltip.
      * Button UI updated according to above result.
      */
     public void updateLnF() {
+        setBorderPainted(!isImageOK());
+        setContentAreaFilled(!isImageOK());
+        setText( isImageOK() ? null : getButtonLabel() );
         if (isImageOK()) { // adjust button for image
-            setBorderPainted(false);
-            setContentAreaFilled(false);
-            setText(null);
             setPreferredSize(new Dimension(FunctionButton.BUT_IMG_SIZE, FunctionButton.BUT_IMG_SIZE));
-        } else // adjust button for text
-        {
-            setBorderPainted(true);
-            setContentAreaFilled(true);
-            setText(getButtonLabel());
+        }
+        else { // adjust button for text
             if (getButtonLabel() != null) {
-                int butWidth = getFontMetrics(getFont()).stringWidth(getButtonLabel());
-                butWidth = butWidth + 20; // pad out the width a bit
-                if (butWidth < FunctionButton.BUT_WDTH) {
-                    butWidth = FunctionButton.BUT_WDTH;
-                }
-                setPreferredSize(new Dimension(butWidth, FunctionButton.BUT_HGHT));
+                int butWidth = getFontMetrics(getFont()).stringWidth(getButtonLabel()) + 20; // pad out the width a bit
+                setPreferredSize(new Dimension( Math.max(butWidth, FunctionButton.BUT_WDTH), FunctionButton.BUT_HGHT));
             } else {
                 setPreferredSize(new Dimension(BUT_WDTH, BUT_HGHT));
             }
         }
-    }
-
-    /**
-     * Handle the selection from the popup menu.
-     *
-     * @param e The ActionEvent causing the action.
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        FunctionButtonPropertyEditor editor = new FunctionButtonPropertyEditor();
-        editor.setFunctionButton(this);
-        editor.setLocation(this.getLocationOnScreen());
-        editor.setVisible(true);
-    }
+    }    
 
     /**
      * Change the state of the function.
+     * Sets internal state, setSelected, and sends to listeners.
      *
      * @param newState The new state. True = Is on, False = Is off.
+     * @deprecated since 4.19.6; use 
+     * {@link jmri.jmrit.throttle.FunctionButton#setSelected(boolean) } instead
      */
+    @Deprecated
     public void changeState(boolean newState) {
-        if (log.isDebugEnabled()) {
-            log.debug("Change state to " + newState);
-        }
-        isOn = newState;
-        this.setSelected(isOn);
+        setSelected(newState);
+    }
+    
+    /**
+     * Change the state of the function.
+     * Sets internal state, setSelected, and sends to listeners.
+     * <p>
+     * To update this button WITHOUT sending to layout, use setState.
+     *
+     * @param newState true = Is Function on, False = Is Function off.
+     */
+    @Override
+    public void setSelected(boolean newState){
+        log.debug("function selected {}", newState);
+        super.setSelected(newState);
         for (int i = 0; i < listeners.size(); i++) {
-            listeners.get(i).notifyFunctionStateChanged(identity, isOn);
+            listeners.get(i).notifyFunctionStateChanged(identity, newState);
         }
     }
 
@@ -301,7 +332,10 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      *
      * @param l The FunctionListener that wants notifications via the
      *          FunctionListener.notifyFunctionStateChanged.
+     * @deprecated since 4.19.6; use 
+     * {@link jmri.jmrit.throttle.FunctionButton#addFunctionListener(jmri.jmrit.throttle.FunctionListener) } instead
      */
+    @Deprecated
     public void setFunctionListener(FunctionListener l) {
         addFunctionListener(l);
     }
@@ -330,121 +364,50 @@ public class FunctionButton extends JToggleButton implements ActionListener {
     }
 
     /**
-     * A PopupListener to handle mouse clicks and releases. Handles the popup
-     * menu.
+     * A PopupListener to handle mouse clicks and releases.
+     * Handles the popup menu.
      */
-    class PopupListener extends MouseAdapter {
+    private class PopupListener extends MouseAdapter {
 
         /**
-         * change the state of the
-         * function depending on the locking state of the button.
+         * If the event is the popup trigger, which is dependent on the
+         * platform, present the popup menu.
+         * @param e The MouseEvent causing the action.
          */
         @Override
         public void mouseClicked(MouseEvent e) {
-
-            log.debug("{}: button1 down = {}, modifier mask = {}, isPopup {}, count = {} raw modifiers = {} masks ={}/{}/{}/{}",
-                " clicked",
-                e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK,
-                e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK | MouseEvent.META_DOWN_MASK | MouseEvent.CTRL_DOWN_MASK),
-                e.isPopupTrigger(),
-                e.getClickCount(),
-                e.getModifiersEx(),
-                MouseEvent.ALT_DOWN_MASK, MouseEvent.META_DOWN_MASK, MouseEvent.CTRL_DOWN_MASK, MouseEvent.SHIFT_DOWN_MASK
-            );
-
-            if (e.isPopupTrigger()) {
-                popup.show(e.getComponent(),
-                        e.getX(), e.getY());
-                return;
-            } 
-
-            JToggleButton button = (JToggleButton) e.getSource();
-
-            // is this an enabled, locking button?
-            if (button.isEnabled() && isLockable) {
-                // yes, alternate state
-                changeState(!isOn);
-                // force button to desired state
-                button.setSelected(isOn);                
-            }
+            checkTrigger(e);
         }
         
         /**
          * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu. 
-         *
+         * platform, present the popup menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
         public void mousePressed(MouseEvent e) {
-
-            log.debug("{}: button1 down = {}, modifier mask = {}, isPopup {}, count = {} raw modifiers = {} masks ={}/{}/{}/{}",
-                " pressed",
-                e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK,
-                e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK | MouseEvent.META_DOWN_MASK | MouseEvent.CTRL_DOWN_MASK),
-                e.isPopupTrigger(),
-                e.getClickCount(),
-                e.getModifiersEx(),
-                MouseEvent.ALT_DOWN_MASK, MouseEvent.META_DOWN_MASK, MouseEvent.CTRL_DOWN_MASK, MouseEvent.SHIFT_DOWN_MASK
-            );
-            
-            if (e.isPopupTrigger()) {
-                popup.show(e.getComponent(),
-                        e.getX(), e.getY());
-                return;
-            } 
-            
-            JToggleButton button = (JToggleButton) e.getSource();
-            
-            // is this an enabled, not locking button?
-            if (button.isEnabled() && !isLockable) {
-                // change state
-                changeState(true);
-                // force button to desired state
-                button.setSelected(isOn);
-            }
+            checkTrigger( e);
         }
 
         /**
          * If the event is the popup trigger, which is dependent on the
-         * platform, present the popup menu. Otherwise change the state of the
-         * function depending on the locking state of the button.
-         *
+         * platform, present the popup menu.
          * @param e The MouseEvent causing the action.
          */
         @Override
         public void mouseReleased(MouseEvent e) {
-
-            log.debug("{}: button1 down = {}, modifier mask = {}, isPopup {}, count = {} raw modifiers = {} masks ={}/{}/{}/{}",
-                "released",
-                e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK,
-                e.getModifiersEx() & (MouseEvent.ALT_DOWN_MASK | MouseEvent.META_DOWN_MASK | MouseEvent.CTRL_DOWN_MASK),
-                e.isPopupTrigger(),
-                e.getClickCount(),
-                e.getModifiersEx(),
-                MouseEvent.ALT_DOWN_MASK, MouseEvent.META_DOWN_MASK, MouseEvent.CTRL_DOWN_MASK, MouseEvent.SHIFT_DOWN_MASK
-            );
-            
+            checkTrigger( e);
+        }
+        
+        private void checkTrigger( MouseEvent e) {
             if (e.isPopupTrigger()) {
-                popup.show(e.getComponent(),
-                        e.getX(), e.getY());
-                return;
-            } 
-            
-            JToggleButton button = (JToggleButton) e.getSource();
-            
-            // is this an enabled, not locking button?
-            if (button.isEnabled() && !isLockable) {
-                // change state
-                changeState(false);
-                // force button to desired state
-                button.setSelected(isOn);
+                popup.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }
 
     /**
-     * Collect the prefs of this object into XML Element
+     * Collect the prefs of this object into XML Element.
      * <ul>
      * <li> identity
      * <li> text
@@ -454,7 +417,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * @return the XML of this object.
      */
     public Element getXml() {
-        Element me = new Element("FunctionButton");
+        Element me = new Element("FunctionButton"); // NOI18N
         me.setAttribute("id", String.valueOf(this.getIdentity()));
         me.setAttribute("text", this.getButtonLabel());
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
@@ -473,12 +436,14 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         return me;
     }
 
+    /**
+     * Check if File exists.
+     * @param name File name
+     * @return true if exists, else false.
+     */
     private boolean checkFile(String name) {
         File fp = new File(name);
-        if (fp.exists()) {
-            return true;
-        }
-        return false;
+        return fp.exists();
     }
 
     /**
@@ -495,8 +460,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         try {
             this.setIdentity(e.getAttribute("id").getIntValue());
             this.setText(e.getAttribute("text").getValue());
-            boolean isLockable = e.getAttribute("isLockable").getBooleanValue();
-            this.setIsLockable(isLockable);
+            this.setIsLockable(e.getAttribute("isLockable").getBooleanValue());
             boolean isVisible = e.getAttribute("isVisible").getBooleanValue();
             this.setDisplay(isVisible);
             if (this.getIdentity() < FunctionPanel.NUM_FUNC_BUTTONS_INIT) {
@@ -521,10 +485,16 @@ public class FunctionButton extends JToggleButton implements ActionListener {
             }
             updateLnF();
         } catch (org.jdom2.DataConversionException ex) {
-            log.error("DataConverstionException in setXml: " + ex);
+            log.error("DataConverstionException in setXml: {}", ex);
         }
     }
 
+    /**
+     * Set the Icon Path, NON selected.
+     * <p>
+     * Checks image and sets isImageOK flag.
+     * @param fnImg icon path.
+     */
     public void setIconPath(String fnImg) {
         iconPath = fnImg;
         ResizableImagePanel fnImage = new ResizableImagePanel();
@@ -541,6 +511,11 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         }
     }
 
+    /**
+     * Get the Icon Path, NON selected.
+     * @return Icon Path, else empty string if null.
+     */
+    @Nonnull
     public String getIconPath() {
         if (iconPath == null) {
             return "";
@@ -548,6 +523,12 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         return iconPath;
     }
 
+    /**
+     * Set the Selected Icon Path.
+     * <p>
+     * Checks image and sets isSelectedImageOK flag.
+     * @param fnImg selected icon path.
+     */
     public void setSelectedIconPath(String fnImg) {
         selectedIconPath = fnImg;
         ResizableImagePanel fnSelectedImage = new ResizableImagePanel();
@@ -567,6 +548,11 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         }
     }
 
+    /**
+     * Get the Selected Icon Path.
+     * @return selected Icon Path, else empty string if null.
+     */
+    @Nonnull
     public String getSelectedIconPath() {
         if (selectedIconPath == null) {
             return "";
@@ -574,12 +560,37 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         return selectedIconPath;
     }
 
+    /**
+     * Get if isImageOK.
+     * @return true if isImageOK.
+     */
     public boolean isImageOK() {
         return isImageOK;
     }
 
+    /**
+     * Get if isSelectedImageOK.
+     * @return true if isSelectedImageOK.
+     */
     public boolean isSelectedImageOK() {
         return isSelectedImageOK;
+    }
+    
+    /** 
+     * Set Throttle.
+     * @param throttle the throttle that this button is associated with.
+     */
+    protected void setThrottle( Throttle throttle) {
+        _throttle = throttle;
+    }
+    
+    /**
+     * Get Throttle for this button.
+     * @return throttle associated with this button.  May be null if no throttle currently associated.
+     */
+    @CheckForNull
+    protected Throttle getThrottle() {
+        return _throttle;
     }
 
     private final static Logger log = LoggerFactory.getLogger(FunctionButton.class);

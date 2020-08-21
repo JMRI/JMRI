@@ -2,22 +2,10 @@ package jmri.jmrit.display;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
-import jmri.jmrit.display.palette.Bundle;
-import jmri.jmrit.display.palette.DecoratorPanel;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.DrawSquares;
-import jmri.util.swing.ImagePanel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

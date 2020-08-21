@@ -3,12 +3,14 @@ package jmri.jmrix.roco.z21;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21SensorManager class for CanBus sensors.
  *
- * @author	Paul Bender Copyright (c) 2018,2019
+ * @author Paul Bender Copyright (c) 2018,2019
  */
 public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -145,7 +147,7 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -157,7 +159,7 @@ public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrT
         l = new Z21SensorManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         znis.terminateThreads();

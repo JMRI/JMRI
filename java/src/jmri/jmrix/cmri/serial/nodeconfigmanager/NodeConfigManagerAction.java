@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * NodeConfigManagerAction object
  * Derived from the original NodeConfig class
  *
- * @author	Chuck Catania    Copyright (C) 2014,2017
+ * @author Chuck Catania    Copyright (C) 2014,2017
  */
 
 public class NodeConfigManagerAction extends AbstractAction {
@@ -34,7 +34,7 @@ public class NodeConfigManagerAction extends AbstractAction {
               f.initComponents();
             }
         catch (Exception ex) {
-            log.error("NodeConfigManagerAction Exception-C2: "+ex.toString());
+            log.error("NodeConfigManagerAction Exception-C2: {}", ex.toString());
             }
         f.setLocation(20,40);
         f.setVisible(true);

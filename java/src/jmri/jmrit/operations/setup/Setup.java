@@ -307,6 +307,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean allowCarsReturnStaging = false; // allow cars on a turn to return to staging if necessary (prevent build failure)
     private boolean promptFromStaging = false; // prompt user to specify which departure staging track to use
     private boolean promptToStaging = false; // prompt user to specify which arrival staging track to use
+    private boolean tryNormalModeStaging = true; // try normal build if route length failure using aggressive
 
     private boolean generateCsvManifest = false; // when true generate csv manifest
     private boolean generateCsvSwitchList = false; // when true generate csv switch list
@@ -357,9 +358,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static void setAutoSaveEnabled(boolean enabled) {
         getDefault().autoSave = enabled;
         if (enabled) {
-            new AutoSave().start();
+            AutoSave.start();
         } else {
-            new AutoSave().stop();
+            AutoSave.stop();
         }
     }
 
@@ -558,6 +559,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static void setPromptToStagingEnabled(boolean enabled) {
         getDefault().promptToStaging = enabled;
+    }
+    
+    public static boolean isStagingTryNormalBuildEnabled() {
+        return getDefault().tryNormalModeStaging;
+    }
+
+    public static void setStagingTryNormalBuildEnabled(boolean enabled) {
+        getDefault().tryNormalModeStaging = enabled;
     }
 
     public static boolean isGenerateCsvManifestEnabled() {
@@ -1961,6 +1970,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.ALLOW_RETURN_STAGING, isAllowReturnToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PROMPT_STAGING_ENABLED, isPromptFromStagingEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PROMPT_TO_STAGING_ENABLED, isPromptToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.STAGING_TRY_NORMAL, isStagingTryNormalBuildEnabled() ? Xml.TRUE : Xml.FALSE);
 
         values.setAttribute(Xml.GENERATE_CSV_MANIFEST, isGenerateCsvManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.GENERATE_CSV_SWITCH_LIST, isGenerateCsvSwitchListEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2594,17 +2604,22 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_INTERCHANGE)) != null) {
                 String enable = a.getValue();
-                log.debug("noLocalInterchange: {}", enable);
+                log.debug("allowLocalInterchangeMoves: {}", enable);
                 setLocalInterchangeMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_SPUR)) != null) {
                 String enable = a.getValue();
-                log.debug("noLocalSpur: {}", enable);
+                log.debug("allowLocalSpurMoves: {}", enable);
+                setLocalSpurMovesEnabled(enable.equals(Xml.TRUE));
+            }
+            else if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_SIDING)) != null) {
+                String enable = a.getValue();
+                log.debug("allowLocalSidingMoves: {}", enable);
                 setLocalSpurMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_YARD)) != null) {
                 String enable = a.getValue();
-                log.debug("noLocalYard: {}", enable);
+                log.debug("allowLocalYardMoves: {}", enable);
                 setLocalYardMovesEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_RESTRICTION_ENABLED)) != null) {
@@ -2631,6 +2646,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String enable = a.getValue();
                 log.debug("promptToStagingEnabled: {}", enable);
                 setPromptToStagingEnabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.STAGING_TRY_NORMAL)) != null) {
+                String enable = a.getValue();
+                log.debug("stagingTryNormalEnabled: {}", enable);
+                setStagingTryNormalBuildEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.GENERATE_CSV_MANIFEST)) != null) {
                 String enable = a.getValue();
@@ -2930,7 +2950,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     @Override
     public void dispose() {
-        new AutoSave().stop();
+        AutoSave.stop();
     }
 
 }

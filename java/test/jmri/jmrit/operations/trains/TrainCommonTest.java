@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;

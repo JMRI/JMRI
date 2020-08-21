@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusPreferences;
@@ -8,11 +9,10 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -67,7 +67,7 @@ public class CbusNodeEditEventFrameTest {
     private NodeConfigToolPane mainpane;
     private CbusNodeTableDataModel nodeModel;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -88,7 +88,7 @@ public class CbusNodeEditEventFrameTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
             memo.dispose();
@@ -102,7 +102,7 @@ public class CbusNodeEditEventFrameTest {
         nodeModel = null;
         memo = null;
         tcis = null;
-        
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrameTest.class);

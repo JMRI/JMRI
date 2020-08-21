@@ -2,15 +2,14 @@ package jmri.jmrit.vsdecoder.swing;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of VSDecoderPreferencesPane
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author Paul Bender Copyright (C) 2015,2016
  */
 public class VSDecoderPreferencesPaneTest {
 
@@ -23,12 +22,12 @@ public class VSDecoderPreferencesPaneTest {
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        
         JUnitUtil.tearDown();
     }

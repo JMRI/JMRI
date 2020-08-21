@@ -1,14 +1,13 @@
 package jmri.jmrix.zimo;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Mx1PowerManagerTest {
 
@@ -20,8 +19,7 @@ public class Mx1PowerManagerTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         Mx1TrafficController tc = new Mx1TrafficController(){
@@ -36,7 +34,7 @@ public class Mx1PowerManagerTest {
         memo = new Mx1SystemConnectionMemo(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

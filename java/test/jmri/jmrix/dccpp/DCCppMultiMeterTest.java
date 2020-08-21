@@ -1,13 +1,15 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase{
+public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase {
 
     @Test
     public void testMethods() {
@@ -15,13 +17,13 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
     }
 
     @Test
-    public void testCurrentReply(){
-        ((DCCppMultiMeter)mm).message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
-	Assert.assertEquals("current level percentage 100.0 - 0.0", (10.0/DCCppConstants.MAX_CURRENT) * 100 ,mm.getCurrent(),0.05);
+    public void testCurrentReply() {
+        ((DCCppMultiMeter) mm).message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
+        Assert.assertEquals("current level percentage 100.0 - 0.0", (10.0 / DCCppConstants.MAX_CURRENT) * 100, mm.getCurrent(), 0.05);
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -32,12 +34,11 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.resetWindows(false, false);
         super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
-
 }

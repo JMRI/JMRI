@@ -1,14 +1,14 @@
 package jmri.jmrix.tmcc;
 
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the SerialMessage class.
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
@@ -47,17 +47,17 @@ public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("string compare ", "54 20 32", msg.toString());
     }
 
-    @Before
+    @BeforeEach
     @Override
-    public void setUp(){
-	JUnitUtil.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
         m = msg = new SerialReply();
     }
 
-    @After
-    public void tearDown(){
+    @AfterEach
+    public void tearDown() {
         m = msg = null;
-	JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

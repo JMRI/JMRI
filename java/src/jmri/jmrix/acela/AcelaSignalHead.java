@@ -17,7 +17,8 @@ public class AcelaSignalHead extends DefaultSignalHead {
     /**
      * Create a SignalHead object, with only a system name.
      * <p>
-     * 'systemName' should have been previously validated
+     * @param systemName should have been previously validated.
+     * @param memo system connection.
      */
     public AcelaSignalHead(String systemName, AcelaSystemConnectionMemo memo) {
         super(systemName);
@@ -42,7 +43,9 @@ public class AcelaSignalHead extends DefaultSignalHead {
     /**
      * Create a SignalHead object, with both system and user names.
      * <p>
-     * 'systemName' should have been previously validated
+     * @param systemName should have been previously validated.
+     * @param userName user name.
+     * @param memo system connection.
      */
     public AcelaSignalHead(String systemName, String userName, AcelaSystemConnectionMemo memo) {
         super(systemName, userName);

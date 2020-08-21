@@ -167,7 +167,7 @@ public class TrainCsvCommon extends TrainCommon {
     protected void printTrackComments(CSVPrinter fileOut, RouteLocation rl, List<Car> carList) throws IOException {
         Location location = rl.getLocation();
         if (location != null) {
-            List<Track> tracks = location.getTrackByNameList(null);
+            List<Track> tracks = location.getTracksByNameList(null);
             for (Track track : tracks) {
                 // any pick ups or set outs to this track?
                 boolean pickup = false;

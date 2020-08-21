@@ -6,14 +6,15 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the {@link SplitDateTimeVariableValue} class.
@@ -330,13 +331,13 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

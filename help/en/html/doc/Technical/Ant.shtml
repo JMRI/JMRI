@@ -50,7 +50,7 @@
         <li>Create a directory to contain your project.</li>
 
         <li>In that project directory, <a href=
-        "http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
+        "https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">
         get the code from GitHub</a>. This will create a
         <tt>jmri</tt> subdirectory where Ant will run, and load it
         with source, tests and resources. It will also create and
@@ -89,7 +89,7 @@
       <a href="http://maven.apache.org/">http://maven.apache.org/</a>. Maven
       will download the appropriate plugins and dependencies as needed.
       After installation, the following can be done from your JMRI working copy
-      (see <a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Getting the Code</a>
+      (see <a href="https://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">Getting the Code</a>
       for instructions on creating a working copy):
 
       <dl>

@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InstanceManagerAutoInitialize;
@@ -14,9 +20,6 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainCommon;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages locations.
@@ -239,7 +242,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         List<Location> sortList = getList();
         List<Track> trackList = new ArrayList<Track>();
         for (Location location : sortList) {
-            List<Track> tracks = location.getTrackByNameList(type);
+            List<Track> tracks = location.getTracksByNameList(type);
             for (Track track : tracks) {
                 trackList.add(track);
             }
@@ -248,7 +251,8 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     }
 
     /**
-     * Returns all tracks of type sorted by use
+     * Returns all tracks of type sorted by use. Alternate tracks
+     * are not included.
      *
      * @param type Spur (Track.SPUR), Yard (Track.YARD), Interchange
      *             (Track.INTERCHANGE), Staging (Track.STAGING), or null
@@ -261,6 +265,9 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         List<Track> moveList = new ArrayList<Track>();
         for (Track track : trackList) {
             boolean locAdded = false;
+            if (track.isAlternate()) {
+                continue;
+            }
             for (int j = 0; j < moveList.size(); j++) {
                 if (track.getMoves() < moveList.get(j).getMoves()) {
                     moveList.add(j, track);
@@ -304,7 +311,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
         List<Location> locs = getList();
         for (Location loc : locs) {
             // now adjust tracks
-            List<Track> tracks = loc.getTrackList();
+            List<Track> tracks = loc.getTracksList();
             for (Track track : tracks) {
                 for (String loadName : track.getLoadNames()) {
                     if (loadName.equals(oldLoadName)) {

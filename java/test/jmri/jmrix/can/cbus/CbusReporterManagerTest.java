@@ -4,18 +4,17 @@ import jmri.Manager.NameValidity;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * CbusReporterManagerTest.java
  *
- * Description:	tests for the CbusReporterManager class
+ * Test for the CbusReporterManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
- * @author	Steve Young Copyright (C) 2019 
+ * @author Paul Bender Copyright (C) 2012,2016
+ * @author Steve Young Copyright (C) 2019 
  */
 public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -65,8 +64,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -76,7 +74,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         l = new CbusReporterManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
         tcis.terminateThreads();

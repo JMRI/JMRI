@@ -12,12 +12,13 @@ import org.openlcb.OlcbInterface;
 
 import org.jdom2.Element;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * OlcbSignalMastXmlTest
  *
- * Description: tests for the OlcbSignalMastXml class
+ * Test for the OlcbSignalMastXml class
  *
  * @author   Bob Jacobsen Copyright (C) 2018
  */
@@ -27,11 +28,6 @@ public class OlcbSignalMastXmlTest {
     static Connection connection;
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
-
-    @Test
-    public void testCtor(){
-        Assert.assertNotNull("OlcbSignalMastXml constructor",new OlcbSignalMastXml());
-    }
 
     @Test
     public void testStore(){
@@ -56,12 +52,12 @@ public class OlcbSignalMastXmlTest {
         Assert.assertEquals("1.2.3.4.5.6.7.4", e.getChild("held").getChild("notheld").getValue());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         messages = new java.util.ArrayList<>();
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -84,16 +80,16 @@ public class OlcbSignalMastXmlTest {
             }
         });
         
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         messages = null;
     }
 
-    @AfterClass
-    public static void postClassTearDown() throws Exception {
+    @AfterAll
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
         }

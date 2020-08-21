@@ -1,30 +1,17 @@
 package apps.startup;
 
-import apps.PerformActionModel;
-import org.openide.util.lookup.ServiceProvider;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  *
  * @author Randall Wood 2016
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.PerformActionModelFactory} instead
  */
-@ServiceProvider(service = StartupModelFactory.class)
-public class PerformActionModelFactory extends AbstractActionModelFactory {
+@Deprecated
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
+public class PerformActionModelFactory extends jmri.util.startup.PerformActionModelFactory {
 
     public PerformActionModelFactory() {
-    }
-
-    @Override
-    public Class<? extends StartupModel> getModelClass() {
-        return PerformActionModel.class;
-    }
-
-    @Override
-    public PerformActionModel newModel() {
-        return new PerformActionModel();
-    }
-
-    @Override
-    public String getEditModelMessage() {
-        return Bundle.getMessage("PerformActionModelFactory.editModel.message");
+        super();
     }
 }

@@ -56,7 +56,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " listens " + p);
+            log.debug("writeCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         _progRead = false;
@@ -90,7 +90,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " listens " + p);
+            log.debug("readCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         _progRead = true;
@@ -116,7 +116,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -130,7 +130,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
      */
     @Override
     public void message(EcosMessage m) {
-        log.info("message: "+m);
+        log.info("message: {}", m);
     }
 
     /** 
@@ -138,7 +138,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
      */
     @Override
     synchronized public void reply(EcosReply reply) {
-        log.info("reply: "+reply);
+        log.info("reply: {}", reply);
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
             if (log.isDebugEnabled()) {
@@ -170,7 +170,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
                 tc.sendEcosMessage(m, this);
             } catch (Exception e) {
                 // program op failed, go straight to end
-                log.error("program operation failed, exception " + e);
+                log.error("program operation failed, exception {}", e);
                 progState = NOTPROGRAMMING;
                 EcosMessage m;
                 m = new EcosMessage("release("+ecosObject+",view)");
@@ -239,10 +239,12 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
 
     /**
      * Internal method to notify of the final result.
+     * @param value Value transferred, particularly if a read operation
+     * @param status Status of completed operation
      */
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_

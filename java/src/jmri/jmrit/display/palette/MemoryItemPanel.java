@@ -52,6 +52,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
         }
     }
 
+    @Override
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
@@ -88,13 +89,13 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
             _iconFamilyPanel.add(instructions());
         }
 
-        makeDragIconPanel(1);
-        makeDndIconPanel(null, null);
+        makeDragIconPanel();
+        makeDndIcon(null);
         log.debug("initIconFamiliesPanel done");
     }
 
     @Override
-    protected void makeDndIconPanel(java.util.HashMap<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIcon(java.util.HashMap<String, NamedIcon> iconMap) {
         if (_update) {
             return;
         }
@@ -194,7 +195,7 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                     _spinner.getValue());
         }
         Integer nCols = (Integer) _spinner.getValue();
-        _writeMem.setNumColumns(nCols.intValue());
+        _writeMem.setNumColumns(nCols);
     }
 
     /**
@@ -218,8 +219,8 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
             _dragIconPanel.removeAll();
-            makeDragIconPanel(1);
-            makeDndIconPanel(null, null);
+            makeDragIconPanel();
+            makeDndIcon(null); // use override
         }
         validate();
     }
@@ -266,12 +267,11 @@ public class MemoryItemPanel extends TableItemPanel<Memory> implements ChangeLis
                     ((JSpinner.DefaultEditor) _spinner.getEditor()).commitEdit();
                     SpinnerNumberModel spinModel = (SpinnerNumberModel) _spinner.getModel();
                     if (log.isDebugEnabled()) {
-                        log.debug("MemoryDnD.createTransferable: spinCols= "
-                                + spinModel.getNumber().intValue());
+                        log.debug("MemoryDnD.createTransferable: spinCols= {}", spinModel.getNumber().intValue());
                     }
                     numCols = spinModel.getNumber().intValue();
                 } catch (java.text.ParseException pe) {
-                    log.error("MemoryDnD.createTransferable: " + pe);
+                    log.error("MemoryDnD.createTransferable: {}", pe);
                 }
                 switch (_memType) {
                     case READONLY:

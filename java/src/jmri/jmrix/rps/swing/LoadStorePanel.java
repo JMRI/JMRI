@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Panel for load/store of RPS setup.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class LoadStorePanel extends javax.swing.JPanel {
 
@@ -62,7 +62,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 File file = fci.getSelectedFile();
                 if (log.isInfoEnabled()) {
-                    log.info("located file " + file + " for load");
+                    log.info("located file {} for load", file);
                 }
                 // handle the file
                 Engine.instance().loadAlignment(file);
@@ -70,7 +70,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
                 log.info("load cancelled in open dialog");
             }
         } catch (Exception e) {
-            log.error("exception during load: " + e);
+            log.error("exception during load: {}", e);
         }
     }
 
@@ -83,7 +83,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 File file = fci.getSelectedFile();
                 if (log.isInfoEnabled()) {
-                    log.info("located file " + file + " for store");
+                    log.info("located file {} for store", file);
                 }
                 // handle the file
                 Engine.instance().storeAlignment(file);
@@ -91,7 +91,7 @@ public class LoadStorePanel extends javax.swing.JPanel {
                 log.info("load cancelled in open dialog");
             }
         } catch (Exception e) {
-            log.error("exception during store: " + e);
+            log.error("exception during store: {}", e);
         }
     }
 
@@ -99,12 +99,12 @@ public class LoadStorePanel extends javax.swing.JPanel {
         try {
             File file = new File(PositionFile.defaultFilename());
             if (log.isInfoEnabled()) {
-                log.info("located file " + file + " for store");
+                log.info("located file {} for store", file);
             }
             // handle the file
             Engine.instance().storeAlignment(file);
         } catch (Exception e) {
-            log.error("exception during storeDefault: " + e);
+            log.error("exception during storeDefault: {}", e);
         }
     }
 

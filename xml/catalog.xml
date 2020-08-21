@@ -19,6 +19,8 @@
             uri="schema/JMRIschema.xsd"/>
     <system systemId="http://jmri.org/xml/schema/appearancetable.xsd"
             uri="schema/appearancetable.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/appearancetable-no-check.xsd"
+            uri="schema/appearancetable-no-check.xsd"/>
     <system systemId="http://jmri.org/xml/schema/aspecttable.xsd"
             uri="schema/aspecttable.xsd"/>
     <system systemId="http://jmri.org/xml/schema/auxiliary-configuration.xsd"
@@ -47,6 +49,8 @@
             uri="schema/idtags.xsd"/>
     <system systemId="http://jmri.org/xml/schema/layout-2-9-6.xsd"
             uri="schema/layout-2-9-6.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/layout-4-19-2.xsd"
+            uri="schema/layout-4-19-2.xsd"/>
     <system systemId="http://jmri.org/xml/schema/layout.xsd"
             uri="schema/layout.xsd"/>
     <system systemId="http://jmri.org/xml/schema/locomotive-config.xsd"
@@ -69,6 +73,8 @@
             uri="schema/roster.xsd"/>
     <system systemId="http://jmri.org/xml/schema/scale.xsd"
             uri="schema/scale.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/schema2xhtml.xsl"
+            uri="schema/schema2xhtml.xsl"/>
     <system systemId="http://jmri.org/xml/schema/speedtable.xsd"
             uri="schema/speedtable.xsd"/>
     <system systemId="http://jmri.org/xml/schema/speedometer-3-9-3.xsd"
@@ -180,9 +186,35 @@
  
     <system systemId="http://jmri.org/xml/DTD/layout-config.dtd"
             uri="DTD/layout-config.dtd"/>
+
+    <system systemId="http://jmri.org/xml/DTD/layout-config.dtd"
+            uri="DTD/layout-config.dtd"/>
+
+    <system systemId="/xml/DTD/operations-cars.dtd"
+            uri="DTD/operations-cars.dtd"/>
+    <system systemId="/xml/DTD/operations-config.dtd"
+            uri="DTD/operations-config.dtd"/>
+    <system systemId="/xml/DTD/operations-engines.dtd"
+            uri="DTD/operations-engines.dtd"/>
+    <system systemId="/xml/DTD/operations-locations.dtd"
+            uri="DTD/operations-locations.dtd"/>
+    <system systemId="/xml/DTD/operations-routes.dtd"
+            uri="DTD/operations-routes.dtd"/>
+    <system systemId="/xml/DTD/operations-trains.dtd"
+            uri="DTD/operations-trains.dtd"/>
     <system systemId="/xml/DTD/rpsfile.dtd"
             uri="DTD/rpsfile.dtd"/>
-    
+     <system systemId="/xml/DTD/throttle-config.dtd"
+            uri="DTD/throttle-config.dtd"/>
+    <system systemId="/xml/DTD/throttle-layout-config.dtd"
+            uri="DTD/throttle-layout-config.dtd"/>
+    <system systemId="/xml/DTD/throttles-preferences.dtd"
+            uri="DTD/throttles-preferences.dtd"/>
+    <system systemId="/xml/DTD/vsdecoder-config.dtd"
+            uri="DTD/vsdecoder-config.dtd"/>
+    <system systemId="/xml/DTD/vsdecoder-preferences.dtd"
+            uri="DTD/vsdecoder-preferences.dtd"/>
+   
     <system systemId="http://www.w3.org/2001/XInclude.xsd"
             uri="schema/xinclude.xsd"/>
 </catalog>

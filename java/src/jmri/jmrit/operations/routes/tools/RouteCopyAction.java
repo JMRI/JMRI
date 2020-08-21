@@ -15,24 +15,23 @@ import jmri.jmrit.operations.routes.Route;
  */
 public class RouteCopyAction extends AbstractAction {
 
-    public RouteCopyAction(String s) {
-        super(s);
+    public RouteCopyAction() {
+        super(Bundle.getMessage("MenuItemCopy"));
+    }
+    
+    public RouteCopyAction(Route route) {
+        this();
+        _route = route;
     }
 
-    Route route;
-
-    public RouteCopyAction(String s, Route route) {
-        super(s);
-        this.route = route;
-    }
-
+    Route _route;
     RouteCopyFrame f = null;
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a copy route frame
         if (f == null || !f.isVisible()) {
-            f = new RouteCopyFrame(route);
+            f = new RouteCopyFrame(_route);
         }
         f.setExtendedState(Frame.NORMAL);
         f.setVisible(true); // this also brings the frame into focus

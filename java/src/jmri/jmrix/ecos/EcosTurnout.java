@@ -31,6 +31,9 @@ public class EcosTurnout extends AbstractTurnout
      * identification in the system name.
      *
      * @param number DCC address of the turnout
+     * @param prefix system prefix
+     * @param etc system connection traffic controller
+     * @param etm ecos turnout manager
      */
     public EcosTurnout(int number, String prefix, EcosTrafficController etc, EcosTurnoutManager etm) {
         super(prefix + "T" + number);
@@ -132,10 +135,27 @@ public class EcosTurnout extends AbstractTurnout
      */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        try {
-            sendMessage(stateChangeCheck(newState));
-        } catch (IllegalArgumentException ex) {
-            log.error("new state invalid, Turnout not set");
+        // implementing classes will typically have a function/listener to get
+        // updates from the layout, which will then call
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue,
+        //          Object newValue)
+        // _once_ if anything has changed state (or set the commanded state directly)
+
+        // sort out states
+        if ((newState & Turnout.CLOSED) != 0) {
+            // first look for the double case, which we can't handle
+            if ((newState & Turnout.THROWN) != 0) {
+                // this is the disaster case!
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
+                return;
+            } else {
+                // send a CLOSED command
+                sendMessage(true ^ getInverted());
+            }
+        } else {
+            // send a THROWN command
+            sendMessage(false ^ getInverted());
         }
     }
 
@@ -156,7 +176,7 @@ public class EcosTurnout extends AbstractTurnout
         if ((getFeedbackMode() != MONITORING)) {
             return;
         }
-        forwardCommandChangeToLayout(state);
+
         newCommandedState(state);
     }
 
@@ -220,20 +240,30 @@ public class EcosTurnout extends AbstractTurnout
                 int turnaddr = _number - 1;
                 Turnout t = tm.getTurnout(prefix + "T" + turnaddr);
                 secondstate = closed;
-                if (t.getKnownState() == CLOSED) {
-                    firststate = true;
+                if (t == null){
+                    log.error("Unable to locate second Turnout address {}",turnaddr);
+                    return;
                 } else {
-                    firststate = false;
+                    if (t.getKnownState() == CLOSED) {
+                        firststate = true;
+                    } else {
+                        firststate = false;
+                    }
                 }
 
             } else {
                 Turnout t = tm.getTurnout(slaveAddress);
                 firststate = closed;
-
-                if (t.getKnownState() == CLOSED) {
-                    secondstate = true;
+                if (t == null){
+                    log.error("Unable to locate slave Turnout address {}",slaveAddress);
+                    return;
                 } else {
-                    secondstate = false;
+
+                    if (t.getKnownState() == CLOSED) {
+                        secondstate = true;
+                    } else {
+                        secondstate = false;
+                    }
                 }
             }
             int setState = 0;
@@ -295,7 +325,7 @@ public class EcosTurnout extends AbstractTurnout
             return; //message is not for our turnout address
         }
         if (msg.contains("switching[0]")) {
-            log.debug("Turnout switched - new state="+newstate);
+            log.debug("Turnout switched - new state={}", newstate);
             /*log.debug("see new state "+newstate+" for "+_number);*/
             //newCommandedState(newstate);
             /*Using newKnownState, as any changes made on the ecos do not show
@@ -326,9 +356,9 @@ public class EcosTurnout extends AbstractTurnout
                     } else if (val.equals("1")) {
                         newstate = THROWN;
                     } else {
-                        log.warn("val |" + val + "| from " + msg);
+                        log.warn("val |{}| from {}", val, msg);
                     }
-                    log.debug("newstate found: "+newstate);
+                    log.debug("newstate found: {}", newstate);
                     if (m.getReplyType().equals("set")) {
                        // wait to set the state until ECOS tells us to (by an event with the contents "switching[0]")
                     } else {

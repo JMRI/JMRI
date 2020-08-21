@@ -1,12 +1,14 @@
 package jmri.jmrit.ussctc;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for Station classes in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class StationTest {
 
@@ -105,8 +107,7 @@ public class StationTest {
     CodeLine codeline;
     CodeButton button;
         
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -119,7 +120,7 @@ public class StationTest {
         button = new CodeButton("IS21", "IS22");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

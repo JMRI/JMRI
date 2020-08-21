@@ -134,36 +134,6 @@
     <label xml:lang="it">Correzione Decellazione Consist</label>
     <tooltip xml:lang="it">Valori oltre 128 incrementano correzzione, minori di 128 decrementano</tooltip>
   </variable>
-  <variable item="Advanced Group 2 Option 12" CV="28" default="1" mask="XXXXXXXV">
-    <qualifier>
-      <variableref>Decoder ID</variableref>
-      <relation>ge</relation>
-      <value>89</value>
-    </qualifier>
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    <label>RailCom Channel 1 Address</label>
-    <tooltip>If enabled, Channel 1 will broadcast the address</tooltip>
-  </variable>
-  <variable item="Advanced Group 2 Option 13" CV="28" default="1" mask="XXXXXXVX">
-    <qualifier>
-      <variableref>Decoder ID</variableref>
-      <relation>ge</relation>
-      <value>89</value>
-    </qualifier>
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    <label>RailCom Channel 2</label>
-    <tooltip>If enabled, Channel 2 will send and receive data and provide acknowledgements. </tooltip>
-  </variable>
-  <variable item="Advanced Group 2 Option 14" CV="28" default="1" mask="XXXVXXXX">
-    <qualifier>
-      <variableref>Decoder ID</variableref>
-      <relation>ge</relation>
-      <value>89</value>
-    </qualifier>
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    <label>RailCom Programming Address 253</label>
-    <tooltip>Serves as a programming lock. If this setting is disabled, programming address 253 will be locked. </tooltip>
-  </variable>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV29.xml"/>
   <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

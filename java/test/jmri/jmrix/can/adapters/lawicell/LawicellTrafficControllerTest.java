@@ -1,8 +1,8 @@
 package jmri.jmrix.can.adapters.lawicell;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for LawicellTrafficController.
@@ -11,7 +11,7 @@ import org.junit.Before;
 public class LawicellTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTest {
    
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
@@ -19,7 +19,7 @@ public class LawicellTrafficControllerTest extends jmri.jmrix.can.TrafficControl
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
         tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

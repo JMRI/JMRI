@@ -88,7 +88,7 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
      */
     public boolean okToSend() {
         if (checkBuffer) {
-            log.debug("Buffer Empty: " + outputBufferEmpty);
+            log.debug("Buffer Empty: {}", outputBufferEmpty);
             return (outputBufferEmpty);
         } else {
             log.debug("No Flow Control or Buffer Check");
@@ -263,7 +263,7 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
         EasyDccReply reply = new EasyDccReply();
         int i = 0;
         char command = msg.toString().charAt(0);
-        log.debug("Message type = " + command);
+        log.debug("Message type = {}", command);
         switch (command) {
 
             case 'X': // eXit programming

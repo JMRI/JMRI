@@ -114,10 +114,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 // save action information
                 List<ConditionalAction> actionList = c.getCopyOfActions();
-                /*               	if (numCond>1190) {
-                 partTime = System.currentTimeMillis() - partTime;
-                 System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
-                 }*/
                 for (ConditionalAction action : actionList) {
                     Element aElem = new Element("conditionalAction");  // NOI18N
                     aElem.setAttribute("option", Integer.toString(action.getOption()));  // NOI18N
@@ -155,11 +151,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      */
     public void setStoreElementClass(Element conditionals) {
         conditionals.setAttribute("class", this.getClass().getName());  // NOI18N
-    }
-
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");  // NOI18N
     }
 
     /**

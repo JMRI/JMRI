@@ -5,8 +5,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import org.junit.internal.TextListener;
-import org.junit.runner.*;
-import org.junit.runner.notification.*;
 import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;

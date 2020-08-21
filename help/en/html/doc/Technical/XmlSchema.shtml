@@ -214,7 +214,7 @@
       command line via e.g.:</p>
       <pre>
 <code>
-./runtest.csh jmri/jmrit/XmlFileValidateAction xml/decoders/0NMRA.xml 
+./runtest.csh apps/jmrit/XmlFileValidateRunner xml/decoders/0NMRA.xml 
 </code>
 </pre>
 
@@ -356,7 +356,7 @@
 
       <p>Lots of classes descend from jmri.configurexml.XmAdapter:
       (<a href=
-      "http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see
+      "https://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see
       Javadoc</a>)</p>
 
       <p>By convention, provide

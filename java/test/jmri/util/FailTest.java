@@ -29,7 +29,6 @@ public class FailTest {
         LoggerFactory.getLogger(FailTest.class).error("This message should cause a failure");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

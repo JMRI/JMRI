@@ -10,8 +10,8 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of Mrc messages
  *
- * @author	Ken Cameron	Copyright (C) 2010 derived from:
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Ken Cameron Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {

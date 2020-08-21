@@ -1,14 +1,13 @@
 package jmri.jmrix.can.swing.send;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CanSendPane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CanSendPaneTest extends jmri.util.swing.JmriPanelTest {
 
@@ -29,7 +28,7 @@ public class CanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
@@ -41,7 +40,7 @@ public class CanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

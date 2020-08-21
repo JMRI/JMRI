@@ -2,6 +2,8 @@ package jmri.jmrit.catalog;
 
 import java.util.Set;
 import jmri.CatalogTree;
+import jmri.CatalogTreeLeaf;
+import jmri.CatalogTreeNode;
 import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
@@ -244,9 +246,8 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
                     }
 
                     @Override
-                    public boolean doPrompt() {
+                    public void didPrompt() {
                         storeImageIndex();
-                        return true;
                     }
                 };
                 sdm.register(_shutDownTask);

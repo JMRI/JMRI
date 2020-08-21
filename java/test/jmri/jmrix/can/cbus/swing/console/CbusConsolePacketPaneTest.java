@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus.swing.console;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of CbusConsolePacketPane
@@ -31,7 +31,7 @@ public class CbusConsolePacketPaneTest  {
     private TrafficControllerScaffold tc;
     private CbusConsolePane mainConsolePane;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -41,7 +41,7 @@ public class CbusConsolePacketPaneTest  {
         mainConsolePane.initComponents(memo,false);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         mainConsolePane.dispose();
         tc.terminateThreads();

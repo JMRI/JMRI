@@ -1,18 +1,18 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SpeedProfileTableTest {
 
@@ -25,14 +25,13 @@ public class SpeedProfileTableTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

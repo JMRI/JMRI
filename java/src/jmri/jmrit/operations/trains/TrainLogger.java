@@ -72,7 +72,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
                 _fileLogger = new java.io.File(getFullLoggerFileName());
             }
         } catch (Exception e) {
-            log.error("Exception while making logging directory: " + e);
+            log.error("Exception while making logging directory: {}", e);
         }
 
     }
@@ -113,12 +113,12 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         // FileOutputStream is set to append
         try (CSVPrinter fileOut = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(_fileLogger, true), StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
-            log.debug("Log: " + line);
+            log.debug("Log: {}", line);
             fileOut.printRecord(line);
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
-            log.error("Exception while opening log file: " + e.getLocalizedMessage());
+            log.error("Exception while opening log file: {}", e.getLocalizedMessage());
         }
     }
 
@@ -152,7 +152,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
             if (Control.SHOW_PROPERTY) {
-                log.debug("Train logger sees property change for train " + e.getSource());
+                log.debug("Train logger sees property change for train {}", e.getSource());
             }
             store((Train) e.getSource());
         }

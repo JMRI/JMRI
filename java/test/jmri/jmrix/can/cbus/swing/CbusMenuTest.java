@@ -12,13 +12,13 @@ import org.junit.jupiter.api.Test;
 /**
  * Test simple functioning of CbusMenu
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusMenuTest {
 
 
     // private TrafficController tc = null;
-    private CanSystemConnectionMemo m = null;
+    private CanSystemConnectionMemo m;
  
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
@@ -38,6 +38,8 @@ public class CbusMenuTest {
 
     @AfterEach
     public void tearDown() { 
+        m.dispose();
+        m = null;
         JUnitUtil.tearDown();
         // tc = null;
     }

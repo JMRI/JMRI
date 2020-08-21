@@ -3,8 +3,6 @@ package jmri.implementation;
 import java.util.TimerTask;
 import jmri.MultiMeter;
 import jmri.beans.Bean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for current meter objects.
@@ -124,6 +122,6 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMultiMeter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMultiMeter.class);
 
 }

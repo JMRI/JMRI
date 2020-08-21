@@ -14,6 +14,9 @@ class Z21SimulatorLocoData {
 
     /**
      * Construct an object of this type with all the data we are recording.
+     * @param addr_msb MSB of address
+     * @param addr_lsb LSB of address
+     * @param speed speed value
      */
     public Z21SimulatorLocoData(byte addr_msb, byte addr_lsb, byte speed){
        address_msb = addr_msb;

@@ -44,7 +44,7 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
                 }
                 return false;
             } else {
-                p.addPropertyChangeListener(this);
+                p.addPropertyChangeListener(PowerManager.POWER, this);
             }
         }
         return true;
@@ -55,7 +55,7 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
             try {
                 p.setPower(PowerManager.ON);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power on " + e);
+                log.error("Exception trying to turn power on {}", e);
                 try {
                     sendErrorStatus();
                 } catch (IOException ie) {
@@ -69,7 +69,7 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
             try {
                 p.setPower(PowerManager.OFF);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power off " + e);
+                log.error("Exception trying to turn power off {}", e);
                 try {
                     sendErrorStatus();
                 } catch (IOException ie) {
@@ -82,12 +82,8 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
         try {
             sendStatus(p.getPower());
-        } catch (JmriException ex) {
-            try {
-                sendErrorStatus();
-            } catch (IOException ie) {
-            }
-        } catch (IOException ie2) {
+        } catch (IOException ie) {
+            // silently ignore
         }
     }
 

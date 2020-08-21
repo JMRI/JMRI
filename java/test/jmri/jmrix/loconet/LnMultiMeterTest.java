@@ -2,10 +2,9 @@ package jmri.jmrix.loconet;
 
 import jmri.MultiMeter;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 public class LnMultiMeterTest {
 
     LocoNetInterfaceScaffold lnis;
@@ -31,7 +30,7 @@ public class LnMultiMeterTest {
         Assert.assertEquals(0.5f,lm.getCurrent(),0); // 0.5AMps
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -40,7 +39,7 @@ public class LnMultiMeterTest {
         memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         lnis.dispose();

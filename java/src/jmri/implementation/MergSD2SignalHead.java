@@ -162,7 +162,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
             default:
                 mInput1.getBean().setCommandedState(Turnout.CLOSED);
 
-                log.warn("Unexpected new appearance: " + mAppearance);
+                log.warn("Unexpected new appearance: {}", mAppearance);
             // go dark
             }
         //}

@@ -1,10 +1,9 @@
 package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for AbstractMRNodeTrafficController.
@@ -23,7 +22,7 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
         Assert.assertEquals("NumNodes at start",0,((AbstractMRNodeTrafficController)tc).getNumNodes());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp(); 
@@ -49,7 +48,7 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
         };
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown(){
        tc = null;

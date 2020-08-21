@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for manual operation and debugging of the RPS system.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class DebuggerFrame extends jmri.util.JmriJFrame
         implements ReadingListener, MeasurementListener {

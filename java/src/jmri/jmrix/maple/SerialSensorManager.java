@@ -88,7 +88,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
         // check configured
         if (!SerialAddress.validSystemNameConfig(sName, 'S', getMemo())) {
-            log.warn("Sensor system Name '" + sName + "' does not address configured hardware.");
+            log.warn("Sensor system Name '{}' does not address configured hardware.", sName);
             javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Sensor just added, "
                     + sName + ", refers to an unconfigured input bit.", "Configuration Warning",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
@@ -124,7 +124,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Dummy routine
+     * Dummy routine.
+     * @param r unused.
      */
     @Override
     public void message(SerialMessage r) {
@@ -133,6 +134,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * Process a reply to a poll of Sensors of one panel node.
+     * {@inheritDoc}
      */
     @Override
     public void reply(SerialReply r) {
@@ -140,7 +142,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Method to register any orphan Sensors when a new Serial Node is created
+     * Method to register any orphan Sensors when a new Serial Node is created.
+     * @param node node to register.
      */
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {

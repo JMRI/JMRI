@@ -26,6 +26,7 @@ public interface Qualifier {
      * <p>
      * Subclasses implement this to control a specific type of qualified object,
      * like a Variable or Pane.
+     * @param enable true to drive, else false.
      */
     public void setWatchedAvailable(boolean enable);
 

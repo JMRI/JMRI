@@ -2,17 +2,16 @@ package jmri.jmrix.maple;
 
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the jmri.jmrix.maple.SerialTurnoutManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -36,16 +35,16 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         Turnout o = l.newTurnout("KT21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
+            log.debug("received turnout value {}", o);
         }
         Assert.assertTrue(null != (SerialTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("KT21"));
+            log.debug("by system name: {}", l.getBySystemName("KT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("KT21"));
@@ -54,7 +53,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
         // replace the SerialTrafficController
@@ -74,7 +73,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

@@ -35,7 +35,7 @@ import javax.annotation.CheckForNull;
  * <p>
  * The AbstractTurnout class contains a basic implementation of the state and
  * messaging code, and forms a useful start for a system-specific
- * implementation. Specific implementations in the jmrix package, e.g. for
+ * implementation. Specific implementations, e.g. for
  * LocoNet and NCE, will convert to and from the layout commands.
  * <p>
  * The states and names are Java Bean parameters, so that listeners can be

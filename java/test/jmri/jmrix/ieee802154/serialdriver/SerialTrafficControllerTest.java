@@ -2,18 +2,17 @@ package jmri.jmrix.ieee802154.serialdriver;
 
 import jmri.jmrix.ieee802154.IEEE802154Node;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * SerialTrafficControllerTest.java
  *
- * Description:	tests for the
+ * Test for the
  * jmri.jmrix.ieee802154.serialdriver.SerialTrafficController class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154TrafficControllerTest {
 
@@ -150,16 +149,15 @@ public class SerialTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE80215
         Assert.assertNotNull("node not found", n);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         tc = new SerialTrafficController();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

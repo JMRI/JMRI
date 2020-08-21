@@ -152,7 +152,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                 try {
                     tmpSName = createSystemName(board + ":" + port, prefix);
                 } catch (JmriException e) {
-                    log.error("Error creating system name for " + board + ":" + port);
+                    log.error("Error creating system name for {}:{}", board, port);
                     JOptionPane.showMessageDialog(null, (Bundle.getMessage("ErrorCreateSystemName") +  " " + board + ":" + port),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 }
@@ -203,7 +203,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     MarklinMessage m = MarklinMessage.sensorPollMessage(module);
                     tc.sendMarklinMessage(m, this);
                     if (log.isDebugEnabled()) {
-                        log.debug("New module added " + module);
+                        log.debug("New module added {}", module);
                     }
                 }
                 MarklinSensor ms = sensorList.get(contact);
@@ -213,7 +213,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     //Little work around to pad single digit address out.
                     padPortNumber(contact, sb);
                     if (log.isDebugEnabled()) {
-                        log.debug("New sensor added " + contact + " : " + sb.toString());
+                        log.debug("New sensor added {} : {}", contact, sb.toString());
                     }
                     ms = (MarklinSensor) provideSensor(sb.toString());
                 }
@@ -225,7 +225,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     ms.setOwnState(Sensor.ACTIVE);
                     return;
                 }
-                log.error("state not found " + ms.getDisplayName() + " " + r.getElement(9) + " " + r.getElement(10));
+                log.error("state not found {} {} {}", ms.getDisplayName(), r.getElement(9), r.getElement(10));
                 log.error(r.toString());
             } else {
                 int s88Module = r.getElement(9);
@@ -236,7 +236,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     return;
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("State s88Module not registered " + s88Module);
+                    log.debug("State s88Module not registered {}", s88Module);
                 }
             }
         }

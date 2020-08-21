@@ -27,7 +27,6 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 
     public XBeeConnectionMemo() {
         super("Z", "XBee");
-        register(); // registers the general type
         InstanceManager.store(this, XBeeConnectionMemo.class); // also register as specific type
     }
 
@@ -36,47 +35,6 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         // create and register the XBeeComponentFactory
         InstanceManager.store(componentFactory = new jmri.jmrix.ieee802154.xbee.swing.XBeeComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
-    }
-
-    /**
-     * Tells which managers this class provides.
-     */
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-        if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.LightManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        }
-        return false; // nothing, by default
-    }
-
-    /**
-     * Provide manager by class
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.LightManager.class)) {
-            return (T) getLightManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        return null; // nothing, by default
     }
 
     /**
@@ -89,7 +47,7 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
 
         XBeeTrafficController cont = (XBeeTrafficController) getTrafficController();
         // the start the managers.
-        _NodeManager = new XBeeNodeManager(cont);
+        setXBeeNodeManager(new XBeeNodeManager(cont));
 
         setSensorManager(new XBeeSensorManager(this));
         jmri.InstanceManager.setSensorManager(getSensorManager());
@@ -97,68 +55,61 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         jmri.InstanceManager.setLightManager(getLightManager());
         setTurnoutManager(new XBeeTurnoutManager(this));
         jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
+        register();
     }
 
     /*
      * get the Node Manager
      */
     public XBeeNodeManager getXBeeNodeManager() {
-        return _NodeManager;
+        return get(XBeeNodeManager.class);
     }
     /*
      * set the Node Manager
      */
 
     public void setXBeeNodeManager(XBeeNodeManager manager) {
-        _NodeManager = manager;
+        store(manager,XBeeNodeManager.class);
     }
-
-    private XBeeNodeManager _NodeManager = null;
 
     /*
      * Provides access to the SensorManager for this particular connection.
      * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager() {
-        return sensorManager;
+        return get(SensorManager.class);
 
     }
 
     public void setSensorManager(SensorManager s) {
-        sensorManager = s;
+        store(s,SensorManager.class);
     }
-
-    private SensorManager sensorManager = null;
 
     /*
      * Provides access to the LightManager for this particular connection.
      * NOTE: LightManager defaults to NULL
      */
     public LightManager getLightManager() {
-        return lightManager;
+        return get(LightManager.class);
 
     }
 
     public void setLightManager(LightManager s) {
-        lightManager = s;
+        store(s,LightManager.class);
     }
-
-    private LightManager lightManager = null;
 
     /*
      * Provides access to the TurnoutManager for this particular connection.
      * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
-        return turnoutManager;
+        return get(TurnoutManager.class);
 
     }
 
     public void setTurnoutManager(TurnoutManager s) {
-        turnoutManager = s;
+        store(s,TurnoutManager.class);
     }
-
-    private TurnoutManager turnoutManager = null;
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {

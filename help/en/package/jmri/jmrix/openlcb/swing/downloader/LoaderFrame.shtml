@@ -454,7 +454,7 @@
       for reliable operation on an OpenLCB feature called
       "Freeze/Unfreeze". For more information on that, including
       issues of standards compliance, please see the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/swing/downloader/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/swing/downloader/package-summary.html">
       package documentation</a>.
 
       <p>(This is the

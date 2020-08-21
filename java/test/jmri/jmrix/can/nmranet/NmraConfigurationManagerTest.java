@@ -1,15 +1,14 @@
 package jmri.jmrix.can.nmranet;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of NmraConfigurationManager
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NmraConfigurationManagerTest {
         
@@ -23,7 +22,7 @@ public class NmraConfigurationManagerTest {
         Assert.assertNotNull("exists", cfm);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tcs = new jmri.jmrix.can.TrafficControllerScaffold();
@@ -32,7 +31,7 @@ public class NmraConfigurationManagerTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

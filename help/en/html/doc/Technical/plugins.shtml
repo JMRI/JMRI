@@ -39,7 +39,6 @@
       <ul>
         <li><a href="#script">Script JMRI</a></li>
         <li><a href="#service">Implement a Service Provider</a></li>
-        <li><a href="#jmriPlugin">Override jmri.JmriPlugin</a></li>
       </ul>
 
         See also the separate pages on
@@ -64,14 +63,14 @@
       </p>
       <p>Examples of scripts that modify JMRI behavior are:</p>
       <ul>
-        <li><a href="http://jmri.org/jython/AddButton.py">AddButton.py</a>
+        <li><a href="https://jmri.org/jython/AddButton.py">AddButton.py</a>
           sample script adds a script button to the main window.
         </li>
-        <li><a href="http://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a>
+        <li><a href="https://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a>
           shows how how to modify the main window to remove the ops-mode
           programming button.
         </li>
-        <li><a href="http://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
+        <li><a href="https://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
           sample script is an even more advanced example that changes
           the appearance of items on panel screens.
         </li>
@@ -133,7 +132,7 @@
     The 
     <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample">jmri.jmrit.sample</a>
     package is an example of this.  
-    (See <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/sample/package-summary.html">Javadoc</a>) 
+    (See <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/sample/package-summary.html">Javadoc</a>) 
     If contains:
     <ul>
         <li>A single functional class, 
@@ -187,7 +186,7 @@
       </p>
       <dl>
 
-        <dt id="StartupActionFactory"><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a>
+        <dt id="StartupActionFactory"><a href="https://jmri.org/JavaDoc/doc/apps/startup/StartupActionFactory.html">StartupActionFactory</a>
         <a href="images/StartUpActionExample.png"><img src="images/StartUpActionExample.png" align="right" height="148" width="256"></a>
         </dt>
         <dd>Startup Actions can be run at application start or attached to the
@@ -202,7 +201,7 @@
           i.e. to select one of several possible connections to act on.
         </dd>
 
-        <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a>
+        <dt><a href="https://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a>
             <a href="images/StartUpModelExample.png"><img src="images/StartUpModelExample.png" align="right" height="182" width="197"></a>
             </dt>
         <dd>Startup Models provide a mechanism to define optional items to be 
@@ -228,29 +227,29 @@
           given action.
         </dd>
 
-        <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html">ConnectionTypeList</a></dt>
+        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/ConnectionTypeList.html">ConnectionTypeList</a></dt>
         <dd>Every manufacturer selectable when creating a configuration is
           defined by a ConnectionTypeList service. Implement this (and other
           required classes) to create a new system connection type. See
           <a href="NewSystem.shtml">Adding a New System</a> for details.
         </dd>
         
-        <dt><a href="http://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></dt>
+        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/InstanceInitializer.html">InstanceInitializer</a></dt>
         <dd>Add new factories for creating default instances of objects
-          managed by the <a href="http://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">InstanceManager</a>.
+          managed by the <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">InstanceManager</a>.
         </dd>
         
-        <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
+        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory</a></dt>
         <dd>The JMRI JSON services used in the JMRI web services can be extended
           using service implementations of this class. See the
-          <a href="http://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory Javadocs</a> for details.
+          <a href="https://jmri.org/JavaDoc/doc/jmri/spi/JsonServiceFactory.html">JsonServiceFactory Javadocs</a> for details.
         </dd>
         
-        <dt><a href="http://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
+        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/swing/PreferencesPanel.html">PreferencesPanel</a></dt>
         <dd>Additional preferences can be displayed in the preferences window by
           providing an implementation of this class.</dd>
                   
-        <dt><a href="http://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
+        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/spi/PreferencesManager.html">PreferencesManager</a></dt>
         <dd>Add a new preferences manager to JMRI. Preferences managers store,
           retrieve, and validate preferences within a JMRI configuration
           profile. If a plugin needs to take action very early in the JMRI
@@ -258,7 +257,7 @@
           PreferencesManager service.
         </dd>
         
-        <dt><a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.SignalMastAddPaneProvider.html">SignalMastAddPaneProvider</a></dt>
+        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/beantable/signalmast/SignalMastAddPane.SignalMastAddPaneProvider.html">SignalMastAddPaneProvider</a></dt>
         <dd>Provides the Add/Edit pane for a new type of SignalMast.
             <p>If you define a new type of SignalMast in your code, 
             also define a service class of this type. It will automatically
@@ -277,24 +276,11 @@
             mechanisms. Note that the WebServlet annotation needs to provide a
             name and urlPatterns.</dd>
             
-        <dt><a href="http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt>
+        <dt><a href="https://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebServerConfiguration.html">WebServerConfiguration</a></dt>
         <dd>Additional file paths, redirections, explicitly blocked paths in the
             JMRI web server can be specified by providing a service that
             implements this.</dd>
       </dl>
-
-        
-      <h2 id="jmriPlugin">Override jmri.JmriPlugin</h2>
-
-      <p>The first instance of
-        <a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">JmriPlugin</a>
-        will have its
-        <a href="http://jmri.org/JavaDoc/doc/jmri/JmriPlugin.html#start-javax.swing.JFrame-javax.swing.JMenuBar-">start</a>
-        method called while the JMRI application launches. This makes it
-        possible to allow the application's main window and main menu to be
-        extended. Use of this mechanism is limiting because JmriPlugin can only
-        be overridden once. Generally, the mechanisms further up are better.
-      </p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

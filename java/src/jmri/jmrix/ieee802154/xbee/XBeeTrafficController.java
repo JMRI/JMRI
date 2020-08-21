@@ -89,7 +89,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [" + m + "]");
+            log.debug("forwardToPort message: [{}]", m);
         }
         // remember who sent this
         mLastSender = reply;
@@ -106,7 +106,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         try {
             xbee.sendPacketAsync(((XBeeMessage) m).getXBeeRequest());
         } catch (XBeeException xbe) {
-            log.error("Error Sending message to XBee: " + xbe);
+            log.error("Error Sending message to XBee: {}", xbe);
         }
     }
 
@@ -207,18 +207,18 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
 
     @Override
     public void packetReceived(XBeePacket response) {
-	// because of the XBee library architecture, we don't
-	// do anything here with the responses.
-        log.debug("packetReceived called with {}",response);
+        // because of the XBee library architecture, we don't
+        // do anything here with the responses.
+        log.debug("packetReceived called with {}", response);
     }
 
     // XBee IModemStatusReceiveListener interface methods
 
     @Override
     public void modemStatusEventReceived(ModemStatusEvent modemStatusEvent){
-	// because of the XBee library architecture, we don't
-	// do anything here with the responses.
-       log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
+        // because of the XBee library architecture, we don't
+        // do anything here with the responses.
+        log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
     }
 
     // XBee IDataReceiveListener interface methods
@@ -226,7 +226,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     @Override
     public void dataReceived(com.digi.xbee.api.models.XBeeMessage xbm){
         // because of the XBee library architecture, we don't
-	// do anything here with the responses.
+        // do anything here with the responses.
         log.debug("dataReceived called with message {} ", xbm);
     }
 
@@ -264,7 +264,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         msgQueue.addLast(m);
         listenerQueue.addLast(reply);
         if (m != null) {
-            log.debug("just notified transmit thread with message " + m.toString());
+            log.debug("just notified transmit thread with message {}", m.toString());
         }
     }
 

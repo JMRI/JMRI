@@ -1,11 +1,11 @@
 package jmri.jmrit.sample.swing;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the SampleConfigPane class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SampleConfigPaneTest {
 
@@ -15,12 +15,12 @@ public class SampleConfigPaneTest {
         new SampleConfigPane();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

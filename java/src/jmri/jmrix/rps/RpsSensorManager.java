@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System names are "RSpppp", where ppp is a CSV representation of the region.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2019
+ * @author Bob Jacobsen Copyright (C) 2007, 2019
  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 

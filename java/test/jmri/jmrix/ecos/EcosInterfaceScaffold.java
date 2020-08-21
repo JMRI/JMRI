@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Test scaffold implementation of EcosInterface.
  * Use an object of this type as a EcosTrafficController in tests.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006
+ * @author Bob Jacobsen Copyright (C) 2002, 2006
  */
 public class EcosInterfaceScaffold extends EcosTrafficController {
 

@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * they can be exposed to scripts as an object methods instead of as static
  * methods of a class.
  *
- * @author Randall Wood (C) 2015, 2016, 2019
+ * @author Randall Wood (C) 2015, 2016, 2019, 2020
  */
 public class FileUtilSupport extends Bean {
 
@@ -84,6 +84,10 @@ public class FileUtilSupport extends Bean {
     private static final Logger log = LoggerFactory.getLogger(FileUtilSupport.class);
     // default instance
     volatile private static FileUtilSupport defaultInstance = null;
+
+    public FileUtilSupport() {
+        super(false);
+    }
 
     /**
      * Get the {@link java.io.File} that path refers to. Throws a

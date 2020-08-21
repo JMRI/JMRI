@@ -7,10 +7,9 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -196,8 +195,7 @@ public class CbusNodeNVManagerTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -214,7 +212,7 @@ public class CbusNodeNVManagerTest {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         nodeToEdit.dispose();
         tcis.terminateThreads();

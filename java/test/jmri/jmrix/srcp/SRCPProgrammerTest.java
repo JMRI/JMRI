@@ -2,14 +2,16 @@ package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
 import jmri.ProgrammingMode;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * SRCPProgrammerTest.java
  *
- * Description:	tests for the jmri.jmrix.srcp.SRCPProgrammer class
+ * Test for the jmri.jmrix.srcp.SRCPProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class SRCPProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -27,9 +29,8 @@ public class SRCPProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 ((SRCPProgrammer)programmer).getBestMode());        
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
@@ -41,7 +42,7 @@ public class SRCPProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         programmer = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

@@ -32,7 +32,7 @@
 
         <p>Cette application gratuite peut se connecter &agrave; un
         serveur <a href=
-        "http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        "https://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
         target="_blank">R&eacute;gulateurWi
         JMRI</a>
         s'ex&eacute;cutant sur un ordinateur, et prend tour
@@ -54,7 +54,7 @@
         connecter &agrave; votre r&eacute;seau PC via le WiFi et
         obtenir une adresse IP.<br>
         Assurez-vous que vous utilisez l'une des derni&egrave;res
-        versions de <a href="http://jmri.org/" target=
+        versions de <a href="https://jmri.org/" target=
         "_blank">JMRI</a> (2.8 fonctionne, 2.10 fonctionne encore
         mieux) sur votre PC, reli&eacute; au r&eacute;seau.
         D&eacute;marrer JMRI et v&eacute;rifiez que vous pouvez
@@ -64,7 +64,7 @@
         <h3>Op&eacute;ration:</h3>
 
         <p>D&eacute;marrez la <a href=
-        "http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
+        "https://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
         target="_blank">R&eacute;gulateur Wi</a> fonction de JMRI,
         situ&eacute;e dans DecoderPro sous
         Outils,R&eacute;gulateur. (Ou sous D&eacute;bogage dans les

@@ -82,7 +82,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
                     mGreen.getBean().setCommandedState(Turnout.THROWN);
                     break;
                 default:
-                    log.warn("Unexpected new appearance: " + mAppearance);
+                    log.warn("Unexpected new appearance: {}", mAppearance);
                 // go dark by falling through
                 case DARK:
                     mRed.getBean().setCommandedState(Turnout.CLOSED);

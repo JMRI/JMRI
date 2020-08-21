@@ -1,14 +1,13 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class AudioTablePanelTest {
 
@@ -25,14 +24,13 @@ public class AudioTablePanelTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();        
         JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // this created an audio manager, clean that up
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();

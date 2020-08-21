@@ -23,6 +23,13 @@ public class CbusCommonSwing {
     public static final Color WHITE_GREEN = new Color(0xf5,0xf5,0xf5);
     public static final Color GOLD = new Color(255,204,51);
     
+    /**
+     * Set cell background with alternating rows.
+     * @param isSelected true if selected.
+     * @param f cell component.
+     * @param table cell table.
+     * @param row cell row.
+     */
     public static void setCellBackground( boolean isSelected, JComponent f, JTable table, int row){
         f.setBackground(isSelected ? table.getSelectionBackground() : 
             (( row % 2 == 0 ) ? table.getBackground() : WHITE_GREEN ) );

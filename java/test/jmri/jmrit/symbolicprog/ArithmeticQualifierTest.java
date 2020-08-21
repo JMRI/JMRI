@@ -1,17 +1,18 @@
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
+
 import javax.swing.JLabel;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author	Bob Jacobsen, Copyright 2014
+ * @author Bob Jacobsen, Copyright 2014
  */
 public class ArithmeticQualifierTest {
 
@@ -136,13 +137,12 @@ public class ArithmeticQualifierTest {
         return m;
     }
 
-    // The minimal setup for log4J
-    @Before 
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -178,7 +178,6 @@ public class CbusEventTableXmlActionTest {
     @TempDir 
     protected Path tempDir;
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();

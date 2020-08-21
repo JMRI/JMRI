@@ -179,13 +179,13 @@
       pause, stop, rewind, fade-in and fade-out audio sources.
       <br>
       You can also directly manipulate Audio Objects with scripts. There's an <a href=
-      "http://jmri.org/jython/AudioExample.py">example script</a>
+      "https://jmri.org/jython/AudioExample.py">example script</a>
       in the distribution, along with documentation for the
-      <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioBuffer.html">
+      <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioBuffer.html">
       AudioBuffer</a>, <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioSource.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioSource.html">
       AudioSource</a> and <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioListener.html">
+      "https://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioListener.html">
       AudioListener</a> classes that control the audio processing.
 
       <h2><a name="playing" id="playing">Playing Audio</a></h2>

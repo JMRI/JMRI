@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * New Zimo Binary implementation of the Turnout interface
  *
- * @author	Kevin Dickerson Copyright (C) 2014
+ * @author Kevin Dickerson Copyright (C) 2014
  */
 public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*/ {
 
@@ -42,14 +42,20 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
      */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        // calls jmri.implementation.AbstractTurnout#stateChangeCheck(int)
-        int command = newState;
-        try {
-            command = (stateChangeCheck(newState) ? Turnout.CLOSED : Turnout.THROWN);
-        } catch (IllegalArgumentException ex) {
-            log.error("new state invalid, Turnout not set"); // NOI18N
+        // sort out states
+        if ((newState & Turnout.CLOSED) != 0) {
+            // first look for the double case, which we can't handle
+            if ((newState & Turnout.THROWN) != 0) {
+                // this is the disaster case!
+                log.error("Cannot command both CLOSED and THROWN {}", newState); // NOI18N
+            } else {
+                // send a CLOSED command
+                forwardToCommandStation(jmri.Turnout.THROWN);
+            }
+        } else {
+            // send a THROWN command
+            forwardToCommandStation(jmri.Turnout.CLOSED);
         }
-        forwardToCommandStation(command);
     }
 
     void forwardToCommandStation(int state) {

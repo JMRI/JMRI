@@ -74,6 +74,7 @@ public class SerialNode extends AbstractNode {
      * Assumes a node address of 1, and a node type of 0 (NODE2002V6).
      * If this constructor is used, actual node address must be set using
      * 'setNodeAddress()', and actual node type using 'setNodeType()'
+     * @param tc system connection traffic controller.
      */
     public SerialNode(SerialTrafficController tc) {
         this(1, tc);
@@ -172,6 +173,7 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Get node type.
+     * @return node type, e.g. NODE2002V1 or NODE2002V6.
      */
     public int getNodeType() {
         return (nodeType);
@@ -179,6 +181,7 @@ public class SerialNode extends AbstractNode {
 
     /**
      * Set node type.
+     * @param type node type, e.g. NODE2002V1 or NODE2002V6.
      */
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
@@ -264,12 +267,7 @@ public class SerialNode extends AbstractNode {
     @Override
     public AbstractMRMessage createOutPacket() {
         if (log.isDebugEnabled()) {
-            log.debug("createOutPacket for nodeType "
-                    + nodeType + " with "
-                    + outputByteChanged[0] + " " + outputArray[0] + ";"
-                    + outputByteChanged[1] + " " + outputArray[1] + ";"
-                    + outputByteChanged[2] + " " + outputArray[2] + ";"
-                    + outputByteChanged[3] + " " + outputArray[3] + ";");
+            log.debug("createOutPacket for nodeType {} with {} {};{} {};{} {};{} {};", nodeType, outputByteChanged[0], outputArray[0], outputByteChanged[1], outputArray[1], outputByteChanged[2], outputArray[2], outputByteChanged[3], outputArray[3]);
         }
 
         // Create a Serial message and add initial bytes
@@ -384,7 +382,7 @@ public class SerialNode extends AbstractNode {
                 log.error("Creating sensor {}S{} failed unexpectedly",
                         tc.getSystemConnectionMemo().getSystemPrefix(),
                         (getNodeAddress() * 1000 + sensorNum));
-                log.debug("node should be " + this);
+                log.debug("node should be {}", this);
                 return;
             }
         }
@@ -406,7 +404,7 @@ public class SerialNode extends AbstractNode {
                 }
             }
         } catch (JmriException e) {
-            log.error("exception in markChanges: " + e);
+            log.error("exception in markChanges: {}", e);
         }
     }
 

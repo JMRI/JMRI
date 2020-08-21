@@ -82,7 +82,7 @@ public class SplitDateTimeVariableValue extends SplitVariableValue {
 
     @Override
     public void stepTwoActions() {
-        log.debug(_name + " SplitDateTimeVariableValue stepTwoActions");
+        log.debug("{} SplitDateTimeVariableValue stepTwoActions", _name);
         super.stepTwoActions(); // need to do base level checks
         _columns = cvCount * 4; //new default column width
         switch (display) {

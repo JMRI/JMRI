@@ -118,7 +118,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     @Override
     public void configureOption3(String value) {
         super.configureOption3(value);
-        log.debug("configureOption3: " + value);
+        log.debug("configureOption3: {}", value);
         setTurnoutHandling(value);
     }
 

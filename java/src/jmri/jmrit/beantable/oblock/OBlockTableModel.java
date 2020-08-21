@@ -141,8 +141,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
 
     @Override
     public String getValue(String name) {
-        int state = _manager.getBySystemName(name).getState();
-        return getValue(state);
+        OBlock bl = _manager.getBySystemName(name);
+        if (bl !=null) {
+            return getValue(bl.getState());
+        }
+        return "";
     }
 
     static protected String getValue(int state) {
@@ -430,7 +433,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                                 block.setReportingCurrent(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
                             }
                         } catch (Exception ex) {
-                            log.error("No Reporter named \"" + tempRow[REPORTERCOL] + "\" found. threw exception: " + ex);
+                            log.error("No Reporter named \"{}\" found. threw exception: {}", tempRow[REPORTERCOL], ex);
                         }
                         if (rep == null) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),
@@ -555,7 +558,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         fireTableRowsUpdated(row, row);
                     }
                 } catch (Exception ex) {
-                    log.error("getSensor(" + (String) value + ") threw exception: " + ex);
+                    log.error("getSensor({}) threw exception: {}", value, ex);
                 }
                 if (!ok) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", (String) value),
@@ -572,7 +575,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         fireTableRowsUpdated(row, row);
                     }
                 } catch (Exception ex) {
-                    log.error("No Reporter named \"" + (String) value + "\" found. threw exception: " + ex);
+                    log.error("No Reporter named \"{}\" found. threw exception: {}", value, ex);
                 }
                 if (rep == null) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchReporterErr", tempRow[REPORTERCOL]),

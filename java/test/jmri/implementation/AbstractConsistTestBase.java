@@ -3,35 +3,35 @@ package jmri.implementation;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import jmri.Consist;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of Consist classes.
  *
- * @author	Paul Copyright (C) 2017
+ * @author Paul Copyright (C) 2017
  */
 abstract public class AbstractConsistTestBase {
 
     protected Consist c = null;
-    @Before
+    @BeforeEach
     abstract public void setUp();  // should set the consist under test to c.
-    @After
+    @AfterEach
     abstract public void tearDown(); // should clean up the consist c.
 
     @Test public void testCtor() {
         Assert.assertNotNull(c);
     }
 
-    @Test(expected=java.lang.NullPointerException.class)
+    @Test
     public void checkDisposeMethod(){
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
         jmri.DccLocoAddress B = new jmri.DccLocoAddress(250,true);
@@ -44,8 +44,8 @@ abstract public class AbstractConsistTestBase {
         Assert.assertTrue("Advanced Consist Contains",c.contains(B));
         c.dispose();
         // after dispose, this should fail
-        Assert.assertTrue("Advanced Consist Contains",c.contains(A));
-        Assert.assertTrue("Advanced Consist Contains",c.contains(B));
+        Assert.assertThrows("Advanced Consist Throws", NullPointerException.class, () -> c.contains(A));
+        Assert.assertThrows("Advanced Consist Throws", NullPointerException.class, () -> c.contains(B));
     }
 
     @Test public void testGetConsistType(){
@@ -178,6 +178,5 @@ abstract public class AbstractConsistTestBase {
     }
 
 
-    // The minimal setup for log4J
 
 }

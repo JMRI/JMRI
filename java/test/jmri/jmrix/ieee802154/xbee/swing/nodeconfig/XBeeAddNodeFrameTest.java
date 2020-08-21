@@ -1,15 +1,17 @@
 package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of XBeeAddNodeFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class XBeeAddNodeFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -18,7 +20,7 @@ public class XBeeAddNodeFrameTest extends jmri.util.JmriJFrameTestBase {
     private XBeeConnectionMemo m = null;
     private XBeeNodeConfigFrame parent = null;
  
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -41,7 +43,7 @@ public class XBeeAddNodeFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc = null;

@@ -1,17 +1,16 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
  *
- * @author	Bob Jacobsen Copyright 2001, 2002
+ * @author Bob Jacobsen Copyright 2001, 2002
  */
 public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -57,8 +56,7 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, s.getKnownState());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -76,11 +74,11 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         t = new LnSensor("LS042", lnis, "L");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         t.dispose();
-	    lnis = null;
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

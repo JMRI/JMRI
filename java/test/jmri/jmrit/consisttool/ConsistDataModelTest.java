@@ -3,15 +3,14 @@ package jmri.jmrit.consisttool;
 import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of ConsistDataModel
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author Paul Bender Copyright (C) 2015,2016
  */
 public class ConsistDataModelTest {
 
@@ -135,14 +134,14 @@ public class ConsistDataModelTest {
         Assert.assertNull("Delete",model.getValueAt(2,3));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
         model = new ConsistDataModel();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         model = null;
         JUnitUtil.tearDown();

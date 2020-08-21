@@ -8,7 +8,9 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorFrame class
@@ -21,7 +23,7 @@ public class MonitorFrameDemo {
     private String testRaw;
     private CanSystemConnectionMemo memo = null;
 
-    class OurScaffold extends TrafficControllerScaffold {
+    static class OurScaffold extends TrafficControllerScaffold {
 
         /*
          * Forward CanMessage to object under test
@@ -44,7 +46,7 @@ public class MonitorFrameDemo {
     private OurScaffold tcs = null;
 
     @Test
-    public void testFireViaAction() throws Exception {
+    public void testFireViaAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         new MonitorAction().actionPerformed(null);
@@ -67,8 +69,8 @@ public class MonitorFrameDemo {
     }
 
     @Test
-    @Ignore("Duplicates Test in MonitorFrameTest")
-    public void XtestFormatMsg() throws Exception {
+    @Disabled("Duplicates Test in MonitorFrameTest")
+    public void XtestFormatMsg() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
@@ -100,8 +102,8 @@ public class MonitorFrameDemo {
     }
 
     @Test
-    @Ignore("Duplicates Test in MonitorFrameTest")
-    public void XtestFormatReply() throws Exception {
+    @Disabled("Duplicates Test in MonitorFrameTest")
+    public void XtestFormatReply() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
@@ -135,9 +137,8 @@ public class MonitorFrameDemo {
         frame.dispose();
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -148,10 +149,13 @@ public class MonitorFrameDemo {
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class, memo);
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
+        memo.dispose();
+        memo = null;
+        tcs.terminateThreads();
+        tcs = null;
         jmri.util.JUnitUtil.resetWindows(false, false);
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

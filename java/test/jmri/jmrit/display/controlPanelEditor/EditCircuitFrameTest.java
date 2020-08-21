@@ -1,15 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -34,7 +33,7 @@ public class EditCircuitFrameTest {
     }
 
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -43,8 +42,9 @@ public class EditCircuitFrameTest {
     }
 
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

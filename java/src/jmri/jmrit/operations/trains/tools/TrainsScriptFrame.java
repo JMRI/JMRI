@@ -181,7 +181,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 
     public void buttonActionRemoveStartUpScript(java.awt.event.ActionEvent ae) {
         JButton rbutton = (JButton) ae.getSource();
-        log.debug("remove move script button activated " + rbutton.getName());
+        log.debug("remove move script button activated {}", rbutton.getName());
         trainManager.deleteStartUpScript(rbutton.getName());
         updateStartUpScriptPanel();
         packFrame();
@@ -189,7 +189,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 
     public void buttonActionRemoveShutDownScript(java.awt.event.ActionEvent ae) {
         JButton rbutton = (JButton) ae.getSource();
-        log.debug("remove termination script button activated " + rbutton.getName());
+        log.debug("remove termination script button activated {}", rbutton.getName());
         trainManager.deleteShutDownScript(rbutton.getName());
         updateShutDownScriptPanel();
         packFrame();

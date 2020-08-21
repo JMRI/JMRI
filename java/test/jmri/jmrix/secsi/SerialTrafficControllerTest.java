@@ -4,12 +4,13 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,8 +82,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i
-                    + " reply=" + rcvdReply);
+            log.debug("past loop, i={} reply={}", i, rcvdReply);
         }
         if (i == 0) {
             log.warn("waitForReply saw an immediate return; is threading right?");
@@ -179,9 +179,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public  void setUp() {
         JUnitUtil.setUp();
         SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
@@ -189,7 +188,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     }
 
     @Override
-    @After
+    @AfterEach
     public  void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

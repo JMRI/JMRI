@@ -9,7 +9,7 @@ import jmri.Turnout;
  * System names are "DTnnn", where D is the user configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 

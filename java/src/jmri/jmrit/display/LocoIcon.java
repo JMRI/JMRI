@@ -143,8 +143,8 @@ public class LocoIcon extends PositionableLabel {
         JMenu iconMenu = new JMenu(Bundle.getMessage("LocoColor"));
         locoButtonGroup = new ButtonGroup();
         String[] colors = getLocoColors();
-        for (int i = 0; i < colors.length; i++) {
-            addLocoMenuEntry(iconMenu, colors[i]);
+        for (String color : colors) {
+            addLocoMenuEntry(iconMenu, color);
         }
         return iconMenu;
     }
@@ -178,7 +178,7 @@ public class LocoIcon extends PositionableLabel {
     }
 
     public void setLocoColor(String color) {
-        log.debug("Set loco color to " + color);
+        log.debug("Set loco color to {}", color);
         if (color.equals(WHITE)) {
             super.updateIcon(white);
             _locoColor = Color.WHITE;
@@ -212,8 +212,7 @@ public class LocoIcon extends PositionableLabel {
     }
 
     public static String[] getLocoColors() {
-        String[] colors = {WHITE, GREEN, GRAY, RED, BLUE, YELLOW};
-        return colors;
+        return new String[]{WHITE, GREEN, GRAY, RED, BLUE, YELLOW};
     }
     
     public Color getLocoColor() {
@@ -316,9 +315,9 @@ public class LocoIcon extends PositionableLabel {
     @Override
     public void doMouseReleased(MouseEvent event) {
         List<Positionable> selections = _editor.getSelectedItems(event);
-        for (int i = 0; i < selections.size(); i++) {
-            if (selections.get(i) instanceof IndicatorTrack) {
-                IndicatorTrack t = (IndicatorTrack) selections.get(i);
+        for (Positionable selection : selections) {
+            if (selection instanceof IndicatorTrack) {
+                IndicatorTrack t = (IndicatorTrack) selection;
                 jmri.jmrit.logix.OBlock block = t.getOccBlock();
                 if (block != null) {
                     block.setMarkerForeground(getForeground());

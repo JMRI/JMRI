@@ -1,6 +1,5 @@
 package jmri.progdebugger;
 
-import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Only supports the DCC single-number address space, should be updated to handle
  * any string address.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2007, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2007, 2013
  */
 public class ProgDebugger extends PropertyChangeSupport implements AddressedProgrammer {
 
@@ -78,7 +77,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
         if (saw != null) {
             return saw;
         }
-        log.warn("CV " + cv + " has no defined value");
+        log.warn("CV {} has no defined value", cv);
         return -1;
     }
 
@@ -110,7 +109,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
      */
     @Override
     public String decodeErrorCode(int i) {
-        log.debug("decoderErrorCode " + i);
+        log.debug("decoderErrorCode {}", i);
         return "error " + i;
     }
 
@@ -123,7 +122,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
         nOperations++;
         final ProgListener m = p;
         // log out the request
-        log.info("write CV: " + CV + " to: " + val + " mode: " + getMode());
+        log.info("write CV: {} to: {} mode: {}", CV, val, getMode());
         _lastWriteVal = val;
         _lastWriteCv = CV;
         // save for later retrieval
@@ -175,11 +174,11 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
         if (saw != null) {
             result = saw;
             confirmOK = (result == val);
-            log.info("confirm CV: " + CV + " mode: " + getMode() + " will return " + result + " pass: " + confirmOK);
+            log.info("confirm CV: {} mode: {} will return {} pass: {}", CV, getMode(), result, confirmOK);
         } else {
             result = -1;
             confirmOK = false;
-            log.info("confirm CV: " + CV + " mode: " + getMode() + " will return -1 pass: false due to no previous value");
+            log.info("confirm CV: {} mode: {} will return -1 pass: false due to no previous value", CV, getMode());
         }
         _lastReadCv = CV;
         // return a notification via the queue to ensure end
@@ -219,7 +218,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
             readValue = saw;
         }
 
-        log.info("read CV: " + CV + " mode: " + getMode() + " will read " + readValue);
+        log.info("read CV: {} mode: {} will read {}", CV, getMode(), readValue);
 
         final int returnValue = readValue;
         // return a notification via the queue to ensure end
@@ -312,7 +311,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
 
     @Override
     public boolean getCanRead(String addr) {
-        log.debug("getCanRead(" + addr + ") returns " + (Integer.parseInt(addr) <= readLimit));
+        log.debug("getCanRead({}) returns {}", addr, Integer.parseInt(addr) <= readLimit);
         return Integer.parseInt(addr) <= readLimit;
     }
 
@@ -324,7 +323,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
 
     @Override
     public boolean getCanWrite(String addr) {
-        log.debug("getCanWrite(" + addr + ") returns " + (Integer.parseInt(addr) <= writeLimit));
+        log.debug("getCanWrite({}) returns {}", addr, Integer.parseInt(addr) <= writeLimit);
         return Integer.parseInt(addr) <= writeLimit;
     }
 

@@ -1,18 +1,17 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21XNetReply class
  *
- * @author  Paul Bender Copyright (C) 2018 
+ * @author Paul Bender Copyright (C) 2018
  */
 public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
-        
+
     // Test the string constructor.
     @Test
     @Override
@@ -35,7 +34,7 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
     public void testStringCtorEmptyString() {
         msg = new Z21XNetReply("");
         Assert.assertEquals("length", 0, msg.getNumDataElements());
-        Assert.assertTrue("empty reply",msg.toString().equals(""));
+        Assert.assertTrue("empty reply", msg.toString().equals(""));
     }
 
     // Test the copy constructor.
@@ -62,18 +61,17 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
         Z21XNetMessage x = new Z21XNetMessage("12 34 AB 03 19 06 0B B1");
         msg = new Z21XNetReply(x);
         Assert.assertEquals("length", x.getNumDataElements(), msg.getNumDataElements());
-        Assert.assertEquals("0th byte", x.getElement(0)& 0xFF, msg.getElement(0)& 0xFF);
-        Assert.assertEquals("1st byte", x.getElement(1)& 0xFF, msg.getElement(1)& 0xFF);
-        Assert.assertEquals("2nd byte", x.getElement(2)& 0xFF, msg.getElement(2)& 0xFF);
-        Assert.assertEquals("3rd byte", x.getElement(3)& 0xFF, msg.getElement(3)& 0xFF);
-        Assert.assertEquals("4th byte", x.getElement(4)& 0xFF, msg.getElement(4)& 0xFF);
-        Assert.assertEquals("5th byte", x.getElement(5)& 0xFF, msg.getElement(5)& 0xFF);
-        Assert.assertEquals("6th byte", x.getElement(6)& 0xFF, msg.getElement(6)& 0xFF);
-        Assert.assertEquals("7th byte", x.getElement(7)& 0xFF, msg.getElement(7)& 0xFF);
+        Assert.assertEquals("0th byte", x.getElement(0) & 0xFF, msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", x.getElement(1) & 0xFF, msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", x.getElement(2) & 0xFF, msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", x.getElement(3) & 0xFF, msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", x.getElement(4) & 0xFF, msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", x.getElement(5) & 0xFF, msg.getElement(5) & 0xFF);
+        Assert.assertEquals("6th byte", x.getElement(6) & 0xFF, msg.getElement(6) & 0xFF);
+        Assert.assertEquals("7th byte", x.getElement(7) & 0xFF, msg.getElement(7) & 0xFF);
     }
 
     // get information from specific types of messages.
-
     // check is service mode response
     @Test
     @Override
@@ -82,33 +80,32 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
         Z21XNetReply r = new Z21XNetReply("64 14 00 14 05 61");
         Assert.assertTrue(r.isServiceModeResponse());
     }
- 
-   @Test
+
+    @Test
     @Override
-    public void testToMonitorStringServiceModeDirectResponse(){
+    public void testToMonitorStringServiceModeDirectResponse() {
         Z21XNetReply r = new Z21XNetReply("64 14 00 14 05 61");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("Z21LAN_X_CV_RESULT",21,5),r.toMonitorString());
+        Assert.assertEquals("Monitor String", Bundle.getMessage("Z21LAN_X_CV_RESULT", 21, 5), r.toMonitorString());
     }
 
     @Test
-    public void testToMonitorStringZ21_LAN_X_TURNOUT_INFO(){
+    public void testToMonitorStringZ21_LAN_X_TURNOUT_INFO() {
         Z21XNetReply r = new Z21XNetReply("43 00 01 01 43");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("Z21LAN_X_TURNOUT_INFO",2,"Closed"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", Bundle.getMessage("Z21LAN_X_TURNOUT_INFO", 2, "Closed"), r.toMonitorString());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = msg = new Z21XNetReply();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-	m = msg = null;
+        m = msg = null;
         JUnitUtil.tearDown();
-    } 
+    }
 
 }

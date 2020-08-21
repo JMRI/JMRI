@@ -27,7 +27,6 @@ public class JsonServerTest {
         assertThat(a).isNotNull();
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

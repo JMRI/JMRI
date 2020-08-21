@@ -1,13 +1,15 @@
 package jmri.jmrix.dccpp.swing;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInterfaceScaffold;
 import jmri.jmrix.dccpp.DCCppSensorManager;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -15,8 +17,7 @@ import org.junit.*;
  */
 public class ConfigBaseStationFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -29,7 +30,7 @@ public class ConfigBaseStationFrameTest extends jmri.util.JmriJFrameTestBase {
 
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

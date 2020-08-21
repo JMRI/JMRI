@@ -1,13 +1,18 @@
 package jmri.jmrit.ctc;
 
+import java.io.File;
+import java.io.IOException;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalHeadManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
-import org.junit.rules.ExpectedException;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.EventTool;
 
 /**
@@ -16,12 +21,6 @@ import org.netbeans.jemmy.EventTool;
  * @author Dave Sand Copyright (C) 2019
  */
 public class CtcRunActionTest {
-
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
-
-    @Rule
-    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     @Test
     public void testAction() {
@@ -88,22 +87,18 @@ public class CtcRunActionTest {
 //         log.warn("Right-S = {} - {}", sh.getHeld(), sh.getAppearanceName());
     }
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
 
-        try {
-            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch (java.io.IOException ioe) {
-            Assert.fail("failed to setup profile for test");
-        }
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
 
         jmri.jmrit.ctc.setup.CreateTestObjects.createTestObjects();
         jmri.jmrit.ctc.setup.CreateTestObjects.createTestFiles();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 
         // stop any BlockBossLogic threads created

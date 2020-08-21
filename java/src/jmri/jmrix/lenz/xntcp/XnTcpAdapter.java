@@ -10,8 +10,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.Vector;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
@@ -66,8 +66,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
     // of each interface found on the LAN
     private static class HostAddress {
 
-        private String ipNumber;
-        private int portNumber;
+        private final String ipNumber;
+        private final int portNumber;
 
         private HostAddress(String h, int p) {
             ipNumber = h;
@@ -194,7 +194,7 @@ public class XnTcpAdapter extends XNetNetworkPortController {
                 // Reply received, make sure that we got all data
                 if (udpPacket.getLength() >= UDP_LENGTH) {
                     // Retrieve the NETBIOS name of the interface
-                    hostNameVector.addElement((new String(udpBuffer, 0, 16, "US-ASCII")).trim());
+                    hostNameVector.addElement((new String(udpBuffer, 0, 16, StandardCharsets.US_ASCII)).trim());
                     // Retrieve the IP and port numbers of the interface
                     hostAddressVector.addElement(new HostAddress(cleanIP((udpPacket.getAddress()).getHostAddress()),
                             ((udpBuffer[16]) & 0xff) * 256 + ((udpBuffer[17]) & 0xff)));
@@ -225,6 +225,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
      * than that of commands sent, but this fact simply implies that we may have
      * a higher number of pending commands for a while, without any negative
      * consequence (the maximum is however arbitrary).
+     *
+     * @param s number to send
      */
     protected synchronized void xnTcpSetPendingPackets(int s) {
         pendingPackets += s;
@@ -278,7 +280,12 @@ public class XnTcpAdapter extends XNetNetworkPortController {
         XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
 // Base class methods for the XNetNetworkPortController interface

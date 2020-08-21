@@ -55,7 +55,7 @@ public class CbusNodeConstants {
                 || node.getNodeParamManager().getParameter(3) == 12 // or CANBC
             ) { 
                 if ( node.getNodeParamManager().getParameter(7) == 4 ) { // v4 Firmware
-                    node.getNodeEventManager().resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
+                    node.getNodeEventManager().resetNodeEventsToZero(); // sets num events to 0 as does not respond to RQEVN
                     node.setStatResponseFlagsAccurate(false);
                 }
             }
@@ -433,8 +433,9 @@ public class CbusNodeConstants {
         Map<Integer, String> result = new HashMap<>();
         result.put(1, "Pi-SPROG 3"); // NOI18N
         result.put(2, "SPROG 3 Plus"); // NOI18N
-        result.put(3, "CAN SPROG"); // NOI18N
-        result.put(4, "System Booster"); // NOI18N
+        result.put(3, "CAN ISB"); // NOI18N
+        result.put(4, "CAN SPROG"); // NOI18N
+        result.put(5, "System Booster"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     
@@ -578,10 +579,11 @@ public class CbusNodeConstants {
      */
     private static Map<Integer, String> createExtra44Map() {
         Map<Integer, String> result = new HashMap<>();
-        result.put(1, "Pi-SPROG 3, no CAN bus, (firmware derived from CANCMD).");
-        result.put(2, "SPROG 3 Plus, no CAN bus, (firmware derived from CANCMD).");
-        result.put(3, "CAN SPROG (firmware derived from cancmd).");
-        result.put(4, "System booster");
+        result.put(1, "no CAN bus, (firmware derived from CANCMD).");
+        result.put(2, "no CAN bus, (firmware derived from CANCMD).");
+        result.put(3, "Isolated CANUSB and CBUS node.");
+        result.put(4, "(firmware derived from CANCMD).");
+        result.put(5, "System booster");
         return Collections.unmodifiableMap(result);
     }   
 
@@ -713,6 +715,7 @@ public class CbusNodeConstants {
         result.put(2, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         result.put(3, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         result.put(4, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(5, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     

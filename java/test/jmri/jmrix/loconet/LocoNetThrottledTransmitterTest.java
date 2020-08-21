@@ -1,8 +1,12 @@
 package jmri.jmrix.loconet;
 
 import java.util.concurrent.TimeUnit;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetThrottledTransmitter class.
@@ -84,6 +88,7 @@ public class LocoNetThrottledTransmitterTest {
 
     @Test
     public void testSendOneNowOneLater() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold(memo);
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
@@ -141,14 +146,13 @@ public class LocoNetThrottledTransmitterTest {
 
     LocoNetSystemConnectionMemo memo;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.tearDown();

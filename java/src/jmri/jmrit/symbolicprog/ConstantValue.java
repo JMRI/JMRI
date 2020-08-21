@@ -138,7 +138,7 @@ public class ConstantValue extends VariableValue {
             updateRepresentation(b);
             return b;
         } else {
-            log.error("Did not recognize a value format: " + format);
+            log.error("Did not recognize a value format: {}", format);
             return null;
         }
     }
@@ -236,7 +236,7 @@ public class ConstantValue extends VariableValue {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.warn("Unexpected propertyChange: " + e);
+        log.warn("Unexpected propertyChange: {}", e);
     }
 
     // clean up connections when done

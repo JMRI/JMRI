@@ -1,41 +1,24 @@
 package apps.gui3;
 
 import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
-import apps.AppsBase;
-import apps.SplashWindow;
-import apps.SystemConsole;
+import apps.*;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.AWTEvent;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
-import java.awt.Toolkit;
+
+import java.awt.*;
 import java.awt.event.AWTEventListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.EventObject;
-import javax.help.SwingHelpUtilities;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
-import javax.swing.WindowConstants;
-import jmri.plaf.macosx.AboutHandler;
-import jmri.plaf.macosx.PreferencesHandler;
-import jmri.plaf.macosx.QuitHandler;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
-import jmri.profile.ProfileManagerDialog;
-import jmri.swing.AboutDialog;
-import jmri.util.FileUtil;
-import jmri.util.HelpUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.SystemType;
-import jmri.util.swing.FontComboUtil;
+
+import javax.swing.*;
+
+import jmri.profile.*;
+
+import apps.swing.AboutDialog;
+
+import jmri.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,9 +74,6 @@ public abstract class Apps3 extends AppsBase {
         // pre-GUI work
         super(applicationName, configFileDef, args);
 
-        // Prepare font lists
-        prepareFontLists();
-
         // create GUI
         initializeHelpSystem();
         if (SystemType.isMacOSX()) {
@@ -138,7 +118,7 @@ public abstract class Apps3 extends AppsBase {
         HelpUtil.initOK();
 
         // tell help to use default browser for external types
-        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+        HelpUtil.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
         // help items are set in the various Tree/Menu/Toolbar constructors
     }
@@ -241,45 +221,15 @@ public abstract class Apps3 extends AppsBase {
         debugmsg = false;
     }
 
-    private void prepareFontLists() {
-        // Prepare font lists
-        Thread fontThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                log.debug("Prepare font lists...");
-                FontComboUtil.prepareFontLists();
-                log.debug("...Font lists built");
-            }
-        });
-        
-        fontThread.setDaemon(true);
-        fontThread.setPriority(Thread.MIN_PRIORITY);
-        fontThread.start();
-    }
-
     protected void initMacOSXMenus() {
-        jmri.plaf.macosx.Application macApp = jmri.plaf.macosx.Application.getApplication();
-        macApp.setAboutHandler(new AboutHandler() {
-
-            @Override
-            public void handleAbout(EventObject eo) {
-                new AboutDialog(null, true).setVisible(true);
-            }
+        apps.plaf.macosx.Application macApp = apps.plaf.macosx.Application.getApplication();
+        macApp.setAboutHandler((EventObject eo) -> {
+            new AboutDialog(null, true).setVisible(true);
         });
-        macApp.setPreferencesHandler(new PreferencesHandler() {
-
-            @Override
-            public void handlePreferences(EventObject eo) {
-                new TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences")).actionPerformed();
-            }
+        macApp.setPreferencesHandler((EventObject eo) -> {
+            new TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences")).actionPerformed();
         });
-        macApp.setQuitHandler(new QuitHandler() {
-
-            @Override
-            public boolean handleQuitRequest(EventObject eo) {
-                return handleQuit();
-            }
-        });
+        macApp.setQuitHandler((EventObject eo) -> handleQuit());
     }
 
     /**
@@ -343,7 +293,7 @@ public abstract class Apps3 extends AppsBase {
             }
 
             // rapid language set; must follow up later with full setting as part of preferences
-            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
+            jmri.util.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }

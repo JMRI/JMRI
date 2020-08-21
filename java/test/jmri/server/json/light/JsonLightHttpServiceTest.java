@@ -9,6 +9,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
@@ -18,9 +19,9 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
+
 import jmri.implementation.AbstractLight;
 
 /**
@@ -131,7 +132,7 @@ public class JsonLightHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<L
         this.validate(result);
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -141,7 +142,7 @@ public class JsonLightHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<L
         JUnitUtil.initDebugThrottleManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

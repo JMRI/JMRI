@@ -240,7 +240,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 try {
                     timeToPlatform = TTP.getLongValue();
                 } catch (DataConversionException e) {
-                    log.debug("ignoring DataConversionException (and reverting to default value): "+e.toString());
+                    log.debug("ignoring DataConversionException (and reverting to default value): {}", e.toString());
                 }
             }
 
@@ -326,11 +326,6 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
             }
         }
         return true;
-    }
-
-    @Override
-    public void load(Element element, Object o) {
-        log.error("load called. Invalid method.");
     }
 
     private static void loadTrain(Element elem, Warrant warrant) {

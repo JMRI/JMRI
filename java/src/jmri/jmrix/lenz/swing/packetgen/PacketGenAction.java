@@ -1,9 +1,3 @@
-/**
- * Swing action to create and register an XpressNet PacketGenFrame
- * object
- *
- * @author Bob Jacobsen Copyright (C) 2001, 2002
- */
 package jmri.jmrix.lenz.swing.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -11,6 +5,12 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Swing action to create and register an XpressNet PacketGenFrame
+ * object
+ *
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
+ */
 public class PacketGenAction extends AbstractXPressNetAction {
 
     public PacketGenAction(String s, jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
@@ -28,7 +28,7 @@ public class PacketGenAction extends AbstractXPressNetAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
+            log.error("Exception: {}", ex.toString());
         }
         f.setVisible(true);
 

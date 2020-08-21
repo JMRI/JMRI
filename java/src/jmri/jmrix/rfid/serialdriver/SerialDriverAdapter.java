@@ -100,14 +100,7 @@ public class SerialDriverAdapter extends RfidPortController {
             // report status?
             if (log.isInfoEnabled()) {
                 // report now
-                log.info(portName + " port opened at " // NOI18N
-                        + activeSerialPort.getBaudRate() + " baud with" // NOI18N
-                        + " DTR: " + activeSerialPort.isDTR() // NOI18N
-                        + " RTS: " + activeSerialPort.isRTS() // NOI18N
-                        + " DSR: " + activeSerialPort.isDSR() // NOI18N
-                        + " CTS: " + activeSerialPort.isCTS() // NOI18N
-                        + "  CD: " + activeSerialPort.isCD() // NOI18N
-                );
+                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
             }
             if (log.isDebugEnabled()) {
                 // report additional status

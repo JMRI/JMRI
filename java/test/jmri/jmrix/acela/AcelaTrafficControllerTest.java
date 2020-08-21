@@ -5,15 +5,16 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the AcelaTrafficController class.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2015
  */
 public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
@@ -42,9 +43,8 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
         ostream.flush();
         JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
         
-		// test the result of sending
-
-		Assert.assertEquals("total length ", 4, tostream.available());
+        // test the result of sending
+        Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", '0', tostream.readByte());
         Assert.assertEquals("Char 1", '1', tostream.readByte());
         Assert.assertEquals("Char 2", '2', tostream.readByte());
@@ -148,16 +148,15 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
     DataOutputStream tistream; // tests write to this
     DataInputStream istream;  // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new AcelaTrafficController();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

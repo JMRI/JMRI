@@ -7,10 +7,12 @@ import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -19,16 +21,13 @@ import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.util.prefs.InitializationException;
-import org.junit.After;
-import org.junit.AfterClass;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests the {@link jmri.swing.JmriJTablePersistenceManager}. Some tests use a
@@ -39,24 +38,21 @@ import org.junit.rules.TemporaryFolder;
  */
 public class JmriJTablePersistenceManagerTest {
 
-    @Rule
-    public TemporaryFolder profileFolder = new TemporaryFolder();
-
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
     }
 
-    @Before
-    public void setUp() throws IOException {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager(new NullProfile(profileFolder.newFolder(Profile.PROFILE)));
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
@@ -413,7 +409,7 @@ public class JmriJTablePersistenceManagerTest {
      * Test of savePreferences method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore("test code is incomplete prototype")
+    @Disabled("test code is incomplete prototype")
     public void testSavePreferences() {
         System.out.println("savePreferences");
         Profile profile = null;

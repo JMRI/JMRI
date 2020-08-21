@@ -354,12 +354,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } catch (java.io.FileNotFoundException ex3) {
             storingErrorEncountered(null, "storing to file " + file.getName(),
                     "File not found " + file.getName(), null, null, ex3);
-            log.error("FileNotFound error writing file: " + ex3.getLocalizedMessage());
+            log.error("FileNotFound error writing file: {}", ex3.getLocalizedMessage());
             return false;
         } catch (java.io.IOException ex2) {
             storingErrorEncountered(null, "storing to file " + file.getName(),
                     "IO error writing file " + file.getName(), null, null, ex2);
-            log.error("IO error writing file: " + ex2.getLocalizedMessage());
+            log.error("IO error writing file: {}", ex2.getLocalizedMessage());
             return false;
         }
         return true;

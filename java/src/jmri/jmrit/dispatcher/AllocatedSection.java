@@ -285,7 +285,7 @@ public class AllocatedSection {
             if (!isInActiveBlockList(b)) {
                 int occ = b.getState();
                 Runnable handleBlockChange = new RespondToBlockStateChange(b, occ, this);
-                Thread tBlockChange = new Thread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
+                Thread tBlockChange = jmri.util.ThreadingUtil.newThread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
                 tBlockChange.start();
                 addToActiveBlockList(b);
                 if (InstanceManager.getDefault(DispatcherFrame.class).getSupportVSDecoder()) {

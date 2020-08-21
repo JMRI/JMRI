@@ -73,6 +73,8 @@ public class SerialLightManager extends AbstractLightManager {
 
     /**
      * Public method to notify user of Light creation error.
+     * @param conflict human readable name of conflicting light.
+     * @param bitNum bit number of conflicting light.
      */
     public void notifyLightCreationError(String conflict, int bitNum) {
         javax.swing.JOptionPane.showMessageDialog(null, "The output bit, " + bitNum

@@ -1,16 +1,16 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of NodeConfigToolPane
@@ -42,7 +42,7 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -56,7 +56,7 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
         helpTarget = "package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane";
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         

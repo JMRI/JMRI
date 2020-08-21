@@ -30,7 +30,6 @@ public class CbusFilterPanelTest {
         assertThat(t).isNotNull();
     }
     
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

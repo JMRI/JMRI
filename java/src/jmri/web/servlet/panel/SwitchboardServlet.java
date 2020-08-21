@@ -37,7 +37,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         log.debug("Getting {} for {}", getPanelType(), name);
         SwitchboardEditor editor = (SwitchboardEditor) getEditor(name);
         if (editor == null) {
-            log.warn("Requested Switchboard [" + name + "] does not exist.");
+            log.warn("Requested Switchboard [{}] does not exist.", name);
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
 
@@ -120,7 +120,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
                         panel.addContent(e);
                     }
                 } catch (Exception ex) {
-                    log.error("Error reading xml panel element: " + ex, ex);
+                    log.error("Error reading xml panel element: {}", ex, ex);
                 }
             }
         }

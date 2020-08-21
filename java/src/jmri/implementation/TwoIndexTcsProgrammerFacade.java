@@ -125,7 +125,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -158,7 +158,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     @Override
     synchronized public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
 
         if (_usingProgrammer == null) {
@@ -317,7 +317,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
                 break;
 
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;

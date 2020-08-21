@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Note: Car: XML read/write is tested in OperationsEnginesTest and
  * OperationsCarsTest
  *
- * @author	Bob Coleman Copyright (C) 2009
+ * @author Bob Coleman Copyright (C) 2009
  *
  */
 public class OperationsRollingStockTest extends OperationsTestCase {

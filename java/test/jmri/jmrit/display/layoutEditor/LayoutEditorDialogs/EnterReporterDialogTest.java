@@ -20,7 +20,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 /**
  * Test simple functioning of enterReporterDialog
  *
- * @author	George Warner Copyright (C) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class EnterReporterDialogTest {
 
@@ -58,6 +58,7 @@ public class EnterReporterDialogTest {
             layoutEditor = null;
             enterReporterDialog = null;
         }
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

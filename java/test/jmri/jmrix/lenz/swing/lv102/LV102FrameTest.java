@@ -1,13 +1,18 @@
 package jmri.jmrix.lenz.swing.lv102;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.lv102.LV102Frame class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LV102FrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -15,25 +20,26 @@ public class LV102FrameTest extends jmri.util.JmriJFrameTestBase {
     public void testCloseButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setVisible(true);
+        assertThat(frame.isVisible()).isTrue();
         LV102FrameScaffold operator = new LV102FrameScaffold();
         operator.pushCloseButton();
+        assertThat(frame.isVisible()).isFalse();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new LV102Frame();
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 

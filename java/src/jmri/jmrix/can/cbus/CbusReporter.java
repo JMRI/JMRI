@@ -40,7 +40,7 @@ public class CbusReporter extends AbstractReporter implements CanListener {
         // At construction, register for messages
         tc = tco;
         addTc(tc);
-        log.debug("Added new reporter " + prefix + "R" + number);
+        log.debug("Added new reporter {}R{}", prefix, number);
     }
 
     private int state = UNKNOWN;
@@ -132,6 +132,7 @@ public class CbusReporter extends AbstractReporter implements CanListener {
     @Override
     public void dispose() {
         tc.removeCanListener(this);
+        super.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusReporter.class);

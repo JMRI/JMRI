@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="15" lastUpdated="20200617"/>
   <version author="Michael Mosher" version="14" lastUpdated="20190315"/>
   <version author="Michael Mosher" version="13" lastUpdated="20171103"/>
   <version author="Marc N Fournier" version="12" lastUpdated="20171031"/>
@@ -40,6 +41,7 @@
   <!-- Version 12 - added D13NHJ and D13NHP , high Ver ID 38 (2014) -->  
   <!-- Version 13 - add new models -->
   <!-- Version 14 - change D16MTC to 8 function (despite the name) and add CV115 for it alone -->
+  <!-- Version 13 - add new models -->
     <decoder>
     <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="38" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
       <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
@@ -253,6 +255,13 @@
         <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
         <size length="0.70" width="0.34" height="0.12" units="inches"/>
       </model>
+      <model model="N12SR 4 function" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+        <output name="1" label="White" connection="wire" maxcurrent="40 mA"/>
+        <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA"/>
+        <output name="3" label="Pad 3" connection="wire" maxcurrent="40 mA"/>
+        <output name="4" label="Pad 4" connection="wire" maxcurrent="40 mA"/>
+        <size length="0.60" width="0.34" height="0.11" units="inches"/>
+      </model>
       <model model="N12SRP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
         <output name="1" label="White" connection="plug" maxcurrent="40 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA"/>
@@ -278,6 +287,13 @@
         <output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA"/>
         <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA"/>
         <size length="1.15" width="0.34" height="0.12" units="inches"/>
+      </model>
+      <model model="Next18" numOuts="4" numFns="8" maxMotorCurrent=".75A (peak=1.2A)" formFactor="Next18">
+        <output name="1" label="Pin 8" connection="plug"/>
+        <output name="2" label="Pin 17" connection="plug"/>
+        <output name="3" label="Pin 3" connection="plug"/>
+        <output name="4" label="Pin 12" connection="plug"/>
+        <size length=".595" width="0.390" units="inches"/>
       </model>
       <model model="N12A0" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale GP40-2, U25B, U23B, B23-7, 30-7, 36-7, GP38, SD25, Trainmaster &amp; many others">
         <output name="1" label="LED 1" connection="solder"/>
@@ -307,6 +323,18 @@
         <output name="1" label="LED 1" connection="solder"/>
         <output name="2" label="LED 2" connection="solder"/>
         <size length="2.65" width="0.37" height="0.12" units="inches"/>        
+      </model>            
+      <model model="N14A0" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas GP40-2, CW40-8, U25B, U23B, B23-7, 30-7, 36-7, GP38, SD25, TRAINMASTER">
+        <output name="1" label="LED 1" connection="solder"/>
+        <output name="2" label="LED 2" connection="solder"/>
+        <output name="3" label="Pad 3" connection="solder"/>
+        <output name="4" label="Pad 4" connection="solder"/>
+      </model>            
+      <model model="N14A3" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas GP39-2, Intermountain SD40-2">
+        <output name="1" label="LED 1" connection="solder"/>
+        <output name="2" label="LED 2" connection="solder"/>
+        <output name="3" label="Pad 3" connection="solder"/>
+        <output name="4" label="Pad 4" connection="solder"/>
       </model>            
       <model model="N14K1" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Ath F45,FP45,kato ES44,AC4400,C30-7,SD40-2,SD40,SD45,SD70MAC">
         <output name="1" label="LED 1" connection="solder"/>

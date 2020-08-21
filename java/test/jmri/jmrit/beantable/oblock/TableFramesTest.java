@@ -8,15 +8,14 @@ import jmri.Path;
 import jmri.implementation.AbstractSensor;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TableFramesTest {
 
@@ -71,16 +70,16 @@ public class TableFramesTest {
         jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

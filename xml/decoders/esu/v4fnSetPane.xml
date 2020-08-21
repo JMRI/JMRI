@@ -188,6 +188,8 @@
                 <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" label=""/>
                 <display item="ESU V4 Function Settings Smoke Chuffs Slider 3" layout="above" format="hslider"/>
             </row>
+            <separator/>
+            <display item="ESU AUX10/Sensor" layout="above" format="radiobuttons"/>
         </column>
     </group>
     <group include="MBW Silberling,Bachmann MK2F">

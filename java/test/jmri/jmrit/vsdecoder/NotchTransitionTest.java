@@ -1,10 +1,9 @@
 package jmri.jmrit.vsdecoder;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the NotchTransition class
@@ -34,13 +33,13 @@ public class NotchTransitionTest {
         Assert.assertTrue("set looped", uut.isLooped());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         uut = new NotchTransition(null, filename, "sysname", "uname"); // BOUND_MODE
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         uut = null;
 

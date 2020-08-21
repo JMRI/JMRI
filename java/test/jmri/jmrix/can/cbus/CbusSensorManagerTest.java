@@ -7,18 +7,17 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
  *
- * @author	Bob Jacobsen Copyright 2008
- * @author	Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen Copyright 2008
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -425,9 +424,8 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("No auto system names",0,tcis.numListeners());
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -436,7 +434,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         l = new CbusSensorManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         memo.dispose();

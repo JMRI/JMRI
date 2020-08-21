@@ -31,10 +31,10 @@
       acc&egrave;s Web bi-directionnel aux services JMRI.
 
       <p>Le servlet vit dans le paquet <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">
       jmri.web.servlet.xmlio</a> , et fournit un acc&egrave;s Web
       au <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">
       JMRI XML IO paquet</a>. Par d&eacute;faut, le serveur web
       JMRI enverra tout URL qui commence par/xmlio &agrave; ce
       servlet. Il liste tous les &eacute;l&eacute;ments connus d'un
@@ -142,7 +142,7 @@
 
       <h2>Format Demande</h2>Le sch&eacute;ma XML est d&eacute;fini
       dans le <a href=
-      "http://jmri.org/xml/schema/xmlio.xsd">document sch&eacute;ma
+      "https://jmri.org/xml/schema/xmlio.xsd">document sch&eacute;ma
       xmlio.xsd</a> .
 
       <p>Il ya aussi une syntaxe bas&eacute;e sur les attributs

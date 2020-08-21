@@ -3,17 +3,18 @@ package jmri.jmrit.beantable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.swing.ManagerComboBox;
@@ -52,14 +53,14 @@ public class AddNewHardwareDevicePanelTest {
         assertNotNull("exists", instance);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();

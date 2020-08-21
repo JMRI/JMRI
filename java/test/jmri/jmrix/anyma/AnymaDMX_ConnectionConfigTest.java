@@ -2,7 +2,8 @@ package jmri.jmrix.anyma;
 
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for AnymaDMX_ConnectionConfig class.
@@ -13,13 +14,13 @@ import org.junit.*;
 public class AnymaDMX_ConnectionConfigTest extends jmri.jmrix.AbstractUsbConnectionConfigTestBase {
 
     @Test
-    @Ignore("superclass method fails because Manufacturer not set in Connection Config class")
+    @Disabled("superclass method fails because Manufacturer not set in Connection Config class")
     @ToDo("Change AnymaDMX_ConnectionConfig so that  getManufacturer and setManufacturer methods are implemented.")
     @Override
     public void testGetAndSetManufacturer(){
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -27,7 +28,7 @@ public class AnymaDMX_ConnectionConfigTest extends jmri.jmrix.AbstractUsbConnect
         cc = new AnymaDMX_ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         cc = null;

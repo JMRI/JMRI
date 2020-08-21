@@ -134,11 +134,6 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         }
     }
 
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
     private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class);
 
 }

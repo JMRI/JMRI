@@ -36,7 +36,7 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
             return null;
         }
         String adapter = ConfigXmlManager.adapterName(oprime);
-        log.debug("forward to " + adapter);
+        log.debug("forward to {}", adapter);
         try {
             XmlAdapter x = (XmlAdapter) Class.forName(adapter).getDeclaredConstructor().newInstance();
             return x.store(oprime);
@@ -61,7 +61,7 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
         }
         String name = shared.getAttribute("LAFclass").getValue();
         String className = installedLAFs.get(name);
-        log.debug("GUI selection: " + name + " class name: " + className);
+        log.debug("GUI selection: {} class name: {}", name, className);
         // set the GUI
         if (className != null) {
             try {
@@ -69,10 +69,10 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
                     log.debug("set GUI to {},{}", name, className);
                     updateLookAndFeel(name, className);
                 } else {
-                    log.debug("skip updateLAF as already has className==" + className);
+                    log.debug("skip updateLAF as already has className=={}", className);
                 }
             } catch (Exception ex) {
-                log.error("Exception while setting GUI look & feel: " + ex);
+                log.error("Exception while setting GUI look & feel: {}", ex);
                 result = false;
             }
         }

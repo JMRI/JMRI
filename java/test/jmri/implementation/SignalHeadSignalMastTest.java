@@ -5,15 +5,14 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.SignalSystem;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the SignalHeadSignalMast implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
  */
 public class SignalHeadSignalMastTest {
@@ -209,8 +208,7 @@ public class SignalHeadSignalMastTest {
 
     // from here down is testing infrastructure
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalSignalHeadManager();
@@ -237,7 +235,7 @@ public class SignalHeadSignalMastTest {
         );
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

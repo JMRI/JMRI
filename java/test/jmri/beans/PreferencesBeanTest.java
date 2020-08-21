@@ -2,6 +2,7 @@ package jmri.beans;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -80,13 +81,17 @@ public class PreferencesBeanTest {
         bean.addPropertyChangeListener("boolean", (e) -> changed = true);
         assertThat(changed).isFalse();
         assertThat(bean.b).isFalse();
+        assertThat(bean.isDirty()).isFalse();
         bean.setBoolean(true);
         assertThat(changed).isTrue();
         assertThat(bean.b).isTrue();
+        assertThat(bean.isDirty()).isTrue();
         changed = false;
+        bean.setIsDirty(false);
         bean.setBoolean(true);
         assertThat(changed).isFalse();
         assertThat(bean.b).isTrue();
+        assertThat(bean.isDirty()).isFalse();
         changed = false;
         bean.setBoolean(false);
         assertThat(changed).isTrue();
@@ -98,13 +103,17 @@ public class PreferencesBeanTest {
         bean.addPropertyChangeListener("int", (e) -> changed = true);
         assertThat(changed).isFalse();
         assertThat(bean.i).isEqualTo(0);
+        assertThat(bean.isDirty()).isFalse();
         bean.setInt(1);
+        assertThat(bean.isDirty()).isTrue();
         assertThat(changed).isTrue();
         assertThat(bean.i).isEqualTo(1);
         changed = false;
+        bean.setIsDirty(false);
         bean.setInt(1);
         assertThat(changed).isFalse();
         assertThat(bean.i).isEqualTo(1);
+        assertThat(bean.isDirty()).isFalse();
         changed = false;
         bean.setInt(0);
         assertThat(changed).isTrue();
@@ -116,17 +125,31 @@ public class PreferencesBeanTest {
         bean.addPropertyChangeListener("Object", (e) -> changed = true);
         assertThat(changed).isFalse();
         assertThat(bean.o).isNull();
+        assertThat(bean.isDirty()).isFalse();
         bean.setObject(profilePath);
+        assertThat(bean.isDirty()).isTrue();
         assertThat(changed).isTrue();
         assertThat(bean.o).isEqualTo(profilePath);
         changed = false;
+        bean.setIsDirty(false);
         bean.setObject(profilePath);
         assertThat(changed).isFalse();
         assertThat(bean.o).isEqualTo(profilePath);
+        assertThat(bean.isDirty()).isFalse();
         changed = false;
         bean.setObject(null);
         assertThat(changed).isTrue();
         assertThat(bean.o).isNull();
+    }
+
+    @Test
+    public void testFirePropertyChange_PropertyChangeEvent() {
+        bean.addPropertyChangeListener("Event", e -> changed = true);
+        assertThat(changed).isFalse();
+        assertThat(bean.isDirty()).isFalse();
+        bean.firePropertyChange(new PropertyChangeEvent(bean, "Event", null, null));
+        assertThat(changed).isTrue();
+        assertThat(bean.isDirty()).isTrue();
     }
 
     private class PreferencesBeanImpl extends PreferencesBean {

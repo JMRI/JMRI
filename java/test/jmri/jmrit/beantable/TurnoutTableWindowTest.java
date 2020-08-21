@@ -11,13 +11,15 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Swing tests for the turnout table.
  *
- * @author	Bob Jacobsen Copyright 2009, 2010, 2017
+ * @author Bob Jacobsen Copyright 2009, 2010, 2017
  */
 public class TurnoutTableWindowTest {
 
@@ -155,8 +157,7 @@ public class TurnoutTableWindowTest {
 
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -165,7 +166,7 @@ public class TurnoutTableWindowTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

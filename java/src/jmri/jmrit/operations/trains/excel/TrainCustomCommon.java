@@ -1,19 +1,21 @@
 package jmri.jmrit.operations.trains.excel;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class TrainCustomCommon {
 
@@ -56,10 +58,6 @@ public abstract class TrainCustomCommon {
     public void setDirectoryName(String name) {
         directoryName = name;
     }
-
-    //    public int getFileCount() {
-//        return fileCount;
-//    }
 
     /**
      * Adds one CSV file path to the collection of files to be processed.

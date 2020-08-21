@@ -3,7 +3,7 @@ package jmri.jmrix.dccpp;
 /**
  * DCCppConstants.java
  *
- * Description: Constants to represent values seen in DCC++ traffic
+ * Constants to represent values seen in DCC++ traffic
  *
  * @author Paul Bender Copyright (C) 2003-2009
  * @author Mark Underwood Copyright (C) 2015

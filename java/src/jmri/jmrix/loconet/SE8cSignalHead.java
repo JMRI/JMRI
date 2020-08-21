@@ -104,7 +104,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
                     closed = true;
                     break;
                 default:
-                    log.error("Invalid state request: " + mAppearance);
+                    log.error("Invalid state request: {}", mAppearance);
                     return;
             }
         }

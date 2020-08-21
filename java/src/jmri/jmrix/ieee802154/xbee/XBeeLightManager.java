@@ -58,7 +58,7 @@ public class XBeeLightManager extends AbstractLightManager {
         }
         int pin = pinFromSystemName(systemName);
         if (!curNode.getPinAssigned(pin)) {
-            log.debug("Adding sensor to pin " + pin);
+            log.debug("Adding sensor to pin {}", pin);
             curNode.setPinBean(pin, new XBeeLight(systemName, userName, tc));
             return (XBeeLight) curNode.getPinBean(pin);
         } else {
@@ -99,7 +99,7 @@ public class XBeeLightManager extends AbstractLightManager {
                 }
             } catch (java.lang.NumberFormatException nfe) {
                 // if there was a number format exception, we couldn't find the node.
-                log.error("Unable to convert " + systemName + " into the Xbee node and pin format of nn:xx");
+                log.error("Unable to convert {} into the Xbee node and pin format of nn:xx", systemName);
                 return NameValidity.INVALID;
             }
 

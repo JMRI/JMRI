@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to export the incoming raw data to a CSV-format file.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
  */
 public class CsvExportAction extends AbstractAction implements ReadingListener {

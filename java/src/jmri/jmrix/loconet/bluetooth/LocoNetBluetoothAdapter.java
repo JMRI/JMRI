@@ -142,14 +142,14 @@ public class LocoNetBluetoothAdapter extends LnPortController {
             log.error("Exception when using bluetooth");
             return BSe.getLocalizedMessage();
         } catch (IOException IOe) {
-            log.error("Unknown IOException when establishing connection to " + portName);
+            log.error("Unknown IOException when establishing connection to {}", portName);
             return IOe.getLocalizedMessage();
         }
 
         if (!opened) {
             ConnectionStatus.instance().setConnectionState(null, portName, ConnectionStatus.CONNECTION_DOWN);
             if (exception[0] != null) {
-                log.error("Exception when connecting to " + portName);
+                log.error("Exception when connecting to {}", portName);
                 return exception[0].getLocalizedMessage();
             }
             switch (responseCode[0]) {

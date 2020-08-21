@@ -3,13 +3,10 @@ package jmri.jmrix.openlcb;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.*;
 
-import org.junit.After;
-import org.junit.Before;
+import static org.junit.Assert.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbAddress class.
@@ -30,20 +27,20 @@ public class OlcbAddressTest {
 
     @Test
     public void testAddressNotOK() {
-        assertTrue(!new OlcbAddress("+0A1").check());
-        assertTrue(!new OlcbAddress("- 001").check());
-        assertTrue(!new OlcbAddress("ABC").check());
+        assertFalse(new OlcbAddress("+0A1").check());
+        assertFalse(new OlcbAddress("- 001").check());
+        assertFalse(new OlcbAddress("ABC").check());
 
-        assertTrue(!new OlcbAddress("xABC").check()); // odd number of digits     
-        assertTrue(!new OlcbAddress("xprs0").check());
+        assertFalse(new OlcbAddress("xABC").check()); // odd number of digits
+        assertFalse(new OlcbAddress("xprs0").check());
 
-        assertTrue(!new OlcbAddress("+n1e").check());
-        assertTrue(!new OlcbAddress("+ne1").check());
-        assertTrue(!new OlcbAddress("+e1").check());
-        assertTrue(!new OlcbAddress("+n1").check());
+        assertFalse(new OlcbAddress("+n1e").check());
+        assertFalse(new OlcbAddress("+ne1").check());
+        assertFalse(new OlcbAddress("+e1").check());
+        assertFalse(new OlcbAddress("+n1").check());
 
         // multiple address not OK
-        assertTrue(!new OlcbAddress("+1;+1;+1").check());
+        assertFalse(new OlcbAddress("+1;+1;+1").check());
     }
 
     @Test
@@ -51,7 +48,7 @@ public class OlcbAddressTest {
         CanReply c = new CanReply(
                 new int[]{0x12, 0x34, 0x56, 0x78,
                         0x9A, 0xBC, 0xDE, 0xF0});
-        assertTrue(!new OlcbAddress("x123456789ABCDEF0").match(c));
+        assertFalse(new OlcbAddress("x123456789ABCDEF0").match(c));
         c.setExtended(true);
         c.setHeader(0x195B4000);
         assertTrue(new OlcbAddress("x123456789ABCDEF0").match(c));
@@ -59,7 +56,7 @@ public class OlcbAddressTest {
         c = new CanReply(
                 new int[]{0x01, 0x34, 0x05, 0x00,
                         0x9A, 0x0B, 0x0E, 0x00});
-        assertTrue(!new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
+        assertFalse(new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
         c.setExtended(true);
         c.setHeader(0x195B4000);
         assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
@@ -71,7 +68,7 @@ public class OlcbAddressTest {
                 new int[]{0x12, 0x34, 0x56, 0x78,
                         0x9A, 0xBC, 0xDE, 0xF0},
                 0x195B4123);
-        assertTrue(!new OlcbAddress("x123456789ABCDEF0").match(c));
+        assertFalse(new OlcbAddress("x123456789ABCDEF0").match(c));
         c.setExtended(true);
 
         assertTrue(new OlcbAddress("x123456789ABCDEF0").match(c));
@@ -80,7 +77,7 @@ public class OlcbAddressTest {
                 new int[]{0x01, 0x34, 0x05, 0x00,
                         0x9A, 0x0B, 0x0E, 0x00},
                 0x195B4123);
-        assertTrue(!new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
+        assertFalse(new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
         c.setExtended(true);
         assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
     }
@@ -92,9 +89,9 @@ public class OlcbAddressTest {
 
     @Test
     public void testEqualsOK() {
-        assertTrue((new OlcbAddress("1.34.5.0.9A.B.E.0")).equals(new OlcbAddress("x013405009A0B0E00")));
-        assertTrue((new OlcbAddress("x013405009A0B0E00")).equals(new OlcbAddress("1.34.5.0.9A.B.E.0")));
-        assertTrue((new OlcbAddress("x013405009A0B0E00")).equals(new OlcbAddress("X013405009A0B0E00")));
+        assertEquals((new OlcbAddress("1.34.5.0.9A.B.E.0")), new OlcbAddress("x013405009A0B0E00"));
+        assertEquals((new OlcbAddress("x013405009A0B0E00")), new OlcbAddress("1.34.5.0.9A.B.E.0"));
+        assertEquals((new OlcbAddress("x013405009A0B0E00")), new OlcbAddress("X013405009A0B0E00"));
     }
 
     @Test
@@ -129,26 +126,26 @@ public class OlcbAddressTest {
 
     @Test
     public void testSplitCheckNotOK() {
-        assertTrue(!new OlcbAddress("+0A1").check());
-        assertTrue(!new OlcbAddress("- 001").check());
-        assertTrue(!new OlcbAddress("ABC").check());
-        assertTrue(!new OlcbAddress("xprs0").check());
+        assertFalse(new OlcbAddress("+0A1").check());
+        assertFalse(new OlcbAddress("- 001").check());
+        assertFalse(new OlcbAddress("ABC").check());
+        assertFalse(new OlcbAddress("xprs0").check());
 
-        assertTrue(!new OlcbAddress("+1;;+1").checkSplit());
-        assertTrue(!new OlcbAddress("+001;").checkSplit());
-        assertTrue(!new OlcbAddress("-001;").checkSplit());
-        assertTrue(!new OlcbAddress("-001;;").checkSplit());
-        assertTrue(!new OlcbAddress("xABC;").checkSplit());
-        assertTrue(!new OlcbAddress("xabc;").checkSplit());
-        assertTrue(!new OlcbAddress("xa1b2c3;").checkSplit());
-        assertTrue(!new OlcbAddress("x123456789ABCDEF0;").checkSplit());
+        assertFalse(new OlcbAddress("+1;;+1").checkSplit());
+        assertFalse(new OlcbAddress("+001;").checkSplit());
+        assertFalse(new OlcbAddress("-001;").checkSplit());
+        assertFalse(new OlcbAddress("-001;;").checkSplit());
+        assertFalse(new OlcbAddress("xABC;").checkSplit());
+        assertFalse(new OlcbAddress("xabc;").checkSplit());
+        assertFalse(new OlcbAddress("xa1b2c3;").checkSplit());
+        assertFalse(new OlcbAddress("x123456789ABCDEF0;").checkSplit());
 
-        assertTrue(!new OlcbAddress("+001;xprs0").checkSplit());
-        assertTrue(!new OlcbAddress("-001;xprs0").checkSplit());
-        assertTrue(!new OlcbAddress("xABC;xprs0").checkSplit());
-        assertTrue(!new OlcbAddress("xabc;xprs0").checkSplit());
-        assertTrue(!new OlcbAddress("xa1b2c3;xprs0").checkSplit());
-        assertTrue(!new OlcbAddress("x123456789ABCDEF0;xprs0").checkSplit());
+        assertFalse(new OlcbAddress("+001;xprs0").checkSplit());
+        assertFalse(new OlcbAddress("-001;xprs0").checkSplit());
+        assertFalse(new OlcbAddress("xABC;xprs0").checkSplit());
+        assertFalse(new OlcbAddress("xabc;xprs0").checkSplit());
+        assertFalse(new OlcbAddress("xa1b2c3;xprs0").checkSplit());
+        assertFalse(new OlcbAddress("x123456789ABCDEF0;xprs0").checkSplit());
     }
 
     @Test
@@ -158,23 +155,23 @@ public class OlcbAddressTest {
 
         a = new OlcbAddress("1.2.3.4.5.6.7.8");
         v = a.split();
-        assertTrue(v.length == 1);
-        assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").equals(v[0]));
+        assertEquals(1, v.length);
+        assertEquals(new OlcbAddress("1.2.3.4.5.6.7.8"), v[0]);
 
         a = new OlcbAddress("1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9");
         v = a.split();
-        assertTrue(v.length == 2);
-        assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").equals(v[0]));
-        assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").equals(v[1]));
+        assertEquals(2, v.length);
+        assertEquals(new OlcbAddress("1.2.3.4.5.6.7.8"), v[0]);
+        assertEquals(new OlcbAddress("1.2.3.4.5.6.7.9"), v[1]);
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

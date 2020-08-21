@@ -43,12 +43,27 @@ public interface PowerManager extends PropertyChangeProvider {
     static final int OFF = 0x04;
     static final int IDLE = 0x08; // not supported by some connection types
 
-    static final String POWER = "Power"; // NOI18N
+    /**
+     * {@link java.beans.PropertyChangeEvent}s are fired with this property name
+     * to ensure backwards compatibility for scripts.
+     * <p>
+     * {@value #POWER_OPN}
+     * 
+     * @deprecated since 4.19.7; use {@link #POWER} instead
+     */
+    @Deprecated
+    static final String POWER_OPN = "Power"; // OPN == "Old Property Name" // NOI18N
+    /**
+     * {@link java.beans.PropertyChangeEvent}s are fired with this property name.
+     * <p>
+     * {@value #POWER}
+     */
+    static final String POWER = "power"; // as recommended in JavaBeans Spec // NOI18N
 
     public void setPower(int v) throws JmriException;
 
     @CheckReturnValue
-    public int getPower() throws JmriException;
+    public int getPower();
 
     // to free resources when no longer used
     public void dispose() throws JmriException;

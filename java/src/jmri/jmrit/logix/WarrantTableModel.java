@@ -603,7 +603,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             }
             break;
         default:
-           log.error("Invalid Column " + col + " requested.");
+            log.error("Invalid Column {} requested.", col);
            throw new java.lang.IllegalArgumentException("Invalid Column " + col + " requested.");
         }
         if (msg != null) {
@@ -676,7 +676,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         } else if (e.getSource() instanceof Warrant) {
             // a value changed. Find it, to avoid complete redraw
             Warrant bean = (Warrant) e.getSource();
-            log.debug("source is warrant "+bean.getDisplayName());
+            log.debug("source is warrant {}", bean.getDisplayName());
             for (int i = 0; i < _warList.size(); i++) {
                 if (bean.equals(_warList.get(i))) {
 
@@ -692,8 +692,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 }
             }
             int row = getRow(bean);
-            if (row < 0) {	// warrant deleted
-            	return;
+            if (row < 0) { // warrant deleted
+                return;
             }
             if (property.equals("blockChange")) {
                 OBlock oldBlock = (OBlock) e.getOldValue();
@@ -723,9 +723,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                         bean.getTrainName(), speed, name),
                         Color.red, true);
             } else if (property.equals("SpeedChange")) {
-            	fireTableCellUpdated(row, CONTROL_COLUMN);
+                fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("WaitForSync")) {
-            	fireTableCellUpdated(row, CONTROL_COLUMN);
+                fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();

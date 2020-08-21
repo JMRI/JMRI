@@ -74,7 +74,7 @@ public class JmriServer {
     public void start() {
         /* Start the server thread */
         if (this.listenThread == null) {
-            this.listenThread = new Thread(new NewClientListener(connectSocket));
+            this.listenThread = jmri.util.ThreadingUtil.newThread(new NewClientListener(connectSocket));
             this.listenThread.start();
             this.advertise();
         }
@@ -168,7 +168,7 @@ public class JmriServer {
         }
 
         public void start() {
-            clientThread = new Thread(this);
+            clientThread = jmri.util.ThreadingUtil.newThread(this);
             clientThread.start();
         }
 

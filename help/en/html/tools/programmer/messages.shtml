@@ -26,7 +26,7 @@
     <div id="mainContent">
 
       <h1>JMRI: Error Messages</h1>
-      <!-- Copy any new content below from page http://jmri.org/help/en/manual/DecoderPro3/Error.shtml -->
+      <!-- Copy any new content below from page https://jmri.org/help/en/manual/DecoderPro3/Error.shtml -->
 
       <p>Various things can go wrong when JMRI tries to work with
       your DCC command station to program a DCC decoder. This page

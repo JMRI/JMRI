@@ -225,8 +225,10 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     JButton updateButton = new JButton(Bundle.getMessage("ButtonTextUpdate"));
 
     /**
-     * Nested class to create one of these tools using old-style defaults
+     * Nested class to create one of these tools using old-style defaults.
+     * @deprecated since 4.19.7; use {@link LocoStatsPanelAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {
@@ -245,7 +247,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     @Override
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "GUI elements are created such that cast to JmriJFrame this is accurate")
     public void notifyChangedInterfaceStatus(Object o) {
-        log.debug("Update is being handled:" +o.toString());  // NOI18N
+        log.debug("Update is being handled:{}", o.toString());  // NOI18N
         if (!updateRequestPending) {
             return;
         }

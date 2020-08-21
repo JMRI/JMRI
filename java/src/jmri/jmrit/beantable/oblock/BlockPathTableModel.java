@@ -438,7 +438,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         if (_block.equals(e.getSource())) {
             String property = e.getPropertyName();
             if (log.isDebugEnabled()) {
-                log.debug("propertyChange \"" + property + "\".  source= " + e.getSource());
+                log.debug("propertyChange \"{}\".  source= {}", property, e.getSource());
             }
             if (property.equals("portalCount") || 
                     property.equals("pathCount") || property.equals("pathName")) {

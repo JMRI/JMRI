@@ -345,7 +345,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1;  // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);  // NOI18N
+        log.debug("setMenuBar number of menu items = {}", pos);  // NOI18N
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {  // NOI18N
@@ -994,9 +994,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             }
         }
         Logix srcLogic = _logixManager.getBySystemName(_logixSysName);
-        for (int i = 0; i < srcLogic.getNumConditionals(); i++) {
-            String cSysName = srcLogic.getConditionalByNumberOrder(i);
-            copyConditionalToLogix(cSysName, srcLogic, targetLogix);
+        if (srcLogic!=null){
+            for (int i = 0; i < srcLogic.getNumConditionals(); i++) {
+                String cSysName = srcLogic.getConditionalByNumberOrder(i);
+                copyConditionalToLogix(cSysName, srcLogic, targetLogix);
+            }
         }
         cancelAddPressed(null);
     }
@@ -1137,7 +1139,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             Logix x = _logixManager.getBySystemName(sName);
             if (x == null) {
                 // Logix does not exist, so cannot be edited
-                log.error("No Logix with system name: " + sName);
+                log.error("No Logix with system name: {}", sName);
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LogixError5"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -1424,8 +1426,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
-                        + uName);
+                log.error("Failure to update Conditional with Duplicate User Name: {}", uName);
                 JOptionPane.showMessageDialog(
                         null, Bundle.getMessage("LogixError10"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -1658,7 +1659,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     String getWhereUsedName(String cName) {
-        return _conditionalManager.getBySystemName(cName).getUserName();
+        Conditional cond = _conditionalManager.getBySystemName(cName);
+        if ( cond!=null){
+            return cond.getUserName();
+        }
+        return "";
     }
 
 // ------------ Methods for Conditional Browser Window ------------
@@ -1737,7 +1742,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
         // Default to logix system name.txt
-        userFileChooser.setSelectedFile(new File(_curLogix.getSystemName() + ".txt"));  // NOI18N
+        userFileChooser.setSelectedFile(new File(FileUtil.sanitizeFilename(_curLogix.getSystemName()) + ".txt"));  // NOI18N
         int retVal = userFileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             log.debug("Save browser content stopped, no file selected");  // NOI18N
@@ -1808,6 +1813,9 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         for (int rx = 0; rx < numConditionals; rx++) {
             conditionalRowNumber = rx;
             Conditional curConditional = _conditionalManager.getBySystemName(_curLogix.getConditionalByNumberOrder(rx));
+            if (curConditional==null){
+                continue;
+            }
             variableList = curConditional.getCopyOfStateVariables();
             _logixSysName = curConditional.getSystemName();
             actionList = curConditional.getCopyOfActions();

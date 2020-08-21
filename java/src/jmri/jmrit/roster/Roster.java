@@ -637,7 +637,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
         if (log.isDebugEnabled()) {
-            log.debug("writeFile " + name);
+            log.debug("writeFile {}", name);
         }
         File file = findFile(name);
         if (file == null) {
@@ -715,7 +715,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                     }
                     entry.setDecoderComment(xmlDecoderComment.toString());
                 } else {
-                    log.debug("skip unsaved roster entry with default name " + entry.getId());
+                    log.debug("skip unsaved roster entry with default name {}", entry.getId());
                 }
             }); //All Comments and Decoder Comment line feeds have been changed to processor directives
         }
@@ -728,7 +728,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 if (!entry.getId().equals(newLocoString)) {
                     values.addContent(entry.store());
                 } else {
-                    log.debug("skip unsaved roster entry with default name " + entry.getId());
+                    log.debug("skip unsaved roster entry with default name {}", entry.getId());
                 }
             });
         }
@@ -843,7 +843,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (root.getChild("roster") != null) { // NOI18N
             List<Element> l = root.getChild("roster").getChildren("locomotive"); // NOI18N
             if (log.isDebugEnabled()) {
-                log.debug("readFile sees " + l.size() + " children");
+                log.debug("readFile sees {} children", l.size());
             }
             l.stream().forEach((e) -> {
                 addEntry(new RosterEntry(e));
@@ -1307,7 +1307,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         int np = 0;
         String[] sp = null;
         if (log.isDebugEnabled()) {
-            log.debug("search directory " + getDefault().getRosterFilesLocation());
+            log.debug("search directory {}", getDefault().getRosterFilesLocation());
         }
         File fp = new File(getDefault().getRosterFilesLocation());
         if (fp.exists()) {
@@ -1322,7 +1322,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 log.warn("expected directory, but {} was a file", getDefault().getRosterFilesLocation());
             }
         } else {
-            log.warn(FileUtil.getUserFilesPath() + "roster directory was missing, though tried to create it");
+            log.warn("{}roster directory was missing, though tried to create it", FileUtil.getUserFilesPath());
         }
 
         // Copy the entries to the final array
@@ -1342,7 +1342,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (log.isDebugEnabled()) {
             log.debug("filename list:");
             for (i = 0; i < sbox.length; i++) {
-                log.debug("      " + sbox[i]);
+                log.debug("      {}", sbox[i]);
             }
         }
         return sbox;

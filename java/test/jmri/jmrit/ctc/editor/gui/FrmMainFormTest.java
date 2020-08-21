@@ -1,8 +1,13 @@
 package jmri.jmrit.ctc.editor.gui;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.jmrit.ctc.setup.CreateTestObjects;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /*
 * Tests for the FrmMainForm Class.
@@ -19,14 +24,16 @@ public class FrmMainFormTest {
         JUnitUtil.dispose(frame);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
+        CreateTestObjects.createTestObjects();
+        CreateTestObjects.createTestFiles();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

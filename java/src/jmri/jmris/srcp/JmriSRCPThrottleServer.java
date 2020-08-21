@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import jmri.*;
 import jmri.jmris.AbstractThrottleServer;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -330,22 +330,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             if (addressList.contains(addr)) {
                 log.debug("Throttle in throttle list");
                 Throttle t = throttleList.get(addressList.indexOf(addr));
-                for (int i = 0; i < fList.size(); i++) {
-                    try {
-                        java.lang.reflect.Method setter = t.getClass()
-                                .getMethod("setF" + i, boolean.class);
-                        setter.invoke(t, fList.get(i));
-                    } catch (java.lang.NoSuchMethodException
-                            | java.lang.IllegalAccessException
-                            | java.lang.reflect.InvocationTargetException ex1) {
-                        log.error("", ex1);
-                        try {
-                            sendErrorStatus();
-                        } catch (IOException ioe) {
-                            log.error("Error writing to network port");
-                        }
-                    }
-                }
+                setFunctionsByThrottle(t,fList);
 
             }
         }
@@ -382,7 +367,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (log.isDebugEnabled()) {
-                log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());
+                log.debug("Property change event received {} / {}", e.getPropertyName(), e.getNewValue());
             }
             switch (e.getPropertyName()) {
                 case Throttle.SPEEDSETTING:

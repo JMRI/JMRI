@@ -1,5 +1,6 @@
 /*
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
+ *
  */
 package jmri.jmrit.ctc;
 
@@ -184,7 +185,7 @@ NOTE:
             }
 //  Check to see if the route specified is free:
 //  The route is the O.S. section that called us, along with the called on occupancy sensor:
-            returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber);
+            returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber, signalDirectionLever == CTCConstants.RIGHTTRAFFIC);
             if (returnValue._mLockedRoute == null) return returnValue;         // Not available, fake out
 
             foundGroupingData._mSignal.setHeld(false);    // Original order in .py code
@@ -200,7 +201,7 @@ NOTE:
 
 //  Check to see if the route specified is free:
 //  The route is the O.S. section that called us, along with the called on occupancy sensor:
-            returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber);
+            returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber, signalDirectionLever == CTCConstants.RIGHTTRAFFIC);
             if (returnValue._mLockedRoute == null) return returnValue;         // Not available, fake out
             foundGroupingData._mSignal.setHeld(false);
         }

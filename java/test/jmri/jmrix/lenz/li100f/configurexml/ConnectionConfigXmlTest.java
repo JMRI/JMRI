@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.li100f.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import jmri.jmrix.lenz.li100f.ConnectionConfig;
 
 /**
@@ -11,8 +11,7 @@ import jmri.jmrix.lenz.li100f.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXmlTest {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();

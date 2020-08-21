@@ -325,7 +325,9 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
     }
 
     /**
-     * Returns the preferences subdirectory in which Consist Files are kept 
+     * GetFile Location.
+     * 
+     * @return the preferences subdirectory in which Consist Files are kept 
      * this is relative to the roster files location. 
      */
     public static String getFileLocation() {
@@ -333,6 +335,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
     }
 
     /**
+     * @param loc location.
      * @deprecated since 4.17.3 file location is determined by roster location.
      */
     @Deprecated

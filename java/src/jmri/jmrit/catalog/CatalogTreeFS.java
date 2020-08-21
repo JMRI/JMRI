@@ -2,6 +2,7 @@ package jmri.jmrit.catalog;
 
 import java.io.File;
 import java.util.HashMap;
+import jmri.CatalogTreeNode;
 import org.apache.commons.io.FilenameUtils;
 
 /**
@@ -84,9 +85,11 @@ public class CatalogTreeFS extends AbstractCatalogTree {
             CatalogTreeNode newElement = new CatalogTreeNode(pName);
             insertNodeInto(newElement, pParent, pParent.getChildCount());
             String[] sp = fp.list();
-            for (int i = 0; i < sp.length; i++) {
-                log.debug("Descend into resource: {} count {}",sp[i], count++);
-                insertNodes(sp[i], pPath + File.separator + sp[i], newElement);
+            if (sp !=null) {
+                for (int i = 0; i < sp.length; i++) {
+                    log.debug("Descend into resource: {} count {}",sp[i], count++);
+                    insertNodes(sp[i], pPath + File.separator + sp[i], newElement);
+                }
             }
         } else /* leaf */ {
             String ext = FilenameUtils.getExtension(fp.getName());

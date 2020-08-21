@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import apps.startup.StartupActionModelUtil;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -56,7 +55,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         adapter = p;
-        addToActionList();
     }
 
     /**
@@ -65,7 +63,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
     public AbstractSerialConnectionConfig() {
         adapter = null;
-        addToActionList();
+
     }
 
     @Override
@@ -604,7 +602,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             adapter.dispose();
             adapter = null;
         }
-        removeFromActionList();
     }
 
     class ComboBoxRenderer extends JLabel
@@ -717,38 +714,22 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         return null;
     }
 
+    /**
+     *
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
     protected final void addToActionList() {
-        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
-        ResourceBundle bundle = getActionModelResourceBundle();
-        if (bundle == null || util == null) {
-            return;
-        }
-        Enumeration<String> e = bundle.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, bundle.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // nothing to do
     }
 
+    /**
+     *
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
     protected void removeFromActionList() {
-        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
-        ResourceBundle bundle = getActionModelResourceBundle();
-        if (bundle == null || util == null) {
-            return;
-        }
-        Enumeration<String> e = bundle.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.removeAction(key);
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // nothing to do
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfig.class);

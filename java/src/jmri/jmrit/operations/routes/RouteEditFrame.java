@@ -210,11 +210,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     
     private void loadToolMenu() {
         toolMenu.removeAll();
-        toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy"), _route));
-        toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"), _route));
+        toolMenu.add(new RouteCopyAction(_route));
+        toolMenu.add(new SetTrainIconRouteAction(_route));
         toolMenu.addSeparator();
-        toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPrint"), false, _route));
-        toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPreview"), true, _route));
+        toolMenu.add(new PrintRouteAction(false, _route));
+        toolMenu.add(new PrintRouteAction(true, _route));
     }
 
     // Save, Delete, Add
@@ -369,7 +369,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void reportRouteExists(String s) {
-        log.info("Can not " + s + ", route already exists");
+        log.info("Can not {}, route already exists", s);
         JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"), MessageFormat.format(Bundle
                 .getMessage("CanNotRoute"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
     }

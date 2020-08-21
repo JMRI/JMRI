@@ -1,7 +1,5 @@
 package jmri;
 
-import jnr.ffi.Struct;
-import org.junit.internal.TextListener;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.TestExecutionListener;

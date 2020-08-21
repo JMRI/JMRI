@@ -179,7 +179,7 @@
                 </ul>
                 We tend to talk about Dropbox because that is the one that seems to be most used by JMRI developers and users, some of whom have been doing so for many years. For more information and setup instructions (also applicable to competing services) see
                 the 
-                <a href="http://jmri.org/help/en/html/setup/Dropbox.shtml">JMRI page on Dropbox use</a>.
+                <a href="https://jmri.org/help/en/html/setup/Dropbox.shtml">JMRI page on Dropbox use</a>.
 
                 <h3>Sharing Profiles between Computers</h3>
                 In the same way that User Files can be relocated completely outside of the user's JMRI file system and shared between computers, so can entire Profiles. In Preferences->Config Profiles->Search Paths you can add a search path in a synced/shared location and set that to be the default for newly-created profiles. It's then simply a matter of manually moving each Profile Folder from the Settings Location to your new shared folder. When you first use a shared profile on a different computer JMRI creates a node-specific folder for storing overrides of settings (see above) that are machine-specific (e.g. COM port names).
@@ -190,9 +190,9 @@
                 The success of file and profile sharing in JMRI is very dependent on the use of our Portable File Access specification in XML files.
                 <p>Briefly, this consists of pseudo-URL prefixes (portable names mentioned above) that replace machine-specific directory paths in file specifications with a set of prefixes relative to known JMRI and machine locations. These are expanded by the local JMRI instance to create a machine-specific file specification. The component separators are standardised as "/" and converted locally.
                 <p>For more information see
-                    <a href="http://jmri.org/help/en/html/doc/Technical/FileNames.shtml">the FileNames page</a>.
+                    <a href="https://jmri.org/help/en/html/doc/Technical/FileNames.shtml">the FileNames page</a>.
                     For a full list of prefixes, see
-                    <a href="http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename-java.lang.String-">the JavaDocs for the FileUtil class</a>.
+                    <a href="https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename-java.lang.String-">the JavaDocs for the FileUtil class</a>.
 
                     <!--#include virtual="/Footer.shtml" -->
 

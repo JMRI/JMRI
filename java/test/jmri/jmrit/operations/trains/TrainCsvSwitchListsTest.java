@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -23,7 +23,7 @@ import jmri.util.JUnitOperationsUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainCsvSwitchListsTest extends OperationsTestCase {
 

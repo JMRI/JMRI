@@ -68,4 +68,29 @@
                 <skipTests>true</skipTests>
             </properties>
         </action>
-    </actions>
+        <action>
+            <actionName>test.single</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>test</goal>
+            </goals>
+            <properties>
+                <test>${packageClassName}</test>
+                <netbeans.jacoco.report>true</netbeans.jacoco.report>
+            </properties>
+        </action>
+        <action>
+            <actionName>test</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>test</goal>
+            </goals>
+            <properties>
+                <netbeans.jacoco.report>true</netbeans.jacoco.report>
+            </properties>
+        </action>
+</actions>

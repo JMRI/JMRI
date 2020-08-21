@@ -1,14 +1,14 @@
 package jmri.jmrit.sound;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the WavBuffer class.
  * <p>
  * Note: This makes noise!
  *
- * @author	Bob Jacobsen Copyright 2006
+ * @author Bob Jacobsen Copyright 2006
  * @author Randall Wood (C) 2016
  */
 public class WavBufferTest {

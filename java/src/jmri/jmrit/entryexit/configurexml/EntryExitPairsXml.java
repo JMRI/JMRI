@@ -3,6 +3,7 @@ package jmri.jmrit.entryexit.configurexml;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -47,6 +48,10 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             return null;    //return element;   // <== don't store empty (unused) element
         }
 
+        java.util.Collections.sort(editors, new Comparator<LayoutEditor>(){
+                    public int compare(LayoutEditor o1, LayoutEditor o2) { return o1.toString().compareTo(o2.toString() ); }
+                });
+                
         int clearDown = p.getClearDownOption();
         if (clearDown > 0) {
             element.addContent(new Element("cleardown").addContent("" + clearDown));  // NOI18N
@@ -71,13 +76,18 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             element.addContent(new Element("dispatcherintegration").addContent("yes"));  // NOI18N
         }
         if (p.useDifferentColorWhenSetting()) {
-            element.addContent(new Element("colourwhilesetting").addContent(ColorUtil.colorToColorName(p.getSettingRouteColor())));  // NOI18N
+            element.addContent(new Element("colourwhilesetting")    
+                    .addContent(ColorUtil.colorToColorName(p.getSettingRouteColor())));  // NOI18N
             element.addContent(new Element("settingTimer").addContent("" + p.getSettingTimer()));  // NOI18N
         }
+        
         for (int k = 0; k < editors.size(); k++) {
             LayoutEditor panel = editors.get(k);
             List<Object> nxpair = p.getSourceList(panel);
 
+            java.util.Collections.sort(nxpair, new Comparator<Object>(){
+                    public int compare(Object o1, Object o2) { return o1.toString().compareTo(o2.toString() ); }
+                });
             Element panelElem = new Element("layoutPanel");  // NOI18N
             panelElem.setAttribute("name", panel.getLayoutName());  // NOI18N
             for (int j = 0; j < nxpair.size(); j++) {
@@ -101,6 +111,10 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                 source.setAttribute("item", item);  // NOI18N
 
                 List<Object> a = p.getDestinationList(key, panel);
+                java.util.Collections.sort(a, new Comparator<Object>(){
+                    public int compare(Object o1, Object o2) { return o1.toString().compareTo(o2.toString() ); }
+                });
+                
                 for (int i = 0; i < a.size(); i++) {
                     Object keyDest = a.get(i);
                     String typeDest = "";
@@ -155,12 +169,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * @param messages Storage element
      */
     public void setStoreElementClass(Element messages) {
-        messages.setAttribute("class", "jmri.jmrit.signalling.configurexml.EntryExitPairsXml");  // NOI18N
-    }
-
-    @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");  // NOI18N
+        messages.setAttribute("class", "jmri.jmrit.entryexit.configurexml.EntryExitPairsXml");  // NOI18N
     }
 
     /**

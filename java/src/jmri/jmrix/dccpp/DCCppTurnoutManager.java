@@ -80,7 +80,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 // reach here for switch command; make sure we know 
                 // about this one
                 String s = getSystemNamePrefix() + addr;
-                if (null == getBySystemName(s)) {
+                DCCppTurnout found = (DCCppTurnout) getBySystemName(s);
+                if ( found == null) {
                     // need to create a new one, and send the message on 
                     // to the newly created object.
                     ((DCCppTurnout) provideTurnout(s)).setFeedbackMode(Turnout.MONITORING);
@@ -88,7 +89,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 } else {
                     // The turnout exists, forward this message to the 
                     // turnout
-                    ((DCCppTurnout) getBySystemName(s)).message(l);
+                    found.message(l);
                 }
             }
         } else if (l.isOutputCmdReply()) {
@@ -101,7 +102,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 // reach here for switch command; make sure we know 
                 // about this one
                 String s = getSystemNamePrefix() + addr;
-                if (null == getBySystemName(s)) {
+                DCCppTurnout found = (DCCppTurnout) getBySystemName(s);
+                if (found == null) {
                     // need to create a new one, and send the message on 
                     // to the newly created object.
                     ((DCCppTurnout) provideTurnout(s)).setFeedbackMode(Turnout.EXACT);
@@ -109,7 +111,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
                 } else {
                     // The turnout exists, forward this message to the 
                     // turnout
-                    ((DCCppTurnout) getBySystemName(s)).message(l);
+                    found.message(l);
                 }
             }
         }
@@ -150,7 +152,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

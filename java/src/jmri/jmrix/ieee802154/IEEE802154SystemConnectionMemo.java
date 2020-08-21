@@ -2,6 +2,8 @@ package jmri.jmrix.ieee802154;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
+
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.util.NamedBeanComparator;
@@ -19,7 +21,7 @@ import jmri.util.NamedBeanComparator;
  * by
  * @author Paul Bender Copyright (C) 2013
  */
-public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class IEEE802154SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public IEEE802154SystemConnectionMemo() {
         this("Z", "IEEE802.15.4");
@@ -57,28 +59,6 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         return _tc;
     }
     private IEEE802154TrafficController _tc = null;
-
-    /**
-     * Tells which managers this class provides.
-     */
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-        return false; // nothing, by default
-    }
-
-    /**
-     * Provide manager by class
-     */
-    @Override
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        return null; // nothing, by default
-    }
 
     /**
      * Configure the common managers for IEEE802154 connections. This puts the

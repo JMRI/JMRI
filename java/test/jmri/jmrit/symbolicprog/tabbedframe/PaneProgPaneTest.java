@@ -6,27 +6,28 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.WindowEvent;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
+ * @author Bob Jacobsen Copyright 2001, 2002, 2003, 2004
  */
 public class PaneProgPaneTest {
 
@@ -422,14 +423,14 @@ public class PaneProgPaneTest {
         log.debug("setupDoc complete");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

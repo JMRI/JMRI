@@ -145,7 +145,12 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         startCommThread();
         startBCastThread();
 
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
     }
 
     /**
@@ -208,8 +213,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                         break; // then exit the for loop.
                     }
                     if (log.isDebugEnabled()) {
-                        log.debug("Network Adapter Received Reply: "
-                                + r.toString());
+                        log.debug("Network Adapter Received Reply: {}", r.toString());
                     }
                     r.setUnsolicited(); // Anything coming through the
                     // broadcast port is an
@@ -246,7 +250,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     private XNetReply loadChars(java.io.BufferedReader istream) throws java.io.IOException {
         // The LIUSBServer sends us data as strings of hex values.
         // These hex values are followed by a <cr><lf>
-        String s = "";
+        String s;
         s = istream.readLine();
         log.debug("Received from port: {}", s);
         if (s == null) {
@@ -280,7 +284,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      */
     private static class BroadCastPortAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
-        private LIUSBServerAdapter parent;
+        private final LIUSBServerAdapter parent;
 
         public BroadCastPortAdapter(LIUSBServerAdapter p) {
             super(p.getSystemConnectionMemo());
@@ -323,7 +327,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      */
     private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
-        private LIUSBServerAdapter parent;
+        private final LIUSBServerAdapter parent;
 
         public CommunicationPortAdapter(LIUSBServerAdapter p) {
             super(p.getSystemConnectionMemo());

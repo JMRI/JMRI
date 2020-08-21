@@ -105,6 +105,7 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
      *
+     * @param comp Component to add to the bottom box
      */
     protected void addToBottomBox(Component comp) {
         bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
@@ -118,9 +119,9 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Add a component to the bottom box. Takes care of organising glue, struts
+     * Add a component to the top box. Takes care of organising glue, struts
      * etc.
-     *
+     * @param comp Component to add to the top box
      */
     protected void addToTopBox(Component comp) {
         topBox.add(Box.createHorizontalStrut(topStrutWidth), topBoxIndex);

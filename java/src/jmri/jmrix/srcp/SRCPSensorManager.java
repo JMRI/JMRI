@@ -9,7 +9,7 @@ import jmri.Sensor;
  * System names are "DSnnn", where D is the user configurable system prefix,
  * nnn is the sensor number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 

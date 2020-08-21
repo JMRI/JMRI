@@ -1,27 +1,29 @@
 package jmri.jmrit.simpleturnoutctrl;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of SimpleTurnoutCtrlFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SimpleTurnoutCtrlFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SimpleTurnoutCtrlFrame();
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SimpleTurnoutCtrlFrame();
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();

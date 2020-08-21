@@ -36,7 +36,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
         log.debug("Getting {} for {}", getPanelType(), name);
         ControlPanelEditor editor = (ControlPanelEditor) getEditor(name);
         if (editor == null) {
-            log.warn("Requested ControlPanel [" + name + "] does not exist.");
+            log.warn("Requested ControlPanel [{}] does not exist.", name);
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
 
@@ -68,7 +68,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                 try {
                     panel.addContent(positionableElement(sub));
                 } catch (Exception ex) {
-                    log.error("Error storing panel element: " + ex, ex);
+                    log.error("Error storing panel element: {}", ex, ex);
                 }
             }
         }

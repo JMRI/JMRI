@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * Description:	extend jmri.AbstractTurnout for SRCP layouts
+ * Extend jmri.AbstractTurnout for SRCP layouts
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2014
  */
 public class SRCPTurnout extends AbstractTurnout {
 
@@ -52,23 +52,35 @@ public class SRCPTurnout extends AbstractTurnout {
      */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        try {
-            sendMessage(stateChangeCheck(newState));
-        } catch (IllegalArgumentException ex) {
-            log.error("new state invalid, Turnout not set");
+        // sort out states
+        if ((newState & Turnout.CLOSED) != 0) {
+            // first look for the double case, which we can't handle
+            if ((newState & Turnout.THROWN) != 0) {
+                // this is the disaster case!
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
+                return;
+            } else {
+                // send a CLOSED command
+                sendMessage(!getInverted());
+            }
+        } else {
+            // send a THROWN command
+            sendMessage(getInverted());
         }
     }
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         log.debug("Send command to {} Pushbutton {}T{}",
-                (_pushButtonLockout ? "Lock" : "Unlock"), tc.getSystemConnectionMemo().getSystemPrefix(), _number);
+                (_pushButtonLockout ? "Lock" : "Unlock"),
+                tc.getSystemConnectionMemo().getSystemPrefix(),
+                _number);
     }
 
     // data members
-    private int _number;   // turnout number
-    private int _bus;   // bus number
-    private SRCPTrafficController tc = null;   // traffic controller
+    private int _number; // turnout number
+    private int _bus;    // bus number
+    private SRCPTrafficController tc = null; // traffic controller
 
     protected void sendMessage(boolean closed) {
         // get the message text

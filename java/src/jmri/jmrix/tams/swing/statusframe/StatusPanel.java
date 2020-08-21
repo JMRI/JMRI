@@ -14,7 +14,7 @@ import jmri.jmrix.tams.TamsTrafficController;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
 
@@ -92,7 +92,9 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
 
     /**
      * Nested class to create one of these using old-style defaults
+     * @deprecated since 4.19.7; use {@link StatusPanelAction} instead
      */
+    @Deprecated
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
 
         public Default() {

@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -89,12 +89,12 @@ public class CbusNodeEventVarPaneTest {
         return ( new JButtonOperator(jfo,Bundle.getMessage("AddNodeEvent")).isEnabled() );
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         t = null;
         JUnitUtil.tearDown();

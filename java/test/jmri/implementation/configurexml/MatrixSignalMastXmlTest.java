@@ -1,10 +1,9 @@
 package jmri.implementation.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the MatrixSignalMastXml class
@@ -18,13 +17,12 @@ public class MatrixSignalMastXmlTest {
       Assert.assertNotNull("MatrixSignalMastXml constructor", new MatrixSignalMastXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

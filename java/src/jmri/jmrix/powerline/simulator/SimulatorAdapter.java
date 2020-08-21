@@ -52,7 +52,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
         }
         opened = true;
         return null; // indicates OK return

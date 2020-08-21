@@ -69,9 +69,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
             return false;
         } else {
             if (log.isInfoEnabled()) {
-                log.info("Initialised JavaSound:"
-                        + " vendor - " + JavaSoundAudioFactory.mixer.getMixerInfo().getVendor()
-                        + " version - " + JavaSoundAudioFactory.mixer.getMixerInfo().getVersion());
+                log.info("Initialised JavaSound: vendor - {} version - {}", JavaSoundAudioFactory.mixer.getMixerInfo().getVendor(), JavaSoundAudioFactory.mixer.getMixerInfo().getVersion());
             }
         }
 

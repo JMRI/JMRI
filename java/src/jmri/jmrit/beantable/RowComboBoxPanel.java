@@ -381,6 +381,6 @@ public abstract class RowComboBoxPanel
         return new JComboBox<>(list);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class);
+    private final static Logger log = LoggerFactory.getLogger(RowComboBoxPanel.class);
 
 }

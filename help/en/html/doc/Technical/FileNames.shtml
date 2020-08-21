@@ -77,7 +77,7 @@
 
       <h2>Implementation</h2>
       The <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
+      "https://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html">jmri.util.FileUtil</a>
       class provides translation routines to make this automatic:
 
       <dl>

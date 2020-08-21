@@ -23,8 +23,8 @@ public class BackupFilesAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class);
 
-    public BackupFilesAction(String s) {
-        super(s);
+    public BackupFilesAction() {
+        super(Bundle.getMessage("Backup"));
     }
 
     @Override

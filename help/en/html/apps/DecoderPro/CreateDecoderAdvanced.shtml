@@ -1275,7 +1275,13 @@ means that it doesn't.
       number is too low. Note that initially, before the values are
       read from the decoder, this display will depend on the
       default value from the file, which might be misleading to the
-      user.</p><!--#include virtual="/Footer.shtml" -->
+      user.</p>
+      <h3>Using XSL transformations</h3>
+      <p>
+          It is possible to generate complex, repeated decoder XML parts using XSL stylesheets.
+          For more information, please see <a href="TransformDecoder.shtml">Use XSLT Transformation for complex decoders</a>.
+      </p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

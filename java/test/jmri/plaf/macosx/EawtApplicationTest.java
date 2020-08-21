@@ -1,11 +1,14 @@
 package jmri.plaf.macosx;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.awt.GraphicsEnvironment;
 
-import java.awt.Desktop;
-import jmri.util.SystemType;
-import org.junit.Assume;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assumptions.assumeThat;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.*;
+import static org.junit.jupiter.api.condition.JRE.*;
+import static org.junit.jupiter.api.condition.OS.MAC;
 
 /**
  * Tests for the EawtApplication class
@@ -15,23 +18,25 @@ import org.junit.Test;
 public class EawtApplicationTest {
 
     @Test
+    @EnabledOnOs(MAC)
+    @EnabledOnJre(JAVA_8)
     public void testCtorMacOSXandJDK8() {
-        Assume.assumeTrue(SystemType.isMacOSX());
-        Assume.assumeFalse(Desktop.getDesktop().isSupported(Desktop.Action.valueOf("APP_ABOUT")));
+        assumeThat(GraphicsEnvironment.isHeadless()).isFalse();
         assertThat(new EawtApplication()).isNotNull();
     }
 
-    @Test(expected = NoClassDefFoundError.class)
+    @Test
+    @EnabledOnOs(MAC)
+    @EnabledForJreRange(min = JAVA_9)
     public void testCtorMacOSXandJDK9plus() {
-        Assume.assumeTrue(SystemType.isMacOSX());
-        Assume.assumeTrue(Desktop.getDesktop().isSupported(Desktop.Action.valueOf("APP_ABOUT")));
-        assertThat(new EawtApplication()).isNotNull();
+        assumeThat(GraphicsEnvironment.isHeadless()).isFalse();
+        assertThatCode(() -> new EawtApplication()).isInstanceOf(NoClassDefFoundError.class);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
+    @DisabledOnOs(MAC)
     public void testCtorNotMacOSX() {
-        Assume.assumeFalse(SystemType.isMacOSX());
-        assertThat(new EawtApplication()).isNotNull();
+        assertThatCode(() -> new EawtApplication()).isInstanceOf(RuntimeException.class);
     }
 
 }

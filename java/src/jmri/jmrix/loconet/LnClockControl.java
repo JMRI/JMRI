@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Date;
+import jmri.JmriException;
 
 import jmri.PowerManager;
 import jmri.implementation.DefaultClockControl;
@@ -282,7 +283,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("slot update " + s);
+            log.debug("slot update {}", s);
         }
         // update current clock variables from the new slot contents
         curDays = s.getFcDays();
@@ -346,7 +347,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             if (pm != null) {
                 power = (pm.getPower() == PowerManager.ON);
             } else {
-                jmri.util.Log4JUtil.warnOnce(log, "Can't access power manager for fast clock");
+                jmri.util.LoggingUtil.warnOnce(log, "Can't access power manager for fast clock");
             }
             s.setTrackStatus(s.getTrackStatus() &  (~LnConstants.GTRK_POWER) );
             if (power) s.setTrackStatus(s.getTrackStatus() | LnConstants.GTRK_POWER);

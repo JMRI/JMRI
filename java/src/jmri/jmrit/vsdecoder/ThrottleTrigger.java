@@ -54,7 +54,7 @@ class ThrottleTrigger extends Trigger {
             return;
         }
 
-        log.debug("Throttle Trigger old value = " + event.getOldValue() + " new value = " + event.getNewValue());
+        log.debug("Throttle Trigger old value = {} new value = {}", event.getOldValue(), event.getNewValue());
         this.callback.takeAction((Float) event.getNewValue());
     }
 

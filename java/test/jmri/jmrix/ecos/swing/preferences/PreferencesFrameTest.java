@@ -1,19 +1,21 @@
 package jmri.jmrix.ecos.swing.preferences;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of PreferencesFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class PreferencesFrameTest extends jmri.util.JmriJFrameTestBase {
 
     jmri.jmrix.ecos.EcosSystemConnectionMemo memo = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -28,7 +30,7 @@ public class PreferencesFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo = null;

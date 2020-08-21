@@ -247,7 +247,7 @@
     <label>Shunt Function Key Extension</label>
     <label xml:lang="it">Estensione tasto funzione Manovra</label>
     <label xml:lang="cs">Rozšíření funkční klávesy posun</label>
-    <label xml:lang="de">Rangiergang</label>
+    <label xml:lang="de">ABV deaktivieren</label>
   </variable>
   <variable CV="157" item="MAN Key Extension (Disable HLU or ABC signal control)" default="0" tooltip="Disables ABC and HLU Signal Control">
     <enumVal>

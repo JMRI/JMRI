@@ -35,7 +35,7 @@ d'une <a href="../USBtoSerial.shtml">connexion USB</a>  soit par les ports s&#23
 <a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>
 <p>Th&#233;oriquement, un Paspberry Pi pris en charge par <a href="http://pi4j.com/">Pi4J</a> est pris en charge par JMRI.<br>
 La prise en charge a &#233;t&#233; test&#233;e avec les mod&#232;les B, B+ et 2B; Il y a aussi une
-<a href="http://jmri.org/install/Raspbian.shtml"> page d'aide JMRI pour installer le Pi</a>.</p>
+<a href="https://jmri.org/install/Raspbian.shtml"> page d'aide JMRI pour installer le Pi</a>.</p>
 
 <a name="connecting"></a><h2>Connexion</h2>
 <p> la prise en charge sous-jacente des connexions GPIO de Raspberry Pi est fourni
@@ -85,7 +85,7 @@ sp&#233;cifiques au mod&#232;le.
 
 	<a name="documentation"></a><h2>Documentation</h2>
 	<h3>Aide JMRI</h3>
-	<p><a href="http://jmri.org/install/Raspbian.shtml">Installation de JMRI sur Pi/Raspbian</a>.
+	<p><a href="https://jmri.org/install/Raspbian.shtml">Installation de JMRI sur Pi/Raspbian</a>.
 	<h3>Autre source d' info</h3>
 	<p>Le <a href="http://pi4j.com/">site web Pi4J</a> fournit des informations d'E/S Java sp&#233;cifiques au
 	mod&#232;le.</p>

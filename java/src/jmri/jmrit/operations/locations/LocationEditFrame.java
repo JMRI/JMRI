@@ -296,20 +296,19 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new TrackCopyAction(this));
         toolMenu.add(new ChangeTracksTypeAction(this));
         toolMenu.add(new ShowTrackMovesAction());
-        toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocation"), _location));
+        toolMenu.add(new ModifyLocationsAction(_location));
         toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
         if (_location != null && _location.getLocationOps() == Location.NORMAL) {
             toolMenu.add(new LocationTrackBlockingOrderAction(_location));
         }
-        toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsLocation"), _location,
-                null));
+        toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new EditCarTypeAction());
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
         toolMenu.addSeparator();
-        toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false, _location));
-        toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true, _location));
+        toolMenu.add(new PrintLocationsAction(false, _location));
+        toolMenu.add(new PrintLocationsAction(true, _location));
         if (Setup.isVsdPhysicalLocationEnabled()) {
-            toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), _location));
+            toolMenu.add(new SetPhysicalLocationAction(_location));
         }
     }
 
@@ -658,9 +657,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             checkBoxes.get(i).setSelected(false);
             // check each track to determine which car types are serviced by
             // this location
-            List<Track> tracks = _location.getTrackList();
+            List<Track> tracks = _location.getTracksList();
             for (Track track : tracks) {
-                if (track.acceptsTypeName(checkBoxes.get(i).getText())) {
+                if (track.isTypeNameAccepted(checkBoxes.get(i).getText())) {
                     checkBoxes.get(i).setSelected(true);
                 }
             }

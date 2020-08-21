@@ -41,10 +41,10 @@ public class ProgDefault {
                 np = 0;
             }
         } else {
-            log.warn(FileUtil.getUserFilesPath() + "programmers was missing, though tried to create it");
+            log.warn("{}programmers was missing, though tried to create it", FileUtil.getUserFilesPath());
         }
         if (log.isDebugEnabled()) {
-            log.debug("Got " + np + " programmers from " + fp.getPath());
+            log.debug("Got {} programmers from {}", np, fp.getPath());
         }
         // create an array of file names from xml/programmers, count entries
         fp = new File(XmlFile.xmlDir() + "programmers");

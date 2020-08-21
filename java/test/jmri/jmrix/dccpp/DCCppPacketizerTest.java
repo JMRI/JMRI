@@ -1,13 +1,11 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 /**
  * <p>
@@ -49,7 +47,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
 
     @Test
     public void testOutbound() throws Exception {
-        DCCppPacketizer c = (DCCppPacketizer)tc;
+        DCCppPacketizer c = (DCCppPacketizer) tc;
         // connect to iostream via port controller scaffold
         DCCppPortControllerScaffold p = new DCCppPortControllerScaffold();
         c.connectPort(p);
@@ -57,11 +55,11 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
         DCCppMessage m = DCCppMessage.makeTurnoutCommandMsg(22, true);
         m.setTimeout(1);  // don't want to wait a long time
         c.sendDCCppMessage(m, null);
-	log.debug("Message = {} length = {}", m.toString(), m.getNumDataElements());
+        log.debug("Message = {} length = {}", m.toString(), m.getNumDataElements());
         jmri.util.JUnitUtil.releaseThread(this); // Allow time for other threads to send 4 characters
         //Assert.assertEquals("total length ", 8, p.tostream.available());
-        Assert.assertEquals("Char 0",'<', p.tostream.readByte() & 0xff);
-        Assert.assertEquals("Char 1",'T', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 0", '<', p.tostream.readByte() & 0xff);
+        Assert.assertEquals("Char 1", 'T', p.tostream.readByte() & 0xff);
         Assert.assertEquals("Char 2", ' ', p.tostream.readByte() & 0xff);
         Assert.assertEquals("Char 3", '2', p.tostream.readByte() & 0xff);
         Assert.assertEquals("Char 4", '2', p.tostream.readByte() & 0xff);
@@ -73,9 +71,9 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
 
     @Test
     public void testInbound() throws Exception {
-        DCCppPacketizer c = (DCCppPacketizer)tc;
+        DCCppPacketizer c = (DCCppPacketizer) tc;
 
-	log.debug("Running testInbound() test");
+        log.debug("Running testInbound() test");
 
         // connect to iostream via port controller
         DCCppPortControllerScaffold p = new DCCppPortControllerScaffold();
@@ -86,21 +84,21 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
         c.addDCCppListener(~0, l);
 
         // now send reply
-	// NOTE: The PortControllerScaffold doesn't model the real PortController, which will
-	// pre-strip the < > characters out of the stream before forwarding it.
-	// So we don't include them here.
+        // NOTE: The PortControllerScaffold doesn't model the real PortController, which will
+        // pre-strip the < > characters out of the stream before forwarding it.
+        // So we don't include them here.
         p.tistream.write('<');
         p.tistream.write('H');
         p.tistream.write(' ');
-	p.tistream.write('2');
-	p.tistream.write('2');
+        p.tistream.write('2');
+        p.tistream.write('2');
         p.tistream.write(' ');
         p.tistream.write('1');
         p.tistream.write('>');
 
         // check that the message was picked up by the read thread.
         Assert.assertTrue("reply received ", waitForReply(l));
-	log.debug("Reply string = {} length = {}",l.rcvdRply.toString(), l.rcvdRply.getNumDataElements());
+        log.debug("Reply string = {} length = {}", l.rcvdRply.toString(), l.rcvdRply.getNumDataElements());
         Assert.assertEquals("Char 0 ", 'H', l.rcvdRply.getElement(0) & 0xFF);
         Assert.assertEquals("Char 1 ", ' ', l.rcvdRply.getElement(1) & 0xFF);
         Assert.assertEquals("Char 2 ", '2', l.rcvdRply.getElement(2) & 0xFF);
@@ -116,8 +114,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
             jmri.util.JUnitUtil.releaseThread(this);
         }
         if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i
-                    + " reply=" + l.rcvdRply);
+            log.debug("past loop, i={} reply={}", i, l.rcvdRply);
         }
         if (i == 0) {
             log.warn("waitForReply saw an immediate return; is threading right?");
@@ -125,8 +122,7 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
         return i < 100;
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -134,12 +130,12 @@ public class DCCppPacketizerTest extends DCCppTrafficControllerTest {
         tc = new StoppingDCCppPacketizer(lcs);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc.terminateThreads();
         tc = null;
-        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 

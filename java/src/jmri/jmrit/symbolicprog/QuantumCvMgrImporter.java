@@ -44,7 +44,7 @@ public class QuantumCvMgrImporter {
             int value = 0;
 
             while ((line = bufferedReader.readLine()) != null) {
-                log.debug("Line='"+line+"'");
+                log.debug("Line='{}'", line);
                 Pattern pattern = Pattern.compile(SEARCH_STRING);
 
                 Matcher matcher = pattern.matcher(line);
@@ -61,8 +61,7 @@ public class QuantumCvMgrImporter {
                     value = Integer.parseInt(matcher.group(2));
                     cvObject = cvModel.allCvMap().get(name);
                     if (cvObject == null) {
-                        log.warn("Adding CV " + name + " description \"" + matcher.group(4) +
-                                "\", which was in import file but not defined by the decoder definition");
+                        log.warn("Adding CV {} description \"{}\", which was in import file but not defined by the decoder definition", name, matcher.group(4));
                         cvModel.addCV(name, false, false, false);
                         cvObject = cvModel.allCvMap().get(name);
                     }
@@ -71,7 +70,7 @@ public class QuantumCvMgrImporter {
             }
             fileReader.close();
         } catch (IOException e) {
-            log.error("Error reading file: " + e);
+            log.error("Error reading file: {}", e);
         }
     }
 

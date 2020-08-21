@@ -2,6 +2,8 @@ package jmri.jmrix.bachrus;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
+
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.util.NamedBeanComparator;
@@ -15,13 +17,13 @@ import jmri.util.NamedBeanComparator;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class SpeedoSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public SpeedoSystemConnectionMemo(SpeedoTrafficController tc) {
         super("A", "Speedo");
         this.tc = tc;
         register();
-        InstanceManager.store(cf = new jmri.jmrix.bachrus.swing.SpeedoComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.bachrus.swing.SpeedoComponentFactory(this),
          jmri.jmrix.swing.ComponentFactory.class);
     }
 
@@ -38,6 +40,7 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Provide access to the TrafficController for this particular connection.
+     * @return traffic controller.
      */
     public SpeedoTrafficController getTrafficController() {
         return tc;

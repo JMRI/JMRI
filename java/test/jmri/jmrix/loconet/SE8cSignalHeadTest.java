@@ -1,11 +1,11 @@
 package jmri.jmrix.loconet;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -238,8 +238,7 @@ public class SE8cSignalHeadTest {
     LocoNetSystemConnectionMemo memo;
     boolean propChangeFlag;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -257,7 +256,7 @@ public class SE8cSignalHeadTest {
         propChangeFlag=false;
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         JUnitUtil.tearDown();

@@ -45,8 +45,8 @@ public class SimpleOperationsServerTest {
                 sendMessageMethod.setAccessible(true);
                 sendMessageMethod.invoke(a, "Hello World");
         });
-        assertThat(thrown).withFailMessage("Could not execute sendMessage via reflection {}",thrown);
-        assertThat(sb.toString()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(thrown).withFailMessage("Could not execute sendMessage via reflection {}",thrown).isNull();
+        assertThat(sb.toString()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     // test sending a message.
@@ -61,8 +61,8 @@ public class SimpleOperationsServerTest {
             sendMessageMethod.setAccessible(true);
             sendMessageMethod.invoke(a, "Hello World");
         });
-        assertThat(thrown).withFailMessage("Could not execute sendMessage via reflection {}",thrown);
-        assertThat(jcs.getOutput()).isEqualTo("Hello World").withFailMessage("SendMessage Check");
+        assertThat(thrown).withFailMessage("Could not execute sendMessage via reflection {}",thrown).isNull();
+        assertThat(jcs.getOutput()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     // test sending the train list.
@@ -70,7 +70,7 @@ public class SimpleOperationsServerTest {
     public void testSendTrainList() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.sendTrainList();
-        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n").withFailMessage("SendTrainList Check");
+        assertThat(sb.toString()).withFailMessage("SendTrainList Check").isEqualTo("OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n");
     }
 
     // test sending the locations list.
@@ -78,7 +78,7 @@ public class SimpleOperationsServerTest {
     public void testSendLocationList() {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.sendLocationList();
-        assertThat(sb.toString()).isEqualTo("OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n").withFailMessage("SendLocationList Check");
+        assertThat(sb.toString()).withFailMessage("SendLocationList Check").isEqualTo("OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n");
     }
 
     // test sending the full status of a train.
@@ -87,7 +87,7 @@ public class SimpleOperationsServerTest {
         new jmri.jmrit.operations.trains.TrainBuilder().build(InstanceManager.getDefault(TrainManager.class).getTrainById("1"));
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.sendFullStatus(InstanceManager.getDefault(TrainManager.class).getTrainByName("STF"));
-        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n").withFailMessage("SendFullStatus Check");
+        assertThat(sb.toString()).withFailMessage("SendFullStatus Check").isEqualTo("OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n");
     }
 
     // test sending the full status of a train.
@@ -97,7 +97,7 @@ public class SimpleOperationsServerTest {
         // Building a train causes the property change listener to send
         // full status of the train.
         new jmri.jmrit.operations.trains.TrainBuilder().build(InstanceManager.getDefault(TrainManager.class).getTrainById("1"));
-        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n").withFailMessage("SendFullStatus Check");
+        assertThat(sb.toString()).withFailMessage("SendFullStatus Check").isEqualTo("OPERATIONS , TRAIN=STF , TRAINLOCATION=North End Staging , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINLEADLOCO , TRAINCABOOSE=CP C10099\n");
     }
 
     //test parsing an message from the client.
@@ -109,7 +109,7 @@ public class SimpleOperationsServerTest {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.parseStatus(inputString);
         // parsing the input causes a status report to be generated.
-        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAIN=STF , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINCABOOSE=CP C10099 , TRAINLOCATION=North End Staging\n").withFailMessage("Train Command Response Check");
+        assertThat(sb.toString()).withFailMessage("Train Command Response Check").isEqualTo("OPERATIONS , TRAIN=STF , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINCABOOSE=CP C10099 , TRAINLOCATION=North End Staging\n");
     }
 
     @Test
@@ -125,8 +125,8 @@ public class SimpleOperationsServerTest {
         // changes with each run of the test.  We could generate the date, but
         // that is more work than required to verify the parsing was correct.
         assertThat(sb.toString())
-                .startsWith("OPERATIONS , TRAIN=STF , TRAINLOCATION= , TRAINLENGTH=0 , TRAINWEIGHT=0 , TRAINCARS=0 , TRAINLEADLOCO , TRAINCABOOSE=\nOPERATIONS , TRAIN=STF , TERMINATE=Terminated")
-                .withFailMessage("Terminate Command Response Check {}",sb);
+                .withFailMessage("Terminate Command Response Check {}",sb)
+                .startsWith("OPERATIONS , TRAIN=STF , TRAINLOCATION= , TRAINLENGTH=0 , TRAINWEIGHT=0 , TRAINCARS=0 , TRAINLEADLOCO , TRAINCABOOSE=\nOPERATIONS , TRAIN=STF , TERMINATE=Terminated");
     }
 
     @Test
@@ -137,7 +137,7 @@ public class SimpleOperationsServerTest {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.parseStatus(inputString);
         // parsing the input causes a status report to be generated.
-        assertThat(sb.toString()).isEqualTo("OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n").withFailMessage("Trains Command Response Check");
+        assertThat(sb.toString()).withFailMessage("Trains Command Response Check").isEqualTo("OPERATIONS , TRAINS=SFF\nOPERATIONS , TRAINS=STF\n");
     }
 
     @Test
@@ -148,12 +148,11 @@ public class SimpleOperationsServerTest {
         SimpleOperationsServer a = new SimpleOperationsServer(input, output);
         a.parseStatus(inputString);
         // parsing the input causes a status report to be generated.
-        assertThat(sb.toString()).isEqualTo("OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n").withFailMessage("Locations Command Response Check");
+        assertThat(sb.toString()).withFailMessage("Locations Command Response Check").isEqualTo("OPERATIONS , LOCATIONS=North End Staging\nOPERATIONS , LOCATIONS=North Industries\nOPERATIONS , LOCATIONS=South End Staging\n");
     }
 
-    // The minimal setup for log4J
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
@@ -168,7 +167,7 @@ public class SimpleOperationsServerTest {
         output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
             @Override
-            public void write(int b) throws java.io.IOException {
+            public void write(int b) {
                 sb.append((char) b);
             }
         });
@@ -176,7 +175,7 @@ public class SimpleOperationsServerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

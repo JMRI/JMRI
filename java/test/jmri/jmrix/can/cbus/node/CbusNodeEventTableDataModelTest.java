@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus.node;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -124,8 +124,7 @@ public class CbusNodeEventTableDataModelTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -137,7 +136,7 @@ public class CbusNodeEventTableDataModelTest {
         jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.node.CbusNodeTableDataModel.class,nodeModel );
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         nodeModel.dispose();

@@ -123,7 +123,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
                 try {
                     InstanceManager.getDefault(DecoderIndexFile.class);
                 } catch (Exception ex) {
-                    log.error("Error in trying to initialize decoder index file " + ex.toString());
+                    log.error("Error in trying to initialize decoder index file {}", ex.toString());
                 }
             }
         };

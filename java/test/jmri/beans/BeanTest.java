@@ -20,7 +20,7 @@ public class BeanTest {
     private boolean changed;
     private Bean bean;
     private PropertyChangeListener listener;
-    private static String PROPERTY = "property";
+    private final static String PROPERTY = "property";
 
     @Test
     public void testAddPropertyChangeListener_PropertyChangeListener() {
@@ -70,7 +70,7 @@ public class BeanTest {
         bean.fireIndexedPropertyChange(PROPERTY, 0, false, true);
         JUnitUtil.waitFor(() -> {
             return changed == true;
-        }, "Change did not fire on GUI thread in time");
+        }, "Change did not fire in time");
         assertThat(changed).isTrue();
     }
 
@@ -81,7 +81,7 @@ public class BeanTest {
         bean.fireIndexedPropertyChange(PROPERTY, 0, 0, 1);
         JUnitUtil.waitFor(() -> {
             return changed == true;
-        }, "Change did not fire on GUI thread in time");
+        }, "Change did not fire in time");
         assertThat(changed).isTrue();
     }
 
@@ -92,7 +92,7 @@ public class BeanTest {
         bean.fireIndexedPropertyChange(PROPERTY, 0, null, null);
         JUnitUtil.waitFor(() -> {
             return changed == true;
-        }, "Change did not fire on GUI thread in time");
+        }, "Change did not fire in time");
         assertThat(changed).isTrue();
     }
 
@@ -104,7 +104,7 @@ public class BeanTest {
         bean.firePropertyChange(event);
         JUnitUtil.waitFor(() -> {
             return changed == true;
-        }, "Change did not fire on GUI thread in time");
+        }, "Change did not fire in time");
         assertThat(changed).isTrue();
     }
 
@@ -115,7 +115,7 @@ public class BeanTest {
         bean.firePropertyChange(PROPERTY, false, true);
         JUnitUtil.waitFor(() -> {
             return changed == true;
-        }, "Change did not fire on GUI thread in time");
+        }, "Change did not fire in time");
         assertThat(changed).isTrue();
     }
 
@@ -126,7 +126,7 @@ public class BeanTest {
         bean.firePropertyChange(PROPERTY, 0, 1);
         JUnitUtil.waitFor(() -> {
             return changed == true;
-        }, "Change did not fire on GUI thread in time");
+        }, "Change did not fire in time");
         assertThat(changed).isTrue();
     }
 
@@ -137,8 +137,19 @@ public class BeanTest {
         bean.firePropertyChange(PROPERTY, null, null);
         JUnitUtil.waitFor(() -> {
             return changed == true;
-        }, "Change did not fire on GUI thread in time");
+        }, "Change did not fire in time");
         assertThat(changed).isTrue();
+    }
+
+    /**
+     * Test that {@link Bean#isNotifyOnEDT()}, which provides access to a final
+     * value is returning the expected final value for all construction scenarios.
+     */
+    @Test
+    public void testIsNotifyOnEDT() {
+        assertThat(new Bean() {}.isNotifyOnEDT()).isFalse();
+        assertThat(new Bean(true) {}.isNotifyOnEDT()).isTrue();
+        assertThat(new Bean(false) {}.isNotifyOnEDT()).isFalse();
     }
 
     @BeforeEach

@@ -5,10 +5,9 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -16,7 +15,7 @@ import org.junit.Test;
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     
@@ -442,9 +441,8 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     
     private TrafficControllerScaffold tcis;
     
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // load dummy TrafficController
@@ -453,7 +451,7 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         t.dispose();
         t = null;

@@ -20,6 +20,8 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 
     /**
      * JMRIClient sensors use the sensor number on the remote host.
+     * @param number sensor number
+     * @param memo system connection
      */
     public JMRIClientSensor(int number, JMRIClientSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "S" + number);
@@ -41,7 +43,21 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
      */
     @Override
     public void setKnownState(int newState) throws jmri.JmriException {
-        sendMessage(stateChangeCheck(newState));
+        // sort out states
+        if ((newState & Sensor.ACTIVE) != 0) {
+            // first look for the double case, which we can't handle
+            if ((newState & Sensor.INACTIVE) != 0) {
+                // this is the disaster case!
+                log.error("Cannot command both ACTIVE and INACTIVE {}", newState);
+                return;
+            } else {
+                // send an ACTIVE command
+                sendMessage(true ^ getInverted());
+            }
+        } else {
+            // send a INACTIVE command
+            sendMessage(false ^ getInverted());
+        }
         if (_knownState != newState) {
             int oldState = _knownState;
             _knownState = newState;
@@ -76,7 +92,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
     @Override
     public void reply(JMRIClientReply m) {
         String message = m.toString();
-        log.debug("Message Received: " + m);
+        log.debug("Message Received: {}", m);
         if (!message.contains(transmitName + " ")) {
             return; // not for us
         }

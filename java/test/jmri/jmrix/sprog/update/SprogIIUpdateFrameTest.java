@@ -1,22 +1,23 @@
 package jmri.jmrix.sprog.update;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private SprogTrafficControlScaffold stcs = null;
     private SprogSystemConnectionMemo m = null;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -24,12 +25,12 @@ public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SprogIIUpdateFrame(m);
-	    }
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SprogIIUpdateFrame(m);
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         if (frame!=null) ((SprogIIUpdateFrame)frame).stopTimer();

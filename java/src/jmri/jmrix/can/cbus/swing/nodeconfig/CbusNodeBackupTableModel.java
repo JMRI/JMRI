@@ -44,7 +44,9 @@ public class CbusNodeBackupTableModel extends javax.swing.table.AbstractTableMod
     @Override
     public void propertyChange(PropertyChangeEvent ev){
         if (ev.getPropertyName().equals("BACKUPS")) {
-            fireTableDataChanged();
+            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+                fireTableDataChanged();
+            });
         }
     }
 
@@ -95,9 +97,9 @@ public class CbusNodeBackupTableModel extends javax.swing.table.AbstractTableMod
             case STATUS_COLUMN:
                 return ("Backup Integrity");
             case BYTES_COLUMN:
-                return("Bytes");
+                return Bundle.getMessage("TotalBytes");
             case COMMENT_COLUMN:
-                return ("User Comment");
+                return Bundle.getMessage("ColumnComment");
             default:
                 return "";
         }
@@ -126,7 +128,7 @@ public class CbusNodeBackupTableModel extends javax.swing.table.AbstractTableMod
     @Override
     public Object getValueAt(int r, int c) {
         if (r > _nodeOfInterest.getNodeBackupManager().getBackups().size()) {
-            return null;
+            c = -1;
         }
         CbusNodeFromBackup lc = _nodeOfInterest.getNodeBackupManager().getBackups().get(r);
         switch (c) {
@@ -139,16 +141,27 @@ public class CbusNodeBackupTableModel extends javax.swing.table.AbstractTableMod
             case COMMENT_COLUMN:
                 return (lc.getBackupComment());
             case DESCRIPTION_COLUMN:
-                if ( r == _nodeOfInterest.getNodeBackupManager().getBackups().size()-1 ){
-                    return ("First Backup on File");
-                }
-                if (lc.getBackupResult() == BackupType.NOTONNETWORK) {
-                    return BackupType.NOTONNETWORK;
-                }
-                return lc.compareWithString(getPreviousBackup(r+1));
+                return getDescription(r, lc);
             default:
                 return null;
         }
+    }
+    
+    /**
+     * Get a description of the backup.
+     * 1st backup on file, not on network, else comparison with previous backup.
+     * @param r index of position in main array.
+     * @param lc the single backup.
+     * @return String with backup description.
+     */
+    private String getDescription(int r, CbusNodeFromBackup lc) {
+        if ( r == _nodeOfInterest.getNodeBackupManager().getBackups().size()-1 ){
+            return ("First Backup on File");
+        }
+        if (lc.getBackupResult() == BackupType.NOTONNETWORK) {
+            return BackupType.NOTONNETWORK.toString();
+        }
+        return lc.compareWithString(getPreviousBackup(r+1));
     }
     
     /** 

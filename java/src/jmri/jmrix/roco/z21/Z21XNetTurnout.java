@@ -81,6 +81,7 @@ public class Z21XNetTurnout extends XNetTurnout {
      * a feedback message at initialization without changing the state of the
      * turnout with respect to whether or not a feedback request was sent.
      * This is used only when the turnout is created by on layout feedback.
+     * @param l Init message
      */
     synchronized void initMessageZ21(XNetReply l) {
         int oldState = internalState;
@@ -140,6 +141,11 @@ public class Z21XNetTurnout extends XNetTurnout {
         return state;
     }
 
+    @Override
+    protected synchronized void sendOffMessage() {
+       sendOffMessage(getCommandedState());
+    }
+
     protected synchronized void sendOffMessage(int state) {
         // We need to tell the turnout to shut off the output.
         if (log.isDebugEnabled()) {
@@ -151,7 +157,7 @@ public class Z21XNetTurnout extends XNetTurnout {
         newKnownState(getCommandedState());
         internalState = IDLE;
         // Then send the message.
-        tc.sendXNetMessage(msg, null);  // reply sent through loconet
+        tc.sendXNetMessage(msg, this);  // reply sent through loconet
     }
 
     protected synchronized XNetMessage getOffMessage(boolean state) {

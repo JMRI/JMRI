@@ -66,7 +66,12 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         // packets.startThreads();
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
-        new XNetInitializationManager(this.getSystemConnectionMemo());
+        new XNetInitializationManager()
+                .memo(this.getSystemConnectionMemo())
+                .setDefaults()
+                .versionCheck()
+                .setTimeout(30000)
+                .init();
         new jmri.jmrix.lenz.XNetHeartBeat(this.getSystemConnectionMemo());
     }
 

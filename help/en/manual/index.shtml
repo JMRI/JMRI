@@ -133,7 +133,7 @@
             <td> </td>
 
             <td><strong><a href=
-            "http://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg;
+            "https://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg;
             v2.14.1</a></strong></td>
 
             <td> </td>
@@ -143,11 +143,11 @@
             <td> </td>
 
             <td><strong><a href=
-            "http://jmri.org/manual/DP3_2-14_manual/index.shtml">DecoderPro
+            "https://jmri.org/manual/DP3_2-14_manual/index.shtml">DecoderPro
             3 v2.14</a></strong></td>
 
             <td><strong><a href=
-            "http://jmri.org/manual/pdf/DP3_Man_2_14.pdf" target=
+            "https://jmri.org/manual/pdf/DP3_Man_2_14.pdf" target=
             "_blank">Printable PDF (6.7MB)</a></strong></td>
           </tr>
 
@@ -188,7 +188,7 @@
       </ul>
 
       <p>All this capability is contained in one <a href=
-      "http://jmri.org/download/index.shtml">install</a>.</p>
+      "https://jmri.org/download/index.shtml">install</a>.</p>
 
       <h2>Take it Step by Step</h2>
 
@@ -225,16 +225,16 @@
 
       <p>If this is your first visit to our manual, we suggest that
       you take the DecoderPro&reg; tour at <a href=
-      "http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+      "https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">https://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
       to get an overview of what we're about to cover.</p>
 
       <h2>System Requirements</h2>
 
       <p>JMRI&reg; requires that Java be installed, whether your
       computer is <a href=
-      "http://jmri.org/install/MacOSX.shtml">Mac</a>, <a href=
-      "http://jmri.org/install/WindowsNew.shtml">Windows</a>, or
-      <a href="http://jmri.org/install/Linux.shtml">Linux</a>
+      "https://jmri.org/install/MacOSX.shtml">Mac</a>, <a href=
+      "https://jmri.org/install/WindowsNew.shtml">Windows</a>, or
+      <a href="https://jmri.org/install/Linux.shtml">Linux</a>
       based.</p>
 
       <p>Version 2.12 can run on any computer system that will run

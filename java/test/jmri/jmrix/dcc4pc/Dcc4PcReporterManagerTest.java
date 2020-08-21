@@ -1,16 +1,16 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Dcc4PcReporterManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.dcc4pc.Dcc4PcReporterManager
+ * Test for the jmri.jmrix.dcc4pc.Dcc4PcReporterManager
  * class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2016
  */
 public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
@@ -21,8 +21,7 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,7 +33,7 @@ public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgr
         l = new Dcc4PcReporterManager(tc,new Dcc4PcSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

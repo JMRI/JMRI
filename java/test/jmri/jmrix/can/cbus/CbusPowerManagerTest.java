@@ -6,10 +6,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.PowerManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -111,15 +110,20 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         r.setRtr(false);
         pwr.reply(r);
         Assert.assertEquals("on", PowerManager.ON, p.getPower());
+        Assert.assertEquals(0, controller.outbound.size());
         
+    }
+    
+    @Test
+    public void checkName() {
+        Assert.assertNotNull(pwr.getUserName());
     }
     
     private CanSystemConnectionMemo memo;
     private CbusPowerManager pwr;
     private TrafficControllerScaffold controller;
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -130,7 +134,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         try {

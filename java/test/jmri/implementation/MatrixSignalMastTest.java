@@ -3,15 +3,14 @@ package jmri.implementation;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the MatrixSignalMast implementation.
  *
- * @author	Egbert Broerse Copyright (C) 2016, 2019
+ * @author Egbert Broerse Copyright (C) 2016, 2019
  */
 public class MatrixSignalMastTest {
 
@@ -203,14 +202,13 @@ public class MatrixSignalMastTest {
 
     // from here down is testing infrastructure
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

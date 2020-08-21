@@ -4,10 +4,8 @@ import java.util.*;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests the static methods of the interface.
@@ -15,7 +13,7 @@ import org.junit.Test;
  * Detailed tests are in jmri.managers.AbstractManagerTestBase with even more
  * detailed tests (which require beans, etc) in type-specific subclasses
  * 
- * @author Bob Jacobsen Copyright (C) 2017	
+ * @author Bob Jacobsen Copyright (C) 2017
  */
 public class ManagerTest {
 
@@ -200,13 +198,12 @@ public class ManagerTest {
         public void setState(int i) {}
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        
         JUnitUtil.clearShutDownManager();
 

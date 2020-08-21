@@ -1,5 +1,5 @@
 /**
- * Provides a sample of a minimal user-added package
+ * Provides a sample of a minimal user-added package.
  * <p>
  * To create a sample object which you can then store in a penal file and reload, 
  * execute <code>import jmri.jmrit.sample; jmri.jmrit.sample.SampleFunctionalClass("Content!")</code>

@@ -327,7 +327,7 @@ public class ThrottleWindow extends JmriJFrame {
     public Jynstrument ynstrument(String path) {
         Jynstrument it = JynstrumentFactory.createInstrument(path, this);
         if (it == null) {
-            log.error("Error while creating Jynstrument " + path);
+            log.error("Error while creating Jynstrument {}", path);
             return null;
         }
         ThrottleFrame.setTransparent(it, true);
@@ -500,7 +500,7 @@ public class ThrottleWindow extends JmriJFrame {
                     try {
                         powerMgr.setPower(PowerManager.ON);
                     } catch (JmriException e1) {
-                        log.error("Error when setting power " + e1);
+                        log.error("Error when setting power {}", e1);
                     }
                 }
             });
@@ -514,7 +514,7 @@ public class ThrottleWindow extends JmriJFrame {
                     try {
                         powerMgr.setPower(PowerManager.OFF);
                     } catch (JmriException e1) {
-                        log.error("Error when setting power " + e1);
+                        log.error("Error when setting power {}", e1);
                     }
                 }
             });
@@ -579,7 +579,7 @@ public class ThrottleWindow extends JmriJFrame {
 
     public void setCurrentThrottleFrame(ThrottleFrame tf) {
         if (getCurrentThrottleFrame() != null) {
-            log.debug("setCurrentThrottleFrame from " + getCurrentThrottleFrame().getAddressPanel().getCurrentAddress() + " to " + tf.getAddressPanel().getCurrentAddress());
+            log.debug("setCurrentThrottleFrame from {} to {}", getCurrentThrottleFrame().getAddressPanel().getCurrentAddress(), tf.getAddressPanel().getCurrentAddress());
         }
         pcs.firePropertyChange("ThrottleFrame", getCurrentThrottleFrame(), tf);
         currentThrottleFrame = tf;
@@ -751,7 +751,7 @@ public class ThrottleWindow extends JmriJFrame {
                         }
 
                     } catch (Exception ex) {
-                        log.debug("Got exception (no panic) " + ex);
+                        log.debug("Got exception (no panic) {}", ex);
                     }
                 }
             }
@@ -819,6 +819,7 @@ public class ThrottleWindow extends JmriJFrame {
          */
         @Override
         public void keyReleased(KeyEvent e) {
+            log.trace("TW {}", e);
             if (e.isAltDown() && e.getKeyCode() == NEXT_THROTTLE_KEY) {
                 log.debug("next");
                 nextThrottleFrame();

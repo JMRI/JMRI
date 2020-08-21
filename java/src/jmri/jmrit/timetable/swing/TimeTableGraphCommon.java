@@ -41,6 +41,9 @@ public class TimeTableGraphCommon {
      * @param scheduleId The schedule to be used for this graph.
      * @param showTrainTimes When true, include the minutes portion of the
      * train times at each station.
+     * @param height Display height
+     * @param width Display width
+     * @param displayType (not currently used)
      */
     void init(int segmentId, int scheduleId, boolean showTrainTimes, double height, double width, boolean displayType) {
         _segmentId = segmentId;
@@ -418,6 +421,7 @@ public class TimeTableGraphCommon {
     /**
      * Move text that overlaps existing text.
      * @param textRect The proposed text rectangle.
+     * @return The resulting rectangle
      */
     Rectangle2D adjustText(Rectangle2D textRect) {
         double xLoc = textRect.getX();
@@ -609,6 +613,7 @@ public class TimeTableGraphCommon {
     /**
      * Finish the train line, draw it, the train name and the throttle line if used.
      * @param stop The current stop.
+     * @param endSegment final segment
      */
     void setEnd(Stop stop, boolean endSegment) {
         double x;

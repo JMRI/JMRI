@@ -3,9 +3,12 @@ package jmri.jmrix.direct;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+
+import jmri.CommandStation;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -16,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
-public class DirectSystemConnectionMemo extends SystemConnectionMemo {
+public class DirectSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -27,8 +30,7 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
     public DirectSystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
 
-        register(); // registers general type
-        InstanceManager.store(this, DirectSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, DirectSystemConnectionMemo.class);
 
         // create and register the ComponentFactory
         InstanceManager.store(cf = new jmri.jmrix.direct.swing.DirectComponentFactory(this),
@@ -46,11 +48,13 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
      */
     public void setTrafficController(TrafficController s){
         tc = s;
-        InstanceManager.store(tc,jmri.CommandStation.class);
+        store(tc, CommandStation.class);
+        InstanceManager.store(tc,CommandStation.class);
     }
 
     /**
      * Get the traffic controller instance associated with this connection memo.
+     * @return traffic controller, provided if null.
      */
     public TrafficController getTrafficController(){
         if (tc == null) {
@@ -60,27 +64,27 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
         return tc;
     }
 
-    private ThrottleManager tm = null;
-
     /**
      * Set the traffic controller instance associated with this connection memo.
      *
      * @param s jmri.jmrix.direct.ThrottleManager object to use.
      */
     public void setThrottleManager(ThrottleManager s){
-        tm = s;
-        InstanceManager.store(tm,jmri.ThrottleManager.class);
+        store(s,ThrottleManager.class);
+        InstanceManager.store(get(ThrottleManager.class),ThrottleManager.class);
     }
 
     /**
      * Get the ThrottleManager instance associated with this connection memo.
+     * @return throttle manager, provided if null.
      */
     public ThrottleManager getThrottleManager(){
-        if (tm == null) {
-            setThrottleManager(new ThrottleManager(this));
-            log.debug("Auto create of ThrottleManager for initial configuration");
-        }
-        return tm;
+        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,
+                (Class c) -> {
+                    setThrottleManager(new ThrottleManager(this));
+                    log.debug("Auto create of ThrottleManager for initial configuration");
+                    return get(ThrottleManager.class);
+                });
     }
 
     @Override
@@ -94,37 +98,9 @@ public class DirectSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     public void configureManagers(){
-        tm = new jmri.jmrix.direct.ThrottleManager(this);
-        jmri.InstanceManager.setThrottleManager(tm);
+        setThrottleManager(new ThrottleManager(this));
+        register();
     }
-
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        } else if (type.equals(jmri.ThrottleManager.class)) {
-            return true;
-        } else if (type.equals(jmri.CommandStation.class)) {
-            return true;
-        }
-        return super.provides(type);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.ThrottleManager.class)) {
-            return (T) getThrottleManager();
-        }
-        if (T.equals(jmri.CommandStation.class)) {
-            return (T) getTrafficController(); // tc is a command station.
-        }
-        return super.get(T);
-    }
-
 
     private final static Logger log = LoggerFactory.getLogger(DirectSystemConnectionMemo.class);
 

@@ -248,7 +248,6 @@ public class CbusAllocateNodeNumberTest {
     private CbusAllocateNodeNumber t;
     private CbusNodeTableDataModel nodeModel;
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

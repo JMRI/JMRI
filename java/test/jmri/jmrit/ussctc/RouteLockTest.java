@@ -1,14 +1,17 @@
 package jmri.jmrit.ussctc;
 
 import java.util.*;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for RouteLock class in the jmri.jmrit.ussctc package
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class RouteLockTest {
 
@@ -133,8 +136,7 @@ public class RouteLockTest {
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -142,7 +144,7 @@ public class RouteLockTest {
         JUnitUtil.initInternalSignalHeadManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

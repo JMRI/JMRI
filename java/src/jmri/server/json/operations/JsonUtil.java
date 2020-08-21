@@ -214,7 +214,7 @@ public class JsonUtil {
             types.add(type);
         }
         ArrayNode tracks = data.putArray(TRACK);
-        for (Track track : location.getTrackList()) {
+        for (Track track : location.getTracksList()) {
             tracks.add(getTrack(track, locale));
         }
         return data;

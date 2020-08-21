@@ -184,7 +184,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("48");
             return false;
         }
-        log.error("unexpected step 4 reached with value: " + value);
+        log.error("unexpected step 4 reached with value: {}", value);
         return true;
     }
 
@@ -216,7 +216,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("49");
             return false;
         }
-        log.error("unexpected step 5 reached with value: " + value);
+        log.error("unexpected step 5 reached with value: {}", value);
         return true;
     }
 
@@ -238,7 +238,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("50");
             return false;
         }
-        log.error("unexpected step 6 reached with value: " + value);
+        log.error("unexpected step 6 reached with value: {}", value);
         return true;
     }
 
@@ -258,7 +258,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest;
             return true;
         }
-        log.error("unexpected step 7 reached with value: " + value);
+        log.error("unexpected step 7 reached with value: {}", value);
         return true;
     }
 
@@ -274,7 +274,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("264");
             return false;
         }
-        log.error("unexpected step 8 reached with value: " + value);
+        log.error("unexpected step 8 reached with value: {}", value);
         return true;
     }
 
@@ -284,7 +284,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productID = productID + (value * 256 * 256 * 256);
             return true;
         }
-        log.error("unexpected step 9 reached with value: " + value);
+        log.error("unexpected step 9 reached with value: {}", value);
         return true;
     }
 
@@ -293,9 +293,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         message(s);
         if (s.equals("Done")) {
             done(mfgID, modelID, productID);
-            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
+            log.info("Decoder returns mfgID:{};modelID:{};productID:{}", mfgID, modelID, productID);
         } else if (log.isDebugEnabled()) {
-            log.debug("received status: " + s);
+            log.debug("received status: {}", s);
         }
     }
 

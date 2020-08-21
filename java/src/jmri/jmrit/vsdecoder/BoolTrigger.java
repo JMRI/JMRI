@@ -77,11 +77,11 @@ class BoolTrigger extends Trigger {
         Element me = new Element("trigger");
 
         log.debug("Bool Trigger getXml():");
-        log.debug("  trigger_name = " + this.getName());
-        log.debug("  event_name = " + this.event_name);
-        log.debug("  target_name = " + target.getName());
-        log.debug("  match = " + Boolean.valueOf(match_value).toString());
-        log.debug("  action = " + this.getTriggerType().toString());
+        log.debug("  trigger_name = {}", this.getName());
+        log.debug("  event_name = {}", this.event_name);
+        log.debug("  target_name = {}", target.getName());
+        log.debug("  match = {}", Boolean.valueOf(match_value).toString());
+        log.debug("  action = {}", this.getTriggerType().toString());
 
         me.setAttribute("name", this.getName());
         me.setAttribute("type", "BOOLEAN");

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based on work by Bob Jacobsen and Kevin Dickerson Copyright
  *
- * @author	 Jan Boen
+ * @author Jan Boen
  */
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
@@ -25,12 +25,14 @@ public class TamsTurnout extends AbstractTurnout
      * identification in the system name.
      *
      * @param number DCC address of the turnout
+     * @param prefix system prefic
+     * @param etc Tams system connection traffic controller
      */
     public TamsTurnout(int number, String prefix, TamsTrafficController etc) {
         super(prefix + "T" + number);
         _number = number;
         tc = etc;
-        //Request status of turnout
+        // Request status of turnout
         TamsMessage m = new TamsMessage("xT " + _number + ",,0");
         m.setBinary(false);
         m.setReplyType('T');
@@ -78,10 +80,21 @@ public class TamsTurnout extends AbstractTurnout
      */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        try {
-            sendMessage(stateChangeCheck(newState));
-        } catch (IllegalArgumentException ex) {
-            log.error("new state invalid, Turnout not set");
+        log.debug("*** forwardCommandChangeToLayout ***");
+        // sort out states
+        if ((newState & Turnout.CLOSED) != 0) {
+            // first look for the double case, which we can't handle
+            if ((newState & Turnout.THROWN) != 0) {
+                // this is the disaster case!
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
+                return;
+            } else {
+                // send a CLOSED command
+                sendMessage(!getInverted());
+            }
+        } else {
+            // send a THROWN command
+            sendMessage(getInverted());
         }
     }
 
@@ -96,7 +109,7 @@ public class TamsTurnout extends AbstractTurnout
      * taken place. Must be followed by "newKnownState" to complete the turnout
      * action.
      *
-     * @param state observed state, updated state from command station
+     * @param state Observed state, updated state from command station
      */
     synchronized void setCommandedStateFromCS(int state) {
         log.debug("*** setCommandedStateFromCS ***");
@@ -159,7 +172,7 @@ public class TamsTurnout extends AbstractTurnout
         if (m.match("T") == 0) {
             String[] lines = msg.split(" ");
             if (lines[1].equals("" + _number)) {
-                // updateReceived = true; // uncomment this line as soon as #pollForStatus() is uncommented
+                updateReceived = true;
                 if (lines[2].equals("r") || lines[2].equals("0")) {
                     log.debug("Turnout {} = CLOSED", _number);
                     setCommandedStateFromCS(Turnout.CLOSED);

@@ -13,6 +13,7 @@ public class Ib1ThrottleManager extends jmri.jmrix.loconet.LnThrottleManager {
 
     /**
      * Constructor.
+     * @param memo system connection.
      */
     public Ib1ThrottleManager(LocoNetSystemConnectionMemo memo) {
         super(memo);

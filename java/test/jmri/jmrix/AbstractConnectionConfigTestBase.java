@@ -1,7 +1,9 @@
 package jmri.jmrix;
 
 import org.assertj.swing.edt.GuiActionRunner;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import javax.swing.JPanel;
 
 /**
@@ -73,14 +75,14 @@ abstract public class AbstractConnectionConfigTestBase {
      * Configure the ConnectionConfig object (cc) and any other
      * necessary objects.
      */
-    @Before
+    @BeforeEach
     abstract public void setUp();
 
     /**
      * Clean up the ConnectionConfig object (cc) and any other
      * necessary objects.
      */
-    @After
+    @AfterEach
     abstract public void tearDown();
 
 }

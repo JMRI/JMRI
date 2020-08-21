@@ -37,7 +37,7 @@ public class AudioCommandThread extends AbstractAudioThread {
         this.setName("command-" + super.getName());
         this.activeAudioFactory = activeAudioFactory;
         if (log.isDebugEnabled()) {
-            log.debug("Created AudioThread for AudioFactory " + activeAudioFactory.toString());
+            log.debug("Created AudioThread for AudioFactory {}", activeAudioFactory.toString());
         }
     }
 
@@ -64,7 +64,7 @@ public class AudioCommandThread extends AbstractAudioThread {
 
         // Finish up
         if (log.isDebugEnabled()) {
-            log.debug("Clean up thread " + this.getName());
+            log.debug("Clean up thread {}", this.getName());
         }
         cleanup();
     }

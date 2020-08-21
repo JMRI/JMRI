@@ -5,14 +5,13 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
@@ -119,8 +118,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     
     private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -128,7 +126,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         r = new CbusReporter(1, tcis, "Test");
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).dispose();

@@ -1,21 +1,19 @@
 package jmri.jmrix.lenz;
 
-import java.util.ArrayList;
-import java.util.List;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2004
+ * @author Bob Jacobsen Copyright 2004
  */
 public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -30,8 +28,8 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     public void testMisses() {
         // try to get nonexistant turnouts
-        Assert.assertNull(l.getByUserName("foo"));
-        Assert.assertNull(l.getBySystemName("bar"));
+        assertThat(l.getByUserName("foo")).isNull();
+        assertThat(l.getBySystemName("bar")).isNull();
     }
 
     @Test
@@ -54,14 +52,12 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         lnis.sendTestMessage(m2);
 
         // try to get turnouts to see if they exist
-        Assert.assertNotNull(l.getBySystemName("XT21"));
-        Assert.assertNotNull(l.getBySystemName("XT22"));
+        Turnout xt21 = l.getBySystemName("XT21");
+        Turnout xt22 = l.getBySystemName("XT22");
+        assertThat(xt21).isNotNull();
+        assertThat(xt22).isNotNull();
 
-        // check the list
-        List<String> testList = new ArrayList<String>(2);
-        testList.add("XT21");
-        testList.add("XT22");
-        Assert.assertEquals("system name list", testList, l.getSystemNameList());
+        assertThat(l.getNamedBeanSet()).containsOnly(xt21,xt22);
     }
 
     @Test
@@ -71,55 +67,48 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         Turnout o = t.newTurnout("XT21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
-        }
-        Assert.assertNotNull(o);
+        log.debug("received turnout value {}", o);
+        assertThat(o).isNotNull();
 
-        // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", t.getBySystemName("XT21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", t.getByUserName("my name"));
-        }
+        log.debug("by system name: {}", t.getBySystemName("XT21"));
+        log.debug("by user name:   {}", t.getByUserName("my name"));
 
-        Assert.assertNotNull(t.getBySystemName("XT21"));
-        Assert.assertNotNull(t.getByUserName("my name"));
+        assertThat(t.getBySystemName("XT21")).isNotNull();
+        assertThat(t.getByUserName("my name")).isNotNull();
     }
 
     @Test
-    public void testGetSystemPrefix(){
-        Assert.assertEquals("prefix","X",l.getSystemPrefix());
+    public void testGetSystemPrefix() {
+        assertThat(l.getSystemPrefix()).isEqualTo("X");
     }
 
     @Test
-    public void testAllowMultipleAdditions(){
-        Assert.assertTrue(l.allowMultipleAdditions("foo"));
+    public void testAllowMultipleAdditions() {
+        assertThat(l.allowMultipleAdditions("foo")).isTrue();
     }
 
     @Test
     @Override
-    public void testThrownText(){
-         Assert.assertEquals("thrown text",Bundle.getMessage("TurnoutStateThrown"),l.getThrownText());
+    public void testThrownText() {
+        assertThat(l.getThrownText()).isEqualTo(Bundle.getMessage("TurnoutStateThrown"));
     }
 
     @Test
     @Override
-    public void testClosedText(){
-         Assert.assertEquals("closed text",Bundle.getMessage("TurnoutStateClosed"),l.getClosedText());
+    public void testClosedText() {
+        assertThat(l.getClosedText()).isEqualTo(Bundle.getMessage("TurnoutStateClosed"));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	    lnis = null;
-	    l = null;
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        lnis.terminateThreads();
+        lnis = null;
+        l = null;
         JUnitUtil.tearDown();
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface, register

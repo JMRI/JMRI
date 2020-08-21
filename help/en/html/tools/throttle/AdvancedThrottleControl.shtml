@@ -118,7 +118,7 @@
       Here, we focus on using the customized Throttles.
 
       <p><a href=
-      "http://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">Both
+      "https://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">Both
       Jynstruments</a> provided below are for controlling already
       assigned Throttles, the Throttle pane you will control has to
       be set up before. Then it's only a matter of drag'n dropping

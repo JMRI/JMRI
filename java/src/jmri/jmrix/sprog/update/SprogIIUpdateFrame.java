@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * Extended to cover SPROG 3 which uses the same bootloader protocol Refactored
  *
- * @author	Andrew Crosland Copyright (C) 2004
+ * @author Andrew Crosland Copyright (C) 2004
  */
 public class SprogIIUpdateFrame
         extends SprogUpdateFrame
@@ -136,7 +136,7 @@ public class SprogIIUpdateFrame
         if ((reply.getOpCode() == SprogMessage.RD_VER) && (reply.getElement(1) == 2)) {
             bootVer = reply.getElement(2);
             if (log.isDebugEnabled()) {
-                log.debug("Found bootloader version " + bootVer);
+                log.debug("Found bootloader version {}", bootVer);
             }
             statusBar.setText(Bundle.getMessage("StatusConnectedToBootloader", bootVer));
             // Enable the file chooser button
@@ -297,19 +297,19 @@ public class SprogIIUpdateFrame
         if ((hexFile.getAddressU()&0xFF) >= 0xF0) {
             // Write to EEPROM
             if (log.isDebugEnabled()) {
-                log.debug("Send write EE " + hexFile.getAddress());
+                log.debug("Send write EE {}", hexFile.getAddress());
             }
             msg = SprogMessage.getWriteEE(hexFile.getAddress(), hexFile.getData());
         } else if ((hexFile.getAddressU()&0xFF) >= 0x20) {
             // Write to user data or config data not supported
             if (log.isDebugEnabled()) {
-                log.debug("null write " + hexFile.getAddress());
+                log.debug("null write {}", hexFile.getAddress());
             }
             msg = null;
         } else if (sv.sprogType.isValidFlashAddress(hexFile.getAddress())) {
             // Program code address is above bootloader range and below debug executive
             if (log.isDebugEnabled()) {
-                log.debug("Send write Flash " + hexFile.getAddress());
+                log.debug("Send write Flash {}", hexFile.getAddress());
             }
             msg = SprogMessage.getWriteFlash(hexFile.getAddress(), hexFile.getData(), blockLen);
             if (log.isDebugEnabled()) {
@@ -318,7 +318,7 @@ public class SprogIIUpdateFrame
         } else {
             // Do nothing
             if (log.isDebugEnabled()) {
-                log.debug("null write " + hexFile.getAddress());
+                log.debug("null write {}", hexFile.getAddress());
             }
             msg = null;
         }
@@ -327,7 +327,7 @@ public class SprogIIUpdateFrame
             statusBar.setText(Bundle.getMessage("StatusWriteX", hexFile.getAddress()));
             tc.sendSprogMessage(msg, this);
             if (log.isDebugEnabled()) {
-                log.debug("Sent write command to address " + hexFile.getAddress());
+                log.debug("Sent write command to address {}", hexFile.getAddress());
             }
             startLongTimer();
         } else {
@@ -340,7 +340,7 @@ public class SprogIIUpdateFrame
 
     synchronized private void sendErase() {
         if (log.isDebugEnabled()) {
-            log.debug("Erase Flash " + eraseAddress);
+            log.debug("Erase Flash {}", eraseAddress);
         }
         int rows = 8; // 512 bytes
         msg = SprogMessage.getEraseFlash(eraseAddress, rows);
@@ -348,7 +348,7 @@ public class SprogIIUpdateFrame
         statusBar.setText(Bundle.getMessage("StatusEraseX", eraseAddress));
         tc.sendSprogMessage(msg, this);
         if (log.isDebugEnabled()) {
-            log.debug("Sent erase command to address " + eraseAddress);
+            log.debug("Sent erase command to address {}", eraseAddress);
         }
         eraseAddress += (rows * 64);
         startLongTimer();
@@ -377,7 +377,7 @@ public class SprogIIUpdateFrame
             eraseAddress = sv.sprogType.getEraseStart();
             if (eraseAddress > 0) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Start erasing @" + eraseAddress);
+                    log.debug("Start erasing @{}", eraseAddress);
                 }
                 sendErase();
             }

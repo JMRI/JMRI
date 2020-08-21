@@ -284,7 +284,7 @@ public class ProfileManagerDialog extends JDialog {
                 Profile profile = profiles.getSelectedValue();
                 ProfileManager.getDefault().setActiveProfile(profile);
                 if (profile != null) {
-                    log.info("Automatically starting with profile " + profile.getId() + " after timeout.");
+                    log.info("Automatically starting with profile {} after timeout.", profile.getId());
                 } else {
                     log.info("Automatically starting without a profile");
                 }

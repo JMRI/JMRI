@@ -905,7 +905,7 @@ SENSOR GROUP:my group:LS2
 
       <ul>
         <li>Logix - auto-generated 
-            <a href="http://jmri.org/JavaDoc/doc/jmri/Logix.html">Logix</a> 
+            <a href="https://jmri.org/JavaDoc/doc/jmri/Logix.html">Logix</a> 
             system names are of the form IX:AUTO:0001</li>
         <li>SENSOR GROUPS - <a href=
         "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/sensorgroup/package-summary.html">
@@ -928,11 +928,11 @@ SENSOR GROUP:my group:LS2
         of more than one yet. The DCC programmer is the first
         example, but there may be others.</li>
 
-        <li><a href="http://jmri.org/JavaDoc/doc/jmri/Conditional.html">Conditionals</a>
+        <li><a href="https://jmri.org/JavaDoc/doc/jmri/Conditional.html">Conditionals</a>
         are a special case.  Although they have things called
         "System Names" and "User Names", they don't really obey the 
         conventions here.  See the 
-        <a href="http://jmri.org/JavaDoc/doc/jmri/ConditionalManager.html">ConditionalManager Javadoc</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/ConditionalManager.html">ConditionalManager Javadoc</a>
         for more information.</li>
         
         <li>The system name convention does not provide a specific
@@ -987,12 +987,12 @@ SENSOR GROUP:my group:LS2
           it as given or, if it can not, throw the exception.
         <p>
           For more information, see the Javadoc for
-            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>, 
-            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#validateSystemName-java.lang.String-">validateSystemNameFormat</a>,
-            <a href="http://jmri.org/JavaDoc/doc/jmri/Manager.html#makeSystemName-java.lang.String-">makeSystemName</a>,
-            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.BadUserNameException.html">BadUserNameException</a>,
+            <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html#normalizeUserName-java.lang.String-">normalizeUserName</a>, 
+            <a href="https://jmri.org/JavaDoc/doc/jmri/Manager.html#validateSystemName-java.lang.String-">validateSystemNameFormat</a>,
+            <a href="https://jmri.org/JavaDoc/doc/jmri/Manager.html#makeSystemName-java.lang.String-">makeSystemName</a>,
+            <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.BadUserNameException.html">BadUserNameException</a>,
             and
-            <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.BadSystemNameException.html">BadSystemNameException</a>.         
+            <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.BadSystemNameException.html">BadSystemNameException</a>.         
         <p>
         In general, it's better to use an input method that already handles all this.  Two are available
         now:
@@ -1005,9 +1005,9 @@ SENSOR GROUP:my group:LS2
 
         // the first argument is the manager, the 2nd is a bean to select or null
         // the third determines how the beans are displayed
-        selectComboBox = new <a href="http://jmri.org/JavaDoc/doc/jmri/swing/NamedBeanComboBox.html">NamedBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class), 
+        selectComboBox = new <a href="https://jmri.org/JavaDoc/doc/jmri/swing/NamedBeanComboBox.html">NamedBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class), 
                                                     currentSensor, 
-                                                    <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.DisplayOptions.html">NamedBean.DisplayOptions</a>.DISPLAYNAME)
+                                                    <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.DisplayOptions.html">NamedBean.DisplayOptions</a>.DISPLAYNAME)
         
         // to get the selected item:
         selectComboBox.getSelectedItem()
@@ -1018,8 +1018,8 @@ SENSOR GROUP:my group:LS2
 <pre style="font-family: monospace;">
 
         import jmri.jmrit.picker.*;
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance(); // or another type
-        <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a> panel = new <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a>(tableModel);
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance(); // or another type
+        <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a> panel = new <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a>(tableModel);
             
         // to get the selected item as a NamedBeanHandle&lt;T&gt;
         panel.getSelectedBeanHandle();
@@ -1033,11 +1033,11 @@ SENSOR GROUP:my group:LS2
 </pre>
         This allows the user to select either the system name or (non-blank) user name in a row,
         which then becomes the preferred name for the resulting 
-        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>.
+        <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>.
         For more information on
-        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>,
+        <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>,
         including how to get them from the 
-        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandleManager.html">NamedBeanHandleManager</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandleManager.html">NamedBeanHandleManager</a>
         see the page on
         <a href="Patterns.shtml">code patterns page</a>.
 
@@ -1073,7 +1073,7 @@ SENSOR GROUP:my group:LS2
         Also, if you've created a system that has complex information in the suffix,
         please have your <code>NamedBean</code> subclasses implement a system-specific
         version of the
-        <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html#compareSystemNameSuffix-java.lang.String-java.lang.String-jmri.NamedBean-">compareSystemNameSuffix()</a>
+        <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html#compareSystemNameSuffix-java.lang.String-java.lang.String-jmri.NamedBean-">compareSystemNameSuffix()</a>
         method in <code>NamedBean</code>.
         For an example, see the bottom of jmri.jmrix.cmri.serial.SerialTurnout
         and jmri.jmrix.cmri.serial.SerialTurnoutTest.

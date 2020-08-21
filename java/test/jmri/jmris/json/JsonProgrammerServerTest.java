@@ -11,17 +11,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class JsonProgrammerServerTest {
 
     @Test
     public void testCTor() {
         JsonProgrammerServer t = new JsonProgrammerServer(new JsonMockConnection((DataOutputStream) null));
-        assertThat(t).isNotNull().withFailMessage("exists");
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();

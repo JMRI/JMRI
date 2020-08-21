@@ -1,6 +1,7 @@
 package jmri.jmrit.ctc;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /*
 * Tests for the CTCMain Class
@@ -13,12 +14,12 @@ public class CTCMainTest {
         Assert.assertNotNull("CTCMain Constructor Return", new CTCMain());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

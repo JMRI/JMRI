@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * or {@link jmri.util.swing.JmriAbstractAction#makePanel()} must be overridden
  * by extending classes.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
 
@@ -94,7 +94,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
             try {
                 cache = makePanel();
             } catch (Exception ex) {
-                log.error("Exception creating panel: " + ex);
+                log.error("Exception creating panel: {}", ex);
                 return;
             }
             if (cache == null) {

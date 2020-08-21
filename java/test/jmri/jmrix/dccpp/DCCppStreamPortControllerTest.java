@@ -7,16 +7,15 @@ import java.io.PipedOutputStream;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * DCCppStreamPortControllerTest.java
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppStreamPortController class
+ * Test for the jmri.jmrix.dccpp.DCCppStreamPortController class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender Copyright (C) 2012,2016
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPortControllerTestBase {
 
@@ -25,9 +24,8 @@ public class DCCppStreamPortControllerTest extends jmri.jmrix.AbstractStreamPort
        Assert.assertNotNull("exists", apc);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         try {

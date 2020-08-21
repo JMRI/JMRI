@@ -349,8 +349,6 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
 
         pIcon.add(pC);
 
-        // adjust text area width based on window size
-//        adjustTextAreaColumnWidth(commentScroller, commentTextArea);
         // row 15
         JPanel pControl = new JPanel();
         pControl.setLayout(new GridBagLayout());
@@ -374,11 +372,6 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
 
         // now provide the railroad name
         railroadNameTextField.setText(Setup.getRailroadName());
-        //DAB commented out these three lines to always allow user to directly change the railroad name from operations
-//        if (Setup.getRailroadName().equals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName())) {
-//            railroadNameTextField.setEnabled(false);
-//        }
-        createShutDownTask();
     }
 
     // Save, Delete, Add buttons

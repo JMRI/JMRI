@@ -1,7 +1,6 @@
 package jmri;
 
-import org.junit.*;
-import org.junit.runner.*;
+import org.junit.jupiter.api.*;
 
 import com.tngtech.archunit.junit.*;
 import com.tngtech.archunit.lang.*;
@@ -17,14 +16,19 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
  * This file is for checks that are valid, but not yet passing due to 
  * (too many) existing violations.
  * <p>
+ * This uses FreezingArchRule to collect issues in the archunit_store directory.
+ * (Existing) issues listed there will be silently bypassed.
+ * Should new issues be encountered, i.e. not ones already in archiunit_store, 
+ * they'll be reported as errors. Please fix them rather than committing a larger store.
+ * To see the full set of issues and/or to recreate the exclusion list, 
+ * delete the archunit_store directory and contents, then rerun this.
+ * <p>
  * Note that this only checks the classes in target/classes, which come from java/src, not
  * the ones in target/test-classes, which come from java/test.  It's relying on the common
  * build procedure to make this distinction.
  *
  * @author Bob Jacobsen 2019
  */
- 
-@RunWith(ArchUnitRunner.class)  // Remove this for JUnit 5
  
 // Pick up all classes from the target/classes directory, which is just the main (not test) code
 @AnalyzeClasses(packages = {"target/classes"}) // "jmri","apps"
@@ -33,11 +37,11 @@ public class ArchitectureCheck extends ArchitectureTest {
 
     // want these statics first in class, to initialize
     // logging before various static items are constructed
-    @BeforeClass  // tests are static
+    @BeforeAll  // tests are static
     static public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
-    @AfterClass
+    @AfterAll
     static public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
@@ -98,8 +102,9 @@ public class ArchitectureCheck extends ArchitectureTest {
                 .resideInAPackage("jmri.util..")
             .should().dependOnClassesThat()
                     .resideOutsideOfPackages("jmri", "jmri.util..",
-                                             "java..", "javax..", "org..") // swing et al imported
+                                             "java..", "javax..", "org..", "edu.umd..") // swing et al imported
         );
+        
     /**
      * Jmri.jmris should not reference jmri.jmrit
      * <p>
@@ -116,18 +121,9 @@ public class ArchitectureCheck extends ArchitectureTest {
         );
 
     /**
-     * Jmri.server should not reference jmri.jmrit
-     * <p>
-     * Intentionally redundant with the check for references to
-     * jmri.jmrit outside itself; fix these first!
-     * <p>
-     * 
+     * jmri (but not apps) should not reference org.apache.log4j to allow jmri
+     * to be used as library in applications that choose not to use Log4J.
      */
-    @ArchTest // initially 45 flags in JMRI 4.17.3
-    public static final ArchRule checkServerPackageJmrit = FreezingArchRule.freeze(
-            noClasses()
-            .that().resideInAPackage("jmri.jmris")
-            .should().dependOnClassesThat().resideInAPackage("jmri.jmrit..")
-        );
-    
+    @ArchTest
+    public static final ArchRule checkLog4J = FreezingArchRule.freeze(ArchitectureTest.noLog4JinJmri);
 }

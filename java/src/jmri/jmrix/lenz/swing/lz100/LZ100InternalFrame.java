@@ -1,7 +1,5 @@
 package jmri.jmrix.lenz.swing.lz100;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,7 +34,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     private int sendCount = 0; // count the number of times the on/off 
     // sequence for F4 has been sent during a reset
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
 
     public LZ100InternalFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
 
@@ -85,59 +83,29 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         pack();
 
         // install reset Command Station button handler
-        resetCSButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                // ask user confirmation
-                if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
-                        null, Bundle.getMessage("LZ100ConfirmResetDialog"),
-                                Bundle.getMessage("QuestionTitle"),
-                        javax.swing.JOptionPane.OK_CANCEL_OPTION,
-                        javax.swing.JOptionPane.WARNING_MESSAGE)) {
-                    // indeed send reset commands
-                    resetLZ100CS();
-                }
+        resetCSButton.addActionListener(a -> {
+            // ask user confirmation
+            if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+                    null, Bundle.getMessage("LZ100ConfirmResetDialog"),
+                            Bundle.getMessage("QuestionTitle"),
+                    javax.swing.JOptionPane.OK_CANCEL_OPTION,
+                    javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                // indeed send reset commands
+                resetLZ100CS();
             }
-        }
-        );
+        });
 
         // install Auto/Manual mode retreive button handler.
-        amModeGetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                amModeGet();
-
-            }
-        }
-        );
+        amModeGetButton.addActionListener(a -> amModeGet());
 
         // install Auto/Manual mode Save button handler.
-        amModeSetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                amModeSave();
-
-            }
-        }
-        );
+        amModeSetButton.addActionListener(a -> amModeSave());
 
         // install Auto mode button handler.
-        isAutoMode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                autoModeAction();
-            }
-        }
-        );
+        isAutoMode.addActionListener(a -> autoModeAction());
 
         // install Manual  mode button handler.
-        isManualMode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                manualModeAction();
-            }
-        }
-        );
+        isManualMode.addActionListener(a -> manualModeAction());
 
         // configure internal frame options
         setClosable(false);     // don't let the user close this frame
@@ -159,12 +127,12 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
     boolean read = false;
 
-    JLabel status = new JLabel(" ");
-    JButton resetCSButton = new JButton(Bundle.getMessage("LZ100Reset"));
-    JRadioButton isAutoMode = new JRadioButton(Bundle.getMessage("Automatic"));
-    JRadioButton isManualMode = new JRadioButton(Bundle.getMessage("Manual"));
-    JToggleButton amModeGetButton = new JToggleButton(Bundle.getMessage("LZ100GetAMMode"));
-    JToggleButton amModeSetButton = new JToggleButton(Bundle.getMessage("LZ100SetAMMode"));
+    final JLabel status = new JLabel(" ");
+    final JButton resetCSButton = new JButton(Bundle.getMessage("LZ100Reset"));
+    final JRadioButton isAutoMode = new JRadioButton(Bundle.getMessage("Automatic"));
+    final JRadioButton isManualMode = new JRadioButton(Bundle.getMessage("Manual"));
+    final JToggleButton amModeGetButton = new JToggleButton(Bundle.getMessage("LZ100GetAMMode"));
+    final JToggleButton amModeSetButton = new JToggleButton(Bundle.getMessage("LZ100SetAMMode"));
 
     /**
      * Listen for responses from the LZ100.
@@ -286,12 +254,6 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         autoMode = false;
     }
 
-    @Override
-    public void dispose() {
-        // take apart the JFrame
-        super.dispose();
-    }
-
-    private static final Logger log = LoggerFactory.getLogger(LZ100Frame.class);
+    private static final Logger log = LoggerFactory.getLogger(LZ100InternalFrame.class);
 
 }

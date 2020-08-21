@@ -143,7 +143,7 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
             }
             reporter.setReport(null);
             if (logDebug) {
-                log.debug("Timeout-" + getSystemName());
+                log.debug("Timeout-{}", getSystemName());
             }
             cleanUpTimeout();
         }

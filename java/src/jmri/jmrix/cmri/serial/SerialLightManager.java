@@ -59,7 +59,7 @@ public class SerialLightManager extends AbstractLightManager {
         String conflict;
         conflict = getMemo().isOutputBitFree(nAddress, bitNum);
         if (!conflict.equals("")) {
-            log.error("Assignment conflict with " + conflict + ".  Light not created.");
+            log.error("Assignment conflict with {}.  Light not created.", conflict);
             notifyLightCreationError(conflict, bitNum);
             return null;
         }
@@ -67,17 +67,18 @@ public class SerialLightManager extends AbstractLightManager {
         if (getMemo().validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
             lgt = new SerialLight(systemName, userName,getMemo());
             if (!getMemo().validSystemNameConfig(systemName, 'L',getMemo().getTrafficController())) {
-                log.warn("Light system Name does not refer to configured hardware: "
-                        + systemName);
+                log.warn("Light system Name does not refer to configured hardware: {}", systemName);
             }
         } else {
-            log.error("Invalid Light system Name format: " + systemName);
+            log.error("Invalid Light system Name format: {}", systemName);
         }
         return lgt;
     }
 
     /**
      * Public method to notify user of Light creation error.
+     * @param conflict human readable light name of light in conflict.
+     * @param bitNum bit number of light in conflict.
      */
     public void notifyLightCreationError(String conflict, int bitNum) {
         javax.swing.JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorAssignDialog", bitNum, conflict) + "\n" +

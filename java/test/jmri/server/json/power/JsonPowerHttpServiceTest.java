@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
@@ -12,10 +13,9 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -109,7 +109,7 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase<JsonPowerH
         }
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -121,7 +121,7 @@ public class JsonPowerHttpServiceTest extends JsonHttpServiceTestBase<JsonPowerH
         JUnitUtil.initDebugPowerManager();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

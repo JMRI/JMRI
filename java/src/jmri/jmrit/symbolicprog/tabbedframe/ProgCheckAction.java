@@ -48,7 +48,7 @@ public class ProgCheckAction extends AbstractAction {
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
             if (log.isDebugEnabled()) {
-                log.debug("located file " + file + " for XML processing");
+                log.debug("located file {} for XML processing", file);
             }
 
             warnMissingNames(file);
@@ -80,6 +80,7 @@ public class ProgCheckAction extends AbstractAction {
 
     /**
      * Check for names in programer that are not in names.xml
+     * @param file A decoder definition XML file to be checked
      */
     void warnMissingNames(File file) {
         String result = checkMissingNames(file);
@@ -119,8 +120,7 @@ public class ProgCheckAction extends AbstractAction {
                     name = nameAttr.getValue();
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("Variable called \""
-                            + ((name != null) ? name : "<none>") + "\"");
+                    log.debug("Variable called \"{}\"", (name != null) ? name : "<none>");
                 }
                 if (!(name == null ? false : nfile.checkName(name))) {
                     log.warn("Variable not found in name list: name=\"{}\"", name);
@@ -138,6 +138,7 @@ public class ProgCheckAction extends AbstractAction {
 
     /**
      * Check for names in names.xml that are not in file
+     * @param file A decoder definition XML file to be checked
      */
     void warnIncompleteComprehensive(File file) {
         String result = checkIncompleteComprehensive(file);
@@ -167,7 +168,7 @@ public class ProgCheckAction extends AbstractAction {
             List<Element> varList = new ArrayList<>();
             expandElement(root.getChild("programmer"), varList);
             if (log.isDebugEnabled()) {
-                log.debug("found " + varList.size() + " display elements");
+                log.debug("found {} display elements", varList.size());
             }
             NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
@@ -204,6 +205,8 @@ public class ProgCheckAction extends AbstractAction {
     /**
      * Check if the name is a function name, e.g. "F5 controls output 8" or
      * "FL(f) controls output 14"
+     * @param name Possible function name to check
+     * @return true if the input is a valid name
      */
     static boolean functionMapName(String name) {
         if (numericPattern == null) {
@@ -236,6 +239,10 @@ public class ProgCheckAction extends AbstractAction {
 
     /**
      * Ask SAX to read and verify a file
+     * @param file XML-formatted input file
+     * @return root element if successful
+     * @throws org.jdom2.JDOMException if file can't be parsed
+     * @throws java.io.IOException  if problems reading file
      */
     static Element readFile(File file) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile() {

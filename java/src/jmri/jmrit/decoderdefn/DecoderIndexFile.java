@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * having to manipulate files.
  * <p>
  * This class doesn't provide tools for defining the index; that's done
- * by the {@link jmri.jmrit.decoderdefn.DecoderIndexBuilder} class which 
+ * by {@link jmri.jmrit.decoderdefn.DecoderIndexCreateAction}, which 
  * rebuilds it from the decoder files.
  * <p>
  * Multiple DecoderIndexFile objects don't make sense, so we use an "instance"
@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * one is created.
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2019
- * @see jmri.jmrit.decoderdefn.DecoderIndexBuilder
+ * @see jmri.jmrit.decoderdefn.DecoderIndexCreateAction
  * 
  */
 public class DecoderIndexFile extends XmlFile {

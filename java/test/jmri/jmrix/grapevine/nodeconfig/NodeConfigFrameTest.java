@@ -1,14 +1,16 @@
 package jmri.jmrix.grapevine.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -21,8 +23,7 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         Assert.assertEquals("title","Configure Nodes",frame.getTitle());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -36,7 +37,7 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo = null;

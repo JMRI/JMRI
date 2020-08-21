@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for running CMRI assignment list.
  *
- * @author	Dave Duchamp Copyright (C) 2006
- * @author	Chuck Catania Copyright (C) 2014, 2016, 2017
+ * @author Dave Duchamp Copyright (C) 2006
+ * @author Chuck Catania Copyright (C) 2014, 2016, 2017
  */
 public class NodeIOListFrame extends jmri.util.JmriJFrame {
 
@@ -222,7 +222,8 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle selection of a Node for info display
+     * Method to handle selection of a Node for info display.
+     * @param nodeID node ID number.
      */
     public void displayNodeIOBits(int nodeID) {
         nodeLabel.setText("Node: " + nodeID + "     ");
@@ -290,7 +291,8 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle print button in List Frame
+     * Method to handle print button in List Frame.
+     * @param e unused.
      */
     public void printButtonActionPerformed(java.awt.event.ActionEvent e) {
         int[] colWidth = new int[5];
@@ -457,6 +459,8 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
          * vertical lines between each column. Data is word wrapped within a
          * column. Can only handle 4 columns of data as strings. Adapted from
          * routines in BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
+         * @param w hard copy writer instance.
+         * @param colWidth column width array.
          */
         public void printTable(HardcopyWriter w, int colWidth[]) {
             // determine the column sizes - proportionately sized, with space between for lines
@@ -578,7 +582,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                     w.write("\n");
                     lineString = new StringBuilder("");
                 } catch (IOException e) {
-                    log.warn("error during printing: " + e);
+                    log.warn("error during printing: {}", e);
                 }
             }
         }

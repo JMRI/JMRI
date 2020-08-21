@@ -3,12 +3,14 @@ package jmri.jmrix.cmri.serial.nodeconfig;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of NodeConfigFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
 
@@ -21,22 +23,22 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         Assert.assertEquals("title", "Configure Nodes", frame.getTitle());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
 
         memo = new CMRISystemConnectionMemo();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new NodeConfigFrame(memo);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new NodeConfigFrame(memo);
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	super.tearDown();
+        super.tearDown();
     }
 }

@@ -122,7 +122,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 start = lines[i].indexOf('[') + 1;
                                 end = lines[i].indexOf(']');
                                 int ports = Integer.parseInt(lines[i].substring(start, end));
-                                log.debug("Found sensor object " + object + " ports " + ports);
+                                log.debug("Found sensor object {} ports {}", object, ports);
 
                                 if ((ports == 8) || (ports == 16)) {
                                     Sensor s;
@@ -171,7 +171,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                     em = new EcosMessage("get(" + object + ",state)");
                                     tc.sendEcosMessage(em, this);
                                 } else {
-                                    log.debug("Invalid number of ports returned for Module " + object);
+                                    log.debug("Invalid number of ports returned for Module {}", object);
                                 }
                             }
                         }

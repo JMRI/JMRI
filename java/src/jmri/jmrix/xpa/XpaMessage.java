@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Encodes a message to an XpressNet command station via an XPA and a modem.
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public class XpaMessage implements jmri.jmrix.Message {
 
@@ -121,26 +121,36 @@ public class XpaMessage implements jmri.jmrix.Message {
     }
 
     /**
-     * Get a message for an "Increase/Decrease Speed" command
+     * Get a message for an "Increase Speed" command
      * to a specific locomotive on the layout.  To make
-     * calculations easy, this uses a single speed step change.
+     * calculations easy, this uses a single speed step increase.
      *
      * @param address throttle loco address for message
      * @param steps amount of speed steps to change, + to increase, - to decrease
      */
-    static XpaMessage getSpeedChangeMsg(int address, int steps) {
+    static XpaMessage getIncSpeedMsg(int address, int steps) {
         StringBuilder buf = new StringBuilder("ATDT#" + address + "*");
         String message;
-        String digit = "3"; // for increase speed message
-        if (steps < 0) {
-            digit = "1"; // decrease speed
-            steps = Math.abs(steps);
-        }
         for (int i = 0; i < steps; i++) {
-            buf.append(digit);
+            buf.append("3");
         }
         message = buf.toString() + ";";
         return new XpaMessage(message);
+    }
+
+    /*
+     Get a message for a "Decrease Speed" command
+     to a specific locomotive on the layout.  To make
+     calculations easy, this uses a single speed step decrease
+     */
+    static XpaMessage getDecSpeedMsg(int Address, int steps) {
+        StringBuilder buf = new StringBuilder("ATDT#" + Address + "*");
+        String Message;
+        for (int i = 0; i < steps; i++) {
+            buf.append("1");
+        }
+        Message = buf.toString() + ";";
+        return new XpaMessage(Message);
     }
 
     /*
@@ -183,16 +193,6 @@ public class XpaMessage implements jmri.jmrix.Message {
      */
     static XpaMessage getSwitchReverseMsg(int address) {
         return new XpaMessage("ATDT#" + address + "#1;");
-    }
-
-    /*
-     Get the appropriate Switch Message.
-     */
-    static XpaMessage getSwitchMsg(int address, boolean reversed) {
-        if (reversed) {
-            return getSwitchReverseMsg(address);
-        }
-        return getSwitchNormalMsg(address);
     }
 
     // Xpa Device Settings

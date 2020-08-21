@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * Updated by Andrew Crosland February 2012 to allow slots to hold 28 step speed
  * packets
  *
- * @author	Andrew Crosland Copyright (C) 2006, 2012
- * @author	Andrew Berridge 2010
+ * @author Andrew Crosland Copyright (C) 2006, 2012
+ * @author Andrew Berridge 2010
  */
 public class SprogSlot {
 
@@ -347,10 +347,10 @@ public class SprogSlot {
 
     private int doRepeat() {
         if (repeat > 0) {
-            log.debug("Slot " + slot + " repeats");
+            log.debug("Slot {} repeats", slot);
             repeat--;
             if (repeat == 0) {
-                log.debug("Clear slot " + slot + " due to repeats exhausted");
+                log.debug("Clear slot {} due to repeats exhausted", slot);
                 this.clear();
             }
         }

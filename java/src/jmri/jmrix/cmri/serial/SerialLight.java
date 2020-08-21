@@ -25,6 +25,8 @@ public class SerialLight extends AbstractLight {
      * Create a Light object, with only system name.
      * <p>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName light system name.
+     * @param memo system connection.
      */
     public SerialLight(String systemName,CMRISystemConnectionMemo memo) {
         super(systemName);
@@ -37,6 +39,9 @@ public class SerialLight extends AbstractLight {
      * Create a Light object, with both system and user names.
      * <p>
      * 'systemName' was previously validated in SerialLightManager
+     * @param systemName light system name.
+     * @param userName light username.
+     * @param memo system connection.
      */
     public SerialLight(String systemName, String userName,CMRISystemConnectionMemo memo) {
         super(systemName, userName);
@@ -76,7 +81,7 @@ public class SerialLight extends AbstractLight {
             } else if (newState == OFF) {
                 mNode.setOutputBit(mBit, true);
             } else {
-                log.warn("illegal state requested for Light: " + getSystemName());
+                log.warn("illegal state requested for Light: {}", getSystemName());
             }
         }
     }

@@ -36,9 +36,9 @@ public class RfidStreamConnectionConfigXml extends AbstractStreamConnectionConfi
 
     @Override
     protected void register() {
-	if(adapter!=null) {
-	   return; // already registered.
-	}
+        if (adapter != null) {
+            return; // already registered.
+        }
         this.register(new RfidStreamConnectionConfig(adapter));
     }
 

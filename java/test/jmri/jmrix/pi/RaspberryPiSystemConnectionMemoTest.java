@@ -2,139 +2,121 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
+
+import jmri.InstanceManager;
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for RaspberryPiSystemConnectionMemo.
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class RaspberryPiSystemConnectionMemoTest extends SystemConnectionMemoTestBase<RaspberryPiSystemConnectionMemo> {
 
     @Test
     public void checkProvidesSensorManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        Assert.assertTrue(m.provides(jmri.SensorManager.class));
+        Assert.assertTrue(scm.provides(jmri.SensorManager.class));
     }
 
     @Test
     public void checkProvidesWhenDisabled() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        m.setDisabled(true);
-        Assert.assertFalse(m.provides(jmri.SensorManager.class));
+        scm.setDisabled(true);
+        Assert.assertFalse(scm.provides(jmri.SensorManager.class));
     }
 
     @Test
     public void checkProvidesTurnoutManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        Assert.assertTrue(m.provides(jmri.TurnoutManager.class));
+        Assert.assertTrue(scm.provides(jmri.TurnoutManager.class));
     }
 
     @Test
     public void checkProvidesLightManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        Assert.assertFalse(m.provides(jmri.LightManager.class)); //false until implemented.
+        Assert.assertFalse(scm.provides(jmri.LightManager.class)); //false until implemented.
     }
     
     @Override
     @Test
     public void testProvidesConsistManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        Assert.assertFalse(m.provides(jmri.ConsistManager.class));
+        Assert.assertFalse(scm.provides(jmri.ConsistManager.class));
     }
 
     @Test
     public void checkProvidesOtherManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        Assert.assertFalse(m.provides(jmri.GlobalProgrammerManager.class));
+        Assert.assertFalse(scm.provides(jmri.GlobalProgrammerManager.class));
     }
 
     @Test
     public void setAndGetSensorManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        RaspberryPiSensorManager sm = new RaspberryPiSensorManager(m);
-        m.setSensorManager(sm);
-        Assert.assertSame("Sensor Manager", sm, m.getSensorManager());
+        RaspberryPiSensorManager sm = new RaspberryPiSensorManager(scm);
+        scm.setSensorManager(sm);
+        Assert.assertSame("Sensor Manager", sm, scm.getSensorManager());
     }
 
     @Test
     public void setAndGetTurnoutManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        RaspberryPiTurnoutManager sm = new RaspberryPiTurnoutManager(m);
-        m.setTurnoutManager(sm);
-        Assert.assertSame("Turnout Manager", sm, m.getTurnoutManager());
+        RaspberryPiTurnoutManager sm = new RaspberryPiTurnoutManager(scm);
+        scm.setTurnoutManager(sm);
+        Assert.assertSame("Turnout Manager", sm, scm.getTurnoutManager());
     }
 
     @Test
     public void setAndGetLightManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        //RaspberryPiLightManager sm = new RaspberryPiLightManager(m.getSystemPrefix());
-        //m.setTurnoutManager(sm);
-        //Assert.assertSame("Light Manager", sm, m.getLightManager());
-        Assert.assertNull("Light Manager", m.getLightManager());
+        Assert.assertNull("Light Manager", scm.getLightManager());
     }
 
     @Test
     public void checkConfigureManagers() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        m.configureManagers();
-        Assert.assertNotNull("Sensor Manager after configureManagers", m.getSensorManager());
-        Assert.assertNotNull("Turnout Manager after configureManagers", m.getTurnoutManager());
-        Assert.assertNull("Light Manager after configureManagers", m.getLightManager());
+        scm.configureManagers();
+        Assert.assertNotNull("Sensor Manager after configureManagers", scm.getSensorManager());
+        Assert.assertNotNull("Turnout Manager after configureManagers", scm.getTurnoutManager());
+        Assert.assertNull("Light Manager after configureManagers", scm.getLightManager());
     }
 
     @Test
     public void checkGetSensorManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        m.configureManagers();
-        Assert.assertNotNull(m.get(jmri.SensorManager.class));
+        scm.configureManagers();
+        Assert.assertNotNull(scm.get(jmri.SensorManager.class));
     }
 
     @Test
     public void checkGetSensorManagerWhenDisabled() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        m.configureManagers();
-        m.setDisabled(true);
-        Assert.assertNull(m.get(jmri.SensorManager.class));
+        scm.configureManagers();
+        scm.setDisabled(true);
+        Assert.assertNull(scm.get(jmri.SensorManager.class));
     }
 
     @Test
     public void checkGetTurnoutManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        m.configureManagers();
-        Assert.assertNotNull(m.get(jmri.TurnoutManager.class));
+        scm.configureManagers();
+        Assert.assertNotNull(scm.get(jmri.TurnoutManager.class));
     }
 
     @Test
     public void checkGetLightManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        m.configureManagers();
-        Assert.assertNull(m.get(jmri.LightManager.class)); // null until implemented.
+        scm.configureManagers();
+        Assert.assertNull(scm.get(jmri.LightManager.class)); // null until implemented.
     }
 
     @Test
     public void checkGetOtherManager() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
-        m.configureManagers();
-        Assert.assertNull(m.get(jmri.GlobalProgrammerManager.class));
+        scm.configureManagers();
+        Assert.assertNull(scm.get(jmri.GlobalProgrammerManager.class));
     }
 
     @Test
     public void checkDispose() {
-        RaspberryPiSystemConnectionMemo m = (RaspberryPiSystemConnectionMemo)scm;
         // verify the connection is registered
-        Assert.assertNotNull(jmri.InstanceManager.getDefault(RaspberryPiSystemConnectionMemo.class));
-        m.dispose();
+        Assert.assertNotNull(InstanceManager.getDefault(RaspberryPiSystemConnectionMemo.class));
+        scm.dispose();
         // after dispose, should be deregistered.
-        Assert.assertNull(jmri.InstanceManager.getNullableDefault(RaspberryPiSystemConnectionMemo.class));
+        Assert.assertNull(InstanceManager.getNullableDefault(RaspberryPiSystemConnectionMemo.class));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -143,12 +125,11 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
         GpioProvider myprovider = new PiGpioProviderScaffold();
         GpioFactory.setDefaultProvider(myprovider);
 
-        RaspberryPiSystemConnectionMemo memo = new RaspberryPiSystemConnectionMemo();
-        memo.configureManagers();
-        scm = memo;
+        scm = new RaspberryPiSystemConnectionMemo();
+        scm.configureManagers();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         scm = null;

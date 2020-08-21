@@ -40,8 +40,9 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         if (tm.isAdvancedRoutingEnabled()) {
             layoutblocks.setAttribute("blockrouting", "yes");
         }
-        if (tm.getNamedStabilisedSensor() != null) {
-            layoutblocks.setAttribute("routingStablisedSensor", tm.getNamedStabilisedSensor().getName());
+        jmri.NamedBeanHandle<Sensor> tmStable = tm.getNamedStabilisedSensor();
+        if (tmStable != null) {
+            layoutblocks.setAttribute("routingStablisedSensor", tmStable.getName());
         }
 
         java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
@@ -56,10 +57,10 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
             if (sname == null) {
                 log.error("System name null during LayoutBlock store");
             } else {
-                log.debug("layoutblock system name is " + sname);
+                log.debug("layoutblock system name is {}", sname);
                 LayoutBlock b = tm.getBySystemName(sname);
                 // save only those LayoutBlocks that are in use--skip abandoned ones
-                if (b.getUseCount() > 0) {
+                if (b!=null && b.getUseCount() > 0) {
                     Element elem = new Element("layoutblock").setAttribute("systemName", sname);
                     elem.addContent(new Element("systemName").addContent(sname));
                     storeCommon(b, elem);
@@ -132,15 +133,13 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
 
         List<Element> layoutblockList = layoutblocks.getChildren("layoutblock");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + layoutblockList.size() + " layoutblocks");
+            log.debug("Found {} layoutblocks", layoutblockList.size());
         }
 
         for (Element e : layoutblockList) {
             String sysName = getSystemName(e);
             if (sysName == null) {
-                log.warn("unexpected null in systemName "
-                        + e + " "
-                        + e.getAttributes());
+                log.warn("unexpected null in systemName {} {}", e, e.getAttributes());
                 break;
             }
 
@@ -197,7 +196,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                     try {
                         b.setBlockMetric(Integer.parseInt(stMetric));
                     } catch (java.lang.NumberFormatException ex) {
-                        log.error("failed to convert metric attribute for block " + b.getDisplayName());
+                        log.error("failed to convert metric attribute for block {}", b.getDisplayName());
                     }
                 }
             }
@@ -229,5 +228,5 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockManagerXml.class);
 }

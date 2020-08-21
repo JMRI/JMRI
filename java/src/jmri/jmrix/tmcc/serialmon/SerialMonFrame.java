@@ -8,7 +8,7 @@ import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 /**
  * Frame displaying (and logging) TMCC serial command messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006
+ * @author Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 

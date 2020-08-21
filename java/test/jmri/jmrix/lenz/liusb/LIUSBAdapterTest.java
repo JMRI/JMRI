@@ -1,17 +1,16 @@
 package jmri.jmrix.lenz.liusb;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * LIUSBAdapterTest.java
  *
- * Description:	tests for the jmri.jmrix.lenz.liusb.LIUSBAdapter class
+ * Test for the jmri.jmrix.lenz.liusb.LIUSBAdapter class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class LIUSBAdapterTest {
 
@@ -21,12 +20,12 @@ public class LIUSBAdapterTest {
         Assert.assertNotNull(a);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

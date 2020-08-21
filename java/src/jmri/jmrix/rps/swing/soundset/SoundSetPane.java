@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for control of the sound speed for the RPS system.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class SoundSetPane extends JPanel
         implements ReadingListener, MeasurementListener, PropertyChangeListener {
@@ -149,12 +149,12 @@ public class SoundSetPane extends JPanel
                 log.warn("resetting receiver number");
                 rcvr.setText("");
             }
-            log.debug("Rcvr " + i + " saw " + r.getValue(i));
+            log.debug("Rcvr {} saw {}", i, r.getValue(i));
             double val = r.getValue(i);
 
             // can't use speed too small
             if (val < 100) {
-                log.warn("time too small to use: " + val);
+                log.warn("time too small to use: {}", val);
                 return;
             }
 
@@ -166,7 +166,7 @@ public class SoundSetPane extends JPanel
             if (auto.isSelected()) {
                 double g = Double.parseDouble(gain.getText());
                 if (g < 1) {
-                    log.warn("resetting gain from " + gain.getText());
+                    log.warn("resetting gain from {}", gain.getText());
                     gain.setText("10.");
                     return;
                 }
@@ -174,7 +174,7 @@ public class SoundSetPane extends JPanel
                 Engine.instance().setVSound(updatedspeed);
             }
         } catch (Exception e) {
-            log.debug("Error calculating speed: " + e);
+            log.debug("Error calculating speed: {}", e);
             speed.setText("");
         }
     }

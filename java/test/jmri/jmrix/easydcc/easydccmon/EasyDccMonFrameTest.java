@@ -5,12 +5,14 @@ import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the EasyDccMonFrame class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class EasyDccMonFrameTest {
 
@@ -22,7 +24,7 @@ public class EasyDccMonFrameTest {
     }
 
     @Test
-    @Ignore("Test fails to get text from frame")
+    @Disabled("Test fails to get text from frame")
     public void testMsg() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EasyDccMessage m = new EasyDccMessage(3);
@@ -41,7 +43,7 @@ public class EasyDccMonFrameTest {
     }
 
     @Test
-    @Ignore("Test fails to get text from frame")
+    @Disabled("Test fails to get text from frame")
     public void testReply() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EasyDccReply m = new EasyDccReply();
@@ -59,12 +61,12 @@ public class EasyDccMonFrameTest {
         Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText());
     }
 
-    @Before
+    @BeforeEach
     public void setUp(){
        jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
        jmri.util.JUnitUtil.tearDown();
     }

@@ -18,10 +18,9 @@ import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -198,15 +197,14 @@ public class JsonSignalHeadSocketServiceTest {
         
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalSignalHeadManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

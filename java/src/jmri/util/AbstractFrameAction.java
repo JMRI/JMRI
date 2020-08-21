@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * This does not manage the JFrame instance; if you invoke this twice, you get
  * two JFrame objects.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 abstract public class AbstractFrameAction extends AbstractAction {
 

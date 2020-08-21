@@ -3,11 +3,13 @@ package jmri.jmrix.can.cbus;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -26,7 +28,7 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
 /*
-    @Test(expected=java.lang.IllegalArgumentException.class)
+    @Test
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
@@ -72,9 +74,8 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     
     private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new TrafficControllerScaffold();
@@ -82,7 +83,7 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         programmer = null;
         tcis.terminateThreads();

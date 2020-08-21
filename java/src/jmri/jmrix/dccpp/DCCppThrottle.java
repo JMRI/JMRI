@@ -32,7 +32,9 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     protected int address;
 
     /**
-     * Constructor
+     * Constructor.
+     * @param memo system connection.
+     * @param controller system connection traffic controller.
      */
     public DCCppThrottle(DCCppSystemConnectionMemo memo, DCCppTrafficController controller) {
         super(memo);
@@ -44,7 +46,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Constructor
+     * Constructor.
+     * @param memo system connection.
+     * @param address loco address.
+     * @param controller system connection traffic controller.
      */
     public DCCppThrottle(DCCppSystemConnectionMemo memo, LocoAddress address, DCCppTrafficController controller) {
         super(memo);
@@ -70,9 +75,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     /**
      * Get the Register Number for this Throttle's assigned address
+     * @return register number currently
      */
     int getRegisterNum() {
- return(tc.getCommandStation().getRegisterNum(this.getDccAddress()));
+        return (tc.getCommandStation().getRegisterNum(this.getDccAddress()));
     }
 
     /**
@@ -155,8 +161,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     @Override
     synchronized public void setSpeedSetting(float speed) {
         if (log.isDebugEnabled()) {
-            log.debug("set Speed to: " + speed
-                    + " Current step mode is: " + this.speedStepMode);
+            log.debug("set Speed to: {} Current step mode is: {}", speed, this.speedStepMode);
         }
         super.setSpeedSetting(speed);
         if (speed < 0) {
@@ -320,7 +325,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString() + " , " + msg.getRetries() + " retries available.");
+            log.debug("Notified of timeout on message{} , {} retries available.", msg.toString(), msg.getRetries());
         }
         if (msg.getRetries() > 0) {
             // If the message still has retries available, send it back to 

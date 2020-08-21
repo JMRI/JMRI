@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Adapted by Sip Bosch for use with zimo Mx-1.
  * 
- * @author	Bob Jacobsen Copyright (C) 2002
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public abstract class Mx1TrafficController implements Mx1Interface {
 
@@ -93,7 +93,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
             v = (Vector<Mx1Listener>) listeners.clone();
         }
         if (log.isDebugEnabled()) {
-            log.debug("notify of incoming packet: " + m.toString());
+            log.debug("notify of incoming packet: {}", m.toString());
         }
         // forward to all listeners
         int cnt = v.size();

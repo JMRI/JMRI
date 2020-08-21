@@ -82,10 +82,10 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
     }
 
     /**
-     * Parse the XML file and create ThrottleFrames. Returns true if throttle
-     * loaded successfully.
-     *
+     * Parse the XML file and create ThrottleFrames.
+     * @return  true if throttle loaded successfully, else false.
      * @param f The XML file containing throttles.
+     * @throws java.io.IOException on error.
      */
     public boolean loadThrottlesLayout(java.io.File f) throws java.io.IOException {
         try {

@@ -3,15 +3,13 @@ package jmri.jmrix.can.cbus;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammerManager class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusProgrammerManagerTest {
 
@@ -26,12 +24,12 @@ public class CbusProgrammerManagerTest {
         Assert.assertTrue("addressed mode ok", m.isAddressedModePossible());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

@@ -1,9 +1,8 @@
 package jmri.jmrix.xpa;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
@@ -107,7 +106,7 @@ public class XpaMessageTest {
     @Test
     public void testGetIncreaseSpeedMsg() {
         String s = "ATDT#65*33333;"; // expected value.
-        XpaMessage m = XpaMessage.getSpeedChangeMsg(65, 5);
+        XpaMessage m = XpaMessage.getIncSpeedMsg(65, 5);
         Assert.assertNotNull("String Constructor Succeeded", m);
         Assert.assertEquals("length", s.length(), m.getNumDataElements());
         Assert.assertEquals("content", s, m.toString());
@@ -116,9 +115,9 @@ public class XpaMessageTest {
     @Test
     public void testGetDecreaseSpeedMsg() {
         String s = "ATDT#65*11111;"; // expected value.
-        XpaMessage m = XpaMessage.getSpeedChangeMsg(65, -5);
+        XpaMessage m = XpaMessage.getDecSpeedMsg(65, 5);
         Assert.assertNotNull("String Constructor Succeeded", m);
-        //Assert.assertEquals("length", s.length(), m.getNumDataElements());
+        Assert.assertEquals("length", s.length(), m.getNumDataElements());
         Assert.assertEquals("content", s, m.toString());
     }
 
@@ -177,12 +176,12 @@ public class XpaMessageTest {
         Assert.assertTrue("content", s.equals(m.toString()));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

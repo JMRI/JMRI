@@ -2,9 +2,6 @@ package jmri.jmrix.lenz.lzv200;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "standard naming for ConnectionConfig objects in XpressNet")
-
-
 /**
  * Handle configuring an XpressNet layout connection via a Lenz LZV200adapter.
  * <p>
@@ -14,11 +11,13 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  * @see LZV200Adapter
  */
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "standard naming for ConnectionConfig objects in XpressNet")
 public class ConnectionConfig extends jmri.jmrix.lenz.liusb.ConnectionConfig {
 
     /**
      * Ctor for an object being created during load process.
      * Swing init is deferred.
+     * @param p serial port adapter.
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);

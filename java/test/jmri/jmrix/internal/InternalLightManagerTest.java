@@ -1,13 +1,10 @@
 package jmri.jmrix.internal;
 
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
+import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the jmri.jmrix.internal.InternalLightManager class.
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
 public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
@@ -36,16 +33,16 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         Light tl = lm.newLight("IL21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received light value " + tl);
+            log.debug("received light value {}", tl);
         }
         Assert.assertTrue(null != tl);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + lm.getBySystemName("IL21"));
+            log.debug("by system name: {}", lm.getBySystemName("IL21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + lm.getByUserName("my name"));
+            log.debug("by user name:   {}", lm.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != lm.getBySystemName("IL21"));
@@ -58,11 +55,10 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         // ask for a Light, and check type
         LightManager lm = jmri.InstanceManager.lightManagerInstance();
 
-        Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
+        Assert.assertTrue(lm.newLight("IL21", "my name") instanceof VariableLight);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -71,7 +67,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         jmri.InstanceManager.setLightManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

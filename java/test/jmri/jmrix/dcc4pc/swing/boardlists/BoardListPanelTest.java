@@ -5,15 +5,14 @@ import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
 import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcListener;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of BoardListPanel
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class BoardListPanelTest {
 
@@ -36,12 +35,12 @@ public class BoardListPanelTest {
         Assert.assertNotNull("exists", action);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

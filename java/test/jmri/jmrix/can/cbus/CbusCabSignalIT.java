@@ -6,8 +6,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Integration Tests for CBUS Cab Signals
@@ -20,8 +20,7 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
     private CanSystemConnectionMemo memo;
     private TrafficController tc;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -34,7 +33,6 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
-        InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
 
         // prepare the cab signal
         memo = new CanSystemConnectionMemo();
@@ -44,7 +42,7 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         cs = new CbusCabSignal(memo,new DccLocoAddress(1234,true));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo.dispose();
@@ -53,6 +51,7 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         tc = null;
         cs.dispose();
         cs = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }

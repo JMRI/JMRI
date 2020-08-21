@@ -2,12 +2,14 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 
 import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.CanSprogConnectionConfig;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * CanSprogConnectionConfigXmlTest.java
  * 
- * Description: tests for the CanSprogConnectionConfigXml class
+ * Test for the CanSprogConnectionConfigXml class
  *
  * @author   Andrew Crosland  Copyright (C) 2020
  */
@@ -19,8 +21,7 @@ public class CanSprogConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abs
         Assert.assertNotNull("exists",c);
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -28,11 +29,12 @@ public class CanSprogConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abs
         cc = new CanSprogConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.tearDown();
     }
 }

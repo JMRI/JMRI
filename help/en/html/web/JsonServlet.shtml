@@ -49,7 +49,7 @@
         the JMRI JSON servlet and provides some examples of use.</p>
 
       <p><strong>Note</strong> the JMRI JSON protocol is documented in <a
-          href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">JMRI API Documentation</a>.</p>
+          href="https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">JMRI API Documentation</a>.</p>
 
       <h2><a name="jmri_json_servlet">JMRI JSON Servlet</a></h2>
 
@@ -125,7 +125,7 @@
           </dl>
           A JSON array of valid types for your JMRI installation is available by using the <em>type</em>
           "<code><a href="http://localhost:12080/json/type">type</a></code>". See the <a
-            href="http://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">protocol documentation</a> for more
+            href="https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">protocol documentation</a> for more
           details.
         </dd>
 

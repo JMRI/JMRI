@@ -9,7 +9,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.util.ColorUtil;
 
@@ -102,9 +102,9 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         int rangemin = 1;
         int rangemax = 32;
         int columns = 4;
-        String type = "T";
-        String connection = "I";
-        String shape = "key";
+        String type;
+        String connection;
+        String shape;
         String name;
 
         try {
@@ -130,13 +130,13 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
-        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
 
         // If available, override location and size with machine dependent values
-        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+        if (!InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
 
@@ -156,7 +156,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         SwitchboardEditor panel = new SwitchboardEditor(name);
         //panel.makeFrame(name);
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
+        InstanceManager.getDefault(EditorManager.class).add(panel);
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
 

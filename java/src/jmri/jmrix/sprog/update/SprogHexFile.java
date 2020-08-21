@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Intended use is as an input format for new program code to be sent to a
  * hardware device via some bootloading process.
  *
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Andrew Crosland Copyright (C) 2010
  */
 public class SprogHexFile extends jmri.util.JmriJFrame {
 
@@ -165,7 +165,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
             }
             if (charIn != ':') {
                 if (log.isDebugEnabled()) {
-                    log.debug("HexFile.readLine no colon at start of line " + lineNo);
+                    log.debug("HexFile.readLine no colon at start of line {}", lineNo);
                 }
                 return new int[]{-1};
             }
@@ -173,7 +173,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("IoErrorReadingHexFile"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             if (log.isDebugEnabled()) {
-                log.debug("I/O Error reading hex file!" + e.toString());
+                log.debug("I/O Error reading hex file!{}", e.toString());
             }
         }
         // length of data
@@ -200,7 +200,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
         }
         int fileCheck = rdHexByte();
         if (((checksum + fileCheck) & 0xff) != 0) {
-            log.error("HexFile.readLine bad checksum at line " + lineNo);
+            log.error("HexFile.readLine bad checksum at line {}", lineNo);
         }
         lineNo++;
         return record;
@@ -246,7 +246,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("IoErrorReadingHexFile"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("I/O Error reading hex file!"+ e.toString());
+            log.error("I/O Error reading hex file!{}", e.toString());
         }
         return (byte) b;
     }

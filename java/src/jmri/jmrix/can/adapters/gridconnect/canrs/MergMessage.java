@@ -52,7 +52,7 @@ public class MergMessage extends GridConnectMessage {
         setElement(offset + m.getNumDataElements() * 2, ';');
         setNumDataElements(offset + 1 + m.getNumDataElements() * 2);
         if (log.isDebugEnabled()) {
-            log.debug("encoded as " + this.toString());
+            log.debug("encoded as {}", this.toString());
         }
     }
 
@@ -67,20 +67,20 @@ public class MergMessage extends GridConnectMessage {
         if (isExtended()) {
             munged = ((header << 3) & 0xFFE00000) | 0x80000 | (header & 0x3FFFF);
             if (log.isDebugEnabled()) {
-                log.debug("Extended header is " + header);
+                log.debug("Extended header is {}", header);
             }
             if (log.isDebugEnabled()) {
-                log.debug("Munged header is " + munged);
+                log.debug("Munged header is {}", munged);
             }
             super.setHeader(munged);
         } else {
             // 11 header bits are left justified
             munged = header << 5;
             if (log.isDebugEnabled()) {
-                log.debug("Standard header is " + header);
+                log.debug("Standard header is {}", header);
             }
             if (log.isDebugEnabled()) {
-                log.debug("Munged header is " + munged);
+                log.debug("Munged header is {}", munged);
             }
             // Can't use super() as we want to send 4 digits
             setHexDigit((munged >> 12) & 0xF, 2);

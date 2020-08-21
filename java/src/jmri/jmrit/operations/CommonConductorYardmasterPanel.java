@@ -428,7 +428,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             setLabelFont(header);
             pMoves.add(header);
         }
-        List<Track> tracks = rl.getLocation().getTrackByNameList(null);
+        List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<RouteLocation> routeList = _train.getRoute().getLocationsBySequenceList();
         List<Car> carList = carManager.getByTrainDestinationList(_train);
         for (Track track : tracks) {

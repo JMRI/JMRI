@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * Aspects are named by a user defined String name.
  * <DT>Lit<DD>Whether the mast's lamps are lit or left dark.
  * This differs from the DARK color defined for the appearance parameter, in
- * that it's independent of that. Lit is intended to allow you to extinquish a
+ * that it's independent of that. Lit is intended to allow you to extinguish a
  * signal mast for approach lighting, while still allowing its color to be set
  * to a definite value for e.g. display on a panel or evaluation in higher level
  * logic.
@@ -83,6 +83,7 @@ public interface SignalMast extends NamedBean {  // to eventually be Signal
      * for the 
      * <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-3-high.xml">AAR-1946/appearance-SL-3-high.xml</a>
      * definition.
+     * @param type mast type.
      */
     public void setMastType(@Nonnull String type);
 
@@ -93,6 +94,7 @@ public interface SignalMast extends NamedBean {  // to eventually be Signal
      * for the 
      * <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-3-high.xml">AAR-1946/appearance-SL-3-high.xml</a>
      * definition.
+     * @return mast type.
      */
     public String getMastType();
     

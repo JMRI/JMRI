@@ -2,7 +2,9 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 
 import jmri.InstanceManager;
@@ -17,7 +19,7 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
@@ -283,16 +285,15 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp();
         JUnitOperationsUtil.loadTrains();
      }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         super.tearDown();
     }

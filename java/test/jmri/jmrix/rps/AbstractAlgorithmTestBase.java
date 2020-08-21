@@ -1,11 +1,11 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Common test scaffolding for Algorithm implementations.
@@ -16,7 +16,7 @@ import org.junit.Test;
  * <p>
  * Implementing subclasses should provide static "main" and "suite" methods.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 abstract public class AbstractAlgorithmTestBase {
 
@@ -202,12 +202,12 @@ abstract public class AbstractAlgorithmTestBase {
         Assert.assertTrue(label + " code <= max", m.getCode() <= codemax);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

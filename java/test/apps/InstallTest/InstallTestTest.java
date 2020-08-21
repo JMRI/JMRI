@@ -1,8 +1,12 @@
 package apps.InstallTest;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+import org.junit.Assert;
+import org.junit.Assume;
 
 /**
  *
@@ -11,20 +15,19 @@ import org.junit.*;
 public class InstallTestTest {
 
     @Test
-    @Ignore("gives error message about an invalid profile on Travis")
+    @Disabled("gives error message about an invalid profile on Travis")
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstallTest t = new InstallTest();
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

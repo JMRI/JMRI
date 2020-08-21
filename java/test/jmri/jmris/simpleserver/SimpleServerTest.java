@@ -36,7 +36,7 @@ public class SimpleServerTest {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     @Override
-                    public void write(int b) throws java.io.IOException {
+                    public void write(int b) {
                         sb.append((char)b);
                     }
                 });
@@ -47,7 +47,6 @@ public class SimpleServerTest {
                ss.handleClient(new java.io.DataInputStream(input),output); }
             catch(java.io.IOException ioe){
                // exception expected at end of input.
-               return;
             }
             });
         t.setName("simpleserver client test thread");
@@ -59,7 +58,6 @@ public class SimpleServerTest {
         }
     }
 
-    // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

@@ -136,6 +136,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
      * existing information in an existing ConnectionConfig object. It's
      * permitted to call this with a null argument, e.g. for when first
      * configuring the system.
+     * @param original Existing ConnectionConfig object to (re)connect with
      */
     protected JmrixConfigPane(ConnectionConfig original) {
 

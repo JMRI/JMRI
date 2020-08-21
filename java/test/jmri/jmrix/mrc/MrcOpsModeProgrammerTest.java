@@ -1,14 +1,13 @@
 package jmri.jmrix.mrc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
@@ -18,8 +17,7 @@ public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
     }    
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -31,7 +29,7 @@ public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         programmer = t;
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

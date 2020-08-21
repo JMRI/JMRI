@@ -178,12 +178,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                             int b = Integer.parseInt(st.nextToken(), 16);
                             // log.debug("char {} is: {}", i, Integer.toHexString(b));
                             if ((b & 0x80) != 0) {
-                                log.warn("LocoNet message with opCode: "
-                                        + Integer.toHexString(opCode)
-                                        + " ended early. Expected length: " + len
-                                        + " seen length: " + i
-                                        + " unexpected byte: "
-                                        + Integer.toHexString(b));
+                                log.warn("LocoNet message with opCode: {} ended early. Expected length: {} seen length: {} unexpected byte: {}", Integer.toHexString(opCode), len, i, Integer.toHexString(b));
                                 throw new LocoNetMessageException();
                             }
                             msg.setElement(i, b);

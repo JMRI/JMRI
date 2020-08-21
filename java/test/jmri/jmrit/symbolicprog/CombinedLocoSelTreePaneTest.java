@@ -1,11 +1,12 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrit.progsupport.ProgModePane;
+
 import javax.swing.JLabel;
+
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
@@ -23,8 +24,7 @@ public class CombinedLocoSelTreePaneTest {
         Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -33,7 +33,7 @@ public class CombinedLocoSelTreePaneTest {
         InstanceManager.setDefault(ProgrammerConfigManager.class, new ProgrammerConfigManager());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();

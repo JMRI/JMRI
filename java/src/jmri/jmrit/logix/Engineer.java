@@ -371,7 +371,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                 _ramp = new ThrottleRamp();
                 _ramp.start();
             } else {
-            	_ramp.quit(false);            	
+                _ramp.quit(false);
             }
             long time = 0;
             int waitTime = _speedUtil.getRampTimeIncrement() + 20;
@@ -452,7 +452,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
         }
         if (Math.abs(getSpeedSetting() - newSpeed) < .002) {
-        	setHalt(false);
+            setHalt(false);
             return false;
         }
         return true;
@@ -611,193 +611,23 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     }
 
     private void setFunction(int cmdNum, boolean isSet) {
-        switch (cmdNum) {
-            case 0:
-                _throttle.setF0(isSet);
-                break;
-            case 1:
-                _throttle.setF1(isSet);
-                break;
-            case 2:
-                _throttle.setF2(isSet);
-                break;
-            case 3:
-                _throttle.setF3(isSet);
-                break;
-            case 4:
-                _throttle.setF4(isSet);
-                break;
-            case 5:
-                _throttle.setF5(isSet);
-                break;
-            case 6:
-                _throttle.setF6(isSet);
-                break;
-            case 7:
-                _throttle.setF7(isSet);
-                break;
-            case 8:
-                _throttle.setF8(isSet);
-                break;
-            case 9:
-                _throttle.setF9(isSet);
-                break;
-            case 10:
-                _throttle.setF10(isSet);
-                break;
-            case 11:
-                _throttle.setF11(isSet);
-                break;
-            case 12:
-                _throttle.setF12(isSet);
-                break;
-            case 13:
-                _throttle.setF13(isSet);
-                break;
-            case 14:
-                _throttle.setF14(isSet);
-                break;
-            case 15:
-                _throttle.setF15(isSet);
-                break;
-            case 16:
-                _throttle.setF16(isSet);
-                break;
-            case 17:
-                _throttle.setF17(isSet);
-                break;
-            case 18:
-                _throttle.setF18(isSet);
-                break;
-            case 19:
-                _throttle.setF19(isSet);
-                break;
-            case 20:
-                _throttle.setF20(isSet);
-                break;
-            case 21:
-                _throttle.setF21(isSet);
-                break;
-            case 22:
-                _throttle.setF22(isSet);
-                break;
-            case 23:
-                _throttle.setF23(isSet);
-                break;
-            case 24:
-                _throttle.setF24(isSet);
-                break;
-            case 25:
-                _throttle.setF25(isSet);
-                break;
-            case 26:
-                _throttle.setF26(isSet);
-                break;
-            case 27:
-                _throttle.setF27(isSet);
-                break;
-            case 28:
-                _throttle.setF28(isSet);
-                break;
-            default:
-                log.error("Function value {} out of range",cmdNum);
-                throw new java.lang.IllegalArgumentException("Function Value " + cmdNum + " out of range");
+        if ( cmdNum < 0 || cmdNum > 28 ) {       
+            log.error("Function value {} out of range",cmdNum);
+            throw new java.lang.IllegalArgumentException("Function Value " + cmdNum + " out of range");
         }
+        else {
+            _throttle.setFunction(cmdNum,isSet);
+         }
     }
 
     private void setLockFunction(int cmdNum, boolean isTrue) {
-        switch (cmdNum) {
-            case 0:
-                _throttle.setF0Momentary(!isTrue);
-                break;
-            case 1:
-                _throttle.setF1Momentary(!isTrue);
-                break;
-            case 2:
-                _throttle.setF2Momentary(!isTrue);
-                break;
-            case 3:
-                _throttle.setF3Momentary(!isTrue);
-                break;
-            case 4:
-                _throttle.setF4Momentary(!isTrue);
-                break;
-            case 5:
-                _throttle.setF5Momentary(!isTrue);
-                break;
-            case 6:
-                _throttle.setF6Momentary(!isTrue);
-                break;
-            case 7:
-                _throttle.setF7Momentary(!isTrue);
-                break;
-            case 8:
-                _throttle.setF8Momentary(!isTrue);
-                break;
-            case 9:
-                _throttle.setF9Momentary(!isTrue);
-                break;
-            case 10:
-                _throttle.setF10Momentary(!isTrue);
-                break;
-            case 11:
-                _throttle.setF11Momentary(!isTrue);
-                break;
-            case 12:
-                _throttle.setF12Momentary(!isTrue);
-                break;
-            case 13:
-                _throttle.setF13Momentary(!isTrue);
-                break;
-            case 14:
-                _throttle.setF14Momentary(!isTrue);
-                break;
-            case 15:
-                _throttle.setF15Momentary(!isTrue);
-                break;
-            case 16:
-                _throttle.setF16Momentary(!isTrue);
-                break;
-            case 17:
-                _throttle.setF17Momentary(!isTrue);
-                break;
-            case 18:
-                _throttle.setF18Momentary(!isTrue);
-                break;
-            case 19:
-                _throttle.setF19Momentary(!isTrue);
-                break;
-            case 20:
-                _throttle.setF20Momentary(!isTrue);
-                break;
-            case 21:
-                _throttle.setF21Momentary(!isTrue);
-                break;
-            case 22:
-                _throttle.setF22Momentary(!isTrue);
-                break;
-            case 23:
-                _throttle.setF23Momentary(!isTrue);
-                break;
-            case 24:
-                _throttle.setF24Momentary(!isTrue);
-                break;
-            case 25:
-                _throttle.setF25Momentary(!isTrue);
-                break;
-            case 26:
-                _throttle.setF26Momentary(!isTrue);
-                break;
-            case 27:
-                _throttle.setF27Momentary(!isTrue);
-                break;
-            case 28:
-                _throttle.setF28Momentary(!isTrue);
-                break;
-            default:
-                log.error("Function value {} out of range",cmdNum);
-                throw new java.lang.IllegalArgumentException("Function Value " + cmdNum + " out of range");
+        if ( cmdNum < 0 || cmdNum > 28 ) {       
+            log.error("Function value {} out of range",cmdNum);
+            throw new java.lang.IllegalArgumentException("Function Value " + cmdNum + " out of range");
         }
+        else {
+            _throttle.setFunctionMomentary(cmdNum, !isTrue);
+         }
     }
 
     /**
@@ -964,29 +794,32 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             OBlock endBlock = oldWarrant.getLastOrder().getBlock();
             long time = 0;
             String msg = null;
-            try {
-                while (time < 10000) {
-                    if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
-                        break;
-                    }
-                    synchronized (this) {
-                        wait(200);
-                        time += 200;
-                    }
+            while (time < 10000) {
+                if (oldWarrant.getRunMode() == Warrant.MODE_NONE) {
+                    break;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(100);
+                    time += 100;
+                } catch (InterruptedException ie) {
+                    time = 10000;
+                    msg = Bundle.getMessage(CANNOT_RUN, newWarrant.getDisplayName(), ie);
+                } finally {
+                    Thread.currentThread().setPriority(priority);
                 }
                 if (time >= 10000) {
-                    log.trace(Bundle.getMessage("cannotLaunch",
-                            newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName()));
+                    msg = Bundle.getMessage("cannotLaunch",
+                            newWarrant.getDisplayName(), oldWarrant.getDisplayName(), endBlock.getDisplayName());
                 }
-            } catch (InterruptedException ie) {
-                log.warn("Warrant \"{}\" InterruptedException message= \"{}\" time= {}",
-                        oldWarrant.getDisplayName(), ie, time);
-                Thread.currentThread().interrupt();
             }
             if (log.isDebugEnabled()) log.debug("CheckForTermination waited {}ms. runMode={} ", time, oldWarrant.getRunMode());
 
             java.awt.Color color = java.awt.Color.red;
-            msg = newWarrant.setRoute(false, null);
+            if (msg == null) {
+                msg = newWarrant.setRoute(false, null);
+            }
             if (msg == null) {
                 msg = newWarrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
             }

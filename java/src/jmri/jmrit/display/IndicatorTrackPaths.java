@@ -57,7 +57,7 @@ public class IndicatorTrackPaths {
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("addPath \"" + path + "\" #paths= " + _paths.size());
+            log.debug("addPath \"{}\" #paths= {}", path, _paths.size());
         }
     }
 

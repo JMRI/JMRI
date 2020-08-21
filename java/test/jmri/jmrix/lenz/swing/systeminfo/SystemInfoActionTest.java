@@ -1,19 +1,20 @@
 package jmri.jmrix.lenz.swing.systeminfo;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.SystemInfoAction class
  *
- * @author	Bob Jacobsen Copyright (c) 2001, 2002
+ * @author Bob Jacobsen Copyright (c) 2001, 2002
  */
 public class SystemInfoActionTest {
         
@@ -49,7 +50,7 @@ public class SystemInfoActionTest {
         frame.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -58,7 +59,7 @@ public class SystemInfoActionTest {
         memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

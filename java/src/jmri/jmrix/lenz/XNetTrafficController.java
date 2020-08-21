@@ -45,14 +45,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     // Abstract methods for the XNetInterface
 
     /**
-     * Forward a preformatted XNetMessage to the actual interface.
-     *
-     * @param m Message to send; will be updated with CRC
-     */
-    @Override
-    abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
-
-    /**
      * Make connection to existing PortController object.
      */
     @Override
@@ -102,18 +94,18 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                 ((XNetListener) client).message((XNetReply) m);
             } else if ((mask & XNetInterface.COMMINFO)
                     == XNetInterface.COMMINFO
-                    && (((XNetReply) m).getElement(0)
+                    && (m.getElement(0)
                     == XNetConstants.LI_MESSAGE_RESPONSE_HEADER)) {
                 ((XNetListener) client).message((XNetReply) m);
             } else if ((mask & XNetInterface.CS_INFO)
                     == XNetInterface.CS_INFO
-                    && (((XNetReply) m).getElement(0)
+                    && (m.getElement(0)
                     == XNetConstants.CS_INFO
-                    || ((XNetReply) m).getElement(0)
+                    || m.getElement(0)
                     == XNetConstants.CS_SERVICE_MODE_RESPONSE
-                    || ((XNetReply) m).getElement(0)
+                    || m.getElement(0)
                     == XNetConstants.CS_REQUEST_RESPONSE
-                    || ((XNetReply) m).getElement(0)
+                    || m.getElement(0)
                     == XNetConstants.BC_EMERGENCY_STOP)) {
                 ((XNetListener) client).message((XNetReply) m);
             } else if ((mask & XNetInterface.FEEDBACK)
@@ -131,9 +123,9 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                 ((XNetListener) client).message((XNetReply) m);
             } else if ((mask & XNetInterface.INTERFACE)
                     == XNetInterface.INTERFACE
-                    && (((XNetReply) m).getElement(0)
+                    && (m.getElement(0)
                     == XNetConstants.LI_VERSION_RESPONSE
-                    || ((XNetReply) m).getElement(0)
+                    || m.getElement(0)
                     == XNetConstants.LI101_REQUEST)) {
                 ((XNetListener) client).message((XNetReply) m);
             }
@@ -237,7 +229,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
-        int len = (((XNetReply) msg).getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
+        int len = (msg.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
         log.debug("Message Length {} Current Size {}", len, msg.getNumDataElements());
         return msg.getNumDataElements() >= len;
     }
@@ -278,6 +270,14 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         super.handleTimeout(msg, l);
         if (l != null) {
             ((XNetListener) l).notifyTimeout((XNetMessage) msg);
+        }
+    }
+
+    @Override
+    protected void notifyMessage(AbstractMRMessage m, AbstractMRListener notMe) {
+        super.notifyMessage(m, notMe);
+        if(notMe!=null) {
+            forwardMessage(notMe, m);
         }
     }
 
@@ -324,6 +324,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     /**
      * Return an XNetFeedbackMessageCache object associated with this traffic
      * controller.
+     * @return the feedback message cache. One is provided if null.
      */
     public XNetFeedbackMessageCache getFeedbackMessageCache() {
         if (_FeedbackCache == null) {

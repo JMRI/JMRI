@@ -2,10 +2,9 @@ package jmri.jmrix.lenz;
 
 import jmri.Light;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,20 +35,20 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light tl = l.newLight("XL21", "my name");
 
         if (log.isDebugEnabled()) {
-            log.debug("received light value " + tl);
+            log.debug("received light value {}", tl);
         }
-        Assert.assertTrue(null != (XNetLight) tl);
+        Assert.assertNotNull(tl);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("XL21"));
+            log.debug("by system name: {}", l.getBySystemName("XL21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
-        Assert.assertTrue(null != l.getBySystemName("XL21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertNotNull(l.getBySystemName("XL21"));
+        Assert.assertNotNull(l.getByUserName("my name"));
     }
 
     @Test
@@ -76,8 +75,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
 
     // from here down is testing infrastructure
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -89,9 +87,9 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

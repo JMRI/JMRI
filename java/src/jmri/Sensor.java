@@ -241,7 +241,7 @@ public interface Sensor extends DigitalIO {
      */
     public PullResistance getPullResistance();
 
-
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",justification="Private not available in interface")
     final static Logger log = LoggerFactory.getLogger(Sensor.class);
     
 }

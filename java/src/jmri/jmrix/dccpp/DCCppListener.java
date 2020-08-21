@@ -41,6 +41,7 @@ public interface DCCppListener extends jmri.jmrix.AbstractMRListener {
      * Member function invoked by an DCCppInterface implementation to notify a
      * sender that an outgoing message timed out and was dropped from the
      * queue.
+     * @param msg the message that timed out.
      */
     public void notifyTimeout(DCCppMessage msg);
 

@@ -68,10 +68,10 @@ public class SensorTurnoutOperator extends TurnoutOperator {
                 }
                 operatorCheck();
                 myTurnout.forwardCommandChangeToLayout();
-                log.warn("retrying " + myTurnout.getSystemName() + ", try #" + (tries + 1));
+                log.warn("retrying {}, try #{}", myTurnout.getSystemName(), tries + 1);
             }
             if (!myTurnout.isConsistentState()) {
-                log.warn("failed to throw " + myTurnout.getSystemName());
+                log.warn("failed to throw {}", myTurnout.getSystemName());
             }
         } catch (TurnoutOperatorException e) {
         }

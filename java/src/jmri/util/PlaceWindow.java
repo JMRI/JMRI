@@ -95,7 +95,7 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
         try {
             for (int i = 0;  i < _screenSize.length; i++) {
                 x += _screenSize[i].width;
-                if (window.getLocationOnScreen().x < x) {
+                if (window.getLocation().x < x) {
                     return i;
                 }
             }
@@ -120,7 +120,9 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
      * minimize the amount the target window is off screen.  The method guarantees
      * a non-null component will not be obscured.\p
      * If the component is null, the target window is placed beside the parent
-     * window, to the Left, Right, Below or Above it.
+     * window, to the Left, Right, Below or Above it.\b
+     * Should be called after target is packed and <strong>before</strong> target is
+     * set visible.
      * @param parent Window containing the Component
      * @param comp Component contained in the parent Window. May be null. 
      * @param target a popup or some kind of window associated with the component

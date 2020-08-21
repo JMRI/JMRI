@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a SerialPacketGenFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialPacketGenAction extends AbstractAction {
 

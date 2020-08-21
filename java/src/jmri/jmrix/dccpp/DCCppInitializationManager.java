@@ -24,7 +24,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 
     @Override
     protected void init() {
-	log.debug("DCCppInitializationManager init() called");
+        log.debug("DCCppInitializationManager init() called");
 
         String base_station = "Unknown";
         String code_build = "Unknown";
@@ -66,6 +66,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         systemMemo.setMultiMeter(new DCCppMultiMeter(systemMemo));
         jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);
 
+        systemMemo.register();
         log.debug("DCC++ Initialization Complete");
     }
 

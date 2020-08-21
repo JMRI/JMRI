@@ -263,7 +263,7 @@ public class CreateGUIObjectsXMLFile {
 /*
     <positionablelabel x="55" y="323" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
-      <icon url="program:resources/icons/USS/plate/base-plates/misc/USS-plate.gif" degrees="0" scale="1.0">
+      <icon url="program:resources/icons/USS/plate/base-plates/misc/USS-plate.gif" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
@@ -272,7 +272,7 @@ public class CreateGUIObjectsXMLFile {
     private static void generateBuilderPlate(PrintWriter printWriter) {
         printWriter.println("    <positionablelabel x=\"55\" y=\"323\" level=\"3\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\">"); // NOI18N
         printWriter.println("      <tooltip>Icon</tooltip>");   // NOI18N
-        printWriter.println("      <icon url=\"program:resources/icons/USS/plate/base-plates/misc/USS-plate.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("      <icon url=\"program:resources/icons/USS/plate/base-plates/misc/USS-plate.gif\" scale=\"1.0\">");   // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </icon>");   // NOI18N
         printWriter.println("    </positionablelabel>");    // NOI18N
@@ -303,7 +303,7 @@ public class CreateGUIObjectsXMLFile {
 /*  As of 4.13.4ish:
     <positionablelabel x="0" y="0" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Icon</tooltip>
-      <icon url="program:resources/icons/USS/background/Panel-blank-9.gif" degrees="0" scale="1.0">
+      <icon url="program:resources/icons/USS/background/Panel-blank-9.gif" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
@@ -324,7 +324,7 @@ public class CreateGUIObjectsXMLFile {
         }
         printWriter.println("    <positionablelabel x=\"" + x + "\" y=\"" + y + "\" level=\"1\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"false\" showtooltip=\"false\" editable=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\">");  // NOI18N
 //      I don't use Tooltip, since it's false anyways...
-        printWriter.println("      <icon url=\"program:resources/icons/USS/background/" + resourceFilename + "\" degrees=\"0\" scale=\"1.0\">");    // NOI18N
+        printWriter.println("      <icon url=\"program:resources/icons/USS/background/" + resourceFilename + "\" scale=\"1.0\">");    // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </icon>");   // NOI18N
         printWriter.println("    </positionablelabel>");    // NOI18N
@@ -333,16 +333,16 @@ public class CreateGUIObjectsXMLFile {
 /*  As of 4.13.4ish:
     <sensoricon sensor="IS3:SWNI" x="0" y="0" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>IS2:CB</tooltip>
-      <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
+      <active url="program:resources/icons/USS/sensor/green-on.gif" scale="1.0">
         <rotation>0</rotation>
       </active>
-      <inactive url="program:resources/icons/USS/sensor/green-off.gif" degrees="0" scale="1.0">
+      <inactive url="program:resources/icons/USS/sensor/green-off.gif" scale="1.0">
         <rotation>0</rotation>
       </inactive>
-      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" degrees="0" scale="1.0">
+      <unknown url="program:resources/icons/USS/sensor/s-unknown.gif" scale="1.0">
         <rotation>0</rotation>
       </unknown>
-      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" degrees="0" scale="1.0">
+      <inconsistent url="program:resources/icons/USS/sensor/s-inconsistent.gif" scale="1.0">
         <rotation>0</rotation>
       </inconsistent>
       <iconmaps />
@@ -353,16 +353,16 @@ public class CreateGUIObjectsXMLFile {
         String inconsistent = unknownInconsistentRedBlink ? "blink/red-b" : "s-inconsistent";   // NOI18N
         printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");   // NOI18N
         printWriter.println("      <tooltip>" + sensor + "</tooltip>"); // NOI18N
-        printWriter.println("      <active url=\"program:resources/icons/USS/sensor/" + color + "-on.gif\" degrees=\"0\" scale=\"1.0\">");  // NOI18N
+        printWriter.println("      <active url=\"program:resources/icons/USS/sensor/" + color + "-on.gif\" scale=\"1.0\">");  // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </active>"); // NOI18N
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/sensor/" + color + "-off.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/sensor/" + color + "-off.gif\" scale=\"1.0\">");   // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </inactive>");   // NOI18N
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/sensor/" + unknown + ".gif\" degrees=\"0\" scale=\"1.0\">");  // NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/sensor/" + unknown + ".gif\" scale=\"1.0\">");  // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </unknown>");    // NOI18N
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/sensor/" + inconsistent + ".gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/sensor/" + inconsistent + ".gif\" scale=\"1.0\">");// NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </inconsistent>");   // NOI18N
         printWriter.println("      <iconmaps />");  // NOI18N
@@ -373,38 +373,38 @@ public class CreateGUIObjectsXMLFile {
 Left:
     <turnouticon turnout="LT47" x="486" y="40" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="false" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
-        <closed url="program:resources/icons/USS/track/turnout/left/west/os-l-w-closed.gif" degrees="0" scale="1.0">
+        <closed url="program:resources/icons/USS/track/turnout/left/west/os-l-w-closed.gif" scale="1.0">
           <rotation>0</rotation>
         </closed>
-        <thrown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-thrown.gif" degrees="0" scale="1.0">
+        <thrown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-thrown.gif" scale="1.0">
           <rotation>0</rotation>
         </thrown>
-        <unknown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-unknown.gif" degrees="0" scale="1.0">
+        <unknown url="program:resources/icons/USS/track/turnout/left/west/os-l-w-unknown.gif" scale="1.0">
           <rotation>0</rotation>
         </unknown>
-        <inconsistent url="program:resources/icons/USS/track/turnout/left/west/os-l-w-inconsistent.gif" degrees="0" scale="1.0">
+        <inconsistent url="program:resources/icons/USS/track/turnout/left/west/os-l-w-inconsistent.gif" scale="1.0">
           <rotation>0</rotation>
         </inconsistent>
       </icons>
       <iconmaps />
     </turnouticon>
 Right:
-        <closed url="program:resources/icons/USS/track/turnout/right/east/os-r-e-closed.gif" degrees="0" scale="1.0">
+        <closed url="program:resources/icons/USS/track/turnout/right/east/os-r-e-closed.gif" scale="1.0">
 */
     private static void generateTurnoutIcon(int x, int y, String turnout, boolean isTurnoutLeftHanded, PrintWriter printWriter) {
         String partialFilename = isTurnoutLeftHanded ? "left/west/os-l-w" : "right/east/os-r-e";    // NOI18N
         printWriter.println("    <turnouticon turnout=\"" + turnout + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"7\" forcecontroloff=\"true\" hidden=\"no\" positionable=\"true\" showtooltip=\"false\" editable=\"true\" tristate=\"false\" momentary=\"false\" directControl=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\">");  // NOI18N
         printWriter.println("      <icons>");   // NOI18N
-        printWriter.println("        <closed url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-closed.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <closed url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-closed.gif\" scale=\"1.0\">");   // NOI18N
         printWriter.println("          <rotation>0</rotation>");    // NOI18N
         printWriter.println("        </closed>");   // NOI18N
-        printWriter.println("        <thrown url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-thrown.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <thrown url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-thrown.gif\" scale=\"1.0\">");   // NOI18N
         printWriter.println("          <rotation>0</rotation>");    // NOI18N
         printWriter.println("        </thrown>");   // NOI18N
-        printWriter.println("        <unknown url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-unknown.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("        <unknown url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-unknown.gif\" scale=\"1.0\">"); // NOI18N
         printWriter.println("          <rotation>0</rotation>");    // NOI18N
         printWriter.println("        </unknown>");  // NOI18N
-        printWriter.println("        <inconsistent url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <inconsistent url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-inconsistent.gif\" scale=\"1.0\">");   // NOI18N
         printWriter.println("          <rotation>0</rotation>");    // NOI18N
         printWriter.println("        </inconsistent>"); // NOI18N
         printWriter.println("      </icons>");  // NOI18N
@@ -415,16 +415,16 @@ Right:
 /*  As of 4.13.4ish:
     <turnouticon turnout="LT48" x="807" y="40" level="7" forcecontroloff="true" hidden="no" positionable="true" showtooltip="false" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <icons>
-        <closed url="program:resources/icons/USS/track/crossover/left/os-l-sc-closed.gif" degrees="0" scale="1.0">
+        <closed url="program:resources/icons/USS/track/crossover/left/os-l-sc-closed.gif" scale="1.0">
           <rotation>0</rotation>
         </closed>
-        <thrown url="program:resources/icons/USS/track/crossover/left/os-l-sc-thrown.gif" degrees="0" scale="1.0">
+        <thrown url="program:resources/icons/USS/track/crossover/left/os-l-sc-thrown.gif" scale="1.0">
           <rotation>0</rotation>
         </thrown>
-        <unknown url="program:resources/icons/USS/track/crossover/left/os-l-sc-unknown.gif" degrees="0" scale="1.0">
+        <unknown url="program:resources/icons/USS/track/crossover/left/os-l-sc-unknown.gif" scale="1.0">
           <rotation>0</rotation>
         </unknown>
-        <inconsistent url="program:resources/icons/USS/track/crossover/left/os-l-sc-inconsistent.gif" degrees="0" scale="1.0">
+        <inconsistent url="program:resources/icons/USS/track/crossover/left/os-l-sc-inconsistent.gif" scale="1.0">
           <rotation>0</rotation>
         </inconsistent>
       </icons>
@@ -440,16 +440,16 @@ Right:
         }
         printWriter.println("    <turnouticon turnout=\"" + turnout + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"7\" forcecontroloff=\"true\" hidden=\"no\" positionable=\"true\" showtooltip=\"false\" editable=\"true\" tristate=\"false\" momentary=\"false\" directControl=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\">");  // NOI18N
         printWriter.println("      <icons>");   // NOI18N
-        printWriter.println("        <closed url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-closed.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("        <closed url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-closed.gif\" scale=\"1.0\">"); // NOI18N
         printWriter.println("          <rotation>0</rotation>");    // NOI18N
         printWriter.println("        </closed>");   // NOI18N
-        printWriter.println("        <thrown url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-thrown.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("        <thrown url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-thrown.gif\" scale=\"1.0\">"); // NOI18N
         printWriter.println("          <rotation>0</rotation>");    // NOI18N
         printWriter.println("        </thrown>");   // NOI18N
-        printWriter.println("        <unknown url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-unknown.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <unknown url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-unknown.gif\" scale=\"1.0\">");   // NOI18N
         printWriter.println("          <rotation>0</rotation>");    // NOI18N
         printWriter.println("        </unknown>");  // NOI18N
-        printWriter.println("        <inconsistent url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("        <inconsistent url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-inconsistent.gif\" scale=\"1.0\">"); // NOI18N
         printWriter.println("          <rotation>0</rotation>");    // NOI18N
         printWriter.println("        </inconsistent>"); // NOI18N
         printWriter.println("      </icons>");  // NOI18N
@@ -461,28 +461,28 @@ Right:
     <signalheadicon signalhead="LH441" x="645" y="31" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>LH441</tooltip>
       <icons>
-        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" degrees="0" scale="1.0">
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-short.gif" scale="1.0">
           <rotation>0</rotation>
         </held>
-        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" degrees="0" scale="1.0">
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-short.gif" scale="1.0">
           <rotation>0</rotation>
         </dark>
-        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" degrees="0" scale="1.0">
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-short.gif" scale="1.0">
           <rotation>0</rotation>
         </red>
-        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" degrees="0" scale="1.0">
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-short.gif" scale="1.0">
           <rotation>0</rotation>
         </yellow>
-        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" degrees="0" scale="1.0">
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-short.gif" scale="1.0">
           <rotation>0</rotation>
         </green>
-        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" degrees="0" scale="1.0">
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-short.gif" scale="1.0">
           <rotation>0</rotation>
         </flashred>
-        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" degrees="0" scale="1.0">
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-short.gif" scale="1.0">
           <rotation>0</rotation>
         </flashyellow>
-        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" degrees="0" scale="1.0">
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-short.gif" scale="1.0">
           <rotation>0</rotation>
         </flashgreen>
       </icons>
@@ -512,14 +512,14 @@ Right:
         printWriter.println(generateSignalLineEnd(color));
     }
     private static String generateSignalLineStart(String direction, String color) {
-        return "        <" + color + " url=\"program:resources/icons/smallschematics/searchlights/" + direction + "-" + color + "-short.gif\" degrees=\"0\" scale=\"1.0\">";    // NOI18N
+        return "        <" + color + " url=\"program:resources/icons/smallschematics/searchlights/" + direction + "-" + color + "-short.gif\" scale=\"1.0\">";    // NOI18N
     }
     private static String generateSignalLineEnd(String color) {
         return "        </" + color + ">";
     }
 
 /*
-    <signalmasticon signalmast="SM-CS10ME" x="461" y="17" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+    <signalmasticon signalmast="SM-CS10ME" x="461" y="17" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
       <tooltip>SM-CS10ME (LF$dsm:SW-1968:SL-2(722))</tooltip>
     </signalmasticon>
 */
@@ -533,16 +533,16 @@ Right:
 /*  As of 4.13.4ish:
     <sensoricon sensor="IS27:LEVER" x="1826" y="310" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>IS27:LEVER</tooltip>
-      <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0">
+      <active url="program:resources/icons/USS/plate/levers/l-left.gif" scale="1.0">
         <rotation>0</rotation>
       </active>
-      <inactive url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0">
+      <inactive url="program:resources/icons/USS/plate/levers/l-right.gif" scale="1.0">
         <rotation>0</rotation>
       </inactive>
-      <unknown url="program:resources/icons/USS/plate/levers/l-unknown.gif" degrees="0" scale="1.0">
+      <unknown url="program:resources/icons/USS/plate/levers/l-unknown.gif" scale="1.0">
         <rotation>0</rotation>
       </unknown>
-      <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" degrees="0" scale="1.0">
+      <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" scale="1.0">
         <rotation>0</rotation>
       </inconsistent>
       <iconmaps />
@@ -551,16 +551,16 @@ Right:
     public static void generateTurnoutLever(int x, int y, String lever, PrintWriter printWriter) {
         printWriter.println("    <sensoricon sensor=\"" + lever + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");    // NOI18N
         printWriter.println("      <tooltip>" + lever + "</tooltip>");  // NOI18N
-        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-left-wide.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-left-wide.gif\" scale=\"1.0\">"); // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </active>"); // NOI18N
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/lever-right-wide.gif\" degrees=\"0\" scale=\"1.0\">");  // NOI18N
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/lever-right-wide.gif\" scale=\"1.0\">");  // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </inactive>");   // NOI18N
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/lever-unknown-wide.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/lever-unknown-wide.gif\" scale=\"1.0\">"); // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </unknown>");    // NOI18N
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif\" scale=\"1.0\">");   // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </inconsistent>");   // NOI18N
         printWriter.println("      <iconmaps />");  // NOI18N
@@ -570,22 +570,22 @@ Right:
 /*  As of 4.13.4ish:
     <multisensoricon x="1826" y="423" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
       <tooltip>IS28:LDGL,IS28:NGL,IS28:RDGL</tooltip>
-      <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="IS28:LDGL">
+      <active url="program:resources/icons/USS/plate/levers/l-left.gif" scale="1.0" sensor="IS28:LDGL">
         <rotation>0</rotation>
       </active>
-      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="IS28:NGL">
+      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" scale="1.0" sensor="IS28:NGL">
         <rotation>0</rotation>
       </active>
-      <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="IS28:RDGL">
+      <active url="program:resources/icons/USS/plate/levers/l-right.gif" scale="1.0" sensor="IS28:RDGL">
         <rotation>0</rotation>
       </active>
-      <inactive url="program:resources/icons/USS/plate/levers/l-inactive.gif" degrees="0" scale="1.0">
+      <inactive url="program:resources/icons/USS/plate/levers/l-inactive.gif" scale="1.0">
         <rotation>0</rotation>
       </inactive>
-      <unknown url="program:resources/icons/USS/plate/levers/l-unknown.gif" degrees="0" scale="1.0">
+      <unknown url="program:resources/icons/USS/plate/levers/l-unknown.gif" scale="1.0">
         <rotation>0</rotation>
       </unknown>
-      <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" degrees="0" scale="1.0">
+      <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" scale="1.0">
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
@@ -594,25 +594,25 @@ Right:
         printWriter.println("    <multisensoricon x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" updown=\"false\" class=\"jmri.jmrit.display.configurexml.MultiSensorIconXml\">");   // NOI18N
         printWriter.println("      <tooltip>" + left + "," + vertical + "," + right + "</tooltip>");// NOI18N
         if (!left.trim().isEmpty()) {
-            printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-left-wide.gif\" degrees=\"0\" scale=\"1.0\" sensor=\"" + left + "\">");// NOI18N
+            printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-left-wide.gif\" scale=\"1.0\" sensor=\"" + left + "\">");// NOI18N
             printWriter.println("        <rotation>0</rotation>");  // NOI18N
             printWriter.println("      </active>"); // NOI18N
         }
-        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-vertical-wide.gif\" degrees=\"0\" scale=\"1.0\" sensor=\"" + vertical + "\">"); // NOI18N
+        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-vertical-wide.gif\" scale=\"1.0\" sensor=\"" + vertical + "\">"); // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </active>"); // NOI18N
         if (!right.trim().isEmpty()) {
-            printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-right-wide.gif\" degrees=\"0\" scale=\"1.0\" sensor=\"" + right + "\">");// NOI18N
+            printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-right-wide.gif\" scale=\"1.0\" sensor=\"" + right + "\">");// NOI18N
             printWriter.println("        <rotation>0</rotation>");// NOI18N
             printWriter.println("      </active>");// NOI18N
         }
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/lever-inactive-wide.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/lever-inactive-wide.gif\" scale=\"1.0\">");   // NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </inactive>");// NOI18N
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/lever-unknown-wide.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/lever-unknown-wide.gif\" scale=\"1.0\">"); // NOI18N
         printWriter.println("        <rotation>0</rotation>");  // NOI18N
         printWriter.println("      </unknown>");    // NOI18N
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif\" scale=\"1.0\">");   // NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </inconsistent>");// NOI18N
         printWriter.println("    </multisensoricon>");// NOI18N
@@ -621,16 +621,16 @@ Right:
 /*  As of 4.13.4ish:
     <sensoricon sensor="IS58:LOCKTOGGLE" x="3063" y="551" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>IS:SAV_PDC_LOCKLEVER</tooltip>
-      <active url="program:resources/icons/USS/plate/levers/switch-on.gif" degrees="0" scale="1.0">
+      <active url="program:resources/icons/USS/plate/levers/switch-on.gif" scale="1.0">
         <rotation>0</rotation>
       </active>
-      <inactive url="program:resources/icons/USS/plate/levers/switch-off.gif" degrees="0" scale="1.0">
+      <inactive url="program:resources/icons/USS/plate/levers/switch-off.gif" scale="1.0">
         <rotation>0</rotation>
       </inactive>
-      <unknown url="program:resources/icons/USS/plate/levers/switch-unknown.gif" degrees="0" scale="1.0">
+      <unknown url="program:resources/icons/USS/plate/levers/switch-unknown.gif" scale="1.0">
         <rotation>0</rotation>
       </unknown>
-      <inconsistent url="program:resources/icons/USS/plate/levers/switch-inconsistent.gif" degrees="0" scale="1.0">
+      <inconsistent url="program:resources/icons/USS/plate/levers/switch-inconsistent.gif" scale="1.0">
         <rotation>0</rotation>
       </inconsistent>
       <iconmaps />
@@ -639,16 +639,16 @@ Right:
     public static void generateToggle(int x, int y, String sensor, PrintWriter printWriter) {
         printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");   // NOI18N
         printWriter.println("      <tooltip>" + sensor + "</tooltip>");// NOI18N
-        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/switch-on.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/switch-on.gif\" scale=\"1.0\">");// NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </active>");// NOI18N
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/switch-off.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/switch-off.gif\" scale=\"1.0\">");// NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </inactive>");// NOI18N
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/switch-unknown.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/switch-unknown.gif\" scale=\"1.0\">");// NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </unknown>");// NOI18N
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/switch-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/switch-inconsistent.gif\" scale=\"1.0\">");// NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </inconsistent>");// NOI18N
         printWriter.println("      <iconmaps />");// NOI18N
@@ -658,16 +658,16 @@ Right:
 /*  As of 4.13.4ish:
     <sensoricon sensor="IS80:CB" x="3388" y="632" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>IS80:CB</tooltip>
-      <active url="program:resources/icons/USS/plate/levers/code-press.gif" degrees="0" scale="1.0">
+      <active url="program:resources/icons/USS/plate/levers/code-press.gif" scale="1.0">
         <rotation>0</rotation>
       </active>
-      <inactive url="program:resources/icons/USS/plate/levers/code.gif" degrees="0" scale="1.0">
+      <inactive url="program:resources/icons/USS/plate/levers/code.gif" scale="1.0">
         <rotation>0</rotation>
       </inactive>
-      <unknown url="program:resources/icons/USS/plate/levers/code-unknown.gif" degrees="0" scale="1.0">
+      <unknown url="program:resources/icons/USS/plate/levers/code-unknown.gif" scale="1.0">
         <rotation>0</rotation>
       </unknown>
-      <inconsistent url="program:resources/icons/USS/plate/levers/code-inconsistent.gif" degrees="0" scale="1.0">
+      <inconsistent url="program:resources/icons/USS/plate/levers/code-inconsistent.gif" scale="1.0">
         <rotation>0</rotation>
       </inconsistent>
       <iconmaps />
@@ -676,16 +676,16 @@ Right:
     public static void generatePushButton(int x, int y, String sensor, PrintWriter printWriter) {
         printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");// NOI18N
         printWriter.println("      <tooltip>" + sensor + "</tooltip>");// NOI18N
-        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/code-press.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/code-press.gif\" scale=\"1.0\">");// NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </active>");// NOI18N
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/code.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/code.gif\" scale=\"1.0\">");// NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </inactive>");// NOI18N
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/code-unknown.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/code-unknown.gif\" scale=\"1.0\">");// NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </unknown>");// NOI18N
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/code-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/code-inconsistent.gif\" scale=\"1.0\">");// NOI18N
         printWriter.println("        <rotation>0</rotation>");// NOI18N
         printWriter.println("      </inconsistent>");// NOI18N
         printWriter.println("      <iconmaps />");// NOI18N

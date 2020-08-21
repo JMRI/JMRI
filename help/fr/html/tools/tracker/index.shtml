@@ -171,11 +171,11 @@
 
       <ul>
         <li><a href=
-        "http://jmri.org/JavaDoc/doc/jmri/Block.html">Canton</a> -
+        "https://jmri.org/JavaDoc/doc/jmri/Block.html">Canton</a> -
         repr&eacute;sente chaque canton et ses connexions</li>
 
         <li><a href=
-        "http://jmri.org/JavaDoc/doc/jmri/Path.html">chemin</a> -
+        "https://jmri.org/JavaDoc/doc/jmri/Path.html">chemin</a> -
         repr&eacute;sente les connexions depuis et vers un autre
         canton, y compris Les param&egrave;tres des aiguillages,
         etc, qui sont n&eacute;cessaires.</li>

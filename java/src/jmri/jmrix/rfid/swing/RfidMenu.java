@@ -9,7 +9,7 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
 /**
  * Create a "Systems" menu containing the Jmri RFID-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright 2003, 2006, 2007, 2008
  * @author Matthew Harris Copyright 2011
  * @since 2.11.4
  */

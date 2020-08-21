@@ -10,7 +10,7 @@ import jmri.jmrix.srcp.SRCPTrafficController;
 /**
  * Frame for user input of SRCP messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.srcp.SRCPListener {
 

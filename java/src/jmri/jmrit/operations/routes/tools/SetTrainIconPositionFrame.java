@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -321,7 +321,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         if (locationBox.getSelectedItem() == null) {
             return;
         }
-        Editor editor = InstanceManager.getDefault(PanelMenu.class).getEditorByName(Setup.getPanelName());
+        Editor editor = InstanceManager.getDefault(EditorManager.class).get(Setup.getPanelName());
         if (editor == null) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"), new Object[]{Setup.getPanelName()}),
                     Bundle.getMessage("PanelNotFound"), JOptionPane.ERROR_MESSAGE);

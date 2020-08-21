@@ -63,7 +63,7 @@ public class UsbLightManager extends AbstractLightManager {
                     if (getMemo().validSystemNameConfig(systemName, 'L')) {
                         result = new AnymaDMX_UsbLight(systemName, userName, getMemo());
                     } else {
-                        log.warn("Light System Name does not refer to configured hardware: " + systemName);
+                        log.warn("Light System Name does not refer to configured hardware: {}", systemName);
                     }
                 } else {
                     log.error("Invalid Light System Name format: {}", systemName);

@@ -84,6 +84,7 @@
             <li><a href="Details.shtml#c6">CAN Simulation</a></li>
             </ul>
         </li>
+        <li><a href="CbusFastClock.shtml">MERG CBUS Fast Clock</a></li>
         <li><a href="../index.shtml">JMRI CAN Support</a></li>
         <li><a href="../scripting.shtml">JMRI Scripting for CAN frames ( jython )</a></li>
         </ul>
@@ -418,7 +419,7 @@
         
         <p>When a JMRI application requests a loco ( which is already in a CBUS session ), 
         JMRI will check the main <a 
-        href="../../tools/throttle/ThrottlePreferencesPane.shtml">Throttles Preferences</a>.</p>
+        href="../../../tools/throttle/ThrottlesPreferencesPane.shtml">Throttles Preferences</a>.</p>
         
         <p>If Silent Steal or Silent Share has been selected, this will be the default action.</p>
         

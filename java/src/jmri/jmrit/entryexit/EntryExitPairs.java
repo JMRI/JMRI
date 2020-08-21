@@ -8,24 +8,23 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.*;
 import java.util.Map.Entry;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.Sensor;
+
+import jmri.*;
 import jmri.beans.VetoableChangeSupport;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,18 +43,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
+public class EntryExitPairs extends VetoableChangeSupport implements Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
         PropertyChangeListener {
 
-    public int routingMethod = LayoutBlockConnectivityTools.METRIC;
-
-    final static int HOPCOUNT = LayoutBlockConnectivityTools.HOPCOUNT;
-    final static int METRIC = LayoutBlockConnectivityTools.METRIC;
+    public LayoutBlockConnectivityTools.Metric routingMethod = LayoutBlockConnectivityTools.Metric.METRIC;
 
     public final static int NXBUTTONSELECTED = 0x08;
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
     public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
     private final SystemConnectionMemo memo;
+    private final Map<String, Boolean> silencedProperties = new HashMap<>();
 
     private int settingTimer = 2000;
 
@@ -127,9 +124,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
      */
     public EntryExitPairs() {
         memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
-        if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
-            InstanceManager.getDefault(ConfigureManager.class).registerUser(this);
-        }
+        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerUser(this));
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
 
         glassPane.setOpaque(false);
@@ -167,9 +162,8 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
 
     public void addNXSourcePoint(NamedBean source) {
         PointDetails point = null;
-        List<LayoutEditor> layout = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
-        for (int i = 0; i < layout.size(); i++) {
-            point = providePoint(source, layout.get(i));
+        for (LayoutEditor editor : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+            point = providePoint(source, editor);
         }
         if (point == null) {
             log.error("Unable to find a location on any panel for item {}", source.getDisplayName());  // NOI18N
@@ -454,7 +448,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
                 for (String srcUUID : src.getDestinationUniqueId()) {
                     if (destUUID.equals(srcUUID)) {
                         log.debug("Found the correct source: src = {}, dest = {}",
-                                 pd.getSensor().getDisplayName(), dp.getDestPoint().getSensor().getDisplayName());
+                                pd.getSensor().getDisplayName(), dp.getDestPoint().getSensor().getDisplayName());
                         setMultiPointRoute(pd, dp.getDestPoint());
                         return;
                     }
@@ -486,9 +480,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
                 if (!toPd.getProtecting().isEmpty()) {
                     toProt = toPd.getProtecting().get(0);
                 }
-                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(), pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(), pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
                 if (result) {
-                    List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
+                    List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.Routing.NONE);
                     if (!blkList.isEmpty()) {
                         if (log.isDebugEnabled()) {
                             for (LayoutBlock blk : blkList) {
@@ -552,8 +546,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
 
         /**
          * Constructor for a SourceToDest element.
-         * @param s a source point
-         * @param dp a destination point
+         *
+         * @param s   a source point
+         * @param dp  a destination point
          * @param dir a direction
          * @param ref Integer used as reference
          */
@@ -687,6 +682,10 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
     /**
      * @since 4.17.4
      * Register in Property Change Listener.
+     * @param source the source bean.
+     * @param destination the destination bean.
+     * @param panel the layout editor panel.
+     * @param id the points details id.
      */
     public void addNXDestination(NamedBean source, NamedBean destination, LayoutEditor panel, String id) {
         if (source == null) {
@@ -711,7 +710,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
             destPoint.setRefObject(destination);
             destPoint.getSignal();
             if (!nxpair.containsKey(sourcePoint)) {
-                Source sp = new Source(sourcePoint) ;
+                Source sp = new Source(sourcePoint);
                 nxpair.put(sourcePoint, sp);
                 sp.removePropertyChangeListener(this);
                 sp.addPropertyChangeListener(this);
@@ -913,9 +912,10 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
 
         /**
          * Constructor for a DeletePair row.
-         * @param src Source sensor bean
+         *
+         * @param src  Source sensor bean
          * @param dest Ddestination sensor bean
-         * @param pnl The LayoutEditor panel for the source bean
+         * @param pnl  The LayoutEditor panel for the source bean
          */
         DeletePair(NamedBean src, NamedBean dest, LayoutEditor pnl) {
             this.src = src;
@@ -962,7 +962,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
     /**
      * Create a list of sensors that have the layout block as either
      * facing or protecting.
-     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditors#hasNxSensorPairs}.
+     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditor#hasNxSensorPairs}.
      * @since 4.11.2
      * @param layoutBlock The layout block to be checked.
      * @return the a list of sensors affected by the layout block or an empty list.
@@ -1319,12 +1319,11 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
             log.debug("Layout block routing has not yet stabilised, discovery will happen once it has");  // NOI18N
             return;
         }
-        Hashtable<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().
-                discoverValidBeanPairs(null, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
-        Enumeration<NamedBean> en = validPaths.keys();
+        HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().
+                discoverValidBeanPairs(null, Sensor.class, LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
         EntryExitPairs eep = this;
-        while (en.hasMoreElements()) {
-            NamedBean key = en.nextElement();
+        for (Entry<NamedBean, List<NamedBean>> entry : validPaths.entrySet()) {
+            NamedBean key = entry.getKey();
             List<NamedBean> validDestMast = validPaths.get(key);
             if (validDestMast.size() > 0) {
                 eep.addNXSourcePoint(key, editor);
@@ -1382,18 +1381,38 @@ public class EntryExitPairs extends VetoableChangeSupport implements jmri.Manage
         return DestinationPoints.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean silenced) {
+        if (!"beans".equals(propertyName)) {
+            throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
+        }
+        silencedProperties.put(propertyName, silenced);
+        if (propertyName.equals("beans") && !silenced) {
+            fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);
+        }
+    }
+
     /** {@inheritDoc} */
     @Override
+    @Deprecated
+    @SuppressWarnings("deprecation")
     public void addDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated
+    @SuppressWarnings("deprecation")
     public void removeDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.remove(e);
     }
 
+    @SuppressWarnings("deprecation")
     final List<ManagerDataListener<DestinationPoints>> listeners = new ArrayList<>();
 
     // initialize logging

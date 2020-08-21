@@ -79,36 +79,6 @@
           items du menu en rempla&ccedil;ant la classe
           DecoderPro.</p>
         </li>
-
-        <li>Classes Plugin
-
-          <p>L'emplacement d'une classe peut entra&icirc;ner un
-          surcro&icirc;t de travail &agrave; long terme, le
-          remplacement d'une classe peut &ecirc;tre modifi&eacute;
-          quand JMRI &eacute;volue. Donc, nous fournissons
-          &eacute;galement un crochet sur lequel accrocher le
-          nouveau code. Apr&egrave;s que l'initialisation soit
-          termin&eacute;e, les programmes seront tent&eacute;s
-          d'invoquer un membre statique de la forme:</p>
-          <pre>
-
-  package jmri;
-  public class JmriPlugin {
-     public static void start(javax.swing.JFrame mainFrame, javax.swing.JMenuBar menuBar) {}
-  }
-
-</pre>Cette m&eacute;thode peut modifier la barre de menus par
-l'insertion, modification ou la suppression des menus ou le menu
-articles, ajouter des boutons sur le panneau principal, etc
-
-          <p>Comme les gens utilisent cette capacit&eacute;, vous
-          aurez probablement envie de remanier certaines classes
-          existantes afin de les rendre plus facile &agrave;
-          &eacute;tendre. Par exemple, une mise en forme
-          monolithique de classe comme llnmon devrait &ecirc;tre
-          divis&eacute;e en plus petits morceaux pour faciliter
-          l'ajout de nouveaux formats.</p>
-        </li>
       </ol>
 
       <h2>Autres M&eacute;canismes</h2>Il est &eacute;galement
@@ -120,14 +90,14 @@ articles, ajouter des boutons sur le panneau principal, etc
       <p>Les scripts peuvent localiser et acc&eacute;der &agrave;
       n'importe quelle fen&ecirc;tre ouverte, par exemple.
       L'exemple de script <a href=
-      "http://jmri.org/jython/AddButton.py">AddButton.py</a> est un
+      "https://jmri.org/jython/AddButton.py">AddButton.py</a> est un
       exemple de l'ajout d'un bouton de script sur la fen&ecirc;tre
       principale. Le <a href=
-      "http://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a>
+      "https://jmri.org/jython/DisableOpsMode.py">DisableOpsMode.py</a>
       montre un exemple de script pour comment faire pour modifier
       la fen&ecirc;tre principale et supprimer le bouton de
       programmation voie principale. L'exemple de script <a href=
-      "http://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
+      "https://jmri.org/jython/ReporterFontControl.py">ReporterFontControl.py</a>
       est un exemple encore plus avanc&eacute;s qui modifie
       l'apparence des &eacute;l&eacute;ments sur les &eacute;crans
       du panneau.</p>

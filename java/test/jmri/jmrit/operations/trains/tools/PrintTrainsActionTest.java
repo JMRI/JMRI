@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.TrainsTableFrame;
@@ -24,7 +24,7 @@ public class PrintTrainsActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsTableFrame ttf = new TrainsTableFrame();
-        PrintTrainsAction t = new PrintTrainsAction("Test Action", true, ttf);
+        PrintTrainsAction t = new PrintTrainsAction(true, ttf);
         Assert.assertNotNull("exists", t);
         
         JUnitUtil.dispose(ttf);
@@ -39,7 +39,7 @@ public class PrintTrainsActionTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
 
         TrainsTableFrame ttf = new TrainsTableFrame();
-        PrintTrainsAction pta = new PrintTrainsAction("Test Action", true, ttf);
+        PrintTrainsAction pta = new PrintTrainsAction(true, ttf);
         Assert.assertNotNull("exists", pta);
 
         pta.actionPerformed(new ActionEvent(this, 0, null));

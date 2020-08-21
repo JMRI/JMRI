@@ -1,17 +1,17 @@
 package jmri.jmrix.grapevine.nodeconfig;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NodeConfigActionTest {
 
@@ -23,8 +23,7 @@ public class NodeConfigActionTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new GrapevineSystemConnectionMemo();
@@ -32,7 +31,7 @@ public class NodeConfigActionTest {
         memo.setTrafficController(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

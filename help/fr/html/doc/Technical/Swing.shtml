@@ -66,7 +66,7 @@
       sont &eacute;num&eacute;r&eacute;es dans un menu.</p>
 
       <p>Le paquet <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">
+      "https://jmri.org/JavaDoc/doc/jmri/util/swing/package-summary.html">
       jmri.util.swing</a> contient le code.</p>
 
       <h2>Cycle de Vie d'un JmriPanel</h2>

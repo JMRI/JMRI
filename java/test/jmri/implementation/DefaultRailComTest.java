@@ -2,13 +2,13 @@ package jmri.implementation;
 
 import java.util.Calendar;
 import java.util.Date;
+
 import jmri.RailCom;
 import jmri.Reporter;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the DefaultRailCom class
@@ -110,8 +110,7 @@ public class DefaultRailComTest {
 
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
@@ -120,7 +119,7 @@ public class DefaultRailComTest {
         jmri.util.JUnitUtil.initRailComManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.clearShutDownManager(); // would be better to check and clean up specifics in tests
         JUnitUtil.tearDown();

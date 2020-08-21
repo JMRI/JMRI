@@ -104,10 +104,9 @@ public class CbusLight extends AbstractLight implements CanListener, CbusEventIn
             return;
         }
         if (addrOn.match(f)) {
-            setState(ON);
-        //    this.set
+            notifyStateChange(getState(), ON);
         } else if (addrOff.match(f)) {
-            setState(OFF);
+            notifyStateChange(getState(), OFF);
         }
     }
 
@@ -120,9 +119,9 @@ public class CbusLight extends AbstractLight implements CanListener, CbusEventIn
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrOn.match(f)) {
-            setState(ON);
+            notifyStateChange(getState(), ON);
         } else if (addrOff.match(f)) {
-            setState(OFF);
+            notifyStateChange(getState(), OFF);
         }
     }
     

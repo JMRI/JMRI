@@ -3,10 +3,8 @@ package jmri.util;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -30,8 +28,7 @@ public class MockShutDownManagerTest {
         Assert.assertEquals(0, dsdm.tasks().size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
-            public boolean execute() {
-                return true;
+            public void run() {
             }
         };
         dsdm.register(task);
@@ -52,8 +49,7 @@ public class MockShutDownManagerTest {
         Assert.assertEquals(0, dsdm.tasks().size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
-            public boolean execute() {
-                return true;
+            public void run() {
             }
         };
         dsdm.register(task);
@@ -85,13 +81,12 @@ public class MockShutDownManagerTest {
         }
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

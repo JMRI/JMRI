@@ -8,6 +8,7 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.tree.DefaultTreeModel;
 import jmri.CatalogTree;
+import jmri.CatalogTreeNode;
 import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -229,7 +229,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
                     setDelayedAppearances(thrDelayedSet, thrDelay);
                 }
             };
-            Thread thr = new Thread(r);
+            Thread thr = jmri.util.ThreadingUtil.newThread(r);
             thr.setName(getDisplayName() + " delayed set appearance");
             thr.setDaemon(true);
             try {
@@ -259,7 +259,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
                 }
             };
 
-            Thread thr = new Thread(r);
+            Thread thr = jmri.util.ThreadingUtil.newThread(r);
             thr.setName(getDisplayName());
             thr.setDaemon(true);
             try {

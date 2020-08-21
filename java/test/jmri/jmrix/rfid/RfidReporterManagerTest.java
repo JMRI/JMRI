@@ -1,15 +1,17 @@
 package jmri.jmrix.rfid;
 
 import javax.annotation.Nonnull;
+
 import jmri.Reporter;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.rfid.RfidReporterManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
 public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -81,8 +83,7 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     public void testReporterProvideByNumber() {
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -101,7 +102,7 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

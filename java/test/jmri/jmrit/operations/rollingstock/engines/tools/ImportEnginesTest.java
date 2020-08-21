@@ -3,12 +3,6 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.Timeout;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
@@ -18,40 +12,38 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@Timeout(60)
 public class ImportEnginesTest extends OperationsTestCase {
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(60); // 60 second timeout for methods in this test class.
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCTor() {
         ImportEngines t = new ImportEngines();
-        Assert.assertNotNull("exists", t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfSystemProperty(named = "jmri.skipjythontests", matches = "true")
     public void testReadFile() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         JUnitOperationsUtil.initOperationsData();
         // check number of engines in operations data
-        Assert.assertEquals("engines", 4, emanager.getNumEntries());
+        assertThat(emanager.getNumEntries()).withFailMessage("engines").isEqualTo(4);
 
         // export engines to create file
         ExportEngines exportEngines = new ExportEngines();
-        Assert.assertNotNull("exists", exportEngines);
+        assertThat(exportEngines).withFailMessage("exists").isNotNull();
 
         // should cause export complete dialog to appear
         Thread export = new Thread(new Runnable() {
@@ -76,11 +68,11 @@ public class ImportEnginesTest extends OperationsTestCase {
         }
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
-        Assert.assertTrue("Confirm file creation", file.exists());
+        assertThat(file.exists()).withFailMessage("Confirm file creation").isTrue();
 
         // delete all engines
         emanager.deleteAll();
-        Assert.assertEquals("engines", 0, emanager.getNumEntries());
+        assertThat(emanager.getNumEntries()).withFailMessage("engines").isEqualTo(0);
 
         // do import      
         Thread mb = new ImportEngines(){
@@ -119,20 +111,18 @@ public class ImportEnginesTest extends OperationsTestCase {
             // do nothing
         }
         // confirm import successful
-        Assert.assertEquals("engines", 4, emanager.getNumEntries());
+        assertThat(emanager.getNumEntries()).withFailMessage("engines").isEqualTo(4);
         
 
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testImportEnginesWithLocations() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         JUnitOperationsUtil.initOperationsData();
         // check number of engines in operations data
-        Assert.assertEquals("engines", 4, emanager.getNumEntries());
+        assertThat(emanager.getNumEntries()).withFailMessage("engines").isEqualTo(4);
 
         // give an engine a location and track assignment
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
@@ -140,11 +130,11 @@ public class ImportEnginesTest extends OperationsTestCase {
         Track track = loc.getTrackByName("NI Yard", null);
 
         Engine e1 = emanager.getByRoadAndNumber("PC", "5559");
-        Assert.assertEquals("place engine on tracck", Track.OKAY, e1.setLocation(loc, track));
+        assertThat(e1.setLocation(loc, track)).withFailMessage("place engine on tracck").isEqualTo(Track.OKAY);
 
         // export engines to create file
         ExportEngines exportEngines = new ExportEngines();
-        Assert.assertNotNull("exists", exportEngines);
+        assertThat(exportEngines).withFailMessage("exists").isNotNull();
 
         // should cause export complete dialog to appear
         Thread export = new Thread(new Runnable() {
@@ -169,11 +159,11 @@ public class ImportEnginesTest extends OperationsTestCase {
         }
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
-        Assert.assertTrue("Confirm file creation", file.exists());
+        assertThat(file.exists()).withFailMessage("Confirm file creation").isTrue();
 
         // delete all engines
         emanager.deleteAll();
-        Assert.assertEquals("engines", 0, emanager.getNumEntries());
+        assertThat(emanager.getNumEntries()).withFailMessage("engines").isEqualTo(0);
         // delete location
         lmanager.deregister(loc);
 
@@ -243,7 +233,7 @@ public class ImportEnginesTest extends OperationsTestCase {
         }
 
         // confirm import successful
-        Assert.assertEquals("engines", 4, emanager.getNumEntries());
+        assertThat(emanager.getNumEntries()).withFailMessage("engines").isEqualTo(4);
         
 
     }

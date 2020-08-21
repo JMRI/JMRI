@@ -7,7 +7,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +21,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     public AbstractTurnoutManager(SystemConnectionMemo memo) {
         super(memo);
-        InstanceManager.getDefault(TurnoutOperationManager.class);		// force creation of an instance
+        InstanceManager.getDefault(TurnoutOperationManager.class); // force creation of an instance
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
 
         // set listener for changes in memo
@@ -214,6 +214,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * Internal method to invoke the factory, after all the logic for returning
      * an existing Turnout has been invoked.
      *
+     * @param systemName system name.
+     * @param userName username.
      * @return never null
      */
     abstract protected Turnout createNewTurnout(@Nonnull String systemName, String userName);

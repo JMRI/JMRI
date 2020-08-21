@@ -1,15 +1,14 @@
 package jmri.implementation.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * SingleTurnoutSignalHeadXmlTest.java
  *
- * Description: tests for the SingleTurnoutSignalHeadXml class
+ * Test for the SingleTurnoutSignalHeadXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class SingleTurnoutSignalHeadXmlTest {
       Assert.assertNotNull("SingleTurnoutSignalHeadXml constructor",new SingleTurnoutSignalHeadXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

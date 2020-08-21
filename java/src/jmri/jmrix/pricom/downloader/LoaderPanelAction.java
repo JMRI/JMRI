@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
 /**
  * Swing action to create and register a LoaderFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class LoaderPanelAction extends AbstractAction {
 

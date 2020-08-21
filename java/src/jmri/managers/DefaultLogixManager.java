@@ -105,7 +105,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     @Override
     public void activateAllLogixs() {
         // Guarantee Initializer executes first.
-        Logix x = getBySystemName(LRouteTableAction.LOGIX_INITIALIZER);
+        Logix x = getBySystemName(LRouteTableAction.getLogixInitializer());
         if (x != null) {
             x.activateLogix();
             x.setGuiNames();
@@ -117,13 +117,13 @@ public class DefaultLogixManager extends AbstractManager<Logix>
             // get the next Logix
             x = iter.next();
 
-            if (x.getSystemName().equals(LRouteTableAction.LOGIX_INITIALIZER)) {
+            if (x.getSystemName().equals(LRouteTableAction.getLogixInitializer())) {
                 continue;
             }
 
             if (loadDisabled) {
                 // user has requested that Logixs be loaded disabled
-                log.warn("load disabled set - will not activate logic for: " + x.getDisplayName());
+                log.warn("load disabled set - will not activate logic for: {}", x.getDisplayName());
                 x.setEnabled(false);
             }
             if (x.getEnabled()) {

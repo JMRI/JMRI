@@ -1,0 +1,41 @@
+@startuml
+
+abstract class LayoutTrack<existing> #DDDDDD
+
+abstract class LayoutTurnout<existing> #DDDDDD
+note left: LH_XOVER-specific code here now
+
+abstract class LayoutSlip<existing> #DDDDDD
+class LayoutTurntable<existing> #DDDDDD
+class LevelXing<existing> #DDDDDD
+class PositionablePoint<existing> #DDDDDD
+class TrackSegment<existing> #DDDDDD
+
+LayoutTrack <|.. LayoutTurnout
+LayoutTrack <|.. LayoutTurntable
+LayoutTrack <|.. LevelXing
+LayoutTrack <|.. PositionablePoint
+LayoutTrack <|.. TrackSegment
+
+LayoutTurnout <|.. LayoutSlip
+
+
+LayoutTurnout <|-- LayoutRHTurnout
+LayoutTurnout <|-- LayoutLHTurnout
+
+LayoutTurnout <|-- LayoutWye
+
+abstract LayoutXOver
+LayoutTurnout <|-- LayoutXOver
+
+LayoutXOver <|-- LayoutDoubleXOver
+LayoutXOver <|-- LayoutRhXOver
+
+LayoutXOver <|-- LayoutLhXOver
+note right: Ends up here
+
+LayoutSlip <|-- LayoutSingleSlip
+LayoutSlip <|-- LayoutDoubleSlip
+
+
+@end

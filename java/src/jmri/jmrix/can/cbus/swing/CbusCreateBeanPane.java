@@ -6,7 +6,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.*;
-import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.can.swing.CanPanel;
@@ -30,15 +29,20 @@ public class CbusCreateBeanPane extends JPanel {
     private final CbusNameService nameservice;
     private NamedBean bean;
     private JButton editUserNameButton;
-    private final Class<?>[] classTypes = new Class<?>[]{
-        jmri.TurnoutManager.class,jmri.SensorManager.class,jmri.LightManager.class};
     protected CbTransferHandler[] transferArray;
+    
+    private final jmri.TurnoutManager tm;
+    private final jmri.SensorManager sm;
+    private final jmri.LightManager lm;
     
     public CbusCreateBeanPane(CanPanel mainPane){
         super();
         _mainPane = mainPane;
+        nameservice = new CbusNameService(mainPane.getMemo());
+        tm = (jmri.TurnoutManager) mainPane.getMemo().get(jmri.TurnoutManager.class);
+        sm = (jmri.SensorManager) mainPane.getMemo().get(jmri.SensorManager.class);
+        lm = (jmri.LightManager) mainPane.getMemo().get(jmri.LightManager.class);
         init();
-        nameservice = new CbusNameService(mainPane.getMemo());        
     }
     
     private void init() {
@@ -62,7 +66,7 @@ public class CbusCreateBeanPane extends JPanel {
         for (int i =0; i<3; i++){
             StringBuilder sb = new StringBuilder();
             sb.append("<html><h2>")
-            .append(((jmri.Manager) InstanceManager.getDefault(classTypes[i])).getBeanTypeHandled() )
+            .append(getManagerByIndex(i).getBeanTypeHandled() )
             .append("</h2></html>"); // NOI18N
             JLabel newBealLabel = new JLabel(sb.toString());
             newBealLabel.setBorder(BorderFactory.createEtchedBorder());
@@ -134,7 +138,7 @@ public class CbusCreateBeanPane extends JPanel {
             if (canImport(c, t.getTransferDataFlavors())) {
                 
                 String validatedAddr;
-                Class<?> mgrClass;
+                jmri.ProvidingManager<?> mgrClass;
                 
                 // do some validation on the input string
                 // processed in the same way as a sensor, turnout or light so less chance of breaking in future
@@ -142,7 +146,7 @@ public class CbusCreateBeanPane extends JPanel {
                 try {
                     validatedAddr = CbusAddress.validateSysName(
                         (String) t.getTransferData(DataFlavor.stringFlavor) );
-                    mgrClass = classInString(((JLabel)c).getText());
+                    mgrClass = classMgrInString(((JLabel)c).getText());
                 } catch (UnsupportedFlavorException | IOException | IllegalArgumentException | ClassCastException e) {
                     return false;
                 }
@@ -152,10 +156,10 @@ public class CbusCreateBeanPane extends JPanel {
                 
                 boolean dirty = false;
                 
-                bean = ((jmri.Manager) InstanceManager.getDefault(mgrClass)).getBySystemName(validatedAddr);
+                bean = mgrClass.getBySystemName(validatedAddr);
                 if ( bean == null) {
                     dirty = true;
-                    bean = ((jmri.ProvidingManager) InstanceManager.getDefault(mgrClass)).provide(validatedAddr);
+                    bean = mgrClass.provide(validatedAddr);
                     bean.setUserName(nameservice.getEventName(nn, en));
                 }
                 setEditPaneActive(true);
@@ -166,14 +170,27 @@ public class CbusCreateBeanPane extends JPanel {
         }
     }
     
-    private Class<?> classInString(String dropLocation){
+    private jmri.ProvidingManager<?> classMgrInString(String dropLocation){
         for (int i =0; i<3; i++){
             if (dropLocation.contains(
-                ((jmri.Manager) InstanceManager.getDefault(classTypes[i])).getBeanTypeHandled())){
-                return classTypes[i];
+                getManagerByIndex(i).getBeanTypeHandled())){
+                return getManagerByIndex(i);
             }
         }
         throw new IllegalArgumentException("Unable to get Bean Type");
+    }
+    
+    private jmri.ProvidingManager<?> getManagerByIndex(int index){
+        switch (index) {
+            case 0:
+                return tm;
+            case 1:
+                return sm;
+            case 2:
+                return lm;
+            default:
+                throw new IllegalArgumentException("Unable to get Manager from Index" + index);
+        }
     }
     
     private void resetBeanText(NamedBean bean, boolean tableChanged, int nn, int en ){

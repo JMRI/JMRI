@@ -2,12 +2,14 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 
 import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprog3ConnectionConfig;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * PiSprog3ConnectionConfigXmlTest.java
  * 
- * Description: tests for the PiSprog3ConnectionConfigXml class
+ * Test for the PiSprog3ConnectionConfigXml class
  *
  * @author  Andrew Crosland  Copyright (C) 2020
  */
@@ -19,8 +21,7 @@ public class PiSprog3ConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abs
         Assert.assertNotNull("exists",c);
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -28,7 +29,7 @@ public class PiSprog3ConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abs
         cc = new PiSprog3ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         JUnitUtil.tearDown();

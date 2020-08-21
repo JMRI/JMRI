@@ -319,18 +319,22 @@ public class AutoActiveTrain implements ThrottleListener {
                 _activeTrain.getTrainName(),
                 _throttle.getLocoAddress(),
                 getMaxTrainLength(), _speedFactor, _useSpeedProfile);
-        _autoEngineer = new AutoEngineer();
-        new Thread(_autoEngineer, "Auto Engineer " + _address).start();
-        _activeTrain.setMode(ActiveTrain.AUTOMATIC);
-        if (_resumingAutomatic) {
-            _resumingAutomatic = false;
-            _activeTrain.setStatus(ActiveTrain.RUNNING);
-            setupNewCurrentSignal(null, true);
-            setEngineDirection();
-            setSpeedBySignal();
-        } else if (InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) {
-            // starting for the first time with automatic allocation of Sections
-            setSpeedBySignal();
+        if (_autoEngineer != null) {
+            log.error("Second Trottle for same loco[{}] - ignoring", _address);
+        } else {
+            _autoEngineer = new AutoEngineer();
+            jmri.util.ThreadingUtil.newThread(_autoEngineer, "Auto Engineer " + _address).start();
+            _activeTrain.setMode(ActiveTrain.AUTOMATIC);
+            if (_resumingAutomatic) {
+                _resumingAutomatic = false;
+                _activeTrain.setStatus(ActiveTrain.RUNNING);
+                setupNewCurrentSignal(null, true);
+                setEngineDirection();
+                setSpeedBySignal();
+            } else if (InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) {
+                // starting for the first time with automatic allocation of Sections
+                setSpeedBySignal();
+            }
         }
     }
 
@@ -341,16 +345,6 @@ public class AutoActiveTrain implements ThrottleListener {
     @Override
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
         log.error("Throttle request failed for {} because {}", address, reason);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
     }
 
     /**
@@ -475,7 +469,24 @@ public class AutoActiveTrain implements ThrottleListener {
                         removeCurrentSignal();
                         stopInCurrentSection(END_REVERSAL);
                     }
-                    // are we going continuously loop
+                    // are we going continuously without delay
+                    else if ( _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
+                        _activeTrain.setRestart();
+                        _activeTrain.setTransitReversed(false);
+                        _activeTrain.resetAllAllocatedSections();
+                        _previousBlock = null;
+                        _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
+                        setEngineDirection();
+                        if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
+                            // we need to get a next section
+                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                            // and then set the signal
+                        }
+                        // can be mid block
+                        setupNewCurrentSignal(null, true);
+                        setSpeedBySignal();
+                    }
+                    // are we restarting later
                     else if ( _activeTrain.getResetWhenDone()) {
                         // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
                         removeCurrentSignal();
@@ -685,8 +696,10 @@ public class AutoActiveTrain implements ThrottleListener {
                 });
                 log.debug("new current signal = {}", sh.getDisplayName(USERSYS));
                 setSpeedBySignal();
-            } // Note: null signal head will result when exiting throat-to-throat blocks.
-            log.debug("new current signal is null - sometimes OK");
+            } else {
+                // Note: null signal head will result when exiting throat-to-throat blocks.
+                log.debug("new current signal is null - sometimes OK");
+            }
         } else {
             //SignalMast
             SignalMast sm = null;
@@ -873,7 +886,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     useSpeed = signalSpeed;
                 }
 
-                log.trace("BlockSpeed[" + blockSpeed + "] SignalSpeed[" + signalSpeed + "]");
+                log.trace("BlockSpeed[{}] SignalSpeed[{}]", blockSpeed, signalSpeed);
                 if (useSpeed < 0.01f) {
                     // check to to see if its allocated to us!!!
                     //      check Block occupancy sensor if it is in an allocated block, which must change before signal.
@@ -1088,8 +1101,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (useSpeedProfile && _currentAllocatedSection.getSection().getActualLength() > 0) {
                     _stoppingUsingSpeedProfile = true;
                 } else {
-                    // sensor is not active
-                    setToAMaximumThrottle(_speedRatio[RESTRICTED_SPEED]);
+                    setDecreasedSpeedBeforeStop();
                 }
                 _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
                     if (e.getPropertyName().equals("KnownState")) {
@@ -1099,8 +1111,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 _stoppingBySensor = true;
             }
         } else if (_currentAllocatedSection.getLength() < _maxTrainLength || _stopBySpeedProfile) {
-            log.debug("{}: train will not fit in [{}] ({}<{}), stop.", _activeTrain.getTrainName(),
-                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength);
+            log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}] StopBySpeedProfile [{}]. setStopNow", _activeTrain.getTrainName(),
+                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength, _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
             // stopping by speed profile uses block length to stop
             //TODO: don't stop immediately, slow to stop instead
@@ -1210,7 +1222,7 @@ public class AutoActiveTrain implements ThrottleListener {
         // even if no task is required it must be run
         // as cleanup happens after train stops.
         Runnable waitForStop = new WaitForTrainToStop(task);
-        Thread tWait = new Thread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
+        Thread tWait = jmri.util.ThreadingUtil.newThread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
         tWait.start();
     }
 
@@ -1245,19 +1257,8 @@ public class AutoActiveTrain implements ThrottleListener {
             case BEGINNING_RESET:
                 _activeTrain.setRestart();
                 if (_activeTrain.getResetWhenDone()) {
-                    if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
-                        _activeTrain.setTransitReversed(false);
-                        _activeTrain.resetAllAllocatedSections();
-                        _previousBlock = null;
-                        _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
-                        setEngineDirection();
-                        if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
-                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
-                            break;
-                        }
-                        // can be mid block
-                        setupNewCurrentSignal(null, true);
-                        setSpeedBySignal();
+                    if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY && !_activeTrain.getReverseAtEnd()) {
+                        log.error("[{}]: train is continueing without pause, should have been handled in handleBlockStateChange.",_activeTrain.getTrainName());
                     } else {
                         // then active train is delayed
                         _activeTrain.setTransitReversed(false);
@@ -1268,7 +1269,6 @@ public class AutoActiveTrain implements ThrottleListener {
                         _activeTrain.setRestart();
                         if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
                             InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
-                            break;
                         }
                         // can be mid block
                         setupNewCurrentSignal(null, true);
@@ -1319,17 +1319,27 @@ public class AutoActiveTrain implements ThrottleListener {
         // note: _stoppingBlock must be set before invoking this method
         //  verify that _stoppingBlock is actually occupied, if not stop immed
         if (_stoppingBlock.getState() == Block.OCCUPIED) {
-            float signalSpeed = 25;
-            try {
-                signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
-            } catch (IllegalArgumentException ex) {
-                log.error("Missing [{}] from Speed table - defaulting to 25",InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
-            }
-            setToAMaximumThrottle(getThrottleSettingFromSpeed(signalSpeed));
+            setDecreasedSpeedBeforeStop();
             _stoppingByBlockOccupancy = true;
         } else {
             setStopNow();
         }
+    }
+
+    /**
+     * Before stopping by sensor alone, or by clearing previous block,
+     * set the speed to the user defined preference.
+     */
+    private void setDecreasedSpeedBeforeStop() {
+        float signalSpeed = 25;
+        try {
+            signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class)
+                    .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+        } catch (IllegalArgumentException ex) {
+            log.error("Missing [{}] from Speed table - defaulting to 25",
+                    InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+        }
+        setToAMaximumThrottle(getThrottleSettingFromSpeed(signalSpeed));
     }
 
     /**
@@ -1541,7 +1551,7 @@ public class AutoActiveTrain implements ThrottleListener {
             return (null);
         }
         Runnable pauseTrain = new PauseTrain(fastMinutes);
-        Thread tPause = new Thread(pauseTrain, "pause train " + _activeTrain.getTrainName());
+        Thread tPause = jmri.util.ThreadingUtil.newThread(pauseTrain, "pause train " + _activeTrain.getTrainName());
         tPause.start();
         return tPause;
     }
@@ -1872,98 +1882,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         protected void setFunction(int cmdNum, boolean isSet) {
-            switch (cmdNum) {
-                case 0:
-                    _throttle.setF0(isSet);
-                    break;
-                case 1:
-                    _throttle.setF1(isSet);
-                    break;
-                case 2:
-                    _throttle.setF2(isSet);
-                    break;
-                case 3:
-                    _throttle.setF3(isSet);
-                    break;
-                case 4:
-                    _throttle.setF4(isSet);
-                    break;
-                case 5:
-                    _throttle.setF5(isSet);
-                    break;
-                case 6:
-                    _throttle.setF6(isSet);
-                    break;
-                case 7:
-                    _throttle.setF7(isSet);
-                    break;
-                case 8:
-                    _throttle.setF8(isSet);
-                    break;
-                case 9:
-                    _throttle.setF9(isSet);
-                    break;
-                case 10:
-                    _throttle.setF10(isSet);
-                    break;
-                case 11:
-                    _throttle.setF11(isSet);
-                    break;
-                case 12:
-                    _throttle.setF12(isSet);
-                    break;
-                case 13:
-                    _throttle.setF13(isSet);
-                    break;
-                case 14:
-                    _throttle.setF14(isSet);
-                    break;
-                case 15:
-                    _throttle.setF15(isSet);
-                    break;
-                case 16:
-                    _throttle.setF16(isSet);
-                    break;
-                case 17:
-                    _throttle.setF17(isSet);
-                    break;
-                case 18:
-                    _throttle.setF18(isSet);
-                    break;
-                case 19:
-                    _throttle.setF19(isSet);
-                    break;
-                case 20:
-                    _throttle.setF20(isSet);
-                    break;
-                case 21:
-                    _throttle.setF21(isSet);
-                    break;
-                case 22:
-                    _throttle.setF22(isSet);
-                    break;
-                case 23:
-                    _throttle.setF23(isSet);
-                    break;
-                case 24:
-                    _throttle.setF24(isSet);
-                    break;
-                case 25:
-                    _throttle.setF25(isSet);
-                    break;
-                case 26:
-                    _throttle.setF26(isSet);
-                    break;
-                case 27:
-                    _throttle.setF27(isSet);
-                    break;
-                case 28:
-                    _throttle.setF28(isSet);
-                    break;
-                default:
-                    log.error("Unhandled cmdNum: {}", cmdNum);
-                    break;
-            }
+            _throttle.setFunction(cmdNum, isSet);
         }
     }
 

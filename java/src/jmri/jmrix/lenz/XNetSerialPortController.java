@@ -103,7 +103,8 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     private boolean checkBuffer = false;
 
     /**
-     * Allow derived classes to set the private checkBuffer value
+     * Allow derived classes to set the private checkBuffer value.
+     * @param b new checkBuffer value
      */
     protected void setCheckBuffer(boolean b) {
         checkBuffer = b;

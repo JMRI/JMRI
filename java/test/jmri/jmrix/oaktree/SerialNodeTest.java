@@ -3,16 +3,15 @@ package jmri.jmrix.oaktree;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the SerialNode class
  *
- * @author	Bob Jacobsen Copyright 2003
- * @author	Dave Duchamp multi-node extensions 2003
+ * @author Bob Jacobsen Copyright 2003
+ * @author Dave Duchamp multi-node extensions 2003
  */
 public class SerialNodeTest {
 
@@ -89,7 +88,7 @@ public class SerialNodeTest {
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new OakTreeSystemConnectionMemo();
@@ -97,7 +96,7 @@ public class SerialNodeTest {
         b = new SerialNode(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

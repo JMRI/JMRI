@@ -1,15 +1,14 @@
 package jmri.jmrix.xpa.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XpaTurnoutManagerXmlTest.java
  *
- * Description: tests for the XpaTurnoutManagerXml class
+ * Test for the XpaTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -20,13 +19,12 @@ public class XpaTurnoutManagerXmlTest {
       Assert.assertNotNull("XpaTurnoutManagerXml constructor",new XpaTurnoutManagerXml());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

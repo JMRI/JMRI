@@ -43,15 +43,16 @@ public class OlcbAddress {
         return hCode;
     }
     
-    String aString = null;
+    String aString;
     int[] aFrame = null;
     boolean match = false;
 
     static final int NODEFACTOR = 100000;
 
     /** 
-     * Construct from OlcbEvent
+     * Construct from OlcbEvent.
      *
+     * @param e the event ID.
      */
     public OlcbAddress(EventID e) {
         byte[] contents = e.getContents();
@@ -73,12 +74,11 @@ public class OlcbAddress {
         // This is done manually, rather than via regular expressions, for performance reasons.
         if (aString.contains(";")) {
             // multi-part address; leave match false and aFrame null
-            return;
         } else if (aString.contains(".")) {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
             if (terms.length != 8) {
-                log.error("unexpected number of terms: " + terms.length);
+                log.error("unexpected number of terms: {}", terms.length);
             }
             int[] tFrame = new int[terms.length];
             try {
@@ -132,8 +132,8 @@ public class OlcbAddress {
     @Override
     public int hashCode() {
         int ret = 0;
-        for (int i = 0; i < this.aFrame.length; i++) {
-            ret += this.aFrame[i];
+        for (int value : this.aFrame) {
+            ret += value;
         }
         return ret;
     }
@@ -162,9 +162,12 @@ public class OlcbAddress {
 
     /**
      * Confirm that the address string (provided earlier) is fully
-     * valid.  This is an expensive call. It's complete-compliance done
+     * valid.
+     * <p>
+     * This is an expensive call. It's complete-compliance done
      * using a regular expression. It can reject some 
      * forms that the code will normally handle OK.
+     * @return true if valid, else false.
      */
     public boolean check() {
         return getMatcher().reset(aString).matches();
@@ -184,10 +187,7 @@ public class OlcbAddress {
         if (!r.isExtended()) {
             return false;
         }
-        if ((r.getHeader() & 0x1FFFF000) != 0x195B4000) {
-            return false;
-        }
-        return true;
+        return (r.getHeader() & 0x1FFFF000) == 0x195B4000;
     }
 
     boolean match(CanMessage r) {
@@ -204,10 +204,7 @@ public class OlcbAddress {
         if (!r.isExtended()) {
             return false;
         }
-        if ((r.getHeader() & 0x1FFFF000) != 0x195B4000) {
-            return false;
-        }
-        return true;
+        return (r.getHeader() & 0x1FFFF000) == 0x195B4000;
     }
 
     /**
@@ -260,20 +257,22 @@ public class OlcbAddress {
 
     public String toCanonicalString() {
         String retval = "x";
-        for (int i = 0; i < aFrame.length; i++) {
-            retval = jmri.util.StringUtil.appendTwoHexFromInt(aFrame[i], retval);
+        for (int value : aFrame) {
+            retval = jmri.util.StringUtil.appendTwoHexFromInt(value, retval);
         }
         return retval;
     }
 
     /**
-     * Provide as dotted pairs
+     * Provide as dotted pairs.
+     * @return dotted pair form off string.
      */
     public String toDottedString() {
         String retval = "";
-        for (int i = 0; i < aFrame.length; i++) {
-            if (! retval.isEmpty()) retval += ".";
-            retval = jmri.util.StringUtil.appendTwoHexFromInt(aFrame[i], retval);
+        for (int value : aFrame) {
+            if (!retval.isEmpty())
+                retval += ".";
+            retval = jmri.util.StringUtil.appendTwoHexFromInt(value, retval);
         }
         return retval;
     }

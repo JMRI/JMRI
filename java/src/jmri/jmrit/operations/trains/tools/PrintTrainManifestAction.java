@@ -2,8 +2,10 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
+
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+
 import jmri.jmrit.operations.trains.Train;
 
 /**
@@ -13,9 +15,9 @@ import jmri.jmrit.operations.trains.Train;
  */
 public class PrintTrainManifestAction extends AbstractAction {
 
-    public PrintTrainManifestAction(String actionName, boolean preview, Train train) {
-        super(actionName);
-        isPreview = preview;
+    public PrintTrainManifestAction(boolean isPreview, Train train) {
+        super(isPreview ? Bundle.getMessage("MenuItemPreviewManifest") : Bundle.getMessage("MenuItemPrintManifest"));
+        _isPreview = isPreview;
         _train = train;
         setEnabled(train != null);
     }
@@ -23,7 +25,7 @@ public class PrintTrainManifestAction extends AbstractAction {
     /**
      * Variable to set whether this is to be printed or previewed
      */
-    boolean isPreview;
+    boolean _isPreview;
     Train _train;
 
     @Override
@@ -33,7 +35,7 @@ public class PrintTrainManifestAction extends AbstractAction {
         }
         if (!_train.isBuilt()) {
             String printOrPreview = Bundle.getMessage("print");
-            if (isPreview) {
+            if (_isPreview) {
                 printOrPreview = Bundle.getMessage("preview");
             }
             String string = MessageFormat.format(Bundle.getMessage("DoYouWantToPrintPreviousManifest"),
@@ -45,7 +47,7 @@ public class PrintTrainManifestAction extends AbstractAction {
                 return;
             }
         }
-        if (!_train.printManifest(isPreview)) {
+        if (!_train.printManifest(_isPreview)) {
             String string = MessageFormat.format(Bundle.getMessage("NeedToBuildTrainBeforePrinting"),
                     new Object[]{_train.getName()});
             JOptionPane.showMessageDialog(null, string, MessageFormat.format(

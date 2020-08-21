@@ -89,6 +89,6 @@ public class PaneEditAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class);
+    private final static Logger log = LoggerFactory.getLogger(PaneEditAction.class);
 
 }

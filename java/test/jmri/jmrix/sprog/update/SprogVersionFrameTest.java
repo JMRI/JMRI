@@ -1,21 +1,23 @@
 package jmri.jmrix.sprog.update;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SprogVersionFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private SprogTrafficControlScaffold stcs = null;
     private SprogSystemConnectionMemo m = null;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -23,12 +25,12 @@ public class SprogVersionFrameTest extends jmri.util.JmriJFrameTestBase {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new SprogVersionFrame(m);
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new SprogVersionFrame(m);
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         m.getSlotThread().interrupt();

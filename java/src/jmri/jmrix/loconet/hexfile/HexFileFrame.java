@@ -32,7 +32,8 @@ public class HexFileFrame extends JmriJFrame {
     javax.swing.JTextField delayField = new javax.swing.JTextField(5);
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     
-    private int connectedAddresses = 0;
+    private int maxSlots = 10;  //maximum addresses that can be acquired at once, this default will be overridden by config
+    private int slotsInUse = 0;
 
     // to find and remember the log file
     final javax.swing.JFileChooser inputFileChooser;
@@ -183,6 +184,12 @@ public class HexFileFrame extends JmriJFrame {
                 log.info("SensorManager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
             }
         }
+        //get the maxSlots value from the connection options
+        try {
+            maxSlots = Integer.parseInt(port.getOptionState("MaxSlots"));
+        } catch (NumberFormatException e) {
+            //ignore missing or invalid option and leave at the default value
+        }
 
         // Install a debug programmer, replacing the existing LocoNet one
         DefaultProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();
@@ -215,21 +222,24 @@ public class HexFileFrame extends JmriJFrame {
                     return;
                 }
                 DccLocoAddress address = (DccLocoAddress) a;
-                //create some testing situations
-                if (connectedAddresses >= 5) {
-                    log.warn("SLOT MAX of 5 reached. Current={}", connectedAddresses);
-                    failedThrottleRequest(address, "SLOT MAX of 5 reached");
+
+                //check for slot limit exceeded
+                if (slotsInUse >= maxSlots) {
+                    log.warn("SLOT MAX of {} reached. Throttle {} not added. Current slotsInUse={}", maxSlots, a, slotsInUse);
+                    failedThrottleRequest(address, "SLOT MAX of " + maxSlots + " reached");
                     return;
                 }
-                // otherwise, continue with setup
+
+                slotsInUse++;
+                log.debug("Throttle {} requested. slotsInUse={}, maxSlots={}", a, slotsInUse, maxSlots);
                 super.requestThrottleSetup(a, control);
-                connectedAddresses++;
             }
 
             @Override
-            public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
+            public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {                
+                if (slotsInUse > 0) slotsInUse--;
+                log.debug("Throttle {} disposed. slotsInUse={}, maxSlots={}", t, slotsInUse, maxSlots);
                 if (super.disposeThrottle(t, l)) {
-                    connectedAddresses--;
                     return true;
                 }
                 return false;

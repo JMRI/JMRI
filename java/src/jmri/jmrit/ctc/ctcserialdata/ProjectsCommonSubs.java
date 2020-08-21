@@ -23,7 +23,7 @@ public class ProjectsCommonSubs {
     static public ArrayList<String> getArrayListFromSSV(String ssvString) { return helper1(ssvString, SSV_SEPARATOR); }
     static private ArrayList<String> helper1(String ssvString, char separator) {
         ArrayList<String> list = new ArrayList<>();
-        try (CSVParser parser = new CSVParser(new StringReader(ssvString), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator))) {
+        try (CSVParser parser = new CSVParser(new StringReader(ssvString), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator).withRecordSeparator(null))) {
             parser.getRecords().forEach(record -> record.forEach(item -> list.add(item)));
         } catch (IOException ex) {
             log.error("Unable to parse {}", ssvString, ex);
@@ -48,7 +48,7 @@ public class ProjectsCommonSubs {
     static public String constructCSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, CSVFormat.DEFAULT.getDelimiter()); }
     static public String constructSSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, ProjectsCommonSubs.SSV_SEPARATOR); }
     static private String constructSeparatorStringFromArray(ArrayList<String> list, char separator) {
-        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator))) {
+        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withDelimiter(separator).withRecordSeparator(null))) {
             printer.printRecord(list);
             return printer.getOut().toString();
         } catch (IOException ex) {
@@ -65,7 +65,13 @@ public class ProjectsCommonSubs {
     public static String getFilenameOnly(String path) {
         // Paths.get(path) can return null per the Paths documentation
         Path file = Paths.get(path);
-        return file != null ? file.getFileName().toString() : "";
+        if (file != null){
+            Object fileName = file.getFileName();
+            if (fileName!=null) {
+                return fileName.toString();
+            }
+        }
+        return "";
     }
 
     public static String addExtensionIfMissing(String path, String missingExtension) {

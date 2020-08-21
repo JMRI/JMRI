@@ -167,8 +167,8 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     @Override
     @Nonnull
     public synchronized String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        int encoderAddress = 0;
-        int input = 0;
+        int encoderAddress;
+        int input;
 
         if (curAddress.contains(":")) {
             // This is a CAN Bus sensor address passed in the form of encoderAddress:input
@@ -208,7 +208,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     @Override
     public synchronized String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);

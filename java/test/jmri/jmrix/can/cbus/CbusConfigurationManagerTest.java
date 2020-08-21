@@ -2,12 +2,10 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -129,20 +127,22 @@ public class CbusConfigurationManagerTest {
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis; // needed for DCC programming mgr?
     private CbusConfigurationManager t;
+    private CbusPreferences prefs;
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        prefs = new CbusPreferences();
+        jmri.InstanceManager.store(prefs,CbusPreferences.class );
         
         t = new CbusConfigurationManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
         t.dispose();

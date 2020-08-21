@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.eventtable;
 
 import java.util.ArrayList;
-import javax.annotation.Nonnull;
 import java.util.Arrays;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanListener;

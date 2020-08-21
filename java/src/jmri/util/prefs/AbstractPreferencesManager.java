@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
@@ -29,8 +30,8 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      */
     @Override
     public boolean isInitialized(Profile profile) {
-        return this.initialized.getOrDefault(profile, false) &&
-                this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
+        return this.initialized.getOrDefault(profile, false)
+                && this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
     }
 
     /**
@@ -38,8 +39,8 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      */
     @Override
     public boolean isInitializedWithExceptions(Profile profile) {
-        return this.initialized.getOrDefault(profile, false) &&
-                !this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
+        return this.initialized.getOrDefault(profile, false)
+                && !this.exceptions.getOrDefault(profile, new ArrayList<>()).isEmpty();
     }
 
     /**
@@ -55,8 +56,8 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * Test if the manager is being initialized.
      *
      * @param profile the profile against which the manager is being initialized
-     *                    or null if being initialized for this user regardless
-     *                    of profile
+     *                or null if being initialized for this user regardless of
+     *                profile
      * @return true if being initialized; false otherwise
      */
     protected boolean isInitializing(Profile profile) {
@@ -64,18 +65,14 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
     }
 
     /**
-     * Get the set of PreferencesProviders that must be initialized prior to
-     * initializing this PreferencesManager. It is generally preferable to
-     * require an Interface or an abstract Class instead of a concrete Class,
-     * since that allows all (or any) concrete implementations of the required
-     * class to be initialized to provide required services for the requiring
-     * PreferencesManager instance.
-     *
+     * {@inheritDoc}
+     * <p>
      * This implementation includes a default dependency on the
      * {@link jmri.jmrix.ConnectionConfigManager}.
      *
-     * @return An set of classes. If there are no dependencies, return an empty
-     *         set instead of null.
+     * @return An set of classes; if there are no dependencies, return an empty
+     *         set instead of null; overriding implementations may add to this
+     *         set directly
      */
     @Override
     @Nonnull
@@ -86,15 +83,10 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
     }
 
     /**
-     * Get the set of Classes that this PreferencesManager can be registered as
-     * a provider of in the {@link jmri.InstanceManager}.
-     *
+     * {@inheritDoc}
+     * <p>
      * This implementation returns the class of the object against which this
      * method is called.
-     *
-     * @return An set of classes. If this PreferencesManager provides an
-     *         instance of no other Interfaces or abstract Classes than
-     *         PreferencesManager, return an empty set instead of null.
      */
     @Override
     @Nonnull
@@ -133,7 +125,7 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      * Add an error to the list of exceptions.
      *
      * @param profile   the profile against which the manager is being
-     *                      initialized
+     *                  initialized
      * @param exception the exception to add
      */
     protected void addInitializationException(Profile profile, @Nonnull Exception exception) {
@@ -153,16 +145,15 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      *
      * @param profile the profile against which the manager is being initialized
      * @param classes the manager classes for which all calling
-     *                    {@link #isInitialized(jmri.profile.Profile)} must
-     *                    return true against all instances of
+     *                {@link #isInitialized(jmri.profile.Profile)} must return
+     *                true against all instances of
      * @param message the localized message to display if an
-     *                    InitializationExcpetion is thrown
+     *                InitializationExcpetion is thrown
      * @throws InitializationException  if any instance of any class in classes
-     *                                      returns false on
-     *                                      isIntialized(profile)
+     *                                  returns false on isIntialized(profile)
      * @throws IllegalArgumentException if any member of classes is not also in
-     *                                      the set of classes returned by
-     *                                      {@link #getRequires()}
+     *                                  the set of classes returned by
+     *                                  {@link #getRequires()}
      */
     protected void requiresNoInitializedWithExceptions(Profile profile,
             @Nonnull Set<Class<? extends PreferencesManager>> classes, @Nonnull String message)
@@ -196,13 +187,32 @@ public abstract class AbstractPreferencesManager extends Bean implements Prefere
      *
      * @param profile the profile against which the manager is being initialized
      * @param message the localized message to display if an
-     *                    InitializationExcpetion is thrown
+     *                InitializationExcpetion is thrown
      * @throws InitializationException if any instance of any class in classes
-     *                                     returns false on
-     *                                     isIntialized(profile)
+     *                                 returns false on isIntialized(profile)
      */
     protected void requiresNoInitializedWithExceptions(Profile profile, @Nonnull String message)
             throws InitializationException {
         this.requiresNoInitializedWithExceptions(profile, this.getRequires(), message);
+    }
+
+    /**
+     * Convenience method to allow a PreferencesManager to require all other
+     * PreferencesManager in an attempt to be the last PreferencesManager
+     * initialized. Use this method as the body of {@link #getRequires()}.
+     * <p>
+     * <strong>Note</strong> given a set of PreferencesManagers using this
+     * method as the body of {@link #getRequires()}, the order in which those
+     * PreferencesManagers are initialized is non-deterministic.
+     *
+     * @return a set of all PreferencesManagers registered with the
+     *         InstanceManager except this one
+     */
+    @Nonnull
+    protected Set<Class<? extends PreferencesManager>> requireAllOther() {
+        return InstanceManager.getList(PreferencesManager.class).stream()
+                .filter(pm -> !pm.equals(this))
+                .map(pm -> pm.getClass())
+                .collect(Collectors.toSet());
     }
 }

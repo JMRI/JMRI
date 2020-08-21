@@ -8,7 +8,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 /**
  * Frame for user input of Sprog messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
 public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 

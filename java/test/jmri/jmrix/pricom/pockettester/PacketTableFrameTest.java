@@ -2,12 +2,14 @@ package jmri.jmrix.pricom.pockettester;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the MonitorFrame class
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class PacketTableFrameTest {
 
@@ -34,13 +36,13 @@ public class PacketTableFrameTest {
         f.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

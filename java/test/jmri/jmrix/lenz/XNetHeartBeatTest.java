@@ -1,14 +1,12 @@
 package jmri.jmrix.lenz;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * XNetHeartBeat.java
  *
- * Description: tests for the jmri.jmrix.lenz.XNetHeartBeat class
+ * Test for the jmri.jmrix.lenz.XNetHeartBeat class
  *
  * @author  Paul Bender Copyright (C) 2019
  */
@@ -21,7 +19,7 @@ public class XNetHeartBeatTest {
        Assert.assertNotNull(hb);
     }
 
-    @Before
+    @BeforeEach
     public void setUp(){
 
        jmri.util.JUnitUtil.setUp();
@@ -34,7 +32,7 @@ public class XNetHeartBeatTest {
 
     }
   
-    @After
+    @AfterEach
     public void tearDown(){
         hb.dispose();
         hb = null;

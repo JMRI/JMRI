@@ -14,20 +14,21 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetConsistManager extends AbstractConsistManager {
 
-    protected XNetTrafficController tc = null;
+    protected XNetTrafficController tc;
     private boolean requestingUpdate = false;
 
     /**
      * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
      * command station.
+     * @param systemMemo system connection.
      */
     public XNetConsistManager(XNetSystemConnectionMemo systemMemo) {
         super();
         tc = systemMemo.getXNetTrafficController();
         this.systemMemo = systemMemo;
     }
-    XNetSystemConnectionMemo systemMemo;
+    final XNetSystemConnectionMemo systemMemo;
 
     /**
      * This implementation does command station consists, so return true.
@@ -161,8 +162,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                                 _lastMUAddress = _lastAddress;
                                 _lastMemberAddress = _lastAddress;
                                 if (log.isDebugEnabled()) {
-                                    log.debug("Sending search for first DH Entry information , _lastMemberAddress is: "
-                                            + _lastMemberAddress);
+                                    log.debug("Sending search for first DH Entry information , _lastMemberAddress is: {}", _lastMemberAddress);
                                 }
                                 currentState = DHADDRESS1INFO;
                                 XNetMessage msg = XNetMessage.getLocomotiveInfoRequestMsg(_lastMemberAddress);
@@ -250,8 +250,7 @@ public class XNetConsistManager extends AbstractConsistManager {
                             currentConsist.restore(firstMember,
                                     (l.getElement(2) & 0x80) == 0x80);
                             if (log.isDebugEnabled()) {
-                                log.debug("Sending search for second DH Entry information , _lastMemberAddress is: "
-                                        + _lastMemberAddress);
+                                log.debug("Sending search for second DH Entry information , _lastMemberAddress is: {}", _lastMemberAddress);
                             }
                             currentState = DHADDRESS2INFO;
                             XNetMessage msg = XNetMessage

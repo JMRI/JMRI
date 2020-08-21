@@ -1,15 +1,15 @@
 package jmri.jmrix.loconet.hexfile;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.*;
-import org.junit.After;
+
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class HexFileFrameTest {
 
@@ -36,15 +36,14 @@ public class HexFileFrameTest {
         f.dispose();   
  }   
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

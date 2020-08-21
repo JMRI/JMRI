@@ -1,19 +1,19 @@
 package jmri.jmrix.can.cbus.swing.eventrequestmonitor;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of CbusEventRequestTablePane
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class CbusEventRequestTablePaneTest {
 
@@ -37,7 +37,7 @@ public class CbusEventRequestTablePaneTest {
         
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -45,7 +45,7 @@ public class CbusEventRequestTablePaneTest {
         memo.setTrafficController(tcis);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         tcis.terminateThreads();

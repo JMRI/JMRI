@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * The {@link SprogReply} class handles the response from the command station.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 

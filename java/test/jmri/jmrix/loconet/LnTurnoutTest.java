@@ -7,14 +7,16 @@ import static jmri.Turnout.THROWN;
 import static jmri.Turnout.UNKNOWN;
 import static jmri.Turnout.INCONSISTENT;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
@@ -111,7 +113,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         try {
             t.setCommandedState(CLOSED);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(lnis.outbound.elementAt(0)
                 .toString().equals("B0 14 30 00"));  // CLOSED loconet message
@@ -137,7 +139,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
             t.setProperty(LnTurnoutManager.BYPASSBUSHBYBITKEY, true);
             t.setCommandedState(THROWN);
         } catch (Exception e) {
-            log.error("TO exception: " + e);
+            log.error("TO exception: {}", e);
         }
         Assert.assertTrue(lnis.outbound.elementAt(0)
                 .toString().equals("BD 14 10 00"));  // thrown loconet message
@@ -815,7 +817,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     LocoNetSystemConnectionMemo memo;
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -836,7 +838,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnt=(LnTurnout) t;
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
         t.dispose();
         JUnitUtil.tearDown();

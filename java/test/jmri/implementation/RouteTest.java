@@ -2,15 +2,14 @@ package jmri.implementation;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
 
 /**
  * Tests for the Route interface
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2006, 2007
  */
 public class RouteTest {
 
@@ -126,14 +125,14 @@ public class RouteTest {
         Assert.assertTrue("VETOINACTIVE", Route.VETOINACTIVE == 3);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

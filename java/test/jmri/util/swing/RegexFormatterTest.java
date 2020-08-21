@@ -1,10 +1,10 @@
 package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import java.text.ParseException;
 import java.util.regex.Pattern;
 
@@ -55,20 +55,19 @@ public class RegexFormatterTest {
         Assert.assertNotNull("exists",t.stringToValue("A1234"));
     }
 
-    @Test(expected=ParseException.class)
+    @Test
     public void testStringToValueFailure() throws ParseException {
         RegexFormatter t = new RegexFormatter("[A-Za-z]\\d*");
-        Assert.assertNotNull("exists",t.stringToValue("AB1234"));
+        Assert.assertThrows(ParseException.class, () -> t.stringToValue("AB1234"));
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

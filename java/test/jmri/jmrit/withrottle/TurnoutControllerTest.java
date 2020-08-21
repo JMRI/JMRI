@@ -1,12 +1,14 @@
 package jmri.jmrit.withrottle;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of TurnoutController
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class TurnoutControllerTest {
 
@@ -16,12 +18,12 @@ public class TurnoutControllerTest {
         Assert.assertNotNull("exists", panel );
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

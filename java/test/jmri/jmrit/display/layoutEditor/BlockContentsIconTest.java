@@ -1,17 +1,18 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
+
 import jmri.BlockManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+
 import org.apache.log4j.Level;
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 
 /**
@@ -81,18 +82,18 @@ public class BlockContentsIconTest {
     }
 
     // from here down is testing infrastructure
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-	    if(!GraphicsEnvironment.isHeadless()){
+        if (!GraphicsEnvironment.isHeadless()) {
             jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
             to = new BlockContentsIcon("test", new LayoutEditor());
             to.setBlock(new jmri.NamedBeanHandle<>("IB1", block));
-	    }
+        }
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         if(to!=null) {
             JUnitUtil.dispose(to.getEditor());

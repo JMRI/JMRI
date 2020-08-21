@@ -1,7 +1,8 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import apps.ConfigBundle;
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,8 +33,11 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Preferences panel to configure optional actions taken at startup.
+ * <p>
+ * This panel will only display (and save) preferences where
+ * {@link StartupModel#isValid()} is true.
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2016, 2020
  */
 @ServiceProvider(service = PreferencesPanel.class)
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {

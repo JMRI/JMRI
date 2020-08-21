@@ -10,27 +10,20 @@ import jmri.jmrix.openlcb.OlcbUtils;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * OlcbSensorManagerXmlTest.java
  *
- * Description: tests for the OlcbSensorManagerXml class
+ * Test for the OlcbSensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  *           Balazs Racz    (C) 2018
  */
 public class OlcbSensorManagerXmlTest {
-
-    @Test
-    public void testCtor(){
-      Assert.assertNotNull("OlcbSensorManagerXml constructor",new OlcbSensorManagerXml());
-    }
 
     @Test
     public void testSaveAndRestoreWithProperties() throws Exception {
@@ -61,7 +54,7 @@ public class OlcbSensorManagerXmlTest {
 
         s.setProperty(OlcbUtils.PROPERTY_QUERY_AT_STARTUP, false);
         s.setAuthoritative(false);
-        Assert.assertEquals(1, mgr.getSystemNameList().size());
+        Assert.assertEquals(1, mgr.getNamedBeanSet().size());
 
         Element stored = xmlmgr.store(mgr);
         Assert.assertNotNull(stored);
@@ -108,13 +101,12 @@ public class OlcbSensorManagerXmlTest {
     OlcbTestInterface t;
     private final static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXmlTest.class);
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

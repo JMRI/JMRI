@@ -2,14 +2,13 @@ package jmri.jmrix.tams;
 
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
@@ -27,8 +26,7 @@ public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 ((TamsProgrammer)programmer).getBestMode());        
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -37,7 +35,7 @@ public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         programmer = t;
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         programmer = null;

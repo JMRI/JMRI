@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -36,16 +35,14 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
-    private TrackEditFrame _tef;
     protected Track _track;
 
-    public IgnoreUsedTrackFrame(TrackEditFrame tef) {
+    public IgnoreUsedTrackFrame(Track track) {
         super();
 
         setTitle(Bundle.getMessage("MenuItemPlannedPickups"));
 
-        _tef = tef;
-        _track = _tef._track;
+        _track = track;
         if (_track == null) {
             log.debug("track is null!");
             return;
@@ -53,15 +50,35 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 
         // load the panel
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
+        
+        // row 1
         JPanel p1 = new JPanel();
-        p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrePlanedPickups")));
+        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+        p1.setMaximumSize(new Dimension(2000, 250));
 
-        p1.add(zeroPercent);
-        p1.add(twentyfivePercent);
-        p1.add(fiftyPercent);
-        p1.add(seventyfivePercent);
-        p1.add(hundredPercent);
+        // row 1a
+        JPanel pTrackName = new JPanel();
+        pTrackName.setLayout(new GridBagLayout());
+        pTrackName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Track")));
+        addItem(pTrackName, new JLabel(track.getName()), 0, 0);
+
+        // row 1b
+        JPanel pLocationName = new JPanel();
+        pLocationName.setLayout(new GridBagLayout());
+        pLocationName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
+        addItem(pLocationName, new JLabel(track.getLocation().getName()), 0, 0);
+
+        p1.add(pTrackName);
+        p1.add(pLocationName);
+
+        JPanel p2 = new JPanel();
+        p2.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrePlanedPickups")));
+
+        p2.add(zeroPercent);
+        p2.add(twentyfivePercent);
+        p2.add(fiftyPercent);
+        p2.add(seventyfivePercent);
+        p2.add(hundredPercent);
 
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(zeroPercent);
@@ -79,24 +96,25 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
         hundredPercent.setSelected(percentage >= 100);
         
         // warning text for planned pick ups.
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
-        p2.add(new JLabel(Bundle.getMessage("PPWarningMessage")));
-        p2.add(new JLabel(Bundle.getMessage("PPWarningMessage2")));
+        JPanel p3 = new JPanel();
+        p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
+        p3.add(new JLabel(Bundle.getMessage("PPWarningMessage")));
+        p3.add(new JLabel(Bundle.getMessage("PPWarningMessage2")));
         
         JPanel pW = new JPanel();
         pW.setLayout(new GridBagLayout());
-        addItem(pW, p2, 0, 1);
+        addItem(pW, p3, 0, 1);
         addItem(pW, saveButton, 0, 2);
 
         getContentPane().add(p1);
+        getContentPane().add(p2);
         getContentPane().add(pW);
 
         addButtonAction(saveButton);
         
         addHelpMenu("package.jmri.jmrit.operations.Operations_PlannedPickUps", true); // NOI18N
 
-        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight200));
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight300));
     }
 
     @Override

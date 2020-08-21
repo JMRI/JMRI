@@ -1,19 +1,19 @@
 package jmri.jmrix.marklin;
 
+import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * MarklinSystemConnectionMemoTest.java
+ * <p>
+ * Test for the jmri.jmrix.marklin.MarklinSystemConnectionMemo class
  *
- * Description:	tests for the jmri.jmrix.marklin.MarklinSystemConnectionMemo class
- *
- * @author	Paul Bender Copyright (C) 2012,2016
+ * @author Paul Bender Copyright (C) 2012,2016
  */
-public class MarklinSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class MarklinSystemConnectionMemoTest extends SystemConnectionMemoTestBase<MarklinSystemConnectionMemo> {
 
     @Test
     public void testCtorWithoutParameter() {
@@ -23,32 +23,32 @@ public class MarklinSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
 
     @Override
     @Test
-    public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+    public void testProvidesConsistManager() {
+        Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        MarklinTrafficController tc = new MarklinTrafficController(){
-          @Override
-          public void transmitLoop(){
-          }
-          @Override
-          public void receiveLoop(){
-          }
+        MarklinTrafficController tc = new MarklinTrafficController() {
+            @Override
+            public void transmitLoop() {
+            }
+
+            @Override
+            public void receiveLoop() {
+            }
         };
-        MarklinSystemConnectionMemo memo = new MarklinSystemConnectionMemo(tc);
-        memo.configureManagers();
-        scm = memo;
+        scm = new MarklinSystemConnectionMemo(tc);
+        scm.configureManagers();
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        scm.getTrafficController().terminateThreads();
+        scm.dispose();
         JUnitUtil.tearDown();
 
     }

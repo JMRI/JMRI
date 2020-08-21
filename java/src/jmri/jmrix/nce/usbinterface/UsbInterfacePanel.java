@@ -165,7 +165,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         if (src == setButton) {
             changeCabId();
         } else {
-            log.error("unknown action performed: " + src);
+            log.error("unknown action performed: {}", src);
         }
     }
 
@@ -264,7 +264,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             log.debug("Receive character");
         }
         if (waiting <= 0) {
-            log.error("unexpected response. Len: " + r.getNumDataElements() + " code: " + r.getElement(0));
+            log.error("unexpected response. Len: {} code: {}", r.getNumDataElements(), r.getElement(0));
             return;
         }
         waiting--;

@@ -2,8 +2,10 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.jmrit.operations.OperationsManager;
@@ -22,8 +24,8 @@ public class LoadDemoAction extends AbstractAction {
 
 //    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class);
 
-    public LoadDemoAction(String s) {
-        super(s);
+    public LoadDemoAction() {
+        super(Bundle.getMessage("LoadDemo"));
     }
 
     @Override

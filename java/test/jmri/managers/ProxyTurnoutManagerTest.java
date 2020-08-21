@@ -1,21 +1,20 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
+
 import jmri.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests the ProxyTurnoutManager.
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014, 2018
+ * @author Bob Jacobsen 2003, 2006, 2008, 2014, 2018
  */
 public class ProxyTurnoutManagerTest {
 
@@ -23,7 +22,7 @@ public class ProxyTurnoutManagerTest {
         return "JT" + i;
     }
 
-    protected TurnoutManager l = null;	// holds objects under test
+    protected TurnoutManager l = null; // holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -59,15 +58,10 @@ public class ProxyTurnoutManagerTest {
         Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testProvideFailure() {
-        try {
-            l.provideTurnout("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
-            throw ex;
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+        JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -183,7 +177,7 @@ public class ProxyTurnoutManagerTest {
         return 7;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
@@ -191,7 +185,7 @@ public class ProxyTurnoutManagerTest {
         InstanceManager.setTurnoutManager(l);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

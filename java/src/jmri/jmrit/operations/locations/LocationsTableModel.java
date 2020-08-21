@@ -204,7 +204,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case TRACK_COLUMN:
                 return getTrackTypes(location);
             case NUMBER_COLUMN:
-                return location.getTrackList().size();
+                return location.getTracksList().size();
             case LENGTH_COLUMN:
                 return location.getLength();
             case USED_LENGTH_COLUMN:

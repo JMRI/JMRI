@@ -704,7 +704,7 @@ public class ActivateTrainFrame {
             tSource = ActiveTrain.ROSTER;
 
             if (trainTypeBox.getSelectedIndex() != 0
-                    && (r.getAttribute("DisptacherTrainType") == null
+                    && (r.getAttribute("DispatcherTrainType") == null
                     || !r.getAttribute("DispatcherTrainType").equals("" + trainTypeBox.getSelectedItem()))) {
                 r.putAttribute("DispatcherTrainType", "" + trainTypeBox.getSelectedItem());
                 r.updateFile();
@@ -1030,9 +1030,9 @@ public class ActivateTrainFrame {
                     trainInfoToDialog(info);
                 }
             } catch (java.io.IOException ioe) {
-                log.error("IO Exception when reading train info file " + ioe);
+                log.error("IO Exception when reading train info file {}", ioe);
             } catch (org.jdom2.JDOMException jde) {
-                log.error("JDOM Exception when reading train info file " + jde);
+                log.error("JDOM Exception when reading train info file {}", jde);
             }
         }
         handleDelayStartClick(null);
@@ -1084,7 +1084,7 @@ public class ActivateTrainFrame {
         // log.error("JDOM exception writing Train Info: "+jde);
         //}
         catch (java.io.IOException ioe) {
-            log.error("IO exception writing Train Info: " + ioe);
+            log.error("IO exception writing Train Info: {}", ioe);
         }
     }
 
@@ -1103,7 +1103,7 @@ public class ActivateTrainFrame {
 
     private void trainInfoToDialog(TrainInfo info) {
         if (!setComboBox(transitSelectBox, info.getTransitName())) {
-            log.warn("Transit " + info.getTransitName() + " from file not in Transit menu");
+            log.warn("Transit {} from file not in Transit menu", info.getTransitName());
             JOptionPane.showMessageDialog(initiateFrame,
                     Bundle.getMessage("TransitWarn", info.getTransitName()),
                     null, JOptionPane.WARNING_MESSAGE);
@@ -1114,7 +1114,7 @@ public class ActivateTrainFrame {
         if (_TrainsFromRoster || _TrainsFromOperations) {
             initializeFreeTrainsCombo();
             if (!setComboBox(trainSelectBox, info.getTrainName())) {
-                log.warn("Train " + info.getTrainName() + " from file not in Train menu");
+                log.warn("Train {} from file not in Train menu", info.getTrainName());
                 JOptionPane.showMessageDialog(initiateFrame,
                         Bundle.getMessage("TrainWarn", info.getTrainName()),
                         null, JOptionPane.WARNING_MESSAGE);
@@ -1246,7 +1246,7 @@ public class ActivateTrainFrame {
         int result = jmri.util.StringUtil.getStateFromName(mode, delayedStartInt, delayedStartString);
 
         if (result < 0) {
-            log.warn("unexpected mode string in turnoutMode: " + mode);
+            log.warn("unexpected mode string in turnoutMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -1356,7 +1356,7 @@ public class ActivateTrainFrame {
         pa2a.add(stopBySpeedProfileCheckBox);
         stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint")); // reuse identical hint for Stop
         pa2a.add(stopBySpeedProfileAdjustLabel);
-        stopBySpeedProfileAdjustSpinner.setModel(new SpinnerNumberModel( Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+        stopBySpeedProfileAdjustSpinner.setModel(new SpinnerNumberModel( Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(5.0f), Float.valueOf(0.01f)));
         stopBySpeedProfileAdjustSpinner.setEditor(new JSpinner.NumberEditor(stopBySpeedProfileAdjustSpinner, "# %"));
         pa2a.add(stopBySpeedProfileAdjustSpinner);
         stopBySpeedProfileAdjustSpinner.setToolTipText(Bundle.getMessage("StopBySpeedProfileAdjustHint"));

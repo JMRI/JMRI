@@ -48,7 +48,7 @@
       coordinates.
 
       <h5>Reporters</h5><img src="images/VSD_Locations01.png" alt=
-      "Manage Reporter Locations" width="536" height="358">
+      "Manage Reporter Locations" width="550" height="356">
 
       <p>The Reporters tab shows a list of all currently defined
       Reporters. This is intended for use with Digitrax
@@ -57,30 +57,33 @@
 
 
       <h5>Blocks</h5><img src="images/VSD_Locations02.png" alt=
-      "Manage Block Locations" width="536" height="358">
+      "Manage Block Locations" width="550" height="232">
 
       <p>The Blocks tab shows a list of all currently defined
       Blocks. This is intended for use with Digitrax
       Transponding or other similar locomotive tracking hardware
-      systems.</p>
+      systems. Using occupancy sensors it's possible to track
+      exactly one loco.</p>
 
 
       <h5>Operations Locations</h5><img src=
       "images/VSD_Locations03.png" alt=
-      "Manage Operations Locations" width="536" height="358">
+      "Manage Operations Locations" width="550" height="232">
 
       <p>The Operations Locations tab shows a list of all Locations
       defined within the JMRI Operations system.</p>
 
       <h5>Listeners</h5><img src="images/VSD_Locations04.png" alt=
-      "Manage Listener Locations" width="536" height="358">
+      "Manage Listener Location" width="550" height="232">
 
       <p>The Listeners tab shows the location of the Listener in
       the VSD sound system. The Listener position has two
       additional measurements: the Bearing (angle clockwise from
       the Y axis) and Azimuth (angle up or down from the X/Y plane)
       which together describe which way the Listener is
-      facing.</p><a name="VSDLocations" id="VSDLocations"></a>
+      facing.</p>
+
+      <a name="VSDLocations" id="VSDLocations"></a>
 
       <h4>Location Following</h4>
 
@@ -96,6 +99,8 @@
 
       <ul>
         <li>Digitrax Transponding (tested)</li>
+
+        <li>Occupancy Sensors and JMRI Blocks (tested)</li>
 
         <li>ESU ECoS (not tested)</li>
 
@@ -114,17 +119,18 @@
 
       <ol>
         <li>Follow the directions appropriate to your hardware
-        system for 
+        system for setting up
         <!-- link below should point to the HELP page for Reporters -->
-         <a href="../../html/tools/Reporters.shtml">setting up
-        Reporters</a>.</li>
+        <!-- klk32003: it is the HELP page (part 2) for Reporters -->
+         <a href="../../html/tools/Reporters.shtml">Reporters</a> or
+         <a href="../../html/tools/Sensors.shtml">Sensors</a>.</li>
 
         <li>Select Debug-&gt;Virtual Sound Decoder-&gt;Manage VSD
         Locations</li>
 
         <li>In the dialog, set X / Y / Z coordinates for each
-        reporter you wish to use for VSD location following.
-        Uncheck the "Use Location" box for Reporters you do not
+        Reporter (or other Objects) you wish to use for VSD location following.
+        Uncheck the "Use Location" box for Objects you do not
         wish to use for VSD tracking.</li>
 
         <li>Click "Save" to store the new values.</li>
@@ -133,10 +139,10 @@
         part of a Panel</li>
       </ol>
 
-      <p><em>Note:</em> Reporters are not added to the Manage VSD
-      Locations "live". If you add new Reporters, you must close
-      and re-open the Manage VSD Locations window to make the new
-      Reporters appear.</p>
+      <p><em>Note:</em> Reporters and Blocks are not added to the Manage
+      VSD Locations "live". If you add new Reporters or Blocks, you must
+      close and re-open the Manage VSD Locations window to make the new
+      Reporters or Blocks appear.</p>
 
       <h5>Coordinate System</h5>
 
@@ -181,7 +187,7 @@
       and/or orientation, go to the Listeners tab and set the X / Y
       / Z coordinates of the Listener's location. The coordinates
       and units must be the same as those used for the
-      Reporters.</p>
+      Reporters or other Objects.</p>
 
       <p>The Bearing and Azimuth values set the orientation of the
       Listener, or the direction the Listener is facing. Bearing is
@@ -202,7 +208,24 @@
       <p><em>Note:</em> The sound will appear to "jump" from
       location to location as the locomotive's reported location
       changes. This effect will be smaller with additional and more
-      closely spaced reporters.</p>
+      closely spaced reporters or blocks.</p>
+
+      <h5>Location Following using Occupancy Sensors and JMRI Blocks</h5>
+
+      <p>If you have installed occupancy sensors, you can use
+      JMRI Blocks to enable a location following.</p>
+
+      <p>A convenient way to do the setup is creating a Panel with
+      the JMRI Layout Editor. A Layout Editor guidance can be found
+      <a href="https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">
+      here</a>.</p>
+
+      <p>Your Panel should have all the Blocks and attached Sensors you need.
+      Test and store the Panel.<br>
+      Then launch the VSDecoder Manager window and create a VSDecoder.<br>
+      To start the location following enter the number of the VSDecoder locomotive address into 
+      the Value field of your starting block (Tools-&gt;Tables-&gt;Block). This sets the new sound position.
+      Now run your locomotive.</p>
 
       <h5>Location Following using JMRI Operations</h5>
 
@@ -213,12 +236,7 @@
       <p>To set the Operations locations:</p>
 
       <ol>
-        <li>Select Operations-&gt;Settings</li>
-
-        <li>Select Tools-&gt;Options</li>
-
-        <li>Check the "Enable physical locations for Virtual Sound
-        Decoder" option, and save the changes.</li>
+        <li>Select Tools-&gt;Operations-&gt;Locations</li>
 
         <li>Create Operations Locations within JMRI Operations</li>
 
@@ -280,7 +298,7 @@
       <p>The general attributes are:</p>
       <ul>
         <li>layout scale (default: N)</li>
-        <li>check time (interval for calculating a new loco position; minimum: 500, maximum: 5000, default: 2000 milliseconds).</li>
+        <li>check time (interval for calculating a new locomotive position; minimum: 500, maximum: 5000, default: 2000 milliseconds).</li>
       </ul>
 
       <p>The attributes for each location are:</p>
@@ -296,7 +314,7 @@
          point (rotate-xpos value, rotate-ypos value) must be provided</li>
         <li>end-position (endpoint) of the location (last location only)
          <br>
-         if the loco is running in a circle, the starting point of the first location and the
+         if the locomotive is running in a circle, the starting point of the first location and the
          endpoint must be identical</li>
       </ul>
 
@@ -314,8 +332,8 @@
       The described route should go away from the left to the right in forward direction, or in case of a
       circle, in clock-wise forward direction.</p>
 
-      <p>The Advanced Location Following allows up to four locos. Normally only one
-      loco can be detected in a tracking section. If you want to run more than one loco, you may create
+      <p>The Advanced Location Following allows up to four locomotives. Normally only one
+      locomotive can be detected in a tracking section. If you want to run more than one locomotive, you may create
       a JMRI Route (again, up to four for VSD purposes) and add the Route to a Train. Please 
       choose the predetermined Route names VSDRoute1 (default), VSDRoute2, VSDRoute3 or VSDRoute4.
       On the "Virtual Sound Decoder Manager" window you'll find an "Option" button on each
@@ -342,7 +360,7 @@
           VSD File-&gt;File name: Class64.vsd-&gt;Select a Profile: Class64-&gt;OK-&gt;Start Engine</li>
         <li>Simulate an incoming Reporter: LocoNet-&gt;Send LocoNet Packet-&gt;Packet:
          d0 20 00 7d 03 00-&gt;Send-&gt;close the window</li>
-        <li>Run the loco and hear the sound wandering from the left to the right</li>
+        <li>Run the locomotive and hear the sound wandering from the left to the right</li>
       </ol>
 
       <p><em>Note:</em> If you choose a Diesel VSD file you might want to add a <strong>top-speed</strong>
@@ -358,7 +376,7 @@
 
       <p>Once you have a working setup, you can activate an option in your
       VSD configuration file to print the calculated position points describing the
-      route of your loco. Please see the "Create XY coordinates output in
+      route of your locomotive. Please see the "Create XY coordinates output in
       console for a VSDecoder" option
       <a href="VSD_File_and_Config.shtml#xy">for details</a>.</p>
 

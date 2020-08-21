@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialPortController;
@@ -11,16 +12,17 @@ import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the SpecificTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2005, 2007, 2008 Converted to multiple
+ * @author Bob Jacobsen Copyright 2005, 2007, 2008 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
  */
@@ -140,8 +142,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i
-                    + " reply=" + rcvdReply);
+            log.debug("past loop, i={} reply={}", i, rcvdReply);
         }
         if (i == 0) {
             log.warn("waitForReply saw an immediate return; is threading right?");
@@ -233,9 +234,8 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
-    @Test
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new SpecificSystemConnectionMemo();
@@ -243,7 +243,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

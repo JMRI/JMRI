@@ -5035,6 +5035,7 @@
     <tracksegment ident="TUR2011-S-61" connect1name="TUR2011" type1="111" connect2name="A143" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="TUR2011-S-62" connect1name="TUR2011" type1="112" connect2name="EB634" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="TUR2011-S-63" connect1name="TUR2011" type1="113" connect2name="EB635" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+<!-- This 2.9.6 file has a turntable with more than 63 rays (!) which the code no longer supports
     <tracksegment ident="TUR2011-S-64" connect1name="TUR2011" type1="114" connect2name="A142" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="TUR2011-S-65" connect1name="TUR2011" type1="115" connect2name="EB636" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="TUR2011-S-66" connect1name="TUR2011" type1="116" connect2name="EB637" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
@@ -5043,6 +5044,7 @@
     <tracksegment ident="TUR2011-S-69" connect1name="TUR2011" type1="119" connect2name="EB639" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="TUR2011-S-70" connect1name="TUR2011" type1="120" connect2name="A112" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="TUR2011-S-71" connect1name="TUR2011" type1="121" connect2name="EB640" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+ -->
     <tracksegment ident="TS2195" connect1name="A95" type1="1" connect2name="A128" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="TC1358" connect1name="A350" type1="1" connect2name="A52" type2="1" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="45.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
     <tracksegment ident="T-I-TOR2048" blockname="St Blazey Jct Up" connect1name="TOR2048" type1="2" connect2name="A344" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />

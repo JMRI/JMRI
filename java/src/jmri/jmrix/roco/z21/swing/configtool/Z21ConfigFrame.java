@@ -23,15 +23,15 @@ import org.slf4j.LoggerFactory;
  * This is a utility for reading the hardware and software versions of your Z21
  * command station and along with the flags and the serial number.
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener {
 
     /**
      *
      */
-    private Z21TrafficController tc = null;
-    private RocoZ21CommandStation cs = null;
+    private Z21TrafficController tc;
+    private RocoZ21CommandStation cs;
 
     /* updatable fields and field labels */
     private final JToggleButton getSystemInfoButton;
@@ -87,9 +87,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         pack();
 
         // Add Get SystemInfo button handler
-        getSystemInfoButton.addActionListener((ActionEvent a) -> {
-            getSystemInfo();
-        });
+        getSystemInfoButton.addActionListener((ActionEvent a) -> getSystemInfo());
 
         // install close button handler
         closeButton.addActionListener((ActionEvent a) -> {
@@ -184,9 +182,7 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         setSystemInfoButton.setToolTipText(Bundle.getMessage("SetSystemInfoButtonToolTip"));
 
         // Add Get SystemInfo button handler
-        setSystemInfoButton.addActionListener((ActionEvent a) -> {
-            writeSystemInfo();
-        });
+        setSystemInfoButton.addActionListener((ActionEvent a) -> writeSystemInfo());
         panel.add(setSystemInfoButton);
 
         return panel;

@@ -72,35 +72,35 @@ public class LightIconXml extends PositionableLabelXml {
         Element icons = element.getChild("icons");
         if (icons == null) {
             if (log.isDebugEnabled()) {
-                log.debug("Main element of Light " + name + "has no icons");
+                log.debug("Main element of Light {}has no icons", name);
             }
         } else {
             NamedIcon icon = loadIcon(l, "on", icons, "LightIcon \"" + name + "\": icon \"on\" ", p);
             if (icon != null) {
                 l.setOnIcon(icon);
             } else {
-                log.info("LightIcon \"" + name + "\": icon \"on\" removed");
+                log.info("LightIcon \"{}\": icon \"on\" removed", name);
                 return;
             }
             icon = loadIcon(l, "off", icons, "LightIcon \"" + name + "\": icon \"off\" ", p);
             if (icon != null) {
                 l.setOffIcon(icon);
             } else {
-                log.info("LightIcon \"" + name + "\": icon \"off\" removed");
+                log.info("LightIcon \"{}\": icon \"off\" removed", name);
                 return;
             }
             icon = loadIcon(l, "unknown", icons, "LightIcon \"" + name + "\": icon \"unknown\" ", p);
             if (icon != null) {
                 l.setUnknownIcon(icon);
             } else {
-                log.info("LightIcon \"" + name + "\": icon \"unknown\" removed");
+                log.info("LightIcon \"{}\": icon \"unknown\" removed", name);
                 return;
             }
             icon = loadIcon(l, "inconsistent", icons, "LightIcon \"" + name + "\": icon \"inconsistent\" ", p);
             if (icon != null) {
                 l.setInconsistentIcon(icon);
             } else {
-                log.info("LightIcon \"" + name + "\": icon \"inconsistent\" removed");
+                log.info("LightIcon \"{}\": icon \"inconsistent\" removed", name);
                 return;
             }
         }

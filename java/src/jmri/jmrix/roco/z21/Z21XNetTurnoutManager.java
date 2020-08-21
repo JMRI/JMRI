@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * System names are "XTnnn", where X is the user-configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Paul Bender Copyright (C) 2016 
+ * @author Paul Bender Copyright (C) 2016 
  */
 public class Z21XNetTurnoutManager extends XNetTurnoutManager {
 

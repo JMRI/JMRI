@@ -8,17 +8,18 @@ import jmri.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 
 import org.jdom2.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * BlockBossLogicXmlTest.java
  *
- * Description: tests for the BlockBossLogicXml class
+ * Test for the BlockBossLogicXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -26,7 +27,7 @@ public class BlockBossLogicXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("BlockBossLogicXml constructor",new BlockBossLogicXml());
+      assertThat(new BlockBossLogicXml()).withFailMessage("BlockBossLogicXml constructor").isNotNull();
     }
     
     int count() {
@@ -63,12 +64,12 @@ public class BlockBossLogicXmlTest {
                         )
                 );
 
-        Assert.assertEquals("zero before", count(), 0);
+        assertThat(count()).withFailMessage("zero before").isEqualTo(0);
         
         BlockBossLogicXml bb = new BlockBossLogicXml();
         bb.load(el, null);
 
-        Assert.assertEquals("one after", count(), 1);
+        assertThat(count()).withFailMessage("one after").isEqualTo(1);
     }
 
     @Test
@@ -94,12 +95,12 @@ public class BlockBossLogicXmlTest {
                         )
                 );
 
-        Assert.assertEquals("zero before", count(), 0);
+        assertThat(count()).withFailMessage("zero before").isEqualTo(0);
         
         BlockBossLogicXml bb = new BlockBossLogicXml();
         bb.load(el, null);
 
-        Assert.assertEquals("zero after", count(), 0);
+        assertThat(count()).withFailMessage("zero after").isEqualTo(0);
 
         jmri.util.JUnitAppender.assertErrorMessage("SignalHead IH1 not defined, <signalelement> element referring to it is ignored");
     }
@@ -126,18 +127,17 @@ public class BlockBossLogicXmlTest {
                         )
                 );
 
-        Assert.assertEquals("zero before", count(), 0);
+        assertThat(count()).withFailMessage("zero before").isEqualTo(0);
         
         BlockBossLogicXml bb = new BlockBossLogicXml();
         bb.load(el, null);
 
-        Assert.assertEquals("zero after", count(), 0);
+        assertThat(count()).withFailMessage("zero after").isEqualTo(0);
         
         jmri.util.JUnitAppender.assertErrorMessage("Ignoring a <signalelement> element with no signal attribute value");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -155,7 +155,7 @@ public class BlockBossLogicXmlTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();

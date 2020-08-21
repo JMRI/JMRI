@@ -1,10 +1,10 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
@@ -12,9 +12,9 @@ import jmri.jmrix.lenz.XNetReply;
 /**
  * Z21XNetOpsModeProgrammerTest.java
  *
- * Description:	tests for the jmri.jmrix.roco.z21.Z21XNetOpsModeProgrammer class
+ * Test for the jmri.jmrix.roco.z21.Z21XNetOpsModeProgrammer class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class Z21XNetOpsModeProgrammerTest extends jmri.jmrix.lenz.XNetOpsModeProgrammerTest {
 
@@ -61,8 +61,7 @@ public class Z21XNetOpsModeProgrammerTest extends jmri.jmrix.lenz.XNetOpsModePro
         Assert.assertEquals("status",jmri.ProgListener.OK,lastStatus);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -85,7 +84,7 @@ public class Z21XNetOpsModeProgrammerTest extends jmri.jmrix.lenz.XNetOpsModePro
 
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         tc = null;

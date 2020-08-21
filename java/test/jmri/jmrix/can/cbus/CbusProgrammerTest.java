@@ -5,12 +5,14 @@ import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         
@@ -33,12 +35,10 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
 
-    @Test(expected=java.lang.IllegalArgumentException.class)
+    @Test
     @Override
     public void testSetGetMode() {
-        programmer.setMode(ProgrammingMode.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                programmer.getMode());        
+        Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(ProgrammingMode.REGISTERMODE));        
     }
 
     @Test
@@ -76,9 +76,8 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertEquals("value", 5, testListener.getRcvdValue());
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new TrafficControllerScaffold();
@@ -88,13 +87,13 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         programmer = p = null;
         tc = null;
-	    testListener = null;
+        testListener = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-    	JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

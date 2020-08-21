@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a CMRInetManagerAction object
  *
- * @author	Chuck Catania Copyright (C) 2014, 2015, 2016, 2017
+ * @author Chuck Catania Copyright (C) 2014, 2015, 2016, 2017
  */
 public class CMRInetManagerAction extends AbstractAction {
 
@@ -30,7 +30,7 @@ public class CMRInetManagerAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("CMRInetManagerAction-C2: " + ex.toString());
+            log.error("CMRInetManagerAction-C2: {}", ex.toString());
         }
         f.setLocation(20, 40);
         f.setVisible(true);

@@ -601,7 +601,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     }
                 }
             };
-            Thread thr = new Thread(r, "Discover Signal Mast Logic");  // NOI18N
+            Thread thr = jmri.util.ThreadingUtil.newThread(r, "Discover Signal Mast Logic");  // NOI18N
             thr.start();
 
         } else {

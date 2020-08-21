@@ -1,10 +1,9 @@
 package jmri.jmrix.powerline.cm11;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SpecificSensorManager class.
@@ -21,7 +20,7 @@ public class SpecificSensorManagerTest {
       Assert.assertNotNull("SpecificSensorManager constructor",new SpecificSensorManager(new SpecificTrafficController(memo)));
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
 
@@ -29,7 +28,7 @@ public class SpecificSensorManagerTest {
         memo = new SpecificSystemConnectionMemo();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();

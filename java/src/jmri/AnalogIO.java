@@ -79,21 +79,25 @@ public interface AnalogIO extends NamedBean {
     
     /**
      * Get the minimum value of this AnalogIO.
+     * @return minimum value.
      */
     public double getMin();
     
     /**
      * Get the maximum value of this AnalogIO.
+     * @return maximum value.
      */
     public double getMax();
     
     /**
-     * Get the resloution of this AnalogIO.
+     * Get the resolution of this AnalogIO.
+     * @return analog resolution.
      */
     public double getResolution();
 
     /**
      * Is this AnalogIO absolute or relative?
+     * @return if absolute or relative.
      */
     public AbsoluteOrRelative getAbsoluteOrRelative();
 

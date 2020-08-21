@@ -18,6 +18,8 @@ public class Throttle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param address loco address.
+     * @param tc system connection traffic controller.
      */
     public Throttle(DccLocoAddress address, CommandStation tc) {
         super(null);

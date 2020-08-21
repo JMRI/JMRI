@@ -1,6 +1,6 @@
 package jmri.util.swing.multipane;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -173,7 +173,7 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     }
 
     Box statusBox;
-    int statusBoxIndex = 0;	// index to insert extra stuff
+    int statusBoxIndex = 0; // index to insert extra stuff
     static final int statusStrutWidth = 10;
 
     public void addToStatusBox(Component comp) {

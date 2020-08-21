@@ -192,28 +192,6 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     * Sets the selected schedule id
-     *
-     * @param id Selected schedule id
-     * Moved to TrainScheduleManager.java
-     * @deprecated at or before 4.13.7
-     */
-    @Deprecated  // at or before 4.13.7
-    public void setTrainSecheduleActiveId(String id) {
-        InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
-    }
-
-    /**
-     * @deprecated at or before 4.13.7
-     * Moved to TrainScheduleManager.java
-     * @return active schedule id
-     */
-    @Deprecated // at or before 4.13.7
-    public String getTrainScheduleActiveId() {
-        return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
-    }
-
-    /**
      * Add a script to run after trains have been loaded
      *
      * @param pathname The script's pathname
@@ -239,7 +217,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
 
     public void runStartUpScripts() {
         // use thread to prevent object (Train) thread lock
-        Thread scripts = new Thread(new Runnable() {
+        Thread scripts = jmri.util.ThreadingUtil.newThread(new Runnable() {
             @Override
             public void run() {
                 for (String scriptPathName : getStartUpScripts()) {
@@ -291,7 +269,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         }
     }
     
-    public boolean hasRoadRestrictions() {
+    public boolean isRoadRestricted() {
         for (Train train : getList()) {
             if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
                 return true;
@@ -300,7 +278,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         return false;
     }
     
-    public boolean hasLoadRestrictions() {
+    public boolean isLoadRestricted() {
         for (Train train : getList()) {
             if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
                 return true;
@@ -471,9 +449,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
      *         destination.
      */
     public Train getTrainForCar(Car car, Train excludeTrain, PrintWriter buildReport) {
-        log.debug("Find train for car (" + car.toString() + ") location (" + car.getLocationName() + ", " // NOI18N
-                + car.getTrackName() + ") destination (" + car.getDestinationName() + ", " // NOI18N
-                + car.getDestinationTrackName() + ")"); // NOI18N
+        log.debug("Find train for car ({}) location ({}, {}) destination ({}, {})", car.toString(), car.getLocationName(), car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()); // NOI18N
         if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, TrainCommon.BLANK_LINE);
             TrainCommon.addLine(buildReport, Setup.BUILD_REPORT_VERY_DETAILED, MessageFormat.format(Bundle
@@ -488,7 +464,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
                 continue;
             }
             // does this train service this car?
-            if (train.services(buildReport, car)) {
+            if (train.isServiceable(buildReport, car)) {
                 return train;
             }
         }
@@ -670,7 +646,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         box.removeAllItems();
         box.addItem(null);
         for (Train train : getTrainsByNameList()) {
-            if (train.services(car)) {
+            if (train.isServiceable(car)) {
                 box.addItem(train);
             }
         }
@@ -734,11 +710,10 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     }
 
     /**
-     *
-     * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
+     * JColorChooser is not a replacement for getRowColorComboBox as it doesn't support no color as a selection.
+     * 
+     * @return the available colors used highlighting table rows including no color.
      */
-    @Deprecated
     public JComboBox<String> getRowColorComboBox() {
         JComboBox<String> box = new JComboBox<>();
         box.addItem(NONE);
@@ -935,7 +910,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
 
     public void buildSelectedTrains(List<Train> trains) {
         // use a thread to allow table updates during build
-        Thread build = new Thread(new Runnable() {
+        Thread build = jmri.util.ThreadingUtil.newThread(new Runnable() {
             @Override
             public void run() {
                 for (Train train : trains) {

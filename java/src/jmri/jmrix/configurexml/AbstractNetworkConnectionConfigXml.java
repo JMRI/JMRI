@@ -162,16 +162,21 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             return result;
         }
         try {
+            log.trace("start adapter.connect()");
             adapter.connect();
         } catch (Exception ex) {
+            log.debug("Caught exception in adapter.connect", ex);
             handleException(ex.getMessage(), "opening connection", null, null, ex);
             return false;
         }
 
         // if successful so far, go ahead and configure
+        log.trace("start adapter.configure()");
         adapter.configure();
 
-        // once all the configure processing has happened, do any extra config
+        // once all the configure processing has happened, do any
+        // extra config
+        log.trace("start unpackElement");
 
         if (perNode.getAttribute("turnoutInterval") != null) { // migrate existing profile, defaults to 250 ms in memo
             adapter.getSystemConnectionMemo().setOutputInterval(Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue()));

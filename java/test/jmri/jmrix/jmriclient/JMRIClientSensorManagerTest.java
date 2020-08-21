@@ -1,18 +1,17 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * JMRIClientSensorManagerTest.java
  * <p>
- * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientSensorManager
+ * Test for the jmri.jmrix.jmriclient.JMRIClientSensorManager
  * class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author Paul Bender Copyright (C) 2016
  */
 public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
@@ -27,9 +26,8 @@ public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgr
         Assert.assertNotNull(l);
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JMRIClientTrafficController tc = new JMRIClientTrafficController() {
@@ -41,7 +39,7 @@ public class JMRIClientSensorManagerTest extends jmri.managers.AbstractSensorMgr
         l = new JMRIClientSensorManager(m);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly

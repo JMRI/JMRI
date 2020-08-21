@@ -221,12 +221,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     @Override
     protected synchronized void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (log.isDebugEnabled()) {
-            log.debug("Add Locomotive "
-                    + LocoAddress.toString()
-                    + " to advanced consist "
-                    + consistAddress.toString()
-                    + " With Direction Normal "
-                    + directionNormal + ".");
+            log.debug("Add Locomotive {} to advanced consist {} With Direction Normal {}.", LocoAddress.toString(), consistAddress.toString(), directionNormal);
         }
         // create the message and fill it,
         byte[] contents = jmri.NmraPacket.consistControl(LocoAddress.getNumber(),
@@ -257,10 +252,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
     @Override
     protected synchronized void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
         if (log.isDebugEnabled()) {
-            log.debug(" Remove Locomotive "
-                    + LocoAddress.toString()
-                    + " from advanced consist "
-                    + consistAddress.toString());
+            log.debug(" Remove Locomotive {} from advanced consist {}", LocoAddress.toString(), consistAddress.toString());
         }
         // create the message and fill it,
         byte[] contents = jmri.NmraPacket.consistControl(LocoAddress.getNumber(),
@@ -291,12 +283,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
      */
     private synchronized void addToCSConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (log.isDebugEnabled()) {
-            log.debug("Add Locomotive "
-                    + LocoAddress.toString()
-                    + " to Standard Consist "
-                    + consistAddress.toString()
-                    + " With Direction Normal "
-                    + directionNormal + ".");
+            log.debug("Add Locomotive {} to Standard Consist {} With Direction Normal {}.", LocoAddress.toString(), consistAddress.toString(), directionNormal);
         }
         EasyDccMessage m;
         if (directionNormal) {
@@ -314,11 +301,7 @@ public class EasyDccConsist extends jmri.implementation.DccConsist implements Ea
      */
     public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
         if (log.isDebugEnabled()) {
-            log.debug("Remove Locomotive "
-                    + LocoAddress.toString()
-                    + " from Standard Consist "
-                    + consistAddress.toString()
-                    + ".");
+            log.debug("Remove Locomotive {} from Standard Consist {}.", LocoAddress.toString(), consistAddress.toString());
         }
         EasyDccMessage m = EasyDccMessage.getSubtractConsist(consistAddress.getNumber(), LocoAddress);
         _memo.getTrafficController().sendEasyDccMessage(m, this);

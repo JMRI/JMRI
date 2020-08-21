@@ -3,7 +3,6 @@ package jmri.managers;
 import java.util.Arrays;
 import java.util.Set;
 import jmri.AudioManager;
-import jmri.BlockManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
@@ -25,6 +24,7 @@ import jmri.SignalMastManager;
 import jmri.SignalSystemManager;
 import jmri.Timebase;
 import jmri.TurnoutManager;
+import jmri.VariableLightManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
@@ -78,6 +78,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == LightManager.class) {
             return new ProxyLightManager();
+        }
+
+        if (type == VariableLightManager.class) {
+            return new DefaultVariableLightManager(memo).init();
         }
 
         if (type == LogixManager.class) {
@@ -154,7 +158,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         Set<Class<?>> set = super.getInitalizes();
         set.addAll(Arrays.asList(
                 AudioManager.class,
-                BlockManager.class,
                 ClockControl.class,
                 ConditionalManager.class,
                 IdTagManager.class,
@@ -172,6 +175,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 SignalSystemManager.class,
                 Timebase.class,
                 TurnoutManager.class,
+                VariableLightManager.class,
                 VSDecoderManager.class
         ));
         return set;

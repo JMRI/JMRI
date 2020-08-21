@@ -1,9 +1,9 @@
 /**
  * XNetListenerScaffold.java
  *
- * Description:	test implementation of XNetListener
+ * test implementation of XNetListener
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.lenz;
 

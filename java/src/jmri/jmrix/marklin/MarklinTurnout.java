@@ -27,6 +27,8 @@ public class MarklinTurnout extends AbstractTurnout
      * identification in the system name.
      *
      * @param number address of the turnout
+     * @param prefix system prefix
+     * @param etc connection traffic controller
      */
     public MarklinTurnout(int number, String prefix, MarklinTrafficController etc) {
         super(prefix + "T" + number);
@@ -43,10 +45,27 @@ public class MarklinTurnout extends AbstractTurnout
      */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        try {
-            sendMessage(stateChangeCheck(newState));
-        } catch (IllegalArgumentException ex) {
-            log.error("new state invalid, Turnout not set");
+        // implementing classes will typically have a function/listener to get
+        // updates from the layout, which will then call
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue,
+        //          Object newValue)
+        // _once_ if anything has changed state (or set the commanded state directly)
+
+        // sort out states
+        if ((newState & Turnout.CLOSED) != 0) {
+            // first look for the double case, which we can't handle
+            if ((newState & Turnout.THROWN) != 0) {
+                // this is the disaster case!
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
+                return;
+            } else {
+                // send a CLOSED command
+                sendMessage(!getInverted());
+            }
+        } else {
+            // send a THROWN command
+            sendMessage(getInverted());
         }
     }
 
@@ -123,7 +142,7 @@ public class MarklinTurnout extends AbstractTurnout
                 try {
                     sendOffMessage((state ? 1 : 0));
                 } catch (Exception e) {
-                    log.error("Exception occurred while sending delayed off to turnout: " + e);
+                    log.error("Exception occurred while sending delayed off to turnout: {}", e);
                 }
             }
         }, METERINTERVAL);
@@ -161,7 +180,7 @@ public class MarklinTurnout extends AbstractTurnout
                         setKnownStateFromCS(Turnout.CLOSED);
                         break;
                     default:
-                        log.warn("Unknown state command " + m.getElement(9));
+                        log.warn("Unknown state command {}", m.getElement(9));
                 }
             }
         }
@@ -180,4 +199,5 @@ public class MarklinTurnout extends AbstractTurnout
     static final int METERINTERVAL = 100;  // msec wait before closed
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class);
+
 }

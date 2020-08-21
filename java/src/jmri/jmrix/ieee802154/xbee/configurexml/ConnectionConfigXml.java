@@ -81,17 +81,17 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 }
 
                 jmri.jmrix.AbstractStreamConnectionConfig cf = null;
-		if ((cf = node.getConnectionConfig()) != null) {
+                if ((cf = node.getConnectionConfig()) != null) {
                     n.addContent(makeParameter("StreamConfig",
                             cf.getClass().getName()));
                     String adapter = ConfigXmlManager.adapterName(cf);
-                    log.debug("forward to " + adapter);
+                    log.debug("forward to {}", adapter);
                     try {
-                       XmlAdapter x = (XmlAdapter) Class.forName(adapter).getDeclaredConstructor().newInstance();
-                       n.addContent(x.store(cf));
-                    } catch (ClassNotFoundException | IllegalAccessException | 
-                                InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException  ex) {
-                       log.error("Exception: ", ex);
+                        XmlAdapter x = (XmlAdapter) Class.forName(adapter).getDeclaredConstructor().newInstance();
+                        n.addContent(x.store(cf));
+                    } catch (ClassNotFoundException | IllegalAccessException
+                            | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex) {
+                        log.error("Exception: ", ex);
                     }
                 }
 
@@ -137,104 +137,104 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             String Identifier = findParmValue(n, "name");
             // create the RemoteXBeeDevice for the node.
             RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
-                         guid,address,Identifier);
+                    guid, address, Identifier);
             // Check to see if the node is a duplicate, if it is, move 
             // to the next one.
             // get a XBeeNode corresponding to this node address if one exists
-           XBeeNode curNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
-           if (curNode != null) {
-               log.info("Read duplicate node {} from file",remoteDevice);
-               continue; 
-           }
-    
+            XBeeNode curNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
+            if (curNode != null) {
+                log.info("Read duplicate node {} from file", remoteDevice);
+                continue;
+            }
+
             try {
-               // and then add it to the network
-               xtc.getXBee().getNetwork().addRemoteDevice(remoteDevice);
-               // create node (they register themselves)
-               XBeeNode node = new XBeeNode(remoteDevice);
-            
-               String polled = findParmValue(n, "polled");
-               node.setPoll(polled.equals("yes"));
-                     
-               xtc.registerNode(node);
+                // and then add it to the network
+                xtc.getXBee().getNetwork().addRemoteDevice(remoteDevice);
+                // create node (they register themselves)
+                XBeeNode node = new XBeeNode(remoteDevice);
 
-               // if there is a stream port controller stored for this
-               // node, we need to load that after the node starts running.
-               // otherwise, the IOStream associated with the node has not
-               // been configured.
-               String streamController = findParmValue(n, "StreamController");
-               String streamConfig = findParmValue(n, "StreamConfig");
-               AbstractStreamPortController connectedController = null; 
-               jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = null;
+                String polled = findParmValue(n, "polled");
+                node.setPoll(polled.equals("yes"));
 
-               Element connect = n.getChildren("connection").get(0); // there should only be one connection child.
-	
-               // configure the controller.	       
-	       if (streamController != null ) {
+                xtc.registerNode(node);
+
+                // if there is a stream port controller stored for this
+                // node, we need to load that after the node starts running.
+                // otherwise, the IOStream associated with the node has not
+                // been configured.
+                String streamController = findParmValue(n, "StreamController");
+                String streamConfig = findParmValue(n, "StreamConfig");
+                AbstractStreamPortController connectedController = null;
+                jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = null;
+
+                Element connect = n.getChildren("connection").get(0); // there should only be one connection child.
+
+                // configure the controller.
+                if (streamController != null) {
                     try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         java.lang.Class<jmri.jmrix.AbstractStreamPortController> T = (Class<AbstractStreamPortController>) Class.forName(streamController);
-			java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class, java.io.DataOutputStream.class, String.class);
+                        java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class, java.io.DataOutputStream.class, String.class);
                         connectedController = (jmri.jmrix.AbstractStreamPortController) ctor.newInstance(node.getIOStream().getInputStream(), node.getIOStream().getOutputStream(), "XBee Node " + node.getPreferedName());
-		    } catch (java.lang.ClassNotFoundException cnfe) {
-			log.error("Unable to find class for stream controller : {}",streamController);
-		    } catch (java.lang.InstantiationException | 
-	                     java.lang.NoSuchMethodException |
-                             java.lang.IllegalAccessException | 
-                             java.lang.reflect.InvocationTargetException ex) {
-			 log.error("Unable to construct Stream Port Controller for node.", ex);
-	            }
-               }
-	       // if streamConfig is available, set up connectedConfig.
-	       if (streamConfig != null && connectedController != null ) {
+                    } catch (java.lang.ClassNotFoundException cnfe) {
+                        log.error("Unable to find class for stream controller : {}", streamController);
+                    } catch (java.lang.InstantiationException
+                            | java.lang.NoSuchMethodException
+                            | java.lang.IllegalAccessException
+                            | java.lang.reflect.InvocationTargetException ex) {
+                        log.error("Unable to construct Stream Port Controller for node.", ex);
+                    }
+                }
+                // if streamConfig is available, set up connectedConfig.
+                if (streamConfig != null && connectedController != null) {
                     try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         java.lang.Class<jmri.jmrix.AbstractStreamConnectionConfig> T = (Class<AbstractStreamConnectionConfig>) Class.forName(streamConfig);
-			java.lang.reflect.Constructor<?> ctor = T.getConstructor(jmri.jmrix.AbstractStreamPortController.class);
+                        java.lang.reflect.Constructor<?> ctor = T.getConstructor(jmri.jmrix.AbstractStreamPortController.class);
                         connectedConfig = (jmri.jmrix.AbstractStreamConnectionConfig) ctor.newInstance(connectedController);
                     } catch (java.lang.ClassNotFoundException cnfe) {
-                        log.error("Unable to find class for stream config: {}",streamConfig);
-		    } catch (java.lang.InstantiationException | 
-	                     java.lang.NoSuchMethodException |
-                             java.lang.IllegalAccessException | 
-                             java.lang.reflect.InvocationTargetException ex) {
-			 log.error("Unable to construct Stream Port Configuration for node.", ex);
+                        log.error("Unable to find class for stream config: {}", streamConfig);
+                    } catch (java.lang.InstantiationException
+                            | java.lang.NoSuchMethodException
+                            | java.lang.IllegalAccessException
+                            | java.lang.reflect.InvocationTargetException ex) {
+                        log.error("Unable to construct Stream Port Configuration for node.", ex);
                     }
-               }
-	       // load information from the xml file.
-	       if(connect!=null && connectedConfig != null ){
-                  String className = connect.getAttributeValue("class");
+                }
+                // load information from the xml file.
+                if (connect != null && connectedConfig != null) {
+                    String className = connect.getAttributeValue("class");
 
-                  try {
+                    try {
                         XmlAdapter adapter = (XmlAdapter) Class.forName(className).getDeclaredConstructor().newInstance();
-                        adapter.load(connect,connectedConfig);
-                    } catch (ClassNotFoundException | 
-		             InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException |
-			     IllegalAccessException ex) {
+                        adapter.load(connect, connectedConfig);
+                    } catch (ClassNotFoundException
+                            | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException
+                            | IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", className, shared, ex);
                     } catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
                         log.error("Unable to load {} into {}", shared, className, ex);
                     }
-	       } 
+                }
 
-               // after loading either config or controller, connect them.
-	       if(connectedConfig != null) {
-	            node.connectPortController(connectedConfig);
-	       } else if(connectedController != null) {
-	            // fallback for connections created with a script
-	            node.connectPortController(connectedController);
-	       }
-	       log.info("loaded {} onto node ",node.getConnectionConfig(),node);
-	       log.info("manuf {} userName {} ",node.getConnectionConfig().getManufacturer(),node.getConnectionConfig().name());
-	    } catch (TimeoutException toe) {
-		 log.error("Timeout adding node {} from configuration file.",
-				 remoteDevice);
-	    } catch (XBeeException xbe) {
-		 log.error("Exception adding node {} from configuration file.",
-				 remoteDevice);
-	    }
-	}
-		
+                // after loading either config or controller, connect them.
+                if (connectedConfig != null) {
+                    node.connectPortController(connectedConfig);
+                } else if (connectedController != null) {
+                    // fallback for connections created with a script
+                    node.connectPortController(connectedController);
+                }
+                log.info("loaded {} onto node ", node.getConnectionConfig(), node);
+                log.info("manuf {} userName {} ", node.getConnectionConfig().getManufacturer(), node.getConnectionConfig().name());
+            } catch (TimeoutException toe) {
+                log.error("Timeout adding node {} from configuration file.",
+                        remoteDevice);
+            } catch (XBeeException xbe) {
+                log.error("Exception adding node {} from configuration file.",
+                        remoteDevice);
+            }
+        }
+
     }
 
     @Override

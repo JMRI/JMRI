@@ -65,7 +65,7 @@ public class TimeoutRfidSensor extends RfidSensor {
 
     private void cleanUpTimeout() {
         if (logDebug) {
-            log.debug("Cleanup timeout thread for " + mSystemName);
+            log.debug("Cleanup timeout thread for {}", mSystemName);
         }
         timeoutThread = null;
     }
@@ -88,7 +88,7 @@ public class TimeoutRfidSensor extends RfidSensor {
             }
             TimeoutRfidSensor.super.notify(null);
             if (logDebug) {
-                log.debug("Timeout-" + mSystemName);
+                log.debug("Timeout-{}", mSystemName);
             }
             cleanUpTimeout();
         }

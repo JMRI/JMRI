@@ -364,7 +364,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             outputModel.removeRow(sel);
                             break;
                         default:
-                            jmri.util.Log4JUtil.warnOnce(log, "Unexpected cTab value = {}", cTab);
+                            jmri.util.LoggingUtil.warnOnce(log, "Unexpected cTab value = {}", cTab);
                             break;
                    }
                 }

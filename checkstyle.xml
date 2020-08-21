@@ -48,6 +48,11 @@
       <property name="message" value="{digit} in logging call, should be {}" />
     </module>
   </module>
+  <module name="FileTabCharacter">
+    <property name="severity" value="error"/>
+    <property name="eachLine" value="true"/>
+    <property name="fileExtensions" value="java"/>
+  </module>
   <module name="NewlineAtEndOfFile">
     <property name="severity" value="error"/>
     <property name="lineSeparator" value="lf"/>

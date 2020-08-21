@@ -1,34 +1,31 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.awt.GraphicsEnvironment;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ExportEnginesTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         ExportEngines t = new ExportEngines();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
     
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCreateFile() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
         JUnitOperationsUtil.initOperationsData();
         ExportEngines exportEngines = new ExportEngines();
-        Assert.assertNotNull("exists", exportEngines);
 
         // should cause export complete dialog to appear
         Thread export = new Thread(new Runnable() {
@@ -47,9 +44,7 @@ public class ExportEnginesTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
-        Assert.assertTrue("Confirm file creation", file.exists());
-        
-
+        assertThat(file.exists()).withFailMessage("Confirm file creation").isTrue();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportEnginesTest.class);

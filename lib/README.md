@@ -15,18 +15,6 @@ macOS binaries are treated slightly differently, see the README file there.
 If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
 - build.xml - used by Ant; note that in addition to changing the classpath entry or entries, you should also ensure the three javadoc targets are linking to the proper sources
 - pom.xml - used by Maven (see notes below)
-- .factorypath - used by Visual Studio Code
-
-On macOS, most of these changes can be affected with (Javadoc links will need to fixed manually):
-```
-find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
-```
-(you may need to install gsed using [Homebrew](http://brew.sh)) by running `brew install gnu-sed`)
-
-On Linux, these same changes can be affected with (Javadoc links will need to fixed manually):
-```
-find . -type f -not -path './.git/*' -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
-```
 
 If the specific library being added or updated is not published to [Maven Central](http://maven.org) by the upstream provider, run the following command after updating the pom.xml file, replacing the tokens in ALL CAPS with the correct values for that library:
 ```
@@ -45,6 +33,16 @@ After you have committed your changes, please run
 which checks the dates of the control files to make sure they've benen updated when lib/ is updated
 
 ### Specific components:
+
+##### apiguardian-api-1.1.0.jar
+- version 1.1.0
+- provides Javadoc markers of API stability
+- from https://github.org/apiguardian-team/apiguardian
+
+##### jetty-*.jar
+- version 9.4.28.v20200408
+- provides the HTTP and WebSocket servers
+- from https://search.maven.org/search?q=g:org.eclipse.jetty%20v:9.4.28.v20200428
 
 ##### jsplitbutton-1.3.1.jar
 - version 1.3.1
@@ -118,7 +116,8 @@ which checks the dates of the control files to make sure they've benen updated w
 - from https://github.com/networknt/json-schema-validator/releases
 
 ##### mqtt-client-0.4.0.jar
-starting in JMRI 4.11.5
+ - Eclipse Paho library  https://www.eclipse.org/paho/
+ - starting in JMRI 4.11.5
 
 ##### BlueCove access to bluetooth
 bluecove-2.1.1-SNAPSHOT.jar
@@ -293,11 +292,24 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
 - Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
+##### PlantUML
+- plantuml.jar
+    was from plantuml.org, now from https://github.com/plantuml/plantuml.git
+- umldoclet.jar
+    downloaded as umldoclet-2.0.10-javadoc.jar
+    from https://github.com/talsma-ict/umldoclet/releases
+    see https://github.com/talsma-ict/umldoclet
+    
 ##### rscbundlecheck.jar
 - check for duplicated properties
 
 ##### system-rules-1.16.0.jar
 - Handle rules for testing calls to java.System methods
+
+##### springframework-*
+- version 5.1.14
+- from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
+- Mocks Java Servlet requests and responses
 
 ##### AppleJavaExtensions.jar
 - version 1.5
@@ -320,12 +332,12 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Only needed at compile/build time, not runtime
 - http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.7/
 
-##### UmlGraph-5.7
-- from http://www.umlgraph.org/download.html
-- only used for ant javadoc-uml
-
 
 ## Older, no longer present:
+
+##### UmlGraph-5.7
+- from http://www.umlgraph.org/download.html
+- only used for ant javadoc-uml with earlier Java
 
 ##### javacsv.jar
 - version 2.0

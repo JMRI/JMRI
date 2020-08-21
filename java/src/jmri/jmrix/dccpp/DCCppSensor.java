@@ -57,7 +57,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         address = Integer.parseInt(id.substring(id.lastIndexOf('S')+1, id.length()));
         log.debug("New sensor system name {} address {}", this.getSystemName(), address);
         if (log.isDebugEnabled()) {
-            log.debug("Created Sensor " + systemName);
+            log.debug("Created Sensor {}", systemName);
         }
         // Finally, request the current state from the layout.
         //this.requestUpdateFromLayout();
@@ -96,6 +96,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
      * a feedback message at initialization without changing the state of the
      * sensor with respect to whether or not a feedback request was sent. This
      * is used only when the sensor is created by on layout feedback.
+     * @param l Init message
      */
     synchronized void initmessage(DCCppReply l) {
         boolean oldState = statusRequested;
@@ -114,14 +115,13 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     @Override
     public synchronized void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
+            log.debug("received message: {}", l);
         }
 
         if (l.isSensorDefReply()) {
             if (l.getSensorDefNumInt() == address) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Def Message for sensor " + systemName
-                              + " (Pin " + address + ")");
+                    log.debug("Def Message for sensor {} (Pin {})", systemName, address);
                 }
                 pin = l.getSensorDefPinInt();
                 pullup = l.getSensorDefPullupBool();
@@ -157,7 +157,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
+            log.debug("Notified of timeout on message{}", msg.toString());
         }
     }
 

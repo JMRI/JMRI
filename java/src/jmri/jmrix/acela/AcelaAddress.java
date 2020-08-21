@@ -31,8 +31,14 @@ public class AcelaAddress {
 
     /**
      * Public static method to parse an Acela system name and return the Acela
-     * Node Address Note: Returns '-1' if illegal systemName format or if the
-     * node is not found. Nodes are numbered from 0 - {@value AcelaNode#MAXNODE}.
+     * Node Address.
+     * <p>
+     * Note: Returns '-1' if illegal systemName format or if the
+     * node is not found.
+     * Nodes are numbered from 0 - {@value AcelaNode#MAXNODE}.
+     * @param systemName system name.
+     * @param memo system connection.
+     * @return node address number.
      */
     public static int getNodeAddressFromSystemName(String systemName, AcelaSystemConnectionMemo memo) {
         // validate the system Name leader characters
@@ -60,6 +66,8 @@ public class AcelaAddress {
     /**
      * Public static method to parse an Acela system name.
      *
+     * @param systemName system name to parse.
+     * @param memo system connection.
      * @return the Acela Node number, return 'null' if illegal systemName format or if the node is
      * not found
      */
@@ -83,6 +91,8 @@ public class AcelaAddress {
      * Public static method to parse an Acela system name and return the bit number.
      * Note: Bits are numbered from 1.
      *
+     * @param systemName system name.
+     * @param prefix bean type, S, T, L or H.
      * @return the bit number, return -1 if an error is found (0 is a valid bit?)
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
@@ -113,6 +123,9 @@ public class AcelaAddress {
      * Public static method to validate system name format.
      * Logging of handled cases no higher than WARN.
      *
+     * @param systemName system name to validate.
+     * @param type bean type, S, T or L.
+     * @param prefix system prefix.
      * @return 'true' if system name has a valid format, else return 'false'
      */
     public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
@@ -141,6 +154,9 @@ public class AcelaAddress {
     /**
      * Public static method to validate Acela system name for configuration.
      *
+     * @param systemName system name to validate.
+     * @param type bean type, S, T or L.
+     * @param memo system connection.
      * @return 'true' if system name has a valid meaning in current
      * configuration, else return 'false'
      */
@@ -188,6 +204,8 @@ public class AcelaAddress {
      * Public static method to convert one format Acela system name for the
      * alternate format.
      *
+     * @param systemName system name to convert.
+     * @param prefix system prefix.
      * @return name (string) in alternate format, or empty string if the supplied
      * system name does not have a valid format, or if there is no representation
      * in the alternate naming scheme.
@@ -209,6 +227,8 @@ public class AcelaAddress {
      * This routine is used to ensure that each system name is uniquely linked
      * to one Acela bit, by removing extra zeros inserted by the user.
      *
+     * @param systemName system name to normalize.
+     * @param prefix system prefix.
      * @return a normalized name is returned in the same format as the input name,
      * or an empty string if the supplied system name does not have a valid format.
      */
@@ -232,8 +252,12 @@ public class AcelaAddress {
 
     /**
      * Public static method to construct an Acela system name from type
-     * character, node address, and bit number
+     * character, node address, and bit number.
      *
+     * @param type bean type letter, S, T or L.
+     * @param nAddress node address.
+     * @param bitNum bit number.
+     * @param memo system connection.
      * @return a system name in the ALxxxx, ATxxxx, or ASxxxx
      * format. The returned name is normalized.
      * Return the null string "" if the supplied character is not valid,
@@ -273,6 +297,8 @@ public class AcelaAddress {
     /**
      * Public static method to check the user name for a valid system name.
      *
+     * @param systemName system name to check.
+     * @param prefix bean prefix, S, T or L.
      * @return "" (null string) if the system name is not valid or does not exist
      */
     public static String getUserNameFromSystemName(String systemName, String prefix) {

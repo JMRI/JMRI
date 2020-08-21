@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -45,10 +45,21 @@ public class SerialTurnout extends AbstractTurnout {
      */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
-        try {
-            sendMessage(stateChangeCheck(newState));
-        } catch (IllegalArgumentException ex) {
-            log.error("new state invalid, Turnout not set");
+
+        // sort out states
+        if ((newState & Turnout.CLOSED) != 0) {
+            // first look for the double case, which we can't handle
+            if ((newState & Turnout.THROWN) != 0) {
+                // this is the disaster case!
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
+                return;
+            } else {
+                // send a CLOSED command
+                sendMessage(true ^ getInverted());
+            }
+        } else {
+            // send a THROWN command
+            sendMessage(false ^ getInverted());
         }
     }
 

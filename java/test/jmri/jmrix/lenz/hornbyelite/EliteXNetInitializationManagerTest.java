@@ -1,53 +1,68 @@
 package jmri.jmrix.lenz.hornbyelite;
 
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
-import jmri.jmrix.lenz.XNetListenerScaffold;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Assert;
+import jmri.implementation.NmraConsistManager;
+import jmri.jmrix.lenz.*;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * EliteXNetInitializationManagerTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.EliteXNetInitializationManager
+ * Test for the jmri.jmrix.lenz.EliteXNetInitializationManager
  * class
  *
  * @author Paul Bender
  */
+@SuppressWarnings("deprecation")
 public class EliteXNetInitializationManagerTest {
+
+    private XNetTrafficController tc;
+    private XNetSystemConnectionMemo memo;
+    private HornbyEliteCommandStation cs;
 
     @Test
     public void testCtor() {
-
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        XNetListenerScaffold l = new XNetListenerScaffold();
-
-        XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(t);
-
         EliteXNetInitializationManager m = new EliteXNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {
                 return 50; // shorten, because this will fail & delay test
             }
         };
-        Assert.assertNotNull("exists", t);
-        Assert.assertNotNull("exists", l);
-        Assert.assertNotNull("exists", m);
-        Assert.assertNotNull("exists", memo);
+        assertThat(m).withFailMessage("exists").isNotNull();
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(memo.getCommandStation()).isEqualTo(cs);
+        softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
+        softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(EliteXNetThrottleManager.class);
+        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
+        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(EliteXNetProgrammer.class);
+        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false,42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
+        softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(EliteXNetTurnoutManager.class);
+        softly.assertThat(memo.getSensorManager()).isNull();
+        softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
+        softly.assertThat(memo.getConsistManager()).isExactlyInstanceOf(NmraConsistManager.class);
+        softly.assertAll();
     }
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        tc = Mockito.mock(XNetTrafficController.class);
+        cs = Mockito.mock(HornbyEliteCommandStation.class);
+        Mockito.when(cs.isOpsModePossible()).thenReturn(true);
+        Mockito.when(tc.getCommandStation()).thenReturn(cs);
+        memo = new EliteXNetSystemConnectionMemo(tc);
     }
 
-    @After
-    public void tearDown() throws Exception {
-	    jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    @AfterEach
+    public void tearDown() {
+        memo = null;
+        tc = null;
+        cs = null;
         jmri.util.JUnitUtil.tearDown();
     }
-
 }

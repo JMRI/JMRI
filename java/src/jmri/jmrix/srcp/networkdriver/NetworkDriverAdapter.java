@@ -9,8 +9,8 @@ import jmri.jmrix.srcp.SRCPTrafficController;
  * This connects an SRCP server (daemon) via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
+ * @author Paul Bender Copyright (C) 2010
  */
 public class NetworkDriverAdapter extends SRCPPortController {
 
@@ -28,7 +28,6 @@ public class NetworkDriverAdapter extends SRCPPortController {
         SRCPTrafficController control = new SRCPTrafficController();
         control.connectPort(this);
         this.getSystemConnectionMemo().setTrafficController(control);
-        this.getSystemConnectionMemo().configureManagers();
         this.getSystemConnectionMemo().configureCommandStation();
     }
 

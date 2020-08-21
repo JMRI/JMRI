@@ -9,7 +9,7 @@ import jmri.ReporterManager;
  * Implementation of a ReporterManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
 public class ProxyReporterManager extends AbstractProxyManager<Reporter> implements ReporterManager {
 
