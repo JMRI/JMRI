@@ -126,7 +126,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        log.debug("Send command to {} Pushbutton {}{}", (_pushButtonLockout ? "Lock" : "Unlock", prefix, _number));
+        log.debug("Send command to {} Pushbutton {}{}", (_pushButtonLockout ? "Lock" : "Unlock"), prefix, _number);
     }
 
     protected void sendMessage(boolean closed) {

@@ -186,7 +186,7 @@ public class TamsTurnout extends AbstractTurnout
         }
     }
 
-    // private boolean updateReceived = false; // uncomment this line as soon as #pollForStatus() is uncommented
+    private boolean updateReceived = false;
 
     /*protected void pollForStatus() {
         if (_activeFeedbackType == MONITORING) {

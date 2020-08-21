@@ -59,10 +59,15 @@ public class XpaThrottle extends AbstractThrottle {
             } else if (value == 0) {
                 m = XpaMessage.getIdleMsg(address);
                 tc.sendXpaMessage(m, null);
-            } else {
-                // Change the speed
+            } else if (value > this.speedvalue) {
+                // Increase the speed
                 int diff = value - speedvalue;
-                m = XpaMessage.getSpeedChangeMsg(this.address, diff);
+                m = XpaMessage.getIncSpeedMsg(this.address, diff);
+                tc.sendXpaMessage(m, null);
+            } else if (value < this.speedvalue) {
+                // Decrease the speed
+                int diff = speedvalue - value;
+                m = XpaMessage.getDecSpeedMsg(this.address, diff);
                 tc.sendXpaMessage(m, null);
             }
         }
