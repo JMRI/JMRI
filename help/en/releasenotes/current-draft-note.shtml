@@ -370,17 +370,20 @@
                 where you can enter a search string.  Hitting Return will find the first 
                 occurrence. There are right and left arrows to find the next occurrence forward
                 and backwards respectively.  Ctrl-G or Cmd-G will also find the next forward
-                occurance. Shift-Ctrl-G or Shift-Cmd-G will find the next occurrence going backwards.
+                occurrence. Shift-Ctrl-G or Shift-Cmd-G will find the next occurrence going backwards.
                 The "Done" button will dismiss the 
-                bar, but you can leave it up without it interferring with anything.
+                bar, but you can leave it up without it interfering with anything.
             </li>
             <li>Added a new optional "maxFnNum" model-level attribute for Decoder Definitions.
+            <p>
                 <ul>
                     <li>
                         Specifies the highest F key supported by the decoder. The assumed default is "28".
                     </li>
                     <li>
-                        Note that `maxFnNum` is not to be confused with the existing `numFns`, a legacy attribute that limits the total number of function mapping lines displayed. Neither is derivable from the other.
+                        Note that `maxFnNum` is not to be confused with the existing `numFns`,
+                        a legacy attribute that limits the total number of function mapping lines displayed.
+                        Neither is derivable from the other.
                     </li>
                     <li>
                         This value is currently used to build the Function Labels pane.
@@ -392,6 +395,14 @@
                         Example definitions are LokSound 5(uses F0-F31) and LokSound V3.5(uses only F0-F15).
                     </li>
                 </ul>
+            <p>
+            </li>
+            <li>Added a new optional "allowResetDefaults" decoder-config level attribute for Decoder Definitions.
+                <p>
+                For some decoders, it's either impossible or impractical for the decoder definition
+                to have universally applicable defaults incorporated. In these cases,
+                setting allowResetDefaults="no" disables the "Reset to defaults" button on the Roster Entry pane
+                and provides an explanatory tooltip.
             </li>
         </ul>
 
@@ -678,5 +689,10 @@
                 GitHub account to do the final submission.
                 There's more info on the 
                 <a href="https://jmri.org/help/en/package/apps/util/issuereporter/swing/IssueReporter.shtml">help page</a>.
+            <li>The interface jmri.Light has been split into jmri.Light and jmri.VariableLight. Lights
+                that supports variable intensity must now implement the jmri.VariableLight interface.
+                All lights are still managed by the jmri.LightManager, but a new manager jmri.VariableLightManager
+                has been added that keeps a copy of the VariableLights. But register and deregister of
+                all lights must still be done thru the LightManager.</li>
         </ul>
 

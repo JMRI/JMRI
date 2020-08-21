@@ -251,13 +251,18 @@
       <p>If you create a directory <code>web</code> in your User
       Files directory, configuration profile root directory, or
       settings directory, any file in that directory that has the same
-      name and directory hierarchy as a file the <code>web</code>
-      directory in the JMRI distribution directory will override
+      name and directory hierarchy as a file in the <code>web</code>
+      directory of the JMRI distribution directory will override
       the default file used for that purpose. This provides the
-      ability to replace images, scripts, and other content with
-      personal content.</p>
+      custom content.</p>
+      
+      <p>Two files <code>web/css/user.css</code> and <code>web/js/user.js</code> 
+      are provided for convenience to make simple appearance and
+      javascript additions and overrides. These files are automatically included
+      in all JMRI web pages, and include instructions for usage.
+      </p>
 
-      <p>The standard web services use templates in the web/servlet
+      <p>The standard web services use templates in the <code>web/servlet</code>
       directory. Note that these templates are tightly linked with
       JMRI. While modifying these templates is the recommended way
       to customize the web access, care must be taken to ensure

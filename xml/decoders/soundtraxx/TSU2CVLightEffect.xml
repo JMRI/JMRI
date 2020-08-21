@@ -40,4 +40,10 @@
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
       <label>FX6 Effect Selection</label>
     </variable>
+    <variable item="FX7 Effect Selection" CV="55" mask="XXXVVVVV" default="15" minOut="7" tooltip="Determines the second effect associated with the FX7 light output">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
+    </variable>
+    <variable item="FX8 Effect Selection" CV="56" mask="XXXVVVVV" default="15" minOut="8" tooltip="Determines the second effect associated with the FX8 light output">
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
+    </variable>
 </variables>
