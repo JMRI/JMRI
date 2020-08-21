@@ -126,7 +126,6 @@ public class Columns {
     public final void updateFrame() {
         _mDefaultListModel.clear();
         _mCTCSerialData.getCodeButtonHandlerDataArrayList().forEach((codeButtonHandlerData) -> {
-            log.info("updateFrame: {}", codeButtonHandlerData);
             _mDefaultListModel.addElement(constructSingleColumnDisplayLine(codeButtonHandlerData));
         });
         _mDeleteButton.setEnabled(false);    // None selected.

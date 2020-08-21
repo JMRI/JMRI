@@ -53,7 +53,7 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mTUL_AdditionalExternalTurnout3 = "";
         returnValue._mTUL_AdditionalExternalTurnout3FeedbackDifferent = false;
         returnValue._mIL_Enabled = false;
-        returnValue._mIL_ListOfCSVSignalNames = "";
+        returnValue._mIL_Signals = new ArrayList<NBHSignal>();
         return returnValue;
     }
 

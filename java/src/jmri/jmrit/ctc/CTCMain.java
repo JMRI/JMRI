@@ -175,15 +175,15 @@ public class CTCMain {
                 CodeButtonHandlerData slavedSwitchCodeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerDataViaUniqueID(codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID);
                 if (slavedSwitchCodeButtonHandlerData != null)  { // Safety check
                     indicationLockingSignals = new IndicationLockingSignals(userIdentifier,
-                                                                            slavedSwitchCodeButtonHandlerData._mIL_ListOfCSVSignalNames,
+                                                                            slavedSwitchCodeButtonHandlerData._mIL_Signals,
                                                                             codeButtonHandlerData._mSWDI_ExternalTurnout,
                                                                             otherData._mSignalSystemType);
                 }
             } else if (codeButtonHandlerData._mIL_Enabled) {
-// DS                indicationLockingSignals = new IndicationLockingSignals(userIdentifier,
-// DS                                                                        codeButtonHandlerData._mIL_ListOfCSVSignalNames,
-// DS                                                                        codeButtonHandlerData._mSWDI_ExternalTurnout,
-// DS                                                                        otherData._mSignalSystemType);
+                indicationLockingSignals = new IndicationLockingSignals(userIdentifier,
+                                                                        codeButtonHandlerData._mIL_Signals,
+                                                                        codeButtonHandlerData._mSWDI_ExternalTurnout,
+                                                                        otherData._mSignalSystemType);
             }
 
 // Slave Switch: null

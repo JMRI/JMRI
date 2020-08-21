@@ -62,7 +62,7 @@ public class FrmIL extends javax.swing.JFrame {
         _mSignalHeadSelected = signalHeadSelected;
         _mCTCSerialData = ctcSerialData;
         _mIL_TableOfExternalSignalNamesDefaultTableModel = (DefaultTableModel)_mIL_TableOfExternalSignalNames.getModel();
-        ArrayList<String> signalsArrayList = ProjectsCommonSubs.getArrayListFromCSV(_mCodeButtonHandlerData._mIL_ListOfCSVSignalNames);
+        ArrayList<String> signalsArrayList = ProjectsCommonSubs.getArrayListOfSignalNames(_mCodeButtonHandlerData._mIL_Signals);
         loadUpSignalTable(signalsArrayList);
         initOrig(signalsArrayList);
 //  This is TYPICAL of the poor quality of Java coding by supposed advanced programmers.
@@ -82,8 +82,8 @@ public class FrmIL extends javax.swing.JFrame {
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mIL_Enabled) return true; // Not enabled, can be no error!
 //  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mIL_ListOfCSVSignalNames)) return false;
-        for (String signalName : ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mIL_ListOfCSVSignalNames)) {
+        if (codeButtonHandlerData._mIL_Signals.isEmpty()) return false;
+        for (String signalName : ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mIL_Signals)) {
             if (checkJMRIObject.checkSignal(signalName) == false) return false;
         }
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
@@ -377,7 +377,9 @@ public class FrmIL extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-        _mCodeButtonHandlerData._mIL_ListOfCSVSignalNames = CommonSubs.getCSVStringFromDefaultTableModel(_mIL_TableOfExternalSignalNamesDefaultTableModel);
+        _mCodeButtonHandlerData._mIL_Signals = ProjectsCommonSubs.getArrayListOfSignals(
+                CommonSubs.getStringArrayFromDefaultTableModel(
+                _mIL_TableOfExternalSignalNamesDefaultTableModel));
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -396,7 +398,7 @@ public class FrmIL extends javax.swing.JFrame {
         int index = _mOS_NumberEntry.getSelectedIndex();
         if (index != -1) { // Safety:
             CodeButtonHandlerData otherCodeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerDataViaUniqueID(_mUniqueIDS.get(index));
-            loadUpSignalTable(ProjectsCommonSubs.getArrayListFromCSV(otherCodeButtonHandlerData._mIL_ListOfCSVSignalNames));
+            loadUpSignalTable(ProjectsCommonSubs.getArrayListOfSignalNames(otherCodeButtonHandlerData._mIL_Signals));
         }
     }//GEN-LAST:event_BT_ReplaceActionPerformed
 

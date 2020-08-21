@@ -411,7 +411,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
                 // IL section
                 cbhd._mIL_Enabled = loadBoolean(lvl1.getChild("IL_Enabled"));
-                cbhd._mIL_Signals = getSignalList(lvl1.getChild("IL_SignalNames"));
+                cbhd._mIL_Signals = getSignalList(lvl1.getChild("IL_Signals"));
 
                 if (log.isDebugEnabled()) {
                     log.info("CodeButtonHandlerData, {}/{}:", _mSwitchNumber, _mSignalEtcNumber);

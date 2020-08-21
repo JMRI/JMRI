@@ -197,8 +197,8 @@ at the top for "automatic" JMRI object verification.
 //  Call On:
     public boolean              _mCO_Enabled;
     public String               _mCO_CallOnToggleInternalSensor;
-    public ArrayList<CallOnData> _mCO_GroupingsList = new ArrayList<>();
-    public String               _mCO_GroupingsListString;
+    public ArrayList<CallOnData> _mCO_GroupingsList = new ArrayList<>();            // new
+    public String               _mCO_GroupingsListString;                           // old
 //  Traffic Locking:
     public boolean              _mTRL_Enabled;
     public ArrayList<TrafficLockingData> _mTRL_LeftTrafficLockingRules = new ArrayList<>();      // new
@@ -223,8 +223,7 @@ at the top for "automatic" JMRI object verification.
     public boolean              _mTUL_AdditionalExternalTurnout3FeedbackDifferent;          // old
 //  Indication Locking (Signals):
     public boolean              _mIL_Enabled;
-    public ArrayList<NBHSignal>      _mIL_Signals = new ArrayList<>();                           // new
-    public String               _mIL_ListOfCSVSignalNames;                                  // old
+    public ArrayList<NBHSignal>      _mIL_Signals = new ArrayList<>();
 
     public static class AdditionalTurnout {
         public String _mTUL_AdditionalExternalTurnout;
