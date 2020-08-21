@@ -1,12 +1,7 @@
 package jmri.implementation;
 
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Sensor;
+import jmri.*;
 import jmri.util.JUnitAppender;
-import jmri.Timebase;
-import jmri.TimebaseRateException;
-import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -23,7 +18,7 @@ public class LightControlTest {
 
     @Test
     public void testCtor() {
-        LightControl lca = new LightControl();
+        LightControl lca = new DefaultLightControl();
         Assert.assertNotNull("LightControl not null", lca);
     }
 
@@ -34,7 +29,7 @@ public class LightControlTest {
 
     @Test
     public void testLightControlCopyCtor() {
-        LightControl copyOfl = new LightControl(lc);
+        LightControl copyOfl = new DefaultLightControl(lc);
         Assert.assertNotNull("LightControl Copy not null", copyOfl);
     }
 
@@ -43,13 +38,13 @@ public class LightControlTest {
     public void testEquals() {
         Light o = new AbstractLight("IL1", "test light") {
         };
-        LightControl l1 = new LightControl(o);
+        LightControl l1 = new DefaultLightControl(o);
 
         Assert.assertFalse(l1.equals(null));
         Assert.assertTrue(l1.equals(l1));
         Assert.assertFalse(l1.equals(""));
 
-        LightControl l2 = new LightControl(o);
+        LightControl l2 = new DefaultLightControl(o);
         Assert.assertTrue(l1.equals(l2));
 
         l1.setControlType(999);
@@ -408,7 +403,7 @@ public class LightControlTest {
         lc.setControlType(Light.FAST_CLOCK_CONTROL);
         lc.setFastClockControlSchedule(3, 0, 4, 0); // onHr, OnMin, OffHr, OffMin
 
-        LightControl lcb = new LightControl(l);
+        LightControl lcb = new DefaultLightControl(l);
         lcb.setControlType(Light.FAST_CLOCK_CONTROL);
         lcb.setFastClockControlSchedule(5, 0, 6, 0); // onHr, OnMin, OffHr, OffMin
 
@@ -480,7 +475,7 @@ public class LightControlTest {
         lc.setControlType(Light.FAST_CLOCK_CONTROL);
         lc.setFastClockControlSchedule(3, 0, 4, 0); // onHr, OnMin, OffHr, OffMin
 
-        LightControl lcb = new LightControl(l);
+        LightControl lcb = new DefaultLightControl(l);
         lcb.setControlType(Light.FAST_CLOCK_CONTROL);
         lcb.setFastClockControlSchedule(3, 30, 4, 30); // onHr, OnMin, OffHr, OffMin
 
@@ -785,7 +780,7 @@ public class LightControlTest {
         lc.setFastClockControlSchedule(1, 2, 3, 4); // onHr, OnMin, OffHr, OffMin
         Assert.assertFalse(lc.onOffTimesFaulty());
  
-        LightControl lcb = new LightControl(l);
+        LightControl lcb = new DefaultLightControl(l);
         lcb.setControlType(Light.FAST_CLOCK_CONTROL);
         lcb.setFastClockControlSchedule(1, 2, 0, 0); // onHr, OnMin, OffHr, OffMin
 
@@ -834,7 +829,7 @@ public class LightControlTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
         _listenerkicks = 0;
         l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
-        lc = new LightControl(l);
+        lc = new DefaultLightControl(l);
     }
 
     @AfterEach

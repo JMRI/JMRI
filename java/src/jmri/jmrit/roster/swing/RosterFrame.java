@@ -707,6 +707,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return Arrays.copyOf(entries, entries.length);
     }
 
+    public RosterEntry[] getAllRosterEntries() {
+        RosterEntry[] entries = rtable.getSortedRosterEntries();
+        return Arrays.copyOf(entries, entries.length);
+    }
+
     @Override
     public String getSelectedRosterGroup() {
         return groups.getSelectedRosterGroup();

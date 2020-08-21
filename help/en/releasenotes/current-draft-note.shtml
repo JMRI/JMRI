@@ -76,9 +76,28 @@
 
         <h4>MQTT</h4>
             <ul>
+                <li>The MQTT temporary directory has been moved to the current profile directory.
+                    This will allow JMRI to have MQTT connections even when JMRI is installed
+                    in a protected location.
                 <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
-                <li>When status UNKNOWN or INCONSISTENT is received from MQTT and the turnout operating mode is MONITORING or EXACT, the layout is now updated with this status</li>
-                <li>When EXACT feedback mode is selected, two different MQTT topics will be used - one for commands and one for state</li>
+                <li>When status UNKNOWN or INCONSISTENT is received from MQTT 
+                    and the turnout operating mode is MONITORING or EXACT, 
+                    the layout is now updated with this status</li>
+                <li>When EXACT feedback mode is selected, 
+                    two different MQTT topics will be used - one for commands and one for state</li>
+                <li>Added MQTT Sensors</li>
+                <li>MQTT connection configuration now lets you set the prefix for Turnouts, Sensors,
+                        Lights, Reporters, Signal Heads and Signal Masts.  (There's no actual support
+                        for Lights, Reporters, Heads and Masts yet, but you can set the prefix).
+                        Note: You should check the settings for Turnouts and Sensors to ensure
+                        they're what you want.  This code upgrade might have overwritten any
+                        values you (had to) manually edit into preferences in the past.
+                <li>The new "jython/SendMqttMessage.py" sample script show how to
+                    send across an existing MQTT connection.
+                <li>The new "jython/ReceiveMqttMessage.py" is simple demo of 
+                    receiving MQTT messages into a script. It just prints the received messages,
+                    but you can build up from there.
+                    
             </ul>
 
         <h4>MRC</h4>
@@ -194,7 +213,16 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Added LokPilot 5 Fx micro Next18 variants and Pullman Silberling.</li>
+            </ul>
+            <ul>
+                <li>Update for some new ESU firmware features.</li>
+            </ul>
+            <ul>
+                <li>Fix some errors.</li>
+            </ul>
+            <ul>
+                <li>F29-F31 now present in Function Labels pane for generation 5 decoders.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -336,7 +364,46 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>The DecoderPro programming/editing screens now have a Find operation!
+                <p>
+                Ctrl-F or Cmd-F will open a small find bar at the bottom of the pane
+                where you can enter a search string.  Hitting Return will find the first 
+                occurrence. There are right and left arrows to find the next occurrence forward
+                and backwards respectively.  Ctrl-G or Cmd-G will also find the next forward
+                occurrence. Shift-Ctrl-G or Shift-Cmd-G will find the next occurrence going backwards.
+                The "Done" button will dismiss the 
+                bar, but you can leave it up without it interfering with anything.
+            </li>
+            <li>Added a new optional "maxFnNum" model-level attribute for Decoder Definitions.
+            <p>
+                <ul>
+                    <li>
+                        Specifies the highest F key supported by the decoder. The assumed default is "28".
+                    </li>
+                    <li>
+                        Note that `maxFnNum` is not to be confused with the existing `numFns`,
+                        a legacy attribute that limits the total number of function mapping lines displayed.
+                        Neither is derivable from the other.
+                    </li>
+                    <li>
+                        This value is currently used to build the Function Labels pane.
+                    </li>
+                   <li>
+                        This value is propagated to the Roster Index and intended to be used in future by throttles, etc.
+                    </li>
+                    <li>
+                        Example definitions are LokSound 5(uses F0-F31) and LokSound V3.5(uses only F0-F15).
+                    </li>
+                </ul>
+            <p>
+            </li>
+            <li>Added a new optional "allowResetDefaults" decoder-config level attribute for Decoder Definitions.
+                <p>
+                For some decoders, it's either impossible or impractical for the decoder definition
+                to have universally applicable defaults incorporated. In these cases,
+                setting allowResetDefaults="no" disables the "Reset to defaults" button on the Roster Entry pane
+                and provides an explanatory tooltip.
+            </li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -344,6 +411,17 @@
         <ul>
              <li></li>
         </ul>
+          
+   <h3>Dispatcher System</h3>
+        <a id="Dispatcher_System" name="Dispatcher_System"></a>
+        <ul>
+             <li>Jython based System which automates the build of a Dispatcher system</li>
+             <li>Requirement: Start with a Panel with track, signals, signal logic built with</li>
+             <li>automatic signal logic, sections built with automatic section builder</li>
+             <li>Provides Gui to: Modify xml of panel to provide icons to setup dispatch</li>
+             <li>between stops, Generate Transits and TrainInfo files required by dispatcher</li>
+             <li>Provides a runtime system to operate the system</li>
+        </ul>       
 
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
@@ -376,16 +454,37 @@
             <li>Fixed problem with track move count when track has an alternate track.</li>
         </ul>
 
-   <h3>Panel Editor</h3>
-        <a id="PE" name="PE"></a>
+   <h3>CTC Tool</h3>
+        <a id="CTC-Tool" name="CTC-Tool"></a>
         <ul>
-            <li></li>
+            <li>To correct prior release notes, the CTC panel can be created with Layout Editor, Control Panel Editor
+            or Panel Editor.</li>
+            <li>This release gets a new capability: Auto-Generation of Traffic Locking (TRL) rules, which is the most tedious
+            and difficult aspect of (any) CTC systems.  However, TRL Auto-Generation is <strong>dependent</strong> on Layout Editor, with Signal
+            Masts at block boundaries, and with automatically generated Signal Mast Logic.  The Signal Mast Logic
+            can be modified <strong>after</strong> discovery, but there has to be at least <strong>one</strong>
+            discovery process run.  After this process is complete, if you are not happy with the way Layout Editor
+            displays the layout, you can create a parallel Control Panel Editor or Panel Editor screen.  Personally, in
+            my opinion, Layout Editor looks very close to an actual CTC panel if drawn correctly.</li>
+            <li>There is a reminder dialog that was added to remind users of the CTC system that using "," (Comma) and
+            ";" (Semi-colon) in ANY of the System and User names for items used by the CTC system is <strong>not</strong>
+            supported, and may cause problems in the program.  The reminder can be silenced permanently too by the user.</li>
+            <li>When CTC Runtime starts (Run CTC Logic), if there are any problem(s), warning(s) or informational
+            message(s), it will now popup a dialog box to inform the user.  Previously, I relied on the System Console
+            for the logging of those messages (which still happens), but the System Console screen may not be
+            visible, ergo the need for this new feature.</li>
+            <li>Bug Fix: It was possible (though technically wrong) for a user to specify a single turnout as locked
+            in two (or more) <strong>different</strong> O.S. sections.  If this was specified, the runtime program would
+            fight itself and eventually cause a stack overflow.  This is now prevented during user entry from occurring.
+            If you have specified this prior to this release, you <strong>must</strong> manually correct this.</li>
+            <li>Bug Fix: There was a problem that occurred when certain Java libraries were used.  The CTC .xml file that
+            contains all of the data was slightly corrupted due it.  By just running this new version of CTC Editor, those
+            problems will <strong>automatically</strong> be fixed. You may then exit the CTC Editor even without saving,
+            as the fix will have already been done. (internal file version 5 to 6)</li>
+            <li>Bug Fix: If an O.S. section did <strong>not</strong> have a Signal Lever defined, it was
+            possible (though wrong) to enable Traffic Locking and / or Call On.  Now it is impossible to define either
+            if there is no Signal Lever defined <strong>properly</strong>.</li>
         </ul>
-        <h4>CTC Tool</h4>
-            <a id="PE-CTC" name="PE-CTC"></a>
-            <ul>
-                <li></li>
-            </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
@@ -472,7 +571,9 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>
+                <li>The B&amp;O-1980 signal system was updated to correct several
+                    errors and to include masts which can be used to protect a 
+                    block of "short braking distance".
                 </li>
             </ul>
 
@@ -580,5 +681,18 @@
 		            so we can discuss how to meet your requirements through other means.</li>
             <li>"Display Message Log" has been removed from the Debug Menu. Use the
                 "System Console" from the Help Menu to view log messages.</li>
+            <li>The older "Upload Debugging Information" item
+                in the help menu has been replaced by 
+                a "Report Issue..." item.  This walks you through creating a
+                <a href="https://github.com/JMRI/JMRI/issues">JMRI GitHub issue</a> and uploads information 
+                that will make debugging easier.  You need a (free)
+                GitHub account to do the final submission.
+                There's more info on the 
+                <a href="https://jmri.org/help/en/package/apps/util/issuereporter/swing/IssueReporter.shtml">help page</a>.
+            <li>The interface jmri.Light has been split into jmri.Light and jmri.VariableLight. Lights
+                that supports variable intensity must now implement the jmri.VariableLight interface.
+                All lights are still managed by the jmri.LightManager, but a new manager jmri.VariableLightManager
+                has been added that keeps a copy of the VariableLights. But register and deregister of
+                all lights must still be done thru the LightManager.</li>
         </ul>
 

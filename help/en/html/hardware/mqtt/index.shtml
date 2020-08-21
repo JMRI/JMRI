@@ -60,7 +60,7 @@
         <p>
         By default, the MQTT topic for a Turnout is constructed by prepending
         "/trains/track/turnout/" to the suffix.  For example, a JMRI Turnout with
-        system name MTabcd will publish and subscribe to the topic /trains/track/turnout/abcd.
+        system name MTabcd will publish and subscribe to the "topic /trains/track/turnout/abcd".
         There are two parts to that: A base topic common
         to everything JMRI does on that connection, and 
         a type-specific topic specific to each type.
@@ -68,24 +68,48 @@
         By default the base topic is "/trains/";
         the turnout-specific part is "track/turnout/",
         leading to a complete prefix of "/trains/track/turnout/".
-        When e.g. Sensors become available, they might have
-        e.g. a type-specific part of "track/sensor/".
         <p>
-        <a href="images/MQTT_Preferences.png"><img
-        src="images/MQTT_Preferences.png" align="right" height="211"
-        width="345"></a>
+        Sensors are similar, with system names like "MS123" 
+        and a topic type-specific part of "track/sensor/".
+        For example, by default MS123 will subscribe to the topic 
+        "/trains/track/sensor/123".
+        <p>
+        <a href="images/MQTT_Preferences.png"><img src="images/MQTT_Preferences.png" align="right" height="278" width="278"></a>
+        <span class="since">Since JMRI 4.15.5</span>
         You can change the base topic by 
         going to the JMRI Connection preferences,
         selecting your MQTT connection's preference
         pane, checking the "Additional Connection Settings" box,
         and then entering the desired value in the "MQTT channel"
-        selection box.  Depending on which kind of computer you
-        have, you might have to click once or twice in that box
-        before you can enter your new prefix text.  Then
-        save your changes and restart the program.
+        selection box.  
+        You then must 
+        save your changes and restart the program; the program
+        won't continue to operate normally after changing the base prefix
+        until you restart it.
+        <p>Note that the default value of "/trains/" is the default for 
+        all JMRI instances.  If you use a common broker (like the
+        http://test.mosquitto.org test server mentioned below) keeping
+        that default prefix will show you traffic from every other JMRI 
+        instance connected to that broker.  You should probably
+        change that default to something like your own railroad name.
+        You might also want to omit the leading slash; it's present in the
+        default for historical reasons, but the MQTT authorities
+        recommend not having a slash there.
         
+        <p>You can change the type-specific
+        part of the prepended string using the other fields
+        in the preferences.  There are separate fields
+        for specifying what JMRI should send (the "transmit" field)
+        and what JMRI should recognize back from the layout (the "receive" field).
+        If you enter a string, the suffix of the Turnout's system name will be appended:
+        "track/turnout/" for MT123 will result in a topic of "/trains/track/turnout/123".
+        If you include "{0}" in the string, the suffix will be expanded there, which 
+        allows you to do things like enter  "track/turnout/{0}/state" and 
+        have that expand to "track/turnout/123/state".s
+        Save the preferences
+        and restart JMRI to put changes into effect.
         <p>
-        You can change the type-specific part of the prepended string using
+        You can also change the type-specific part of the prepended string using
         a script at startup time.  See the
         <a href="/jython/SetMqttPrefix.py">jython/SetMqttPrefix.py</a>
         sample script for an example.  
@@ -101,6 +125,9 @@
         <h3>Turnouts</h3>
             By default, the message content for turnouts is
             "CLOSED" and "THROWN".
+        <h3>Sensors</h3>
+            By default, the message content for sensors is
+            "ACTIVE" and "INACTIVE".
         <h3>Changing the Coding</h3>
         <span class="since">Since JMRI 4.15.5</span>
             You can use
@@ -108,6 +135,8 @@
             to install a new 
             <a href="https://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttContentParser.html">jmri.jmrix.mqtt.MqttContentParser</a>
             object to code and decode the content of messages.
+            You might want to use JSON format, or need to adapt to specific messages from 
+            some already-existing devise; you can create a custom parser to do any of that.
             See the 
             <a href="/jython/SetMqttParser.py">jython/SetMqttParser.py</a>
             sample script for how to do that.

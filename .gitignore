@@ -59,6 +59,7 @@ local.properties
 RemoteSystemsTempFiles
 .idea/libraries/**
 .idea/sonarlint/issuestore
+.factorypath
 
 # user-installed components
 /web/TrainCrew

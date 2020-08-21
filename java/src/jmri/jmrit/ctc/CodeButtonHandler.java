@@ -344,7 +344,7 @@ appropriately for the back to train route for this feature to activate."
     private boolean trafficLockingValid(int presentSignalDirectionLever) {
 // If asking for a route and it indicates an error (a conflict), DO NOTHING!
         if (_mTrafficLocking != null) {
-            TrafficLockingInfo trafficLockingInfo = _mTrafficLocking.valid(presentSignalDirectionLever);
+            TrafficLockingInfo trafficLockingInfo = _mTrafficLocking.valid(presentSignalDirectionLever, _mFleeting.isFleetingEnabled());
             _mLockedRoute = trafficLockingInfo._mLockedRoute;   // Can be null! This is the bread crumb trail when running time expires.
             return trafficLockingInfo._mReturnStatus;
         }
