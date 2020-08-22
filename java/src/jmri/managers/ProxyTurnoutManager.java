@@ -256,7 +256,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     /**
      * {@inheritDoc}
-     * @return outputInterval from default TurnoutManager
+     * @return end time of latest OutputInterval as LocalDateTime from default TurnoutManager
      */
     @Nonnull
     @Override

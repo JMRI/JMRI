@@ -269,7 +269,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
      * Get the Interval (in ms) to wait between output commands.
      * Configured in AdapterConfig, stored in memo.
      *
-     * @return the (Turnout) Output Interval in Milliseconds
+     * @return the (Turnout) Output Interval in milliseconds
      */
     public int getOutputInterval();
 
@@ -283,7 +283,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     /**
      * Get end time of latest OutputInterval, calculated from the current time.
      *
-     * @return end time in Milliseconds or current time if no interval was set or timer has completed
+     * @return end time in milliseconds or current time if no interval was set or timer has completed
      */
     @Nonnull
     public LocalDateTime outputIntervalEnds();

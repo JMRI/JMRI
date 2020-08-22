@@ -25,7 +25,7 @@ public class TamsTurnout extends AbstractTurnout
      * identification in the system name.
      *
      * @param number DCC address of the turnout
-     * @param prefix system prefic
+     * @param prefix system prefix
      * @param etc Tams system connection traffic controller
      */
     public TamsTurnout(int number, String prefix, TamsTrafficController etc) {
@@ -73,7 +73,7 @@ public class TamsTurnout extends AbstractTurnout
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    private TamsTrafficController tc;
+    private final TamsTrafficController tc;
 
     /**
      * {@inheritDoc}
@@ -87,7 +87,6 @@ public class TamsTurnout extends AbstractTurnout
             if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN {}", newState);
-                return;
             } else {
                 // send a CLOSED command
                 sendMessage(!getInverted());
@@ -99,7 +98,7 @@ public class TamsTurnout extends AbstractTurnout
     }
 
     // data members
-    private int _number; // turnout number
+    int _number; // turnout number
 
     /**
      * Set the turnout known state to reflect what's been observed from the
@@ -172,7 +171,7 @@ public class TamsTurnout extends AbstractTurnout
         if (m.match("T") == 0) {
             String[] lines = msg.split(" ");
             if (lines[1].equals("" + _number)) {
-                updateReceived = true;
+                //updateReceived = true; // uncomment when pollForStatus() works
                 if (lines[2].equals("r") || lines[2].equals("0")) {
                     log.debug("Turnout {} = CLOSED", _number);
                     setCommandedStateFromCS(Turnout.CLOSED);
@@ -186,7 +185,7 @@ public class TamsTurnout extends AbstractTurnout
         }
     }
 
-    private boolean updateReceived = false;
+    //boolean updateReceived = false;
 
     /*protected void pollForStatus() {
         if (_activeFeedbackType == MONITORING) {

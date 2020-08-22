@@ -409,7 +409,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /**
-     * Duration in Milliseconds of interval between separate Turnout commands on the same connection.
+     * Duration in milliseconds of interval between separate Turnout commands on the same connection.
      * <p>
      * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
      */
