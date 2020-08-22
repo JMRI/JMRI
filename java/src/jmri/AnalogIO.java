@@ -33,25 +33,6 @@ public interface AnalogIO extends NamedBean {
     }
     
     /**
-     * How is the known state updated? By JMRI itself or by the layout?
-     */
-    public enum FeedbackMode {
-        Jmri(Bundle.getMessage("FeedbackModeJmri")),
-        Layout(Bundle.getMessage("FeedbackModeLayout"));
-        
-        private final String _descr;
-        
-        private FeedbackMode(String descr) {
-            _descr = descr;
-        }
-        
-        @Override
-        public String toString() {
-            return _descr;
-        }
-    }
-
-    /**
      * Show whether the analog value is stable.
      * 
      * @return true if the analog value is stable
@@ -128,21 +109,6 @@ public interface AnalogIO extends NamedBean {
      */
     @CheckReturnValue
     public double getState(double v);
-
-    /**
-     * Sets the feedback mode.
-     * @param mode the feedback mode
-     * @throws UnsupportedOperationException if the AnalogIO doesn't support
-     *         setting feedback mode
-     */
-    public void setFeedbackMode(FeedbackMode mode) throws UnsupportedOperationException;
-
-    /**
-     * Get the feedback mode
-     * @return the feedback mode or null if not supported
-     */
-    @CheckReturnValue
-    public FeedbackMode getFeedbackMode();
 
     /**
      * Get the minimum value of this AnalogIO.

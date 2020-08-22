@@ -629,19 +629,6 @@ public abstract class AbstractVariableLight
         setCommandedAnalogValue(newState);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void setFeedbackMode(FeedbackMode mode) {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @CheckReturnValue
-    public FeedbackMode getFeedbackMode() {
-        return null;
-    }
-    
     @Override
     public double getResolution() {
         return 1.0 / getNumberOfSteps();

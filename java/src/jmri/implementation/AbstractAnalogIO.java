@@ -14,7 +14,6 @@ import jmri.AnalogIO;
  */
 public abstract class AbstractAnalogIO extends AbstractNamedBean implements AnalogIO {
 
-    private FeedbackMode _feedbackMode = FeedbackMode.Jmri;
     private double _commandedValue = 0.0;
     private double _knownValue = 0.0;
 
@@ -124,19 +123,6 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
         setCommandedAnalogValue(value);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void setFeedbackMode(FeedbackMode mode) {
-        _feedbackMode = mode;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @CheckReturnValue
-    public FeedbackMode getFeedbackMode() {
-        return _feedbackMode;
-    }
-    
     /** {@inheritDoc} */
     @Override
     @Nonnull
