@@ -2,6 +2,7 @@ package jmri.jmrit.ctc.editor.code;
 
 import java.util.ArrayList;
 import jmri.jmrit.ctc.NBHSignal;
+import jmri.jmrit.ctc.ctcserialdata.CallOnData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 
 /**
@@ -36,7 +37,7 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mSWDI_GUICrossoverLeftHand = false;
         returnValue._mSWDL_Enabled = false;
         returnValue._mCO_Enabled = false;
-        returnValue._mCO_GroupingsListString = "";
+        returnValue._mCO_GroupingsList = new ArrayList<CallOnData>();
         returnValue._mTRL_LeftTrafficLockingRulesSSVList = "";
         returnValue._mTRL_RightTrafficLockingRulesSSVList = "";
         returnValue._mTRL_Enabled = false;

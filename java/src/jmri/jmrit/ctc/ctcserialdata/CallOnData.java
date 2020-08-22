@@ -3,7 +3,6 @@ package jmri.jmrit.ctc.ctcserialdata;
 import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import jmri.*;
 import jmri.jmrit.ctc.*;
 
@@ -18,8 +17,8 @@ public class CallOnData {
     public String _mSignalFacingDirection;
     public String _mSignalAspectToDisplay;
     public NBHSensor _mCalledOnExternalSensor;
-    public Block _mExternalBlock;
-    public List<NBHSensor> _mSwitchIndicators;      // Up to 6 entries
+    public NamedBeanHandle<Block> _mExternalBlock;
+    public ArrayList<NBHSensor> _mSwitchIndicators;      // Up to 6 entries
 
     public CallOnData() {
     }
@@ -28,7 +27,7 @@ public class CallOnData {
                         String signalFacingDirection,
                         String signalAspectToDisplay,
                         NBHSensor calledOnExternalSensor,
-                        Block externalBlock,
+                        NamedBeanHandle<Block> externalBlock,
                         ArrayList<NBHSensor> switchIndicators) {
         _mExternalSignal = externalSignal;
         _mSignalFacingDirection = signalFacingDirection;
@@ -44,7 +43,7 @@ public class CallOnData {
                 _mSignalFacingDirection != null ? _mSignalFacingDirection : "",
                 _mSignalAspectToDisplay != null ? _mSignalAspectToDisplay : "",
                 _mCalledOnExternalSensor != null ? _mCalledOnExternalSensor.getHandleName() : "",
-                _mExternalBlock != null ? _mExternalBlock.getDisplayName() : "");
+                _mExternalBlock != null ? _mExternalBlock.getName() : "");
         StringBuilder buildString = new StringBuilder(formattedString);
         _mSwitchIndicators.forEach(sw -> {
             buildString.append(",");

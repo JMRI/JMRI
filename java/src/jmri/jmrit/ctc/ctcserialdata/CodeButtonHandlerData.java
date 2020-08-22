@@ -198,7 +198,6 @@ at the top for "automatic" JMRI object verification.
     public boolean              _mCO_Enabled;
     public String               _mCO_CallOnToggleInternalSensor;
     public ArrayList<CallOnData> _mCO_GroupingsList = new ArrayList<>();            // new
-    public String               _mCO_GroupingsListString;                           // old
 //  Traffic Locking:
     public boolean              _mTRL_Enabled;
     public ArrayList<TrafficLockingData> _mTRL_LeftTrafficLockingRules = new ArrayList<>();      // new

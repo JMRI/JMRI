@@ -13,8 +13,11 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import jmri.*;
+import jmri.jmrit.ctc.NBHSensor;
+import jmri.jmrit.ctc.NBHSignal;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
+import jmri.jmrit.ctc.ctcserialdata.CallOnData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
@@ -36,12 +39,11 @@ public class FrmCO extends javax.swing.JFrame {
     private final CTCSerialData _mCTCSerialData;
     private final CheckJMRIObject _mCheckJMRIObject;
     private final boolean _mSignalHeadSelected;
-    private final DefaultListModel<String> _mDefaultListModel;
+    private final DefaultListModel<CallOnData> _mDefaultListModel;
     private boolean _mAddNewPressed;
-
     private String _mCO_CallOnToggleInternalSensorOrig;
+    private ArrayList<CallOnData> _mDefaultListModelOrig = new ArrayList<> ();
 
-    private ArrayList<String> _mDefaultListModelOrig = new ArrayList<> ();
     private void initOrig() {
         _mCO_CallOnToggleInternalSensorOrig = _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor;
         int defaultListModelSize = _mDefaultListModel.getSize();
@@ -87,10 +89,11 @@ public class FrmCO extends javax.swing.JFrame {
 //  Once you specify a model, then functions like JList.setListData may update the screen, but the model
 //  DOES NOT SEE ANY OF THE DATA!  Therefore, I have to load the data via the model instead of directly:
         _mDefaultListModel.clear(); // Superflous but doesn't hurt in case GUI designer put something in there.....
-        for (String aString : ProjectsCommonSubs.getArrayListFromSSV(_mCodeButtonHandlerData._mCO_GroupingsListString)) {
-            _mDefaultListModel.addElement(aString);
+        for (CallOnData callOnData : _mCodeButtonHandlerData._mCO_GroupingsList) {
+            _mDefaultListModel.addElement(callOnData);
         }
         initOrig();
+
         ArrayList<String> arrayListOfSelectableSwitchDirectionIndicators = CommonSubs.getArrayListOfSelectableSwitchDirectionIndicators(_mCTCSerialData.getCodeButtonHandlerDataArrayList());
         arrayListOfSelectableSwitchDirectionIndicators.add(0, "");     // None is always available.
         String[] arrayOfSelectableSwitchDirectionIndicators = new String[arrayListOfSelectableSwitchDirectionIndicators.size()];
@@ -104,21 +107,22 @@ public class FrmCO extends javax.swing.JFrame {
         _mSwitchIndicator4.setModel(new DefaultComboBoxModel<>(arrayOfSelectableSwitchDirectionIndicators));
         _mSwitchIndicator5.setModel(new DefaultComboBoxModel<>(arrayOfSelectableSwitchDirectionIndicators));
         _mSwitchIndicator6.setModel(new DefaultComboBoxModel<>(arrayOfSelectableSwitchDirectionIndicators));
+
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         enableTopPart(true);
         _mEditBelow.setEnabled(false);
         _mDelete.setEnabled(false);
     }
 
-    public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
-        if (!codeButtonHandlerData._mCO_Enabled) return true;  // Not enabled, can be no error!
-//  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCO_CallOnToggleInternalSensor)) return false;
-        for (String groupingListString : ProjectsCommonSubs.getArrayListFromSSV(codeButtonHandlerData._mCO_GroupingsListString)) {
-            if (!checkJMRIObject.validClass(new CallOnEntry(groupingListString))) return false; // Error
-        }
-        return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
-    }
+     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
+         if (!codeButtonHandlerData._mCO_Enabled) return true;  // Not enabled, can be no error!
+ //  Checks:
+         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCO_CallOnToggleInternalSensor)) return false;
+         for (CallOnData callOnDataRow : codeButtonHandlerData._mCO_GroupingsList) {
+             if (!checkJMRIObject.validClass(callOnDataRow)) return false;
+         }
+         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
+     }
 
 //  Validate all internal fields as much as possible:
     private ArrayList<String> formFieldsValid() {
@@ -217,6 +221,7 @@ public class FrmCO extends javax.swing.JFrame {
 
         jLabel15.setText(Bundle.getMessage("InfoDlgCORow5B"));
 
+        _mGroupingsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         _mGroupingsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -465,19 +470,17 @@ public class FrmCO extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "I don't want to introduce bugs, CPU no big deal here.")
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
         _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor = _mCO_CallOnToggleInternalSensor.getText();
         int size = _mDefaultListModel.getSize();
-        String resultString = "";
+        _mCodeButtonHandlerData._mCO_GroupingsList.clear();
         for (int index = 0; index < size; index++) {
-            String thisEntry = _mDefaultListModel.getElementAt(index);
-            resultString = 0 == index ? thisEntry : resultString + ProjectsCommonSubs.SSV_SEPARATOR + thisEntry;
+            CallOnData thisEntry = _mDefaultListModel.getElementAt(index);
+            _mCodeButtonHandlerData._mCO_GroupingsList.add(thisEntry);
         }
-        _mCodeButtonHandlerData._mCO_GroupingsListString = resultString;
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -515,26 +518,30 @@ public class FrmCO extends javax.swing.JFrame {
         int selectedIndex = _mGroupingsList.getSelectedIndex();
         enableTopPart(false);
         _mGroupingsList.setEnabled(false);
-        CallOnEntry callOnEntry = new CallOnEntry(_mDefaultListModel.get(selectedIndex));
-        _mSignalFacingDirection.setSelectedItem(callOnEntry._mSignalFacingDirection);
-        _mSignalAspectToDisplay.setSelectedItem(callOnEntry._mSignalAspectToDisplay);
+        CallOnData callOnData = _mDefaultListModel.get(selectedIndex);
+        _mSignalFacingDirection.setSelectedItem(callOnData._mSignalFacingDirection);
+        _mSignalAspectToDisplay.setSelectedItem(callOnData._mSignalAspectToDisplay);
         _mGroupingListAddReplace.setText(Bundle.getMessage("TextDlgCOUpdateInstructions")); // NOI18N
         _mGroupingListAddReplace.setEnabled(true);
-        _mSwitchIndicator1.setSelectedItem(callOnEntry._mSwitchIndicator1);
-        _mSwitchIndicator2.setSelectedItem(callOnEntry._mSwitchIndicator2);
-        _mSwitchIndicator3.setSelectedItem(callOnEntry._mSwitchIndicator3);
-        _mSwitchIndicator4.setSelectedItem(callOnEntry._mSwitchIndicator4);
-        _mSwitchIndicator5.setSelectedItem(callOnEntry._mSwitchIndicator5);
-        _mSwitchIndicator6.setSelectedItem(callOnEntry._mSwitchIndicator6);
+
+        for (int i = 0; i < callOnData._mSwitchIndicators.size(); i++) {
+            if (i == 0) _mSwitchIndicator1.setSelectedItem(callOnData._mSwitchIndicators.get(i).getHandleName());
+            if (i == 1) _mSwitchIndicator2.setSelectedItem(callOnData._mSwitchIndicators.get(i).getHandleName());
+            if (i == 2) _mSwitchIndicator3.setSelectedItem(callOnData._mSwitchIndicators.get(i).getHandleName());
+            if (i == 3) _mSwitchIndicator4.setSelectedItem(callOnData._mSwitchIndicators.get(i).getHandleName());
+            if (i == 4) _mSwitchIndicator5.setSelectedItem(callOnData._mSwitchIndicators.get(i).getHandleName());
+            if (i == 5) _mSwitchIndicator6.setSelectedItem(callOnData._mSwitchIndicators.get(i).getHandleName());
+        }
+
         _mExternalSignal.requestFocusInWindow();
         if (_mSignalHeadSelected) {
-            CommonSubs.populateJComboBoxWithBeans(_mExternalSignal, "SignalHead", callOnEntry._mExternalSignal, false);
-            CommonSubs.populateJComboBoxWithBeans(_mCalledOnExternalSensor, "Sensor", callOnEntry._mCalledOnExternalSensor, false);
+            CommonSubs.populateJComboBoxWithBeans(_mExternalSignal, "SignalHead", callOnData._mExternalSignal.getHandleName(), false);
+            CommonSubs.populateJComboBoxWithBeans(_mCalledOnExternalSensor, "Sensor", callOnData._mCalledOnExternalSensor.getHandleName(), false);
             CommonSubs.populateJComboBoxWithBeans(_mExternalBlock, "Block", null, true);
         } else {
-            CommonSubs.populateJComboBoxWithBeans(_mExternalSignal, "SignalMast", callOnEntry._mExternalSignal, false);
+            CommonSubs.populateJComboBoxWithBeans(_mExternalSignal, "SignalMast", callOnData._mExternalSignal.getHandleName(), false);
             CommonSubs.populateJComboBoxWithBeans(_mCalledOnExternalSensor, "Sensor", null, true);
-            CommonSubs.populateJComboBoxWithBeans(_mExternalBlock, "Block", callOnEntry._mExternalBlock, false);
+            CommonSubs.populateJComboBoxWithBeans(_mExternalBlock, "Block", callOnData._mExternalBlock.getName(), false);
         }
     }//GEN-LAST:event__mEditBelowActionPerformed
 
@@ -562,32 +569,54 @@ public class FrmCO extends javax.swing.JFrame {
                 return;
             }
         }
-        CallOnEntry callOnEntry = new CallOnEntry(  (String) _mExternalSignal.getSelectedItem(),
-                (_mSignalFacingDirection.getSelectedItem() == null ? null : _mSignalFacingDirection.getSelectedItem().toString()),
-                (_mSignalAspectToDisplay.getSelectedItem() == null ? null : _mSignalAspectToDisplay.getSelectedItem().toString()),
-                (String) _mCalledOnExternalSensor.getSelectedItem(),
-                (String) _mExternalBlock.getSelectedItem(),
-                (String)_mSwitchIndicator1.getSelectedItem(),
-                (String)_mSwitchIndicator2.getSelectedItem(),
-                (String)_mSwitchIndicator3.getSelectedItem(),
-                (String)_mSwitchIndicator4.getSelectedItem(),
-                (String)_mSwitchIndicator5.getSelectedItem(),
-                (String)_mSwitchIndicator6.getSelectedItem());
-        CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(callOnEntry);
+
+        CallOnData newCallOnData = new CallOnData();
+
+        newCallOnData._mExternalSignal = new NBHSignal((String) _mExternalSignal.getSelectedItem());
+        newCallOnData._mSignalFacingDirection = (_mSignalFacingDirection.getSelectedItem() == null ? null : _mSignalFacingDirection.getSelectedItem().toString());
+        newCallOnData._mSignalAspectToDisplay = (_mSignalAspectToDisplay.getSelectedItem() == null ? null : _mSignalAspectToDisplay.getSelectedItem().toString());
+        newCallOnData._mCalledOnExternalSensor = new NBHSensor("FrmCO", "", "Add/Update sensor", (String) _mCalledOnExternalSensor.getSelectedItem(), true);
+        if (!newCallOnData._mCalledOnExternalSensor.valid()) newCallOnData._mCalledOnExternalSensor = null;
+
+        NamedBeanHandle<Block> blockHandle = null;
+        String blockName = (String) _mExternalBlock.getSelectedItem();
+        Block block = InstanceManager.getDefault(BlockManager.class).getBlock(blockName);
+        if (block != null) {
+            blockHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(blockName, block);
+        }
+        newCallOnData._mExternalBlock = blockHandle;
+
+        ArrayList<NBHSensor> indcators = new ArrayList<>();
+        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator1.getSelectedItem(), true));
+        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator2.getSelectedItem(), true));
+        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator3.getSelectedItem(), true));
+        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator4.getSelectedItem(), true));
+        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator5.getSelectedItem(), true));
+        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator6.getSelectedItem(), true));
+
+        ArrayList<NBHSensor> indicatorList = new ArrayList<>();
+        for (NBHSensor sensor : indcators) {
+            // Skip null entries
+            if (sensor.valid()) {
+                indicatorList.add(sensor);
+            }
+        }
+        newCallOnData._mSwitchIndicators = indicatorList;
+
+        CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(newCallOnData);
         if (verifyClassReturnValue != null) { // Error:
             JOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);    // NOI18N
             return;
         }
 
-        String newValue = callOnEntry.toCSVString();
         _mGroupingListAddReplace.setEnabled(false);
         enableTopPart(true);
         if (_mAddNewPressed) {
-            _mDefaultListModel.addElement(newValue);
+            _mDefaultListModel.addElement(newCallOnData);
         }
         else {
-            _mDefaultListModel.set(_mGroupingsList.getSelectedIndex(), newValue);
+            _mDefaultListModel.set(_mGroupingsList.getSelectedIndex(), newCallOnData);
         }
         _mGroupingsList.setEnabled(true);
     }//GEN-LAST:event__mGroupingListAddReplaceActionPerformed
@@ -598,6 +627,7 @@ public class FrmCO extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        log.info("jButton2ActionPerformed reapply patterns null exception");
         CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_CallOn(_mProgramProperties, temp);
         _mCO_CallOnToggleInternalSensor.setText(temp._mCO_CallOnToggleInternalSensor);
@@ -656,7 +686,7 @@ public class FrmCO extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> _mExternalBlock;
     private javax.swing.JComboBox<String> _mExternalSignal;
     private javax.swing.JButton _mGroupingListAddReplace;
-    private javax.swing.JList<String> _mGroupingsList;
+    private javax.swing.JList<CallOnData> _mGroupingsList;
     private javax.swing.JLabel _mGroupingsListPrompt;
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JComboBox<String> _mSignalAspectToDisplay;
@@ -687,4 +717,6 @@ public class FrmCO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FrmCO.class);
 }

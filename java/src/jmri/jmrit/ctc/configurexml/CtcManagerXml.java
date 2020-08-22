@@ -231,10 +231,10 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return element;
     }
 
-    Element storeBlock(String elementName, Block block) {
+    Element storeBlock(String elementName, NamedBeanHandle<Block> block) {
         Element element = new Element(elementName);
         if (block != null) {
-            element.setText(block.getDisplayName());
+            element.setText(block.getName());
         }
         return element;
     }
@@ -576,12 +576,15 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return turnout;
     }
 
-    Block loadBlock(Element element) {
-        Block block = null;
+    NamedBeanHandle<Block> loadBlock(Element element) {
+        NamedBeanHandle<Block> blockHandle = null;
         if (element != null && element.getValue() != null && !element.getValue().isEmpty()) {
-            block = InstanceManager.getDefault(BlockManager.class).getBlock(element.getValue());
+            Block block = InstanceManager.getDefault(BlockManager.class).getBlock(element.getValue());
+            if (block != null) {
+                blockHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(element.getValue(), block);
+            }
         }
-        return block;
+        return blockHandle;
     }
 
     // **** Load ArrayList objects ****

@@ -146,7 +146,7 @@ public class CTCMain {
                 new CallOn( _mLockedRoutesManager,
                             userIdentifier,
                             codeButtonHandlerData._mCO_CallOnToggleInternalSensor,
-                            codeButtonHandlerData._mCO_GroupingsListString,
+                            codeButtonHandlerData._mCO_GroupingsList,
                             otherData._mSignalSystemType)
                 : null;
 
