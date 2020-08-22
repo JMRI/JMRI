@@ -12,7 +12,7 @@ import jmri.SensorManager;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxySensorManager extends AbstractProxyManager<Sensor>
+public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
         implements SensorManager {
 
     public ProxySensorManager() {
