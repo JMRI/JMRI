@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -26,8 +27,6 @@ import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.NamedBean;
 import jmri.Path;
-import jmri.ShutDownTask;
-import jmri.implementation.swing.SwingShutDownTask;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -274,6 +273,7 @@ public class WarrantTableAction extends AbstractAction {
      * @param b the block to validate
      * @return error/warning message, if any
      */
+    @Nonnull
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
     public String checkPathPortals(OBlock b) {
         if (log.isDebugEnabled()) {
@@ -282,6 +282,10 @@ public class WarrantTableAction extends AbstractAction {
         StringBuffer sb = new StringBuffer();
         List<Path> pathList = b.getPaths();
         if (pathList.isEmpty()) {
+            if (b.getPortals().isEmpty()) {
+                sb.append(Bundle.getMessage("NoPortals"));
+                sb.append(" ");
+            }
             sb.append(Bundle.getMessage("NoPaths", b.getDisplayName()));
             sb.append("\n");
             _hasErrors = true;

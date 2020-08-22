@@ -1011,7 +1011,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         // we assume this occupation is this train. user should know
                         if (runState == WAIT_FOR_CLEAR || runState == HALT) {
                             // However user knows if condition may have cleared due to overrun.
-                            _message = allocateFromIndex(false, true, _idxCurrentOrder + 1);
+                            _message = allocateFromIndex(true, _idxCurrentOrder + 1);
                             // This is user's decision to reset and override wait flags
                             Engineer.ThrottleRamp ramp = _engineer.getRamp();
                             if (ramp == null || ramp.ready) {   // do not change flags when ramping
@@ -1222,7 +1222,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         _allocated = true; // start block allocated
-        String msg = allocateFromIndex(show, false, 1);
+        String msg = allocateFromIndex(false, 1);
         if (msg != null) {
             _message = msg;
         } else if (_partialAllocate) {
@@ -1237,12 +1237,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /*
      * Allocate and set path
      * Only return a message if allocation of first index block fails.
-     * @param show true when displaying a temporary route.  N.B. Allocates beyond clearance issues.
-     * when false does not allocate beyond a clearance issue.
      * @param set only allocates and sets path in one block, the 'index' block
      * show the entire route but do not set any turnouts in occupied blocks
      */
-    private String allocateFromIndex(boolean show, boolean set, int index) {
+    private String allocateFromIndex(boolean set, int index) {
         int limit;
         if (_partialAllocate || set) {
             limit = Math.min(index + 1, _orders.size());
@@ -1561,7 +1559,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _curSpeedType = speedType;
             _waitForSignal = false;
             if (!_waitForBlock && !_waitForWarrant && _engineer != null) {
-                allocateFromIndex(false, true, _idxCurrentOrder + 1);
+                allocateFromIndex(true, _idxCurrentOrder + 1);
              // engineer will clear its flags when ramp completes
                 _engineer.rampSpeedTo(speedType, 0, false);
 //                setMovement(END);
@@ -1599,7 +1597,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             log.debug("Warrant \"{}\" clearing _stoppingBlock= \"{}\".",
                 getDisplayName(), blockName);
 
-        String msg = allocateFromIndex(false, true, _idxCurrentOrder + 1);
+        String msg = allocateFromIndex(true, _idxCurrentOrder + 1);
         if (msg == null && doStoppingBlockClear()) {
             return true;
         }
@@ -1621,7 +1619,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 String msg = null;
                 try {
                     while (time < 200) {
-                        msg = allocateFromIndex(false, true, _idxCurrentOrder + 1);
+                        msg = allocateFromIndex(true, _idxCurrentOrder + 1);
                         if (msg == null && doStoppingBlockClear()) {
                             break;
                         }
@@ -1943,7 +1941,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         // _idxCurrentOrder has been incremented. Warranted train has entered this block.
         // Do signals, speed etc.
         if (_idxCurrentOrder < _orders.size() - 1) {
-            allocateFromIndex(false, true, _idxCurrentOrder + 1);
+            allocateFromIndex(true, _idxCurrentOrder + 1);
             if (_engineer != null) {
                 BlockOrder bo = _orders.get(_idxCurrentOrder + 1);
                 if ((bo.getBlock().getState() & OBlock.UNDETECTED) != 0) {
@@ -2342,7 +2340,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (speedType.equals(Warrant.Stop)) {
                 // block speed cannot be Stop, so OK to assume signal
                 _waitForSignal = true;
-                speedType = Warrant.Stop;
             }
         }
 
@@ -2361,7 +2358,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 _waitForBlock = true;
                 speedType = Warrant.Stop;
             }
-        } else {
+        } else if (!speedType.equals(Warrant.Stop)) {
             msg = blkOrder.setPath(this);
             if (msg != null) {
                 // when setPath fails, it calls setShareTOBlock

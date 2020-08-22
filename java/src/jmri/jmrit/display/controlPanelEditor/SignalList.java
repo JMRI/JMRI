@@ -14,54 +14,54 @@ import javax.swing.ListCellRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.NamedBean;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 
 /**
  *
- * @author Pete Cressman Copyright: Copyright (c) 2014
+ * @author Pete Cressman Copyright: Copyright (c) 2020
  *
  */
-public class PortalList extends JList<Portal> {
+public class SignalList extends JList<SignalPair> {
 
-    private final PortalListModel _portalListModel;
+    private final SignalListModel _signalListModel;
 
-    PortalList(OBlock block, EditFrame parent) {
+    SignalList(OBlock block, EditFrame parent) {
         super();
-        _portalListModel = new PortalListModel(block, parent);
-        setModel(_portalListModel);
-        setCellRenderer(new PortalCellRenderer());
+        _signalListModel = new SignalListModel(block, parent);
+        setModel(_signalListModel);
+        setCellRenderer(new SignalCellRenderer());
         setPreferredSize(new Dimension(300, 120));
         setVisibleRowCount(5);
     }
 
     void dataChange() {
-        _portalListModel.dataChange();
+        _signalListModel.dataChange();
     }
 
     void setSelected(Portal portal) {
-        List<Portal> list = _portalListModel._homeBlock.getPortals();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals(portal)) {
-                setSelectedIndex(i);
+        for (SignalPair sp : _signalListModel._list) {
+            if (sp._portal.equals(portal)) {
+                setSelectedValue(sp, true);
                 return;
             }
         }
         clearSelection();
     }
 
-    private static class PortalCellRenderer extends JLabel implements ListCellRenderer<Portal>{
+    private static class SignalCellRenderer extends JLabel implements ListCellRenderer<SignalPair>{
 
         @Override
         public Component getListCellRendererComponent(
-                JList<? extends Portal> list, // the list
-                Portal value, // value to display
+                JList<? extends SignalPair> list, // the list
+                SignalPair value, // value to display
                 int index, // cell index
                 boolean isSelected, // is the cell selected
                 boolean cellHasFocus) // does the cell have focus
         {
-            String s = value.getDescription();
-            setText(s);
+            setText(value.getDiscription());
             if (isSelected) {
                 setBackground(list.getSelectionBackground());
                 setForeground(list.getSelectionForeground());
@@ -76,38 +76,44 @@ public class PortalList extends JList<Portal> {
         }
     }
 
-    static class PortalListModel extends AbstractListModel<Portal> implements PropertyChangeListener {
+    static class SignalListModel extends AbstractListModel<SignalPair> implements PropertyChangeListener {
 
         OBlock _homeBlock;
         private final EditFrame _parent;
-        List<Portal> _list = new ArrayList<>();
+        List<SignalPair> _list = new ArrayList<>();
 
-        PortalListModel(OBlock block, EditFrame parent) {
+        SignalListModel(OBlock block, EditFrame parent) {
             _homeBlock = block;
             _parent = parent;
             _homeBlock.addPropertyChangeListener(this);
             makeList();
         }
-        
+
         private void makeList() {
-            for (Portal p : _list) {
-                p.removePropertyChangeListener(this);
+            for (SignalPair sp : _list) {
+                sp._portal.removePropertyChangeListener(this);
             }
-            _list = _homeBlock.getPortals();
-            for (Portal p : _list) {
-                p.addPropertyChangeListener(this);
+            _list.clear();
+            for (Portal portal : _homeBlock.getPortals()) {
+                NamedBean signal = portal.getSignalProtectingBlock(_homeBlock);
+                if (signal != null) {
+                    _list.add(new SignalPair(signal, portal));
+                }
+            }
+            for (SignalPair sp : _list) {
+                sp._portal.addPropertyChangeListener(this);
             }
         }
 
         @Override
         public int getSize() {
-            return _homeBlock.getPortals().size();
+            return _list.size();
         }
 
         @Override
-        public Portal getElementAt(int index) {
+        public SignalPair getElementAt(int index) {
             if (index < getSize()) {
-                return _homeBlock.getPortals().get(index);
+                return _list.get(index);
             }
             return null;
         }
@@ -135,5 +141,5 @@ public class PortalList extends JList<Portal> {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(PortalList.class);
+    private final static Logger log = LoggerFactory.getLogger(SignalList.class);
 }
