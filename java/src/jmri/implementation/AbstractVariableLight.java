@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Date;
 
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 import static jmri.Light.INTERMEDIATE;
@@ -616,6 +617,31 @@ public abstract class AbstractVariableLight
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public double getState(double v) {
+        return getCommandedAnalogValue();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setState(double newState) throws JmriException {
+        setCommandedAnalogValue(newState);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setFeedbackMode(FeedbackMode mode) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckReturnValue
+    public FeedbackMode getFeedbackMode() {
+        return null;
+    }
+    
     @Override
     public double getResolution() {
         return 1.0 / getNumberOfSteps();

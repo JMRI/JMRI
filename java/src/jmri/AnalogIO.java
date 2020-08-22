@@ -1,5 +1,7 @@
 package jmri;
 
+import javax.annotation.CheckReturnValue;
+
 /**
  * Represent an analog I/O on the layout.
  * 
@@ -23,9 +25,29 @@ public interface AnalogIO extends NamedBean {
             _str = str;
         }
         
+        @CheckReturnValue
         @Override
         public String toString() {
             return _str;
+        }
+    }
+    
+    /**
+     * How is the known state updated? By JMRI itself or by the layout?
+     */
+    public enum FeedbackMode {
+        Jmri(Bundle.getMessage("FeedbackModeJmri")),
+        Layout(Bundle.getMessage("FeedbackModeLayout"));
+        
+        private final String _descr;
+        
+        private FeedbackMode(String descr) {
+            _descr = descr;
+        }
+        
+        @Override
+        public String toString() {
+            return _descr;
         }
     }
 
@@ -34,6 +56,7 @@ public interface AnalogIO extends NamedBean {
      * 
      * @return true if the analog value is stable
      */
+    @CheckReturnValue
     default public boolean isConsistentValue() {
         return true;
     }
@@ -47,9 +70,9 @@ public interface AnalogIO extends NamedBean {
      *
      * @param value the desired analog value
      * @throws jmri.JmriException general error when setting the value fails
-     * @throws IllegalArgumentException if the value is Float.NaN,
-     *                                  Float.NEGATIVE_INFINITY or
-     *                                  Float.POSITIVE_INFINITY
+     * @throws IllegalArgumentException if the value is Double.NaN,
+     *                                  Double.NEGATIVE_INFINITY or
+     *                                  Double.POSITIVE_INFINITY
      */
     public void setCommandedAnalogValue(double value) throws JmriException;
 
@@ -61,6 +84,7 @@ public interface AnalogIO extends NamedBean {
      *
      * @return the analog value
      */
+    @CheckReturnValue
     public double getCommandedAnalogValue();
     
     /**
@@ -73,32 +97,79 @@ public interface AnalogIO extends NamedBean {
      *
      * @return the known analog value
      */
+    @CheckReturnValue
     default public double getKnownAnalogValue() {
         return getCommandedAnalogValue();
     }
     
     /**
+     * Provide generic access to internal state.
+     * <p>
+     * This generally shouldn't be used by Java code; use the class-specific
+     * form instead (setCommandedAnalogValue). This is provided to
+     * make scripts access easier to read.
+     *
+     * @param value the analog value
+     * @throws JmriException general error when setting the state fails
+     */
+    @InvokeOnLayoutThread
+    public void setState(double value) throws JmriException;
+
+    /**
+     * Provide generic access to internal state.
+     * <p>
+     * This generally shouldn't be used by Java code; use the class-specific
+     * form instead (getCommandedAnalogValue). This is provided to
+     * make scripts easier to read.
+     * 
+     * @param v only used to select this method which returns an analog value.
+     *          It's recommended to use 0.0 as the parameter.
+     * @return the state
+     */
+    @CheckReturnValue
+    public double getState(double v);
+
+    /**
+     * Sets the feedback mode.
+     * @param mode the feedback mode
+     * @throws UnsupportedOperationException if the AnalogIO doesn't support
+     *         setting feedback mode
+     */
+    public void setFeedbackMode(FeedbackMode mode) throws UnsupportedOperationException;
+
+    /**
+     * Get the feedback mode
+     * @return the feedback mode or null if not supported
+     */
+    @CheckReturnValue
+    public FeedbackMode getFeedbackMode();
+
+    /**
      * Get the minimum value of this AnalogIO.
      * @return minimum value.
      */
+    @CheckReturnValue
     public double getMin();
     
     /**
      * Get the maximum value of this AnalogIO.
      * @return maximum value.
      */
+    @CheckReturnValue
     public double getMax();
     
     /**
      * Get the resolution of this AnalogIO.
      * @return analog resolution.
      */
+    @CheckReturnValue
     public double getResolution();
 
     /**
      * Is this AnalogIO absolute or relative?
      * @return if absolute or relative.
      */
+    @CheckReturnValue
     public AbsoluteOrRelative getAbsoluteOrRelative();
 
     /**

@@ -94,6 +94,21 @@ public class AbstractAnalogIOTest {
         Assert.assertTrue("getBeanType() matches", "Analog I/O".equals(myAnalogIO.getBeanType()));
     }
     
+    @Test
+    public void testState() throws JmriException {
+        MyAbstractAnalogIO myAnalogIO = new MyAbstractAnalogIO(10.0, 20.0, true);
+        myAnalogIO.setState(3.3);
+        myAnalogIO.setCommandedAnalogValue(3.3);
+        System.err.format("Value: %1.2f%n", myAnalogIO.getKnownAnalogValue());
+        Assert.assertTrue("value is correct",
+                3.3 == myAnalogIO.getKnownAnalogValue());
+        
+        myAnalogIO = new MyAbstractAnalogIO(10.0, 20.0, true);
+        myAnalogIO.setCommandedAnalogValue(3.3);
+        Assert.assertTrue("value is correct",
+                3.3 == myAnalogIO.getState(0.0));
+    }
+    
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
@@ -129,6 +144,16 @@ public class AbstractAnalogIOTest {
         @Override
         protected void sendValueToLayout(double value) throws JmriException {
             this.setValue(value);
+        }
+
+        @Override
+        public void setState(int s) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public int getState() {
+            throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override

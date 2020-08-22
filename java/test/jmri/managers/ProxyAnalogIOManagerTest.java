@@ -258,6 +258,16 @@ public class ProxyAnalogIOManagerTest {
         }
 
         @Override
+        public void setState(double value) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public double getState(double v) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
         public String getBeanType() {
             return "AnalogIO";
         }
@@ -290,6 +300,18 @@ public class ProxyAnalogIOManagerTest {
         @Override
         public AbsoluteOrRelative getAbsoluteOrRelative() {
             return AbsoluteOrRelative.ABSOLUTE;
+        }
+    
+        /** {@inheritDoc} */
+        @Override
+        public void setFeedbackMode(FeedbackMode mode) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public FeedbackMode getFeedbackMode() {
+            throw new UnsupportedOperationException("Not supported.");
         }
     
     }
@@ -331,6 +353,18 @@ public class ProxyAnalogIOManagerTest {
             // No need to implement this method for this test
             throw new UnsupportedOperationException("Not supported");
         }
+    
+        /** {@inheritDoc} */
+        @Override
+        public void setFeedbackMode(FeedbackMode mode) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public FeedbackMode getFeedbackMode() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
         
     }
     
@@ -352,6 +386,16 @@ public class ProxyAnalogIOManagerTest {
         @Override
         public int getState() {
             throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void setState(double value) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public double getState(double v) {
+            throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
@@ -387,6 +431,18 @@ public class ProxyAnalogIOManagerTest {
         @Override
         public AbsoluteOrRelative getAbsoluteOrRelative() {
             throw new UnsupportedOperationException("Not supported");
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public void setFeedbackMode(FeedbackMode mode) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public FeedbackMode getFeedbackMode() {
+            throw new UnsupportedOperationException("Not supported.");
         }
         
     }

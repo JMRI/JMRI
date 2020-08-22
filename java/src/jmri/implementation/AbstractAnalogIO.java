@@ -14,6 +14,7 @@ import jmri.AnalogIO;
  */
 public abstract class AbstractAnalogIO extends AbstractNamedBean implements AnalogIO {
 
+    private FeedbackMode _feedbackMode = FeedbackMode.Jmri;
     private double _commandedValue = 0.0;
     private double _knownValue = 0.0;
 
@@ -48,7 +49,7 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
     abstract protected void sendValueToLayout(double value) throws JmriException;
 
     /**
-     * Set the string of this AnalogIO.Called from the implementation class
+     * Set the value of this AnalogIO. Called from the implementation class
      * when the layout updates this AnalogIO.
      * 
      * @param newValue the new value
@@ -113,17 +114,29 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
 
     /** {@inheritDoc} */
     @Override
-    public int getState() {
-        // A AnalogIO doesn't have a state
-        return NamedBean.UNKNOWN;
+    public double getState(double v) {
+        return getCommandedAnalogValue();
     }
 
     /** {@inheritDoc} */
     @Override
-    public void setState(int newState) {
-        // A AnalogIO doesn't have a state
+    public void setState(double value) throws JmriException {
+        setCommandedAnalogValue(value);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void setFeedbackMode(FeedbackMode mode) {
+        _feedbackMode = mode;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckReturnValue
+    public FeedbackMode getFeedbackMode() {
+        return _feedbackMode;
+    }
+    
     /** {@inheritDoc} */
     @Override
     @Nonnull
