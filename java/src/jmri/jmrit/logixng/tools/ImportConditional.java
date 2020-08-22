@@ -1,18 +1,8 @@
 package jmri.jmrit.logixng.tools;
 
 import java.util.List;
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Logix;
-import jmri.Memory;
-import jmri.NamedBean;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
@@ -28,8 +18,10 @@ import jmri.jmrit.logixng.digital.expressions.And;
 import jmri.jmrit.logixng.digital.expressions.Antecedent;
 import jmri.jmrit.logixng.digital.expressions.Or;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalActionBean;
 
@@ -50,20 +42,28 @@ public class ImportConditional {
 //        _logix = logix;
         _conditional = conditional;
 //        _logixNG = logixNG;
+        String userName = conditional.getSystemName();
+        if (conditional.getUserName() != null) {
+            userName += ": " + conditional.getUserName();
+        }
 //        _conditionalNG = new DefaultConditionalNG(conditionalNG_SysName, null);
         _conditionalNG = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class)
-                .createConditionalNG(conditionalNG_SysName, null);
+                .createConditionalNG(conditionalNG_SysName, userName);
         
 //        log.debug("Import Logix {} to LogixNG {}", _logix.getSystemName(), _logixNG.getSystemName());
         log.error("AA: Import Conditional {} to ConditionalNG {}", _conditional.getSystemName(), _conditionalNG.getSystemName());
     }
     
-    public void doImport() throws SocketAlreadyConnectedException, Exception {
+    public ConditionalNG getConditionalNG() {
+        return _conditionalNG;
+    }
+    
+    public void doImport() throws SocketAlreadyConnectedException, JmriException {
         boolean triggerOnChange = _conditional.getTriggerOnChange();
         IfThenElse.Type type = triggerOnChange ? IfThenElse.Type.TRIGGER_ACTION : IfThenElse.Type.CONTINOUS_ACTION;
         
         // This will fail, but fix it later.
-        IfThenElse ifThen = new IfThenElse("", null, type);
+        IfThenElse ifThen = new IfThenElse(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null, type);
         
         Conditional.AntecedentOperator ao = _conditional.getLogicType();
         String antecedentExpression = _conditional.getAntecedentExpression();

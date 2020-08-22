@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import jmri.*;
 import jmri.implementation.*;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.*;
 
 import org.junit.After;
@@ -118,19 +119,35 @@ public class ImportTest {
         ca.setDeviceName("IT1");
         actions.add(ca);
         
+        check.runTest("Logix is not activated", false);
+        
         logixManager.activateAllLogixs();
         
         check.runTest("Logix is activated", true);
         
         logix.deActivateLogix();
+        
+        // Import the logix to LogixNG
+        new ImportLogix(logix).doImport();
+        
         logixManager.deleteLogix(logix);
         
-        check.runTest("Logix is removed", false);
-        
-        check.runTest("LogixNG is not activated", false);
+        check.runTest("Logix is removed and LogixNG is not activated", false);
         
         // Not implemented yet
-        Assume.assumeFalse(true);
+//        Assume.assumeFalse(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        
+        System.err.println("-------------------------------------------");
+        java.io.PrintWriter p = new java.io.PrintWriter(System.err);
+        for (jmri.jmrit.logixng.LogixNG l : InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet()) {
+            System.err.println("LogixNG: " + l.getSystemName());
+            System.err.println("ConditionalNG: " + l.getConditionalNG(0).getSystemName());
+            l.printTree(p, "   ");
+        }
+        p.flush();
+        System.err.println("-------------------------------------------");
         
         check.runTest("LogixNG is activated", true);
         
@@ -414,7 +431,9 @@ public class ImportTest {
 
     @After
     public void tearDown() {
-//        JUnitAppender.clearBacklog();
+        // Remove this later
+        JUnitAppender.clearBacklog();
+        
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
