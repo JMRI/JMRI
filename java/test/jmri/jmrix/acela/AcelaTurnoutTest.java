@@ -37,7 +37,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
 //        Assert.assertTrue("empty Thrown message", tcis.outbound.size() > 0);
 //        Assert.assertEquals("thrown message", "52 05 89 00",
 //                tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-//	    Assert.assertTrue("thrown message sent", tcis.outbound.size() > 0);
+//        Assert.assertTrue("thrown message sent", tcis.outbound.size() > 0);
     }
 
     @Test
