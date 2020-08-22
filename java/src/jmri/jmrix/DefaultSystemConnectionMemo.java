@@ -245,12 +245,11 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
             // only set first time
             this.disabledAsLoaded = disabled;
         }
-        if (disabled == this.disabled) {
-            return;
+        if (disabled != this.disabled) {
+            boolean oldDisabled = this.disabled;
+            this.disabled = disabled;
+            this.propertyChangeSupport.firePropertyChange(DISABLED, oldDisabled, disabled);
         }
-        boolean oldDisabled = this.disabled;
-        this.disabled = disabled;
-        this.propertyChangeSupport.firePropertyChange(DISABLED, oldDisabled, disabled);
     }
 
     /**

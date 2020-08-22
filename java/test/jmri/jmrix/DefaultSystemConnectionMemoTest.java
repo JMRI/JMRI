@@ -168,6 +168,18 @@ public class DefaultSystemConnectionMemoTest {
     }
 
     @Test
+    public void testRestartRequired() {
+        Assert.assertTrue("not dirty", _memo.isRestartRequired());
+    }
+
+    @Test
+    public void testSetDisabled() {
+        Assert.assertFalse("memo enabled", _memo.getDisabled());
+        _memo.setDisabled(true);
+        Assert.assertTrue("memo disabled", _memo.getDisabled());
+    }
+
+    @Test
     public void testSetGetOutputInterval() {
         Assert.assertEquals("default interval in memo", _memo.getOutputInterval(), 250);
         _memo.setOutputInterval(123);
