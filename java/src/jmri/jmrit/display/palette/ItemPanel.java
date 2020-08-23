@@ -375,9 +375,11 @@ public abstract class ItemPanel extends JPanel  {
     
     /**
      * See if the map is supported by the family map. "Equals" in
-     * this context means that each map is the same size, the keys are equal and
+     * this context means that each map is the same size the keys are equal and
      * the urls for the icons are equal. Note that icons with different urls may
      * be or appear to be the same.
+     * The item type "SignalHead" allows for unequal sizes but 'mapOne'
+     * must contain 'mapTwo' elements.
      * 
      * @param mapOne an icon HashMap
      * @param mapTwo another icon HashMap
@@ -385,7 +387,7 @@ public abstract class ItemPanel extends JPanel  {
      *         family map.
      */
     protected boolean mapsAreEqual(HashMap<String, NamedIcon> mapOne, HashMap<String, NamedIcon> mapTwo) {
-        if (mapOne.size() != mapTwo.size()) {
+        if (  !_itemType.equals("SignalHead") && mapOne.size() != mapTwo.size()) {
             return false;
         }
         for (Entry<String, NamedIcon> mapTwoEntry : mapTwo.entrySet()) {

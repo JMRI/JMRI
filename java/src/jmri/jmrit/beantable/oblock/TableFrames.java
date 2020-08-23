@@ -1024,7 +1024,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _blockPathMap.remove(name);
             if (frame instanceof BlockPathFrame) {
                 String msg = WarrantTableAction.getDefault().checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
-                if (msg != null) {
+                if (!msg.isEmpty()) {
                     JOptionPane.showMessageDialog(this, msg,
                             Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
                 }

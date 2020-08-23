@@ -264,29 +264,31 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             litMenu.add(r);
             popup.add(litMenu);
 
-            java.util.Enumeration<String> en = getSignalMast().getSignalSystem().getImageTypeList();
-            if (en.hasMoreElements()) {
-                JMenu iconSetMenu = new JMenu(Bundle.getMessage("SignalMastIconSet"));
-                ButtonGroup iconTypeGroup = new ButtonGroup();
-                setImageTypeList(iconTypeGroup, iconSetMenu, "default");
-                while (en.hasMoreElements()) {
-                    setImageTypeList(iconTypeGroup, iconSetMenu, en.nextElement());
-                }
-                popup.add(iconSetMenu);
-            }
-            popup.add(new jmri.jmrit.signalling.SignallingSourceAction(Bundle.getMessage("SignalMastLogic"), getSignalMast()));
-            JMenu aspect = new JMenu(Bundle.getMessage("ChangeAspect"));
-            final java.util.Vector<String> aspects = getSignalMast().getValidAspects();
-            for (int i = 0; i < aspects.size(); i++) {
-                final int index = i;
-                aspect.add(new AbstractAction(aspects.elementAt(index)) {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        getSignalMast().setAspect(aspects.elementAt(index));
+            if (namedMast != null) {
+                java.util.Enumeration<String> en = getSignalMast().getSignalSystem().getImageTypeList();
+                if (en.hasMoreElements()) {
+                    JMenu iconSetMenu = new JMenu(Bundle.getMessage("SignalMastIconSet"));
+                    ButtonGroup iconTypeGroup = new ButtonGroup();
+                    setImageTypeList(iconTypeGroup, iconSetMenu, "default");
+                    while (en.hasMoreElements()) {
+                        setImageTypeList(iconTypeGroup, iconSetMenu, en.nextElement());
                     }
-                });
+                    popup.add(iconSetMenu);
+                }
+                popup.add(new jmri.jmrit.signalling.SignallingSourceAction(Bundle.getMessage("SignalMastLogic"), getSignalMast()));
+                JMenu aspect = new JMenu(Bundle.getMessage("ChangeAspect"));
+                final java.util.Vector<String> aspects = getSignalMast().getValidAspects();
+                for (int i = 0; i < aspects.size(); i++) {
+                    final int index = i;
+                    aspect.add(new AbstractAction(aspects.elementAt(index)) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            getSignalMast().setAspect(aspects.elementAt(index));
+                        }
+                    });
+                }
+                popup.add(aspect);
             }
-            popup.add(aspect);
             addTransitPopup(popup);
         } else {
             final java.util.Vector<String> aspects = getSignalMast().getValidAspects();
@@ -601,7 +603,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
     @Override
     public void dispose() {
-        getSignalMast().removePropertyChangeListener(this);
+        if (namedMast != null) {
+            getSignalMast().removePropertyChangeListener(this);
+        }
         super.dispose();
     }
 
