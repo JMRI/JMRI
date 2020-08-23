@@ -76,6 +76,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      * @param systemName system name being requested
      * @return requested IdTag object or null if none exists
      */
+    @Override
     @CheckReturnValue
     @CheckForNull
     public IdTag getBySystemName(@Nonnull String systemName);
@@ -87,6 +88,7 @@ public interface IdTagManager extends ProvidingManager<IdTag> {
      * @param userName user name being requested
      * @return requested IdTag object or null if none exists
      */
+    @Override
     @CheckReturnValue
     @CheckForNull
     public IdTag getByUserName(@Nonnull String userName);

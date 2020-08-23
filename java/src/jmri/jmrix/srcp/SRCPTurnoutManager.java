@@ -1,34 +1,44 @@
 package jmri.jmrix.srcp;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 
 /**
- * Implement turnout manager for SRCP systems.
+ * Implement TurnoutManager for SRCP systems.
  * <p>
  * System names are "DTnnn", where D is the user configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    int _bus = 0;
-
-    public SRCPTurnoutManager(SRCPBusConnectionMemo memo, int bus) {
+    public SRCPTurnoutManager(SRCPBusConnectionMemo memo) {
         super(memo);
-        _bus = bus;
+    }
+
+    /**
+     *
+     * @param memo the associated SystemConnectionMemo
+     * @param bus the bus ID configured for this connection
+     * @deprecated since 4.18 use {@link SRCPBusConnectionMemo#getBus()}
+     */
+    @Deprecated
+    public SRCPTurnoutManager(SRCPBusConnectionMemo memo, int bus) {
+        this(memo);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SRCPBusConnectionMemo getMemo() {
         return (SRCPBusConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         Turnout t;
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         t = new SRCPTurnout(addr, getMemo());
@@ -38,7 +48,7 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

@@ -1,12 +1,12 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrit.progsupport.ProgModePane;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -82,8 +82,7 @@ public class CombinedLocoSelPaneTest {
         JUnitAppender.assertWarnMessage("Found mfg 13 (Public-domain and DIY) version 123; no such decoder defined");
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -92,7 +91,7 @@ public class CombinedLocoSelPaneTest {
         jmri.InstanceManager.setDefault(ProgrammerConfigManager.class, new ProgrammerConfigManager());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();

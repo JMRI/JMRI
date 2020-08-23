@@ -2063,7 +2063,7 @@
         </qualifier>
         <decVal max="63"/>
     </variable>
-    <variables exclude="LokPilot Fx V4.0">
+    <variables exclude="LokPilot Fx V4.0,LokPilot Micro V4.0,LokPilot Micro V4.0 DCC">
         <!-- AUX5 Mode -->
         <variable label="AUX5 Mode" CV="16.0.307" default="1" item="ESU V4 Function Output A5 effect generated" mask="XXXVVVVV">
             <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>

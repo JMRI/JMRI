@@ -32,7 +32,7 @@ public class SerialDriverAdapter extends MrcPortController {
     public SerialDriverAdapter() {
         super(new MrcSystemConnectionMemo());
         setManufacturer(jmri.jmrix.mrc.MrcConnectionTypeList.MRC);
-        options.put("CabAddress", new Option("Cab Address:", validOption1, false)); //IN18N
+        options.put("CabAddress", new Option("Cab Address:", validOption1, false)); // NOI18N
     }
 
     @Override
@@ -51,8 +51,8 @@ public class SerialDriverAdapter extends MrcPortController {
             try {
                 activeSerialPort.setSerialPortParams(currentBaudNumber(getCurrentBaudRate()), SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_ODD);
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());//IN18N
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();//IN18N
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());// NOI18N
+                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();// NOI18N
             }
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
@@ -60,9 +60,8 @@ public class SerialDriverAdapter extends MrcPortController {
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.info("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());//IN18N
-            log.info("input buffer " + activeSerialPort.getInputBufferSize());//IN18N
+            log.info("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());// NOI18N
+            log.info("input buffer {}", activeSerialPort.getInputBufferSize());// NOI18N
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
@@ -71,14 +70,7 @@ public class SerialDriverAdapter extends MrcPortController {
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName + " port opened at "
-                        + activeSerialPort.getBaudRate() + " baud, sees "
-                        + " DTR: " + activeSerialPort.isDTR()
-                        + " RTS: " + activeSerialPort.isRTS()
-                        + " DSR: " + activeSerialPort.isDSR()
-                        + " CTS: " + activeSerialPort.isCTS()
-                        + "  CD: " + activeSerialPort.isCD()
-                );//IN18N
+                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());// NOI18N
             }
 
             opened = true;
@@ -87,7 +79,7 @@ public class SerialDriverAdapter extends MrcPortController {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
             log.error("Unexpected exception while opening port {}", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;//IN18N
+            return "Unexpected error while opening port " + portName + ": " + ex;// NOI18N
         }
 
         return null; // indicates OK return
@@ -105,7 +97,7 @@ public class SerialDriverAdapter extends MrcPortController {
         this.getSystemConnectionMemo().setMrcTrafficController(packets);
 
         packets.setAdapterMemo(this.getSystemConnectionMemo());
-        packets.setCabNumber(Integer.parseInt(getOptionState("CabAddress")));//IN18N
+        packets.setCabNumber(Integer.parseInt(getOptionState("CabAddress")));// NOI18N
 
         this.getSystemConnectionMemo().configureManagers();
 
@@ -116,7 +108,7 @@ public class SerialDriverAdapter extends MrcPortController {
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {
-            log.error("getInputStream called before load(), stream not available");//IN18N
+            log.error("getInputStream called before load(), stream not available");// NOI18N
             return null;
         }
 
@@ -126,12 +118,12 @@ public class SerialDriverAdapter extends MrcPortController {
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");//IN18N
+            log.error("getOutputStream called before load(), stream not available");// NOI18N
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);//IN18N
+            log.error("getOutputStream exception: {}", e);// NOI18N
         }
         return null;
     }
@@ -146,7 +138,7 @@ public class SerialDriverAdapter extends MrcPortController {
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{"38,400 bps"}; //IN18N
+        return new String[]{"38,400 bps"}; // NOI18N
     }
 
     /**
@@ -166,7 +158,7 @@ public class SerialDriverAdapter extends MrcPortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    protected String[] validOption1 = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};//IN18N
+    protected String[] validOption1 = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};// NOI18N
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

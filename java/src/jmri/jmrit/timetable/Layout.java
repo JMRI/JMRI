@@ -19,13 +19,15 @@ import jmri.jmrit.timetable.swing.TimeTableFrame;
  */
 public class Layout implements VetoableChangeListener {
 
+    public static final String SCALE_RATIO = "ScaleRatio";
+
     /**
      * Create a new layout with default values.
      */
     public Layout() {
         _layoutId = _dm.getNextId("Layout");  // NOI18N
         _dm.addLayout(_layoutId, this);
-        _scale.addVetoableChangeListener("ScaleRatio", this);  // NOI18N
+        _scale.addVetoableChangeListener(SCALE_RATIO, this);  // NOI18N
         setScaleMK();
     }
 
@@ -57,17 +59,13 @@ public class Layout implements VetoableChangeListener {
      * The final step is to re-calculate the train times.
      * @throws IllegalArgumentException The calculate can throw an exception which will get re-thrown.
      */
-    public void setScaleMK() throws IllegalArgumentException {
+    public void setScaleMK() {
         double distance = (_metric) ? 1000 : 5280;
         _scaleMK = distance / _ratio / _fastClock;
         log.debug("scaleMK = {}, scale = {}", _scaleMK, _scale);  // NOI18N
 
-        try {
-            _dm.calculateLayoutTrains(getLayoutId(), false);
-            _dm.calculateLayoutTrains(getLayoutId(), true);
-        } catch (IllegalArgumentException ex) {
-            throw ex;
-        }
+        _dm.calculateLayoutTrains(getLayoutId(), false);
+        _dm.calculateLayoutTrains(getLayoutId(), true);
     }
 
     public double getScaleMK() {
@@ -95,7 +93,7 @@ public class Layout implements VetoableChangeListener {
     }
 
     public void setScale(Scale newScale) {
-        _scale.removeVetoableChangeListener("ScaleRatio", this);  // NOI18N
+        _scale.removeVetoableChangeListener(SCALE_RATIO, this);  // NOI18N
         if (newScale == null) {
             newScale = ScaleManager.getScale("HO");  // NOI18N
             log.warn("No scale found, defaulting to HO");  // NOI18N
@@ -115,7 +113,7 @@ public class Layout implements VetoableChangeListener {
             setScaleMK();
             throw ex;
         }
-        _scale.addVetoableChangeListener("ScaleRatio", this);  // NOI18N
+        _scale.addVetoableChangeListener(SCALE_RATIO, this);  // NOI18N
     }
 
     public int getFastClock() {
@@ -128,9 +126,9 @@ public class Layout implements VetoableChangeListener {
      * @throws IllegalArgumentException (CLOCK_LT_1) if the value is less than 1.
      * will also re-throw a recalc error.
      */
-    public void setFastClock(int newClock) throws IllegalArgumentException {
+    public void setFastClock(int newClock) {
         if (newClock < 1) {
-            throw new IllegalArgumentException(_dm.CLOCK_LT_1);
+            throw new IllegalArgumentException(TimeTableDataManager.CLOCK_LT_1);
         }
         int oldClock = _fastClock;
         _fastClock = newClock;
@@ -155,14 +153,14 @@ public class Layout implements VetoableChangeListener {
      * @throws IllegalArgumentException (THROTTLES_USED, THROTTLES_LT_0) when the
      * new count is less than train references or a negative number was passed.
      */
-    public void setThrottles(int newThrottles) throws IllegalArgumentException {
+    public void setThrottles(int newThrottles) {
         if (newThrottles < 0) {
-            throw new IllegalArgumentException(_dm.THROTTLES_LT_0);
+            throw new IllegalArgumentException(TimeTableDataManager.THROTTLES_LT_0);
         }
         for (Schedule schedule : _dm.getSchedules(_layoutId, true)) {
             for (Train train : _dm.getTrains(schedule.getScheduleId(), 0, true)) {
                 if (train.getThrottle() > newThrottles) {
-                    throw new IllegalArgumentException(_dm.THROTTLES_IN_USE);
+                    throw new IllegalArgumentException(TimeTableDataManager.THROTTLES_IN_USE);
                 }
             }
         }
@@ -178,7 +176,7 @@ public class Layout implements VetoableChangeListener {
      * @param newMetric True for metric units.
      * @throws IllegalArgumentException if there was a recalc error.
      */
-    public void setMetric(boolean newMetric) throws IllegalArgumentException {
+    public void setMetric(boolean newMetric) {
         boolean oldMetric = _metric;
         _metric = newMetric;
 
@@ -235,5 +233,5 @@ public class Layout implements VetoableChangeListener {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Layout.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Layout.class);
 }

@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Setup - Configuration Profiles</title><!-- Style -->
+  <title>JMRI Setup - Configuration Profiles</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,15 +15,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -34,12 +34,29 @@
       contains all Preferences as they are set in the JMRI
       Preferences dialog, and may - optionally - include user
       files, a Roster, and Throttles.</p>
+      
+      <p>By default, only one profile is used and it's not 
+      made very visible to the user.  But having 
+      multiple profiles can be useful:
+      <ul>
+      <li>For example, you can have one profile in your laptop that 
+      defines all your hardware connections, and another 
+      that defines the same ones as "simulated" connections.
+      By picking one or the other when starting up, you 
+      can both work at the layout with real connections
+      and also work offline, without the real layout
+      hardware connected.</li>
+       
+      <li>Another example would be one profile for your 
+      own layout, and another for using DecoderPro at 
+      your local club.</li>
+      </ul>
 
       <p><a href="images/Config_ProfileMigrate314.png"><img src=
       "images/Config_ProfileMigrate314.png" width="438" height=
       "114" align="right" alt=
       "Profile configuration conversion dialog screen"></a> When
-      opening an older JMRI configuration in one of the newer
+      opening an older (before JMRI 3.9) configuration in one of the newer
       applications, the way Preferences are stored is converted.
       The application notifies you with this dialog:</p>
 
@@ -53,10 +70,12 @@
       specify that the application should always start with the
       same Profile.</p>
 
-      <p>By default, when a JMRI application starts up, it prompts
-      the user for which Configuration Profile to use: <img src=
-      "images/Set_Active_Profile.png"></p>
-
+      <p>By default, when a JMRI application starts up with multiple profiles, 
+      it prompts the user for which Configuration Profile to use: 
+      </p>
+        
+        <img src="images/Set_Active_Profile.png">
+        
       <p>If the user doesn't select a new Profile and click OK, the
       program will continue with the default Profile after a short
       delay. You can check a box in the preferences to bypass this
@@ -117,7 +136,7 @@
       existing configuration to a new Profile, and use that
       Profile. If you are using a JMRI application you had not used
       prior to upgrading, the application will behave as described
-      above.</p><!--#include virtual="/Footer" -->
+      above.</p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

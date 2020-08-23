@@ -3,6 +3,7 @@ package jmri.jmrix.dccpp;
 import static jmri.jmrix.dccpp.DCCppConstants.MAX_SENSOR_ID;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -41,6 +42,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public DCCppSystemConnectionMemo getMemo() {
         return (DCCppSystemConnectionMemo) memo;
     }
@@ -54,8 +56,14 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     // DCCpp specific methods
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) throws IllegalArgumentException {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
@@ -64,8 +72,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
                     systemName.substring(getSystemPrefix().length() + 1) +
                     " to DCC++ sensor address"); // NOI18N
         }
-        Sensor s = new DCCppSensor(getSystemNamePrefix() + addr, userName, tc);
-        return s;
+        return new DCCppSensor(getSystemNamePrefix() + addr, userName, tc);
     }
 
     /**
@@ -76,9 +83,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     @Override
     public void message(DCCppReply l) {
         int addr = -1;  // -1 flags that no sensor address was found in reply
-        if (log.isDebugEnabled()) {
-            log.debug("received message: " + l);
-        }
+        log.debug("received message: {}", l);
         if (l.isSensorDefReply()) {
             addr = l.getSensorDefNumInt();
             if (log.isDebugEnabled()) {
@@ -130,12 +135,13 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    synchronized public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    synchronized public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 
@@ -176,7 +182,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      * @return the next valid address after the current address
      */
     @Override
-    synchronized public String getNextValidAddress(String curAddress, String prefix) {
+    synchronized public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName;
 
@@ -208,7 +214,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 

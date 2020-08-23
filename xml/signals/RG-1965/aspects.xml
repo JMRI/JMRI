@@ -14,10 +14,10 @@
   </copyright>
 
   <authorgroup xmlns="http://docbook.org/ns/docbook" >
-<author>
-    <personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
-    <email>dcc2@ebroerse.nl</email>
-</author>    
+    <author>
+      <personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
+      <email>dcc2@ebroerse.nl</email>
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -35,7 +35,7 @@
       <name>Clear</name>
       <rule>Rule 281</rule>
       <indication>Proceed</indication>
-      <reference></reference>
+      <reference>page 10</reference>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
       <route>Normal</route>
@@ -45,7 +45,7 @@
       <name>Diverging Approach Medium</name>
       <rule>Rule 281B</rule>
       <indication>Proceed approaching next signal at medium speed (only) within interlocking limits</indication>
-      <reference></reference>
+      <reference>page 10</reference>
       <speed>Medium</speed>
       <speed2>Medium</speed2>
       <route>Diverging</route>
@@ -55,7 +55,7 @@
       <name>Approach Medium</name>
       <rule>Rule 282</rule>
       <indication>Proceed approaching next signal at medium speed</indication>
-      <reference></reference>
+      <reference>page 10</reference>
       <speed>Limited</speed>
       <speed2>Medium</speed2>
       <route>Normal</route>
@@ -65,7 +65,7 @@
       <name>Diverging Clear</name>
       <rule>Rule 283</rule>
       <indication>Proceed; medium speed (only) within interlocking limits</indication>
-      <reference></reference>
+      <reference>page 10</reference>
       <speed>Limited</speed>
       <speed2>Medium</speed2>
       <route>Diverging</route>
@@ -75,7 +75,7 @@
       <name>Approach</name>
       <rule>Rule 285</rule>
       <indication>Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed.</indication>
-      <reference></reference>
+      <reference>page 10</reference>
       <speed>Medium</speed>
       <speed2>Slow</speed2>
       <route>Normal</route>
@@ -85,7 +85,7 @@
       <name>Diverging Approach</name>
       <rule>Rule 286</rule>
       <indication>Proceed at slow speed (only) within interlocking limits, preparing to stop at next signal.</indication>
-      <reference></reference>
+      <reference>page 10</reference>
       <speed>Medium</speed>
       <speed2>Slow</speed2>
       <route>Diverging</route>
@@ -95,7 +95,7 @@
       <name>Restricting</name>
       <rule>Rule 290</rule>
       <indication>Proceed at restricted speed.</indication>
-      <reference></reference>
+      <reference>page 10</reference>
       <speed>Restricted</speed>
       <speed2>Restricted</speed2>
       <route>Either</route>
@@ -105,7 +105,7 @@
       <name>Stop and Proceed</name>
       <rule>Rule 291</rule>
       <indication>Stop; then proceed at restricted speed.</indication>
-      <reference></reference>
+      <reference>page 10</reference>
       <speed>Stop</speed>
       <speed2>Restricted</speed2>
       <route>Either</route>
@@ -115,7 +115,7 @@
       <name>Stop</name>
       <rule>Rule 292</rule>
       <indication>Stop.</indication>
-      <reference></reference>
+      <reference>page 10</reference>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
@@ -137,4 +137,3 @@
   </appearancefiles>
   
 </aspecttable>
-  

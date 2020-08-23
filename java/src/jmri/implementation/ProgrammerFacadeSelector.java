@@ -32,17 +32,17 @@ public class ProgrammerFacadeSelector {
         // iterate over any facades and add them
         List<Element> facades = element.getChildren("capability");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + facades.size() + " capability elements");
+            log.debug("Found {} capability elements", facades.size());
         }
         for (Element facade : facades) {
             String fname = facade.getChild("name").getText();
             if (log.isDebugEnabled()) {
-                log.debug("Process capability facade: " + fname);
+                log.debug("Process capability facade: {}", fname);
             }
 
             List<Element> parameters = facade.getChildren("parameter");
             if (log.isDebugEnabled()) {
-                log.debug("Found " + facades.size() + " capability parameters");
+                log.debug("Found {} capability parameters", facades.size());
             }
             for (Element parameter : parameters) {
                 String pname = parameter.getAttributeValue("name");

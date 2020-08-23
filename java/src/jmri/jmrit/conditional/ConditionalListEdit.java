@@ -12,47 +12,18 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.*;
+
+import jmri.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.Audio;
-import jmri.Conditional;
 import jmri.Conditional.Operator;
 import jmri.Conditional.State;
-import jmri.ConditionalAction;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Logix;
-import jmri.NamedBean;
-import jmri.Route;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.logix.OBlock;
@@ -452,8 +423,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (cName != null) {
                     c = _conditionalManager.getBySystemName(cName);
                     if (c == null) {
-                        log.error("Invalid conditional system name when calculating - " // NOI18N
-                                + cName);
+                        log.error("Invalid conditional system name when calculating - {}", cName);
                     } else {
                         // calculate without taking any action
                         c.calculate(false, null);
@@ -492,8 +462,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 Logix p = _logixManager.getByUserName(uName);
                 if (p != null) {
                     // Logix with this user name already exists
-                    log.error("Failure to update Logix with Duplicate User Name: " // NOI18N
-                            + uName);
+                    log.error("Failure to update Logix with Duplicate User Name: {}", uName);
                     JOptionPane.showMessageDialog(_editLogixFrame,
                             Bundle.getMessage("Error6"),
                             Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -573,8 +542,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
         if (_curConditional == null) {
             // should never get here unless there is an assignment conflict
-            log.error("Failure to create Conditional with System Name: " // NOI18N
-                    + cName);
+            log.error("Failure to create Conditional with System Name: {}", cName);
             return;
         }
         // add to Logix at the end of the calculate order
@@ -643,8 +611,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
-                        + uName);
+                log.error("Failure to update Conditional with Duplicate User Name: {}", uName);
                 JOptionPane.showMessageDialog(_editConditionalFrame,
                         Bundle.getMessage("Error10"),    // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -1039,7 +1006,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (alreadyEditingActionOrVariable()) {
             return;
         }
-        if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+        if (LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())) {
             JOptionPane.showMessageDialog(_editConditionalFrame,
                     Bundle.getMessage("Error49"),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -1245,7 +1212,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         // clean up empty variable and actions
-        if (!LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+        if (!LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())) {
             for (int i = 0; i < _variableList.size(); i++) {
                 if (_variableList.get(i).getType() == Conditional.Type.NONE) {
                     _variableList.remove(i);
@@ -1507,7 +1474,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     /**
-     * Fetch valid appearances for a given Signal Head.
+     * Fetch valid localized appearances for a given Signal Head.
      * <p>
      * Warn if head is not found.
      *
@@ -3478,21 +3445,17 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 sndFileChooser = new JFileChooser(System.getProperty("user.dir") // NOI18N
                         + java.io.File.separator + "resources" // NOI18N
                         + java.io.File.separator + "sounds");  // NOI18N
-                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("wav sound files");  // NOI18N
-                filt.addExtension("wav");  // NOI18N
-                sndFileChooser.setFileFilter(filt);
+                sndFileChooser.setFileFilter(new FileNameExtensionFilter("wav sound files", "wav")); // NOI18N
             }
             currentChooser = sndFileChooser;
         } else if (actionType == Conditional.Action.RUN_SCRIPT) {
             if (scriptFileChooser == null) {
                 scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-                jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");  // NOI18N
-                filt.addExtension("py");  // NOI18N
-                scriptFileChooser.setFileFilter(filt);
+                scriptFileChooser.setFileFilter(new FileNameExtensionFilter("Python script files", "py")); // NOI18N
             }
             currentChooser = scriptFileChooser;
         } else {
-            log.warn("Unexpected actionType[" + actionType.name() + "] = " + actionType.toString());  // NOI18N
+            log.warn("Unexpected actionType[{}] = {}", actionType.name(), actionType.toString());  // NOI18N
             if (defaultFileChooser == null) {
                 defaultFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
                 defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
@@ -3509,7 +3472,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _longActionString.setText(FileUtil.getPortableFilename(currentChooser.getSelectedFile().getCanonicalPath()));
             } catch (java.io.IOException ex) {
                 if (log.isDebugEnabled()) {
-                    log.error("exception setting file location: " + ex);  // NOI18N
+                    log.error("exception setting file location: {}", ex);  // NOI18N
                 }
                 _longActionString.setText("");
             }
@@ -3689,7 +3652,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (lgtx == null) {
                         return false;
                     }
-                    if (!lgtx.isIntensityVariable()) {
+                    if (!(lgtx instanceof VariableLight)) {
                         JOptionPane.showMessageDialog(_editConditionalFrame,
                                 Bundle.getMessage("Error45", name), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),
@@ -3706,7 +3669,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (lgtx == null) {
                         return false;
                     }
-                    if (!lgtx.isTransitionAvailable()) {
+                    if ( !(lgtx instanceof VariableLight) ||
+                            !((VariableLight)lgtx).isTransitionAvailable()) {
                         JOptionPane.showMessageDialog(_editConditionalFrame,
                                 Bundle.getMessage("Error40", name), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),
@@ -4209,6 +4173,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (cn == null) {
                     String sName = _curLogix.getConditionalByNumberOrder(row);
                     Conditional cdl = _conditionalManager.getBySystemName(sName);
+                    if (cdl==null){
+                        log.error("No conditional {} while editing user name",sName);
+                        return;
+                    }
                     cdl.setUserName(uName);
                     fireTableRowsUpdated(row, row);
 
@@ -4217,15 +4185,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (refList != null) {
                         for (String ref : refList) {
                             Conditional cRef = _conditionalManager.getBySystemName(ref);
+                            if (cRef==null){
+                                continue;
+                            }
                             List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                             for (ConditionalVariable var : varList) {
                                 // Find the affected conditional variable
                                 if (var.getName().equals(sName)) {
-                                    if (uName.length() > 0) {
-                                        var.setGuiName(uName);
-                                    } else {
-                                        var.setGuiName(sName);
-                                    }
+                                    var.setGuiName( (uName.length() > 0) ? uName : sName );
                                 }
                             }
                             cRef.setStateVariables(varList);
@@ -4368,7 +4335,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             ConditionalVariable variable = _variableList.get(row);
             switch (col) {
                 case ROWNUM_COLUMN:
-                    return ("R" + (row + 1)); //NOI18N
+                    return ("R" + (row + 1)); // NOI18N
                 case AND_COLUMN:
                     if (row == 0) { //removed: || _logicType == Conditional.MIXED
                         return "";
@@ -4440,7 +4407,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     variable.setTriggerActions(!variable.doTriggerActions());
                     break;
                 case EDIT_COLUMN:
-                    if (LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
+                    if (LRouteTableAction.getLogixInitializer().equals(_curLogix.getSystemName())) {
                         JOptionPane.showMessageDialog(_editConditionalFrame,
                                 Bundle.getMessage("Error49"),
                                 Bundle.getMessage("ErrorTitle"), // NOI18N

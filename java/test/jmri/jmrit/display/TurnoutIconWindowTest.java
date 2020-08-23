@@ -1,23 +1,22 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.JComponent;
+
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Swing tests for the TurnoutIcon
  *
- * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author Bob Jacobsen Copyright 2009, 2010
  */
 public class TurnoutIconWindowTest {
     
@@ -139,18 +138,18 @@ public class TurnoutIconWindowTest {
         to.closeFrameWithConfirmations();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
     }
     
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

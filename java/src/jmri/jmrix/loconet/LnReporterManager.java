@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public LocoNetSystemConnectionMemo getMemo() {
         return (LocoNetSystemConnectionMemo) memo;
     }
@@ -51,7 +53,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         Reporter t;
         int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
         t = new LnReporter(addr, tc, getSystemPrefix());
@@ -65,7 +67,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -73,7 +75,8 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
@@ -103,18 +106,32 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     @Override
     public void message(LocoNetMessage l) {
         // check message type
-        if (l.getOpCode() != 0xD0) {
-            return;
+        int addr;
+        switch (l.getOpCode()) {
+            case LnConstants.OPC_MULTI_SENSE:
+                if ((l.getElement(1) & 0xC0) == 0) {
+                    addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
+                    break;
+                }
+                return;
+            case LnConstants.OPC_PEER_XFER:
+                if (l.getElement(1) == 0x09 && l.getElement(2) == 0x00) {
+                    addr = (l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1;
+                    break;
+                }
+                return;
+            case LnConstants.OPC_LISSY_UPDATE:
+                if (l.getElement(1) == 0x08) {
+                    addr =  (l.getElement(4) & 0x7F);
+                    break;
+                }
+                return;
+            default:
+                return;
         }
-        if ((l.getElement(1) & 0xC0) != 0) {
-            return;
-        }
-
-        // message type OK, check address
-        int addr = (l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1;
-
+        log.debug("Reporter[{}]", addr);
         LnReporter r = (LnReporter) provideReporter(getSystemNamePrefix() + addr); // NOI18N
-        r.message(l); // make sure it got the message
+        r.messageFromManager(l); // make sure it got the message
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnReporterManager.class);

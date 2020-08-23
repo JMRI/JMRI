@@ -31,6 +31,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * This ctor interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
+     * @param m message string.
      */
     public SerialMessage(String m) {
         super(m);

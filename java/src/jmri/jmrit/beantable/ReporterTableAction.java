@@ -16,9 +16,6 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.SystemConnectionMemoManager;
-import jmri.managers.ProxyReporterManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
@@ -308,18 +305,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             ActionListener createListener = this::createPressed;
             ActionListener cancelListener = this::cancelPressed;
             ActionListener rangeListener = this::canAddRange;
-            if (reporterManager instanceof ProxyReporterManager) {
-                ProxyReporterManager proxy = (ProxyReporterManager) reporterManager;
-                prefixBox.setManagers(proxy.getDisplayOrderManagerList());
-                if (pref.getComboBoxLastSelection(systemSelectionCombo) != null) {
-                    SystemConnectionMemo memo = InstanceManager
-                            .getDefault(SystemConnectionMemoManager.class)
-                            .getSystemConnectionMemoForUserName(pref.getComboBoxLastSelection(systemSelectionCombo));
-                    prefixBox.setSelectedItem(memo.get(ReporterManager.class));
-                }
-            } else {
-                prefixBox.setManagers(reporterManager);
-            }
+            configureManagerComboBox(prefixBox, reporterManager, ReporterManager.class);
             userNameTextField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
@@ -343,6 +329,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     }
 
     void cancelPressed(ActionEvent e) {
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -386,7 +373,15 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         String errorMessage = null;
         String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
-            curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
+            try {
+                curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
+            } catch (jmri.JmriException ex) {
+                displayHwError(curAddress, ex);
+                // directly add to statusBarLabel (but never called?)
+                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBarLabel.setForeground(Color.red);
+                return;
+            }
             if (curAddress == null) {
                 log.debug("Error converting HW or getNextValidAddress");
                 errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
@@ -446,6 +441,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;

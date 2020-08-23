@@ -123,8 +123,8 @@ import org.slf4j.LoggerFactory;
  * 50%. Performance improves to 80% correct for the typical layout with six
  * receivers.
  *
- * @author	Robert Ashenfelter Copyright (C) 2007
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Robert Ashenfelter Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class Ash2_0Algorithm extends AbstractCalculator {
 
@@ -142,20 +142,11 @@ public class Ash2_0Algorithm extends AbstractCalculator {
     }
 
     public Ash2_0Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[3];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
+        this(new Point3d[]{sensor1, sensor2, sensor3}, vsound);
     }
 
     public Ash2_0Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, Point3d sensor4, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[4];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
-        sensors[3] = sensor4;
+        this(new Point3d[]{sensor1, sensor2, sensor3, sensor4}, vsound);
     }
 
     double Vs;
@@ -187,12 +178,12 @@ public class Ash2_0Algorithm extends AbstractCalculator {
                 code = -Tr.length;
                 break;
             default:
-                log.error("Unexpected error code: " + result.code);
+                log.error("Unexpected error code: {}", result.code);
                 code = 0;
         }
-        log.debug("old code=" + result.code + " new code=" + code);
+        log.debug("old code={} new code={}", result.code, code);
 
-        log.debug("x = " + Xt + " y = " + Yt + " z0 = " + Zt + " code = " + code);
+        log.debug("x = {} y = {} z0 = {} code = {}", Xt, Yt, Zt, code);
         return new Measurement(r, Xt, Yt, Zt, Vs, code, "Ash2_0Algorithm");
     }
 
@@ -234,20 +225,20 @@ public class Ash2_0Algorithm extends AbstractCalculator {
     }
 
 // ----------------------------------------------------
-//	RPS  POSITION  SOLVER	Version 2.0	by R. C. Ashenfelter    1-14-07
+// RPS POSITION SOLVER Version 2.0 by R. C. Ashenfelter 01-14-07
 
-    /*							*
-     *  This algorithm was provided by Robert Ashenfelter	*
-     *  who provides no guarantee as to its usability,	*
-     *  correctness nor intellectual property status.	*
-     *  Use it at your own risk.				*
-     *							*/
-    int offset = 0;			//  Offset (usec), add to delay
+    /* 
+     * This algorithm was provided by Robert Ashenfelter
+     * who provides no guarantee as to its usability,
+     * correctness nor intellectual property status.
+     * Use it at your own risk.
+     */
+    int offset = 0; //  Offset (usec), add to delay
 
-    final static int TMAX = 35000;			//  Max. allowable delay (usec)
-    final static int TMIN = 150;		//  Min. allowable delay (usec)
-    final static int SMAX = 30;			//  Max. OK std. dev. (usec)
-    final static int NMAX = 50;			//  Max. no. of receivers used
+    final static int TMAX = 35000; //  Max. allowable delay (usec)
+    final static int TMIN = 150;   //  Min. allowable delay (usec)
+    final static int SMAX = 30;    //  Max. OK std. dev. (usec)
+    final static int NMAX = 50;    //  Max. no. of receivers used
 
     //  Compute RPS Position using
     @SuppressFBWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
@@ -379,7 +370,7 @@ public class Ash2_0Algorithm extends AbstractCalculator {
                 w = w * w;
             }//    Weight by distance
             if (i >= 1000) {
-                w *= 5.0 - 0.004 * i;//		  with fade out
+                w *= 5.0 - 0.004 * i; // with fade out
             }
             q = Math.sqrt((Xs[j] - x) * (Xs[j] - x) + (Ys[j] - y) * (Ys[j] - y) + (Zs[j] - z) * (Zs[j] - z));
             q = w * (1.0 - Rs[j] / q);//    Adjustment factor

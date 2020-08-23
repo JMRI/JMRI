@@ -7,9 +7,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,8 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,22 +39,9 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
 
     private boolean engLog = false; // when true logging engine movements
     private boolean carLog = false; // when true logging car movements
-    static final String DEL = ","; // delimiter
-    static final String ESC = "\""; // escape character NOI18N
 
     public RollingStockLogger() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized RollingStockLogger instance() {
-        return InstanceManager.getDefault(RollingStockLogger.class);
+        // nothing to do
     }
 
     public void enableCarLogging(boolean enable) {
@@ -78,66 +68,27 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
             return;
         }
 
-        String rsRoad = rs.getRoadName();
-        if (rsRoad.contains(DEL)) {
-            rsRoad = ESC + rs.getRoadName() + ESC;
-        }
-        String rsType = rs.getTypeName();
-        if (rsType.contains(DEL)) {
-            rsType = ESC + rs.getTypeName() + ESC;
-        }
-        String rsLocationName = rs.getLocationName();
-        if (rsLocationName.contains(DEL)) {
-            rsLocationName = ESC + rs.getLocationName() + ESC;
-        }
-        String rsTrackName = rs.getTrackName();
-        if (rsTrackName.contains(DEL)) {
-            rsTrackName = ESC + rs.getTrackName() + ESC;
-        }
-        String rsTrainName = rs.getTrainName();
-        if (rsTrainName.contains(DEL)) {
-            rsTrainName = ESC + rs.getTrainName() + ESC;
-        }
         String carLoad = " ";
         String carFinalDest = " ";
         String carFinalDestTrack = " ";
         if (rs.getClass().equals(Car.class)) {
             Car car = (Car) rs;
             carLoad = car.getLoadName();
-            if (carLoad.contains(DEL)) {
-                carLoad = ESC + car.getLoadName() + ESC;
-            }
             carFinalDest = car.getFinalDestinationName();
-            if (carFinalDest.contains(DEL)) {
-                carFinalDest = ESC + car.getFinalDestinationName() + ESC;
-            }
             carFinalDestTrack = car.getFinalDestinationTrackName();
-            if (carFinalDestTrack.contains(DEL)) {
-                carFinalDestTrack = ESC + car.getFinalDestinationTrackName() + ESC;
-            }
         }
 
-        String line = rs.getNumber() +
-                DEL +
-                rsRoad +
-                DEL +
-                rsType +
-                DEL +
-                carLoad +
-                DEL +
-                rsLocationName +
-                DEL +
-                rsTrackName +
-                DEL +
-                carFinalDest +
-                DEL +
-                carFinalDestTrack +
-                DEL +
-                rsTrainName +
-                DEL +
-                rs.getMoves() +
-                DEL +
-                getTime();
+        List<Object> line = Arrays.asList(new Object[]{rs.getNumber(),
+            rs.getRoadName(),
+            rs.getTypeName(),
+            carLoad,
+            rs.getLocationName(),
+            rs.getTrackName(),
+            carFinalDest,
+            carFinalDestTrack,
+            rs.getTrainName(),
+            rs.getMoves(),
+            getTime()});
 
         fileOut(line); // append line to common file
         fileOut(line, rs); // append line to individual file
@@ -146,33 +97,28 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
     /*
      * Appends one line to common log file.
      */
-    private void fileOut(String line) {
+    private void fileOut(List<Object> line) {
         fileOut(line, getFile());
     }
 
     /*
      * Appends one line to the rolling stock's individual file.
      */
-    private void fileOut(String line, RollingStock rs) {
+    private void fileOut(List<Object> line, RollingStock rs) {
         fileOut(line, getFile(rs));
     }
 
-    private void fileOut(String line, File file) {
-        PrintWriter fileOut = null;
-        try {
-            // FileOutputStream is set to append
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true),
-                    "UTF-8")), true); // NOI18N
+    private void fileOut(List<Object> line, File file) {
+        // FileOutputStream is set to append
+        try (CSVPrinter fileOut = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true),
+                    StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
+            log.debug("Log: {}", line);
+            fileOut.printRecord(line);
+            fileOut.flush();
+            fileOut.close();
         } catch (IOException e) {
             log.error("Exception while opening log file: {}", e.getMessage());
-            return;
         }
-
-        log.debug("Log: {}", line);
-
-        fileOut.println(line);
-        fileOut.flush();
-        fileOut.close();
     }
 
     /*
@@ -206,29 +152,18 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         return fileLogger;
     }
 
-    private String getHeader() {
-        String header = Bundle.getMessage("Number") +
-                DEL +
-                Bundle.getMessage("Road") +
-                DEL +
-                Bundle.getMessage("Type") +
-                DEL +
-                Bundle.getMessage("Load") +
-                DEL +
-                Bundle.getMessage("Location") +
-                DEL +
-                Bundle.getMessage("Track") +
-                DEL +
-                Bundle.getMessage("FinalDestination") +
-                DEL +
-                Bundle.getMessage("Track") +
-                DEL +
-                Bundle.getMessage("Train") +
-                DEL +
-                Bundle.getMessage("Moves") +
-                DEL +
-                Bundle.getMessage("DateAndTime");
-        return header;
+    private List<Object> getHeader() {
+        return Arrays.asList(new Object[]{Bundle.getMessage("Number"),
+            Bundle.getMessage("Road"),
+            Bundle.getMessage("Type"),
+            Bundle.getMessage("Load"),
+            Bundle.getMessage("Location"),
+            Bundle.getMessage("Track"),
+            Bundle.getMessage("FinalDestination"),
+            Bundle.getMessage("Track"),
+            Bundle.getMessage("Train"),
+            Bundle.getMessage("Moves"),
+            Bundle.getMessage("DateAndTime")});
     }
 
     /*
@@ -332,9 +267,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
             log.debug("Rolling Stock Logger adding car listerners");
             carLog = true;
             List<Car> cars = InstanceManager.getDefault(CarManager.class).getList();
-            for (Car car : cars) {
-                car.addPropertyChangeListener(this);
-            }
+            cars.forEach(car -> car.addPropertyChangeListener(this));
             // listen for new rolling stock being added
             InstanceManager.getDefault(CarManager.class).addPropertyChangeListener(this);
         }
@@ -345,9 +278,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
             engLog = true;
             log.debug("Rolling Stock Logger adding engine listerners");
             List<Engine> engines = InstanceManager.getDefault(EngineManager.class).getList();
-            for (Engine engine : engines) {
-                engine.addPropertyChangeListener(this);
-            }
+            engines.forEach(engine -> engine.addPropertyChangeListener(this));
             // listen for new rolling stock being added
             InstanceManager.getDefault(EngineManager.class).addPropertyChangeListener(this);
         }
@@ -357,9 +288,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         if (carLog) {
             log.debug("Rolling Stock Logger removing car listerners");
             List<Car> cars = InstanceManager.getDefault(CarManager.class).getList();
-            for (Car car : cars) {
-                car.removePropertyChangeListener(this);
-            }
+            cars.forEach(car -> car.removePropertyChangeListener(this));
             InstanceManager.getDefault(CarManager.class).removePropertyChangeListener(this);
         }
         carLog = false;
@@ -369,9 +298,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         if (engLog) {
             log.debug("Rolling Stock Logger removing engine listerners");
             List<Engine> engines = InstanceManager.getDefault(EngineManager.class).getList();
-            for (Engine engine : engines) {
-                engine.removePropertyChangeListener(this);
-            }
+            engines.forEach(engine -> engine.removePropertyChangeListener(this));
             InstanceManager.getDefault(EngineManager.class).removePropertyChangeListener(this);
         }
         engLog = false;

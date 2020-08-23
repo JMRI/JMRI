@@ -22,4 +22,7 @@
       <enumChoice>
           <choice>EMD 645 Turbo 16 Cylinder</choice>
       </enumChoice>
+      <enumChoice>
+          <choice>EMD 645 Turbo 16 Cylinder EFI</choice>
+      </enumChoice>
 </enumVal>

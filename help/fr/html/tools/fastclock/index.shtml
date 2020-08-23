@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec 2013-09-25-->
+<!-- Updated by Herv&#233; Blorec 2013-09-25-->
 
 <html lang="fr">
 <head>
@@ -11,23 +11,23 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Setup Fast Clock">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
-      <h2>Configuration Horloge Rapide</h2>JMRI fournit deux types
-      d'horloge rapide:
+        <!-- Page Body -->
+
+<h2>Configuration Horloges Rapides</h2>
+      <p>JMRI fournit deux types d'horloge rapide:</p>
 
       <ul>
         <li>Interne - l'horloge des ordinateurs fournit les
@@ -84,6 +84,10 @@
         int&eacute;grer une horloge dans un TCO (au lieu d'une
         fen&ecirc;tre s&eacute;par&eacute;e) de l'&eacute;diteur de
         panneau.</li>
+        
+        <li>Horloge Pragotron clock - &#268;SD 
+            <span class="since">since 4.19.2</span></li>
+
       </ul>
 
       <p>Lorsque l'horloge est en marche, JMRI cr&eacute;e un
@@ -96,7 +100,7 @@
       accessible &agrave; partir de Logix et de scripts.</p>
 
       <p>Chronom&eacute;trage heureux!</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

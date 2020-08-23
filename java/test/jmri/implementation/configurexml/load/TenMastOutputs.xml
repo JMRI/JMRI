@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>19</minor>
+    <test>2</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1001</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output1</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1002</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output2</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1003</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output3</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1004</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output4</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1005</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output5</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1006</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output6</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1007</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output7</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1008</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output8</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1009</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output9</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1010</systemName>
+      <comment>IF$xsm:AAR-1946:PL-2-high($0001)-10t:output10</comment>
+    </turnout>
+  </turnouts>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <matrixsignalmast class="jmri.implementation.configurexml.MatrixSignalMastXml">
+      <systemName>IF$xsm:AAR-1946:PL-2-high($0001)-10t</systemName>
+      <userName>Example of 10</userName>
+      <unlit allowed="yes">
+        <bitString>0101010101</bitString>
+      </unlit>
+      <delay duration="0" />
+      <outputs>
+        <output matrixCol="output1">IT1001</output>
+        <output matrixCol="output2">IT1002</output>
+        <output matrixCol="output3">IT1003</output>
+        <output matrixCol="output4">IT1004</output>
+        <output matrixCol="output5">IT1005</output>
+        <output matrixCol="output6">IT1006</output>
+        <output matrixCol="output7">IT1007</output>
+        <output matrixCol="output8">IT1008</output>
+        <output matrixCol="output9">IT1009</output>
+        <output matrixCol="output10">IT1010</output>
+      </outputs>
+      <bitStrings>
+        <bitString aspect="Clear">1000000001</bitString>
+        <bitString aspect="Approach Medium">0100000010</bitString>
+        <bitString aspect="Advance Approach">0010000100</bitString>
+        <bitString aspect="Medium Clear">0001001000</bitString>
+        <bitString aspect="Approach">0000110000</bitString>
+        <bitString aspect="Slow Approach">0000100000</bitString>
+        <bitString aspect="Permissive">0001000000</bitString>
+        <bitString aspect="Restricting">0010000000</bitString>
+        <bitString aspect="Stop and Proceed" />
+        <bitString aspect="Stop">1000000000</bitString>
+      </bitStrings>
+      <disabledAspects>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+      </disabledAspects>
+      <resetPreviousStates>yes</resetPreviousStates>
+    </matrixsignalmast>
+  </signalmasts>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <filehistory>
+    <operation>
+      <type>Load OK</type>
+      <date>Sat Jan 11 12:39:03 PST 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/implementation/configurexml/load/TenMastOutputs.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sat Jan 11 12:39:03 PST 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/implementation/configurexml/load/TenMastOutputs.xml</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sat Jan 11 12:39:03 PST 2020</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.19.2ish+jake+20200111T2036Z+R00bb7bd74e on Sat Jan 11 12:39:03 PST 2020-->
+</layout-config>

@@ -1,6 +1,5 @@
 package jmri.jmrix.tams.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Create a "Systems" menu containing the Tams-specific tools.
  *
  * Based on work by Bob Jacobsen
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class TamsMenu extends JMenu {
 

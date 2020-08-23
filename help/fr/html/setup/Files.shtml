@@ -15,20 +15,18 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Installation JMRI: Fichiers de Configuration</h1>
 
-<p>Cette section essaye d'expliquero&#250; sont stock&#233;s sur votre ordinateur les fichiers de Configuration ( r&#233;glages ) de JMRI et quelleinformation ils contiennent .
-</p>
+<p>Cette section essaye d'expliquero&#250; sont stock&#233;s sur votre ordinateur les fichiers de Configuration ( r&#233;glages ) de JMRI et quelleinformation ils contiennent .</p>
 
 <dl>
-	<a name="location">
-	<dt class="left">Emplacements Fichier de Configuration</dt></a>
+	<dt class="left"><a name="location">Emplacements Fichier de Configuration</a></dt>
 	<dd class="first">
 	Il y a deux endroits o&#250; nous pouvons trouver des Fichiers de Configuration JMRI:
 		<ol>
@@ -54,7 +52,7 @@
 			</ul>
 			
 		<p>La fa&#231;on la plus simple de le trouver est de lancer un programme JMRI, p. DecoderPro ou PanelPro et s&#233;lectionnez "Emplacements ..." dans le menu "Aide".. Un traitement sp&#233;cial pour les utilisateurs de Windows: si vous acc&#233;dez au menu D&#233;marrer de Windows, dans la section JMRI, vous	pouvez s&#233;lectionner "Pr&#233;f&#233;rences" pour ouvrir ce r&#233;pertoire.
-		<P> Vous pouvez d&#233;finir ou modifier les scripts de localisation et les fichiers utilisateur dans les Emplacement des fichiers 
+		<p> Vous pouvez d&#233;finir ou modifier les scripts de localisation et les fichiers utilisateur dans les Emplacement des fichiers
 		<a href="../../package/apps/TabbedPreferences.shtml#FileLocations" >Preferences...</a> -&gt;
 		.Notez que le changement de "User Files Location" changera &#233;galement l'emplacement par d&#233;faut pour Panels, Rosters etc. etc.	
 		</li>
@@ -86,7 +84,7 @@ Dans votre dossier JMRI Preferences, vous trouverez un certain nombre de types d
 	</dd>
 </dl>
     
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

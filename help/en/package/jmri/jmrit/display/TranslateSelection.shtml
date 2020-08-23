@@ -9,7 +9,8 @@
   <title>JMRI: Translate Selection Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI help Layout Editor Translate"><!-- Style -->
+  "JMRI help Layout Editor Translate">
+  <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Translate Selection</h1>
 
       <p>The Translate Selection dialog provides for translating a
@@ -62,7 +64,7 @@
       needed.</p>
 
       <p><b>To retain your changes, please remember to save your
-      Panel!</b></p><!--#include virtual="/Footer" -->
+      Panel!</b></p><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

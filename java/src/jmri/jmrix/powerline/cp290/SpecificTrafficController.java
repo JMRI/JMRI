@@ -63,7 +63,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         // loop through other addresses, if any
         while (((c = s.getCommand()) != null) && (c.isAddress())) {
             if (housecode != ((X10Sequence.Address) c).getHouseCode()) {
-                log.error("multiple housecodes found: " + housecode + ", " + c.getHouseCode());
+                log.error("multiple housecodes found: {}, {}", housecode, c.getHouseCode());
                 return;
             }
             devicemask = setDeviceBit(devicemask, ((X10Sequence.Address) c).getAddress());
@@ -79,7 +79,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         // loop through other functions, if any
         while (((c = s.getCommand()) != null) && (c.isFunction())) {
             if (housecode != ((X10Sequence.Function) c).getHouseCode()) {
-                log.error("multiple housecodes found: " + housecode + ", " + c.getHouseCode());
+                log.error("multiple housecodes found: {}, {}", housecode, c.getHouseCode());
                 return;
             }
             formatAndSend(housecode, devicemask, (X10Sequence.Function) c, l);
@@ -115,7 +115,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             level = 16;
         }
         if (logDebug) {
-            log.debug("dim level: " + level);
+            log.debug("dim level: {}", level);
         }
         level = 16 - level;
         int function = c.getFunction();
@@ -153,7 +153,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
-            log.debug("forward " + m);
+            log.debug("forward {}", m);
         }
         super.forwardToPort(m, reply);
     }

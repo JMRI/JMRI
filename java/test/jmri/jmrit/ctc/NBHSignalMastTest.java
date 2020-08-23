@@ -2,9 +2,12 @@ package jmri.jmrit.ctc;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import jmri.SignalMast;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /*
 * Tests for the NBHSignalMast Class
@@ -83,14 +86,14 @@ public class NBHSignalMastTest {
         mast.removePropertyChangeListener(_testListener);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDefaultSignalMastManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

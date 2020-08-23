@@ -1,0 +1,18 @@
+<!-- SidebarLayoutAutomation.shtml -->
+<!-- This is the common sidebar definition for Layout Automation pages -->
+      <dt><h3><a href="/help/en/html/tools/automation/">Layout Automation</a></h3></dt>
+        <dd>Use JMRI to automate parts of your layout and operations:
+          <ul>  <!-- Try to organize list in most used or alphabetical order -->
+            <li><a href="/help/en/html/tools/signaling/index.shtml">Signaling</a>
+            <li><a href="/help/en/package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>
+            <li><a href="/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+            <li><a href="/help/en/html/tools/Routes.shtml">Routes</a>
+            <li><a href="/help/en/html/tools/LRoutes.shtml">LRoutes</a>
+            <li><a href="/help/en/html/tools/EntryExit.shtml">Entry/Exit Routing</a>
+            <li><a href="/help/en/html/tools/Logix.shtml">Logix</a>
+            <li><a href="/help/en/html/tools/scripting/index.shtml">Scripting</a>
+            <li><a href="/help/en/html/tools/automation/viaJava.shtml">Automate with Java</a>
+            <li><a href="/help/en/html/tools/CTC.shtml">CTC Tools</a>
+          </ul>
+        </dd>
+<!-- /SidebarLayoutAutomation.shtml -->

@@ -3,7 +3,7 @@ package jmri.jmrix.openlcb.swing.clockmon;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.openlcb.swing.Bundle {
 
-    @Nullable
+    @CheckForNull
     private static final String name = "jmri.jmrix.openlcb.swing.clockmon.Bundle"; // NOI18N
 
     //
@@ -80,7 +80,7 @@ public class Bundle extends jmri.jmrix.openlcb.swing.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

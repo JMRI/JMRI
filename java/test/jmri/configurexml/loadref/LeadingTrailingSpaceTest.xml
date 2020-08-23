@@ -3,7 +3,7 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>7</minor>
+    <minor>17</minor>
     <test>4</test>
     <modifier>ish</modifier>
   </jmriversion>
@@ -43,14 +43,26 @@
       <userName>Turnout Leading Space</userName>
     </turnout>
   </turnouts>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Sep 08 22:31:08 CEST 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Sep 08 23:10:13 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/configurexml/load/LeadingTrailingSpaceTest.xml</filename>
+      <filehistory />
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Sep 08 23:10:27 CEST 2019</date>
+      <filename />
+    </operation>
   </filehistory>
-  <!--Written by JMRI version 4.7.4ish+jake+20170508T0641Z+R31e3f566ff on Sun May 07 23:41:47 PDT 2017 $Id$-->
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190908T2029Z+R59b5cbdf37 on Sun Sep 08 23:10:27 CEST 2019-->
 </layout-config>

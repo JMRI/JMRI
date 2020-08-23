@@ -71,7 +71,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
                 element.addContent(addTurnoutElement(p.getInput3(), "input3"));
                 break;
             default:
-                log.error("incorrect number of aspects " + aspects + " for Signal " + p.getDisplayName());
+                log.error("incorrect number of aspects {} for Signal {}", aspects, p.getDisplayName());
         }
 
         return element;
@@ -160,7 +160,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
                 input3 = loadTurnout(l.get(2));
                 break;
             default:
-                log.error("incorrect number of aspects " + aspects + " when loading Signal " + sys);
+                log.error("incorrect number of aspects {} when loading Signal {}", aspects, sys);
         }
         if (uname == null) {
             h = new MergSD2SignalHead(sys, aspects, input1, input2, input3, feather, home);
@@ -170,9 +170,8 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
 
         loadCommon(h, shared);
 
-        SignalHead existingBean =
-                InstanceManager.getDefault(jmri.SignalHeadManager.class)
-                        .getBeanBySystemName(sys);
+        SignalHead existingBean = InstanceManager.getDefault(jmri.SignalHeadManager.class)
+                        .getBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
             log.error("systemName is already registered: {}", sys);

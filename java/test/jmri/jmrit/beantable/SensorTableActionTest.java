@@ -1,13 +1,15 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 import org.slf4j.Logger;
@@ -18,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class SensorTableActionTest extends AbstractTableActionBase {
+public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
 
     @Test
     public void testCTor() {
@@ -63,7 +65,7 @@ public class SensorTableActionTest extends AbstractTableActionBase {
             is1.setKnownState(Sensor.ACTIVE);
             is2.setKnownState(Sensor.INACTIVE);
         } catch (jmri.JmriException reason) {
-            log.warn("Exception flipping sensor is1: " + reason);
+            log.warn("Exception flipping sensor is1: {}", reason);
         }
 
         // set graphic state column display preference to false, read by createModel()
@@ -158,9 +160,8 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     }
 
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -170,7 +171,7 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         a.dispose();
         a = null;

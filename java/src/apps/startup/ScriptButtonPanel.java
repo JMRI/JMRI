@@ -53,6 +53,7 @@ public class ScriptButtonPanel extends javax.swing.JPanel {
 
         scriptButton.setText(bundle.getString("ScriptButtonPanel.scriptButton.text")); // NOI18N
         scriptButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 scriptButtonActionPerformed(evt);
             }

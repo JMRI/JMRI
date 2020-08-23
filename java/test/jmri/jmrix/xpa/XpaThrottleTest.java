@@ -2,16 +2,15 @@ package jmri.jmrix.xpa;
 
 import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 
 /**
- * Description:	tests for the jmri.jmrix.xpa.XpaThrottle class.
+ * Test for the jmri.jmrix.xpa.XpaThrottle class.
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -208,9 +207,8 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup3() {
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         tc = new XpaTrafficController();
@@ -220,7 +218,7 @@ public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         tc = null;

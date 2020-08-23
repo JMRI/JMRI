@@ -1,5 +1,4 @@
 <!-- Defines XML for configuring the JMRIdemo program -->
-<!-- $Id$ -->
 
 <!-- This file is obsolete!  All program preferences now use preferences-config.dtd -->
 <!-- Its kept in the distribution so that old config files can be read, but -->

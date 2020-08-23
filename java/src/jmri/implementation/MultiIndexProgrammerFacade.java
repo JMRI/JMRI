@@ -153,7 +153,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                         _cv = splits[0];
                         break;
                     default:
-                        log.error("Too many parts in CV name; taking 1st two " + cv);
+                        log.error("Too many parts in CV name; taking 1st two {}", cv);
                         valuePI = Integer.parseInt(splits[1]);
                         valueSI = Integer.parseInt(splits[2]);
                         _cv = splits[0];
@@ -190,7 +190,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                         _cv = splits[2];
                         break;
                     default:
-                        log.error("Too many parts in CV name; taking 1st two " + cv);
+                        log.error("Too many parts in CV name; taking 1st two {}", cv);
                         valuePI = Integer.parseInt(splits[0]);
                         valueSI = Integer.parseInt(splits[1]);
                         _cv = splits[2];
@@ -429,7 +429,7 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                 }
                 break;
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;

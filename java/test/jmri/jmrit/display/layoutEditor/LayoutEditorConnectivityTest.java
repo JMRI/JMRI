@@ -2,29 +2,30 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.Turnout;
+import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Swing tests for the LayoutEditor
  *
- * @author	Dave Duchamp Copyright 2011
+ * @author Dave Duchamp Copyright 2011
  */
 public class LayoutEditorConnectivityTest {
+
+    ConfigXmlManager cm;
 
     @Test
     public void testShowAndClose() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
-        };
 
         // load and display test panel file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/valid/LEConnectTest.xml");
@@ -294,18 +295,20 @@ public class LayoutEditorConnectivityTest {
         to.closeFrameWithConfirmations();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initShutDownManager();
+        cm = new jmri.configurexml.ConfigXmlManager() {
+        };
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
+        cm = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

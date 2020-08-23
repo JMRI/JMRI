@@ -4,8 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.SystemConnectionMemo;
 
 /**
  * Enables basic setup of a network client interface for a jmrix implementation.
@@ -28,8 +28,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     protected AbstractNetworkPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        setHostName(""); // give the host name a default value of
-        // the empty string.
+        setHostName(""); // give the host name a default value of the empty string.
     }
 
     @Override
@@ -41,6 +40,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     @Override
     public void connect() throws IOException {
+        log.debug("connect() starts to {}:{}", getHostName(), getPort());
         opened = false;
         if (getHostAddress() == null || m_port == 0) {
             log.error("No host name or port set: {}:{}", m_HostName, m_port);
@@ -69,17 +69,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             ConnectionStatus.instance().setConnectionState(
                     getUserName(), m_HostName, ConnectionStatus.CONNECTION_UP);
         }
-    }
-
-    /**
-     * Query the status of this connection, at least as far as is
-     * known.
-     *
-     * @return true if connection is open
-     */
-    @Override
-    public boolean status() {
-        return opened;
+        log.trace("connect ends");
     }
 
     /**
@@ -89,6 +79,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     @Override
     public void setHostName(String s) {
+        log.trace("setHostName({})", s, new Exception("traceback only"));
         m_HostName = s;
         if ((s == null || s.equals("")) && !getMdnsConfigure()) {
             m_HostName = JmrixConfigPane.NONE;
@@ -108,6 +99,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * @param s the address; if empty, will use the host name
      */
     protected void setHostAddress(String s) {
+        log.trace("setHostAddress({})", s);
         m_HostAddress = s;
         if (s == null || s.equals("")) {
             m_HostAddress = m_HostName;
@@ -128,11 +120,13 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     @Override
     public void setPort(int p) {
+        log.trace("setPort(int {})", p);
         m_port = p;
     }
 
     @Override
     public void setPort(String p) {
+        log.trace("setPort(String {})", p);
         m_port = Integer.parseInt(p);
     }
 
@@ -229,6 +223,10 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     @Override
     public DataInputStream getInputStream() {
+        log.trace("getInputStream() starts");
+        if (socketConn == null) {
+            log.error("getInputStream invoked with null socketConn");
+        }
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
             if (m_port != 0) {
@@ -240,6 +238,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             }
         }
         try {
+            log.trace("getInputStream() returns normally");
             return new DataInputStream(socketConn.getInputStream());
         } catch (java.io.IOException ex1) {
             log.error("Exception getting input stream:", ex1);
@@ -269,113 +268,44 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         }
         return null;
     }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    //private boolean allowConnectionRecovery = false;
+    
     /**
-     * Close the client side socket connection, reset the open flag and attempt
-     * a reconnection. Called when a connection is initially lost.
+     * {@inheritDoc}
      */
     @Override
-    public void recover() {
-        if (!allowConnectionRecovery) {
-            return;
-        }
-        opened = false;
+    protected void closeConnection(){
         try {
             socketConn.close();
         } catch (IOException e) {
             log.trace("Unable to close socket", e);
         }
-        reconnect();
-    }
-
-    /**
-     * Attempts to reconnect to a failed Server.
-     */
-    public void reconnect() {
-
-        // If the connection is already open, then we shouldn't try a re-connect.
-        if (opened && !allowConnectionRecovery) {
-            return;
-        }
-        ReconnectWait thread = new ReconnectWait();
-        thread.setName("Connection Recovery " + getCurrentPortName() );
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            log.error("Unable to join to the reconnection thread");
-        }
-
-        if (!opened) {
-            log.error("Failed to re-establish connectivity");
-        } else {
-            resetupConnection();
-            log.info("Reconnected to {}", getHostName());
-        }
+        opened=false;
     }
 
     /**
      * Customizable method to deal with resetting a system connection after a
      * successful recovery of a connection.
      */
+    @Override
     protected void resetupConnection() {
     }
-
-    class ReconnectWait extends Thread {
-
-        public final static int THREADPASS = 0;
-        public final static int THREADFAIL = 1;
-        int _status;
-
-        public int status() {
-            return _status;
-        }
-
-        public ReconnectWait() {
-            _status = THREADFAIL;
-        }
-
-        @Override
-        public void run() {
-            boolean reply = true;
-            int count = 0;
-            int secondCount = 0;
-            while (reply) {
-                safeSleep(reconnectinterval, "Waiting");
-                count++;
-
-                try {
-                    // if the device allows autoConfiguration,
-                    // we need to run the autoConfigure() call
-                    // before we try to reconnect.
-                    if (getMdnsConfigure()) {
-                        autoConfigure();
-                    }
-                    connect();
-                } catch (IOException ex) {
-                    log.trace("restart failed", ex); // main warning to log.error done within connect();
-                    // if returned on exception stops thread and connection attempts
-                }
-                
-                reply = !opened;
-                if (count >= retryAttempts) {
-                    log.error("Unable to reconnect after {} Attempts, increasing duration of retries", count);
-                    //retrying but with twice the retry interval.
-                    reconnectinterval = reconnectinterval * 2;
-                    count = 0;
-                    secondCount++;
-                }
-                if (secondCount >= 10) {
-                    log.error("Giving up on reconnecting after 100 attempts");
-                    reply = false;
-                }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void reconnectFromLoop(int retryNum){
+        try {
+            // if the device allows autoConfiguration,
+            // we need to run the autoConfigure() call
+            // before we try to reconnect.
+            if (getMdnsConfigure()) {
+                autoConfigure();
             }
+            connect();
+        } catch (IOException ex) {
+            log.trace("restart failed", ex); // main warning to log.error done within connect();
+            // if returned on exception stops thread and connection attempts
         }
     }
 
@@ -406,6 +336,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         return connTimeout;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkPortController.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractNetworkPortController.class);
 
 }

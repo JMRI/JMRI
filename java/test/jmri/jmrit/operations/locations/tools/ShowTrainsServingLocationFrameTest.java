@@ -3,8 +3,8 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -27,6 +27,7 @@ public class ShowTrainsServingLocationFrameTest extends OperationsTestCase {
         ShowTrainsServingLocationFrame t = new ShowTrainsServingLocationFrame();
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
+
     }
 
     @Test
@@ -35,10 +36,11 @@ public class ShowTrainsServingLocationFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         Location ni = InstanceManager.getDefault(LocationManager.class).getLocationByName("North Industries");
         ShowTrainsServingLocationFrame stslf = new ShowTrainsServingLocationFrame();
-        Track track = ni.getTrackList().get(0);
+        Track track = ni.getTracksList().get(0);
         stslf.initComponents(ni, track);
         Assert.assertNotNull("exists", stslf);
         JUnitUtil.dispose(stslf);
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ShowTrainsServingLocationFrameTest.class);

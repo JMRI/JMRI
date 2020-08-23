@@ -1,6 +1,7 @@
 package jmri.jmrix.maple;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -43,35 +44,41 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public MapleSystemConnectionMemo getMemo() {
         return (MapleSystemConnectionMemo) memo;
     }
 
     /**
-     * Create a new sensor if all checks are passed System name is normalized to
-     * ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor s;
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid sensor system name - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Invalid Maple Sensor system name - " +  // NOI18N
+                    systemName);
         }
         // does this Sensor already exist
         s = getBySystemName(sName);
         if (s != null) {
-            log.warn("Sensor with this name already exists - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Maple Sensor with this name already exists - " +  // NOI18N
+                    systemName);
         }
         // check bit number
         int bit = SerialAddress.getBitFromSystemName(sName, getSystemPrefix());
         if ((bit <= 0) || (bit > 1000)) {
             log.warn("Sensor bit number '{}' is outside the supported range, 1-1000", Integer.toString(bit));
-            return null;
+            throw new IllegalArgumentException("Sensor bit number " +  // NOI18N
+                    Integer.toString(bit) + " is outside the supported range 1-1000");
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
         if (userName == null) {
@@ -81,7 +88,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
         // check configured
         if (!SerialAddress.validSystemNameConfig(sName, 'S', getMemo())) {
-            log.warn("Sensor system Name '" + sName + "' does not address configured hardware.");
+            log.warn("Sensor system Name '{}' does not address configured hardware.", sName);
             javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Sensor just added, "
                     + sName + ", refers to an unconfigured input bit.", "Configuration Warning",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
@@ -95,7 +102,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
@@ -103,7 +111,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
@@ -116,7 +124,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Dummy routine
+     * Dummy routine.
+     * @param r unused.
      */
     @Override
     public void message(SerialMessage r) {
@@ -125,6 +134,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * Process a reply to a poll of Sensors of one panel node.
+     * {@inheritDoc}
      */
     @Override
     public void reply(SerialReply r) {
@@ -132,7 +142,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Method to register any orphan Sensors when a new Serial Node is created
+     * Method to register any orphan Sensors when a new Serial Node is created.
+     * @param node node to register.
      */
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
@@ -156,12 +167,13 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             //Address format passed is in the form of sysNode:address or T:turnout address
             int seperator = curAddress.indexOf(":");
@@ -185,12 +197,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return prefix + typeLetter() + iName;
     }
 
-    int sysNode = 0;
-    int address = 0;
-    int iName = 0;
+    private int sysNode = 0;
+    private int address = 0;
+    private int iName = 0;
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName = "";
 

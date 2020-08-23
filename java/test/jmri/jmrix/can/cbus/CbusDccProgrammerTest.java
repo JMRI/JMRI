@@ -1,33 +1,34 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.ProgListenerScaffold;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     @Test
     @Override
     public void testDefault() {
-        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 programmer.getMode());        
     }
     
     @Override
     @Test
     public void testDefaultViaBestMode() {
-        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
                 ((CbusDccProgrammer)programmer).getBestMode());        
     }
 
 /*
-    @Test(expected=java.lang.IllegalArgumentException.class)
+    @Test
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
@@ -70,20 +71,25 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
 */
+    
+    private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        programmer = new CbusDccProgrammer(new TrafficControllerScaffold());
+        tcis = new TrafficControllerScaffold();
+        programmer = new CbusDccProgrammer(tcis);
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         programmer = null;
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerTest.class);

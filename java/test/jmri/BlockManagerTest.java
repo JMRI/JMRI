@@ -2,10 +2,8 @@ package jmri;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the BlockManager class.
@@ -105,7 +103,7 @@ public class BlockManagerTest {
         Assert.assertEquals("provide user name by system name", "UserName5", bprovide2.getUserName());
 
         // auto create with prefixed systemname and no username
-        Block bprovide3 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("SystemName6");
+        Block bprovide3 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IBSystemName6");
         Assert.assertEquals("provide system name by user name", "IBSystemName6", bprovide3.getSystemName());
         Assert.assertEquals("provide user name by user name", null, bprovide3.getUserName());
 
@@ -162,13 +160,14 @@ public class BlockManagerTest {
         Assert.assertEquals("block speed back to normal", "Normal", InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

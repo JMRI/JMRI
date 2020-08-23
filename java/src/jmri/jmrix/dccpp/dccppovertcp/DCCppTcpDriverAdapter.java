@@ -3,7 +3,6 @@ package jmri.jmrix.dccpp.dccppovertcp;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
-import jmri.jmrix.dccpp.DCCppPortController;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

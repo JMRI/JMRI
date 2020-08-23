@@ -22,10 +22,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Roster Speed Profiling</h1>
 
       <p>The Speed Profiling tool is designed to create a profile
@@ -154,7 +154,7 @@
       can be deleted. Normally the red instruction will not display.
       </p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -315,7 +315,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
         // remove types not serviced by this train
         for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
             String type = comboBoxTypes.getItemAt(i);
-            if (_train != null && !_train.acceptsTypeName(type)) {
+            if (_train != null && !_train.isTypeNameAccepted(type)) {
                 comboBoxTypes.removeItem(type);
             }
         }

@@ -1,7 +1,9 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrit.operations.rollingstock.cars.CarsTableModel;
 
 /**
@@ -15,12 +17,8 @@ public class ResetCheckboxesCarsTableAction extends AbstractAction {
 
     CarsTableModel _carsTableModel;
 
-    public ResetCheckboxesCarsTableAction(String s) {
-        super(s);
-    }
-
     public ResetCheckboxesCarsTableAction(CarsTableModel carsTableModel) {
-        this(Bundle.getMessage("TitleResetCheckboxes"));
+        super(Bundle.getMessage("TitleResetCheckboxes"));
         _carsTableModel = carsTableModel;
     }
 

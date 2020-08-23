@@ -1,6 +1,7 @@
 package jmri.jmrix.powerline;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +13,13 @@ import org.slf4j.LoggerFactory;
  * the unit number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
- * multiple connection
+ * @author Ken Cameron, (C) 2009, sensors from poll replies. Converted to
+ * multiple connection support
  * @author kcameron Copyright (C) 2011
  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager implements SerialListener {
 
-    SerialTrafficController tc = null;
+    private SerialTrafficController tc = null;
 
     public SerialSensorManager(SerialTrafficController tc) {
         super(tc.getAdapterMemo());
@@ -30,6 +31,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SerialSystemConnectionMemo getMemo() {
         return (SerialSystemConnectionMemo) memo;
     }
@@ -41,24 +43,27 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     }
 
     /**
-     * Create a new sensor if all checks are passed System name is normalized to
-     * ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor s;
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid Sensor system name - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Invalid Powerline Sensor system name - " +  // NOI18N
+                    systemName);
         }
-        // does this Sensor already exist
+        // does this Sensor already exist?
         s = getBySystemName(sName);
         if (s != null) {
-            log.error("Sensor with this name already exists - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Powerline Sensor with this name already exists - " +  // NOI18N
+                    systemName);
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
         if (userName == null) {
@@ -66,7 +71,6 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         } else {
             s = new SerialSensor(sName, tc, userName);
         }
-
         return s;
     }
 
@@ -86,12 +90,12 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     abstract public void reply(SerialReply r);
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
@@ -135,7 +139,8 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return tc.getAdapterMemo().getSerialAddress().validateSystemNameFormat(name, typeLetter(), locale);
     }
 
@@ -143,7 +148,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, typeLetter());
     }
 

@@ -1,17 +1,6 @@
 package jmri.jmrix.rfid;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import jmri.DccLocoAddress;
-import jmri.IdTag;
-import jmri.InstanceManager;
-import jmri.LocoAddress;
-import jmri.PhysicalLocationReporter;
-import jmri.ReporterManager;
 import jmri.implementation.AbstractIdTagReporter;
-import jmri.util.PhysicalLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extend AbstractIdTagReporter for RFID systems

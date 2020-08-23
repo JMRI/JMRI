@@ -72,9 +72,7 @@ public class MultiIconEditor extends JPanel {
         IconButton(int index, Icon init) {  // init icon passed to avoid ref before ctor complete
             super(init);
             savedIndex = index;
-            addActionListener((ActionEvent a) -> {
-                pickIcon();
-            });
+            addActionListener((ActionEvent a) -> pickIcon());
         }
 
         int savedIndex;

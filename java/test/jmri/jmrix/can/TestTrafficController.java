@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test scaffold to replace the TrafficController
  *
- * @author	Bob Jacobsen Copyright 2008, 2010
+ * @author Bob Jacobsen Copyright 2008, 2010
  */
 public class TestTrafficController extends TrafficController {
     private final static Logger log = LoggerFactory.getLogger(TestTrafficController.class);

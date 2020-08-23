@@ -1,12 +1,13 @@
 package jmri.beans;
 
+import java.beans.PropertyChangeEvent;
 import javax.annotation.Nonnull;
 import jmri.profile.Profile;
 
 /**
  * Bean that implements some common code for preferences objects.
  *
- * @author Randall Wood (C) 2017
+ * @author Randall Wood (C) 2017, 2020
  */
 public abstract class PreferencesBean extends Bean {
 
@@ -33,6 +34,7 @@ public abstract class PreferencesBean extends Bean {
      * null is not associated with a Profile, but applies application wide
      */
     public PreferencesBean(Profile profile) {
+        super(false);
         this.profile = profile;
     }
 
@@ -82,34 +84,68 @@ public abstract class PreferencesBean extends Bean {
      */
     protected void setIsDirty(boolean value) {
         boolean old = this.isDirty;
-        if (old != value) {
-            this.isDirty = value;
-            this.firePropertyChange(DIRTY, old, value);
-        }
+        this.isDirty = value;
+        this.firePropertyChange(DIRTY, old, value);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * As a side effect, calls to {@link #isDirty} will return {@code true} if
+     * oldValue and newValue differ or are null.
+     */
     @Override
-    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-        if (!DIRTY.equals(propertyName)) {
+    public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        if (oldValue == null || newValue == null || !oldValue.equals(newValue)) {
+            this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
             this.setIsDirty(true);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * As a side effect, calls to {@link #isDirty} will return {@code true} if
+     * oldValue and newValue differ and propertyName is not {@value #DIRTY}.
+     */
     @Override
-    protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
-        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-        if (!DIRTY.equals(propertyName)) {
+    public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
+        if (oldValue != newValue) {
+            this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+            // don't force dirty to true if we just changed dirty
+            if (!DIRTY.equals(propertyName)) {
+                this.setIsDirty(true);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * As a side effect, calls to {@link #isDirty} will return {@code true} if
+     * oldValue and newValue differ.
+     */
+    @Override
+    public void firePropertyChange(String propertyName, int oldValue, int newValue) {
+        if (oldValue != newValue) {
+            this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
             this.setIsDirty(true);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * As a side effect, calls to {@link #isDirty} will return {@code true}. To
+     * avoid that side effect, call
+     * {@link PropertyChangeSupport#firePropertyChange(java.beans.PropertyChangeEvent)}
+     * on {@link #propertyChangeSupport} directly.
+     */
     @Override
-    protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
-        this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-        if (!DIRTY.equals(propertyName)) {
+    public void firePropertyChange(PropertyChangeEvent evt) {
+        this.propertyChangeSupport.firePropertyChange(evt);
+        if (!DIRTY.equals(evt.getPropertyName())) {
             this.setIsDirty(true);
         }
     }
-
 }

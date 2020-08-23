@@ -35,7 +35,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         this.tc = _tc;
         SHORT_TIMEOUT = 4000; // length default timeout
         // connect to listen
-        log.info("" + this.tc);
+        log.info("{}", this.tc);
         if(this.tc!=null)
             this.tc.addMx1Listener(~0, this);
     }
@@ -59,8 +59,8 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     static final int NOTPROGRAMMING = 0; // is notProgramming
     static final int INQUIRESENT = 2; // read/write command sent, waiting reply
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv;  // remember the cv being read/written
 
     /** 
      * {@inheritDoc}
@@ -69,7 +69,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " listens " + p);
+            log.debug("writeCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         _progRead = false;
@@ -108,7 +108,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " listens " + p);
+            log.debug("readCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         _progRead = true;
@@ -138,7 +138,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -231,7 +231,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_

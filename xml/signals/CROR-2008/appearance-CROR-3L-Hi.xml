@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -45,6 +45,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Corrected case error in image paths</revremark>
     </revision>
+    <revision>
+        <revnumber>1.06</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
   <aspecttable>CROR-2008</aspecttable>
   <name>Triple head searchlight high signal with 'L' plate</name>
@@ -261,220 +267,174 @@
     <aspectMapping>
       <advancedAspect>Clear Signal</advancedAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Clear to Limited</advancedAspect>
       <ourAspect>Advance Clear to Limited</ourAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Clear to Medium</advancedAspect>
       <ourAspect>Advance Clear to Medium</ourAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Clear to Diverging</advancedAspect>
       <ourAspect>Advance Clear to Slow</ourAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Clear to Slow</advancedAspect>
       <ourAspect>Advance Clear to Slow</ourAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Clear to Restricting</advancedAspect>
       <ourAspect>Advance Clear to Slow</ourAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Clear to Stop</advancedAspect>
       <ourAspect>Advance Clear to Stop</ourAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Advance Clear to Limited</advancedAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Advance Clear to Medium</advancedAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Advance Clear to Slow</advancedAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Advance Clear to Stop</advancedAspect>
       <ourAspect>Clear Signal</ourAspect>
-      <ourAspect>Limited to Clear</ourAspect>
       <ourAspect>Slow to Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited to Clear</advancedAspect>
       <ourAspect>Clear to Limited</ourAspect>
       <ourAspect>Limited to Limited</ourAspect>
-      <ourAspect>Medium to Limited</ourAspect>
       <ourAspect>Slow to Limited</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited to Limited</advancedAspect>
       <ourAspect>Clear to Limited</ourAspect>
       <ourAspect>Limited to Limited</ourAspect>
-      <ourAspect>Medium to Limited</ourAspect>
       <ourAspect>Slow to Limited</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited to Medium</advancedAspect>
       <ourAspect>Clear to Limited</ourAspect>
       <ourAspect>Limited to Limited</ourAspect>
-      <ourAspect>Medium to Limited</ourAspect>
       <ourAspect>Slow to Limited</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited to Slow</advancedAspect>
       <ourAspect>Clear to Limited</ourAspect>
       <ourAspect>Limited to Limited</ourAspect>
-      <ourAspect>Medium to Limited</ourAspect>
       <ourAspect>Slow to Limited</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited to Restricting</advancedAspect>
       <ourAspect>Clear to Limited</ourAspect>
       <ourAspect>Limited to Limited</ourAspect>
-      <ourAspect>Medium to Limited</ourAspect>
       <ourAspect>Slow to Limited</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited to Stop</advancedAspect>
       <ourAspect>Clear to Limited</ourAspect>
       <ourAspect>Limited to Limited</ourAspect>
-      <ourAspect>Medium to Limited</ourAspect>
       <ourAspect>Slow to Limited</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium to Clear</advancedAspect>
-      <ourAspect>Clear to Medium</ourAspect>
       <ourAspect>Limited to Medium</ourAspect>
-      <ourAspect>Medium to Medium</ourAspect>
       <ourAspect>Slow to Medium</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium to Limited</advancedAspect>
-      <ourAspect>Clear to Medium</ourAspect>
       <ourAspect>Limited to Medium</ourAspect>
-      <ourAspect>Medium to Medium</ourAspect>
       <ourAspect>Slow to Medium</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium to Medium</advancedAspect>
-      <ourAspect>Clear to Medium</ourAspect>
       <ourAspect>Limited to Medium</ourAspect>
-      <ourAspect>Medium to Medium</ourAspect>
       <ourAspect>Slow to Medium</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium to Slow</advancedAspect>
-      <ourAspect>Clear to Medium</ourAspect>
       <ourAspect>Limited to Medium</ourAspect>
-      <ourAspect>Medium to Medium</ourAspect>
       <ourAspect>Slow to Medium</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium to Restricting</advancedAspect>
-      <ourAspect>Clear to Medium</ourAspect>
       <ourAspect>Limited to Medium</ourAspect>
-      <ourAspect>Medium to Medium</ourAspect>
       <ourAspect>Slow to Medium</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium to Stop</advancedAspect>
-      <ourAspect>Clear to Medium</ourAspect>
       <ourAspect>Limited to Medium</ourAspect>
-      <ourAspect>Medium to Medium</ourAspect>
       <ourAspect>Slow to Medium</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Diverging to Clear</advancedAspect>
       <ourAspect>Clear to Slow</ourAspect>
       <ourAspect>Limited to Slow</ourAspect>
-      <ourAspect>Medium to Slow</ourAspect>
-      <ourAspect>Slow to Slow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Diverging to Stop</advancedAspect>
       <ourAspect>Clear to Slow</ourAspect>
       <ourAspect>Limited to Slow</ourAspect>
-      <ourAspect>Medium to Slow</ourAspect>
-      <ourAspect>Slow to Slow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Diverging</advancedAspect>
       <ourAspect>Clear to Slow</ourAspect>
       <ourAspect>Limited to Slow</ourAspect>
-      <ourAspect>Medium to Slow</ourAspect>
-      <ourAspect>Slow to Slow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Slow to Clear</advancedAspect>
       <ourAspect>Clear to Slow</ourAspect>
       <ourAspect>Limited to Slow</ourAspect>
-      <ourAspect>Medium to Slow</ourAspect>
-      <ourAspect>Slow to Slow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Slow to Limited</advancedAspect>
       <ourAspect>Clear to Slow</ourAspect>
       <ourAspect>Limited to Slow</ourAspect>
-      <ourAspect>Medium to Slow</ourAspect>
-      <ourAspect>Slow to Slow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Slow to Medium</advancedAspect>
       <ourAspect>Clear to Slow</ourAspect>
       <ourAspect>Limited to Slow</ourAspect>
-      <ourAspect>Medium to Slow</ourAspect>
-      <ourAspect>Slow to Slow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Slow to Slow</advancedAspect>
       <ourAspect>Clear to Slow</ourAspect>
       <ourAspect>Limited to Slow</ourAspect>
-      <ourAspect>Medium to Slow</ourAspect>
-      <ourAspect>Slow to Slow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Slow to Stop</advancedAspect>
       <ourAspect>Clear to Slow</ourAspect>
       <ourAspect>Limited to Slow</ourAspect>
-      <ourAspect>Medium to Slow</ourAspect>
-      <ourAspect>Slow to Slow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Restricting Signal</advancedAspect>
       <ourAspect>Clear to Restricting</ourAspect>
       <ourAspect>Limited to Restricting</ourAspect>
-      <ourAspect>Slow to SLow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
@@ -486,7 +446,6 @@
       <advancedAspect>Take Siding</advancedAspect>
       <ourAspect>Clear to Restricting</ourAspect>
       <ourAspect>Limited to Restricting</ourAspect>
-      <ourAspect>Slow to Slow</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Stop Signal</advancedAspect>

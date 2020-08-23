@@ -25,16 +25,11 @@ public class JMRIClientTurnoutManagerXml extends jmri.managers.configurexml.Abst
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) {
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnoutManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnoutManagerXml.class);
 }

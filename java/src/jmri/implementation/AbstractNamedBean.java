@@ -8,10 +8,10 @@ import java.util.Objects;
 import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
-import jmri.beans.Beans;
+import jmri.beans.BeanUtil;
 
 /**
  * Abstract base for the NamedBean interface.
@@ -51,7 +51,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      *                                               normalized
      * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
-    protected AbstractNamedBean(@Nonnull String sys, @Nullable String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+    protected AbstractNamedBean(@Nonnull String sys, @CheckForNull String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
         if (Objects.isNull(sys)) {
             throw new NamedBean.BadSystemNameException();
         }
@@ -110,7 +110,6 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
-    @SuppressWarnings("deprecation") // overrides deprecated method
     final public String getFullyFormattedDisplayName() {
         return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }
@@ -120,7 +119,6 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
-    @SuppressWarnings("deprecation") // overrides deprecated method
     final public String getFullyFormattedDisplayName(boolean userNameFirst) {
         return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }
@@ -179,7 +177,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
-        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+        if (listener != null && !BeanUtil.contains(pcs.getPropertyChangeListeners(), listener)) {
             register.remove(listener);
             listenerRefs.remove(listener);
         }
@@ -189,7 +187,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
-        if (listener != null && !Beans.contains(pcs.getPropertyChangeListeners(), listener)) {
+        if (listener != null && !BeanUtil.contains(pcs.getPropertyChangeListeners(), listener)) {
             register.remove(listener);
             listenerRefs.remove(listener);
         }
@@ -260,19 +258,29 @@ public abstract class AbstractNamedBean implements NamedBean {
         return mSystemName;
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * It would be good to eventually make this final to 
-     * keep it consistent system-wide, but 
-     * we have some existing classes to update first.
-     */
+    /** {@inheritDoc}
+    */
     @Nonnull
     @Override
-    public String toString() {
-        return getSystemName();
+    final public String toString() {
+        /*
+         * Implementation note:  This method is final to ensure that the
+         * contract for toString is properly implemented.  See the 
+         * comment in NamedBean#toString() for more info.
+         * If a subclass wants to add extra info at the end of the
+         * toString output, extend {@link #toStringSuffix}.
+         */
+        return getSystemName()+toStringSuffix();
     }
 
+    /**
+     * Overload this in a sub-class to add extra info to the results of toString()
+     * @return a suffix to add at the end of #toString() result
+     */
+    protected String toStringSuffix() {
+        return "";
+    }
+    
     @Override
     final public String getUserName() {
         return mUserName;
@@ -320,23 +328,23 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setProperty(@Nonnull String key,Object value){
-         if (parameters == null) {
-             parameters = new HashMap<>();
-         }
-         Set<String> keySet = getPropertyKeys();
-         if(keySet.contains(key)){
+    public void setProperty(@Nonnull String key, Object value) {
+        if (parameters == null) {
+            parameters = new HashMap<>();
+        }
+        Set<String> keySet = getPropertyKeys();
+        if (keySet.contains(key)) {
             // key already in the map, replace the value.
             Object oldValue = getProperty(key);
-            if(!Objects.equals(oldValue, value)){
-	          removeProperty(key); // make sure the old value is removed.
-              parameters.put(key, value);
-              firePropertyChange(key,oldValue,value);
+            if (!Objects.equals(oldValue, value)) {
+                removeProperty(key); // make sure the old value is removed.
+                parameters.put(key, value);
+                firePropertyChange(key, oldValue, value);
             }
-         } else {
+        } else {
             parameters.put(key, value);
-            firePropertyChange(key,null,value);
-         }
+            firePropertyChange(key, null, value);
+        }
     }
 
     @Override

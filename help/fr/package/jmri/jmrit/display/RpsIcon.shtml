@@ -8,7 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
 
-  <title>JMRI: RPS Icon</title><!-- Style -->
+  <title>JMRI: RPS Icon</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Ic&ocirc;ne RPS</h1>RPS est un syst&egrave;me
       permettant de mesurer les positions du mat&eacute;riel
       roulant sur votre r&eacute;seau. Plus d'informations sur RPS
@@ -106,12 +108,10 @@
         plut&ocirc;t vous montrer la position actuelle.</li>
       </ul>
 
-      <p>Ne pas oublier de sauvegarder votre TCO! <a id="popup"
-      name="popup"></a></p>
+      <p>Ne pas oublier de sauvegarder votre TCO!</p>
 
-      <h2><a id="popup" name="popup">Menu Contextuel</a></h2><a id=
-      "popup" name="popup">Le menu contextuel de l'ic&ocirc;ne RPS
-      contient:</a>
+      <h2><a id="popup" name="popup">Menu Contextuel</a></h2>
+      <p>Le menu contextuel de l'ic&ocirc;ne RPS contient:</p>
 
       <dl>
         <dt>Lecture position RPS</dt>
@@ -239,12 +239,11 @@
 
       <h2><a id="custom" name="custom">Personnalisation</a></h2>
 
-      <h3><a id="custom" name="custom">Position de
-      D&eacute;part</a></h3><a id="custom" name="custom">Lorsque
-      vous ouvrez le TCO, les ic&ocirc;nes sont remise &agrave; la
+      <h3>Position de D&eacute;part</h3>
+      Lorsque vous ouvrez le TCO, les ic&ocirc;nes sont remise &agrave; la
       m&ecirc;me position sur l'&eacute;cran qu'elles occupaient
       lorsque le TCO a &eacute;t&eacute; sauvegard&eacute; dans le
-      fichier.</a>
+      fichier.
 
       <p>Vous pouvez l'utiliser pour par exemple mettre les
       ic&ocirc;nes hors de la voie. Elles restent dans cette
@@ -254,17 +253,17 @@
       partie active du TCO.</p>
 
       <h3><a id="custicon" name="custicon">Afficher une Ic&ocirc;ne
-      Personnalis&eacute;e</a></h3><a id="custicon" name=
-      "custicon">Bien qu'il n'y ait pas encore d'interface
+      Personnalis&eacute;e</a></h3>
+      <p>Bien qu'il n'y ait pas encore d'interface
       graphique pour &ccedil;a (&ccedil;a vient!), vous pouvez
       modifier l'ic&ocirc;ne d'un &eacute;metteur qui est suivi par
       le syst&egrave;me RPS afin qu'il affiche par exemple une
       petite image de la locomotive. Pour ce faire, vous allez
       &eacute;diter le fichier de d&eacute;finition de panneau
       directement. (Il ya plus d'informations sur le Format XML,
-      que nous utilisons</a> <a href=
+      que nous utilisons <a href=
       "../../../../html/apps/DecoderPro/IntroXML.shtml">ici</a>)
-      Les &eacute;tapes sont les suivantes:
+      Les &eacute;tapes sont les suivantes:</p>
 
       <ul>
         <li>Cr&eacute;er une ic&ocirc;ne sur l'&eacute;diteur de
@@ -316,7 +315,7 @@
         pour une image avec le num&eacute;ro du train.</li>
       </ul>Une belle interface graphique pour faire cela est
       &agrave; venir, mais elle n'est pas encore l&agrave;. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

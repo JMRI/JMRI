@@ -31,7 +31,7 @@ public class ShutDownManagerInitializer extends AbstractInstanceInitializer {
      * {@inheritDoc}
      */
     @Override
-    public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+    public <T> Object getDefault(Class<T> type) {
         if (type.equals(ShutDownManager.class)) {
             String property = System.getProperty("jmri.shutdownmanager");
             if (property != null) {

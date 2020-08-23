@@ -1,6 +1,6 @@
 package jmri.jmrit.display;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -13,11 +13,9 @@ import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.text.MessageFormat;
+import java.util.*;
 import java.util.List;
-import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -35,8 +33,8 @@ import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
-import jmri.jmrit.catalog.CatalogTreeLeaf;
-import jmri.jmrit.catalog.CatalogTreeNode;
+import jmri.CatalogTreeLeaf;
+import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,7 +85,7 @@ public class MultiSensorIconAdder extends IconAdder {
                     n.toString(), n.getChildCount(), n.getNumLeaves());
         }
         _iconMap = new HashMap<>(10);
-        _order = new ArrayList<>();
+        _iconOrderList = new ArrayList<>();
         ArrayList<CatalogTreeLeaf> list = n.getLeaves();
         // adjust order of icons
         for (int i = list.size() - 1; i >= 0; i--) {
@@ -130,26 +128,25 @@ public class MultiSensorIconAdder extends IconAdder {
     @Override
     protected void doIconPanel() {
         if (log.isDebugEnabled()) {
-            log.debug("doIconPanel: Sizes: _iconMap= {} _order.size()= {}, _sensorMap.size()= {}",
-                    _iconMap.size(), _order.size(), _sensorMap.size());
+            log.debug("doIconPanel: Sizes: _iconMap= {} _iconOrderList.size()= {}, _sensorMap.size()= {}",
+                    _iconMap.size(), _iconOrderList.size(), _sensorMap.size());
         }
         Dimension dim = null;
         JPanel rowPanel = null;
         int cnt = 0;
-        for (int i = 3; i < _order.size(); i++) {
+        for (int i = 3; i < _iconOrderList.size(); i++) {
             if (rowPanel == null) {
                 rowPanel = new JPanel();
                 rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
                 rowPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             }
-            String key = _order.get(i);
+            String key = _iconOrderList.get(i);
             if (key.equals("placeHolder")) {
                 continue;
             }
             JPanel p1 = new JPanel();
             p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-            String label = java.text.MessageFormat.format(Bundle.getMessage("MultiSensorPosition"),
-                    new Object[]{cnt + 1});
+            String label = MessageFormat.format(Bundle.getMessage("MultiSensorPosition"), cnt + 1);
             p1.add(new JLabel(label));
             p1.add(_iconMap.get(key));
 
@@ -183,14 +180,14 @@ public class MultiSensorIconAdder extends IconAdder {
             p4 = new JPanel();
             NamedBeanHandle<Sensor> sensor = _sensorMap.get(key);
             String name = Bundle.getMessage("notSet");
-            java.awt.Color color = java.awt.Color.RED;
+            Color color = Color.RED;
             if (sensor != null) {
                 name = sensor.getName();
                 /*name = sensor.getUserName();
                  if (name == null)  {
                  name = sensor.getSystemName();
                  }*/
-                color = java.awt.Color.BLACK;
+                color = Color.BLACK;
             }
             p4.setBorder(BorderFactory.createLineBorder(color));
             p4.add(new JLabel(name));
@@ -205,7 +202,7 @@ public class MultiSensorIconAdder extends IconAdder {
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.add(p13);
             panel.add(p2);
-            panel.setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK));
+            panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
             rowPanel.add(panel);
             rowPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -218,7 +215,7 @@ public class MultiSensorIconAdder extends IconAdder {
             dim = panel.getPreferredSize();
         }
         while ((cnt % 3) != 0) {
-            java.util.Objects.requireNonNull(rowPanel, "should not have found rowPanel null here");    
+            Objects.requireNonNull(rowPanel, "should not have found rowPanel null here");
             rowPanel.add(Box.createRigidArea(dim));
             cnt++;
         }
@@ -230,7 +227,7 @@ public class MultiSensorIconAdder extends IconAdder {
         rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
         rowPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
         for (int i = 0; i < 3; i++) {
-            String key = _order.get(i);
+            String key = _iconOrderList.get(i);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             p.add(new JLabel(Bundle.getMessage(key)));
@@ -260,9 +257,7 @@ public class MultiSensorIconAdder extends IconAdder {
         p.add(_rightleft);
         p.add(Box.createHorizontalStrut(STRUT_SIZE));
         JButton addIcon = new JButton(Bundle.getMessage("AddMultiSensorIcon"));
-        addIcon.addActionListener((ActionEvent e) -> {
-            addIcon();
-        });
+        addIcon.addActionListener((ActionEvent e) -> addIcon());
         p.add(addIcon);
         this.add(p);
         this.add(new JSeparator());
@@ -324,7 +319,7 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     private void addIcon() {
-        int index = _order.size();
+        int index = _iconOrderList.size();
         String path = "resources/icons/misc/X-red.gif"; //"resources/icons/USS/plate/levers/l-vertical.gif";
         String label = "MultiSensorPosition " + (index - 3);
         super.setIcon(index, label, new NamedIcon(path, path));
@@ -360,16 +355,16 @@ public class MultiSensorIconAdder extends IconAdder {
     void delete(String key) {
         _iconMap.remove(key);
         _sensorMap.remove(key);
-        int index = _order.indexOf(key);
-        _order.remove(key);
+        int index = _iconOrderList.indexOf(key);
+        _iconOrderList.remove(key);
         if (!_update) {
             _defaultIcons.deleteLeaves(key);
             //  update labels
-            for (int k = index; k < _order.size(); k++) {
-                String label = _order.get(k);
+            for (int k = index; k < _iconOrderList.size(); k++) {
+                String label = _iconOrderList.get(k);
                 ArrayList<CatalogTreeLeaf> leaves = _defaultIcons.getLeaves(label);
-                for (int i = 0; i < leaves.size(); i++) {
-                    String path = leaves.get(i).getPath();
+                for (CatalogTreeLeaf leaf : leaves) {
+                    String path = leaf.getPath();
                     _defaultIcons.deleteLeaves(label);
                     _defaultIcons.addLeaf("MultiSensorPosition " + (k - 3), path);
                     // break;
@@ -388,14 +383,14 @@ public class MultiSensorIconAdder extends IconAdder {
      * @return Unique object
      */
     public NamedIcon getIcon(int index) {
-        if (index >= _order.size()) {
+        if (index >= _iconOrderList.size()) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoIconAt"), index - 2),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        return (NamedIcon) _iconMap.get(_order.get(index)).getIcon();
+        return (NamedIcon) _iconMap.get(_iconOrderList.get(index)).getIcon();
     }
 
     /**
@@ -406,14 +401,14 @@ public class MultiSensorIconAdder extends IconAdder {
      * @return Unique object
      */
     public NamedBeanHandle<Sensor> getSensor(int index) {
-        if (index >= _order.size()) {
+        if (index >= _iconOrderList.size()) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     Bundle.getMessage("NoSensorAt"), index - 2),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        return _sensorMap.get(_order.get(index));
+        return _sensorMap.get(_iconOrderList.get(index));
     }
 
     public boolean getUpDown() {
@@ -423,14 +418,9 @@ public class MultiSensorIconAdder extends IconAdder {
     private boolean putSensor(String key, Sensor sensor) {
         String name = sensor.getDisplayName();
         log.debug("putSensor: key= {} sensor= {}", key, name);
-        Iterator<NamedBeanHandle<Sensor>> iter = _sensorMap.values().iterator();
-        while (iter.hasNext()) {
-            if (name.equals(iter.next().getName())) {
-                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                        Bundle.getMessage("DupSensorName"),
-                        new Object[]{name}),
-                        Bundle.getMessage("ErrorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
+        for (NamedBeanHandle<Sensor> sensorNamedBeanHandle : _sensorMap.values()) {
+            if (name.equals(sensorNamedBeanHandle.getName())) {
+                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("DupSensorName"), name), Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }

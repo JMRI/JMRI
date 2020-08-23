@@ -1,15 +1,14 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * EliteAdapterTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.hornbyelite.EliteAdapter class
+ * Test for the jmri.jmrix.lenz.hornbyelite.EliteAdapter class
  *
  * @author Paul Bender
  */
@@ -21,12 +20,12 @@ public class EliteAdapterTest {
         Assert.assertNotNull(a);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

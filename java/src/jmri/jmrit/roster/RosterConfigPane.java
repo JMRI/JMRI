@@ -3,7 +3,6 @@ package jmri.jmrit.roster;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -34,7 +33,6 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
     JLabel filename;
     JTextField owner = new JTextField(20);
     JFileChooser fc;
-    private final ResourceBundle apb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     public RosterConfigPane() {
         fc = new JFileChooser(FileUtil.getUserFilesPath());
@@ -94,9 +92,7 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
                 }
                 filename.setText(fc.getSelectedFile().getParent() + File.separator);
                 validate();
-                if (getTopLevelAncestor() != null) {
-                    ((JFrame) getTopLevelAncestor()).pack();
-                }
+                packTopFrame();
             }
         });
         p.add(b);
@@ -106,9 +102,7 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
             public void actionPerformed(ActionEvent e) {
                 filename.setText("");
                 validate();
-                if (getTopLevelAncestor() != null) {
-                    ((JFrame) getTopLevelAncestor()).pack();
-                }
+                packTopFrame();
             }
         });
         p.add(b);
@@ -120,6 +114,13 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
         owner.setText(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
         p2.add(owner);
         add(p2);
+    }
+    
+    private void packTopFrame(){
+        java.awt.Container co = getTopLevelAncestor();
+        if ( co instanceof JFrame ) {
+            ((JFrame) co).pack();
+        }
     }
 
     public String getDefaultOwner() {
@@ -141,17 +142,17 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public String getPreferencesItemText() {
-        return this.apb.getString("MenuRoster"); // NOI18N
+        return Bundle.getMessage("MenuItemRoster"); // NOI18N
     }
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return this.apb.getString("TabbedLayoutRoster"); // NOI18N
+        return Bundle.getMessage("TabbedLayoutRoster"); // NOI18N
     }
 
     @Override
     public String getLabelKey() {
-        return this.apb.getString("LabelTabbedLayoutRoster"); // NOI18N
+        return Bundle.getMessage("LabelTabbedLayoutRoster"); // NOI18N
     }
 
     @Override

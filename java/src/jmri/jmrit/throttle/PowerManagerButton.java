@@ -77,44 +77,36 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
         if (powerMgr == null) {
             return;
         }
-        try {
-            switch (powerMgr.getPower()) {
-                case PowerManager.ON:
-                    setIcon(getPowerOnIcon());
-                    setToolTipText(Bundle.getMessage("LayoutPowerOn"));
-                    if (getFullText()) {
-                        setText(Bundle.getMessage("PowerStateOn"));
-                    }
-                    break;
-                case PowerManager.OFF:
-                    setIcon(getPowerOffIcon());
-                    setToolTipText(Bundle.getMessage("LayoutPowerOff"));
-                    if (getFullText()) {
-                        setText(Bundle.getMessage("PowerStateOff"));
-                    }
-                    break;
-                case PowerManager.UNKNOWN:
-                    setIcon(getPowerUnknownIcon());
-                    setToolTipText(Bundle.getMessage("LayoutPowerUnknown"));
-                    if (getFullText()) {
-                        setText(Bundle.getMessage("PowerStateUnknown"));
-                    }
-                    break;
-                default:
-                    setIcon(getPowerUnknownIcon());
-                    setToolTipText(Bundle.getMessage("LayoutPowerUnknown"));
-                    log.error("Unexpected state value: {}", powerMgr.getPower());
-                    if (getFullText()) {
-                        setText(Bundle.getMessage("PowerStateUnknown"));
-                    }
-                    break;
-            }
-        } catch (JmriException ex) {
-            setIcon(getPowerUnknownIcon());
-            setToolTipText(Bundle.getMessage("LayoutPowerUnknown"));
-            if (getFullText()) {
-                setText(Bundle.getMessage("PowerStateUnknown"));
-            }
+        switch (powerMgr.getPower()) {
+            case PowerManager.ON:
+                setIcon(getPowerOnIcon());
+                setToolTipText(Bundle.getMessage("LayoutPowerOn"));
+                if (getFullText()) {
+                    setText(Bundle.getMessage("PowerStateOn"));
+                }
+                break;
+            case PowerManager.OFF:
+                setIcon(getPowerOffIcon());
+                setToolTipText(Bundle.getMessage("LayoutPowerOff"));
+                if (getFullText()) {
+                    setText(Bundle.getMessage("PowerStateOff"));
+                }
+                break;
+            case PowerManager.UNKNOWN:
+                setIcon(getPowerUnknownIcon());
+                setToolTipText(Bundle.getMessage("LayoutPowerUnknown"));
+                if (getFullText()) {
+                    setText(Bundle.getMessage("PowerStateUnknown"));
+                }
+                break;
+            default:
+                setIcon(getPowerUnknownIcon());
+                setToolTipText(Bundle.getMessage("LayoutPowerUnknown"));
+                log.error("Unexpected state value: {}", powerMgr.getPower());
+                if (getFullText()) {
+                    setText(Bundle.getMessage("PowerStateUnknown"));
+                }
+                break;
         }
     }
 

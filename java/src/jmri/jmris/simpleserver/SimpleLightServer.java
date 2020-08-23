@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleLightServer extends AbstractLightServer {
 
+    private static final String LIGHT = "LIGHT";
     private DataOutputStream output = null;
     private JmriConnection connection = null;
 
@@ -37,36 +38,36 @@ public class SimpleLightServer extends AbstractLightServer {
     @Override
     public void sendStatus(String lightName, int Status) throws IOException {
         if (Status == Light.ON) {
-            this.sendMessage("LIGHT " + lightName + " ON\n");
+            this.sendMessage(LIGHT + " " + lightName + " ON\n");
         } else if (Status == Light.OFF) {
-            this.sendMessage("LIGHT " + lightName + " OFF\n");
+            this.sendMessage(LIGHT + " " + lightName + " OFF\n");
         } else {
             //  unknown state
-            this.sendMessage("LIGHT " + lightName + " UNKNOWN\n");
+            this.sendMessage(LIGHT + " " + lightName + " UNKNOWN\n");
         }
     }
 
     @Override
     public void sendErrorStatus(String lightName) throws IOException {
-        this.sendMessage("LIGHT ERROR\n");
+        this.sendMessage(LIGHT + " ERROR\n");
     }
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
         int index;
-        index = statusString.indexOf(" ") + 1;
+        index = statusString.indexOf(' ') + 1;
         if (statusString.contains("ON")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Light ON");
             }
-            initLight(statusString.substring(index, statusString.indexOf(" ", index + 1)));
-            lightOn(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            initLight(statusString.substring(index, statusString.indexOf(' ', index + 1)));
+            lightOn(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         } else if (statusString.contains("OFF")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Light OFF");
             }
-            initLight(statusString.substring(index, statusString.indexOf(" ", index + 1)));
-            lightOff(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            initLight(statusString.substring(index, statusString.indexOf(' ', index + 1)));
+            lightOff(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         }
     }
 
@@ -78,5 +79,5 @@ public class SimpleLightServer extends AbstractLightServer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleLightServer.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleLightServer.class);
 }

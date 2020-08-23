@@ -2,11 +2,9 @@
 <html lang="fr">
 <!-- Updated by Blorec Herv&#233; 2016-08-28-->
 <head>
-  <title>
- 	JMRI: Blocks Documentation
-  </title>
-  <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="layout java model railroad JMRI tools dcc">
+<title>JMRI: Blocks Documentation</title>
+<meta name="author" content="Bob Jacobsen">
+<meta name="keywords" content="layout java model railroad JMRI tools dcc">
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -18,12 +16,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: Documentation Canton</h1>
 
@@ -61,12 +58,13 @@ optionnellement &#224; un Canton. Ces attributs optionnels sont saisis manuellem
  dans ce tableau. Si les trains ne circulent pas automatiquement dans 
 un Canton, il n'est pas n&#233;cessaire d'ajouter ces attributs.</p>
 
- 
 <h4>Commandes du Tableau Canton</h4>
-		<ul>
-		<li>Au dessous du tableau Canton, vous trouverez le bouton <b>Ajouter...</b></li>
-		<li>Le menu <b> Chemins</b> contient un &#233;l&#233;ment Effacer Chemins...</li>
-		<li>Le menu <b>Vitesse</b> vous permet de d&#233;finir l'&#233;chelle du syst&#233;me par d&#233;faut </li>
+
+<ul>
+    <li>Au dessous du tableau Canton, vous trouverez le bouton <b>Ajouter...</b></li>
+    <li>Le menu <b> Chemins</b> contient un &#233;l&#233;ment Effacer Chemins...</li>
+    <li>Le menu <b>Vitesse</b> vous permet de d&#233;finir l'&#233;chelle du syst&#233;me par d&#233;faut </li>
+</ul>
 
 <a name="addBlock"></a><h3>Ajouter un nouveau Canton</h3>
 <p>Pour ajouter un nouveau Canton suivre cette <a href="../../package/jmri/jmrit/beantable/BlockEdit.shtml">proc&#233;dure</a></p>
@@ -77,28 +75,14 @@ un Canton, il n'est pas n&#233;cessaire d'ajouter ces attributs.</p>
 <h3>Sauvegarde des Cantons sur le disque</h3>
 <p>Les Cantons sont sauvegard&#233;s dans votre fichier de configuration du r&#233;seau, avec les Aiguillages, 
 les Capteurs, les Feux de Signalisation, etc. Pour stocker ces informations sur le disque, utilisez <b>Stocker 
-Configuration..</b> dans le menu <b>Fichier</b> en haut du tableau 
+Configuration...</b> dans le menu <b>Fichier</b> en haut du tableau
 Canton ( ou autres tables depuis le menu Outils ), ou s&#233;lectionnez <b>Stocker Panneau...</b>
 dans le menu <b>Panneau</b>. Notez que l'&#233;tat libre/occup&#233; de chaque Canton 
 n'est pas sauvegard&#233; dans le fichier de configuration. Quand les cantons sont charg&#233;s depuis 
 un fichier de configuration, leurs &#233;tats sont lus depuis les Capteurs.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

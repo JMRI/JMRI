@@ -12,9 +12,9 @@ public class Station {
      * @param segmentId The parent segment id.
      * @throws IllegalArgumentException STATION_ADD_FAIL
      */
-    public Station(int segmentId) throws IllegalArgumentException {
+    public Station(int segmentId) {
         if (_dm.getSegment(segmentId) == null) {
-            throw new IllegalArgumentException(_dm.STATION_ADD_FAIL);
+            throw new IllegalArgumentException(TimeTableDataManager.STATION_ADD_FAIL);
         }
         _stationId = _dm.getNextId("Station");  // NOI18N
         _segmentId = segmentId;
@@ -66,9 +66,9 @@ public class Station {
      * @param newDistance The value to be used.
      * @throws IllegalArgumentException (DISTANCE_LT_0) if the value is less than 0.0.
      */
-    public void setDistance(double newDistance) throws IllegalArgumentException {
+    public void setDistance(double newDistance) {
         if (newDistance < 0) {
-            throw new IllegalArgumentException(_dm.DISTANCE_LT_0);
+            throw new IllegalArgumentException(TimeTableDataManager.DISTANCE_LT_0);
         }
         double oldDistance = _distance;
         _distance = newDistance;
@@ -100,9 +100,9 @@ public class Station {
      * @param newSidings The value to be used.
      * @throws IllegalArgumentException (SIDINGS_LT_0) if the value is less than 0.
      */
-    public void setSidings(int newSidings) throws IllegalArgumentException {
+    public void setSidings(int newSidings) {
         if (newSidings < 0) {
-            throw new IllegalArgumentException(_dm.SIDINGS_LT_0);
+            throw new IllegalArgumentException(TimeTableDataManager.SIDINGS_LT_0);
         }
         _sidings = newSidings;
     }
@@ -117,13 +117,13 @@ public class Station {
      * @throws IllegalArgumentException (STAGING_LT_0, STAGING_IN_USE) if the value is
      * less than 0 or a staging track is referenced by a train stop.
      */
-    public void setStaging(int newStaging) throws IllegalArgumentException {
+    public void setStaging(int newStaging) {
         if (newStaging < 0) {
-            throw new IllegalArgumentException(_dm.STAGING_LT_0);
+            throw new IllegalArgumentException(TimeTableDataManager.STAGING_LT_0);
         }
         for (Stop stop : _dm.getStops(0, getStationId(), false)) {
             if (stop.getStagingTrack() > newStaging) {
-                throw new IllegalArgumentException(_dm.STAGING_IN_USE);
+                throw new IllegalArgumentException(TimeTableDataManager.STAGING_IN_USE);
             }
         }
         _staging = newStaging;

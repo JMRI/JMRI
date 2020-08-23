@@ -17,17 +17,17 @@ public class JsonRouteServiceFactory implements JsonServiceFactory<JsonRouteHttp
     public static final String ROUTES = "routes"; // NOI18N
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{ROUTE, ROUTES};
     }
 
     @Override
-    public JsonRouteSocketService getSocketService(JsonConnection connection) {
+    public JsonRouteSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonRouteSocketService(connection);
     }
 
     @Override
-    public JsonRouteHttpService getHttpService(ObjectMapper mapper) {
+    public JsonRouteHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonRouteHttpService(mapper);
     }
 

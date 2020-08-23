@@ -12,7 +12,8 @@
   <meta name="Description" content=
   "Throttle documentation for JMRI project" />
   <meta name="Author" content="Lionel Jeanson" />
-  <meta name="Language" content="EN" /><!-- Style -->
+  <meta name="Language" content="EN" />
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii" />
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -20,16 +21,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print" />
   <link rel="icon" href="/images/jmri.ico" type="image/png" />
-  <link rel="home" title="Home" href="/" /><!-- /Style -->
+  <link rel="home" title="Home" href="/" />
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Throttle pane Toolbar</h1><img src=
       "images/ThrottleToolBar.png" alt="" /><br />
       The Throttle toolbar is accessible from the <a href=
@@ -64,7 +65,7 @@
 
       <h2>List Button</h2>Show/Hide the <a href=
       "ThrottlesListWindow.shtml">Throttles List</a>. 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

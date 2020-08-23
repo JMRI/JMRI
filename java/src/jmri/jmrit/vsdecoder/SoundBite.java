@@ -348,7 +348,7 @@ class SoundBite extends VSDSound {
          */
         if (frequency <= 0) {
             // Protect against divide-by-zero errors
-            return 0l;
+            return 0L;
         } else {
             return (1000 * num_frames) / frequency;
         }

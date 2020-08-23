@@ -1,31 +1,35 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * DCCppThrottleManagerTest.java
+ * <p>
+ * Test for the jmri.jmrix.dccpp.DCCppThrottleManager class
  *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppThrottleManager class
- *
- * @author	Paul Bender
- * @author	Mark Underwood (C) 2015
+ * @author Paul Bender
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        DCCppCommandStation cs = new DCCppCommandStation();
+        cs.setCommandStationMaxNumSlots(12); // the "traditional" value for DCC++
+        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(cs);
         tm = new DCCppThrottleManager(new DCCppSystemConnectionMemo(tc));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.resetWindows(false, false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

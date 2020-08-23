@@ -16,9 +16,11 @@
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
   <version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20151022"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
+  <!-- Version 2 - change mfg to match name in NMRA.xml -->
   
   <decoder>
-    <family name="Servo5" mfg="MGP" type="stationary" comment="Servo5, a LocoNet decoder for railway switches">
+    <family name="Servo5" mfg="Möllehem Gårdsproduktion" type="stationary" comment="Servo5, a LocoNet decoder for railway switches">
       <model model="Servo5" lowVersionID="1">
 			</model>
     </family>

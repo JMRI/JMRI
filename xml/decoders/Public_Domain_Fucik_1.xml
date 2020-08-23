@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
+    <version version="1" author="Svata Dedic svatopluk.dedic@gmail.com" lastUpdated="20200201"/>
+    <decoder>
+        <!-- These decoders are DIY and are documented at http://www.fucik.name" -->
+        <family name="fucik.name DIY" mfg="Public-domain and DIY" >
+            <model model="1 ServoDecoder v3.4" lowVersionID="34" highVersionID="34" numOuts="2" connector="other"/>
+        </family>
+        <programming direct="yes" paged="no" register="yes" ops="no" />
+        
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/fucik/servodecoder_vars_common.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/fucik/servodecoder_vars_1.xml"/>
+        </variables>
+    </decoder>
+    <xi:include href="http://jmri.org/xml/decoders/fucik/servodecoder_panels_basic.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/fucik/servodecoder_panels_1.xml"/>
+</decoder-config>

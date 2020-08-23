@@ -1,0 +1,34 @@
+<!-- Sidebar.shtml -->
+<!-- This is the common sidebar definition for html/web pages -->
+	  <hr class="hide">
+	  <div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">JMRI Web Access</div>
+	    <dl>
+
+		<dt><h3><a href="index.shtml">Basic Use</a></h3></dt>
+		<dd>JMRI supports working with your layout from a web browser.
+		    <ul>
+		    <li><a href="index.shtml#Start">Getting Started</a></li>
+		    <li><a href="index.shtml#Configure">Configure</a></li>
+		    <li><a href="index.shtml#files">URLs</a></li>
+		    </ul>
+		</dd>
+
+		<dt><h3>Services</h3></dt>
+		<dd>Details of the JMRI web services.
+		    <ul>
+		    <li><a href="FrameServlet.shtml">Frames</a></li>
+		    <li><a href="JsonServlet.shtml">JSON</a></li>
+		    <li><a href="PanelServlet.shtml">Panels</a></li>
+		    <li><a href="RosterServlet.shtml">Roster</a></li>
+		    </ul>
+		</dd>
+
+                <!--#include virtual="../../parts/SidebarApplications.shtml" -->
+	    </dl>
+
+            <!--#include virtual="../../parts/SidebarTail.shtml" -->
+	    
+	</div> <!-- closes #side -->
+
+<!-- /Sidebar.shtml -->

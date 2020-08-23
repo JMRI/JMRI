@@ -126,19 +126,20 @@ public class ThreadingUtil {
     }
 
     /**
-     * Run some GUI-specific code before returning a value
+     * Run some GUI-specific code before returning a value.
      * <p>
      * Typical uses:
      * <p>
      * {@code
-     * ThreadingUtil.runOnGUI(() -> {
-     *     mine.setVisible();
+     * Boolean retval = ThreadingUtil.runOnGUIwithReturn(() -> {
+     *     return mine.isVisible();
      * });
      * }
      * <p>
      * If an InterruptedException is encountered, it'll be deferred to the next
      * blocking call via Thread.currentThread().interrupt()
      * 
+     * @param <E> generic
      * @param ta What to run, usually as a lambda expression
      * @return the value returned by ta
      */
@@ -195,7 +196,7 @@ public class ThreadingUtil {
      * Typical uses:
      * <p>
      * {@code 
-     * ThreadingUtil.runOnGUIEventually( ()->{ 
+     * ThreadingUtil.runOnGUIDelayed( ()->{ 
      *  mine.setVisible(); 
      * }, 1000);
      * }
@@ -224,6 +225,45 @@ public class ThreadingUtil {
         return SwingUtilities.isEventDispatchThread();
     }
 
+    /**
+     * Create a new thread in the JMRI group
+     * @param runner Runnable.
+     * @return new Thread.
+     */
+    static public Thread newThread(Runnable runner) {
+        return new Thread(getJmriThreadGroup(), runner);
+    }
+    
+    /**
+     * Create a new thread in the JMRI group.
+     * @param runner Thread runnable.
+     * @param name Thread name.
+     * @return New Thread.
+     */
+    static public Thread newThread(Runnable runner, String name) {
+        return new Thread(getJmriThreadGroup(), runner, name);
+    }
+    
+    /**
+     * Get the JMRI default thread group.
+     * This should be passed to as the first argument to the {@link Thread} 
+     * constructor so we can track JMRI-created threads.
+     * @return JMRI default thread group.
+     */
+    static public ThreadGroup getJmriThreadGroup() {
+        // we access this dynamically instead of keeping it in a static
+        
+        ThreadGroup main = Thread.currentThread().getThreadGroup();
+        while (main.getParent() != null ) {main = main.getParent(); }        
+        ThreadGroup[] list = new ThreadGroup[main.activeGroupCount()+2];  // space on end
+        int max = main.enumerate(list);
+        
+        for (int i = 0; i<max; i++) { // usually just 2 or 3, quite quick
+            if (list[i].getName().equals("JMRI")) return list[i];
+        }
+        return new ThreadGroup(main, "JMRI");
+    }
+    
     /**
      * Check whether a specific thread is running (or able to run) right now.
      *
@@ -263,7 +303,7 @@ public class ThreadingUtil {
     static public void requireGuiThread(org.slf4j.Logger logger) {
         if (!isGUIThread()) {
             // fail, which can be a bit slow to do the right thing
-            Log4JUtil.warnOnce(logger, "Call not on GUI thread", new Exception("traceback"));
+            LoggingUtil.warnOnce(logger, "Call not on GUI thread", new Exception("traceback"));
         } 
     }
     
@@ -277,7 +317,7 @@ public class ThreadingUtil {
     static public void requireLayoutThread(org.slf4j.Logger logger) {
         if (!isLayoutThread()) {
             // fail, which can be a bit slow to do the right thing
-            Log4JUtil.warnOnce(logger, "Call not on Layout thread", new Exception("traceback"));
+            LoggingUtil.warnOnce(logger, "Call not on Layout thread", new Exception("traceback"));
         } 
     }
     
@@ -318,16 +358,16 @@ public class ThreadingUtil {
 
                 java.lang.management.MonitorInfo[] monitors = threadInfo.getLockedMonitors();
                 for (java.lang.management.MonitorInfo mon : monitors) {
-                    log.warn("Thread was holding monitor {} from {}", mon, mon.getLockedStackFrame(), Log4JUtil.shortenStacktrace(new Exception("traceback"))); // yes, warn - for re-enable later
+                    log.warn("Thread was holding monitor {} from {}", mon, mon.getLockedStackFrame(), LoggingUtil.shortenStacktrace(new Exception("traceback"))); // yes, warn - for re-enable later
                 }
 
                 java.lang.management.LockInfo[] locks = threadInfo.getLockedSynchronizers();
                 for (java.lang.management.LockInfo lock : locks) {
                     // certain locks are part of routine Java API operations
                     if (lock.toString().startsWith("java.util.concurrent.ThreadPoolExecutor$Worker") ) {
-                        log.debug("Thread was holding java lock {}", lock, Log4JUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
+                        log.debug("Thread was holding java lock {}", lock, LoggingUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
                     } else {
-                        log.warn("Thread was holding lock {}", lock, Log4JUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
+                        log.warn("Thread was holding lock {}", lock, LoggingUtil.shortenStacktrace(new Exception("traceback")));  // yes, warn - for re-enable later
                     }
                 }
             } catch (RuntimeException ex) {

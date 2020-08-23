@@ -57,6 +57,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Added restricted mappings</revremark>
     </revision>
+    <revision>
+        <revnumber>1.23</revnumber>
+        <date>2019-12-304</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect value of Medium Approach Medium account it cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
   <aspecttable>NS</aspecttable>
   <name>Double head 3-3 color light high signal</name>
@@ -173,7 +179,6 @@
     <aspectMapping>
       <advancedAspect>Limited Clear</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
-      <ourAspect>Medium Approach Medium</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
@@ -193,13 +198,11 @@
     <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-      <ourAspect>Medium Approach Medium</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-      <ourAspect>Medium Approach Medium</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
@@ -212,13 +215,11 @@
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
-      <ourAspect>Medium Approach Medium</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-      <ourAspect>Medium Approach Medium</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>

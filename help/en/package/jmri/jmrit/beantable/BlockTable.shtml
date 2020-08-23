@@ -15,10 +15,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Block Table</h1>
 
       <p>Blocks may be set up manually in the Block Table, using a
@@ -263,7 +263,7 @@
       <p>Back to the <a href=
       "../../../../html/tools/Blocks.shtml">Blocks Help
       page</a></p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

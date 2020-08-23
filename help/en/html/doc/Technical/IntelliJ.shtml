@@ -11,14 +11,15 @@
   <meta name="keywords" content=
   "JMRI technical code IntelliJ IDEA 2017.2 2018 2019.1 IDE">
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
 
-    <div id="mainContent">
-      <h1>JMRI Code: Building with IntelliJ IDEA</h1>
+  <h1>JMRI Code: Building with IntelliJ IDEA</h1>
 
       <p>IntelliJ IDEA Community Edition (available from <a href=
       "https://www.jetbrains.com/idea/">www.jetbrains.com/idea/</a>)
@@ -292,11 +293,13 @@
 
       <h3>Making Changes</h3>
 
-      <p>To work on the JMRI code, always start a new Branch off
-      from master, so your own "master" will stay intact.<br>
-      To create a new Branch in IntelliJ, check out master, VCS
-      &gt; Git &gt; Pull... from JMRI-master, VCS &gt; Git &gt;
-      Push... to create a current base.<br>
+      <p>To work on the JMRI code, always start a new Branch so that
+      your own "original" will stay intact. In most cases, you will
+      create this new branch off from <code>master</code>, your
+      personal copy of the main JMRI code.<br>
+      To create a new Branch in IntelliJ, first check out master.
+      To make it currect, first do VCS &gt; Git &gt; Pull... from JMRI-master,
+      and VCS &gt; Git &gt; Push... to create a current base.<br>
       Now then from the <strong>Git Branches</strong> pane, select
       "+ New Branch":<br>
       <a href="images/IntelliJ/IjGitBranches.png"><img src=
@@ -305,9 +308,24 @@
       Supply a name i.e. <code>my-dialog-2</code> and click OK.<br>
       Note: Starting your Branch name with a unique two letter
       combination will make it stand out from the long list much
-      better than a name like <code>patch-1</code>.</p><a name=
-      "setant" id="setant"></a>
+      better than a name like <code>patch-1</code>.</p>
+      <p>
+      In special cases, you might want to branch from one of your
+      own active branches, or from a different branch or Tag in the
+      JMRI Github repository.<br>
+      To branch from a tag, select "Checkout Tag or Revision..."
+      from the Git:branch drop down at bottom right:
+      <br>
+      <img src="images/IntelliJ/IjGitCheckoutTag.png" width="457"
+      height="92" alt="IntelliJ Checkout Tag option"><br>
+      In the dialog, start typing the name of the Tag you saw in GitHub web:<br>
+      <a href="images/IntelliJ/IjGitCheckoutTagDialog.png"><img src=
+      "images/IntelliJ/IjGitCheckoutTagDialog.png" width="346" height="127"
+      alt="IntelliJ Checkout Tag dialog"></a><br>
+      Click "OK" and provide a name for the new branch.
+      </p>
 
+      <a name="setant" id="setant"></a>
       <h2>Building and running JMRI using Ant</h2>
 
       <p>We recommend that before you try to build and run one of
@@ -473,8 +491,17 @@
         "images/IntelliJ/IjCommitPush.png" width="181" height="98"
         alt="IntelliJ Commit and Push"></a></li>
 
-        <li>In the Push Commits pane, review your description and
-        click "Push".</li>
+        <li>In the Push Commits pane, review your description.<br>
+        For certain users there's an option to change the repo to
+        which you want to push your local branch to:<br>
+        <a href="images/IntelliJ/IjPushSelectRepoOrigin.png"><img
+        src="images/IntelliJ/IjPushSelectRepoOrigin.png" width="286"
+        height="62" alt="IntelliJ Push Dialog Option"></a>
+        <br>
+        Click on the underlined part of the top line to see tha pop-up.
+        "origin" is your personal remote repository, "JMRI" is the official
+        developer's repository.<br>
+        If the path and all else is correct, click "Push".</li>
 
         <li>To push to your GitHub repository after a local Commit,
         just select "Push..." from the "VCS" -&gt; Git menu:<br>
@@ -594,33 +621,43 @@
       <p>A further explanation of this pane and debugging in general can be found in the
       <a href="https://www.jetbrains.com/help/idea/debugging.html">IntelliJ Online Help</a>.<br>
       If your code was not compiled just before debugging, the source and class files might be out of sync, so be
-      sure to build first. As described above, you could add that to your Debug Configuration too, but it does take
-      extra time before each run.</p>
+      sure to build first. As described above, you could add that to your Debug Configuration too, but it might take
+      unneeded extra time before each run.</p>
 
       <a name="test" id="test"></a><h3>Testing with IntelliJ</h3>
       <p>Besides Debug, there's also a "Run ... with Coverage" option available in the Run menu and tool bar.</p>
       <p>When you create or edit a <a href="JUnit.shtml">test</a>
-        (located in your Project at JMRI.java.test etc.) you can
-        test it either as part of the <code>alltest</code> Ant Build
-        (double click in the IntelliJ Ant Build right hand
-        column to run), run it on its own using the <code>test-single</code> Ant Task
-        or create a JUnit type <a href="#debug">Debug Configuration</a> with optional Coverage reporting.<br>
-        To use test-single, enter the path of your test in the Ant Build
-        Properties by either clicking the Properties button at the top or
-        right-clicking on any line in the Ant Build column,
-        choosing "Properties". Open the "Properties" tab, click the
-        + (Add) sign at lower left and enter <code>test.includes</code>
-        in the Name column and the path to your test under Value,
-        starting with either <code>apps.</code> or <code>jmri.</code> as shown:<br>
-        <a href="images/IntelliJ/IjAntProps.png"><img src="images/IntelliJ/IjAntProps.png" width="318" height="174"
-        alt="IntelliJ Ant Property"></a>
+      (located in your Project at JMRI.java.test etc.) you can test it in one of the following ways:</p>
+      <ul>
+        <li>part of the <code>alltest</code> Ant Build (double click in the IntelliJ Ant Build right hand
+        column to run)</li>
+        <li>run it on its own using the <code>test-single</code> Ant Task</li>
+        <li>create a JUnit type <a href="#debug">Debug Configuration</a> with optional Coverage reporting or</li>
+        <li>Run a single test inside the File Edit pane of an open test file (the simplest to set up)</li>
+      </ul>
+      <p>To use <code>test-single</code>, enter the path of your test in the Ant Build
+      Properties by either clicking the Properties button at the top or
+      right-clicking on any line in the Ant Build column,
+      choosing "Properties". Open the "Properties" tab, click the
+      + (Add) sign at lower left and enter <code>test.includes</code>
+      in the Name column and the path to your test under Value,
+      starting with either <code>apps.</code> or <code>jmri.</code> as shown:<br>
+      <a href="images/IntelliJ/IjAntProps.png"><img src="images/IntelliJ/IjAntProps.png" width="318" height="174"
+      alt="IntelliJ Ant Property"></a>
       </p>
       <p>The Code Coverage of your test can be checked by running Debug With Coverage. Unless you install the Jacoco
-        application, IntelliJ runs its own coverage scheme:<br>
-        After tests have completed the Coverage pane opens. Double-click a class line to open the code page. In the
-        left margin coverage is marked:<br>
-        <a href="images/IntelliJ/IjCoverageResultPane.png"><img src="images/IntelliJ/IjCoverageResultPane.png"
-        width="444" height="170" alt="IntelliJ Ant Property"></a>
+      application, IntelliJ runs its own coverage scheme:<br>
+      After tests have completed the Coverage pane opens. Double-click a class line to open the code page. In the
+      left margin coverage is marked:<br>
+      <a href="images/IntelliJ/IjCoverageResultPane.png"><img src="images/IntelliJ/IjCoverageResultPane.png"
+      width="444" height="170" alt="IntelliJ Ant Property"></a>
+      </p>
+      <p>To run a single <code>@Test</code> test inside the file window, make sure you have set up the JMRI Project
+      Structure &gt; Modules &gt; Sources (see <a href="#debug">above</a>). When you open a Test file, in the left
+      margin a green Run Test arrow will show next to every test. Click it and select one of the 3 options from the
+      combo:<br>
+      <a href="images/IntelliJ/IjFileRunTestIcon.png"><img src="images/IntelliJ/IjFileRunTestIcon.png"
+      width="181" height="75" alt="IntelliJ Run @Test"></a>
       </p>
 
       <a name="spotbugs" id="spotbugs"></a>
@@ -675,20 +712,27 @@
       <h2>Making a Pull Request</h2>
 
       <p>When your contribution is ready, submit a "Pull Request" to the main
-        JMRI code repository on the GitHub website so the maintainers
-        of JMRI can study your proposed changes and merge them into
-        the master JMRI repo.</p>
+      JMRI code repository on the GitHub website so the maintainers
+      of JMRI can study your proposed changes and merge them into
+      the master JMRI repo.</p>
 
       <p>To make a PR from within IntelliJ IDEA, select "Create
-        Pull Request" from the "VCS" -&gt; Git menu (it's the one but
-        last item, supported by the Git plug in).<br>
-        Note: Be sure to select your own repository if you see multiple options
-        to choose from in this submenu:<br>
-        <img src="images/IntelliJ/IjPullViaOwnRepo.png" width="622" height="52" alt="IntelliJ Git Menu"></p>
+      Pull Request" from the "VCS" -&gt; "Git" menu (it's the one but
+      last item, supported by the Git plugin).<br>
+      Note: Be sure to select your own repository if you see multiple options
+      to choose from in this submenu:<br>
+      <img src="images/IntelliJ/IjPullViaOwnRepo.png" width="622" height="52" alt="IntelliJ Git Menu"></p>
       <p>Fill in a title and comment for your PR:<br>
-        <a href="images/IntelliJ/IjGitPRCreate.png">
-          <img src="images/IntelliJ/IjGitPRCreate.png" width="265" height="120" alt="IntelliJ Git Create PR"></a></p>
-
+      <a href="images/IntelliJ/IjGitPRCreate.png">
+      <img src="images/IntelliJ/IjGitPRCreate.png" width="265" height="120" alt="IntelliJ Git Create PR"></a>
+      </p>
+      <p>Unless your change is intended for a special branch like a previous release, you would set the PR Target
+      Branch to "master" as shown above. Otherwise, use the combo box to change the branch where you want your new
+      changes to be added:<br>
+      <a href="images/IntelliJ/IjCreatePrSelectBaseBranch.png">
+      <img src="images/IntelliJ/IjCreatePrSelectBaseBranch.png" width="300" height="168"
+      alt="IntelliJ Git Create PR Base Branch"></a>
+      </p>
       <p>To create a PR from GitHub web - outside IntelliJ - start by
         signing on to the <a href="http://github.com">GitHub web
           site</a>, selecting your repository &amp; branch and clicking
@@ -708,7 +752,7 @@
       The instructions to set this via <code>vmoptions</code> are
       <a href="#install">at the top of this page</a>.<br>
       In addition, check that in the IntelliJ Preferences &gt; Editor &gt; Code Style &gt; Properties you checked
-        "Insert space around key-value delimiter", or your edits will mess up the work already in place.</p>
+      "Insert space around key-value delimiter", or your edits will mess up the work already in place.</p>
       <a href="images/IntelliJ/IjPrefsEditorProperties.png"><img src="images/IntelliJ/IjPrefsEditorProperties.png"
       width="490" height="285" alt="IntelliJ Props Editor Style Setting"></a>
       <p>To easily edit Resource Bundle <code>.properties</code> files, containing translations in different languages,

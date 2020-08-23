@@ -147,6 +147,7 @@ public class SerialTurnout extends AbstractTurnout {
      * Control the actual layout hardware. The request is for a particular
      * functional setting, e.g. CLOSED or THROWN. The "inverted" status of the
      * output leads is handled here.
+     * @param closed true sets the Turnout to CLOSED
      */
     protected void sendMessage(boolean closed) {
         // if a Pulse Timer is running, ignore the call

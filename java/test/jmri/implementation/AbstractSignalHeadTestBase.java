@@ -1,14 +1,13 @@
 package jmri.implementation;
 
-import java.util.Arrays;
 import jmri.SignalHead;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Base support for testing SignalHead implementations
  *
- * @author	Bob Jacobsen Copyright (C) 2017
+ * @author Bob Jacobsen Copyright (C) 2017
  */
 public abstract class AbstractSignalHeadTestBase {
 

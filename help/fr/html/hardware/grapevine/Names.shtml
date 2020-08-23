@@ -2,9 +2,7 @@
 <html lang="fr">
 <head>
 <!-- Updated by Herv&#233; Blorec 2017-01-26 -->
-<title>JMRI: Grapevine System Names</title>
 <title>JMRI Hardware Support - Grapevine System - Naming</title>
-
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -15,9 +13,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Support Mat&#233;riel: Syst&#232;mes Grapevine</h1>
 
@@ -73,12 +73,12 @@ Les n&#339;uds Grapevine ont un nombre d'entr&#233;es possibles:
      Il y a huit connecteurs &#224; trois broches sur un n&#339;ud de Grapevine
      qui peuvent &#234;tre utilis&#233;s comme entr&#233;es en g&#233;n&#233;ral. Ces capteurs sont
      r&#233;f&#233;renc&#233; 001 &#224; 008. Ils peuvent &#233;galement &#234;tre r&#233;f&#233;renc&#233;s
-     dans un format plus court (o&#249 les trois chiffres complets ne sont pas n&#233;cessaires)
+     dans un format plus court (o&#249; les trois chiffres complets ne sont pas n&#233;cessaires)
      comme P1 &#224; P8.
      <p>
      En outre, il y a huit broches suppl&#233;mentaires dans le
      Connecteur &#224; 14 broches qui peut &#234;tre r&#233;f&#233;renc&#233; en tant que capteurs
-     009 &#224; 016 ou par le biais p9 p16, o&#249 le "p" indique entr&#233;e parall&#232;le.
+     009 &#224; 016 ou par le biais p9 p16, o&#249; le "p" indique entr&#233;e parall&#232;le.
  </dd>
  <dt>
     Les Cartes S&#233;rie de Capteur d'Occupation
@@ -101,18 +101,18 @@ Les n&#339;uds Grapevine ont un nombre d'entr&#233;es possibles:
      <p>
      Des exemples, le tout pour 22 n&#339;uds:
      <ul>
-     <li> GS22a1 ou GS22101 est le capteur d'occupation pour le premier bloc d'entr&#233;e le 1er ASC. <br/>
-         GS22m1 ou GS22201 est le capteur de mouvement correspondante pour le premier
-         bloc d'entr&#233;e le 1er ASC.
-     GS22a9 <li> ou GS22109 est le capteur d'occupation pour le pr n&#339;uds emier bloc d'entr&#233;e sur le deuxi&#232;me ASC. <br/>
-         GS22m9 ou GS22209 est le capteur de mouvement correspondante pour le premier
-         bloc d'entr&#233;e sur le deuxi&#232;me ASC.
-     <li> GS22a24 ou GS124 est le capteur d'occupation de l'entr&#233;e du bloc 8&#232;me au 3&#232;me ASC. <br/>
-         GS22m24 ou GS224 est le capteur de mouvement correspondante pour le 8e
-         bloc d'entr&#233;e sur le 3&#232;me ASC.
-           <p>
-       </ul>
+        <li> GS22a1 ou GS22101 est le capteur d'occupation pour le premier bloc d'entr&#233;e le 1er ASC. <br>
+        GS22m1 ou GS22201 est le capteur de mouvement correspondante pour le premier
+        bloc d'entr&#233;e le 1er ASC.
+        GS22a9 <li> ou GS22109 est le capteur d'occupation pour le pr n&#339;uds emier bloc d'entr&#233;e sur le deuxi&#232;me ASC. <br>
+        GS22m9 ou GS22209 est le capteur de mouvement correspondante pour le premier
+        bloc d'entr&#233;e sur le deuxi&#232;me ASC.
+        <li> GS22a24 ou GS124 est le capteur d'occupation de l'entr&#233;e du bloc 8&#232;me au 3&#232;me ASC.<br>
+        GS22m24 ou GS224 est le capteur de mouvement correspondante pour le 8e
+        bloc d'entr&#233;e sur le 3&#232;me ASC.</li>
+    </ul>
 </dd>
+
  <dt>
     Les d&#233;tecteurs d'occupation anciens
  </dt> <dd>
@@ -139,10 +139,9 @@ Chacun d'eux peut &#234;tre utilis&#233; comme un
 <a href="../../tools/Turnouts.shtml"> Aiguillage</a>  JMRI,
 <a href="../../tools/Lights.shtml"> Lumi&#232;re</a> JMRI,
 ou
-<a href="../../tools/Signals.shtml"> Feus de Signalisation</a> JMRI
+<a href="../../tools/Signals.shtml">Feus de Signalisation</a> JMRI
 
-
- <h4>Aiguillages</h4>
+<h4>Aiguillages</h4>
 
 Les sorties Grapevine peuvent &#234;tre utilis&#233;es pour la commande des moteurs d'aiguillage.
 Dans ce cas, ils  doivent &#234;tre r&#233;f&#233;renc&#233;es comme des 
@@ -167,17 +166,18 @@ rouge/jaune/vert et aspects clignotant associ&#233;s ,
 vous devez le d&#233;finir comme un " feu de signalisation Grapevine" en utilisant le bouton<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"> Ajouter ...</a> dans le
 <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml"> Tableau Feu de signalisation</a>.
 Donnez-lui un nom syst&#232;me qui commence par "GH", et est suivie par le n&#339;ud et
-num&#233;ros de sortie..  
+num&#233;ros de sortie.
 
 <p>
 Par exemple, pour utiliser le troisi&#232;me connecteur sur la carte du deuxi&#232;me conducteur sur le n&#339;ud 1,
-d&#233;finir une cible de signal en utilisant nom syst&#232;me Grapevine GH1203 .
+d&#233;finir une cible de signal en utilisant nom syst&#232;me Grapevine GH1203.
 
 <a name="documentation"></a><h2>Documentation</h2>
 Pour plus d'informations sur le mat&#233;riel Grapevine consulter le
 <a href="http://www.protrak.cc"> site web ProTrak </a>.
 
-
-<!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -70,7 +70,7 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 
         SignalHead existingBean =
                 InstanceManager.getDefault(jmri.SignalHeadManager.class)
-                        .getBeanBySystemName(sys);
+                        .getBySystemName(sys);
 
         if ((existingBean != null) && (existingBean != h)) {
             log.error("systemName is already registered: {}", sys);
@@ -82,4 +82,5 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
     }
 
     private final static Logger log = LoggerFactory.getLogger(QuadOutputSignalHeadXml.class);
+
 }

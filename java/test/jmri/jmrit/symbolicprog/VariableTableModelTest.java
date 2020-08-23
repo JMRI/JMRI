@@ -3,23 +3,24 @@ package jmri.jmrit.symbolicprog;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
 import javax.swing.JLabel;
+
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test VariableTableModel table methods.
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class VariableTableModelTest {
 
@@ -98,7 +99,7 @@ public class VariableTableModelTest {
         //fmt.setNewlines(true);   // pretty printing
         //fmt.setIndent(true);
         //try {
-        //	 fmt.output(doc, o);
+        // fmt.output(doc, o);
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
         // and test reading this
         t.setRow(0, el0);
@@ -154,7 +155,7 @@ public class VariableTableModelTest {
         //fmt.setNewlines(true);   // pretty printing
         //fmt.setIndent(true);
         //try {
-        //	 fmt.output(doc, o);
+        // fmt.output(doc, o);
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
         // and test reading this
         t.setRow(0, el0);
@@ -683,7 +684,7 @@ public class VariableTableModelTest {
         //fmt.setNewlines(true);   // pretty printing
         //fmt.setIndent(true);
         //try {
-        //	 fmt.output(doc, o);
+        // fmt.output(doc, o);
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
         // and test reading this
         t.setRow(0, el0);
@@ -733,12 +734,12 @@ public class VariableTableModelTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,13 +1,14 @@
 package jmri.jmrix.rps.swing.polling;
 
 import java.awt.GraphicsEnvironment;
+
 import javax.swing.JFrame;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
+
 import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
@@ -30,14 +31,15 @@ public class PollTableActionTest {
         f.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        jmri.util.JUnitUtil.initRosterConfigManager();
         memo = new RpsSystemConnectionMemo();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memo = null;
         jmri.util.JUnitUtil.tearDown();

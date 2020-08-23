@@ -22,10 +22,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: DecoderPro Operations Mode Programmer</h1><a name=
       "contents" id="contents"></a>
 
@@ -131,7 +131,7 @@
       checked. They also do not change for steps above if a lower
       step is changed.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

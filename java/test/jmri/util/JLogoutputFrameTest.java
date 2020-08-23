@@ -2,12 +2,11 @@ package jmri.util;
 
 import java.awt.GraphicsEnvironment;
 import java.util.*;
+
 import org.apache.log4j.*;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -23,13 +22,12 @@ public class JLogoutputFrameTest {
         t.getMainFrame().dispose();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     @SuppressWarnings("unchecked") // cast required by logging APIs
     public void tearDown() {
         // remove any JTextPaneAppender objects that

@@ -104,7 +104,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             @Override
             public void actionPerformed(ActionEvent e) {
                 ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("SectionGenerationComplete"));
+                JOptionPane.showMessageDialog(finalF, Bundle.getMessage("SectionGenerationComplete"));
             }
         });
     }
@@ -535,10 +535,11 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
     void autoCreatePairs(jmri.util.JmriJFrame f) {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
-            int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));
+            int response = JOptionPane.showConfirmDialog(f, Bundle.getMessage("EnableLayoutBlockRouting"),
+                    Bundle.getMessage("TitleBlockRouting"), JOptionPane.YES_NO_OPTION);
             if (response == 0) {
                 InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabled"));
+                JOptionPane.showMessageDialog(f, Bundle.getMessage("LayoutBlockRoutingEnabled"));
             } else {
                 return;
             }
@@ -600,7 +601,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     }
                 }
             };
-            Thread thr = new Thread(r, "Discover Signal Mast Logic");  // NOI18N
+            Thread thr = jmri.util.ThreadingUtil.newThread(r, "Discover Signal Mast Logic");  // NOI18N
             thr.start();
 
         } else {

@@ -14,7 +14,6 @@ import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.profile.ProfileManager;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * </p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2012
- * @author	Paul Bender Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2019
  */
 public class RosterTestUtil {
 

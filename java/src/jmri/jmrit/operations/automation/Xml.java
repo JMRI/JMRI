@@ -9,6 +9,10 @@ package jmri.jmrit.operations.automation;
  */
 public class Xml {
 
+    private Xml(){
+        //class of constants
+    }
+
     // Common to operation xml files
     static final String ID = "id"; // NOI18N
     static final String NAME = "name"; // NOI18N

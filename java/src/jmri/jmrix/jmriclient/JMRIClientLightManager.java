@@ -1,6 +1,7 @@
 package jmri.jmrix.jmriclient;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
 
 /**
@@ -21,12 +22,13 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public JMRIClientSystemConnectionMemo getMemo() {
         return (JMRIClientSystemConnectionMemo) memo;
     }
 
     @Override
-    public Light createNewLight(String systemName, String userName) {
+    public Light createNewLight(@Nonnull String systemName, String userName) {
         Light t;
         int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
         t = new JMRIClientLight(addr, getMemo());
@@ -38,7 +40,7 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (systemName.startsWith(getSystemNamePrefix())
                 && Integer.parseInt(systemName.substring(getSystemNamePrefix().length())) > 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
@@ -47,7 +49,8 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return super.validateIntegerSystemNameFormat(name, 0, Integer.MAX_VALUE, locale);
     }
 
@@ -58,7 +61,7 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
      * Abstract Light class
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (true);
     }
 

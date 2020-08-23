@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to hold SPROG type and firmware version.
  *
- * @author	Andrew Crosland Copyright (C) 2012
+ * @author Andrew Crosland Copyright (C) 2012
  */
 public class SprogVersion {
 
@@ -20,7 +20,7 @@ public class SprogVersion {
      */
     public SprogVersion(SprogType t) {
         if (log.isDebugEnabled()) {
-            log.debug("SprogVersion(SprogType) ctor: " + t.toString());
+            log.debug("SprogVersion(SprogType) ctor: {}", t.toString());
         }
         sprogType = t;
         sprogVersion = "";
@@ -34,10 +34,10 @@ public class SprogVersion {
      */
     public SprogVersion(SprogType t, String s) {
         if (log.isDebugEnabled()) {
-            log.debug("SprogVersion(SprogType, String) ctor: " + t.toString() + "v" + s);
+            log.debug("SprogVersion(SprogType, String) ctor: {}v{}", t.toString(), s);
         }
         if (log.isDebugEnabled()) {
-            log.debug("sprogType: " + t.sprogType);
+            log.debug("sprogType: {}", t.sprogType);
         }
         sprogType = t;
         sprogVersion = s;
@@ -90,7 +90,7 @@ public class SprogVersion {
         int major = this.getMajorVersion();
         int minor = this.getMinorVersion();
         if (log.isDebugEnabled()) {
-            log.debug("Major: " + major + " Minor: " + minor);
+            log.debug("Major: {} Minor: {}", major, minor);
         }
         if (this.sprogType.isSprogII() && (((major == 1) && (minor >= 6))
                 || ((major == 2) && (minor >= 1))
@@ -149,12 +149,13 @@ public class SprogVersion {
     }
 
     /**
-     *
+     * Custom toString with Version Number.
+     * @param s sprog version.
      * @return String representation of SPROG version
      */
     public String toString(SprogVersion s) {
         if (log.isDebugEnabled()) {
-            log.debug("sprogType: " + s.sprogType.sprogType);
+            log.debug("sprogType: {}", s.sprogType.sprogType);
         }
         return (s.sprogType.toString() +" v"+ sprogVersion);
     }

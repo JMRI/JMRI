@@ -14,7 +14,7 @@ import jmri.jmrix.sprog.SprogCSStreamPortController;
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author Andrew Crosland Copyright: Copyright (c) 2006
+ * @author Andrew Crosland Copyright (c) 2006
  */
 public class SprogCSStreamConnectionConfigXml extends AbstractStreamConnectionConfigXml {
 
@@ -36,9 +36,9 @@ public class SprogCSStreamConnectionConfigXml extends AbstractStreamConnectionCo
 
     @Override
     protected void register() {
-	if(adapter!=null) {
-	   return; // already registered.
-	}
+        if (adapter != null) {
+            return; // already registered.
+        }
         this.register(new SprogCSStreamConnectionConfig(adapter));
     }
 

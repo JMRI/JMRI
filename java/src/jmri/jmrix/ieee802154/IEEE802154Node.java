@@ -52,7 +52,7 @@ public abstract class IEEE802154Node extends AbstractNode {
         if (checkNodeAddress(address)) {
             nodeAddress = address;
         } else {
-            log.error("illegal node address: " + Integer.toString(address));
+            log.error("illegal node address: {}", Integer.toString(address));
             nodeAddress = 0;
             throw new IllegalArgumentException("Attempt to set address to invalid value: " + address);
         }

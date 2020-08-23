@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Updated by Herv&#233; Blorec  2013-10-12-->
 
-  <title>JMRI: Tableau de Groupe Signaux</title><!-- Style -->
+  <title>JMRI: Tableau de Groupe Signaux</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,16 +16,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Tableau de Groupe Signaux</h1>Groupes de Signaux.
       Les groupes de signaux sont utilis&eacute;s pour
       d&eacute;finir un certain nombre de t&ecirc;tes de signal,
@@ -200,7 +201,7 @@
             <p>IT6 mis Droitt</p>
           </td>
         </tr>
-      </table><!--#include virtual="/Footer" -->
+      </table><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

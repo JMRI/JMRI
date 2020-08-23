@@ -2,9 +2,9 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -18,6 +18,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 
@@ -31,22 +33,14 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     private PortalIcon _icon;
     private JRadioButton _toButton;
     private JRadioButton _fromButton;
-    private JRadioButton _noButton;
+    private HashMap<String, NamedIcon> _iconMap;
 
     private PortalList _portalList;
 
     public EditPortalDirection(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
+        checkCircuitIcons("DirectionArrow");
         pack();
-        String msg = _parent.checkForPortals(block, "DirectionArrow");
-        if (msg == null) {
-            msg = _parent.checkForPortalIcons(block, "DirectionArrow");
-        }
-        if (msg != null) {
-            JOptionPane.showMessageDialog(this, msg,
-                    Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
-            _canEdit = false;
-        }
     }
 
     private JPanel makeArrowPanel() {
@@ -57,19 +51,19 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         panel.add(Box.createHorizontalStrut(200));
 
         ButtonGroup group = new ButtonGroup();
-        _toButton = new JRadioButton(_parent._editor.getPortalIcon(PortalIcon.TO_ARROW));
+        _toButton = new JRadioButton(_iconMap.get(PortalIcon.TO_ARROW));
         _toButton.setActionCommand(PortalIcon.TO_ARROW);
         _toButton.addActionListener(this);
         group.add(_toButton);
         panel.add(_toButton);
 
-        _fromButton = new JRadioButton(_parent._editor.getPortalIcon(PortalIcon.FROM_ARROW));
+        _fromButton = new JRadioButton(_iconMap.get(PortalIcon.FROM_ARROW));
         _fromButton.setActionCommand(PortalIcon.FROM_ARROW);
         _fromButton.addActionListener(this);
         group.add(_fromButton);
         panel.add(_fromButton);
 
-        _noButton = new JRadioButton(Bundle.getMessage("noIcon"), _parent._editor.getPortalIcon(PortalIcon.HIDDEN));
+        JRadioButton _noButton = new JRadioButton(Bundle.getMessage("noIcon"), _iconMap.get(PortalIcon.HIDDEN));
         _noButton.setVerticalTextPosition(AbstractButton.CENTER);
         _noButton.setHorizontalTextPosition(AbstractButton.CENTER);
         _noButton.setActionCommand(PortalIcon.HIDDEN);
@@ -82,6 +76,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
 
     @Override
     protected JPanel makeContentPanel() {
+        _iconMap = PortalIcon.getPaletteMap();
         JPanel portalPanel = new JPanel();
         portalPanel.setLayout(new BoxLayout(portalPanel, BoxLayout.Y_AXIS));
 
@@ -89,7 +84,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName())));
         portalPanel.add(panel);
 
-        _portalList = new PortalList(_homeBlock);
+        _portalList = new PortalList(_homeBlock, this);
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
 
@@ -141,9 +136,9 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
     public void valueChanged(ListSelectionEvent e) {
         Portal portal = _portalList.getSelectedValue();
         if (portal != null) {
-            List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
+            List<PortalIcon> piArray = _parent.getPortalIcons(portal);
             if (piArray.isEmpty()) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getDisplayName()),
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getName()),
                         Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
                 clearListSelection();
             } else {
@@ -160,18 +155,16 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
             return;
         }
         if (PortalIcon.TO_ARROW.equals(e.getActionCommand())) {
-            _icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.TO_ARROW));
-            _icon.setIcon(PortalIcon.FROM_ARROW, _parent._editor.getPortalIcon(PortalIcon.FROM_ARROW));
+            _icon.setIcon(PortalIcon.TO_ARROW,_iconMap.get(PortalIcon.TO_ARROW));
+            _icon.setIcon(PortalIcon.FROM_ARROW, _iconMap.get(PortalIcon.FROM_ARROW));
             _icon.setArrowOrientatuon(true);
             _icon.setHideArrows(false);
         } else if (PortalIcon.FROM_ARROW.equals(e.getActionCommand())) {
-            _icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.FROM_ARROW));
-            _icon.setIcon(PortalIcon.FROM_ARROW, _parent._editor.getPortalIcon(PortalIcon.TO_ARROW));
+            _icon.setIcon(PortalIcon.TO_ARROW, _iconMap.get(PortalIcon.FROM_ARROW));
+            _icon.setIcon(PortalIcon.FROM_ARROW, _iconMap.get(PortalIcon.TO_ARROW));
             _icon.setArrowOrientatuon(false);
             _icon.setHideArrows(false);
         } else if (PortalIcon.HIDDEN.equals(e.getActionCommand())) {
-//         _icon.setIcon(PortalIcon.TO_ARROW, _parent._editor.getPortalIcon(PortalIcon.HIDDEN));      
-//         _icon.setArrowOrientatuon(true);
             _icon.setHideArrows(true);
             _icon.setStatus(PortalIcon.HIDDEN);
             return;
@@ -209,14 +202,20 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
 
     @Override
     protected void closingEvent(boolean close) {
+        StringBuffer sb = new StringBuffer();
         String msg = _parent.checkForPortals(_homeBlock, "BlockPaths");
-        if (msg == null) {
-            msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
-        }
-        if (msg != null) {
+        if (msg.length() > 0) {
+            sb.append(msg);
+            sb.append("\n");
             close = true;
         }
-        closingEvent(close, msg);
+        msg = _parent.checkForPortalIcons(_homeBlock, "DirectionArrow");
+        if (msg.length() > 0) {
+            sb.append(msg);
+            sb.append("\n");
+            close = true;
+        }
+        closingEvent(close, sb.toString());
     }
 
 }

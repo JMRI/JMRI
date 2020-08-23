@@ -158,7 +158,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected javax.swing.JTextField receiveDelayField = new javax.swing.JTextField(3);
 
     /**
-     * Constructor method
+     * Constructor method.
+     * @param memo system connection.
      */
     public NodeConfigFrame(AcelaSystemConnectionMemo memo) {
         super();
@@ -1505,7 +1506,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public void updateButtonActionPerformed() {
         // update node information
         nodeType = nodeTypeBox.getSelectedIndex();
-        log.debug("update performed: was " + curNode.getNodeType() + " request " + nodeType);
+        log.debug("update performed: was {} request {}", curNode.getNodeType(), nodeType);
         if (curNode.getNodeType() != nodeType) {
             // node type has changed
             curNode.setNodeType(nodeType);

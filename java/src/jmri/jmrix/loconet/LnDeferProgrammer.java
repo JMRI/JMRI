@@ -189,6 +189,6 @@ public class LnDeferProgrammer implements Programmer {
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnDeferProgrammer.class);
 
 }

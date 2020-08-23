@@ -1,8 +1,8 @@
 package jmri.jmrix.mrc;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the MrcPortController class.
@@ -12,7 +12,7 @@ import org.junit.Before;
 public class MrcPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
        MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
@@ -56,7 +56,7 @@ public class MrcPortControllerTest extends jmri.jmrix.AbstractSerialPortControll
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown(){
        JUnitUtil.tearDown();
     }

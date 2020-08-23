@@ -13,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.ProxyManager;
 
 /**
  * A JComboBox for a set of Managers for the same type of NamedBean.
@@ -33,7 +34,8 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
     public ManagerComboBox(@Nonnull List<Manager<B>> list, Manager<B> selection) {
         super();
         setRenderer(new ManagerRenderer(getRenderer()));
-        ManagerComboBox.this.setManagers(list, selection); // prevent overriding method from being used
+        // prevent overriding method from being used
+        ManagerComboBox.this.setManagers(list, selection);
     }
 
     /**
@@ -66,12 +68,21 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
     /**
      * Set the list of managers to the single passed in manager, and select it.
      *
-     * @param manager the manager
+     * @param manager the manager; if manager is a {@link ProxyManager}, this is
+     *                equivalent to calling {@link #setManagers(List, Manager)}
+     *                with the results of
+     *                {@link ProxyManager#getDisplayOrderManagerList()},
+     *                {@link ProxyManager#getDefaultManager()}
      */
     public void setManagers(@Nonnull Manager<B> manager) {
-        List<Manager<B>> list = new ArrayList<>();
-        list.add(manager);
-        setManagers(list, manager);
+        if (manager instanceof ProxyManager) {
+            ProxyManager<B> proxy = (ProxyManager<B>) manager;
+            setManagers(proxy.getDisplayOrderManagerList(), proxy.getDefaultManager());
+        } else {
+            List<Manager<B>> list = new ArrayList<>();
+            list.add(manager);
+            setManagers(list, manager);
+        }
     }
 
     /**
@@ -91,7 +102,8 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
         }
 
         @Override
-        public Component getListCellRendererComponent(JList<? extends Manager<B>> list, Manager<B> value, int index, boolean isSelected, boolean cellHasFocus) {
+        public Component getListCellRendererComponent(JList<? extends Manager<B>> list, Manager<B> value, int index,
+                boolean isSelected, boolean cellHasFocus) {
             JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value != null) {
                 label.setText(value.getMemo().getUserName());

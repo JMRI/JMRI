@@ -60,7 +60,7 @@ public class PrintNceConsistRosterAction extends AbstractAction {
         NceConsistRoster r = InstanceManager.getDefault(NceConsistRoster.class);
         List<NceConsistRosterEntry> list = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
 
-        log.debug("Roster list size: " + list.size());
+        log.debug("Roster list size: {}", list.size());
         for (NceConsistRosterEntry entry : list) {
             entry.printEntry(writer);
         }

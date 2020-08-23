@@ -2,15 +2,18 @@ package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
+
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -49,7 +52,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("2nd state", Sensor.INACTIVE, t.getState());
 
-	t.setOwnState(Sensor.ACTIVE); // next is considered to run immediately, before debounce
+        t.setOwnState(Sensor.ACTIVE); // next is considered to run immediately, before debounce
         Assert.assertEquals("post-set state", Sensor.INACTIVE, t.getState());
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("Final state", Sensor.ACTIVE, t.getState());
@@ -57,7 +60,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
 
     @Override
     @Test
-    @Ignore("Base class test does not function correctly for RaspberryPi Sensors")
+    @Disabled("Base class test does not function correctly for RaspberryPi Sensors")
     @ToDo("provide mock raspberry pi implementation so code can be tested using parent class test")
     public void testAddListener() throws JmriException {
     }
@@ -68,20 +71,30 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
         Assert.assertEquals("default pull state", jmri.Sensor.PullResistance.PULL_DOWN, t.getPullResistance());
     }
 
-    // The minimal setup for log4J
+    private GpioProvider myProvider;
+
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
-        GpioProvider myprovider = new PiGpioProviderScaffold();
-        GpioFactory.setDefaultProvider(myprovider);
         JUnitUtil.setUp();
-        t = new RaspberryPiSensor("PiS1");
+        JUnitUtil.resetInstanceManager();
+        myProvider = new PiGpioProviderScaffold();
+        GpioFactory.setDefaultProvider(myProvider);
+
+        t = new RaspberryPiSensor("PS4");
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-	t.dispose();
+        if (t != null) {
+            t.dispose(); // is supposed to unprovisionPin 4
+        }
+        // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
+        myProvider.shutdown();
+
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 

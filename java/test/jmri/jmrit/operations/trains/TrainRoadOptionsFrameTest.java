@@ -4,12 +4,12 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TrainRoadOptionsFrameTest extends OperationsTestCase {
 

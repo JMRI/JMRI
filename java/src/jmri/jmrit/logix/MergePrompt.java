@@ -12,7 +12,6 @@ import java.util.TreeMap;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,8 +27,6 @@ import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 
 /**
  * Prompts user to select SpeedProfile to write to Roster
@@ -38,16 +35,16 @@ import jmri.util.table.ButtonRenderer;
  */
 public class MergePrompt extends JDialog {
 
-    HashMap<String, Boolean> _candidates;   // merge candidate choices
+    Map<String, Boolean> _candidates;   // merge candidate choices
     HashMap<String, RosterSpeedProfile> _mergeProfiles;  // candidate's speedprofile
     HashMap<String, RosterSpeedProfile> _sessionProfiles;  // candidate's speedprofile
-    HashMap<String, HashMap<Integer, Boolean>> _anomalyMap;
+    Map<String, Map<Integer, Boolean>> _anomalyMap;
     JPanel _viewFrame;
     JTable _mergeTable;
     JmriJFrame _anomolyFrame;
     static int STRUT = 20;
 
-    MergePrompt(String name, HashMap<String, Boolean> cand, HashMap<String, HashMap<Integer, Boolean>> anomalies) {
+    MergePrompt(String name, Map<String, Boolean> cand, Map<String, Map<Integer, Boolean>> anomalies) {
         super();
         _candidates = cand;
         _anomalyMap = anomalies;
@@ -79,10 +76,8 @@ public class MergePrompt extends JDialog {
         }
         int rowHeight = new JButton("VIEW").getPreferredSize().height;
         table.setRowHeight(rowHeight);
-//        java.awt.Font font = table.getFont();
         JPanel description = new JPanel();
         JLabel label = new JLabel(Bundle.getMessage("MergePrompt"));
-//        description.setFont(font);
         label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         description.add(label);
 
@@ -96,9 +91,7 @@ public class MergePrompt extends JDialog {
         panel.add(button);
         panel.add(Box.createHorizontalStrut(STRUT));
         button = new JButton(Bundle.getMessage("ButtonMerge"));
-        button.addActionListener((ActionEvent evt) -> {
-            dispose();
-        });
+        button.addActionListener((ActionEvent evt) -> dispose());
         panel.add(button);
         panel.add(Box.createHorizontalStrut(STRUT));
         button = new JButton(Bundle.getMessage("ButtonCloseView"));
@@ -110,7 +103,6 @@ public class MergePrompt extends JDialog {
         });
         panel.add(button);
 
-//        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane pane = new JScrollPane(table);
         pane.setPreferredSize(new Dimension(tablewidth, tablewidth));
 
@@ -144,7 +136,7 @@ public class MergePrompt extends JDialog {
 
     private void noMerge() {
         for (Map.Entry<String, Boolean> ent : _candidates.entrySet()) {
-            _candidates.put(ent.getKey(), Boolean.valueOf(false));
+            _candidates.put(ent.getKey(), false);
         }
     }
 
@@ -159,7 +151,7 @@ public class MergePrompt extends JDialog {
         panel.add(MergePrompt.makeEditInfoPanel(id));
         _viewFrame.add(panel);
 
-        HashMap<Integer, Boolean> anomalies = _anomalyMap.get(id);
+        Map<Integer, Boolean> anomalies = _anomalyMap.get(id);
 
         JPanel spPanel = new JPanel();
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
@@ -191,20 +183,20 @@ public class MergePrompt extends JDialog {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JLabel label = new JLabel(Bundle.getMessage("viewTitle", id));
-        label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(label);
         label = new JLabel(Bundle.getMessage("deletePrompt1"));
         label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
         label.setForeground(java.awt.Color.RED);
-        label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(label);
         label = new JLabel(Bundle.getMessage("deletePrompt2"));
         label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-        label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(label);
         label = new JLabel(Bundle.getMessage("deletePrompt3"));
         label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-        label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(label);
         return panel;
     }
@@ -214,13 +206,13 @@ public class MergePrompt extends JDialog {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JLabel l = new JLabel(Bundle.getMessage("anomalyPrompt"));
         l.setForeground(java.awt.Color.RED);
-        l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        l.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(l);
         return panel;
     }
 
     static JPanel makeSpeedProfilePanel(String title, RosterSpeedProfile profile, 
-                boolean edit, HashMap<Integer, Boolean> anomalies) {
+                boolean edit, Map<Integer, Boolean> anomalies) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(new JLabel(Bundle.getMessage(title)));
@@ -233,9 +225,9 @@ public class MergePrompt extends JDialog {
      * speeds. Omit anomalies.
      *
      * @param speedProfile speedProfile
-     * @return HashMap of Key and direction of possible errors (anomalies)
+     * @return Map of Key and direction of possible errors (anomalies)
      */
-    static public HashMap<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile) {
+    public static Map<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile) {
         // do forward speeds, then reverse
         HashMap<Integer, Boolean> anomalies = new HashMap<>();
         TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
@@ -309,7 +301,7 @@ public class MergePrompt extends JDialog {
 
         ArrayList<Map.Entry<String, Boolean>> candidateArray = new ArrayList<>();
 
-        MergeTableModel(HashMap<String, Boolean> map) {
+        MergeTableModel(Map<String, Boolean> map) {
             Iterator<java.util.Map.Entry<String, Boolean>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
                 candidateArray.add(iter.next());
@@ -318,11 +310,8 @@ public class MergePrompt extends JDialog {
 
         boolean hasAnomaly(int row) {
             Map.Entry<String, Boolean> entry = candidateArray.get(row);
-            HashMap<Integer, Boolean> anomaly = _anomalyMap.get(entry.getKey());
-            if (anomaly != null && anomaly.size() > 0) {
-                return true;
-            }
-            return false;
+            Map<Integer, Boolean> anomaly = _anomalyMap.get(entry.getKey());
+            return(anomaly != null && anomaly.size() > 0);
         }
 
         @Override
@@ -383,10 +372,7 @@ public class MergePrompt extends JDialog {
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (col == ID_COL) {
-                return false;
-            }
-            return true;
+            return col == ID_COL;
         }
 
         @Override
@@ -441,5 +427,6 @@ public class MergePrompt extends JDialog {
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(MergePrompt.class);
+    //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergePrompt.class);
+
 }

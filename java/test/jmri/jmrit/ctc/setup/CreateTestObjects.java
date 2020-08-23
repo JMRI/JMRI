@@ -9,6 +9,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.jmrit.blockboss.BlockBossLogicProvider;
 import jmri.jmrit.ctc.CTCFiles;
 
 public class CreateTestObjects {
@@ -164,6 +165,7 @@ public class CreateTestObjects {
         bb.setLimitSpeed2(limitspeed2);
         bb.setSensor1(sensor1);
         bb.setSensor2(sensor2);
+        InstanceManager.getDefault(BlockBossLogicProvider.class).register(bb);
         bb.start();
     }
 
@@ -179,7 +181,7 @@ public class CreateTestObjects {
             log.debug("Copying from {} to {}", propsFile, CTCFiles.getFile(props));
             Files.copy(propsFile.toPath(), CTCFiles.getFile(props).toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
-            log.error("Copy CTC Poperties demo file failed", ex);  // NOI18N
+            log.error("Copy CTC Properties demo file failed", ex);  // NOI18N
         }
         try {
             log.debug("Copying from {} to {}", systemFile, CTCFiles.getFile(system));

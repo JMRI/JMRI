@@ -8,7 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008, 2019 -->
 
   <title>JMRI: PanelPro, an application for making Control
-  Panels</title><!-- Style -->
+  Panels</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,16 +17,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-    <!--#include virtual="/Header" -->
+    <!--#include virtual="/Header.shtml" -->
     <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
-        <div id="mainContent">
-            <h1>JMRI: PanelPro</h1>
+      <h1>JMRI: PanelPro</h1>
             <p>The JMRI libraries contain the PanelPro
             application for creating panels to control or follow your
             (virtual) model railroad. This page introduces the
@@ -52,6 +54,8 @@
                 straightforward control interface, showing a range of switch
                 keys to watch and control items.</li>
             </ul>
+
+            <p>For the impatient, try the <a href="GettingStarted.shtml">Getting Started</a> page.</p>
 
             <h2>Which Editor to use?</h2>
 
@@ -94,7 +98,7 @@
             "../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>.
             In addition, the Layout description of your railway can be
             used by scripts such as the included
-            <a href="../..//tools/scripting/Examples.shtml">AutoDispatcher2</a>
+            <a href="../../tools/scripting/Examples.shtml">AutoDispatcher2</a>
             to automatically control your trains. There are many other
             tools within JMRI which require a description of your
             railroad and the description comes from the Layout built in
@@ -127,10 +131,10 @@
             that describes how he used Panel Editor and Layout Editor
             together.</li>
             <li>Our <a href=
-            "http://jmri.org/community/examples/Gallery.shtml">Gallery
+            "https://jmri.org/community/examples/Gallery.shtml">Gallery
             page</a> shows examples of how model railroaders have used
             panels on their own layouts, including using PanelPro for <a href=
-            "http://jmri.org/community/examples/Modules.shtml">Modular
+            "https://jmri.org/community/examples/Modules.shtml">Modular
             layouts</a>.</li>
             <li>Rodney Black's <a href="http://cats4ctc.org/">CATS</a>
             (Computer Automated Traffic System) application is another
@@ -224,7 +228,7 @@
             panels for even large layouts. The example above is from <a href=
             "http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's
             Cornwall Railroad</a>. There's a <a href=
-            "http://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">
+            "https://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">
             page on the main web site</a> that describes this in detail.
             There's also a <a href=
             "http://ownry.squarespace.com/blog/2011/4/7/ctc-dispatcher-panel-on-the-ownry.html?SSScrollPosition=0">
@@ -326,7 +330,7 @@
             system at the same time. See the page on <a href=
             "../../doc/Technical/Names.shtml">Names &amp; Naming</a> for
             more information.</p>
-            <!--#include virtual="/Footer" -->
+            <!--#include virtual="/Footer.shtml" -->
         </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
 </body>

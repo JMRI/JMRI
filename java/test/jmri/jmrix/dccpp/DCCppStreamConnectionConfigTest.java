@@ -1,25 +1,25 @@
 package jmri.jmrix.dccpp;
 
-import org.junit.*;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2018	
+ * @author Paul Bender Copyright (C) 2018
  */
 public class DCCppStreamConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfigTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         cc = new DCCppStreamConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-	cc = null;
+        cc = null;
+        jmri.util.JUnitUtil.resetWindows(false,false);
         jmri.util.JUnitUtil.tearDown();
     }
 

@@ -1,10 +1,9 @@
 package jmri.util.node;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -22,14 +21,13 @@ public class NodeIdentityTest {
         Assert.assertNotNull(NodeIdentity.storageIdentity());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetNodeIdentity();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetNodeIdentity();
         JUnitUtil.tearDown();

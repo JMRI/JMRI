@@ -247,13 +247,10 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
                     * (1.0 - (allowedWidth / currentStringWidth)));
             String displayableName = "..." // NOI18N
                     + inputFileName.getText().substring((int) startPoint);
-            log.info("Shortening display of filename " // NOI18N
-                    + inputFileName.getText()
-                    + " to " + displayableName);   // NOI18N
-            log.debug("Width required to display the full file name = " // NOI18N
-                    + currentStringWidth);
-            log.debug("Allowed width = " + allowedWidth);  // NOI18N
-            log.debug("Amount of text not displayed = " + startPoint);  // NOI18N
+            log.info("Shortening display of filename {} to {}", inputFileName.getText(), displayableName);   // NOI18N
+            log.debug("Width required to display the full file name = {}", currentStringWidth);
+            log.debug("Allowed width = {}", allowedWidth);  // NOI18N
+            log.debug("Amount of text not displayed = {}", startPoint);  // NOI18N
             inputFileName.setText(displayableName);
         }
         inputFileName.updateUI();

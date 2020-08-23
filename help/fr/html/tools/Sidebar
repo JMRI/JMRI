@@ -1,34 +1,32 @@
 <!-- Sidebar -->
 <!-- Updated Blorec Herv&#233; le 2016-09-05;  -->
-<html lang="fr">
 	<!-- This is the common sidebar definition for html/tools pages -->
 	<hr class="hide">
-	<div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI is...</div>
-		 <dl class="toc">
+	    <div style="text-align: center">JMRI c'est...</div>
+		 <dl>
 
 			<dt><h3><a href="index.shtml">Outils G&#233;n&#233;raux</a></h3></dt>
 			<dd> JMRI fournit de puissants outils pour travailler avec votre
 			r&#233;seau. 
 				<ul>
-				<li><dfn><a href="Turnouts.shtml">Aiguillages</a></dfn>
-    			<li><dfn><a href="Lights.shtml">Lumi&#232;res</a></dfn>
-		    	<li><dfn><a href="Sensors.shtml">Capteurs</a></dfn>
-				<li><dfn><a href="throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
-		    	<li><dfn><a href="consisttool/ConsistTool.shtml">Couplage</a></dfn>
-				<li><dfn><a href="signaling/index.shtml">Signalisation</a></dfn>
-		    	<li><dfn><a href="Blocks.shtml">Cantons</a></dfn>
-				<li><dfn><a href="Reporters.shtml">Rapports</a></dfn>
-				<li><dfn><a href="Memories.shtml">Variables M&#233;moires</a></dfn>
-				<li><dfn><a href="Routes.shtml">Itin&#233;raires</a></dfn>
-				<li><dfn><a href="LRoutess.shtml">LItin&#233;raires</a></dfn>
-				<li><dfn><a href="Sections.shtml">Sections</a></dfn>
-				<li><dfn><a href="Logix.shtml">Logix</a></dfn>
-				<li><dfn><a href="fastclock/index.shtml">Horloge Rapide</a></dfn>
-				<li><dfn><a href="speedometer/index.shtml">Compteur</a></dfn>
-				<li> <dfn> <a href="Audio.shtml">Audio</a></dfn>
-				<li> <dfn> <a href="IdTags.shtml">ID &#233;tiquettes</a></dfn>
+				<li><a href="Turnouts.shtml">Aiguillages</a></li>
+    			<li><a href="Lights.shtml">Lumi&#232;res</a></li>
+		    	<li><a href="Sensors.shtml">Capteurs</a></li>
+				<li><a href="throttle/ThrottleMain.shtml">R&#233;gulateurs</a></li>
+		    	<li><a href="consisttool/ConsistTool.shtml">Couplage</a></li>
+				<li><a href="signaling/index.shtml">Signalisation</a></li>
+		    	<li><a href="Blocks.shtml">Cantons</a></li>
+				<li><a href="Reporters.shtml">Rapports</a></li>
+				<li><a href="Memories.shtml">Variables M&#233;moires</a></li>
+				<li><a href="Routes.shtml">Itin&#233;raires</a></li>
+				<li><a href="LRoutess.shtml">LItin&#233;raires</a></li>
+				<li><a href="Sections.shtml">Sections</a></li>
+				<li><a href="Logix.shtml">Logix</a></li>
+				<li><a href="fastclock/index.shtml">Horloge Rapide</a></li>
+				<li><a href="speedometer/index.shtml">Compteur</a></li>
+				<li><a href="Audio.shtml">Audio</a></li>
+				<li><a href="IdTags.shtml">ID &#233;tiquettes</a></li>
 				</ul>
 			</dd>
 
@@ -36,22 +34,22 @@
 			<dd>
 				<ul>				
 
-		    <li><dfn><a href="../hardware/acela/index.shtml#tools">Acela (CTI)</a></dfn>
-		    <li><dfn><a href="../hardware/cmri/CMRI.shtml#tools">C/MRI</a></dfn>
-		    <li><dfn><a href="../hardware/can/index.shtml#tools">CAN</a></dfn>
-		    <li><dfn><a href="../hardware/can/cbus/index.shtml#tools">MERG CBUS</a></dfn>
-		    <li><dfn><a href="../hardware/dccpp/index.shtml#tools">DCC++</a></dfn>
-		    <li><dfn><a href="../hardware/easydcc/EasyDCC.shtml#tools">EasyDCC</a></dfn>
-		    <li><dfn><a href="../hardware/ecos/index.shtml#tools">ESU ECoS</a></dfn>
-		    <li><dfn><a href="../hardware/grapevine/index.shtml#tools">Grapevine</a></dfn>
-		    <li><dfn><a href="../apps/LocoTools/index.shtml">LocoNet (Digitrax)</a></dfn>
-		    <li><dfn><a href="../hardware/marklin/index.shtml#tools">M&auml;rklin</a></dfn>
-		    <li><dfn><a href="../hardware/nce/index.shtml#tools">NCE</a></dfn>
-		    <li><dfn><a href="../hardware/openlcb/index.shtml#tools">OpenLCB</a></dfn>
-		    <li><dfn><a href="../hardware/rps/index.shtml#tools">RPS</a></dfn>
-		    <li><dfn><a href="../hardware/sprog/SPROG.shtml#tools">SPROG</a></dfn>
-				<li><dfn><a href="../hardware/XBee/index.shtml#tools">XBee</a></dfn>
-				<li><dfn><a href="../hardware/XPressNet/index.shtml#tools">XPressNet (Lenz)</a></dfn>
+		    <li><a href="../hardware/acela/index.shtml#tools">Acela (CTI)</a></li>
+		    <li><a href="../hardware/cmri/CMRI.shtml#tools">C/MRI</a></li>
+		    <li><a href="../hardware/can/index.shtml#tools">CAN</a></li>
+		    <li><a href="../hardware/can/cbus/index.shtml#tools">MERG CBUS</a></li>
+		    <li><a href="../hardware/dccpp/index.shtml#tools">DCC++</a></li>
+		    <li><a href="../hardware/easydcc/EasyDCC.shtml#tools">EasyDCC</a></li>
+		    <li><a href="../hardware/ecos/index.shtml#tools">ESU ECoS</a></li>
+		    <li><a href="../hardware/grapevine/index.shtml#tools">Grapevine</a></li>
+		    <li><a href="../apps/LocoTools/index.shtml">LocoNet (Digitrax)</a></li>
+		    <li><a href="../hardware/marklin/index.shtml#tools">M&auml;rklin</a></li>
+		    <li><a href="../hardware/nce/index.shtml#tools">NCE</a></li>
+		    <li><a href="../hardware/openlcb/index.shtml#tools">OpenLCB</a></li>
+		    <li><a href="../hardware/rps/index.shtml#tools">RPS</a></li>
+		    <li><a href="../hardware/sprog/SPROG.shtml#tools">SPROG</a></li>
+			<li><a href="../hardware/XBee/index.shtml#tools">XBee</a></li>
+			<li><a href="../hardware/XPressNet/index.shtml#tools">XPressNet (Lenz)</a></li>
 			</ul>
 		</dd>
 
@@ -60,16 +58,21 @@
 		de votre r&#233;seau, du simple contr&ocirc;le d'une commande de  barri&#232;re
 		jusqu'&#224; faire circuler des trains en toile de fond.
 			<ul>
-			<li><dfn><a href="../Signals.shtml">Signalisation</a></dfn>	
-			<li><dfn><a href="EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>	  
-			<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>		    		    
-			<li><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
-			<li><dfn><a href="scripting/index.shtml">Script</a></dfn>
+			<li><a href="../Signals.shtml">Signalisation</a></li>
+			<li><a href="EntryExit.shtml">Entr&#233;e Sortie (NX)</a></li>
+			<li><a href="../Routes.shtml">Itin&#233;raires</a></li>
+			<li><a href="../fastclock/index.shtml">Horloges Rapides</a></li>
+			<li><a href="scripting/index.shtml">Script</a></li>
 			</ul>
 		</dd>
 
 		</dl>
 
 	</div> <!-- closes #side -->
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
 
 <!-- /Sidebar -->

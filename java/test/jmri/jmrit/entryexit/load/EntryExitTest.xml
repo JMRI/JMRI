@@ -454,7 +454,7 @@
   </layoutblocks>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
     <route userName="Turnouts">
-      <systemName>IR:AUTO:0001</systemName>
+      <systemName>IO:AUTO:0001</systemName>
       <userName>Turnouts</userName>
       <routeOutputTurnout systemName="IT101" state="CLOSED" />
       <routeOutputTurnout systemName="IT102" state="CLOSED" />
@@ -463,13 +463,13 @@
       <routeSensor systemName="Reset" mode="onActive" />
     </route>
     <route userName="Sensors">
-      <systemName>IR:AUTO:0002</systemName>
+      <systemName>IO:AUTO:0002</systemName>
       <userName>Sensors</userName>
       <routeOutputSensor systemName="Reset" state="INACTIVE" />
       <routeSensor systemName="Reset" mode="onActive" />
     </route>
     <route userName="Block Detectors">
-      <systemName>IR:AUTO:0003</systemName>
+      <systemName>IO:AUTO:0003</systemName>
       <userName>Block Detectors</userName>
       <routeOutputSensor systemName="BD-AW" state="INACTIVE" />
       <routeOutputSensor systemName="BD-AE" state="INACTIVE" />
@@ -488,7 +488,7 @@
       <routeSensor systemName="Reset" mode="onActive" />
     </route>
     <route userName="NX Sensors">
-      <systemName>IR:AUTO:0004</systemName>
+      <systemName>IO:AUTO:0004</systemName>
       <userName>NX Sensors</userName>
       <routeOutputSensor systemName="NX-Alpha-EB" state="INACTIVE" />
       <routeOutputSensor systemName="NX-AW" state="INACTIVE" />
@@ -511,16 +511,16 @@
   </signalmastlogics>
   <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
     <logix userName="Initialize" enabled="yes">
-      <systemName>RTXINITIALIZER</systemName>
+      <systemName>IX:RTXINITIALIZER</systemName>
       <userName>Initialize</userName>
-      <logixConditional systemName="RTXINITIALIZER1T" order="0" />
+      <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
     </logix>
   </logixs>
   <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
-    <conditional systemName="RTXINITIALIZER1T" userName="Route 1C Initialize" antecedent="R1" logicType="3" triggerOnChange="yes">
-      <systemName>RTXINITIALIZER1T</systemName>
+    <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C Initialize" antecedent="R1" logicType="3" triggerOnChange="yes">
+      <systemName>IX:RTXINITIALIZER1T</systemName>
       <userName>Route 1C Initialize</userName>
-      <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="0" systemName="IX:RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="Reset" data="2" delay="0" string="" />
     </conditional>
   </conditionals>

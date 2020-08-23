@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig;
  *
  * @author Paul Bender Copyright: Copyright (c) 2015
  */
-abstract public class AbstractXNetSerialConnectionConfigXml extends AbstractSerialConnectionConfigXml {
+public abstract class AbstractXNetSerialConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public AbstractXNetSerialConnectionConfigXml() {
         super();

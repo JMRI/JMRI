@@ -8,10 +8,12 @@ import java.awt.GraphicsEnvironment;
 
 import org.netbeans.jemmy.operators.*;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
- * @author	Bob Jacobsen Copyright 2014
+ * @author Bob Jacobsen Copyright 2014
  */
 public class AddSignalMastPanelTest {
 
@@ -108,7 +110,7 @@ public class AddSignalMastPanelTest {
                 // constructor for d will wait until the dialog is visible
                 JDialogOperator d = new JDialogOperator(Bundle.getMessage("WarningTitle"));
                 JButtonOperator bo = new JButtonOperator(d,"OK");
-                jmri.util.ThreadingUtil.runOnGUI(() -> {bo.push();});
+                bo.push();
             }).start();
         }
         Assert.assertFalse(a.checkUserName("user name"));
@@ -121,7 +123,7 @@ public class AddSignalMastPanelTest {
                 // constructor for d will wait until the dialog is visible
                 JDialogOperator d = new JDialogOperator(Bundle.getMessage("WarningTitle"));
                 JButtonOperator bo = new JButtonOperator(d,"OK");
-                jmri.util.ThreadingUtil.runOnGUI(() -> {bo.push();});
+                bo.push();
             }).start();
         }
         Assert.assertFalse(a.checkUserName("IF$vsm:basic:one-searchlight($1)"));
@@ -129,7 +131,7 @@ public class AddSignalMastPanelTest {
         JUnitAppender.assertErrorMessage("User Name \"IF$vsm:basic:one-searchlight($1)\" already exists as a System name");
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
@@ -143,13 +145,14 @@ public class AddSignalMastPanelTest {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         try {
             SignalSystemTestUtil.deleteMockSystem();
         } catch (Exception e) {
             log.error("exception deleting mock system", e);
         }
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AddSignalMastPanelTest.class);

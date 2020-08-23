@@ -6,30 +6,26 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233; 2013-09-26-->
+  <!-- Updated by Blorec Herv&#233; 2013-09-26-->
 
-  <title>JMRI: The Python/Jython language</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: The Python/Jython language</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <!-- Page Body -->
-
-      <h2>JMRI: Le langage Python/Jython</h2><a href=
+        <!-- Page Body -->
+<h2>JMRI: Le langage Python/Jython</h2>
+      <p><a href=
       "http://www.python.org">Python</a> est un langage de script
       couramment utilis&eacute; qui est disponible sur de nombreux
       types d'ordinateurs. Une variante bas&eacute;e sur Java,
@@ -38,7 +34,7 @@
       facile le contr&ocirc;le d'un chemin de fer miniature
       &agrave; partir de la ligne de commande d'un ordinateur. Pour
       nos besoins, les deux langages sont enti&egrave;rement
-      identiques.
+      identiques.</p>
 
       <p>Si comme moi vous pr&eacute;f&eacute;rez lire le papier,
       il y a beaucoup de livres disponibles sur Python.
@@ -107,10 +103,12 @@ de savoir o&ugrave; l'{et }aller:
                  done = 0
          print done
   
-</pre>Si vous obtenez un message &agrave; propos de "Syntax error",
+</pre>
+<p>Si vous obtenez un message &agrave; propos de "Syntax error",
 regardez le num&eacute;ro de la ligne indiqu&eacute;e pour voir si
-votre indentation n'est pas align&eacute;e. 
-<!--#include virtual="/Footer" -->
+votre indentation n'est pas align&eacute;e.</p>
+
+<!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

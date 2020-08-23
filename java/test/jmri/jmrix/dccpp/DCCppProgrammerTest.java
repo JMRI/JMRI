@@ -1,22 +1,24 @@
 /**
  * DCCppProgrammerTest.java
  *
- * Description:	JUnit tests for the DCCppProgrammer class
+ * JUnit tests for the DCCppProgrammer class
  *
- * @author	Bob Jacobsen
- * @author	Mark Underwood (C) 2015
+ * @author Bob Jacobsen
+ * @author Mark Underwood (C) 2015
  */
 package jmri.jmrix.dccpp;
 
 import jmri.JmriException;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     static final int RESTART_TIME = 20;
-        
+
     private DCCppInterfaceScaffold t = null;
     private jmri.ProgListenerScaffold l = null;
     private DCCppProgrammer p = null;
@@ -25,34 +27,32 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
-                programmer.getMode());        
+                programmer.getMode());
     }
 
     @Override
     @Test
     public void testDefaultViaBestMode() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
-                ((DCCppProgrammer)programmer).getBestMode());        
+                ((DCCppProgrammer) programmer).getBestMode());
     }
- 
-    @Test(expected=java.lang.IllegalArgumentException.class)
+
+    @Test
     @Override
     public void testSetGetMode() {
-        programmer.setMode(ProgrammingMode.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                programmer.getMode());        
+        Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(ProgrammingMode.REGISTERMODE));
     }
 
     @Override
     @Test
     public void testGetCanWriteAddress() {
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
-    }    
+    }
 
     @Override
     @Test
-    public void testGetWriteConfirmMode(){
-        Assert.assertEquals("Write Confirm Mode",jmri.Programmer.WriteConfirmMode.DecoderReply,
+    public void testGetWriteConfirmMode() {
+        Assert.assertEquals("Write Confirm Mode", jmri.Programmer.WriteConfirmMode.DecoderReply,
                 programmer.getWriteConfirmMode("1234"));
     }
 
@@ -81,7 +81,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("test body is commented out")
+    @Disabled("test body is commented out")
     public void testWriteRegisterSequence() throws JmriException {
         /*
         // infrastructure objects
@@ -175,7 +175,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("test is commented out")
+    @Disabled("test is commented out")
     public void testReadRegisterSequence() throws JmriException {
         /*
         // infrastructure objects
@@ -350,7 +350,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         //p.setMode(ProgrammingMode.PAGEMODE);
         //Assert.assertTrue("DCC++ Base Station Can Read CV3 in paged mode", p.getCanRead("3"));
 
-	p.setMode(ProgrammingMode.DIRECTBYTEMODE);
+        p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Read CV3 in direct byte mode", p.getCanRead("3"));
 
         p.setMode(ProgrammingMode.DIRECTBITMODE);
@@ -358,11 +358,9 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
         //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Read CV300 in register mode", p.getCanRead("300"));
-
-	//p.setMode(ProgrammingMode.PAGEMODE);
+        //p.setMode(ProgrammingMode.PAGEMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Read CV300 in paged mode", p.getCanRead("300"));
-
-	p.setMode(ProgrammingMode.DIRECTBYTEMODE);
+        p.setMode(ProgrammingMode.DIRECTBYTEMODE);
         Assert.assertTrue("DCC++ Base Station Can Read CV300 in direct byte mode", p.getCanRead("300"));
 
         p.setMode(ProgrammingMode.DIRECTBITMODE);
@@ -377,7 +375,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -390,16 +388,17 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 super.restartTimer(RESTART_TIME);
             }
         };
-	programmer = p;
+        programmer = p;
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
-	t = null;
-	l = null;
-	p = null;
-	JUnitUtil.tearDown();
+        t = null;
+        l = null;
+        p = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
 }

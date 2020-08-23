@@ -6,10 +6,10 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- Translated  by Blorec Hervé le 2011-10-28-->
+  <!-- Translated  by Blorec Herv&#233; le 2011-10-28-->
 
-  <title>JMRI: Maple Node Configuration</title><!-- Style -->
+  <title>JMRI: Maple Node Configuration</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Maple configuration des N&Aring;"uds</h2>
 
       <h3>Renseignements g&Atilde;&copy;n&Atilde;&copy;raux:</h3>
@@ -290,7 +291,7 @@
       <p>Maple= &Atilde;&permil;cran Tactile</p>
 
       <p>HMI = Interface Homme Machine</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

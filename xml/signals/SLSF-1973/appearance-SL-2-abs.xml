@@ -57,7 +57,7 @@
   <reference> As described in the
 July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
   </reference>
-  <description>Appearances for a two-searchlight signal with an "A" (absolute)</description>
+  <description>Appearances for a two-searchlight signal with an "A" (absolute).</description>
   
   <appearances>
 
@@ -115,14 +115,6 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <reference>Rule 288</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-288-a.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>lunar</show>
-      <reference>Rule 288</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-288-b.gif</imagelink>
     </appearance>
 
     <appearance>

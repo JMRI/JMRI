@@ -75,12 +75,7 @@ public class NceLight extends AbstractLight {
             byte[] bl = NceBinaryCommand.accDecoder(mBit, state);
 
             if (log.isDebugEnabled()) {
-                log.debug("Command: "
-                        + Integer.toHexString(0xFF & bl[0])
-                        + " " + Integer.toHexString(0xFF & bl[1])
-                        + " " + Integer.toHexString(0xFF & bl[2])
-                        + " " + Integer.toHexString(0xFF & bl[3])
-                        + " " + Integer.toHexString(0xFF & bl[4]));
+                log.debug("Command: {} {} {} {} {}", Integer.toHexString(0xFF & bl[0]), Integer.toHexString(0xFF & bl[1]), Integer.toHexString(0xFF & bl[2]), Integer.toHexString(0xFF & bl[3]), Integer.toHexString(0xFF & bl[4]));
             }
 
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
@@ -92,10 +87,7 @@ public class NceLight extends AbstractLight {
             byte[] bl = NmraPacket.accDecoderPkt(mBit, state);
 
             if (log.isDebugEnabled()) {
-                log.debug("packet: "
-                        + Integer.toHexString(0xFF & bl[0])
-                        + " " + Integer.toHexString(0xFF & bl[1])
-                        + " " + Integer.toHexString(0xFF & bl[2]));
+                log.debug("packet: {} {} {}", Integer.toHexString(0xFF & bl[0]), Integer.toHexString(0xFF & bl[1]), Integer.toHexString(0xFF & bl[2]));
             }
 
             NceMessage m = NceMessage.sendPacketMessage(tc, bl);

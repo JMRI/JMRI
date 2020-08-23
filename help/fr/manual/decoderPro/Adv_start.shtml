@@ -12,13 +12,14 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <a name="Top"></a>
-<h1><a name="Top">Advanced Programmer</a></h1>
+<h1>Advanced Programmer</h1>
 <h2>Roster Entry</h2>
 
 <div align="right">
@@ -51,7 +52,7 @@ so.&nbsp; This is done just &nbsp;as you would in the <a href="Basic_Programming
 <p><a href="index.shtml#AdvanceProgram">Back to Index</a></p>
 </div>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
  </body>

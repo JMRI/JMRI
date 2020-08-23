@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import javax.annotation.CheckReturnValue;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.StringIO;
@@ -49,11 +50,12 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     /**
      * Set the string of this StringIO.
      * Called from the implementation class when the layout updates this StringIO.
+     * @param newValue new value to set
      */
     protected void setString(@Nonnull String newValue) {
         Object _old = this._knownString;
         this._knownString = newValue;
-        firePropertyChange("State", _old, _knownString); //NOI18N
+        firePropertyChange("State", _old, _knownString); // NOI18N
     }
 
     /** {@inheritDoc} */
@@ -115,11 +117,15 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
         return Bundle.getMessage("BeanNameStringIO");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc} 
+     * 
+     * Do a string comparison.
+     */
+    @CheckReturnValue
     @Override
-    @Nonnull
-    public String toString() {
-        return this.getClass().getName() + " (" + this.getSystemName() + ")"; //NOI18N
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+        return suffix1.compareTo(suffix2);
     }
 
 }

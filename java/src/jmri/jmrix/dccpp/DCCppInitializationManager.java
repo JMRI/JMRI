@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Giorgio Terdina Copyright (C) 2007
  * @author Mark Underwood Copyright (C) 2015
+ * @author Harald Barth Copyright (C) 2019
  *
  * Based on XNetInitializationManager by Paul Bender and Giorgio Terdina
  */
@@ -23,9 +24,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 
     @Override
     protected void init() {
-        if (log.isDebugEnabled()) {
-            log.debug("Init called");
-        }
+        log.debug("DCCppInitializationManager init() called");
 
         String base_station = "Unknown";
         String code_build = "Unknown";
@@ -67,6 +66,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         systemMemo.setMultiMeter(new DCCppMultiMeter(systemMemo));
         jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);
 
+        systemMemo.register();
         log.debug("DCC++ Initialization Complete");
     }
 

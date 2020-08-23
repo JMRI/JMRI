@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * NOTE: This currently only supports the standalone RFID interfaces.
  * <p>
  *
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public class RfidStreamPortController extends AbstractStreamPortController implements RfidInterface {
 

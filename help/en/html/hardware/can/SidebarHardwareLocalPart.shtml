@@ -1,0 +1,14 @@
+<!-- SidebarHardwareLocalPart.shtml for can -->
+
+          <dt><h3 style="padding-left: 1em;"><a href="index.shtml">Controller Area Networks (CAN)</a></h3></dt>
+		  <dd>
+		     <ul>
+                    <li><a href="../openlcb/index.shtml">OpenLCB</a>
+					<li><a href="scripting.shtml">CAN Scripting</a>
+				    <li><a href="cbus/index.shtml">MERG CBUS</a>
+				    <li><a href="cbus/Names.shtml">MERG CBUS Naming</a>
+				    <li><a href="cbus/Details.shtml">MERG CBUS Connection Details</a>
+			 </ul>
+		  </dd> 
+          
+<!-- /SidebarHardwareLocalPart.shtml -->

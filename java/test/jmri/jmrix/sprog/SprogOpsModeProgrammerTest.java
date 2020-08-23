@@ -1,10 +1,8 @@
 package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogOpsModeProgrammer.
@@ -16,8 +14,7 @@ public class SprogOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
     private SprogTrafficControlScaffold stcs = null;
     private SprogSystemConnectionMemo m = null;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -32,7 +29,7 @@ public class SprogOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
         programmer = new SprogOpsModeProgrammer(2,false,m);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         m.getSlotThread().interrupt();

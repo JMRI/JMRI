@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- XML File to represent all of the result values, ie COMPLETE, SLIM, INCOMPLETE etc -->
+<CbusNode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/MERG-DEV/JMRI/master/schema/MergCBUSNodeBackup.xsd" NodeNum="41375">
+  <UserName>My Node Name for Node 41375</UserName>
+  <ModuleTypeName>CATFLAP</ModuleTypeName>
+  <FreeText>My Node 41375 Freetext</FreeText>
+  <Backups>
+    <BackupInfo dateTimeStamp="2019-08-30 14:51:15" result="COMPLETE">
+      <Comment>Last Backup Completed Comment</Comment>
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="000000001000000000000000FF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-07-27 14:14:00" result="NOTONNETWORK" />
+    <BackupInfo dateTimeStamp="2019-07-29 12:34:00" result="SLIM" />
+    <BackupInfo dateTimeStamp="2019-06-20 04:44:36" result="INCOMPLETE">
+      <Comment>Backup Complete 245</Comment>
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>00</NodeVariables>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-08-30 15:12:36" result="COMPLETEDWITHERROR">
+      <NodeVariables>00</NodeVariables>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-06-24 19:51:15" result="COMPLETE">
+      <Comment>First Backup Completed Comment</Comment>
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+  </Backups>
+</CbusNode>

@@ -22,9 +22,8 @@ public class CtcEditorAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        InstanceManager.getOptionalDefault(FrmMainForm.class).orElseGet(() -> {
-            return new FrmMainForm();
-        }).setVisible(true);
+        InstanceManager.getOptionalDefault(FrmMainForm.class).orElseGet(() -> new FrmMainForm())
+                .setVisible(true);
     }
 
     // never invoked, because we overrode actionPerformed above

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/consistRoster.xsl" type="text/xsl"?>
+<!DOCTYPE consist-roster-config SYSTEM "/xml/DTD/consist-roster-config.dtd">
+<consist-roster-config>
+  <!--Written by JMRI version 4.17.8ish+jake+20200103T2106Z+R7c13c6be12 on Fri Jan 03 13:07:38 PST 2020-->
+  <roster>
+    <consist id="11(S)" consistNumber="11" longAddress="no" type="DAC">
+      <loco dccLocoAddress="1" longAddress="no" locoDir="normal" locoName="lead" />
+      <loco dccLocoAddress="2" longAddress="no" locoDir="normal" locoName="mid" locoMidNumber="1" />
+      <loco dccLocoAddress="3" longAddress="no" locoDir="normal" locoName="rear" />
+    </consist>
+  </roster>
+</consist-roster-config>

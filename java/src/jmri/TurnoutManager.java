@@ -1,9 +1,7 @@
 package jmri;
 
-import java.util.List;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * Locate a Turnout object representing some specific turnout on the layout.
@@ -130,7 +128,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
      *                                  be parsed
      */
     @Nonnull
-    public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
+    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
@@ -217,7 +215,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public boolean isControlTypeSupported(@Nonnull String systemName);
 
     /**
-     * A method that determines if it is possible to add a range of turnouts in
+     * Determines if it is possible to add a range of turnouts in
      * numerical order.
      *
      * @param systemName the starting turnout system name; ignored in all known

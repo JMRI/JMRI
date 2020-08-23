@@ -41,7 +41,16 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
             try {
                 tc.setCanId(Integer.parseInt(getOptionState("CANID")));
             } catch (Exception e) {
-                log.error("Cannot parse CAN ID - check your preference settings " + e);
+                log.error("Cannot parse CAN ID - check your preference settings {}", e);
+                log.error("Now using default CAN ID");
+            }
+        } else if (getOptionState(option2Name).equals(ConfigurationManager.SPROGCBUS)) {
+            // Register the CAN traffic controller being used for this connection
+            tc = new MergTrafficController();
+            try {
+                tc.setCanId(Integer.parseInt(getOptionState("CANID")));
+            } catch (Exception e) {
+                log.error("Cannot parse CAN ID - check your preference settings {}", e);
                 log.error("Now using default CAN ID");
             }
         } else {

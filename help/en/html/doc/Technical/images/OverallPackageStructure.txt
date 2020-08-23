@@ -3,10 +3,6 @@
 package jmri {
 }
 
-package apps {
-}
-
-
 package jmri.jmrit {}
 
 package jmri.jmrix {}

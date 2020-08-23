@@ -1,10 +1,12 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
-import apps.PerformActionModel;
-import apps.StartupActionsManager;
+import jmri.util.startup.PerformActionModel;
+import jmri.util.startup.StartupActionsManager;
+
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;
+
 import javax.swing.GroupLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -13,8 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.LayoutStyle;
 import javax.swing.SpinnerNumberModel;
+
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
+
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Binding;

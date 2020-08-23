@@ -1,15 +1,17 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JLabel;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -34,11 +36,10 @@ public class PrintCvActionTest {
         CvTableModel cvtm = new CvTableModel(new JLabel(), null);
         PrintCvAction t = new PrintCvAction("Test Action", cvtm, pFrame, false, re);
         Assert.assertNotNull("exists", t);
-        JUnitUtil.dispose(pFrame);
+        pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -46,7 +47,7 @@ public class PrintCvActionTest {
         JUnitUtil.initDebugProgrammerManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

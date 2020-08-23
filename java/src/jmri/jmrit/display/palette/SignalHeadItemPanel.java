@@ -3,11 +3,8 @@ package jmri.jmrit.display.palette;
 import java.awt.BorderLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -26,14 +23,14 @@ import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignalHeadItemPanel extends TableItemPanel<SignalHead> { 
+public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
 
-    public SignalHeadItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<SignalHead> model, Editor editor) {
-        super(parentFrame, type, family, model, editor);
+    public SignalHeadItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<SignalHead> model) {
+        super(parentFrame, type, family, model);
     }
 
     @Override
-    protected JPanel initTablePanel(PickListModel<SignalHead> model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel<SignalHead> model) {
         _table = model.makePickTable();
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -46,12 +43,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         JPanel panel = new JPanel();
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
-        clearSelectionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                _table.clearSelection();
-            }
-        });
+        clearSelectionButton.addActionListener(a -> _table.clearSelection());
         clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
@@ -59,14 +51,8 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
     }
 
     @Override
-    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
-        super.makeDndIconPanel(iconMap, "SignalHeadStateRed");
-    }
-
-    @Override
-    protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
-        closeDialogs();
-        _dialog = new SignalHeadIconDialog(type, family, this, iconMap);
+    protected String getDisplayKey() {
+        return "SignalHeadStateGreen";
     }
 
     /**
@@ -78,41 +64,36 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
             return;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= {}, {}({})", row, _table.getValueAt(row, 0), _table.getValueAt(row, 1));
+        // Index error if only one row
+        if (_table.getRowCount() < 2) {
+            log.debug("Table valueChanged: row= {}, {}({})",
+                    row, _table.getValueAt(row, 0), _table.getValueAt(row, 1));
         }
         if (row >= 0) {
             _updateButton.setEnabled(true);
             _updateButton.setToolTipText(null);
             if (_family != null) {
                 // get raw map of all appearances for row's head type.
-                HashMap<String, NamedIcon> fullmap = getFilteredIconMap(ItemPanel.makeNewIconMap(_itemType));
+                HashMap<String, NamedIcon> fullmap = getFilteredIconMap(makeNewIconMap(_itemType));
                 // icon map of appearances for type of current bean.
                 HashMap<String, NamedIcon> currentmap = (getIconMap());
-                if (log.isDebugEnabled()) {
-                    log.debug("currentmap keys = {}", currentmap.keySet().toString());
-                }
+                log.debug("currentmap keys = {}", currentmap.keySet().toString());
                 // use current images for as many of the fullMap's members as possible
                 HashMap<String, NamedIcon> iconMap = new HashMap<>();
-                Iterator<Entry<String, NamedIcon>> it = fullmap.entrySet().iterator();
-                while (it.hasNext()) {
-                    Entry<String, NamedIcon> entry = it.next();
+                for (Entry<String, NamedIcon> entry : fullmap.entrySet()) {
                     String key = entry.getKey();
                     String newKey = ItemPalette.convertText(key);
-                    if (log.isDebugEnabled()) {
-                        log.debug("fullmap key = {}, converts to {}", key, newKey);
-                    }
+                    log.debug("fullmap key = {}, converts to {}", key, newKey);
                     NamedIcon icon = currentmap.get(newKey);
                     if (icon != null) {
-                        iconMap.put(newKey, icon);                        
+                        iconMap.put(newKey, icon);
                     } else {
                         iconMap.put(newKey, entry.getValue());
                     }
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("set Signal Head {} map size= {}", _table.getValueAt(row, 0), iconMap.size());
-                }
-                setIconMap(iconMap);
+                log.debug("set Signal Head {} map size= {}", _table.getValueAt(row, 0), iconMap.size());
+//                _currentIconMap = iconMap;
+                updateFamiliesPanel();
             }
         } else {
             _updateButton.setEnabled(false);
@@ -125,7 +106,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
 
     protected HashMap<String, NamedIcon> getFilteredIconMap(HashMap<String, NamedIcon> allIconsMap) {
         if (allIconsMap == null) {
-            JOptionPane.showMessageDialog(_paletteFrame,
+            JOptionPane.showMessageDialog(_frame,
                     Bundle.getMessage("FamilyNotFound", _itemType, _family),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
@@ -141,35 +122,28 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 return allIconsMap;
             }
             HashMap<String, NamedIcon> iconMap = new HashMap<>();
-            Iterator<Entry<String, NamedIcon>> it = allIconsMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : allIconsMap.entrySet()) {
                 String name = entry.getKey();
                 String borderName = ItemPalette.convertText(name);
-                for (int j = 0; j < states.length; j++) {
-                    if (borderName.equals(states[j])
-                            || name.equals("SignalHeadStateDark")
-                            || name.equals(ItemPalette.convertText("SignalHeadStateDark"))
-                            || name.equals("SignalHeadStateHeld")
+                for (String state : states) {
+                    if (borderName.equals(state) || name.equals("SignalHeadStateDark") 
+                            || name.equals(ItemPalette.convertText("SignalHeadStateDark")) 
+                            || name.equals("SignalHeadStateHeld") 
                             || name.equals(ItemPalette.convertText("SignalHeadStateHeld"))) {
                         iconMap.put(name, entry.getValue());
                         break;
                     }
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug("filteredMap size= {}",iconMap.size());
-            }
+            log.debug("filteredMap size= {}", iconMap.size());
             return iconMap;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Map NOT filtered, size= {}",allIconsMap.size());
-        }
+        log.debug("Map NOT filtered, size= {}", allIconsMap.size());
         return allIconsMap;
     }
 
     @Override
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, 
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String,
             NamedIcon> map, NamedIcon icon) {
         return new IconDragJLabel(flavor, map, icon);
     }
@@ -178,7 +152,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
 
         HashMap<String, NamedIcon> iMap;
 
-        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, 
+        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map,
                 NamedIcon icon) {
             super(flavor, icon);
             iMap = map;
@@ -206,13 +180,11 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
             }
 
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
-                SignalHeadIcon sh = new SignalHeadIcon(_editor);
+                SignalHeadIcon sh = new SignalHeadIcon(_frame.getEditor());
                 sh.setSignalHead(bean.getDisplayName());
                 HashMap<String, NamedIcon> map = getFilteredIconMap(iMap);
-                Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();
-                while (iter.hasNext()) {
-                    Entry<String, NamedIcon> ent = iter.next();
-                    sh.setIcon(Bundle.getMessage(ent.getKey()), new NamedIcon(ent.getValue()));
+                for (Entry<String, NamedIcon> ent : map.entrySet()) {
+                    sh.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
                 }
                 sh.setFamily(_family);
                 sh.setLevel(Editor.SIGNALS);
@@ -229,5 +201,4 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
     }
 
     private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class);
-
 }

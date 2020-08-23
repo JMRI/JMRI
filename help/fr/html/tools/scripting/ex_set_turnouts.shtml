@@ -6,29 +6,24 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233;  2013-09-26-->
+  <!-- Updated by Blorec Herv&#233;  2013-09-26-->
 
   <title>JMRI: Scripting Example - Setting Turnouts</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <!-- Page Body -->
+        <!-- Page Body -->
 
       <h2>JMRI: Scripts pour Aller ...<br>
       R&eacute;glage de l'&eacute;tat par D&eacute;faut des
@@ -227,7 +222,9 @@ setStartup (). start ()    # cr&eacute;ation de l'une d'elles, et  lancer son ex
 
         <p>- Page r&eacute;dig&eacute;e par Jerry Britton, Mars
         2006.</p>
-      </div><!--#include virtual="/Footer" -->
+      </div>
+
+        <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

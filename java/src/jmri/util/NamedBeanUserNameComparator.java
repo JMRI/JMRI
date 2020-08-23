@@ -21,9 +21,16 @@ public class NamedBeanUserNameComparator<B extends NamedBean> implements java.ut
         String s2 = n2.getUserName();
         int comparison = 0;
         AlphanumComparator comparator = new AlphanumComparator();
-        if (s1 == null || s2 == null || (comparison = comparator.compare(s1, s2)) == 0) {
+        // handle both usernames being null or empty
+        if ((s1 == null || s1.isEmpty()) && (s2 == null || s2.isEmpty())) {
             return n1.compareTo(n2);
         }
-        return comparison;
+        if (s1 == null || s1.isEmpty()) {
+            s1 = n1.getSystemName();
+        }
+        if (s2 == null || s2.isEmpty()) {
+            s2 = n1.getSystemName();
+        }
+        return comparison != 0 ? comparison : comparator.compare(s1, s2);
     }
 }

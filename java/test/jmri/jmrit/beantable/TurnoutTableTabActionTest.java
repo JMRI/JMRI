@@ -1,12 +1,13 @@
 package jmri.jmrit.beantable;
 
-import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TurnoutTableTabActionTest extends AbstractTableTabActionBase {
 
@@ -31,8 +32,7 @@ public class TurnoutTableTabActionTest extends AbstractTableTabActionBase {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -43,7 +43,7 @@ public class TurnoutTableTabActionTest extends AbstractTableTabActionBase {
         a = new TurnoutTableTabAction();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         a = null;

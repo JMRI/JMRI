@@ -4,7 +4,6 @@ import java.awt.Color;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +46,7 @@ public class ColorUtil {
      *         if color is null
      */
     @Nonnull
-    public static String colorToString(@Nullable Color color) {
+    public static String colorToString(@CheckForNull Color color) {
         if (color == null) {
             return ColorTrack;
         }
@@ -66,7 +65,7 @@ public class ColorUtil {
      * @return the name or hex value of color; returns null if color is null
      */
     @CheckForNull
-    public static String colorToColorName(@Nullable Color color) {
+    public static String colorToColorName(@CheckForNull Color color) {
         if (color == null) {
             return null;
         }
@@ -85,7 +84,7 @@ public class ColorUtil {
      * @return the localized name or hex value of color; returns null if color is null
      */
     @CheckForNull
-    public static String colorToLocalizedName(@Nullable Color color) {
+    public static String colorToLocalizedName(@CheckForNull Color color) {
         if (color == null) {
             return null;
         }
@@ -200,7 +199,7 @@ public class ColorUtil {
      * @return the hex string or null if color is null
      */
     @CheckForNull
-    public static String colorToHexString(@Nullable Color color) {
+    public static String colorToHexString(@CheckForNull Color color) {
         if (color == null) {
             return null;
         }
@@ -214,7 +213,7 @@ public class ColorUtil {
      * @return the color name or null if not known/not in list
      */
     @CheckForNull
-    private static String colorToName(@Nullable Color color) {
+    private static String colorToName(@CheckForNull Color color) {
         if (color == null) {
             return null;
         }

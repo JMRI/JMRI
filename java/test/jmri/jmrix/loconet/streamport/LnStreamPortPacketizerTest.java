@@ -2,7 +2,10 @@ package jmri.jmrix.loconet.streamport;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -29,9 +32,8 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     
     private DataInputStream istream;   // so the traffic controller can read from this
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new LocoNetSystemConnectionMemo();
@@ -53,7 +55,7 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
         memo.dispose();
         lnp.terminateThreads();
@@ -70,7 +72,7 @@ public class LnStreamPortPacketizerTest extends jmri.jmrix.loconet.LnPacketizerT
 
     @Override
     @Test
-    @Ignore("may be causing hang on travis and appveyor")
+    @Disabled("may be causing hang on travis and appveyor")
     public void testStartThreads() {
        ((LnStreamPortPacketizer)lnp).connectPort(apc);
        lnp.startThreads();

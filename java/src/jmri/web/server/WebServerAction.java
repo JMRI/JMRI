@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to start a web server. Doesn't show a panel.
  *
- * @author	Randall Wood Copyright (C) 2012
+ * @author Randall Wood Copyright (C) 2012
  */
 public class WebServerAction extends JmriAbstractAction {
 

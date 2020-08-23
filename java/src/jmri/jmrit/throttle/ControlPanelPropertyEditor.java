@@ -35,6 +35,7 @@ public class ControlPanelPropertyEditor extends JDialog {
 
     /**
      * Constructor. Create it and pack it.
+     * @param panel control panel.
      */
     public ControlPanelPropertyEditor(ControlPanel panel) {
         control = panel;

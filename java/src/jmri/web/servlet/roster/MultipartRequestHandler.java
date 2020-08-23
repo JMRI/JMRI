@@ -21,10 +21,10 @@ public class MultipartRequestHandler {
 
     public static List<FileMeta> uploadByJavaServletAPI(HttpServletRequest request) throws IOException, ServletException {
 
-        List<FileMeta> files = new LinkedList<FileMeta>();
+        List<FileMeta> files = new LinkedList<>();
 
         if (request.getContentType() != null && request.getContentType().startsWith("multipart/form-data")) {
-            request.setAttribute(Request.__MULTIPART_CONFIG_ELEMENT, MULTI_PART_CONFIG);
+            request.setAttribute(Request.MULTIPART_CONFIG_ELEMENT, MULTI_PART_CONFIG);
         }
 
         // 1. Get all parts and the flag
@@ -35,7 +35,7 @@ public class MultipartRequestHandler {
         String rosterGroup = request.getParameter("rosterGroup");
 
         // deal with each each part
-        FileMeta temp = null;
+        FileMeta temp;
         for (Part part : parts) {
 
             // if part is multiparts "file"

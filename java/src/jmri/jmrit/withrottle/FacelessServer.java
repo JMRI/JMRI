@@ -1,7 +1,6 @@
 package jmri.jmrit.withrottle;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import jmri.InstanceManager;
@@ -68,7 +67,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
                 device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
                 String threadName = "DeviceServer-" + threadNumber++;  // NOI18N
-                Thread t = new Thread(device, threadName);
+                Thread t = jmri.util.ThreadingUtil.newThread(device, threadName);
                 for (DeviceListener dl : deviceListenerList) {
                     device.addDeviceListener(dl);
                 }
@@ -232,17 +231,8 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
         deviceList.clear();
     }
 
-    private jmri.implementation.AbstractShutDownTask task = null;
-
     private void setShutDownTask() {
-        task = new jmri.implementation.AbstractShutDownTask("WiThrottle Server ShutdownTask") {
-            @Override
-            public boolean execute() {
-                disableServer();
-                return true;
-            }
-        };
-        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(task);
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(this::disableServer);
     }
 
     @Override

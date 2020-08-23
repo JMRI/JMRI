@@ -6,8 +6,6 @@ import jmri.JmriException;
 import jmri.SignalAppearanceMap;
 import jmri.implementation.MatrixSignalMast;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for MatrixSignalMast objects.
@@ -61,7 +59,7 @@ public class MatrixSignalMastXml
 
         List<String> outputs = p.getOutputs();
         // convert char[] to xml-storable simple String
-        // max. 5 outputs (either: turnouts (bean names) [or ToDo: DCC addresses (numbers)]
+        // outputs (either: turnouts (bean names) [or ToDo: DCC addresses (numbers)]
         // spotted by SpotBugs as to never be null (check on creation of MatrixMast)
         Element outps = new Element("outputs");
         int i = 1;
@@ -78,7 +76,7 @@ public class MatrixSignalMastXml
             e.addContent(outps);
         }
 
-        // string of max. 6 chars "001010" describing matrix row per aspect
+        // string of "001010" describing matrix row per aspect
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if (appMap != null) {
             Element bss = new Element("bitStrings");
@@ -90,7 +88,7 @@ public class MatrixSignalMastXml
                 bs.addContent(p.getBitstring(key));
                 bss.addContent(bs);
             }
-                e.addContent(bss);
+            e.addContent(bss);
 
         }
         List<String> disabledAspects = p.getDisabledAspects();
@@ -104,6 +102,9 @@ public class MatrixSignalMastXml
             if (disabledAspects.size() != 0) {
                 e.addContent(el);
             }
+        }
+        if (p.resetPreviousStates()) {
+            e.addContent(new Element("resetPreviousStates").addContent("yes"));
         }
         return e;
     }
@@ -172,6 +173,12 @@ public class MatrixSignalMastXml
                 m.setAspectDisabled(asp.getText());
             }
         }
+
+        if ((shared.getChild("resetPreviousStates") != null) // load mast-specific delay, since 4.19.4
+                && shared.getChild("resetPreviousStates").getText().equals("yes")) {
+            m.resetPreviousStates(true);
+        }
+
         return true;
     }
 
@@ -180,6 +187,6 @@ public class MatrixSignalMastXml
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatrixSignalMastXml.class);
 
 }

@@ -59,7 +59,7 @@ public class PrintCvAction extends AbstractAction {
                 w.write(s, 0, s.length());
             }
         } catch (IOException e) {
-            log.warn("error during printing: " + e);
+            log.warn("error during printing: {}", e);
         }
         mRoster.printEntry(w);
         w.setFontStyle(Font.PLAIN);
@@ -193,8 +193,11 @@ public class PrintCvAction extends AbstractAction {
 
     /**
      * Returns a representation of a CV name as a long integer sort order value.
+     * <p>
      * The value itself is not meaningful, but is used in comparisons when
      * sorting.
+     * @param cvName cv name string to parse.
+     * @return the sort order value.
      */
     public static long cvSortOrderVal(String cvName) {
         final int MAX_CVMNUM_SPACE = 1200;

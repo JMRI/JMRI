@@ -1,7 +1,9 @@
 package jmri.jmrix.easydcc.serialdriver.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.easydcc.serialdriver.ConnectionConfig;
 
 /**
@@ -11,8 +13,7 @@ import jmri.jmrix.easydcc.serialdriver.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -20,9 +21,10 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;

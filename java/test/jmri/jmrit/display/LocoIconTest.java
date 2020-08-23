@@ -2,12 +2,14 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Font;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of LocoIcon
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LocoIconTest extends PositionableTestBase {
 
@@ -43,13 +45,13 @@ public class LocoIconTest extends PositionableTestBase {
 
     @Override
     @Test
-    @Ignore("not supported for LocoIcon")
+    @Disabled("not supported for LocoIcon")
     public void testDoViemMenu(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Do View Menu",p.doViemMenu());
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         super.setUp();

@@ -1,15 +1,14 @@
 package jmri.jmrix.lenz.li100;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
 /**
  * LI100AdapterTest.java
  *
- * Description: tests for the jmri.jmrix.lenz.li100.LI100Adapter class
+ * Test for the jmri.jmrix.lenz.li100.LI100Adapter class
  *
  * @author Paul Bender
  */
@@ -21,12 +20,12 @@ public class LI100AdapterTest {
         Assert.assertNotNull("exists", a);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

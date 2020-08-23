@@ -9,15 +9,12 @@ import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.*;
 
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  *
- * @author	Bob Jacobsen, Copyright 2002
+ * @author Bob Jacobsen, Copyright 2002
  */
 public abstract class AbstractVariableValueTestBase {
 
@@ -434,7 +431,7 @@ public abstract class AbstractVariableValueTestBase {
     // this next is just preserved here; note not being invoked.
     // test that you're not using too much space when you call for a value
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testSpaceUsage() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -476,8 +473,6 @@ public abstract class AbstractVariableValueTestBase {
         return m;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
-
     public void setUp() {
         JUnitUtil.setUp();
     }
@@ -485,5 +480,7 @@ public abstract class AbstractVariableValueTestBase {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
+    private final static  org.slf4j.Logger log =  org.slf4j.LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
 
 }

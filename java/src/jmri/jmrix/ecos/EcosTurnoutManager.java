@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -60,12 +61,13 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public EcosSystemConnectionMemo getMemo() {
         return (EcosSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
@@ -80,14 +82,14 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     // to listen for status changes from Ecos system
     @Override
     public void reply(EcosReply m) {
-        log.debug("reply " + m);
+        log.debug("reply {}", m);
         // is this a list of turnouts?
         EcosTurnout et;
 
@@ -110,14 +112,14 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                     }
                     //Creation or removal of a turnout from the Ecos.
                 } else {
-                    log.debug("Forwarding on State change for " + ecosObjectId);
+                    log.debug("Forwarding on State change for {}", ecosObjectId);
                     et = _tecos.get(ecosObjectId);
                     if (et != null) {
                         et.reply(m);
                         //As the event will come from one object, we shall check to see if it is an extended address,
                         // if it is we also forward the message onto the slaved address.
                         if (et.getExtended() != 0) {
-                            log.debug("This is also an extended turnout so forwarding on change to " + et.getSlaveAddress());
+                            log.debug("This is also an extended turnout so forwarding on change to {}", et.getSlaveAddress());
                             EcosTurnout etx = (EcosTurnout) provideTurnout(et.getSlaveAddress());
                             etx.reply(m);
                         }
@@ -135,13 +137,13 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         // yes, make sure TOs exist
                         //log.debug("found "+(lines.length-2)+" turnout objects");
                         for (String item : m.getContents()) {
-                            log.debug("header " + item);
+                            log.debug("header {}", item);
                             //for (int i = 1; i<lines.length-1; i++) {
                             if (item.contains("addr")) { // skip odd lines
                                 int object = GetEcosObjectNumber.getEcosObjectNumber(item, null, " ");
                                 if ((20000 <= object) && (object < 30000)) { // only physical turnouts
                                     int addr = GetEcosObjectNumber.getEcosObjectNumber(item, "[", "]");
-                                    log.debug("Found turnout object " + object + " addr " + addr);
+                                    log.debug("Found turnout object {} addr {}", object, addr);
 
                                     if (addr > 0) {
                                         Turnout t = getTurnout(getSystemNamePrefix() + addr);
@@ -152,7 +154,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                         }
                                     }
                                 } else if ((30000 <= object) && (object < 40000)) {  //This is a ecos route
-                                    log.debug("Found route object " + object);
+                                    log.debug("Found route object {}", object);
 
                                     Turnout t = getTurnout(getSystemNamePrefix() + object);
                                     if (t == null) {
@@ -237,7 +239,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                             et.setUserName(name);
                         }
                     }
-                } else if (ecosObjectId >= 20000 && ecosObjectId <= 30000) {
+                } else if (ecosObjectId >= 20000) { // ecosObjectId <= 30000 is always true at this point (Spotbugs)
                     log.debug("Reply for specific turnout");
                     et = _tecos.get(ecosObjectId);
                     if (et != null) {
@@ -245,7 +247,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         //As the event will come from one object, we shall check to see if it is an extended address,
                         // if it is we also forward the message onto the slaved address.
                         if (et.getExtended() != 0) {
-                            log.debug("This is also an extended turnout so forwarding on change to " + et.getSlaveAddress());
+                            log.debug("This is also an extended turnout so forwarding on change to {}", et.getSlaveAddress());
                             EcosTurnout etx = (EcosTurnout) provideTurnout(et.getSlaveAddress());
                             etx.reply(m);
                         }
@@ -270,7 +272,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             end = lines.indexOf(']');
             String turnoutadd = stripChar(lines.substring(start, end));
             String[] straddr = turnoutadd.split(",");
-            log.debug("Number of Address for this device is " + straddr.length);
+            log.debug("Number of Address for this device is {}", straddr.length);
             if (straddr.length <= 2) {
                 if (straddr.length == 2) {
                     if (!straddr[0].equals(straddr[1])) {
@@ -343,7 +345,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
         } else if ((30000 <= object) && (object < 40000)) {  //This is a ecos route
 
-            log.debug("Found route object " + object);
+            log.debug("Found route object {}", object);
 
             Turnout t = getTurnout(getSystemNamePrefix() + object);
             if (t == null) {
@@ -444,7 +446,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                             }
                             int count = et.getNumPropertyChangeListeners() - 1; // one is this table
                             if (log.isDebugEnabled()) {
-                                log.debug("Delete with " + count);
+                                log.debug("Delete with {}", count);
                             }
                             if ((!noWarnDelete) && (count > 0)) {
                                 String msg = java.text.MessageFormat.format(
@@ -498,7 +500,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         }
     }
 
-    boolean noWarnDelete = false;
+    private boolean noWarnDelete = false;
 
     public String stripChar(String s) {
         String allowed

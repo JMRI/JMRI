@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * SRCPSensor implementation of the Sensor interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2010
  */
 public class SRCPSensor extends AbstractSensor implements SRCPListener {
 
@@ -48,7 +48,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
             // first look for the double case, which we can't handle
             if ((s & Sensor.INACTIVE) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both ACTIVE and INACTIVE " + s);
+                log.error("Cannot command both ACTIVE and INACTIVE {}", s);
                 return;
             } else {
                 // send an ACTIVE command
@@ -92,7 +92,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
     @Override
     public void reply(SRCPReply m) {
         String message = m.toString();
-        log.debug("Message Received: " + m);
+        log.debug("Message Received: {}", m);
         if (!message.contains(_bus + " FB " + _number)) {
             return; // not for us
         }
@@ -108,7 +108,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
     @Override
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         if (log.isDebugEnabled()) {
-            log.debug("reply called with simpleNode " + n.jjtGetValue());
+            log.debug("reply called with simpleNode {}", n.jjtGetValue());
         }
         //if( n.jjtGetChild(3) instanceof jmri.jmrix.srcp.parser.ASTfb )
         reply(new SRCPReply(n));

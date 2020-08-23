@@ -22,7 +22,7 @@ public class InternalLightManagerThrowExceptionScaffold extends InternalLightMan
     
     /** {@inheritDoc} */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
@@ -50,12 +50,13 @@ public class InternalLightManagerThrowExceptionScaffold extends InternalLightMan
     /** {@inheritDoc} */
     @Override
     @CheckForNull
-    public Light getByUserName(String key) {
+    public Light getByUserName(@Nonnull String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }

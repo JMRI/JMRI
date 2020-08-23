@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2010
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
+ * @deprecated since 4.19.7 without direct replacement
  */
+@Deprecated
 public class RosterRecorder extends Thread {
 
     public RosterRecorder() {
@@ -44,6 +46,7 @@ public class RosterRecorder extends Thread {
 
     /**
      * Added or removed RosterEntry, make sure we're listening appropriately.
+     * @param e The event that indicated the change.
      */
     void changedRoster(java.beans.PropertyChangeEvent e) {
         log.debug("changedRoster");
@@ -63,6 +66,7 @@ public class RosterRecorder extends Thread {
 
     /**
      * Changed RosterEntry changed RosterEntry fires off store.
+     * @param e The event that indicated the change.
      */
     void changedEntry(java.beans.PropertyChangeEvent e) {
         log.debug("changedEntry");

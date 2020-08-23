@@ -17,16 +17,18 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+    <h1> Support Mat&#233;riel: Fleischmann Twin Centre</h1>
 
-      <H1> Support Mat&#233;riel: Fleischmann Twin Centre</H1>
+    <p>JMRI peut communiquer avec Fleischmann Twin Centre de plusieurs fa&#231;ons. Pour avoir plus de d&#233;tails, voir la page
+    <a href="Uhlenbrock.shtml"> sur la configuration des &#233;quipements compatibles avec Uhlenbrock</a>.</p>
 
-<P>JMRI peut communiquer avec Fleischmann Twin Centre de plusieurs fa&#231;ons. Pour avoir plus de d&#233;tails, voir la page 
-<a href="Uhlenbrock.shtml"> sur la configuration des &#233;quipements compatibles avec Uhlenbrock</a>.
-
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
 </body>
 </html>

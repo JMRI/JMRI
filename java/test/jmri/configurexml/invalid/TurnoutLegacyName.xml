@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.jmri.org/xml/XSLT/panelfile.xsl"?>
+
+<!-- turnout elements with a legacy name fail -->
+
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <turnout feedback="MONITORING" inverted="false" automate="Default">
+      <systemName>DCCPT1</systemName>
+      <userName>User</userName>
+    </turnout>
+  </turnouts>
+</layout-config>
+
+

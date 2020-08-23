@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import apps.AppConfigBase;
+
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
@@ -12,7 +13,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
 import javax.swing.JOptionPane;
+
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.profile.NullProfile;
@@ -21,13 +24,11 @@ import jmri.profile.ProfileManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,26 +40,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriUserPreferencesManagerTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
     private final static Logger log = LoggerFactory.getLogger(JmriUserPreferencesManagerTest.class);
     private final String strClass = JmriUserPreferencesManagerTest.class.getName();
-
-    @Test
-    public void testGetInstance() {
-        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
-        Assert.assertNotNull(JmriUserPreferencesManager.getInstance());
-        Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getInstance());
-        Assert.assertEquals(JmriUserPreferencesManager.getDefault(), JmriUserPreferencesManager.getInstance());
-    }
-
-    @Test
-    public void testGetDefault() {
-        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
-        Assert.assertNotNull(JmriUserPreferencesManager.getDefault());
-        Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getDefault());
-    }
 
     @Test
     public void testAllowSave() {
@@ -917,8 +900,8 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @Test
-    public void testReadUserPreferences() throws IOException {
-        JUnitUtil.resetProfileManager(new NullProfile(folder.newFolder(Profile.PROFILE)));
+    public void testReadUserPreferences(@TempDir File folder) throws IOException {
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
         Point location = new Point(69, 96);
         Dimension windowSize = new Dimension(100, 200);
         UserPreferencesManager m1 = new TestJmriUserPreferencesManager();
@@ -959,8 +942,8 @@ public class JmriUserPreferencesManagerTest {
     }
 
     @Test
-    public void testSaveElement() throws IOException {
-        JUnitUtil.resetProfileManager(new NullProfile(folder.newFolder(Profile.PROFILE)));
+    public void testSaveElement(@TempDir File folder) throws IOException {
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
         Point location = new Point(69, 96);
         Dimension windowSize = new Dimension(100, 200);
         UserPreferencesManager m1 = new TestJmriUserPreferencesManager();
@@ -1000,7 +983,7 @@ public class JmriUserPreferencesManagerTest {
         Assert.assertEquals("selection1", m2.getComboBoxLastSelection(strClass));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -1009,7 +992,7 @@ public class JmriUserPreferencesManagerTest {
         InstanceManager.reset(UserPreferencesManager.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

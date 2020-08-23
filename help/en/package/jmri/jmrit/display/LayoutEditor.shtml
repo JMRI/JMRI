@@ -34,10 +34,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Layout Editor</h1><a name="contents" id=
       "contents"></a>
 
@@ -172,7 +172,7 @@
       <p>Below is a short tutorial on the basics of using Layout
       Editor. A more complete tutorial is available for download as
       a pdf file on the JMRI web site. See <a href=
-      "http://jmri.org/community/clinics/NMRA2008/index.html"><strong>Using
+      "https://jmri.org/community/clinics/NMRA2008/index.html"><strong>Using
       the JMRI/PanelPro Layout Editor</strong></a> and its two
       associated demonstration .xml files. <a name="start" id=
       "start"></a></p>
@@ -2042,7 +2042,7 @@
 
       <p>Back to the <a href="../../../../html/apps/PanelPro/index.shtml">
         PanelPro help page</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

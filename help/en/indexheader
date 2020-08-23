@@ -14,5 +14,6 @@ The Help system <b><a href="webtoc.shtml">Table of Contents</a></b>
 is also available online.<p/>
 <p>
 This page is generated automatically as part of the 
-build process. For more information, see the
+build process. However, the underlying information must be maintained manually and is, therefore,
+not always up-to-date.  For more information, see the
 <a href="http://jmri.org/help/en/html/doc/Technical/Help.shtml">Developer page on the Help system</a>.</p>

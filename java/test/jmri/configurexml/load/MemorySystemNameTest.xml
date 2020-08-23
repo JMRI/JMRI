@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>17</minor>
+    <test>7</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="4.0">
+      <systemName>IM00012</systemName>
+      <comment>leading zeros</comment>
+    </memory>
+    <memory value="5.0">
+      <systemName>IM12</systemName>
+      <comment>no leading zeros</comment>
+    </memory>
+    <memory value="2.0">
+      <systemName>IMCASETEST</systemName>
+      <comment>UPPER case</comment>
+    </memory>
+    <memory value="12:14 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+    <memory value="3.0">
+      <systemName>IMcasetest</systemName>
+      <comment>lower case</comment>
+    </memory>
+  </memories>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <filehistory>
+    <operation>
+      <type>Store</type>
+      <date>Sun Dec 01 12:06:32 PST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.7ish+jake+20191201T2003Z+R4e0172a865 on Sun Dec 01 12:06:32 PST 2019-->
+</layout-config>

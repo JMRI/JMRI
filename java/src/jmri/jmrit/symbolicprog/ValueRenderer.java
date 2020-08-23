@@ -8,7 +8,7 @@ import javax.swing.table.TableCellRenderer;
 /**
  * ValueRenderer.java
  *
- * Description: Renders enum table cells
+ * Renders enum table cells
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */

@@ -1,7 +1,9 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrit.operations.trains.Train;
 
 /**
@@ -12,8 +14,8 @@ import jmri.jmrit.operations.trains.Train;
  */
 public class TrainByCarTypeAction extends AbstractAction {
 
-    public TrainByCarTypeAction(String s, Train train) {
-        super(s);
+    public TrainByCarTypeAction(Train train) {
+        super(Bundle.getMessage("MenuItemShowCarTypes"));
         _train = train;
     }
 
@@ -22,8 +24,7 @@ public class TrainByCarTypeAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         // create frame
-        TrainByCarTypeFrame f = new TrainByCarTypeFrame();
-        f.initComponents(_train);
+        new TrainByCarTypeFrame(_train);
     }
 }
 

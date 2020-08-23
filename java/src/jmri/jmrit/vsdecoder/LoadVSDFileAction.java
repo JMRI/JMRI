@@ -1,10 +1,12 @@
 package jmri.jmrit.vsdecoder;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,10 +72,7 @@ public class LoadVSDFileAction extends AbstractAction {
             log.debug("Using path: {}", start_dir);
 
             fileChooser = new JFileChooser(start_dir);
-            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"));
-            filt.addExtension("vsd");
-            filt.addExtension("zip");
-            fileChooser.setFileFilter(filt);
+            fileChooser.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"), "vsd", "zip")); // NOI18N
             fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
             fileChooser.setCurrentDirectory(new File(start_dir));
         }
@@ -83,48 +82,31 @@ public class LoadVSDFileAction extends AbstractAction {
             // give up if no file selected
         }
 
-        loadVSDFile(fileChooser.getSelectedFile());
+        loadVSDFile(fileChooser.getSelectedFile().toString());
 
         // Store the last used directory
         try {
             last_path = fileChooser.getCurrentDirectory().getCanonicalPath();
         } catch (java.io.IOException err) {
-            log.debug("Error getting current directory: " + err);
+            log.debug("Error getting current directory", err);
             last_path = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
         }
     }
 
-    public static boolean loadVSDFile(java.io.File f) {
-        VSDFile vsdfile;
-        // Create a VSD (zip) file.
-        try {
-            vsdfile = new VSDFile(f);
-            log.debug("VSD File name = {}", vsdfile.getName());
-            if (vsdfile.isInitialized()) {
-                VSDecoderManager.instance().loadProfiles(vsdfile);
-            }
-            // Cleanup and close files.
-            vsdfile.close();
-
-            if (!vsdfile.isInitialized()) {
-                JOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(),
+    public static boolean loadVSDFile(String fp) {
+        // Check whether the file exists
+        File file = new File(fp);
+        if (!file.exists()) {
+            log.error("Cannot locate VSD File");
+            if (!GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(null, "Cannot locate VSD File",
                         Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
             }
-
-            return vsdfile.isInitialized();
-
-        } catch (java.util.zip.ZipException ze) {
-            log.error("ZipException opening file " + f.toString(), ze);
-            return false;
-        } catch (java.io.IOException ze) {
-            log.error("IOException opening file " + f.toString(), ze);
             return false;
         }
-    }
 
-    public static boolean loadVSDFile(String fp) {
+        // Check config.xml
         VSDFile vsdfile;
-
         try {
             // Create a VSD (zip) file.
             vsdfile = new VSDFile(fp);
@@ -134,12 +116,19 @@ public class LoadVSDFileAction extends AbstractAction {
             }
             // Cleanup and close files.
             vsdfile.close();
+
+            if (!vsdfile.isInitialized() && !GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(),
+                        Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
+            }
+
             return vsdfile.isInitialized();
+
         } catch (java.util.zip.ZipException ze) {
-            log.error("ZipException opening file " + fp, ze);
+            log.error("ZipException opening file {}", fp, ze);
             return false;
         } catch (java.io.IOException ze) {
-            log.error("IOException opening file " + fp, ze);
+            log.error("IOException opening file {}", fp, ze);
             return false;
         }
 
@@ -158,7 +147,6 @@ public class LoadVSDFileAction extends AbstractAction {
          */
     }
 
-    // initialize logging
     private static final Logger log = LoggerFactory.getLogger(LoadVSDFileAction.class);
 
 }

@@ -52,11 +52,11 @@
     8, but there are workarounds described online.</p>
    <a name="getwgit" id="getwgit"></a>
 
-   <h2>Eclipse version "Proton"</h2>
+   <h2>Eclipse version "Proton" and later</h2>
 
-   The "Proton" version of Eclipse released in the summer of 2018 requires a Maven project update after downloading the
-   JMRI source files. To do this, right click "jmri [...]" in the Package Explorer, then in the menu, select "Maven" and
-   in the sub menu "Update project ...". After the update is complete, do a project clean to rebuild the source files.
+   The "Proton" and later versions of Eclipse require a Maven project update after downloading the JMRI source files. To
+   do this, right click "jmri [...]" in the Package Explorer, then in the menu, select "Maven" and in the sub menu
+   "Update project ...". After the update is complete, do a project clean to rebuild the source files.
 
 
    <h2>Getting the JMRI Source using Git</h2>
@@ -182,7 +182,9 @@
 
    <p>If the ant build succeeds, you can now launch any of the JMRI applications from ant, and create a jmri.jar
     file if you wish. Use the "2 Ant Build" and in the window select the "Targets" tab, and use the appropriate checkbox
-    to generate what you want.</p>
+    to generate what you want. Two targets that are worth running if you're experiencing error messages in the Eclipse
+    console window are "realclean" followed by "panelpro".</p>
+    
    <a name="build" id="build"></a>
 
    <h2>Pushing changes to your GitHub branch</h2>
@@ -245,7 +247,80 @@
 
    <h2>Compiler Errors and Warnings</h2>
 
-   As of 10/18/2017 roughly 4300 warnings were being reported by the Eclipse. You can ignore these for now.
+   As of 5/10/2020 roughly 4600 warnings were being reported by the Eclipse. You can ignore these for now.
+
+   <h2>JUnit Testing and Test Coverage</h2>
+
+   If you wish to run the test coverage tool, you need to add this VM argument to the run configuration:
+
+   <pre>
+   -Djmri.shutdownmanager=jmri.util.MockShutDownManager
+   </pre>
+
+   <p>If you want to run a test coverage report accessing all of the tests in sub-directories, you'll need to create
+    a test class that will invoke all of the tests within a directory and sub-directories. Below is an example that will
+    run all of the tests in the directory "jmri.jmrit.operations":</p>
+   <pre>
+package apps.tests;
+
+import org.junit.internal.TextListener;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.ExcludeClassNamePatterns;
+import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.SuiteDisplayName;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.RunWith;
+import org.junit.runner.notification.RunListener;
+
+/**
+ * Invoke all the JMRI project JUnit tests via a GUI interface.
+ *
+ * This file is part of JMRI.
+ * 
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * @author Bob Jacobsen
+ */
+@RunWith(JUnitPlatform.class)
+@SuiteDisplayName("OperationTests")
+@SelectPackages({"jmri.jmrit.operations"})
+@ExcludeClassNamePatterns({"HeadLessTest","FileLineEndingsTest","ArchitectureTest"})
+public class JUnitOperationsTests {
+
+    static public void main(String[] args) {
+        run(JUnitOperationsTests.class);
+    }
+
+    /**
+     * Run tests with a default RunListener.
+     *
+     * @param testClass the class containing tests to run
+     */
+    public static void run(Class<?> testClass){
+        run(new TextListener(System.out),testClass);
+    }
+
+    /**
+     * Run tests with a specified RunListener
+     *
+     * @param listener the listener for the tests
+     * @param testClass the class containing tests to run
+     */
+    public static void run(RunListener listener, Class<?> testClass) {
+        JUnitCore runner = new JUnitCore();
+        runner.addListener(listener);
+        Result result = runner.run(testClass);
+        System.exit(result.wasSuccessful() ? 0 : 1);
+    }
+}
+</pre>
 
    <!--#include virtual="/Footer.shtml" -->
   </div>

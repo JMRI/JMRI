@@ -214,7 +214,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         log.debug("useProgrammer entry: _usingProgrammer is {}", _usingProgrammer);
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -262,7 +262,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
                 temp.programmingOpReply(value, status);
                 break;
             default:
-                log.error("Unexpected state on reply: " + state);
+                log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible
                 _usingProgrammer = null;
                 state = ProgState.NOTPROGRAMMING;

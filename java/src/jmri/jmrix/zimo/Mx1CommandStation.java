@@ -1,13 +1,11 @@
 package jmri.jmrix.zimo;
 
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Defines standard operations for Dcc command stations.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  *
  * Adapted by Sip Bosch for use with Zimo Mx-1
  *

@@ -1,14 +1,13 @@
 package jmri.util.exceptionhandler;
 
 import jmri.util.JUnitAppender;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class UncaughtExceptionHandlerTest {
 
@@ -49,7 +48,7 @@ public class UncaughtExceptionHandlerTest {
         // emits no logging, as the UncaughtExceptionHandlerTest handler isn't invoked
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
 
@@ -57,7 +56,7 @@ public class UncaughtExceptionHandlerTest {
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         Thread.setDefaultUncaughtExceptionHandler(this.defaultExceptionHandler);
         jmri.util.JUnitUtil.tearDown();

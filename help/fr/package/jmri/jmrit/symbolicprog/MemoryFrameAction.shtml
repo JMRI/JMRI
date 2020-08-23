@@ -1,14 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
+<!-- Translated  by Blorec Herv&#233; le 2011-11-3-->
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2008 -->
-  <!-- $Id$ -->
-  <!-- Translated  by Blorec Hervé le 2011-11-3-->
-
   <title>JMRI: Outil Moniteur M&Atilde;&copy;moire</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -19,14 +15,15 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  Memory Monitor Tool <!-- /Style -->
-   Memory Monitor Tool <!--#include virtual="/Header" -->
-
+  Memory Monitor Tool
+   Memory Monitor Tool <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Outil Moniteur de M&Atilde;&copy;moire</h1><a href=
       "MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg"
       width="194" height="56" align="right"></a> L'Outil Moniteur
@@ -106,9 +103,11 @@
 
         <li>The right column is the total memory available to
         JMRI.</li>
-      </ul>At the top of the left column, the maximum memory that
-      can be available to JMRI is displayed. 
-      <!--#include virtual="/Footer" -->
+      </ul>
+      At the top of the left column, the maximum memory that
+      can be available to JMRI is displayed.
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

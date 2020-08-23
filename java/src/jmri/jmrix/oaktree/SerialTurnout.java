@@ -23,6 +23,9 @@ public class SerialTurnout extends AbstractTurnout {
      * Create a Turnout object, with both system and user names.
      * <p>
      * 'systemName' was previously validated in SerialTurnoutManager
+     * @param systemName turnout system name.
+     * @param userName turnout user name.
+     * @param memo system connection.
      */
     public SerialTurnout(String systemName, String userName, OakTreeSystemConnectionMemo memo) {
         super(systemName, userName);
@@ -50,7 +53,7 @@ public class SerialTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command

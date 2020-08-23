@@ -1,22 +1,20 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.Manager.NameValidity;
-import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * CbusReporterManagerTest.java
  *
- * Description:	tests for the CbusReporterManager class
+ * Test for the CbusReporterManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
- * @author	Steve Young Copyright (C) 2019 
+ * @author Paul Bender Copyright (C) 2012,2016
+ * @author Steve Young Copyright (C) 2019 
  */
 public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -57,25 +55,33 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         return "MR" + i;
     }
     
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+        Assert.assertEquals("No auto system names",0,tcis.numListeners());
+    }
+    
     private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(new TrafficControllerScaffold());
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
         l = new CbusReporterManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
+        tcis.terminateThreads();
+        tcis = null;
+        memo.dispose();
         memo = null;
-        jmri.util.JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
-
 
 }

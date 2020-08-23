@@ -1,13 +1,15 @@
 package jmri.jmrix.rps;
 
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.InstanceManager;
-import jmri.Manager;
+
+import jmri.*;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 import jmri.Manager.NameValidity;
-import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,11 +18,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
-public class RpsSystemConnectionMemo extends SystemConnectionMemo {
+public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public RpsSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name);
-        register(); // registers general type
         InstanceManager.store(this, RpsSystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory
@@ -40,72 +41,35 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
         return null;
     }
 
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
     public void configureManagers() {
         InstanceManager.setSensorManager(getSensorManager());
         InstanceManager.setReporterManager(getReporterManager());
+        register();
     }
 
     /**
-     * Provide access to the SensorManager for this particular connection.
+     * @return The RpsSensorManager associated with this connection.
      */
-    private RpsSensorManager sensorManager = null;
-
     public RpsSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        if (sensorManager == null) {
-            sensorManager = new RpsSensorManager(this);
-        }
-        return sensorManager;
+        return (RpsSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> { return new RpsSensorManager(this); });
     }
 
     /**
-     * Provide access to the Reporter Manager for this particular connection.
+     * @return The RpsReporterManager associated with this connection
      */
-    private RpsReporterManager reporterManager = null;
-
     public RpsReporterManager getReporterManager() {
         if (getDisabled()) {
             return null;
         }
-        if (reporterManager == null) {
-            reporterManager = new RpsReporterManager(this);
-        }
-        return reporterManager;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        }
-
-        if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.ReporterManager.class)) {
-            return true;
-        }
-        return super.provides(type); // nothing, by default
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.ReporterManager.class)) {
-            return (T) getReporterManager();
-        }
-        return super.get(T);
+        return (RpsReporterManager) classObjectMap.computeIfAbsent(ReporterManager.class, (Class c) -> { return new RpsReporterManager(this); });
     }
 
     /**
@@ -152,9 +116,11 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Validate RPS system name format.
      *
+     * @param systemName system name.
+     * @param type e.g. S for Sensor, T for Turnout.
      * @return VALID if system name has a valid format, else return INVALID
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(getSystemPrefix() + type))) {
             // here if an illegal format 

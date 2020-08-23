@@ -47,7 +47,7 @@
   <!-- valid for 73100, 73140, 75330, 76425, 76560 (IntelliSound4); 73105, 73235, 73405, PIKO41RH2400 (IntelliDrive2)
                            (to be declared explicitly with include)                       -->  
   </revhistory>
- <variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,PIKO41RH2400">
+ <variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400">
 	<!--repeat include= below-->
 	<enumVal>
 		<enumChoice choice="Deactivated">
@@ -63,7 +63,7 @@
 				<choice>A2</choice>
 			</enumChoice>
 		</enumChoiceGroup>
-		<enumChoiceGroup exclude="73115,73145,73405,73415">
+		<enumChoiceGroup exclude="73115,73145,73405,73415,74120">
 			<enumChoice choice="A3">
 				<choice>A3</choice>
 			</enumChoice>
@@ -71,7 +71,7 @@
 				<choice>A4</choice>
 			</enumChoice>
 		</enumChoiceGroup>
-		<enumChoiceGroup exclude="73105,73115,73145,73405,73415">
+		<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120">
 			<enumChoice choice="A5">
 				<choice>A5</choice>
 			</enumChoice>
@@ -91,7 +91,7 @@
 	<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
     <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
   </variable>
-  <variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,PIKO41RH2400">
+  <variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400">
 	<enumVal>
 	  <enumChoice choice="None">
             <choice>None</choice>
@@ -158,7 +158,7 @@
 				<choice>A2</choice>
 			</enumChoice>
 		</enumChoiceGroup>
-		<enumChoiceGroup exclude="73105,73115,73145,73405,73415">
+		<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120">
 			<enumChoice choice="A3">
 				<choice>A3</choice>
 			</enumChoice>
@@ -166,7 +166,7 @@
 				<choice>A4</choice>
 			</enumChoice>
 		</enumChoiceGroup>
-		<enumChoiceGroup exclude="73105,73115,73145,73405,73415">
+		<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120">
 			<enumChoice choice="A5">
 				<choice>A5</choice>
 			</enumChoice>
@@ -186,7 +186,7 @@
 	<tooltip xml:lang="de">Ist eine der Licht vorne oder hinten AUS option deaktiviert, so gilt die zwei als deaktiviert</tooltip>
     <tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
   </variable>
-  <variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,PIKO41RH2400">
+  <variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,74120,PIKO41RH2400">
 	<enumVal>
 	  <enumChoice choice="None">
             <choice>None</choice>

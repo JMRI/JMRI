@@ -3,15 +3,10 @@ package jmri.jmrix.can.cbus.node;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
-    
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Class to represent a node imported from FCU file or CbusNodeXml.
@@ -46,20 +41,21 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
         _backupComment = "";
         setBackupResult(BackupType.INCOMPLETE);
         _timeStamp = timeStamp;
-        if (node.getParameters()!=null) {
-            setParameters(node.getParameters());
+        if (node.getNodeParamManager().getParameters()!=null) {
+            super.getNodeParamManager().setParameters(node.getNodeParamManager().getParameters());
         } else {
             setBackupResult(BackupType.COMPLETEDWITHERROR);
         }
-        if (node.getNvArray()!=null) {
-            setNVs(node.getNvArray());
+        if (node.getNodeNvManager().getNvArray()!=null) {
+            super.getNodeNvManager().setNVs(node.getNodeNvManager().getNvArray());
         } else {
             setBackupResult(BackupType.COMPLETEDWITHERROR);
         }
         // copy events
-        if (node.getEventArray()!=null) {
-            node.getEventArray().forEach((ndEv) -> {
-                addNewEvent(new CbusNodeEvent( ndEv ));
+        ArrayList<CbusNodeEvent> _tmpArr = node.getNodeEventManager().getEventArray();
+        if (_tmpArr !=null) {
+            _tmpArr.forEach((ndEv) -> {
+                getNodeEventManager().addNewEvent(new CbusNodeEvent( ndEv ));
             });
         } else {
             setBackupResult(BackupType.COMPLETEDWITHERROR);
@@ -70,9 +66,18 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
     }
     
     /**
+     * Ignores incoming and outgoing CAN Frames
+     * {@inheritDoc}
+     */
+    @Override
+    public CbusNodeCanListener getNewCanListener(){
+        return new DoNothingCanListener();
+    }
+    
+    /**
      * Set the Backup DateTime
      * @param thisDate Timestamp
-     */     
+     */
     protected void setBackupTimeStamp( Date thisDate){
         _timeStamp = thisDate;
     }
@@ -89,7 +94,7 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
      * Set the Backup Result
      * @param type Backup Type Enum
      */  
-    protected void setBackupResult(BackupType type) {
+    protected final void setBackupResult(BackupType type) {
         _backupType = type;
     }
 
@@ -97,7 +102,7 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
      * Get the Backup Result
      * @return enum
      */  
-    public BackupType getBackupResult() {
+    public final BackupType getBackupResult() {
         return _backupType;
     }
     
@@ -128,7 +133,7 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
      */
     public void addBupEvent(int nn, int en, String evVars){
         CbusNodeEvent buildEv = new CbusNodeEvent( nn, en , getNodeNumber(), evVars);
-        addNewEvent(buildEv);
+        getNodeEventManager().addNewEvent(buildEv);
     }
     
     /**
@@ -149,15 +154,15 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
         
         StringBuilder text = new StringBuilder();
         
-        if (!(getParameterHexString().equals(toTest.getParameterHexString()))){
+        if (!(getNodeParamManager().getParameterHexString().equals(toTest.getNodeParamManager().getParameterHexString()))){
             text.append("Parameters Changed"+" ");
         }
         
-        if (!(getNvHexString().equals(toTest.getNvHexString()))){
+        if (!(getNodeNvManager().getNvHexString().equals(toTest.getNodeNvManager().getNvHexString()))){
             text.append("NV's Changed"+" ");
         }
         
-        if ( getTotalNodeEvents() != toTest.getTotalNodeEvents() ) {
+        if ( getNodeEventManager().getTotalNodeEvents() != toTest.getNodeEventManager().getTotalNodeEvents() ) {
             text.append("Number Events Changed"+" ");
         } else if (getEventArrayHash()!=toTest.getEventArrayHash()){
             text.append("Events Changed"+" ");
@@ -172,7 +177,7 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
     }
     
     /** 
-     * {@inheritDoc} 
+     * {@inheritDoc}
      * Compares to the Time Date Stamp of the Backup
      */
     @Override
@@ -200,30 +205,32 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
         if (this.getNodeNumber() != t.getNodeNumber()) {
             return false;
         }
-        if (!(this.getParameterHexString().equals(t.getParameterHexString()))){
+        if (!(this.getNodeParamManager().getParameterHexString().equals(t.getNodeParamManager().getParameterHexString()))){
             return false;
         }
-        if (!(this.getNvHexString().equals(t.getNvHexString()))){
+        if (!(this.getNodeNvManager().getNvHexString().equals(t.getNodeNvManager().getNvHexString()))){
             return false;
         }
-        if ( this.getTotalNodeEvents() != t.getTotalNodeEvents() ) {
+        if ( this.getNodeEventManager().getTotalNodeEvents() != t.getNodeEventManager().getTotalNodeEvents() ) {
             return false;
         }
-        if ( this.getEventArray() !=null && t.getEventArray() !=null) {
-            java.util.Collections.sort(this.getEventArray());
-            java.util.Collections.sort(t.getEventArray());
+        
+        ArrayList<CbusNodeEvent> thisEvs = this.getNodeEventManager().getEventArray();
+        ArrayList<CbusNodeEvent> otherEvs = t.getNodeEventManager().getEventArray();
+        
+        if ( thisEvs !=null && otherEvs !=null) {
+            java.util.Collections.sort(thisEvs);
+            java.util.Collections.sort(otherEvs);
         }
-        if (this.getEventArrayHash()!=t.getEventArrayHash()){
-            return false;
-        }
-        return true;
+        return this.getEventArrayHash() == t.getEventArrayHash();
     }
     
     /** 
      * {@inheritDoc}
      */
     @Override public int hashCode() {
-        return Objects.hash(getNodeNumber(),getParameterHexString(),getNvHexString(),getEventArrayHash());
+        return Objects.hash(getNodeNumber(),getNodeParamManager().getParameterHexString(),
+            getNodeNvManager().getNvHexString(),getEventArrayHash());
     }
     
     /** 
@@ -231,10 +238,11 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
      * @return 0 if event array null
      */
     public int getEventArrayHash(){
-        if ( getEventArray() == null ) {
+        ArrayList<CbusNodeEvent> _tmpArr = getNodeEventManager().getEventArray();
+        if ( _tmpArr == null ) {
             return 0;
         } else {
-            return getEventArray().hashCode();
+            return _tmpArr.hashCode();
         }
     }
     
@@ -245,29 +253,33 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
      */
     @Override
     public String toString(){
-        return getNodeNumberName()+ " Backup " + getBackupTimeStamp();
+        return super.toString()+ " Backup " + getBackupTimeStamp();
     }
     
-    /** 
-     * {@inheritDoc}
-     * Ignores outgoing CAN Frames
+    /**
+     * Ignores Incoming and Outgoing CAN Frames.
      */
-    @Override
-    public void message(CanMessage m) {
-    }
+    protected static class DoNothingCanListener extends CbusNodeCanListener {
+
+        public DoNothingCanListener(){
+            super(null,null);
+        }
+        
+        /**
+         * Ignores outgoing CAN Frames.
+         * {@inheritDoc}
+         */
+        @Override
+        public void message(CanMessage m) {}
+
+        /**
+         * Ignores incoming CAN Frames.
+         * {@inheritDoc}
+         */
+        @Override
+        public void reply(CanReply m) {}
     
-    /** 
-     * {@inheritDoc}
-     * Ignores incoming CAN Frames
-     */
-    @Override
-    public void reply(CanReply m) {
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void dispose(){
-    }
+}
     
     // private static final Logger log = LoggerFactory.getLogger(CbusNodeFromBackup.class);
     

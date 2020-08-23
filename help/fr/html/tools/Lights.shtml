@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; le 2017-01-02 -->
+<!-- Updated by Blorec Herv&#233; le 2017-01-02 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -10,26 +10,24 @@
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+	<!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
 <h1>JMRI:Documentation Lumi&#232;re</h1>
 
-<h2>Qu'est ce que les Lumi&#232;res?</H2>
+<h2>Qu'est ce que les Lumi&#232;res?</h2>
 
 <p>Les Lumi&#232;res sont des bits de sortie num&#233;rique qui fonctionnent comme des interrupteurs marche/arr&#234;t. Les Lumi&#232;res
 ont &#233;t&#233; cr&#233;&#233;es pour fournir un contr&#244;le ais&#233; des voyants du panneau de commande et l'&#233;clairage des paysages
@@ -106,44 +104,45 @@ dans le menu  <b>Panneau</b> . Notez que l'&#233;tat activ&#233;/d&#233;sactiv&#
 n'est pas enregistr&#233; dans le fichier de configuration. Lorsque les Lumi&#232;res sont charg&#233;es &#224; partir d'un
 fichier de configuration, elles sont tous activ&#233;es.
 
-<a name="addLight"> <H3>Ajout d'un Nouvelle Lumi&#232;re</H3></a>
+<a name="addLight"></a><h3>Ajout d'un Nouvelle Lumi&#232;re</h3>
+
 <p>Pour ajouter une nouvelle Lumi&#232;re, suivez cette proc&#233;dure:</p>
 <ol>
 	<li>Cliquez <b> Tableau Lumi&#232;res</b> dans le menu <b>Outils</b> pour faire appara&#238;tre
-le Tableau Lumi&#232;re, et cliquez sur le bouton  <b>Ajouter ...</b> au bas de la
-table pour faire appara&#238;tre la fen&#234;tre Ajouter/Modifier Lumi&#232;re.	
+	le Tableau Lumi&#232;re, et cliquez sur le bouton  <b>Ajouter ...</b> au bas de la
+	table pour faire appara&#238;tre la fen&#234;tre Ajouter/Modifier Lumi&#232;re.
 	</li>
 	<li>Entrez un nom syst&#232;me, selon la convention JMRI. La premi&#232;re
-lettre d&#233;signe le mat&#233;riel de votre syst&#232;me ('L' pour loconet, "C" pour C/MRI,
-etc), et la deuxi&#232;me lettre doit &#234;tre 'L' pour la lumi&#232;re. Elles sont suivies par
-un nombre qui donne l'adresse mat&#233;rielle du bit de sortie num&#233;rique 
-r&#233;f&#233;renc&#233;. Exemples d'adresses valides du syst&#232;me sont: CL1004, et LL401,
-en supposant que vous ayiez le mat&#233;riel pour les bits sortie num&#233;rique adress&#233;s.	
+	lettre d&#233;signe le mat&#233;riel de votre syst&#232;me ('L' pour loconet, "C" pour C/MRI,
+	etc), et la deuxi&#232;me lettre doit &#234;tre 'L' pour la lumi&#232;re. Elles sont suivies par
+	un nombre qui donne l'adresse mat&#233;rielle du bit de sortie num&#233;rique
+	r&#233;f&#233;renc&#233;. Exemples d'adresses valides du syst&#232;me sont: CL1004, et LL401,
+	en supposant que vous ayiez le mat&#233;riel pour les bits sortie num&#233;rique adress&#233;s.
 	</li>
 	<li>Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rente
-du nom utilisateur d'autres Lumi&#232;res sera accept&#233;e, mais il est
-sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de la Lumi&#232;re.
+	du nom utilisateur d'autres Lumi&#232;res sera accept&#233;e, mais il est
+	sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de la Lumi&#232;re.
 	</li>
 	<li>S&#233;lectionnez le type de commande &#224; partir des options dans le menu contextuel.
-Lorsque vous changez le type de commande, diff&#233;rentes options apparaissent sur les deux lignes
-ci-dessous. Les options de contr&#244;le sont examin&#233;es plus en d&#233;tail
-<A HREF="#lightcontrol">ci-dessous</a>.
+	Lorsque vous changez le type de commande, diff&#233;rentes options apparaissent sur les deux lignes
+	ci-dessous. Les options de contr&#244;le sont examin&#233;es plus en d&#233;tail
+	<a href="#lightcontrol">ci-dessous</a>.
 	</li>
 	<li>Entrez les informations requises pour compl&#233;ter la d&#233;finition de la commande
-dans les champs qui apparaissent. Si vous avez besoin d'entrer un nom de capteur ou un nom d'aiguillage, vous devez entrer le nom (nom  syst&#232;me ou nom utilisateur) d'un capteur ou d'un aiguillage existant.  <b>Attention</b> : si vous entrez un nom d'utilisateur, soyez prudent sur
-le changement du nom utilisateur de votre capteur ou de votre aiguillage. Un simple changement
-du nom utilisateur pourrait casser votre d&#233;finition de commande de Lumi&#232;re.
+	dans les champs qui apparaissent. Si vous avez besoin d'entrer un nom de capteur ou un nom d'aiguillage, vous devez entrer le nom (nom  syst&#232;me ou nom utilisateur) d'un capteur ou d'un aiguillage existant.  <b>Attention</b> : si vous entrez un nom d'utilisateur, soyez prudent sur
+	le changement du nom utilisateur de votre capteur ou de votre aiguillage. Un simple changement
+	du nom utilisateur pourrait casser votre d&#233;finition de commande de Lumi&#232;re.
 	</li>
 	<li>Ensuite se trouve la zone des notes de la fen&#234;tre Ajouter/Modifier Lumi&#232;re. C'est ici qu'apparaitront
-les instructions et les messages d'erreur lorsque vous cr&#233;ez ou modifiez
-une Lumi&#232;re. Il faut toujours v&#233;rifier ce domaine pour voir si les choses se d&#233;roulent comme pr&#233;vu.
+	les instructions et les messages d'erreur lorsque vous cr&#233;ez ou modifiez
+	une Lumi&#232;re. Il faut toujours v&#233;rifier ce domaine pour voir si les choses se d&#233;roulent comme pr&#233;vu.
 	</li>
 	<li>Cliquez sur le bouton  <b>Cr&#233;er</b> situ&#233; au bas de la fen&#234;tre.
-Si tout va bien, un message indiquant "Nouvelle Lumi&#232;re ajout&#233;e ..." sera
-affich&#233; dans la zone des notes. S'il y a des probl&#232;mes avec quoi que ce soit, une erreur ou un
-message d'avertissement sera affich&#233; dans la zone des notes; vous devez alors
-corriger l'erreur et cliquez sur  <b>Cr&#233;er</b> &#224; nouveau.
-</li>
+	Si tout va bien, un message indiquant "Nouvelle Lumi&#232;re ajout&#233;e ..." sera
+	affich&#233; dans la zone des notes. S'il y a des probl&#232;mes avec quoi que ce soit, une erreur ou un
+	message d'avertissement sera affich&#233; dans la zone des notes; vous devez alors
+	corriger l'erreur et cliquez sur  <b>Cr&#233;er</b> &#224; nouveau.
+	</li>
 </ol>
 
 <h3>Modification d'une Lumi&#232;re Existante</h3>
@@ -160,9 +159,9 @@ corriger l'erreur et cliquez sur  <b>Cr&#233;er</b> &#224; nouveau.
 
 
 	Les boutons <b>Cr&#233;er</b> et <b>Modifier</b> au bas du panneau Ajouter/Editer Lumi&#232;re 
- 	vont changer pour <b>Mise &#224; jour</b> et <b>Annuler</b> .</Li>
+ 	vont changer pour <b>Mise &#224; jour</b> et <b>Annuler</b> .</li>
 	<li>Effectuez les modifications ou les ajouts que vous avez besoin &#224; l'information dans
-	la bo&#238;te de dialogue. Notez que le nom syst&#232;me de la Lumi&#232;re &#233;dit&#233;e ne peut pas 		&#234;tre chang&#233;, mais le nom utilisateur peut &#234;tre chang&#233;. Les autres &#233;l&#233;ments sont 		d&#233;crits <A HREF="#addLight">ci-dessus</a>.</li>
+	la bo&#238;te de dialogue. Notez que le nom syst&#232;me de la Lumi&#232;re &#233;dit&#233;e ne peut pas 		&#234;tre chang&#233;, mais le nom utilisateur peut &#234;tre chang&#233;. Les autres &#233;l&#233;ments sont 		d&#233;crits <a href="#addLight">ci-dessus</a>.</li>
 	<li>Apr&#232;s avoir modifi&#233; les informations Lumi&#232;re, cliquez sur <b>Mise &#224; jours</b> 
 	pour changer la lumi&#232;re s&#233;lectionn&#233;e. Si tout va bien, un
 	message indiquant "Lumi&#232;re mise &#224; jour ..." sera affich&#233; dans la zone des notes
@@ -185,42 +184,46 @@ corriger l'erreur et cliquez sur  <b>Cr&#233;er</b> &#224; nouveau.
 	modification n'est apport&#233;e &#224; la Lumi&#232;re s&#233;lectionn&#233;e.</li>
 </ol>
 
-<a name="lightcontrol"><h3>Options  de Commande Automatis&#233;e des Lumi&#232;res</h3></a>
+<a name="lightcontrol"></a><h3>Options  de Commande Automatis&#233;e des Lumi&#232;res</h3>
 
 Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyens suivants:
 	<ul>
-	<p><li> <b>Par Capteur</b> - La Lumi&#232;re sera allum&#233;e lorsque le Capteur
+	<li><b>Par Capteur</b> - La Lumi&#232;re sera allum&#233;e lorsque le Capteur
 	change d'actif ou d'inactif, selon le choix fait dans le
 	"Sens pour ON" du menu contextuel, et il sera &#233;teint, lorsque le capteur
 	inverse l'&#233;tat. Sp&#233;cifiez le capteur en saisissant son nom
 	(nom syst&#232;me ou nom utilisateur) dans le champ "Nom de Capteur". Cette option a
 	un certain nombre d'utilisations, y compris l'&#233;tablissement d'une lumi&#232;re du tableau de commande 		pour suivre l'occupation des cantons
-. 	C'est utile, par exemple, pour suivre la position du train dans la surveillance d'une coulisse.</p>
+. 	C'est utile, par exemple, pour suivre la position du train dans la surveillance d'une coulisse.
 	</li>
-	<p><li> <b>Par l'Horloge Rapide</b> - La Lumi&#232;re sera allum&#233;e quand l'horloge
+	<li> <b>Par l'Horloge Rapide</b> - La Lumi&#232;re sera allum&#233;e quand l'horloge
  	atteint l'heure indiqu&#233;e dans le "Time On" et sera d&#233;sactiv&#233;e lorsque
 	l'horloge rapide atteint le temps entr&#233; dans "Time Off". Les temps sont
 	entr&#233;s dans le format "hh: mm" , o&#249; "hh" est heures et "mm" est minutes d'une horloge	
 	24 heures. Une utilisation de cette option est d'activer et de d&#233;sactiver l'&#233;clairage des paysages,
-	les lumi&#232;res des rues, lumi&#232;res des maison, etc pour simuler le temps de passage &#224; la nuit sur 		le r&#233;seau.</p>
+	les lumi&#232;res des rues, lumi&#232;res des maison, etc pour simuler le temps de passage &#224; la nuit sur
+	le r&#233;seau.
 	</li>
- 	<li><p> <b>Par &#201;tat d'Aiguillage</b> - La Lumi&#232;re sera allum&#233;e quand l'aiguillage passe de 		droit &#224; d&#233;vi&#233;, selon le choix fait dans le
+ 	<li><b>Par &#201;tat d'Aiguillage</b> - La Lumi&#232;re sera allum&#233;e quand l'aiguillage passe de 		droit &#224; d&#233;vi&#233;, selon le choix fait dans le
 	"Etat pour ON" du menu contextuel, et il sera &#233;teint, quand l'aiguillage
 	inverse son &#233;tat. Sp&#233;cifiez l'aiguillage en saisissant son nom
 	(nom syst&#232;me ou nom utilisateur) dans le champ "Nom de l'Aiguillage". Cette option peut
 	&#234;tre utilis&#233;e pour allumer une lumi&#232;re sur le tableau de commande pour suivre l'&#233;tat d'un 		aiguillage.
 	C'est utile, par exemple, pour surveiller l'&#233;tat des aiguillages cach&#233;s.
-	</p>
 	</li>
-	<p><li> <b>Par Chronom&#233;trage ON</b> - La Lumi&#232;re sera allum&#233;e lors du changement du capteur 		d&#233;clencheur actif, et il sera &#233;teint, quand le temps pr&#233;cis&#233;
+	<li><b>Par Chronom&#233;trage ON</b> - La Lumi&#232;re sera allum&#233;e lors du changement du capteur 		d&#233;clencheur actif, et il sera &#233;teint, quand le temps pr&#233;cis&#233;
  	se sera &#233;coul&#233;. Sp&#233;cifiez le capteur d&#233;clencheur en saisissant son nom
 	(nom du syst&#232;me ou nom d'utilisateur) dans le champ "Nom du capteur de d&#233;clenchement. Entrez 
 	le temps d'allumage de la Lumi&#232;re  (en millisecondes) dans la "dur&#233;e ON"
-	dans le champs . Cette option a un certain nombre d'utilisations, ell a &#233;t&#233; initialement 		con&#231;ue pour enclenchez un d&#233;coupleur &#233;lectromagn&#233;tique en r&#233;ponse &#224; un bouton 		poussoir du panneau de contr&#244;le, mais il peut &#233;galement &#234;tre utilis&#233; pour d'autres types 		d'animation sur le r&#233;seau, par exemple, pour commander la sonnerie d'une cloche de passage &#224; 		niveau quand un train entre dans le canton.</p>
-</li>
+	dans le champs . Cette option a un certain nombre d'utilisations, ell a &#233;t&#233; initialement
+	con&#231;ue pour enclenchez un d&#233;coupleur &#233;lectromagn&#233;tique en r&#233;ponse &#224; un bouton
+	poussoir du panneau de contr&#244;le, mais il peut &#233;galement &#234;tre utilis&#233; pour d'autres types
+	d'animation sur le r&#233;seau, par exemple, pour commander la sonnerie d'une cloche de passage &#224;
+	niveau quand un train entre dans le canton.
+	</li>
 </ul>
 	
-<a name="variablelight"><h3>Lumi&#232;res Variables </h3></a>
+<a name="variablelight"></a><h3>Lumi&#232;res Variables</h3>
 
 <p>
 	Une lumi&#232;re variable permet un niveau variable d'intensit&#233;s entre On et Off.
@@ -228,14 +231,12 @@ Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyen
 	moment de la journ&#233;e et la nuit. Seules certaines formes de lumi&#232;res ont la possibilit&#233; 		d'&#234;tre variable.
 	Des exemples comprennent des dispositifs Internes et PowerLine.
 	Un certain nombre d'options de configuration sont disponibles pour les lumi&#232;res variables
-     <A HREF="#VariableLightSettings">ci-dessous</a>.
-</p>
+     <a href="#VariableLightSettings">ci-dessous</a>.</p>
 <p>
 	Une lumi&#232;re variable est ajust&#233;e par un r&#233;glage d'intensit&#233;.
 	La gamme de l'intensit&#233; est de 0,00 pour Off &#224; 1,00 qui est On complet.
  	L'entr&#233;e utilisateur pour l'intensit&#233; sera soit l'utilisation de la valeur avec virgule
- 	ou la valeur de pourcentage de 0% &#224; 100%.
-</p>
+ 	ou la valeur de pourcentage de 0% &#224; 100%.</p>
 <p>
 	Selon le mat&#233;riel utilis&#233;, certaines lumi&#232;res variables feront un
 	ajustement d'initialisation lors du passage du mode simple mode on/off
@@ -243,7 +244,7 @@ Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyen
 	Sur ces appareils ce ne sera pas &#224; nouveau n&#233;cessaire aussi longtemps que  <b>uniquement</b> 
 	les commandes de r&#233;glage d'intensit&#233; sont utilis&#233;es.
 	Un m&#233;lange sur les commande marche/arr&#234;t peut exiger que l'initialisation se produise &#224; 	n
-	nouveau.
+	nouveau.</p>
 <p>
 	Une lumi&#232;re variable a trois types d'op&#233;rateurs:
 	<dl>
@@ -271,35 +272,33 @@ Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyen
 		</dd>    
 	</dl>
 
-	
-    
-<a name="VariableLightSettings"><h3>R&#233;glages Variables de la lumi&#232;re</h3></a>
-<p>
+	<a name="VariableLightSettings"></a><h3>R&#233;glages Variables de la lumi&#232;re</h3>
+	<p>
 	Ces param&#232;tres ajustent la mani&#232;re dont la commande "intensit&#233;" est utilis&#233;e.
 	<dl>
-	<dt> <b>Intensit&#233;  minimum </b> </dt>
-	<dd>
-		Une valeur de 0 &#224; 100 (pour cent) qui d&#233;finit la plus faible intensit&#233; de lumi&#232;re 
-		qui sera valid&#233;e par une commande dim
-		Une commande hors explicite va ignorer cette valeur.
-	</dd>
+		<dt> <b>Intensit&#233;  minimum </b> </dt>
+		<dd>
+			Une valeur de 0 &#224; 100 (pour cent) qui d&#233;finit la plus faible intensit&#233; de lumi&#232;re
+			qui sera valid&#233;e par une commande dim
+			Une commande hors explicite va ignorer cette valeur.
+		</dd>
 
- 	<dt> <b>Intensit&#233; maximale:</b> </dt>
-	<dd>
-		Une valeur de 0 &#224; 100 (pour cent) qui fixe l'intensit&#233; maximale de la lumi&#232;re qui
-		sera valid&#233;e par une commande dim
-		Une commande explicite On va ignorer cette valeur.
-	</dd>
+		<dt> <b>Intensit&#233; maximale:</b> </dt>
+		<dd>
+			Une valeur de 0 &#224; 100 (pour cent) qui fixe l'intensit&#233; maximale de la lumi&#232;re qui
+			sera valid&#233;e par une commande dim
+			Une commande explicite On va ignorer cette valeur.
+		</dd>
 
-<dt> <b>Temps de transition :</b> </dt>
-	<dd>
-		Nombre de minutes pour passer de 0% &#224; 100% d'intensit&#233;.
-		Une valeur de z&#233;ro provoquera le passage d'une valeur minimale &#224; une valeur maximale
-		 aussi rapidement que l'appareil est en mesure de le faire
-</dd>
+		<dt> <b>Temps de transition :</b> </dt>
+		<dd>
+			Nombre de minutes pour passer de 0% &#224; 100% d'intensit&#233;.
+			Une valeur de z&#233;ro provoquera le passage d'une valeur minimale &#224; une valeur maximale
+			 aussi rapidement que l'appareil est en mesure de le faire
+		</dd>
 	</dl>
 
-		<!--#include virtual="/Footer" -->
+		<!--#include virtual="/Footer.shtml" -->
 	</div><!-- closes #mainContent-->
 </div><!-- closes #mBody-->
 </body>

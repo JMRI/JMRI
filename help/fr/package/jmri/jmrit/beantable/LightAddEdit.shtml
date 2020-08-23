@@ -18,16 +18,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Ajouter/&eacute;diter Lumi&egrave;res</h1><a name=
-      "addLight" id="addLight"></a>
+
+      <h1>Ajouter/&eacute;diter Lumi&egrave;res</h1>
+      <a name="addLight" id="addLight"></a>
 
       <h2>Ajout d'une Nouvelle Lumi&egrave;re</h2>Pour ajouter une
       nouvelle lumi&egrave;re, suivez cette proc&eacute;dure:
@@ -113,15 +114,13 @@
         </li>
       </ol>
 
-      <h2><a name="addLight" id="addLight">Ajout de plusieurs
-      nouveaux Lumi&egrave;res en une Seule Fois</a></h2><a name=
-      "addLight" id="addLight">Si le <b>Syst&egrave;me</b>
+      <h2>Ajout de plusieurs nouveaux Lumi&egrave;res en une Seule Fois</h2>
+      <p>Si le <b>Syst&egrave;me</b>
       s&eacute;lectionn&eacute;: supporte l'ajout de multiples
       Lumi&egrave;res &agrave; la fois, la fen&ecirc;tre
       <b>Ajouter/&eacute;diter Lumi&egrave;re</b> affiche deux
       &eacute;l&eacute;ments suppl&eacute;mentaires, comme le
-      montre ci-dessous:<br>
-      <br></a>
+      montre ci-dessous:</p>
 
       <p><img src="LightAddManyFrame.png" height="399" width=
       "622"></p>
@@ -352,14 +351,12 @@
       </ul>
 
       <h2><a name="varLight" id="varLight">Travailler avec des
-      lumi&egrave;res &agrave; intensit&eacute;
-      variable</a></h2><a name="varLight" id="varLight">Si le
-      <b>Syst&egrave;me</b> s&eacute;lectionn&eacute;: supporte
+      lumi&egrave;res &agrave; intensit&eacute; variable</a></h2>
+      <p>Si le <b>Syst&egrave;me</b> s&eacute;lectionn&eacute;: supporte
       Lumi&egrave;res avec une intensit&eacute; variable, la
       fen&ecirc;tre <b>Ajouter/Modifier Lumi&egrave;re</b> affiche
       la zone <b>Intensit&eacute; Variable</b> indiqu&eacute;e
-      dessous lorsque vous ajoutez une lumi&egrave;re:<br>
-      <br></a>
+      dessous lorsque vous ajoutez une lumi&egrave;re:</p>
 
       <p><img src="LightAddVariable.png" height="445" width=
       "776"></p>
@@ -395,7 +392,7 @@
       l'<b>Intensit&eacute; Cible</b> fix&eacute;e &agrave; la
       limite pertinente.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

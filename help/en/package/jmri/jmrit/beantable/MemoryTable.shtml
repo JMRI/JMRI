@@ -15,10 +15,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Memory Variable Table</h1>
       <p>You can use the Memory
       Variable Table to look at the contents of JMRI memory
@@ -41,7 +41,7 @@
       <p>For more information on Memory Variables, see the <a href=
       "../../../../html/tools/Memories.shtml">Memory Variables help
       page</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * RPS implementation of the Reporter interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
@@ -78,7 +78,8 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
 
     /**
      * Notify parameter listeners that a device has left the region covered by
-     * this sensor.
+     * this reporter.
+     * @param id Number of region being left
      */
     void notifyLeaving(Integer id) {
         firePropertyChange("Leaving", null, id);
@@ -87,7 +88,8 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
 
     /**
      * Notify parameter listeners that a device has entered the region covered
-     * by this sensor.
+     * by this reporter.
+     * @param id Number of region being entered
      */
     void notifyArriving(Integer id) {
         firePropertyChange("Arriving", null, id);
@@ -109,14 +111,17 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     @Override
     public void dispose() {
         Model.instance().removeRegion(region);
+        super.dispose();
     }
 
     // Methods to support PhysicalLocationReporter interface
 
     /**
      * Parses out a (possibly old) RpsReporter-generated report string to
-     * extract the address from the front. Assumes the RpsReporter format is
-     * "NNNN".
+     * extract the address from the front.
+     * Assumes the RpsReporter format is "NNNN".
+     * @param rep loco string.
+     * @return loco address, may be null.
      */
     public LocoAddress getLocoAddress(String rep) {
         // The report is a string, that is the ID of the locomotive (I think)
@@ -140,6 +145,8 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      * Get the direction (ENTER/EXIT) of the report.
      * <p>
      * Because of the way Ecos Reporters work (or appear to), all reports are ENTER type.
+     * @param rep reporter ID in string form.
+     * @return direction is always a location entrance
      */
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // The RPS reporter only sends a report on entry.
@@ -147,22 +154,27 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
     }
 
     /**
-     * Get the PhysicalLocation of the Reporter
-     *
-     * Reports its own location, for now. Not sure if that's the right thing or
-     * not. Would be nice if it reported the exact measured location of the
+     * Get the PhysicalLocation of the Reporter.
+     * <p>
+     * Reports its own location, for now.
+     * Not sure if that's the right thing or not. 
+     * Would be nice if it reported the exact measured location of the
      * transmitter, but right now that doesn't appear to be being stored
      * anywhere retrievable. NOT DONE YET
+     * @return PhysicalLocation.getBeanPhysicalLocation
      */
     public PhysicalLocation getPhysicalLocation() {
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     /**
-     * Get the PhysicalLocation of the Transmitter for a given ID
-     *
+     * Get the PhysicalLocation of the Transmitter for a given ID.
+     * <p>
      * Given an ID (in String form), looks up the Transmitter and gets its
      * current PhysicalLocation (translated from the RPS Measurement).
+     *
+     * @param s transmitter ID.
+     * @return physical location.
      */
     public PhysicalLocation getPhysicalLocation(String s) {
         if (s.length() > 0) {

@@ -14,11 +14,10 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI: XML Usage</h1>
 
       <p>JMRI uses XML for a number of purposes: to hold decoder

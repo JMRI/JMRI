@@ -1,15 +1,14 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 
 /**
@@ -35,25 +34,27 @@ public class OBlockTableActionTest {
         javax.swing.JDesktopPane dt = (javax.swing.JDesktopPane) doc.getContentPane();
         javax.swing.JInternalFrame[] fob = dt.getAllFrames();
         Assert.assertNotNull("OBlock window", fob);
-        System.out.println();
 
         Assert.assertEquals(4, fob.length);
         new QueueTool().waitEmpty();
         // Ask to close add window
         ThreadingUtil.runOnGUI(() -> {
+            doc.setVisible(false);
             JUnitUtil.dispose(doc);
         });
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

@@ -11,181 +11,20 @@
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-        <h1>JMRI: Analyse statique avec SpotBugs</h1>SpotBugs est un
-        outil qui peut examiner le code pour trouver
-      d'&eacute;ventuels probl&egrave;mes. Il fait un "analyse
-      statique", en regardant &agrave; travers le code pour trouver
-      certaines "mauvaises id&eacute;es connues ": Les choses qui
-      sont susceptibles de causer des probl&egrave;mes
-      occasionnels/intermittents, mauvaise performance, etc Parce
-      que ces genre de probl&egrave;mes sont difficile &agrave;
-      trouver avec les tests, les trouver par l'inspection est
-      souvent la seule approche r&eacute;aliste. Disposer d'un
-      outil qui peut faire les inspections automatiquement, afin
-      qu'elles puissent se faire &agrave; chaque fois que quelque
-      chose est chang&eacute;, prot&egrave;ge le code d'une
-      d&eacute;gradation lente sans que quelqu'un le remarque
-      jusqu'&agrave; ce qu'il soit trop tard.
-
-      <p>Pour plus d'informations sur SpotBugs, voir <a href=
-                                                        "https://spotbugs.github.io">la page d'accueil
-              SpotBugs</a> .</p>
-
-      <p>Nous ex&eacute;cutons sous forme d'une routine SpotBugs
-          comme une partie de notre <a href=
-      "ContinuousIntegration.shtml">processus continue
-      d'int&eacute;gration</a>. Vous pouvez voir les
-      r&eacute;sultats des plus r&eacute;centes constructions en
-      ligne <a href=
-      "https://jmri.ci.cloudbees.com/job/Development/job/FindBugs/lastBuild/">
-      ici</a>.</p>
-
-      <p>Si findBugs trouve une erreur positive, un bug qui n'est
-      pas r&eacute;ellemnt un bug, vous pouvez l'&eacute;teindre
-      avec une annotation tels que:</p>
-      <pre style="font-family: monospace;">
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK pour comparer les flottantess, car m&eacute;me les plus infimes diff&eacute;rences 
-devraient d&eacute;clencher les mises &agrave; jour")
-</pre>Le second argument "justification" est optionnel, mais
-hautement recommand&eacute;. Expliquer pourquoi vous avez
-ajout&eacute; cette annotation pour supprimer un message aidera
-Celui qui viendra apr&egrave;s vous et tentera de comprendre le
-code. Il aidera &eacute;galement &agrave; vous assurer que vous
-comprenez correctement la cause du rapport du bugg sous-jacent:
-Parfois ce qui semble un faux positif ne l'est pas vraiment.
-
-      <p>si vous avez besoin de mettre plus d'un type de message
-      dans une annotation, utilisez la syntaxe en tableau:</p>
-      <pre style="font-family: monospace;">
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","Pourquoi les deux sont n&eacute;cessaire")
-</pre>Les annotations de bug peuvent aider &agrave; mieux
-comprendre votre code. Parfois, ils vont lui donner suffisamment de
-compr&eacute;hension exemple: quand une variable peut &eacute;tre
-nulle, que &ccedil;a ne va plus faire de fausses erreurs positives.
-Pour plus d'information sur ceci, voir la <a href=
-                                             "http://findbugs.sourceforge.net/manual/annotations.html">page des
-    annotations SpotBugs</a> . Elle peut &eacute;tre utile pour marquer
-les classes avec une des annotations suivantes de telle sorte que
-SpotBugs fasse un bon travail de raisonnement &agrave; ce sujet:
-
-      <ul>
-        <li><a href=
-               "http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckForNull</a>
-            - une variable ou un param&egrave;tre peut avoir une valeur
-        nulle ,donc toutes les utilisations devraient
-        convenablement g&eacute;rer cela.</li>
-
-        <li><a href=
-               "http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckReturnValue</a>
-            - cette m&eacute;thode n'a aucun effet secondaire, il n'y a
-        donc pas lieu de l'appeler sans v&eacute;rifier que c'est
-        la valeur de retour</li>
-
-        <li><a href=
-        "http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html">
-        net.jcip.annotations.Immutable</a> - Un objet de cette
-        classe ne peut pas &eacute;tre modifi&eacute; apr&egrave;s
-        sa cr&eacute;ation. Cela permet &agrave; la fois la une
-        meilleure v&eacute;rification de la logique, et de
-        simplifier &eacute;galement l'utilisation par vos
-        coll&egrave;gues, il est donc bon de marquer les classes
-        avec cette propri&eacute;t&eacute;.</li>
-
-        <li><a href=
-        "http://jcip.net/annotations/doc/net/jcip/annotations/NotThreadSafe.html">
-        net.jcip.annotations.NotThreadSafe</a> - une classe qui
-        n'est pas un lien de s&eacute;curit&eacute;,ne devrait donc
-        pas &eacute;tre v&eacute;rifi&eacute;e pour les
-        probl&egrave;mes de simultan&eacute;it&eacute;. Souvent
-        utilis&eacute; pour les classes Swing , mais il faut noter
-        que certains composants Swing (par exemple, les
-        fen&eacute;tres moniteur, les classes avec les auditeurs)
-        ne doivent pas accepter l'entr&eacute;e d'autres
-        liens.</li>
-
-        <li><a href=
-        "http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html">
-        net.jcip.annotations.ThreadSafe</a> - Les classes qui ne
-        doivent &eacute;tre utilisables pour de multiples liens.
-        SpotBugs l'assumes g&eacute;n&eacute;ralement, mais il est
-        bon de le mettre sur une classe qui est destin&eacute;e
-        &agrave; &eacute;tre un lien de s&eacute;curit&eacute;
-        comme un rappel pour les d&eacute;veloppeurs futurs.</li>
-      </ul>Pour de plus ample informations au sujet de ces
-      annotations, svp voir la <a href=
-      "http://jcip.net/annotations/doc/index.html">page dans l'API
-      Concurrency</a>.
-    </div>
-
-    <p>Simon White a ajout&eacute; le support SpotBugs &agrave;
-        notre Chaine de construction bas&eacute;e sur Ant pendant le
-    d&eacute;veloppement du JMRI 2.5.5. Sa note sur ceci
-    suit...</p>
-
-    <p>Comme demande de fonctionnalit&eacute; par 1716873, j'ai
-    ajout&eacute; une t&acirc;che Ant pour ex&eacute;cuter
-    SpotBugs. Ceci va produire un rapport en HTML dans le
-    m&eacute;me emplacement que le JMRI jar (c'est &agrave; dire le
-    plus haut niveau du r&eacute;pertoire projet ). Notez la
-    nouvelle t&acirc;che ex&eacute;cute en premier ant dist parce
-    SpotBugs examine le dossier jmri.jar. Pour ex&eacute;cuter la
-    t&acirc;che:</p>
-
-    <ul>
-        <li>Installer SpotBugs (pour moi j'ai mis cela dans
-            C:/SpotBugs-3.1.1)</li>
-
-        <li>soit ex&eacute;cuter
-            <pre>
-ant-Dspotbugs.home = C:/SpotBugs-1.3.8 spotbugs (rempla&ccedil;ant le param&egrave;tre de votre emplacement d'installation)
-        </pre>
-
-        <p>ou modifier le build.xml et modifier le param&egrave;tre
-            comment&eacute; de spotbugs.home &agrave; votre emplacement
-            d'installation, puis ex&eacute;cutez</p>
-        <pre>
-ant spotbugs
-        </pre>
-      </li>
-    </ul>Sur mon ancienne machine il faut environ 20 minutes, mais
-    votre dur&eacute;e peut varier.
-
-    <p>Notez que dans le build.xml j'ai mis le r&eacute;glage
-        maximal de m&eacute;moire-Xmx pour le t&acirc;che SpotBugs pour
-        1024m. Si votre syst&egrave;me a plus de m&eacute;moire, la
-    stimuler peut acc&eacute;l&eacute;rer les choses.</p>
-
-    <p>L'ex&eacute;cution de ceci sur JMRI 2.5.4 donn&eacute; les
-    r&eacute;sultats suivants:</p>
-
-    <table border="1">
-      <tr>
-        <td>Avertissements Mauvaise pratique</td>
-
-        <td>164</td>
-      </tr>
-
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-<div id="mainContent">
-
-    <H1>JMRI: Analyse statique avec SpotBugs</H1>
+        <!-- Page Body -->
+<h1>JMRI: Analyse statique avec SpotBugs</h1>
 
 SpotBugs est un outil qui peut examiner le code pour trouver d'&#233;ventuels
 probl&#232;mes. Il fait un "analyse statique", en regardant &#224; travers le
@@ -198,9 +37,9 @@ Disposer d'un outil qui peut faire les inspections automatiquement,
 afin qu'elles puissent se faire &#224; chaque fois que quelque chose est chang&#233;,
 prot&#232;ge le code d'une d&#233;gradation lente sans que quelqu'un le
 remarque jusqu'&#224; ce qu'il soit trop tard.
-<P>
+<p>
     Pour plus d'informations sur SpotBugs, voir
-    <A href="https://spotbugs.github.io"> la page d'accueil SpotBugs  </A>.
+    <a href="https://spotbugs.github.io"> la page d'accueil SpotBugs  </a>.
 
 <p>
     Nous ex&#233;cutons sous forme d'une routine SpotBugs comme une partie de notre
@@ -291,51 +130,57 @@ Nous n'utilisons pas ces annotations:
         SpotBugs traitera les articles annot&#233;s comme s'ils n'avaient aucune annotation.
         Dans la pratique, cette annotation est utile que pour des raisons imp&#233;rieuses d'une annotation globale non nulle.
 	Utilisez javax.annotation.ParametersAreNullableByDefault pour le d&#233;finir comme une classe enti&#232;re.
-	Pref&#233;rez l'usage de <code>CheckForNull</code>.
+        Pref&#233;rez l'usage de <code>CheckForNull</code>.</li>
 </ul>
 
-<h3><H3>Suppression Avertissements</h3>
+<h3>Suppression Avertissements</h3>
 
     Nous avons d&#233;sactiv&#233; les SpotBugs de routine de contr&#244;le de certains types de conditions:
     <dl>
-        <dt><a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#ri-class-implements-same-interface-as-superclass-ri-redundant-interfaces">RI_REDUNDANT_INTERFACES</a>
+        <dt><a
+        href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#ri-class-implements-same-interface-as-superclass-ri-redundant-interfaces">RI_REDUNDANT_INTERFACES</a></dt>
         <dd>Ce drapeaux au cas o&#249; une classe impl&#233;mente une interface, et aussi h&#233;rite d'une 
 	superclasse qui impl&#233;mente d&#233;j&#224; cette interface. Ceci est redondant et inutile, mais il ne peut pas provoquer de dysfonctionnement 
-	du code.Nous avons assez d'entre eux que nousavons &#233;teint l'avertissement, et nous y reviendrons plus tard.
-        <dt><a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-named-static-inner-class-sic-inner-should-be-static-anon">SIC_INNER_SHOULD_BE_STATIC_ANON
-                , 
-                <dt><a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-static-inner-class-sic-inner-should-be-static-needs-this">
-                        SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a>
+        du code. Nous avons assez d'entre eux que nousavons &#233;teint l'avertissement, et nous y reviendrons plus tard.</dd>
+        <dt><a
+        href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-named-static-inner-class-sic-inner-should-be-static-anon">SIC_INNER_SHOULD_BE_STATIC_ANON</a>
+        ,
+        <dt><a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-static-inner-class-sic-inner-should-be-static-needs-this">
+        SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a></dt>
 	<dd>Static oppos&#233; &#224; non-static,
 	les classes internes ( classes d&#233;finies au c&#339;ur d'autres classes ) prennent moins de place
 	parce qu'ils ne maintiennent pas de r&#233;f&#233;rences &#224; l'objet contenant. Cet avertissement sugg&#232;re de d&#233;placer 
 	une classe anonyme interne (d&#233;finie dans la ligne du code) &#224; une classe r&#233;guli&#232;re (non d&#233;finie en ligne) ainsi elles peuvent
 	&#234;tre statiques. Bien que ce soit probablement une petite am&#233;lioration, c'est un peu de travail pour une petite am&#233;lioration.
-	Nous avons assez de ceux o&#249; nous avons coup&#233; les avertissements, et et nous y reviendront plus tard.
+        Nous avons assez de ceux o&#249; nous avons coup&#233; les avertissements, et et nous y reviendront plus tard.</dd>
         <dt><a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-named-static-inner-class-sic-inner-should-be-static-anon">SIC_INNER_SHOULD_BE_STATIC_ANON</a>,
             <a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-static-inner-class-sic-inner-should-be-static-needs-this">
-                SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a>
+                SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a></dt>
 	<dd>Statique, comme oppos&#233; &#224; non-statique,
 	Les inner classes ( classes d&#233;finies au sein d'autres classes ) prennent peu de place
 	parce qu'lles ne permettent pas de maintenir les r&#233;f&#233;rences &#224; l'objet contenant. Cet avertissement sugg&#232;re de d&#233;placer une classe 
 	interne anonyme ( d&#233;finie dans la ligne du code ) vers une classe r&#233;guli&#232;re ( non d&#233;fini pas en ligne ) ainsi elle peut 
 	&#234;tre rendue statique.Bien que ce soit probablement une petite am&#233;lioration, c'est un peu de travail pour une petite am&#233;lioration. 
-	Nous en avons assez aussi nous avons eteint l'avertissement, et il reviendra un peu plus tard.
-        <dt><a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#pzla-consider-returning-a-zero-length-array-rather-than-null-pzla-prefer-zero-length-arrays">PZLA_PREFER_ZERO_LENGTH_ARRAYS</a>
+        Nous en avons assez aussi nous avons eteint l'avertissement, et il reviendra un peu plus tard.</dd>
+        <dt><a
+            href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#pzla-consider-returning-a-zero-length-array-rather-than-null-pzla-prefer-zero-length-arrays">PZLA_PREFER_ZERO_LENGTH_ARRAYS</a></dt>
         <dd>Que doit faire une m&#233;thode qui retourne un tableau de valeurs quand il n'y en a pas?
 	Retourner "Nulle", oppos&#233; &#224; un tableau vides, exige tout le code d'appel pour traiter un cas particulier.
 	Dans beaucoup de cas, retourner un tableau vide rend le code plus simple. Mais pour du code existant, la simplification est 
 	marginale. Comme cela est un probl&#232;me de conception, mais il surgit souvent nous avons supprim&#233; ceci 
-	pour nous focaliser maintenant sur des probl&#232;mes plus presssants
-<dt>Code Malveillant
+            pour nous focaliser maintenant sur des probl&#232;mes plus presssants</dd>
+        <dt>Code Malveillant</dt>
 	<dd>C'est une classe d'avertissement centr&#233;e autour d'une id&#233;e que les donn&#233;es et les m&#233;thodes de codes  ne doivent pas &#234;tre trop 
 	visibles sp&#233;cialement en statique. Ceci est vrai, mais JMRI n'est pas une biblioth&#232;que tremp&#233;e qui est publi&#233;e dans un monde de 	
-	gens qui essaient de le briser, aussi ces changements ne sont pas une grande priorit&#233;.
-<dt>Nm<dd>La convention est que les noms de cette clase d&#233;marre avec une lettre capitale et les noms de proc&#233;d&#233; ( donn&#233; et code ) avec 
-	une lettre minuscule. 
-<dt>Se,SvVI<dd>Cette une grande classe d'averissementss associ&#233;es avec la s&#233;rialisation Java. JMRI 
+        gens qui essaient de le briser, aussi ces changements ne sont pas une grande priorit&#233;.</dd>
+        <dt>Nm</dt>
+        <dd>La convention est que les noms de cette clase d&#233;marre avec une lettre capitale et les noms de
+        proc&#233;d&#233; ( donn&#233; et code ) avec
+            une lettre minuscule.</dd>
+        <dt>Se,SvVI</dt>
+        <dd>Cette une grande classe d'averissementss associ&#233;es avec la s&#233;rialisation Java. JMRI
 	n'utilise pas la s&#233;rialisation et il est peu probable qu'il le  fasse &#224; l'avenir, de sorte que nous supprimons ces derniers pour 
-	&#233;lever la qualit&#233; moyenne des avertissements &#233;mis.
+        &#233;lever la qualit&#233; moyenne des avertissements &#233;mis.</dd>
 </dl>	
 
 <h3>Arri&#232;re Plan</h3>
@@ -345,28 +190,28 @@ Simon White a ajout&#233; le support FindBugs &#224; notre Chaine de constructio
 JMRI 2.5.5. Sa note sur ceci suit...
 
 <p>
-    Comme demande de fonctionnalit&#233; par 1716873, j'ai ajout&#233; une t&#226;che Ant pour ex&#233;cuter SpotBugs.
-    Ceci va produire un rapport en HTML dans le m&#233;me emplacement que le  JMRI jar 
+Comme demande de fonctionnalit&#233; par 1716873, j'ai ajout&#233; une t&#226;che Ant pour ex&#233;cuter SpotBugs.
+Ceci va produire un rapport en HTML dans le m&#233;me emplacement que le  JMRI jar
 ( c'est &#224; dire le plus haut niveau du r&#233;pertoire projet ). Notez  la nouvelle t&#226;che ex&#233;cute en premier ant dist 
-parce SpotBugs examine le dossier jmri.jar.
+parce SpotBugs examine le dossier jmri.jar.</p>
 
 Pour ex&#233;cuter la t&#226;che:
 <ul>
-    <li> Installer SpotBugs ( pour moi j'ai mis cela dans C:/SpotBugs-3.1.1 )
+    <li> Installer SpotBugs ( pour moi j'ai mis cela dans C:/SpotBugs-3.1.1 )</li>
 
     <li> soit ex&#233;cuter
  
-</code><pre>
+<code>
 ant-Dspotbugs.home=C:/SpotBugs-3.1.1 spotbugs ( rempla&#233;ant le param&#232;tre de votre emplacement d'installation )
-</pre> </code>
+</code>
 
-<p>
 ou modifier le build.xml et modifier le param&#232;tre comment&#233;
 de spotbugs.home &#224; votre emplacement d'installation, puis ex&#233;cutez
 
-</code> <pre>
+<code>
 ant spotbugs
-</pre> </code>
+</code>
+    </li>
 </ul>
 
 Sur mon ancienne machine il faut environ 20 minutes, mais votre dur&#233;e peut varier.
@@ -377,18 +222,18 @@ Si votre syst&#232;me a plus de m&#233;moire, la stimuler peut acc&#233;l&#233;r
 
 <p>
 L'ex&#233;cution de ceci sur JMRI 2.5.4 donn&#233; les r&#233;sultats suivants:
-<p>
+
 <table border="1">
 <tr> <td> Avertissements Mauvaise pratique</td><td>164</td></tr>
-<tr> <td> Avertissements Correction<td><td>77</td></tr>
+<tr> <td> Avertissements Correction</td><td>77</td></tr>
 <tr> <td> Avertissements exp&#233;rimentaux</td><td>7</td></tr>
 <tr> <td> Avertissements vuln&#233;rabilit&#233; code malveillant</td><td>221</td></tr>
-<tr> <td> Avertissements multithread exactitude<td><td>90</td></tr>
+<tr> <td> Avertissements multithread exactitude</td><td>90</td></tr>
 <tr> <td> Avertissements Performance</td><td>459</td></tr>
 <tr> <td> Avertissements Louche</td><td>304</td></tr>
 <tr> <th> Total</th><th>1322</th></tr>
-
 </table>
+
 <p>Beaucoup de travail a &#233;t&#233; fait dans JMRI pendant le cycle de lib&#233;ration 2.12 pour
 amener le compteur de bug &#224; z&#233;ro. Le <a
   href = "ContinuousIntegration.shtml"> serveur d'int&#233;gration continue a fait </a>
@@ -401,7 +246,7 @@ introduire de nouvelles erreurs.</p>
 
 
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

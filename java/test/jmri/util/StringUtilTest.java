@@ -1,12 +1,14 @@
 package jmri.util;
 
 import java.util.Arrays;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.StringUtil class.
  *
- * @author	Bob Jacobsen Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  */
 public class StringUtilTest {
 
@@ -475,13 +477,12 @@ public class StringUtilTest {
         Assert.assertEquals("255,256,257", "FF 00 01 ", StringUtil.hexStringFromInts(new int[] {255,256,257}) );
     }
     
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

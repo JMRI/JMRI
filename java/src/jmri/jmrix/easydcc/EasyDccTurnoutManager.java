@@ -1,6 +1,7 @@
 package jmri.jmrix.easydcc;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +37,13 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public EasyDccSystemConnectionMemo getMemo() {
         return (EasyDccSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         Turnout t;
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         t = new EasyDccTurnout(getSystemPrefix(), addr, getMemo());
@@ -69,7 +71,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -77,7 +79,8 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, MAX_ACC_DECODER_ADDRESS, locale);
     }
 

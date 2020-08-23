@@ -283,25 +283,28 @@ public class EcosLocoToRoster implements EcosListener {
         String msg = m.toString();
         String[] lines = msg.split("\n");
         if (m.getResultCode() == 0) {
-            if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", cv[")) {
-                startval = lines[0].indexOf("(") + 1;
-                endval = (lines[0].substring(startval)).indexOf(",") + startval;
-                //The first part of the messages is always the object id.
-                int object = Integer.parseInt(lines[0].substring(startval, endval));
-                if (object == _ecosObjectInt) {
-                    for (int i = 1; i < lines.length - 1; i++) {
-                        if (lines[i].contains("cv[")) {
-                            //int startcvnum = lines[i].indexOf("[")+1;
-                            //int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
-                            //int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
-                            //int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
-                            //int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
-                            //int cvval = Integer.parseInt(lines[i].substring(startcvval, endcvval));
-                            //String strcvnum = "CV"+cvnum;
-                        }
-                    }
-                }
-            } else if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", funcdesc")) {
+            // TODO use this if branch?
+            //
+            //            if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", cv[")) {
+            //                startval = lines[0].indexOf("(") + 1;
+            //                endval = (lines[0].substring(startval)).indexOf(",") + startval;
+            //                //The first part of the messages is always the object id.
+            //                int object = Integer.parseInt(lines[0].substring(startval, endval));
+            //                if (object == _ecosObjectInt) {
+            //                    for (int i = 1; i < lines.length - 1; i++) {
+            //                        if (lines[i].contains("cv[")) {
+            //                            //int startcvnum = lines[i].indexOf("[")+1;
+            //                            //int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
+            //                            //int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
+            //                            //int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
+            //                            //int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
+            //                            //int cvval = Integer.parseInt(lines[i].substring(startcvval, endcvval));
+            //                            //String strcvnum = "CV"+cvnum;
+            //                        }
+            //                    }
+            //                }
+            //            } else if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", funcdesc")) {
+            if (lines[0].startsWith("<REPLY get(" + _ecosObject + ", funcdesc")) {
                 int functNo = 0;
                 try {
                     startval = lines[1].indexOf("[") + 1;
@@ -436,7 +439,7 @@ public class EcosLocoToRoster implements EcosListener {
                     re.setFunctionLabel(functNo, functionLabel);
                     re.setFunctionLockable(functNo, !moment);
                 } catch (RuntimeException e) {
-                    log.error("Error occurred while getting the function information : " + e.toString());
+                    log.error("Error occurred while getting the function information : {}", e.toString());
                 }
                 getFunctionDetails(functNo + 1);
             }
@@ -458,8 +461,6 @@ public class EcosLocoToRoster implements EcosListener {
         Roster.getDefault().writeRoster();
         ecosManager.clearLocoToRoster();
     }
-
-//    JComboBox combo;
 
     public void comboPanel() {
         frame.setTitle(Bundle.getMessage("DecoderSelectionXTitle", ecosLoco.getEcosDescription()));
@@ -595,7 +596,8 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     /**
-     *
+     * Check for Duplicate roster entry.
+     * @param id Loco ID String.
      * @return true if the value in the Ecos Description is a duplicate of some
      *         other RosterEntry in the roster
      */
@@ -645,11 +647,7 @@ public class EcosLocoToRoster implements EcosListener {
             String mfg = decoder.getMfg();
             String family = decoder.getFamily();
             String model = decoder.getModel();
-            log.debug(" process " + mfg + "/" + family + "/" + model
-                    + " on nodes "
-                    + (mfgElement == null ? "<null>" : mfgElement.toString() + "(" + mfgElement.getChildCount() + ")") + "/"
-                    + (familyElement == null ? "<null>" : familyElement.toString() + "(" + familyElement.getChildCount() + ")")
-            );
+            log.debug(" process {}/{}/{} on nodes {}/{}", mfg, family, model, mfgElement == null ? "<null>" : mfgElement.toString() + "(" + mfgElement.getChildCount() + ")", familyElement == null ? "<null>" : familyElement.toString() + "(" + familyElement.getChildCount() + ")");
             // build elements
             if (mfgElement == null || !mfg.equals(mfgElement.toString())) {
                 // need new mfg node
@@ -681,7 +679,7 @@ public class EcosLocoToRoster implements EcosListener {
                         || decoders.get(i + 2).getFamily().equals(family)
                         || !decoders.get(i + 1).getModel().equals(family)) {
                     // normal here; insert the new family element & exit
-                    log.debug("normal family update case: " + family);
+                    log.debug("normal family update case: {}", family);
                     familyElement = new DecoderTreeNode(family,
                             hoverText,
                             decoders.get(i).titleString());
@@ -689,10 +687,9 @@ public class EcosLocoToRoster implements EcosListener {
                     continue;
                 } else {
                     // this is short case; insert decoder entry (next) here
-                    log.debug("short case, i=" + i + " family=" + family + " next "
-                            + decoders.get(i + 1).getModel());
+                    log.debug("short case, i={} family={} next {}", i, family, decoders.get(i + 1).getModel());
                     if (i + 1 > len) {
-                        log.error("Unexpected single entry for family: " + family);
+                        log.error("Unexpected single entry for family: {}", family);
                     }
                     family = decoders.get(i + 1).getModel();
                     familyElement = new DecoderTreeNode(family,
@@ -731,7 +728,7 @@ public class EcosLocoToRoster implements EcosListener {
                         && // can't be a multiple decoder selection
                         dTree.getSelectionCount() < 2) {
                     // decoder selected - reset and disable loco selection
-                    log.debug("Selection event with " + dTree.getSelectionPath().toString());
+                    log.debug("Selection event with {}", dTree.getSelectionPath().toString());
                     if (locoBox != null) {
                         locoBox.setSelectedIndex(0);
                     }
@@ -791,7 +788,7 @@ public class EcosLocoToRoster implements EcosListener {
         // locate a decoder like that.
         List<DecoderFile> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, mfgID, modelID, null, null);
         if (log.isDebugEnabled()) {
-            log.debug("selectDecoder found " + temp.size() + " matches");
+            log.debug("selectDecoder found {} matches", temp.size());
         }
         // install all those in the JComboBox in place of the longer, original list
         if (temp.size() > 0) {
@@ -913,15 +910,14 @@ public class EcosLocoToRoster implements EcosListener {
             log.error("loadDecoder file invoked with null object");
             return;
         }
-        log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                + " " + df.getFileName());
+        log.debug("loadDecoderFile from {} {}", DecoderFile.fileLocation, df.getFileName());
 
         try {
             decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (org.jdom2.JDOMException e) {
-            log.error("JDOM Exception while loading decoder XML file: " + df.getFileName());
+            log.error("JDOM Exception while loading decoder XML file: {}", df.getFileName());
         } catch (java.io.IOException e) {
-            log.error("IO Exception while loading decoder XML file: " + df.getFileName());
+            log.error("IO Exception while loading decoder XML file: {}", df.getFileName());
         }
         // load variables from decoder tree
         df.getProductID();
@@ -934,7 +930,7 @@ public class EcosLocoToRoster implements EcosListener {
 
         // get the showEmptyPanes attribute, if yes/no update our state
         if (decoderRoot.getAttribute("showEmptyPanes") != null) {
-            log.debug("Found in decoder " + decoderRoot.getAttribute("showEmptyPanes").getValue());
+            log.debug("Found in decoder {}", decoderRoot.getAttribute("showEmptyPanes").getValue());
         }
 
         // save the pointer to the model element

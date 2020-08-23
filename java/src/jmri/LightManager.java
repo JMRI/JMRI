@@ -44,6 +44,7 @@ public interface LightManager extends ProvidingManager<Light> {
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     default public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     /** {@inheritDoc} */

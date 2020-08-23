@@ -66,6 +66,8 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         return true;
     }
 
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "OK to write to static variables to record static library status")
     @Override
     public void cleanup() {
 
@@ -88,6 +90,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                 AbstractAudioThread.snooze(100);
             }
         }
+        initialised = false;
     }
 
     @Override
@@ -100,8 +103,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                 audioCommand = commandQueue.remove(0);
                 if (audioCommand != null) {
                     if (log.isDebugEnabled()) {
-                        log.debug("Process command: " + audioCommand.toString()
-                                + " (" + commandQueue.size() + " remaining)");
+                        log.debug("Process command: {} ({} remaining)", audioCommand.toString(), commandQueue.size());
                     }
                     Audio audio = audioCommand.getAudio();
 
@@ -149,8 +151,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                                 audioSource.doResetCurrentPosition();
                                 break;
                             default:
-                                log.warn("Command " + audioCommand.toString()
-                                        + " not suitable for AudioSource (" + audioSource.getSystemName() + ")");
+                                log.warn("Command {} not suitable for AudioSource ({})", audioCommand.toString(), audioSource.getSystemName());
                         }
                     } // Process AudioBuffer commands
                     else if (audio instanceof AudioBuffer) {
@@ -160,8 +161,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                                 audioBuffer.loadBuffer();
                                 break;
                             default:
-                                log.warn("Command " + audioCommand.toString()
-                                        + " not suitable for AudioBuffer (" + audioBuffer.getSystemName() + ")");
+                                log.warn("Command {} not suitable for AudioBuffer ({})", audioCommand.toString(), audioBuffer.getSystemName());
                         }
                     } // Process AudioListener commands
                     else if (audio instanceof AudioListener) {
@@ -171,8 +171,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                                 audioListener.doResetCurrentPosition();
                                 break;
                             default:
-                                log.warn("Command " + audioCommand.toString()
-                                        + " not suitable for AudioListener (" + audioListener.getSystemName() + ")");
+                                log.warn("Command {} not suitable for AudioListener ({})", audioCommand.toString(), audioListener.getSystemName());
                         }
                     }
                 }
@@ -185,7 +184,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
             }
             commandQueue.add(queueAudioCommand);
             if (log.isDebugEnabled()) {
-                log.debug("New audio command: " + queueAudioCommand.toString());
+                log.debug("New audio command: {}", queueAudioCommand.toString());
             }
             return true;
         }

@@ -306,7 +306,7 @@ public class GraphPane extends JPanel implements Printable {
             try {
                 job.print();
             } catch (PrinterException ex) {
-                log.error("Exception whilst printing profile " + ex);
+                log.error("Exception whilst printing profile {}", ex);
             }
         }
     }

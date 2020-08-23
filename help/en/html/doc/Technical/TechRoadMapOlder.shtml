@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -22,15 +21,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
+    <h1>JMRI: Technology Road Map History</h1>
 
-    <div id="mainContent">
-      <h1>JMRI: Technology Road Map History</h1>
       <p>This page is the historical version of the road map for
       JMRI's future development. It contains notes on older releases.<br>
       For more recent work, see the <a href="TechRoadMap.shtml">main
@@ -213,29 +214,6 @@
           <td>1.5</td>
         </tr>
 
-        <tr>
-          <td>?.?.*</td>
-
-          <td>Development series</td>
-
-          <td></td>
-
-          <td>?</td>
-
-          <td>?</td>
-        </tr>
-
-        <tr>
-          <td>?.?</td>
-
-          <td>Production version, culmination of ?.?.* series</td>
-
-          <td></td>
-
-          <td>?</td>
-
-          <td>?</td>
-        </tr>
 
         <tr>
           <td>3.8</td>
@@ -272,6 +250,212 @@
 
           <td>1.6</td>
         </tr>
+
+        <tr>
+          <td>3.11.*</td>
+
+          <td>Development series</td>
+
+          <td></td>
+
+          <td>1.6</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.0</td>
+
+          <td>Production version, culmination of 3.11.* series</td>
+
+          <td>July 2015 <b>(done)</b></td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.1.*</td>
+
+          <td>Development series</td>
+
+          <td></td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.2</td>
+
+          <td>Production version, culmination of 4.1.* series</td>
+
+          <td>December 2015 <b>(done)</b></td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.3.*</td>
+
+          <td>Development series</td>
+
+          <td></td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.4</td>
+
+          <td>Production version, culmination of 4.3.* series</td>
+
+          <td>Early Summer 2016</td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.5.*</td>
+
+          <td>Development series</td>
+
+          <td></td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.6</td>
+
+          <td>Production version, culmination of 4.5.* series</td>
+
+          <td>Late Fall 2016</td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.7.*</td>
+
+          <td>Development series</td>
+
+          <td></td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.8</td>
+
+          <td>Production version, culmination of 4.7.* series</td>
+
+          <td>Early Summer 2017</td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.9.*</td>
+
+          <td>Development series</td>
+
+          <td></td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.10</td>
+
+          <td>Production version, culmination of 4.9.* series</td>
+
+          <td>December 2017</td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.12</td>
+
+          <td>Production version, culmination of 4.11.* series</td>
+
+          <td>July 2018</td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.14</td>
+
+          <td>Production version, culmination of 4.13.* series</td>
+
+          <td>December 2018</td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.16</td>
+
+          <td>Production version, culmination of 4.15.* series</td>
+
+          <td>July 2019</td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.18</td>
+
+          <td>Production version, culmination of Fall 2019 series</td>
+
+          <td>December 2019</td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
+          <td>4.20</td>
+
+          <td>Production version, culmination of Spring 2020 series</td>
+
+          <td>July 2020</td>
+
+          <td>8</td>
+
+          <td>8</td>
+        </tr>
+
+
       </table>
 
       <h4>JMRI 1.9, 2.0</h4>The JMRI 1.9 development series moved
@@ -435,6 +619,8 @@
         "http://findbugs.sourceforge.net/api/edu/umd/cs/findbugs/annotations/package-summary.html">
         this</a>).</li>
       </ul>
+
+    
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

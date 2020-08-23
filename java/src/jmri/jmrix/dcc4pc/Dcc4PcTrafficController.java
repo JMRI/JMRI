@@ -124,7 +124,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [" + m + "]");
+            log.debug("forwardToPort message: [{}]", m);
         }
         if (port == null) {
             return;
@@ -176,7 +176,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         } catch (InterruptedException ex) {
                             Thread.currentThread().interrupt();
                         } catch (Exception ex) {
-                            log.warn("sendMessage: Exception: " + ex.toString());
+                            log.warn("sendMessage: Exception: {}", ex.toString());
                         }
                         ostream.flush();
                         port.setDTR(false);
@@ -199,7 +199,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                             log.error("retry wait interrupted");
                         }
                     } else {
-                        log.warn("sendMessage: port not ready for data sending: " + java.util.Arrays.toString(msg));
+                        log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));
                     }
                 }
             } else {
@@ -255,7 +255,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             }
             return true;
         } catch (java.io.IOException ex) {
-            log.error("IO Exception" + ex.toString());
+            log.error("IO Exception{}", ex.toString());
         }
         return !port.isDSR();
     }
@@ -295,8 +295,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             //log.debug(mLastMessage.getElement(0));
             if (mLastSentMessage.isForChildBoard()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("This is a message for a child board " + ((Dcc4PcReply) msg).toHexString());
-                    log.debug("Originate " + mLastMessage.toString());
+                    log.debug("This is a message for a child board {}", ((Dcc4PcReply) msg).toHexString());
+                    log.debug("Originate {}", mLastMessage.toString());
                 }
                 if ((mLastSentMessage.getNumDataElements() - 1) == msg.getElement(1)) {
                     log.debug("message lengths match");
@@ -314,14 +314,14 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 } else {
                     if (log.isDebugEnabled()) {
                         log.debug("Not all of the command was sent, we need to figure out a way to resend the bits");
-                        log.debug("Original Message length " + mLastSentMessage.getNumDataElements());
-                        log.debug("What CID has procced in size " + (byte) msg.getElement(1));
-                        log.debug("Reply is in error " + ((Dcc4PcReply) msg).toHexString());
+                        log.debug("Original Message length {}", mLastSentMessage.getNumDataElements());
+                        log.debug("What CID has procced in size {}", (byte) msg.getElement(1));
+                        log.debug("Reply is in error {}", ((Dcc4PcReply) msg).toHexString());
                     }
                 }
             } else if (mLastSentMessage.getElement(0) == 0x0C) {
                 if (log.isDebugEnabled()) {
-                    log.debug("last message was a get response " + ((Dcc4PcReply) msg).toHexString());
+                    log.debug("last message was a get response {}", ((Dcc4PcReply) msg).toHexString());
                 }
                 if (msg.getElement(0) == Dcc4PcReply.SUCCESS) {
                     ((Dcc4PcReply) msg).strip();
@@ -387,14 +387,13 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 }
             }
         } else {
-            log.debug("Last message sent was null " + ((Dcc4PcReply) msg).toHexString());
+            log.debug("Last message sent was null {}", ((Dcc4PcReply) msg).toHexString());
         }
 
         // message is complete, dispatch it !!
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + msg.getNumDataElements()
-                    + " contains " + msg.toString() + " state " + mCurrentState);
+            log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
         }
         // forward the message to the registered recipients,
         // which includes the communications monitor
@@ -418,7 +417,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     // message, otherwise go on to the next message
                     if (msg.isRetransmittableErrorMsg()) {
                         if (log.isDebugEnabled()) {
-                            log.debug("Automatic Recovery from Error Message: " + msg.toString());
+                            log.debug("Automatic Recovery from Error Message: {}", msg.toString());
                         }
                         synchronized (xmtRunnable) {
                             mCurrentState = AUTORETRYSTATE;
@@ -478,8 +477,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             // Unsolicited message
         } else {
             if (log.isDebugEnabled()) {
-                log.debug("Unsolicited Message Received "
-                        + msg.toString());
+                log.debug("Unsolicited Message Received {}", msg.toString());
             }
             replyInDispatch = false;
         }
@@ -511,7 +509,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                             mLastMessage = null;
                             mLastSentMessage = null;
                             readingData = false;
-                            log.warn("timeout flushes receive buffer: " + ((Dcc4PcReply) msg).toHexString());
+                            log.warn("timeout flushes receive buffer: {}", ((Dcc4PcReply) msg).toHexString());
                             msg.flush();
                             i = 0;  // restart
                             flushReceiveChars = false;
@@ -519,7 +517,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         } else {
                             if (canReceive()) {
                                 if (log.isDebugEnabled()) {
-                                    log.debug("Set data " + i + ", " + (char1 & 0xff));
+                                    log.debug("Set data {}, {}", i, char1 & 0xff);
                                 }
                                 msg.setElement(i, char1);
                                 waiting = false;
@@ -533,7 +531,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                                 }
                             } else {
                                 i--; // flush char
-                                log.error("unsolicited character received: " + Integer.toHexString(char1));
+                                log.error("unsolicited character received: {}", Integer.toHexString(char1));
                             }
                         }
                     } else if (!port.isDSR()) {
@@ -590,7 +588,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 log.error(InterruptMessage);
             }
         }
-        log.debug("TIMEOUT in transmitWait, mCurrentState:" + mCurrentState + " " + state + " port dsr " + port.isDSR() + " wait time " + waitTime);
+        log.debug("TIMEOUT in transmitWait, mCurrentState:{} {} port dsr {} wait time {}", mCurrentState, state, port.isDSR(), waitTime);
     }
 
     private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class);

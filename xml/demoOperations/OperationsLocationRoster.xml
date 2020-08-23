@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xml/XSLT/operations-locations.xsl" type="text/xsl"?>
 <!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-locations.dtd">
 <operations-config>
-  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:47:34 EST 2016 $Id$-->
+  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:47:34 EST 2016 -->
   <locations>
     <location id="6" name="Farmington" ops="1" dir="15" switchList="true" comment="Small Town, only sidings" switchListComment="">
       <types>

@@ -9,7 +9,7 @@ import java.io.DataOutputStream;
  */
 public class JmriConnectionScaffold extends JmriConnection {
 
-    private StringBuilder output;
+    private final StringBuilder output;
 
     public JmriConnectionScaffold(DataOutputStream s){
         super(s);
@@ -24,10 +24,9 @@ public class JmriConnectionScaffold extends JmriConnection {
      * failure. If there is an asynchronous failure, the connection is closed.
      *
      * @param message message to send
-     * @throws java.io.IOException if problem sending message
      */
     @Override
-    public void sendMessage(String message) throws java.io.IOException {
+    public void sendMessage(String message) {
        // just append the message to a string builder, don't actually write it anywhere.
        output.append(message);
     }

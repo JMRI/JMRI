@@ -94,7 +94,7 @@ public class NceTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -113,9 +113,7 @@ public class NceTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to "
-                    + (pushButtonLockout ? "Lock" : "Unlock")
-                    + " Pushbutton " + prefix + _number);
+            log.debug("Send command to {} Pushbutton {}{}", pushButtonLockout ? "Lock" : "Unlock", prefix, _number);
         }
 
         byte[] bl = PushbuttonPacket.pushbuttonPkt(prefix, _number, pushButtonLockout);
@@ -242,12 +240,7 @@ public class NceTurnout extends AbstractTurnout {
             byte[] bl = NceBinaryCommand.accDecoder(_number, closed);
 
             if (log.isDebugEnabled()) {
-                log.debug("Command: "
-                        + Integer.toHexString(0xFF & bl[0])
-                        + " " + Integer.toHexString(0xFF & bl[1])
-                        + " " + Integer.toHexString(0xFF & bl[2])
-                        + " " + Integer.toHexString(0xFF & bl[3])
-                        + " " + Integer.toHexString(0xFF & bl[4]));
+                log.debug("Command: {} {} {} {} {}", Integer.toHexString(0xFF & bl[0]), Integer.toHexString(0xFF & bl[1]), Integer.toHexString(0xFF & bl[2]), Integer.toHexString(0xFF & bl[3]), Integer.toHexString(0xFF & bl[4]));
             }
 
             NceMessage m = NceMessage.createBinaryMessage(tc, bl);
@@ -259,10 +252,7 @@ public class NceTurnout extends AbstractTurnout {
             byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
 
             if (log.isDebugEnabled()) {
-                log.debug("packet: "
-                        + Integer.toHexString(0xFF & bl[0])
-                        + " " + Integer.toHexString(0xFF & bl[1])
-                        + " " + Integer.toHexString(0xFF & bl[2]));
+                log.debug("packet: {} {} {}", Integer.toHexString(0xFF & bl[0]), Integer.toHexString(0xFF & bl[1]), Integer.toHexString(0xFF & bl[2]));
             }
 
             NceMessage m = NceMessage.sendPacketMessage(tc, bl);

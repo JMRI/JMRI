@@ -6,11 +6,10 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -24,8 +23,10 @@ public class EditPortalDirectionTest {
     OBlockManager blkMgr;
 
     @Test
-    public void testCTor() {
+    public void testSetup() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        
         ControlPanelEditor frame = new ControlPanelEditor("EditPortalDirectionTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
@@ -42,19 +43,19 @@ public class EditPortalDirectionTest {
         Assert.assertNotNull("exists", dFrame);
         
         JUnitUtil.dispose(frame);
-        JUnitUtil.dispose(dFrame);
+//        JUnitUtil.dispose(dFrame);    // OK button should close dFrame
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         blkMgr = new OBlockManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // only needed intermittently; better to find and remove, but that would require lots o' refactoring
         JUnitUtil.tearDown();
     }
 

@@ -1,7 +1,8 @@
 package apps.startup;
 
+import jmri.util.startup.StartupModel;
 import apps.ConfigBundle;
-import apps.StartupActionsManager;
+import jmri.util.startup.StartupActionsManager;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,8 +33,11 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Preferences panel to configure optional actions taken at startup.
+ * <p>
+ * This panel will only display (and save) preferences where
+ * {@link StartupModel#isValid()} is true.
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2016, 2020
  */
 @ServiceProvider(service = PreferencesPanel.class)
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {
@@ -109,6 +113,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         ResourceBundle bundle = ResourceBundle.getBundle("apps/startup/Bundle"); // NOI18N
         addBtn.setText(bundle.getString("StartupActionsPreferencesPanel.addBtn.text")); // NOI18N
         addBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 addBtnActionPerformed(evt);
             }
@@ -117,6 +122,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         removeBtn.setText(bundle.getString("StartupActionsPreferencesPanel.removeBtn.text")); // NOI18N
         removeBtn.setEnabled(false);
         removeBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 removeBtnActionPerformed(evt);
             }
@@ -127,6 +133,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         upBtn.setText(bundle.getString("StartupActionsPreferencesPanel.upBtn.text")); // NOI18N
         upBtn.setEnabled(false);
         upBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 upBtnActionPerformed(evt);
             }
@@ -135,6 +142,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         downBtn.setText(bundle.getString("StartupActionsPreferencesPanel.downBtn.text")); // NOI18N
         downBtn.setEnabled(false);
         downBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 downBtnActionPerformed(evt);
             }

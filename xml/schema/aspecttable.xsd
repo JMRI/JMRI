@@ -83,22 +83,22 @@
                   
                   <xs:sequence>
                     
-                    <xs:element name="name" minOccurs="1" maxOccurs="1">
+                    <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1">
                       <xs:annotation><xs:documentation>
                       This must match zero or one "aspectname" element 
                       in each appearance definition file.
                       </xs:documentation></xs:annotation>
                     </xs:element>
                     
-                    <xs:element name="title" minOccurs="0" maxOccurs="1"></xs:element>
-                    <xs:element name="rule" minOccurs="0" maxOccurs="1"></xs:element>
-                    <xs:element name="indication" minOccurs="0" maxOccurs="1"></xs:element>
-                    <xs:element name="description" minOccurs="0" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="reference" minOccurs="0" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="comment" minOccurs="0" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="speed" minOccurs="1" maxOccurs="unbounded"></xs:element>
-                    <xs:element name="speed2" minOccurs="1" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+                    <xs:element name="rule" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+                    <xs:element name="indication" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+                    <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="imagelink" type="xs:string" minOccurs="0" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="speed" type="xs:string" minOccurs="1" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="speed2" type="xs:string" minOccurs="1" maxOccurs="unbounded"></xs:element>
                     <xs:element name="route" minOccurs="0" maxOccurs="1">
                      <xs:simpleType>
                         <xs:restriction base="xs:string">
@@ -125,6 +125,7 @@
               </xs:element>
             </xs:sequence>
           </xs:complexType>
+          
         </xs:element>
 
         <xs:element name="imagetypes" minOccurs="0" maxOccurs="1">
@@ -134,7 +135,7 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="imagetype" minOccurs="0" maxOccurs="unbounded" >
-                <xs:complexType>
+                <xs:complexType><!-- ensures no character content to element -->
                   <xs:attribute name="type" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
@@ -149,7 +150,7 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="appearancefile" minOccurs="0" maxOccurs="unbounded">
-                <xs:complexType>
+                <xs:complexType><!-- ensures no character content to element -->
                   <xs:attribute name="href" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
@@ -161,5 +162,20 @@
       
       </xs:sequence>
     </xs:complexType>
+    
+    <!-- aspect names must be unique -->
+    <xs:key name="uniqueAspectName">
+        <xs:annotation><xs:documentation>The uniqueAspectName check constrains each aspect name value to be unique. </xs:documentation></xs:annotation>
+        <xs:selector xpath="./aspects/aspect/name"/>
+        <xs:field xpath="."/>
+      </xs:key>
+  
+    <!-- appearance files must be unique -->
+    <xs:key name="uniqueAppearanceFile">
+        <xs:annotation><xs:documentation>The uniqueAppearanceFile check constrains each appearance file reference to be unique. </xs:documentation></xs:annotation>
+        <xs:selector xpath="./appearancefiles/appearancefile"/>
+        <xs:field xpath="@href"/>
+    </xs:key>
+  
   </xs:element>
 </xs:schema>

@@ -1,27 +1,31 @@
 package jmri.jmrit.ctc.editor;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
+
+import jmri.jmrit.ctc.setup.CreateTestObjects;
+import jmri.profile.NullProfile;
 import jmri.util.JUnitUtil;
-import org.junit.*;
-import org.junit.rules.ExpectedException;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 
 /**
- * Tests for the CtcEditorAction Class
+ * Tests for the CtcEditorAction Class.
  *
  * @author Dave Sand Copyright (C) 2019
  */
 public class CtcEditorActionTest {
 
     JFrameOperator _jfo = null;
-
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
-
-    @Rule
-    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     static final int DELAY = 0;
 
@@ -42,6 +46,8 @@ public class CtcEditorActionTest {
         menuTests();
         frameButtonTests();
         editTests();
+        _jfo.requestClose();
+        _jfo = null;
     }
 
     void menuTests() {
@@ -58,7 +64,7 @@ public class CtcEditorActionTest {
         Assert.assertTrue(findMenuItem.getText().equals(Bundle.getMessage("MenuFind")));  // NOI18N
         new JMenuItemOperator(findMenuItem).doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmFind = new JFrameOperator(Bundle.getMessage("TitleDlgFind"));  // NOI18N
         Assert.assertNotNull(frmFind);
@@ -84,7 +90,7 @@ public class CtcEditorActionTest {
         Assert.assertTrue(debugMenuItem.getText().equals(Bundle.getMessage("MenuDebugging")));  // NOI18N
         new JMenuItemOperator(debugMenuItem).doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmDebug = new JFrameOperator(Bundle.getMessage("TitleDlgDeb"));  // NOI18N
         Assert.assertNotNull(frmDebug);
@@ -95,7 +101,7 @@ public class CtcEditorActionTest {
         Assert.assertTrue(defaultMenuItem.getText().equals(Bundle.getMessage("MenuDefaults")));  // NOI18N
         new JMenuItemOperator(defaultMenuItem).doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmDefaults = new JFrameOperator(Bundle.getMessage("TitleDlgDef"));  // NOI18N
         Assert.assertNotNull(frmDefaults);
@@ -106,7 +112,7 @@ public class CtcEditorActionTest {
         Assert.assertTrue(fleetMenuItem.getText().equals(Bundle.getMessage("MenuFleeting")));  // NOI18N
         new JMenuItemOperator(fleetMenuItem).doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmFleeting = new JFrameOperator(Bundle.getMessage("TitleDlgFleet"));  // NOI18N
         Assert.assertNotNull(frmFleeting);
@@ -117,7 +123,7 @@ public class CtcEditorActionTest {
         Assert.assertTrue(patternMenuItem.getText().equals(Bundle.getMessage("MenuPatterns")));  // NOI18N
         new JMenuItemOperator(patternMenuItem).doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmPatterns = new JFrameOperator(Bundle.getMessage("TItleDlgPat"));  // NOI18N
         Assert.assertNotNull(frmPatterns);
@@ -128,7 +134,7 @@ public class CtcEditorActionTest {
         Assert.assertTrue(designMenuItem.getText().equals(Bundle.getMessage("MenuDesign")));  // NOI18N
         new JMenuItemOperator(designMenuItem).doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmGUI = new JFrameOperator(Bundle.getMessage("TitleDlgGUI"));  // NOI18N
         Assert.assertNotNull(frmGUI);
@@ -142,7 +148,7 @@ public class CtcEditorActionTest {
         JMenuItem aboutMenuItem = (JMenuItem) jpm.getComponent(0);
         Assert.assertTrue(aboutMenuItem.getText().equals(Bundle.getMessage("MenuAbout")));  // NOI18N
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         new JMenuItemOperator(aboutMenuItem).doClick();
         JFrameOperator frmAbout = new JFrameOperator("About");  // NOI18N
@@ -158,9 +164,9 @@ public class CtcEditorActionTest {
         JButtonOperator jbChange = new JButtonOperator(_jfo, Bundle.getMessage("ButtonChange"));
         jbChange.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
-        JFrameOperator frmChange = new JFrameOperator("Modify switch and signal etc. #'s");  // NOI18N
+        JFrameOperator frmChange = new JFrameOperator("Modify Switch and Signal etc. #'s");  // NOI18N
         Assert.assertNotNull(frmChange);
         new JButtonOperator(frmChange, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -174,7 +180,7 @@ public class CtcEditorActionTest {
 
         // ButtonReapplyItem -- Not a frame, use dialog mode
         jlo.clickOnItem(0, 1);
-        Thread btnApply = createModalDialogOperatorThread("Warning", Bundle.getMessage("ButtonYes"), "btnApply");  // NOI18N
+        Thread btnApply = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonYes"), "btnApply");  // NOI18N
         JButtonOperator jbApply = new JButtonOperator(_jfo, Bundle.getMessage("ButtonReapplyItem"));
         jbApply.doClick();
         JUnitUtil.waitFor(() -> {
@@ -194,7 +200,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbCB = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 0);
         jbCB.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmCB = new JFrameOperator(Bundle.getMessage("TitleDlgCB"));  // NOI18N
         Assert.assertNotNull(frmCB);
@@ -205,7 +211,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbSIDI = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 1);
         jbSIDI.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmSIDI = new JFrameOperator(Bundle.getMessage("TitleSIDI"));  // NOI18N
         Assert.assertNotNull(frmSIDI);
@@ -216,7 +222,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbSIDL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 4);
         jbSIDL.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmSIDL = new JFrameOperator(Bundle.getMessage("TitleDlgSIDL"));  // NOI18N
         Assert.assertNotNull(frmSIDL);
@@ -227,7 +233,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbSWDI = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 7);
         jbSWDI.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmSWDI = new JFrameOperator(Bundle.getMessage("TitleSWDI"));  // NOI18N
         Assert.assertNotNull(frmSWDI);
@@ -238,7 +244,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbSWDL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 8);
         jbSWDL.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmSWDL = new JFrameOperator(Bundle.getMessage("TitleDlgSWDL"));  // NOI18N
         Assert.assertNotNull(frmSWDL);
@@ -249,7 +255,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbCO = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 2);
         jbCO.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmCO = new JFrameOperator(Bundle.getMessage("TitleDlgCO"));  // NOI18N
         Assert.assertNotNull(frmCO);
@@ -260,7 +266,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbTUL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 5);
         jbTUL.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmTUL = new JFrameOperator(Bundle.getMessage("TitleDlgTUL"));  // NOI18N
         Assert.assertNotNull(frmTUL);
@@ -271,7 +277,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbIL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 6);
         jbIL.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmIL = new JFrameOperator(Bundle.getMessage("TitleDlgIL"));  // NOI18N
         Assert.assertNotNull(frmIL);
@@ -285,7 +291,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbTRL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 3);
         jbTRL.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmTRL = new JFrameOperator(Bundle.getMessage("TitleDlgTRL"));  // NOI18N
         Assert.assertNotNull(frmTRL);
@@ -294,7 +300,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbRules = new JButtonOperator(frmTRL, Bundle.getMessage("ButtonEdit"), 0);
         jbRules.doClick();
         if (DELAY > 0) {
-            new org.netbeans.jemmy.EventTool().waitNoEvent(DELAY);
+            new EventTool().waitNoEvent(DELAY);
         }
         JFrameOperator frmRules = new JFrameOperator("Edit Right traffic locking rules");  // NOI18N
         Assert.assertNotNull(frmRules);
@@ -319,29 +325,30 @@ public class CtcEditorActionTest {
     @Test
     public void testMakePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        thrown.expect(IllegalArgumentException.class);
-        new CtcEditorAction().makePanel();
+        Assert.assertThrows(IllegalArgumentException.class, () -> new CtcEditorAction().makePanel());
     }
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetFileUtilSupport();
-        try {
-            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch (java.io.IOException ioe) {
-            Assert.fail("failed to setup profile for test");
-        }
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
 
-        jmri.jmrit.ctc.setup.CreateTestObjects.createTestObjects();
-        jmri.jmrit.ctc.setup.CreateTestObjects.createTestFiles();
+        CreateTestObjects.createTestObjects();
+        CreateTestObjects.createTestFiles();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
+
+        // stop any BlockBossLogic threads created
+        JUnitUtil.clearBlockBossLogic();
+
         JUnitUtil.tearDown();
     }
 
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorActionTest.class);
+
 }

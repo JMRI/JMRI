@@ -238,7 +238,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      */
     public void setParity() {
         // check for the D3 special case
-        if (getOpCode() == 0xD3 && getNumDataElements() > 6) {
+        if ((getOpCode() == LnConstants.RE_OPC_PR3_MODE) && (getNumDataElements() > 6)) {
             // sum the D3 header separately
             int sum = 0xFF;
             for (int i = 0; i < 5; i++) {
@@ -278,7 +278,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         int loop;
 
         // check for the D3 special case
-        if (getOpCode() == 0xD3 && len > 6) {
+        if ((getOpCode() == LnConstants.RE_OPC_PR3_MODE) && (len > 6)) {
             // sum the D3 header separately
             int sum = 0xFF;
             for (loop = 0; loop < 5; loop++) {

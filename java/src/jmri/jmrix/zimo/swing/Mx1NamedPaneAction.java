@@ -1,6 +1,11 @@
 package jmri.jmrix.zimo.swing;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.Icon;
+import jmri.SystemConnectionMemo;
+import jmri.jmrix.swing.SystemConnectionAction;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
@@ -10,11 +15,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to create and load a JmriPanel from just its name.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 Copied from nce.swing
+ * @author Bob Jacobsen Copyright (C) 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
  */
-public class Mx1NamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
+public class Mx1NamedPaneAction extends jmri.util.swing.JmriNamedPaneAction implements SystemConnectionAction<Mx1SystemConnectionMemo> {
 
     /**
      * Create a Mx1NamedPane associated with the given window.
@@ -51,6 +56,21 @@ public class Mx1NamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         }
 
         return p;
+    }
+
+    @Override
+    public Mx1SystemConnectionMemo getSystemConnectionMemo() {
+        return memo;
+    }
+
+    @Override
+    public void setSystemConnectionMemo(Mx1SystemConnectionMemo memo) {
+        this.memo = memo;
+    }
+
+    @Override
+    public Set<Class<? extends SystemConnectionMemo>> getSystemConnectionMemoClasses() {
+        return new HashSet<>(Arrays.asList(Mx1SystemConnectionMemo.class));
     }
 
     private final static Logger log = LoggerFactory.getLogger(Mx1NamedPaneAction.class);

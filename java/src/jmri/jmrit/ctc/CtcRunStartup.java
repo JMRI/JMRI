@@ -1,12 +1,12 @@
 package jmri.jmrit.ctc;
 
-import apps.startup.AbstractStartupActionFactory;
-import apps.startup.StartupActionFactory;
+import jmri.util.startup.AbstractStartupActionFactory;
+import jmri.util.startup.StartupActionFactory;
 import java.util.Locale;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * {@link apps.startup.StartupActionFactory} for the
+ * {@link jmri.util.startup.StartupActionFactory} for the
  * {@link jmri.jmrit.ctc.editor.CtcEditorAction}.
  *
  * @author Dave Sand Copyright (C) 2018

@@ -30,7 +30,10 @@ import org.apache.log4j.spi.LoggingEvent;
  * minimal impact on performance if not used.
  *
  * @author bender heri See 4/15/2009 Log4J email
+ * @deprecated since 4.22.1 without direct replacement; this duplicates the
+ * {@link apps.SystemConsole} functionality
  */
+@Deprecated
 public class JLogoutputFrame {
 
     private static final Logger myLog = Logger.getLogger(JLogoutputFrame.class);
@@ -68,7 +71,7 @@ public class JLogoutputFrame {
 
     /**
      * Constructor
-     *
+     * <p>
      */
     private JLogoutputFrame() {
         super();

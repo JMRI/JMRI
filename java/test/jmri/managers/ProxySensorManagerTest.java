@@ -9,19 +9,17 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test the ProxySensorManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014
+ * @author Bob Jacobsen 2003, 2006, 2008, 2014
  */
 public class ProxySensorManagerTest implements Manager.ManagerDataListener<Sensor>, PropertyChangeListener {
 
-    protected ProxySensorManager l = null;	// holds objects under test
+    protected ProxySensorManager l = null; // holds objects under test
 
     @Test
     public void testDispose() {
@@ -86,15 +84,10 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("can find by name", t, l.getBySystemName("JS9"));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void testProvideFailure() {
-        try {
-            l.provideSensor("");
-            Assert.fail("didn't throw");
-        } catch (IllegalArgumentException ex) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
-            throw ex;
-        }
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideSensor(""));
+        JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -228,7 +221,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Sensor s4 = l.provideSensor("ZS2");
 
         // property listener should have been immediately invoked
-        Assert.assertEquals("propertyListenerCount", 4, propertyListenerCount);
+        Assert.assertEquals("propertyListenerCount", 5, propertyListenerCount);
         Assert.assertEquals("last call", "length", propertyListenerLast);
 
         // listener should have been immediately invoked
@@ -347,9 +340,6 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         List<String> sortedList = l.getSystemNameList();
         List<Sensor> beanList = l.getNamedBeanList();
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
-        String[] sortedArray = l.getSystemNameArray();
-        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
-        List<String> orderedList = l.getSystemNameAddedOrderList();
         
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
@@ -363,24 +353,10 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Iterator<Sensor> iter = beanSet.iterator();
         Assert.assertEquals("bean set 1st", s2, iter.next());
         Assert.assertEquals("bean set 2nd", s4, iter.next());
-
-        Assert.assertEquals("sorted array length", 2, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
         
-        Assert.assertEquals("ordered list length", 2, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-
         // add and test (non) liveness
         Sensor s3 = l.provideSensor("IS3");
         Sensor s1 = l.provideSensor("IS1");
-
-        Assert.assertEquals("ordered list length", 4, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
-        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
 
         Assert.assertEquals("sorted list length", 2, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS2", sortedList.get(0));
@@ -397,24 +373,11 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("bean set 3rd", s3, iter.next());
         Assert.assertEquals("bean set 4th", s4, iter.next());
 
-        Assert.assertEquals("sorted array length", 2, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS2", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS4", sortedArray[1]);
-        
         // update and test update
-        orderedList = l.getSystemNameAddedOrderList();
         sortedList = l.getSystemNameList();
         beanList = l.getNamedBeanList();
         beanSet = l.getNamedBeanSet();
-        sortedArray = l.getSystemNameArray();
-        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         
-        Assert.assertEquals("ordered list length", 4, orderedList.size());
-        Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
-        Assert.assertEquals("ordered list 2nd", "IS2", orderedList.get(1));
-        Assert.assertEquals("ordered list 3rd", "IS3", orderedList.get(2));
-        Assert.assertEquals("ordered list 4th", "IS1", orderedList.get(3));
-
         Assert.assertEquals("sorted list length", 4, sortedList.size());
         Assert.assertEquals("sorted list 1st", "IS1", sortedList.get(0));
         Assert.assertEquals("sorted list 2nd", "IS2", sortedList.get(1));
@@ -433,12 +396,6 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         Assert.assertEquals("bean set 2nd", s2, iter.next());
         Assert.assertEquals("bean set 3rd", s3, iter.next());
         Assert.assertEquals("bean set 4th", s4, iter.next());
-
-        Assert.assertEquals("sorted array length", 4, sortedArray.length);
-        Assert.assertEquals("sorted array 1st", "IS1", sortedArray[0]);
-        Assert.assertEquals("sorted array 2nd", "IS2", sortedArray[1]);
-        Assert.assertEquals("sorted array 3rd", "IS3", sortedArray[2]);
-        Assert.assertEquals("sorted array 4th", "IS4", sortedArray[3]);
 
     }
 
@@ -530,7 +487,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         lastCall = "Changed";
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
@@ -552,7 +509,7 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
         lastCall = null;
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

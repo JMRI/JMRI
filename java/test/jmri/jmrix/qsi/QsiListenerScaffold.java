@@ -4,7 +4,7 @@ package jmri.jmrix.qsi;
 /**
  * Stands in for the QsiTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 class QsiListenerScaffold implements QsiListener {
 

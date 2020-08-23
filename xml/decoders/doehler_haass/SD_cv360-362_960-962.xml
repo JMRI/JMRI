@@ -19,6 +19,12 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
       <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
         <firstname>Pierre</firstname>
         <surname>Billon</surname>
       </personname>
@@ -26,12 +32,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>4</revnumber>
+      <date>2020-05-02</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Excluded similar CV9xx for Sound Decoder</revremark>
+    </revision>
+    <revision>
       <revnumber>3</revnumber>
       <date>2015-11-01</date>
       <authorinitials>PB</authorinitials>
       <revremark>Included similar CVs from SUSI sound modules</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>2</revnumber>
       <date>2015-03-05</date>
       <authorinitials>PB</authorinitials>
@@ -51,7 +63,7 @@
 	<label xml:lang="de">Schreibschutz Flash-ROM</label>
 	<label xml:lang="ca">Protecció de la memòria flash</label>
   </variable>
-  <variable label="Flash-ROM protection" CV="960" tooltip="CV960" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 4" readOnly="yes" exclude="Combo sound decoders,SH10A_1.00">
+  <variable label="Flash-ROM protection" CV="960" tooltip="CV960" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 4" readOnly="yes" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 	<label xml:lang="fr">Protection mémoire flash</label>
 	<label xml:lang="de">Schreibschutz Flash-ROM</label>
@@ -65,7 +77,7 @@
 	<label xml:lang="de">Schwellenwert ZVS</label>
 	<label xml:lang="ca">Límit ZVS</label>
    </variable>
-  <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="9" item="Sound Option 21" exclude="Combo sound decoders,SH10A_1.00">
+  <variable label="Threshold ZVS" CV="961" tooltip="CV961 (0-14)" default="9" item="Sound Option 21" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00">
 	<decVal min="0" max="14"/>
 	<label xml:lang="fr">Seuil ZVS</label>
 	<label xml:lang="de">Schwellenwert ZVS</label>
@@ -79,7 +91,7 @@
 	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>
 	<label xml:lang="ca">Sortida de fum al pas 127</label>
    </variable>
-   <variable label="Smoke puffs at speed 127" CV="962" tooltip="CV962 (0-255)" default="0" item="Sound Option 22" exclude="Combo sound decoders,SH10A_1.00">
+   <variable label="Smoke puffs at speed 127" CV="962" tooltip="CV962 (0-255)" default="0" item="Sound Option 22" exclude="Combo sound decoders,Sound Decoders (2016),Sound Decoders (2018),SH10A_1.00">
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Poussée de fumée en vitesse 127</label>
 	<label xml:lang="de">Dampfstöße bei Fahrstufe 127</label>

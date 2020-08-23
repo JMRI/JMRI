@@ -66,6 +66,6 @@
       <conditionalAction option="1" delay="0" type="1" systemName=" " data="0" string=" " />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 1.7.6-B1 on Mon Apr 16 13:59:08 PDT 2007 $Id$-->
+  <!--Written by JMRI version 1.7.6-B1 on Mon Apr 16 13:59:08 PDT 2007 -->
 </layout-config>
 

@@ -8,7 +8,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.implementation.FileLocationsPreferences;
@@ -88,6 +87,7 @@ public class RosterConfigManager extends AbstractPreferencesManager {
     }
 
     @Override
+    @Nonnull
     public Set<Class<? extends PreferencesManager>> getRequires() {
         Set<Class<? extends PreferencesManager>> requires = super.getRequires();
         requires.add(FileLocationsPreferences.class);

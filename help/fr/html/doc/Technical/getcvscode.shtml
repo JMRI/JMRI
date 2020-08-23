@@ -18,15 +18,14 @@
     <!--#include virtual="/Style" -->
 </head>
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+ <body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
-
-	    <h1>JMRI: Obtenir le vieux code CVS</h1>
+<h1>JMRI: Obtenir le vieux code CVS</h1>
 
 <h2>Cette pages est conserv&#233;e dans un but historique seulement!</h2>
 
@@ -38,10 +37,10 @@ code source, vous devez utiliser les instructions d&#233;taill&#233;es ci-dessou
 <h2>D&#233;marrage Rapide</h2>
 
 <p>Vous pouvez t&#233;l&#233;charger le code source JMRI via CVS en utilisant:
-<code><pre>
+<code>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
-</pre></code>
+</code>
 ( Si un mot de passe est demand&#233;, taper sur rerour )
 
 
@@ -53,7 +52,7 @@ Si vous voulez travailler avec le code, quelques minutes d'installation de CVS e
 <p>
 Beaucoup d'ordinateurs ont CVS install&#233;, Linux et MAC OS X.
 Si vous utilisez Windows, vous aurez besoin d'installer un programme "client" CVS comme
-<a href="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467">WinCVS</a>
+<a href="http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467">WinCVS</a>
 Une version r&#233;cente peut &#234;tre t&#233;l&#233;charg&#233;e depuis:
 <a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.
 
@@ -117,15 +116,16 @@ Pour le serveur entrez <pre><code>&lt; jmri.cvs.sourceforge.net&gt;</code></pre>
 En bas &#224; droite de l'&#233;cran il y a un bouton "Fetch List". Cliquez le et une liste doit appara&#238;tre cliquez sur la ligne 'all'.
 Puis cliquez sur OK en bas du volet.
 Un nouveau volet doit s'ouvrir et les fichiers doivent &#234;tre t&#233;l&#233;charg&#233;s; au bas de ce volet il y a une case nomm&#233;e "Close on Completion", cochez la
-quand le volet se ferme, le dossier que vous avez cr&#233;&#233; doit avoir les dossiers &#224; l'int&#233;rieur avec tous les fichiers JMRI.
-</p>
+quand le volet se ferme, le dossier que vous avez cr&#233;&#233; doit avoir les dossiers &#224; l'int&#233;rieur avec
+tous les fichiers JMRI.
+
 <p>
 Une fois que vous avez r&#233;alis&#233; le contr&#244;le initial depuis CVS dans votre dossier local, pour 
 les actualiser, s&#233;lectionnez les tous et Clic Droit et 
 s&#233;lectionnez "CVS Update", Vous pouvez aussi juste actualiser un simple dossier en le s&#233;lectionnant, etc.
 </p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

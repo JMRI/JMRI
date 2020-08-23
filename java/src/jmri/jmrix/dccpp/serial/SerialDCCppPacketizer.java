@@ -58,8 +58,7 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
      */
     @Override
     protected int lengthOfByteStream(final jmri.jmrix.AbstractMRMessage m) {
-        final int len = m.getNumDataElements() + 2;
-        return len;
+        return m.getNumDataElements() + 2;
     }
 
     /**
@@ -161,5 +160,5 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
         return activeBackgroundRefresh;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class);
 }

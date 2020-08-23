@@ -1,7 +1,9 @@
 package jmri.jmrix.easydcc.simulator.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.easydcc.simulator.ConnectionConfig;
 
 /**
@@ -11,8 +13,7 @@ import jmri.jmrix.easydcc.simulator.ConnectionConfig;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -20,9 +21,10 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
         cc = new ConnectionConfig();
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;

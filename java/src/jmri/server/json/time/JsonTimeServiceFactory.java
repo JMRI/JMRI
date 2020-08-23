@@ -21,17 +21,17 @@ public class JsonTimeServiceFactory implements JsonServiceFactory<JsonTimeHttpSe
     public final static String TIME = JSON.TIME;
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{TIME};
     }
 
     @Override
-    public JsonTimeSocketService getSocketService(JsonConnection connection) {
+    public JsonTimeSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonTimeSocketService(connection);
     }
 
     @Override
-    public JsonTimeHttpService getHttpService(ObjectMapper mapper) {
+    public JsonTimeHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonTimeHttpService(mapper);
     }
 

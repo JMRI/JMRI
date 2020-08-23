@@ -1,6 +1,5 @@
 package jmri.jmrit.withrottle;
 
-import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 
 /**

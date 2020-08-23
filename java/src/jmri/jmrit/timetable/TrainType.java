@@ -14,9 +14,9 @@ public class TrainType {
      * @param layoutId The parent layout id.
      * @throws IllegalArgumentException TYPE_ADD_FAIL
      */
-    public TrainType(int layoutId) throws IllegalArgumentException {
+    public TrainType(int layoutId) {
         if (_dm.getLayout(layoutId) == null) {
-            throw new IllegalArgumentException(_dm.TYPE_ADD_FAIL);
+            throw new IllegalArgumentException(TimeTableDataManager.TYPE_ADD_FAIL);
         }
         _typeId = _dm.getNextId("TrainType");  // NOI18N
         _layoutId = layoutId;

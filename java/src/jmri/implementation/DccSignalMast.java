@@ -219,7 +219,7 @@ public class DccSignalMast extends AbstractSignalMast {
     }
 
     /**
-     * get the number of times the packet should be sent to the track.
+     * Get the number of times the packet should be sent to the track.
      *
      * @return the count.
      */

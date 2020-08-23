@@ -2,7 +2,7 @@ package jmri.jmrix.openlcb.swing;
 
 import jmri.*;
 import jmri.jmrit.beantable.signalmast.SignalMastAddPane;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 import jmri.jmrix.openlcb.*;
 
@@ -107,15 +107,15 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
     }
 
 
-    JCheckBox allowUnLit = new JCheckBox();
+    final JCheckBox allowUnLit = new JCheckBox();
 
     LinkedHashMap<String, JCheckBox> disabledAspects = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
-    LinkedHashMap<String, EventIdTextField> aspectEventIDs = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
-    JPanel disabledAspectsPanel = new JPanel();
-    EventIdTextField litEventID = new EventIdTextField();
-    EventIdTextField notLitEventID = new EventIdTextField();
-    EventIdTextField heldEventID = new EventIdTextField();
-    EventIdTextField notHeldEventID = new EventIdTextField();
+    final LinkedHashMap<String, EventIdTextField> aspectEventIDs = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT);
+    final JPanel disabledAspectsPanel = new JPanel();
+    final EventIdTextField litEventID = new EventIdTextField();
+    final EventIdTextField notLitEventID = new EventIdTextField();
+    final EventIdTextField heldEventID = new EventIdTextField();
+    final EventIdTextField notHeldEventID = new EventIdTextField();
 
     OlcbSignalMast currentMast = null;
 
@@ -207,7 +207,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         log.debug("setMast({})", mast);
     }
 
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
+    final DecimalFormat paddedNumber = new DecimalFormat("0000");
 
     /** {@inheritDoc} */
     @Override

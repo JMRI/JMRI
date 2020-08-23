@@ -14,6 +14,7 @@ public interface SerialPortAdapter extends PortAdapter {
 
     /**
      * Provide a vector of valid port names, each a String.
+     * @return port names.
      */
     public Vector<String> getPortNames();
 
@@ -23,6 +24,7 @@ public interface SerialPortAdapter extends PortAdapter {
      * @param portName name tu use for this port
      * @param appName provided to the underlying OS during startup so
      *                that it can show on status displays, etc.
+     * @return null indicates OK return, else error message.
      */
     public String openPort(String portName, String appName);
 
@@ -137,6 +139,12 @@ public interface SerialPortAdapter extends PortAdapter {
     /**
      * Error handling for busy port at open.
      *
+     * @param p        the exception being handled, if additional information
+     *                 from it is desired.
+     * @param portName name of the port being accessed.
+     * @param log      where to log a status message.
+     * @return Localized message, in case separate presentation to user is
+     *         desired.
      * @see jmri.jmrix.AbstractSerialPortController
      */
     public String handlePortBusy(PortInUseException p, String portName, Logger log);

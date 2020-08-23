@@ -8,6 +8,7 @@
       <option name="KEEP_BLANK_LINES" value="true" />
     </Properties>
     <codeStyleSettings language="HTML">
+      <option name="RIGHT_MARGIN" value="120" />
       <option name="WRAP_ON_TYPING" value="1" />
     </codeStyleSettings>
     <codeStyleSettings language="JAVA">

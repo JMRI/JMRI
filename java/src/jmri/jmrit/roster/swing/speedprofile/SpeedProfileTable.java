@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.swing.Box;
@@ -38,7 +37,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
     JLabel description;
     String rosterId;
     RosterSpeedProfile speedProfile;
-    HashMap<Integer, Boolean> anomalies;
+    Map<Integer, Boolean> anomalies;
     boolean hasAnomaly;
     // divided by layout scale, gives a rough conversion for throttle setting to track speed
     static float SCALE = jmri.jmrit.logix.SpeedUtil.SCALE_FACTOR;

@@ -1,0 +1,5 @@
+<!-- SidebarUp.shtml -->
+<!-- This is the common sidebar definition for pages in html/hardware/[subdirectory]/ -->
+<!-- Someday may need a separate sidebar for those files, but for now... -->
+<!--#include virtual="/help/en/html/hardware/Sidebar.shtml" -->
+<!-- /SidebarUp.shtml -->

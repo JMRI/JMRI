@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+hex = Hex OPC Value
+minPri = CAN Priority 0 – High access, 1 – Above Normal access, 2 – Normal access, 3 – Low access
+name = OPC Name, must have corresponding CbusBundle values, eg. for OPC ACK,
+    CBUS_ACK : Short OPC Description
+    CTIP_ACK : Detailed OPC Description
+decode = The decode parse string used in CbusOpCodes.java, used for Console Log.
+    Values starting "OPC_" must have a corresponding CbusBundle value
+    ~OPC_SN~
+    %1 - Translate next 1 Byte ( 0-255 )
+    %2 - Translate next 2 bytes as hi lo pair ( 0-65535 )
+    ^2 - Translate next 2 bytes to Loco ID
+    $2 - Translate next 2 bytes with node name ( if possible )
+    $4 - Translate next 4 bytes with event / node name ( if possible )
+filter = Enum of which categories apply in CbusFilter.java
+
+-->
+<CbusOpcs>
+  <CbusOpc hex="00" minPri="2" name="ACK" decode="" filter="CFMISC,CFNETWK"/>
+  <CbusOpc hex="01" minPri="2" name="NAK" decode="" filter="CFMISC,CFNETWK"/>
+  <CbusOpc hex="02" minPri="0" name="HLT" decode="" filter="CFMISC,CFNETWK"/>
+  <CbusOpc hex="03" minPri="1" name="BON" decode="" filter="CFMISC,CFNETWK"/>
+  <CbusOpc hex="04" minPri="1" name="TOF" decode="" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="05" minPri="1" name="TON" decode="" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="06" minPri="1" name="ESTOP" decode="" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="07" minPri="0" name="ARST" decode="" filter="CFMISC,CFNETWK"/>
+  <CbusOpc hex="08" minPri="1" name="RTOF" decode="" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="09" minPri="1" name="RTON" decode="" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="0A" minPri="0" name="RESTP" decode="" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="0C" minPri="2" name="RSTAT" decode="" filter="CFCS,CFCSC"/>
+  <CbusOpc hex="0D" minPri="3" name="QNN" decode="" filter="CFNDCONFIG,CFNDNUM"/>
+  <CbusOpc hex="10" minPri="3" name="RQNP" decode="" filter="CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="11" minPri="2" name="RQMN" decode="" filter="CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="21" minPri="2" name="KLOC" decode="~OPC_SN~: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="22" minPri="2" name="QLOC" decode="~OPC_SN~: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="23" minPri="2" name="DKEEP" decode="~OPC_SN~: ,%1" filter="CFCS,CFCSKA"/>
+  <CbusOpc hex="30" minPri="2" name="DBG1" decode="~OPC_DA~: ,%1" filter="CFMISC,CFOTHER"/>
+  <CbusOpc hex="3F" minPri="3" name="EXTC" decode=": ,%1" filter="CFMISC,CFOTHER"/>
+  <CbusOpc hex="40" minPri="2" name="RLOC" decode="~OPC_AD~: ,^2" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="41" minPri="2" name="QCON" decode="~OPC_AD~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="42" minPri="3" name="SNN" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDNUM"/>
+  <CbusOpc hex="43" minPri="2" name="ALOC" decode="~OPC_SN~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSFUNC"/>
+  <CbusOpc hex="44" minPri="2" name="STMOD" decode="~OPC_SN~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="45" minPri="2" name="PCON" decode="~OPC_SN~: ,%1, ~OPC_CA~: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="46" minPri="2" name="KCON" decode="~OPC_SN~: ,%1, ~OPC_CA~: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="47" minPri="2" name="DSPD" decode="~OPC_SN~: ,%1, ~OPC_SD~: ,%1" filter="CFCS,CFCSDSPD"/>
+  <CbusOpc hex="48" minPri="2" name="DFLG" decode="~OPC_SN~: ,%1, ~OPC_FL~: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="49" minPri="2" name="DFNON" decode="~OPC_SN~: ,%1, ~OPC_FN~: ,%1" filter="CFCS,CFCSFUNC"/>
+  <CbusOpc hex="4A" minPri="2" name="DFNOF" decode="~OPC_SN~: ,%1, ~OPC_FN~: ,%1" filter="CFCS,CFCSFUNC"/>
+  <CbusOpc hex="4C" minPri="3" name="SSTAT" decode="~OPC_SN~: ,%1, ~OPC_ST~: ,%1" filter="CFCS,CFCSC"/>
+  <CbusOpc hex="4F" minPri="3" name="NNRSM" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="50" minPri="3" name="RQNN" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDNUM"/>
+  <CbusOpc hex="51" minPri="3" name="NNREL" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDNUM"/>
+  <CbusOpc hex="52" minPri="3" name="NNACK" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDNUM"/>
+  <CbusOpc hex="53" minPri="3" name="NNLRN" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="54" minPri="3" name="NNULN" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="55" minPri="3" name="NNCLR" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="56" minPri="3" name="NNEVN" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="57" minPri="3" name="NERD" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="58" minPri="3" name="RQEVN" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="59" minPri="3" name="WRACK" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="5A" minPri="3" name="RQDAT" decode="$2" filter="CFNODE,CFDATA,CFRQDAT"/>
+  <CbusOpc hex="5B" minPri="3" name="RQDDS" decode="$2" filter="CFNODE,CFDATA,CFRQDDS"/>
+  <CbusOpc hex="5C" minPri="3" name="BOOTM" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="5D" minPri="3" name="ENUM" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="5E" minPri="3" name="NNRST" decode="$2" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="5F" minPri="3" name="EXTC1" decode=": ,%1, ~OPC_DA~: ,%1" filter="CFMISC,CFOTHER"/>
+  <CbusOpc hex="60" minPri="2" name="DFUN" decode="~OPC_SN~: ,%1, ~OPC_RG~: ,%1, ~OPC_FN~ ,%1" filter="CFCS,CFCSFUNC"/>
+  <CbusOpc hex="61" minPri="2" name="GLOC" decode="~OPC_AD~: ,^2, ~OPC_FL~: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="63" minPri="2" name="ERR" decode="" filter="CFCS,CFCSC"/>
+  <CbusOpc hex="6F" minPri="3" name="CMDERR" decode="$2 " filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="70" minPri="3" name="EVNLF" decode="$2, ~OPC_SP~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="71" minPri="3" name="NVRD" decode="$2, ~OPC_NV~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDVAR"/>
+  <CbusOpc hex="72" minPri="3" name="NENRD" decode="$2, ~OPC_EN~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="73" minPri="3" name="RQNPN" decode="$2, ~OPC_PA~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="74" minPri="3" name="NUMEV" decode="$2, ~OPC_ES~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="75" minPri="3" name="CANID" decode="$2, ~OPC_CI~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="7F" minPri="3" name="EXTC2" decode=": ,%1, ~OPC_DA~: ,%1, ,%1" filter="CFMISC,CFOTHER"/>
+  <CbusOpc hex="80" minPri="2" name="RDCC3" decode="~OPC_RP~: ,%1, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="82" minPri="2" name="WCVO" decode="~OPC_SN~: ,%1, ~OPC_CV~: ,%2, ~OPC_DA~: ,%1" filter="CFCS,CFCSPROG"/>
+  <CbusOpc hex="83" minPri="2" name="WCVB" decode="~OPC_SN~: ,%1, ~OPC_CV~: ,%2, ~OPC_DA~: ,%1" filter="CFCS,CFCSPROG"/>
+  <CbusOpc hex="84" minPri="2" name="QCVS" decode="~OPC_SN~: ,%1, ~OPC_CV~: ,%2, ~OPC_MD~: ,%1" filter="CFCS,CFCSPROG"/>
+  <CbusOpc hex="85" minPri="2" name="PCVS" decode="~OPC_SN~: ,%1, ~OPC_CV~: ,%2, ~OPC_DA~: ,%1" filter="CFCS,CFCSPROG"/>
+  <CbusOpc hex="90" minPri="3" name="ACON" decode="$4" filter="CFEVENT,CFNODE,CFON,CFLONG,CFSTD,CFED0"/>
+  <CbusOpc hex="91" minPri="3" name="ACOF" decode="$4" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFSTD,CFED0"/>
+  <CbusOpc hex="92" minPri="3" name="AREQ" decode="$4" filter="CFEVENT,CFNODE,CFLONG,CFREQUEST"/>
+  <CbusOpc hex="93" minPri="3" name="ARON" decode="$4" filter="CFEVENT,CFNODE,CFON,CFLONG,CFSTD,CFRESPONSE"/>
+  <CbusOpc hex="94" minPri="3" name="AROF" decode="$4" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFSTD,CFRESPONSE"/>
+  <CbusOpc hex="95" minPri="3" name="EVULN" decode="$4" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="96" minPri="3" name="NVSET" decode="$2, ~OPC_NV~: ,%1, ~OPC_VL~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDVAR"/>
+  <CbusOpc hex="97" minPri="3" name="NVANS" decode="$2, ~OPC_NV~: ,%1, ~OPC_VL~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDVAR"/>
+  <CbusOpc hex="98" minPri="3" name="ASON" decode="$4" filter="CFEVENT,CFNODE,CFON,CFSHORT,CFSTD,CFED0"/>
+  <CbusOpc hex="99" minPri="3" name="ASOF" decode="$4" filter="CFEVENT,CFNODE,CFOF,CFSHORT,CFSTD,CFED0"/>
+  <CbusOpc hex="9A" minPri="3" name="ASRQ" decode="$4" filter="CFEVENT,CFNODE,CFSHORT,CFREQUEST"/>
+  <CbusOpc hex="9B" minPri="3" name="PARAN" decode="$2, ~OPC_PA~: ,%1, ~OPC_VL~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="9C" minPri="3" name="REVAL" decode="$2, ~OPC_ET~: ,%1, ~OPC_EV~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="9D" minPri="3" name="ARSON" decode="$4" filter="CFEVENT,CFNODE,CFON,CFSHORT,CFSTD,CFRESPONSE"/>
+  <CbusOpc hex="9E" minPri="3" name="ARSOF" decode="$4" filter="CFEVENT,CFNODE,CFOF,CFSHORT,CFSTD,CFRESPONSE"/>
+  <CbusOpc hex="9F" minPri="3" name="EXTC3" decode=": ,%1, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFMISC,CFOTHER"/>
+  <CbusOpc hex="A0" minPri="2" name="RDCC4" decode="~OPC_RP~: ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="A2" minPri="2" name="WCVS" decode="~OPC_SN~: ,%1, ~OPC_CV~: ,%2, ~OPC_MD~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSPROG"/>
+  <CbusOpc hex="B0" minPri="3" name="ACON1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFON,CFLONG,CFSTD,CFED1"/>
+  <CbusOpc hex="B1" minPri="3" name="ACOF1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFSTD,CFED1"/>
+  <CbusOpc hex="B2" minPri="3" name="REQEV" decode="$4, ~OPC_EV~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="B3" minPri="3" name="ARON1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFON,CFLONG,CFRESPONSE,CFED1"/>
+  <CbusOpc hex="B4" minPri="3" name="AROF1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFRESPONSE,CFED1"/>
+  <CbusOpc hex="B5" minPri="3" name="NEVAL" decode="$2, ~OPC_ET~: ,%1, ~OPC_EV~: ,%1, ~OPC_VL~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="B6" minPri="3" name="PNN" decode="$2, ~OPC_MF~: ,%1, ~OPC_MI~: ,%1, ~OPC_FL~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="B8" minPri="3" name="ASON1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFON,CFSHORT,CFSTD,CFED1"/>
+  <CbusOpc hex="B9" minPri="3" name="ASOF1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFOF,CFSHORT,CFSTD,CFED1"/>
+  <CbusOpc hex="BD" minPri="3" name="ARSON1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFON,CFSHORT,CFRESPONSE,CFED1"/>
+  <CbusOpc hex="BE" minPri="3" name="ARSOF1" decode="$4, ~OPC_DA~: ,%1" filter="CFEVENT,CFNODE,CFOF,CFSHORT,CFRESPONSE,CFED1"/>
+  <CbusOpc hex="BF" minPri="3" name="EXTC4" decode=": ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1" filter="CFMISC,CFOTHER"/>
+  <CbusOpc hex="C0" minPri="2" name="RDCC5" decode="~OPC_RP~: ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="C1" minPri="2" name="WCVOA" decode="~OPC_AD~: ,^2, ~OPC_CV~: ,%2, ~OPC_MD~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSPROG"/>
+  <CbusOpc hex="C2" minPri="3" name="CABDAT" decode="~OPC_AD~: ,^2, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1" filter="CFDATA,CFCABDAT"/>
+  <CbusOpc hex="CF" minPri="3" name="FCLK" decode="~OPC_FI~: ,%1, ~OPC_FH~: ,%1, ~OPC_FW~: ,%1, ~OPC_FD~: ,%1, ~OPC_FM~: ,%1, ~OPC_FT~: ,%1" filter="CFMISC,CFCLOCK"/>
+  <CbusOpc hex="D0" minPri="3" name="ACON2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFON,CFLONG,CFSTD,CFED2"/>
+  <CbusOpc hex="D1" minPri="3" name="ACOF2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFSTD,CFED2"/>
+  <CbusOpc hex="D2" minPri="3" name="EVLRN" decode="$4, ~OPC_EV~: ,%1, ~OPC_VL~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="D3" minPri="3" name="EVANS" decode="$4, ~OPC_EV~: ,%1, ~OPC_VL~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="D4" minPri="3" name="ARON2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFON,CFLONG,CFRESPONSE,CFED2"/>
+  <CbusOpc hex="D5" minPri="3" name="AROF2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFRESPONSE,CFED2"/>
+  <CbusOpc hex="D8" minPri="3" name="ASON2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFON,CFSHORT,CFSTD,CFED2"/>
+  <CbusOpc hex="D9" minPri="3" name="ASOF2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFSHORT,CFSTD,CFED2"/>
+  <CbusOpc hex="DD" minPri="3" name="ARSON2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFON,CFSHORT,CFRESPONSE,CFED2"/>
+  <CbusOpc hex="DE" minPri="3" name="ARSOF2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFSHORT,CFRESPONSE,CFED2"/>
+  <CbusOpc hex="DF" minPri="3" name="EXTC5" decode=": ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFMISC,CFOTHER"/>
+  <CbusOpc hex="E0" minPri="2" name="RDCC6" decode="~OPC_RP~: ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFCS,CFCSLC"/>
+  <CbusOpc hex="E1" minPri="2" name="PLOC" decode="~OPC_SN~: ,%1, ~OPC_AD~: ,^2, ~OPC_SD~: ,%1, F1: ,%1, F2: ,%1, F3: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="E2" minPri="3" name="NAME" decode="~OPC_CH~: ,%1, ,%1, ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="E3" minPri="2" name="STAT" decode="$2, ~OPC_CS~: ,%1, ~OPC_FL~: ,%1, ~OPC_VN~: ,%1, ,%1, ,%1" filter="CFNODE,CFCS,CFCSC"/>
+  <CbusOpc hex="EF" minPri="3" name="PARAMS" decode="~OPC_PA~ :,%1, ,%1, ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFNDCONFIG,CFNDSETUP"/>
+  <CbusOpc hex="F0" minPri="3" name="ACON3" decode="$4, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFEVENT,CFNODE,CFON,CFLONG,CFSTD,CFED3"/>
+  <CbusOpc hex="F1" minPri="3" name="ACOF3" decode="$4, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFSTD,CFED3"/>
+  <CbusOpc hex="F2" minPri="3" name="ENRSP" decode="$2, ,$4, ~OPC_ET~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="F3" minPri="3" name="ARON3" decode="$4, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFEVENT,CFNODE,CFON,CFLONG,CFRESPONSE,CFED3"/>
+  <CbusOpc hex="F4" minPri="3" name="AROF3" decode="$4, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFLONG,CFRESPONSE,CFED3"/>
+  <CbusOpc hex="F5" minPri="3" name="EVLRNI" decode="$4, ~OPC_ET~: ,%1, ~OPC_EV~: ,%1, ~OPC_VL~: ,%1" filter="CFNODE,CFNDCONFIG,CFNDEV"/>
+  <CbusOpc hex="F6" minPri="3" name="ACDAT" decode="$2, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFNODE,CFDATA,CFACDAT"/>
+  <CbusOpc hex="F7" minPri="3" name="ARDAT" decode="$2, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFNODE,CFDATA,CFARDAT"/>
+  <CbusOpc hex="F8" minPri="3" name="ASON3" decode="$4, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFEVENT,CFNODE,CFON,CFSHORT,CFSTD,CFED3"/>
+  <CbusOpc hex="F9" minPri="3" name="ASOF3" decode="$4, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFSHORT,CFSTD,CFED3"/>
+  <CbusOpc hex="FA" minPri="3" name="DDES" decode="~OPC_DN~: ,%2, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFDATA,CFDDES"/>
+  <CbusOpc hex="FB" minPri="3" name="DDRS" decode="~OPC_DN~: ,%2, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFDATA,CFDDRS"/>
+  <CbusOpc hex="FC" minPri="3" name="DDWS" decode="~OPC_DN~: ,%2, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFDATA,CFDDES"/>
+  <CbusOpc hex="FD" minPri="3" name="ARSON3" decode="$4, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFEVENT,CFNODE,CFON,CFSHORT,CFRESPONSE,CFED3"/>
+  <CbusOpc hex="FE" minPri="3" name="ARSOF3" decode="$4, ~OPC_DA~: ,%1, ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFSHORT,CFRESPONSE,CFED3"/>
+  <CbusOpc hex="FF" minPri="3" name="EXTC6" decode=": ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFMISC,CFOTHER"/>
+  </CbusOpcs>

@@ -14,7 +14,7 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one
     public SpeedoReply() {
-	super();
+        super();
     }
 
     // copy one
@@ -25,9 +25,9 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
             return;
         }
         _nDataChars = m._nDataChars;
-	if(m.isUnsolicited()) {
-           setUnsolicited();
-	}
+        if (m.isUnsolicited()) {
+            setUnsolicited();
+        }
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = m._dataChars[i];
         }

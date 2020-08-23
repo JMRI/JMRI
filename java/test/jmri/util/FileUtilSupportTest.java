@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -20,9 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.FileUtilSupport class.
@@ -271,7 +269,7 @@ public class FileUtilSupportTest {
         File file = File.createTempFile("FileUtilTest", null);
         String text = "jmri.util.FileUtil#appendTextToFile";
         instance.appendTextToFile(file, text);
-        List<String> lines = Files.readAllLines(Paths.get(file.toURI()), Charset.forName("UTF-8"));
+        List<String> lines = Files.readAllLines(Paths.get(file.toURI()), StandardCharsets.UTF_8);
         assertEquals(text, lines.get(0));
     }
 
@@ -331,7 +329,7 @@ public class FileUtilSupportTest {
         assertNull(instance.findExternalFilename(FileUtil.PROGRAM + this.preferencesTestFile.getName()));
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -350,7 +348,7 @@ public class FileUtilSupportTest {
         }, "Create program test file");
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         this.programTestFile.delete();
         JUnitUtil.waitFor(() -> {

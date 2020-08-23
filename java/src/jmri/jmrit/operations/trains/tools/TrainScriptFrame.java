@@ -3,15 +3,13 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.GridBagLayout;
 import java.io.File;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -22,8 +20,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a train's script options. Allows the user to execute
@@ -341,7 +337,7 @@ public class TrainScriptFrame extends OperationsFrame {
     public void buttonActionRemoveBuildScript(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             JButton rbutton = (JButton) ae.getSource();
-            log.debug("remove build script button activated " + rbutton.getName());
+            log.debug("remove build script button activated {}", rbutton.getName());
             _train.deleteBuildScript(rbutton.getName());
             updateBuildScriptPanel();
             pack();
@@ -351,7 +347,7 @@ public class TrainScriptFrame extends OperationsFrame {
     public void buttonActionRemoveAfterBuildScript(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             JButton rbutton = (JButton) ae.getSource();
-            log.debug("remove after build script button activated " + rbutton.getName());
+            log.debug("remove after build script button activated {}", rbutton.getName());
             _train.deleteAfterBuildScript(rbutton.getName());
             updateAfterBuildScriptPanel();
             pack();
@@ -361,7 +357,7 @@ public class TrainScriptFrame extends OperationsFrame {
     public void buttonActionRemoveMoveScript(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             JButton rbutton = (JButton) ae.getSource();
-            log.debug("remove move script button activated " + rbutton.getName());
+            log.debug("remove move script button activated {}", rbutton.getName());
             _train.deleteMoveScript(rbutton.getName());
             updateMoveScriptPanel();
             pack();
@@ -371,7 +367,7 @@ public class TrainScriptFrame extends OperationsFrame {
     public void buttonActionRemoveTerminationScript(java.awt.event.ActionEvent ae) {
         if (_train != null) {
             JButton rbutton = (JButton) ae.getSource();
-            log.debug("remove termination script button activated " + rbutton.getName());
+            log.debug("remove termination script button activated {}", rbutton.getName());
             _train.deleteTerminationScript(rbutton.getName());
             updateTerminationScriptPanel();
             pack();
@@ -395,21 +391,20 @@ public class TrainScriptFrame extends OperationsFrame {
      * We always use the same file chooser in this class, so that the user's
      * last-accessed directory remains available.
      */
-    JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PythonScriptFiles"), "py"); // NOI18N
+    JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
 
     private File selectFile() {
         if (fc == null) {
             log.error("Could not find user directory");
         } else {
+            fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("PythonScriptFiles"), "py")); // NOI18N
             fc.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
             // when reusing the chooser, make sure new files are included
             fc.rescanCurrentDirectory();
             int retVal = fc.showOpenDialog(null);
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                // Run the script from it's filename
-                return file;
+                return fc.getSelectedFile();
             }
         }
         return null;

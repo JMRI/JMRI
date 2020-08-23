@@ -5,17 +5,14 @@ import java.awt.event.*;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
-import jmri.util.swing.*;
 
 import org.jdom2.Element;
 
@@ -189,6 +186,7 @@ public class AddSignalMastPanel extends JPanel {
 
     /**
      * Select a particular signal implementation to display.
+     * @param view The signal implementation pane name to display
      */
     void selection(String view) {
         log.trace(" selection({}) start", view);
@@ -292,7 +290,12 @@ public class AddSignalMastPanel extends JPanel {
 
             // get the signals system name from the user name in combo box
             String u = (String) sigSysBox.getSelectedItem();
-            sigsysname = man.getByUserName(u).getSystemName();
+            SignalSystem sig = man.getByUserName(u);
+            if (sig==null){
+                log.error("Signal System Not found for Username {}",u);
+                return;
+            }
+            sigsysname = sig.getSystemName();
             log.trace("     loadMastDefinitions with sigsysname {}", sigsysname); // NOI18N
             mapNameToShowSize = new LinkedHashMap<>();
             mapTypeToName = new LinkedHashMap<>();
@@ -425,6 +428,7 @@ public class AddSignalMastPanel extends JPanel {
      * Check of user name done when creating new SignalMast.
      * In case of error, it looks a message and (if not headless) shows a dialog.
      *
+     * @param nam User name to be checked
      * @return true if OK to proceed
      */
     boolean checkUserName(String nam) {

@@ -15,10 +15,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Logix Table</h1>
 
       <p>A Logix is a small group of Conditionals focused on a single task
@@ -181,7 +181,7 @@
       <p>For more information, consult the <a href=
       "../../../../html/tools/Logix.shtml">main Logix
       documentation</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -15,7 +15,9 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- ver1 made from the ESU_LokSoundV5 file -->
+    <!-- ver2 updates for new firmware and reorganise code shared with LokPilot 5  -->
     <version author="Dave Heap" version="1" lastUpdated="20190507"/>
+    <version author="Dave Heap" version="2" lastUpdated="20200410"/>
     <decoder>
         <family name="ESU Miscellaneous decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="Essential Sound Unit" numOuts="4" productID="16777363">
@@ -138,6 +140,7 @@
     <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v5ConsistPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>

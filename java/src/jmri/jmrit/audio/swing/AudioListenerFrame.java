@@ -48,6 +48,8 @@ public class AudioListenerFrame extends AbstractAudioFrame {
     JSpinner metersPerUnit = new JSpinner();
     JLabel metersPerUnitLabel = new JLabel(Bundle.getMessage("UnitM/U"));
 
+    private final static String PREFIX = "IAL";
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioListenerFrame(String title, AudioTableDataModel model) {
         super(title, model);
@@ -115,7 +117,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Listener frame with current values
+     * Populate the Edit Listener frame with current values.
      */
     @Override
     public void populateFrame(Audio a) {
@@ -132,12 +134,15 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         metersPerUnit.setValue(l.getMetersPerUnit());
     }
 
-    void applyPressed(ActionEvent e) {
+    private void applyPressed(ActionEvent e) {
+        String sName = sysName.getText();
+        if (entryError(sName, PREFIX, "$")) { // no index for AudioListener
+            return;
+        }
         String user = userName.getText();
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText();
         AudioListener l;
         try {
             l = (AudioListener) InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(sName);
@@ -156,4 +161,5 @@ public class AudioListenerFrame extends AbstractAudioFrame {
     }
 
     //private static final Logger log = LoggerFactory.getLogger(AudioListenerFrame.class);
+
 }

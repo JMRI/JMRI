@@ -304,7 +304,7 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         try {
             Roster.getDefault().writeFile(Roster.getDefault().getRosterIndexPath());
         } catch (IOException ex) {
-            log.error("Exception while writing the new roster file, may not be complete: " + ex);
+            log.error("Exception while writing the new roster file, may not be complete: {}", ex);
         }
         // use the new one
 

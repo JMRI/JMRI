@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.Preferences;
+import javax.annotation.Nonnull;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
@@ -65,6 +66,7 @@ public class FileLocationsPreferences extends AbstractPreferencesManager {
     }
 
     @Override
+    @Nonnull
     public Set<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }

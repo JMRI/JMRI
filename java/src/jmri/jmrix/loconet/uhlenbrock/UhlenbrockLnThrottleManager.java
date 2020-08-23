@@ -5,7 +5,6 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.ThrottleListener;
-import jmri.ThrottleManager;
 import jmri.jmrix.loconet.LnThrottleManager;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;

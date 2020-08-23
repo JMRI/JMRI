@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = PreferencesManager.class)
 public class ConsistPreferencesManager extends AbstractPreferencesManager {
 
-    private final static Logger log = LoggerFactory.getLogger(ConsistPreferencesManager.class);
-    public final static String UPDATE_CV19 = "updateCV19";
+    private static final Logger log = LoggerFactory.getLogger(ConsistPreferencesManager.class);
+    public static final String UPDATE_CV19 = "updateCV19";
     private boolean updateCV19 = false;
 
     @Override

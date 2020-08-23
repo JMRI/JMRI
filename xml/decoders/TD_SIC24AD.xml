@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1.8" lastUpdated="20200109"/>
   <version author="B. Milhaupt" version="1.7" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1.5" lastUpdated="20130807"/>
   <!-- Version 1 initial release 10/14/08-->
@@ -23,8 +23,9 @@
   <!-- Version 1.5 update decoder-config xmlns 08/07/13-->
   <!-- Version 1.6 correct Input 5 toggle, was labeled same as input 1 toggle and did not fuction correctly 06/12/17-->
   <!-- Version 1.7 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
+  <!-- Version 1.8 change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="SIC24AD" mfg="Team Digital" type="stationary" comment="The SIC24AD can be programmed in the usual way">
+    <family name="SIC24AD" mfg="Team Digital, LLC" type="stationary" comment="The SIC24AD can be programmed in the usual way">
       <model model="SIC24AD" lowVersionID="10"/>
     </family>
     <programming direct="no" paged="yes" register="no" ops="yes">

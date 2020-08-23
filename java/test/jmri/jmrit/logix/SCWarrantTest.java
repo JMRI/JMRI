@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -12,7 +13,11 @@ import jmri.SignalHeadManager;
 import jmri.Turnout;
 import jmri.implementation.VirtualSignalHead;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -34,13 +39,14 @@ public class SCWarrantTest extends WarrantTest {
         BlockOrder lastOrder = new BlockOrder(_OBlockMgr.getOBlock("South"), "SouthToWest", "SouthWest", null);
         orders.add(lastOrder);
 
-        Assert.assertTrue("Route Free", ((SCWarrant) warrant).isRouteFree());
-        Assert.assertTrue("Route Allocated", ((SCWarrant) warrant).isRouteAllocated());
+        assertThat(((SCWarrant) warrant).isRouteFree()).withFailMessage("Route Free").isTrue();
+        assertThat(((SCWarrant) warrant).isRouteAllocated()).withFailMessage("Route Allocated").isTrue();
     }
 
     @Test
     @Override
     public void testWarrant() throws JmriException {
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         sEast.setState(Sensor.INACTIVE);
         sWest.setState(Sensor.INACTIVE);
         sSouth.setState(Sensor.INACTIVE);
@@ -67,8 +73,6 @@ public class SCWarrantTest extends WarrantTest {
         warrant.setRoute(false, orders);
         warrant.checkStartBlock();
         warrant.checkRoute();
-        SpeedUtil su = warrant.getSpeedUtil();
-        su.setOrders(orders);
 
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
@@ -77,7 +81,7 @@ public class SCWarrantTest extends WarrantTest {
         String msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - " + msg, msg);
 
-        Assert.assertTrue("in start block", ((SCWarrant) warrant).inStartBlock());
+        assertThat(((SCWarrant) warrant).inStartBlock()).withFailMessage("in start block").isTrue();
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m = warrant.getRunningMessage();
@@ -113,15 +117,13 @@ public class SCWarrantTest extends WarrantTest {
 
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initShutDownManager();
         JUnitUtil.initRosterConfigManager();
 
         // setup the sc warrant preliminaries.
@@ -146,20 +148,20 @@ public class SCWarrantTest extends WarrantTest {
         shMgr.register(shSE);
 
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
-        Portal pNorthWest = _portalMgr.createNewPortal(null, "NorthWest");
+        Portal pNorthWest = _portalMgr.createNewPortal("NorthWest");
         pNorthWest.setToBlock(bWest, false);
         pNorthWest.setFromBlock(bNorth, false);
         pNorthWest.setProtectSignal(shNW, 20, bWest);
-        Portal pSouthWest = _portalMgr.createNewPortal(null, "SouthWest");
+        Portal pSouthWest = _portalMgr.createNewPortal("SouthWest");
         pSouthWest.setToBlock(bWest, false);
         pSouthWest.setFromBlock(bSouth, false);
         pSouthWest.setProtectSignal(shSW, 20, bWest);
 
-        Portal pNorthEast = _portalMgr.createNewPortal(null, "NorthEast");
+        Portal pNorthEast = _portalMgr.createNewPortal("NorthEast");
         pNorthEast.setToBlock(bEast, false);
         pNorthEast.setFromBlock(bNorth, false);
         pNorthEast.setProtectSignal(shNE, 20, bEast);
-        Portal pSouthEast = _portalMgr.createNewPortal(null, "SouthEast");
+        Portal pSouthEast = _portalMgr.createNewPortal("SouthEast");
         pSouthEast.setToBlock(bEast, false);
         pSouthEast.setFromBlock(bSouth, false);
         pSouthEast.setProtectSignal(shSE, 20, bEast);
@@ -212,9 +214,10 @@ public class SCWarrantTest extends WarrantTest {
         warrant = new SCWarrant("IW1", "SCWarrant test", 5);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         super.tearDown();
     }
 

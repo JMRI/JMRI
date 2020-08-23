@@ -2,16 +2,14 @@ package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
-import org.netbeans.jemmy.operators.JButtonOperator;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class OpSessionLogTest {
 
@@ -47,21 +45,20 @@ public class OpSessionLogTest {
     }
 
     @Test
-    @Ignore("needs more thought")
+    @Disabled("needs more thought")
     public void makeLogFileCheck() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
        // This is going to be a graphical check.
        // make sure the log file is correctly chosen and created.
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         f = null;
         JUnitUtil.tearDown();

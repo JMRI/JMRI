@@ -93,7 +93,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                         provideMemory(pName);
                 setMemory(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, memory));
             } catch (IllegalArgumentException e) {
-                log.error("Memory '" + pName + "' not available, icon won't see changes");
+                log.error("Memory '{}' not available, icon won't see changes", pName);
             }
         } else {
             log.error("No MemoryManager for this protocol, icon won't see changes");
@@ -190,13 +190,13 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     @Override
     protected void edit() {
         _iconEditor = new IconAdder("Memory") {
-            JSpinner spinner = new JSpinner(_spinModel);
+            final JSpinner spinner = new JSpinner(_spinModel);
 
             @Override
             protected void addAdditionalButtons(JPanel p) {
                 ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setColumns(2);
                 spinner.setMaximumSize(spinner.getPreferredSize());
-                spinner.setValue(Integer.valueOf(_textBox.getColumns()));
+                spinner.setValue(_textBox.getColumns());
                 JPanel p2 = new JPanel();
                 //p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
                 //p2.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -209,12 +209,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
 
         makeIconEditorFrame(this, "Memory", true, _iconEditor);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        ActionListener addIconAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                editMemory();
-            }
-        };
+        ActionListener addIconAction = a -> editMemory();
         _iconEditor.makeIconPanel(false);
         _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(getMemory());

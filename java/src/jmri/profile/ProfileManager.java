@@ -17,7 +17,6 @@ import java.util.zip.ZipOutputStream;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -151,7 +150,7 @@ public class ProfileManager extends Bean {
      *
      * @param identifier the profile path or id; can be null
      */
-    public void setActiveProfile(@Nullable String identifier) {
+    public void setActiveProfile(@CheckForNull String identifier) {
         log.debug("setActiveProfile called with {}", identifier);
         // handle null profile
         if (identifier == null) {
@@ -202,7 +201,7 @@ public class ProfileManager extends Bean {
      *
      * @param profile the profile to activate
      */
-    public void setActiveProfile(@Nullable Profile profile) {
+    public void setActiveProfile(@CheckForNull Profile profile) {
         Profile old = activeProfile;
         if (profile == null) {
             activeProfile = null;
@@ -216,11 +215,11 @@ public class ProfileManager extends Bean {
     }
 
     @CheckForNull
-    protected Profile getNextActiveProfile() {
+    public Profile getNextActiveProfile() {
         return this.nextActiveProfile;
     }
 
-    protected void setNextActiveProfile(@Nullable Profile profile) {
+    protected void setNextActiveProfile(@CheckForNull Profile profile) {
         Profile old = this.nextActiveProfile;
         if (profile == null) {
             this.nextActiveProfile = null;

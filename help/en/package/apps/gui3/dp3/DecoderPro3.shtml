@@ -22,10 +22,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Introduction to DecoderPro 3</h1>
 
       <p><b>THIS HELP FILE IS WORK IN PROGRESS</b>. Please help
@@ -300,7 +300,7 @@
       can be done using the "Roster Group Table Associations"
       pane, accessible from the "Settings" menu.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

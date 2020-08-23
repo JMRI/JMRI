@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
@@ -13,7 +14,7 @@ import org.junit.rules.TemporaryFolder;
 /**
  * Test simple functioning of ThrottleFrame
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class ThrottleFrameTest {
 
@@ -130,8 +131,9 @@ public class ThrottleFrameTest {
             JemmyUtil.enterClickAndLeave(f);
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
             Assert.assertTrue("Function F" + i + " on", f.isSelected());
+            // Full Message along lines of Can't send F13-F20 since no command station defined
+            JUnitAppender.assertErrorMessageStartsWith("Can't send F");
         }
-
         to.pushReleaseButton();
     }
 
@@ -152,6 +154,7 @@ public class ThrottleFrameTest {
     @Test
     public void testStopButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         to.setAddressValue(new DccLocoAddress(42, false));
         to.setSpeedSlider(28);
@@ -167,6 +170,8 @@ public class ThrottleFrameTest {
     @Test
     public void testEStopButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         frame.setExtendedState(frame.getExtendedState() | java.awt.Frame.MAXIMIZED_BOTH);
         panel.toFront();
 
@@ -230,7 +235,7 @@ public class ThrottleFrameTest {
 
         to.setAddressValue(new DccLocoAddress(42, false));
 
-        to.pushForwardButton();	// need to verify this took effect.	
+        to.pushForwardButton(); // need to verify this took effect.
         Assert.assertTrue("Forward Direction", to.getAttachedThrottle().getIsForward());
 
         to.pushReleaseButton();
@@ -242,7 +247,7 @@ public class ThrottleFrameTest {
 
         to.setAddressValue(new DccLocoAddress(42, false));
 
-        to.pushReverseButton(); // need to verify this took effect.	
+        to.pushReverseButton(); // need to verify this took effect.
         Assert.assertFalse("Reverse Direction", to.getAttachedThrottle().getIsForward());
         to.pushReleaseButton();
     }
@@ -257,13 +262,13 @@ public class ThrottleFrameTest {
         Assert.assertEquals("Speed setting 28", 28, to.getSpeedSliderValue());
         float speed = to.getAttachedThrottle().getSpeedSetting();
 
-        to.pushForwardButton();	// need to verify this took effect.	
+        to.pushForwardButton(); // need to verify this took effect.
         Assert.assertTrue("Forward Direction", to.getAttachedThrottle().getIsForward());
         // and the absolute value of the speed is the same.
 
         Assert.assertEquals("Throttle Speed Setting after forward", Math.abs(speed), Math.abs(to.getAttachedThrottle().getSpeedSetting()), 0.0);
 
-        to.pushReverseButton();	// need to verify this took effect.	
+        to.pushReverseButton(); // need to verify this took effect.
         Assert.assertFalse("Reverse Direction", to.getAttachedThrottle().getIsForward());
         // and the absolute value of the speed is the same.
 
@@ -381,6 +386,7 @@ public class ThrottleFrameTest {
         panel = null;
         frame = null;
         to = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

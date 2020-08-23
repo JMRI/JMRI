@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus;
 
 import java.awt.Color;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -133,16 +133,28 @@ public class CbusEventHighlighterTest {
         Assert.assertTrue("does highlight event 1", (t.highlight(r)));         
     }
     
+    @Test
+    public void testSetGet(){
+    
+        t.setNnEnable(true);
+        Assert.assertTrue("nn enable true",t.getNnEnable());
+        t.setNnEnable(false);
+        Assert.assertFalse("nn enable false",t.getNnEnable());
+    
+        t.setEv(12345);
+        Assert.assertTrue("set get ev",t.getEv()==12345);
+        
+    }
+    
     
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         t = new CbusEventHighlighter();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
         t = null;

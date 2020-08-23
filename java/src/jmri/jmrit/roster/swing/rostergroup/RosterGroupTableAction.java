@@ -31,6 +31,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
      * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
+     * @param s action title though may be changed?
      *
      */
     public RosterGroupTableAction(String s) {

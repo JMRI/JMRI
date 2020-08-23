@@ -12,14 +12,12 @@ import java.util.Set;
 import jmri.Block;
 import jmri.IdTag;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.PhysicalLocationReporter;
 import jmri.Reporter;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.jmrit.vsdecoder.listener.VSDListener;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
@@ -35,9 +33,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * VSDecoderFactory
+ * VSDecoderFactory, builds VSDecoders as needed, handles loading from XML if needed.
  *
- * Builds VSDecoders as needed.  Handles loading from XML if needed.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -52,12 +49,12 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018
+ * @author Klaus Killinger Copyright (C) 2018-2020
  */
 public class VSDecoderManager implements PropertyChangeListener {
 
     //private static final ResourceBundle rb = VSDecoderBundle.bundle();
-    private static final String vsd_property_change_name = "VSDecoder Manager"; //NOI18N
+    private static final String vsd_property_change_name = "VSDecoder Manager"; // NOI18N
 
     // Array-pointer for blockParameter
     private static final int radius = 0;
@@ -114,7 +111,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private float distance_rest_new = 0.0f; // Block distance to go, copy
 
     private float xPosi;
-    static final int max_decoder = 4; // For now only four locos allowed (arbitrary)
+    public static final int max_decoder = 4; // For now only four locos allowed (arbitrary)
     private int remove_index;
     boolean is_tunnel = false;
     boolean geofile_ok = false;
@@ -143,8 +140,7 @@ public class VSDecoderManager implements PropertyChangeListener {
         vsdecoderPrefs = new VSDecoderPreferences(dirname + VSDecoderPreferences.VSDPreferencesFileName);
         // Listen to ReporterManager for Report List changes
         setupReporterManagerListener();
-        // Get a Listener (the only one for now)
-        //VSDListener t = new VSDListener(getNextListenerID());
+        // Get a Listener
         VSDListener t = new VSDListener();
         listenerTable.put(t.getSystemName(), t);
         // Update JMRI "Default Audio Listener"
@@ -176,6 +172,14 @@ public class VSDecoderManager implements PropertyChangeListener {
         return vsdecoderPrefs;
     }
 
+    public int getMasterVolume() {
+        return getVSDecoderPreferences().getMasterVolume();
+    }
+
+    public void setMasterVolume(int mv) {
+        getVSDecoderPreferences().setMasterVolume(mv);
+    }
+
     public JmriJFrame provideManagerFrame() {
         if (managerFrame == null) {
             if (GraphicsEnvironment.isHeadless()) {
@@ -189,25 +193,30 @@ public class VSDecoderManager implements PropertyChangeListener {
                         if (entry_counter < max_decoder) {
                             VSDConfig config = new VSDConfig();
                             config.setLocoAddress(entry.getDccLocoAddress());
-                            log.debug("Roster entry VSD address: {}", config.getLocoAddress());
-                            boolean is_loaded = LoadVSDFileAction.loadVSDFile(entry.getAttribute("VSDecoder_Path"));
-                            if (!is_loaded) {
-                                log.error("loading VSD file {}: {}", entry.getAttribute("VSDecoder_Path"), is_loaded);
+                            log.info("Loading Roster Entry \"{}\", VSDecoder {} ...", entry.getId(), config.getLocoAddress());
+                            if (entry.getAttribute("VSDecoder_Path") != null && entry.getAttribute("VSDecoder_Profile") != null) {
+                                if (LoadVSDFileAction.loadVSDFile(entry.getAttribute("VSDecoder_Path"))) {
+                                    // config.xml OK
+                                    log.info(" VSD path: {}", entry.getAttribute("VSDecoder_Path"));
+                                    config.setProfileName(entry.getAttribute("VSDecoder_Profile"));
+                                    log.debug(" entry VSD profile: {}", entry.getAttribute("VSDecoder_Profile"));
+                                    VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
+                                    if (newDecoder != null) {
+                                        log.info("VSD {}, profile \"{}\" ready.", config.getLocoAddress(), config.getProfileName());
+                                        entry_counter++;
+                                    } else {
+                                        log.warn("VSD {} failed", config.getProfileName());
+                                    }
+                                }
+                            } else {
+                                log.error("Cannot load VSD File - path or profile missing - check your Roster Media");
                             }
-                            log.debug(" entry full VSD path: {}", entry.getAttribute("VSDecoder_Path"));
-                            config.setProfileName(entry.getAttribute("VSDecoder_Profile"));
-                            log.debug(" entry VSD profile: {}", entry.getAttribute("VSDecoder_Profile"));
-                            VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
-                            if (newDecoder != null) {
-                                log.info("VSD profile {} loaded", config.getProfileName());
-                            }
-                            entry_counter++;
                         } else {
                             log.warn("Only {} roster entries allowed. Disgarded {}", max_decoder, rosterList.size() - max_decoder);
                         }
                     }
                     if (entry_counter == 0) {
-                        log.info("No Roster entry found in Roster Group {}", vsdRosterGroup);
+                        log.warn("No Roster entry found in Roster Group {}", vsdRosterGroup);
                     }
                 } else {
                     log.warn("Roster group \"{}\" not found", vsdRosterGroup);
@@ -217,7 +226,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 managerFrame = new VSDManagerFrame();
             }
         } else {
-            log.warn("Virtual Sound Decoder Manager is already running"); // VSDManagerFrameTitle?
+            log.warn("Virtual Sound Decoder Manager is already running");
         }
         return managerFrame;
     }
@@ -233,16 +242,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         // first returned value is 0.
         return ++locorow;
     }
-
-    // To be used in the future
-    /*
-     private String getNextListenerID() {
-     // ListenerID initialized to zero, pre-incremented before return...
-     // first returned ID value is 1.
-     // Prefix is added by the VSDListener constructor
-     return "VSDecoderID" + (++listenerID); // NOI18N
-     }
-     */
 
     @Deprecated
     public VSDecoder getVSDecoder(String profile_name) {
@@ -272,24 +271,21 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     /**
-     * Provide or build a VSDecoder based on a provided configuration
+     * Provide or build a VSDecoder based on a provided configuration.
+     * 
+     * @param config previous configuration, not null.
+     * @return vsdecoder, or null on error.
      */
     public VSDecoder getVSDecoder(VSDConfig config) {
         String path;
         String profile_name = config.getProfileName();
         // First, check to see if we already have a VSDecoder on this Address
-        //debugPrintDecoderList();
         if (decoderAddressMap.containsKey(config.getLocoAddress().toString())) {
             return decoderAddressMap.get(config.getLocoAddress().toString());
         }
         if (profiletable.containsKey(profile_name)) {
             path = profiletable.get(profile_name);
             log.debug("Profile {} is in table.  Path: {}", profile_name, path);
-
-            if (!(locorow < max_decoder - 1)) {
-                log.warn("VSDecoder not created. Maximal number is {}", max_decoder);
-                return null;
-            }
 
             config.setVSDPath(path);
             config.setId(getNextVSDecoderID());
@@ -298,10 +294,9 @@ public class VSDecoderManager implements PropertyChangeListener {
             decoderAddressMap.put(vsd.getAddress().toString(), vsd);
             decoderInBlock.put(vsd.getAddress().getNumber(), vsd);
             locoInBlock[getNextlocorow()][address] = vsd.getAddress().getNumber();
-            //debugPrintDecoderList();
             if (geofile_ok) {
                 if (vsd.topspeed == 0) {
-                    log.warn("Top-speed not defined. No advanced location following possible.");
+                    log.info("Top-speed not defined. No advanced location following possible.");
                 } else {
                     initSoundPositionTimer(vsd);
                 }
@@ -314,24 +309,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         }
     }
 
-    /*
-     public void debugPrintDecoderList() {
-     log.debug("Current Decoder List by System ID:");
-     Set<Map.Entry<String, VSDecoder>> ids = decodertable.entrySet();
-     Iterator<Map.Entry<String, VSDecoder>> idi = ids.iterator();
-     while (idi.hasNext()) {
-     Map.Entry<String, VSDecoder> e = idi.next();
-     log.debug("    ID: {}, Val: {}", e.getKey(), e.getValue().getAddress().toString());
-     }
-     log.debug("Current Decoder List by Address:");
-     ids = decoderAddressMap.entrySet();
-     idi = ids.iterator();
-     while (idi.hasNext()) {
-     Map.Entry<String, VSDecoder> e = idi.next();
-     log.debug("    ID: {}, Val: {}", e.getKey(), e.getValue().getId());
-     }
-     }
-     */
     public VSDecoder getVSDecoderByID(String id) {
         VSDecoder v = decodertable.get(id);
         if (v == null) {
@@ -355,28 +332,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         return rv;
     }
 
-    /*
-     public VSDecoder getVSDecoderByAddress(String sa) {
-     // First, translate the string into a DccLocoAddress
-     // no object if no address
-     if (sa.equals("")) return null;
-        
-     DccLocoAddress da = null;
-     // ask the Throttle Manager to handle this!
-     LocoAddress.Protocol protocol;
-     if(InstanceManager.throttleManagerInstance()!=null){
-     protocol = InstanceManager.throttleManagerInstance().getProtocolFromString(sa);
-     da = (DccLocoAddress)InstanceManager.throttleManagerInstance().getAddress(sa, protocol);
-     }
-
-     // now look up the decoder
-     if (da != null) {
-     return getVSDecoderByAddress(da);
-     }
-     return(null);
- 
-     }
-     */
     public void setDefaultVSDecoder(VSDecoder d) {
         default_decoder = d;
     }
@@ -438,7 +393,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             return;
         }
         if (l.equals(PhysicalLocation.Origin)) {
-            log.info("Location: {} ... ignoring", l.toString());
+            log.info("Location: {} ... ignoring", l);
             // Physical location at origin means it hasn't been set.
             return;
         }
@@ -502,25 +457,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         return profiletable.get(profile);
     }
 
-    /**
-     * Load Profiles from a VSD file Not deprecated anymore. used by the new
-     * ConfigDialog.
-     */
-    public void loadProfiles(String path) {
-        try {
-            VSDFile vsdfile = new VSDFile(path);
-            if (vsdfile.isInitialized()) {
-                this.loadProfiles(vsdfile);
-            }
-        } catch (java.util.zip.ZipException e) {
-            log.error("ZipException loading VSDecoder from {}", path);
-            // would be nice to pop up a dialog here...
-        } catch (java.io.IOException ioe) {
-            log.error("IOException loading VSDecoder from {}", path);
-            // would be nice to pop up a dialog here...
-        }
-    }
-
     protected void registerReporterListener(String sysName) {
         Reporter r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(sysName);
         if (r == null) {
@@ -536,7 +472,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     protected void registerBeanListener(Manager beanManager, String sysName) {
-        NamedBean b = beanManager.getBeanBySystemName(sysName);
+        NamedBean b = beanManager.getBySystemName(sysName);
         if (b == null) {
             log.debug("No bean by name {}", sysName);
             return;
@@ -609,6 +545,9 @@ public class VSDecoderManager implements PropertyChangeListener {
                 stopSoundPositionTimer(v);
             }
         }
+        // Empty the timertable
+        timertable.clear();
+
         // Empty the DecoderTable
         decodertable.clear();
         /*
@@ -655,10 +594,10 @@ public class VSDecoderManager implements PropertyChangeListener {
             log.debug("Block property change! name: {} old: {} new = {}", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
             blockPropertyChange(evt);
         } else if (evt.getSource() instanceof VSDManagerFrame) {
-            if (evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.REMOVE_DECODER))) {
+            if (evt.getPropertyName().equals(VSDManagerFrame.REMOVE_DECODER)) {
                 // Shut down the requested decoder and remove it from the manager's hash maps. 
                 // Unless there are "illegal" handles, this should put the decoder on the garbage heap.  I think.
-                String sa = (String) evt.getNewValue();
+                String sa = (String) evt.getOldValue();
                 VSDecoder d = this.getVSDecoderByAddress(sa);
                 log.debug("Removing Decoder {} ... {}", sa, d.getAddress());
                 stopSoundPositionTimer(d);
@@ -669,12 +608,10 @@ public class VSDecoderManager implements PropertyChangeListener {
                 locoInBlockRemove(d.getAddress().getNumber());
                 timertable.remove(d.getId()); // Remove timer
                 locorow--; // prepare array index for eventually adding a new decoder
-                //debugPrintDecoderList();
-            } else if (evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.CLOSE_WINDOW))) {
+            } else if (evt.getPropertyName().equals(VSDManagerFrame.CLOSE_WINDOW)) {
                 // Note this assumes there is only one VSDManagerFrame open at a time.
                 shutdownDecoders();
                 if (managerFrame != null) {
-                    managerFrame.dispose();
                     managerFrame = null;
                 }
             }
@@ -700,38 +637,62 @@ public class VSDecoderManager implements PropertyChangeListener {
                 // Need to decide which reporter it is, so we can use different methods
                 // to extract the address and the location.
                 if ((Integer) event.getNewValue() == Block.OCCUPIED) {
-                    // Get this Block's Reporter's current/last report value.  need to fix this - it could be
-                    /// an idtag type reporter.
+                    // Is there a Block's Reporter?
                     if (blk.getReporter() == null) {
                         log.debug("Block {} has no reporter!  Skipping state-type report", blk.getSystemName());
                         return;
                     }
+                    // Get this Block's Reporter's current/last report value
                     if (blk.isReportingCurrent()) {
                         Object currentReport = blk.getReporter().getCurrentReport();
                         if ( currentReport != null) {
-                           if(currentReport instanceof jmri.Reportable) {
-                              repVal = ((jmri.Reportable)currentReport).toReportString();
-                           } else {
-                              repVal = currentReport.toString();
-                           }
+                            if(currentReport instanceof jmri.Reportable) {
+                                repVal = ((jmri.Reportable)currentReport).toReportString();
+                            } else {
+                                repVal = currentReport.toString();
+                            }
                         }
                     } else {
                         Object lastReport = blk.getReporter().getLastReport();
                         if ( lastReport != null) {
-                           if(lastReport instanceof jmri.Reportable) {
-                              repVal = ((jmri.Reportable)lastReport).toReportString();
-                           } else {
-                              repVal = lastReport.toString();
-                           }
+                            if(lastReport instanceof jmri.Reportable) {
+                                repVal = ((jmri.Reportable)lastReport).toReportString();
+                            } else {
+                                repVal = lastReport.toString();
+                            }
                         }
                     }
                 } else {
                     log.debug("Ignoring report. not an OCCUPIED event.");
                     return;
                 }
-            } else if (eventName.equals("value")) {
+            } else if (eventName.equals("value")) { // NOI18N
+                if (event.getNewValue() == null ) {
+                    return; // block value was cleared, nothing to do
+                }
                 if (event.getNewValue() instanceof String) {
                     repVal = event.getNewValue().toString();
+                    // Is the new event value a valid VSDecoder address? If OK, set the sound position
+                    if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
+                        int locoAddress = Integer.parseInt(repVal);
+                        if (decoderInBlock.containsKey(locoAddress)) {
+                            if (blk.getPhysicalLocation() == null) {
+                                log.warn("Block {} has no physical location!", blk.getSystemName());
+                            } else {
+                                decoderInBlock.get(locoAddress).savedSound.setTunnel(blk.getPhysicalLocation().isTunnel()); // tunnel status
+                                decoderInBlock.get(locoAddress).setPosition(blk.getPhysicalLocation());
+                                log.debug("Block value: {}, physical location: {}", event.getNewValue(), blk.getPhysicalLocation());
+                            }
+                        } else {
+                            log.warn("Block value \"{}\" is not a valid VSDecoder address", event.getNewValue());
+                        }
+                        return;
+                    }
+                } else if (event.getNewValue() instanceof jmri.jmrix.loconet.TranspondingTag) {
+                    repVal = ((jmri.Reportable) event.getNewValue()).toReportString();
+                    log.info("Block Value TranspondingTag {} found", repVal);
+                } else {
+                    log.warn("Block Value \"{}\" found - unsupported object!", event.getNewValue());
                 }
                 // Else it will still be null from the declaration/assignment above.
             } else {
@@ -740,7 +701,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             }  // Type of eventName.
             // Set the decoder's position.
             if (repVal == null) {
-                log.warn("Report from Block {} is null!", blk.getUserName());
+                log.warn("Report from Block {} is null!", blk.getSystemName());
             }
             if (blk.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER) {
                 setDecoderPositionByAddr(blk.getLocoAddress(repVal), blk.getPhysicalLocation());
@@ -766,6 +727,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 if (event.getNewValue() instanceof jmri.jmrix.loconet.TranspondingTag) {
                     String repVal = ((jmri.Reportable) event.getNewValue()).toReportString();
                     if (arp.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER) {
+                        decoderInBlock.get(arp.getLocoAddress(repVal).getNumber()).savedSound.setTunnel(arp.getPhysicalLocation(repVal).isTunnel());
                         setDecoderPositionByAddr(arp.getLocoAddress(repVal), arp.getPhysicalLocation(repVal));
                     }
                 } else {
@@ -773,6 +735,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     // Dcc4Pc, Ecos, 
                     // Assume Reporter "arp" is the most recent seen location
                     IdTag newValue = (IdTag) event.getNewValue();
+                    decoderInBlock.get(arp.getLocoAddress(newValue.getTagID()).getNumber()).savedSound.setTunnel(arp.getPhysicalLocation(null).isTunnel());
                     setDecoderPositionByAddr(arp.getLocoAddress(newValue.getTagID()), arp.getPhysicalLocation(null));
                 }
             } else {
@@ -848,6 +811,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                                         if (old_rp == -1 && d.startPos != null) { // Special case start position: first choice; if found, overwrite it.
                                             posToSet = d.startPos;
                                         }
+                                        d.savedSound.setTunnel(blockPositionlists.get(d.setup_index).get(new_rp_index).isTunnel()); // tunnel status
                                         log.debug("position to set: {}", posToSet);  
                                         setDecoderPositionByAddr(xa, posToSet); // Sound set position
                                         stopSoundPositionTimer(d);
@@ -937,7 +901,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     public void loadProfiles(VSDFile vf) {
         Element root;
         String pname;
-        if ((root = vf.getRoot()) == null) {
+        root = vf.getRoot();
+        if (root == null) {
             return;
         }
 
@@ -946,10 +911,13 @@ public class VSDecoderManager implements PropertyChangeListener {
         java.util.Iterator<Element> i = root.getChildren("profile").iterator(); // NOI18N
         while (i.hasNext()) {
             Element e = i.next();
-            log.debug(e.toString());
-            if ((pname = e.getAttributeValue("name")) != null) { // NOI18N
+            pname = e.getAttributeValue("name");
+            log.debug("Profile name: {}", pname);
+            if ((pname != null) && !(pname.isEmpty())) { // NOI18N
                 profiletable.put(pname, vf.getName());
                 new_entries.add(pname);
+            } else {
+                log.error("Profile name is not valid");
             }
         }
 
@@ -1007,7 +975,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 int dadr_block = locoInBlock[dadr_index][block]; // get block number for current decoder/loco
                 if (reporterlists.get(d.setup_index).contains(dadr_block)) {
                     int dadr_block_index = reporterlists.get(d.setup_index).indexOf(dadr_block);
-                    newPosition = new PhysicalLocation(0.0f, 0.0f, 0.0f, is_tunnel);
+                    newPosition = new PhysicalLocation(0.0f, 0.0f, 0.0f, d.savedSound.getTunnel());
                     // calculate current speed in meter/second; support topspeed forward or reverse
                     // JMRI speed is 0-1; currentspeed is speed after speedCurve(); multiply with topspeed (MPH); convert MPH to meter/second; regard layout scale
                     speed_ms = d.currentspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale;
@@ -1043,9 +1011,10 @@ public class VSDecoderManager implements PropertyChangeListener {
                             newPosition.y =  rotate_ypos + (float) Math.sin(anglePos) * (d.lastPos.x - rotate_xpos) + (float) Math.cos(anglePos) * (d.lastPos.y - rotate_ypos);
                             newPosition.z = 0.0f;
                         }
+                        log.debug("position to set: {}", newPosition);
                         d.setPosition(newPosition); // Sound set position
                         log.debug(" distance rest to go in block: {} of {} cm", Math.round(distance_rest_new * 100.0f),
-                            Math.round(blockParameter[d.setup_index][dadr_block_index][length] * 100.0f));
+                        Math.round(blockParameter[d.setup_index][dadr_block_index][length] * 100.0f));
                         locoInBlock[dadr_index][distance_to_go] = Math.round(distance_rest_new * 100.0f); // Save distance rest in cm
                         log.debug(" saved distance rest: {}", locoInBlock[dadr_index][distance_to_go]);
                     } else {

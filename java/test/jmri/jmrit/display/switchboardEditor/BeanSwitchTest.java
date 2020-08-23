@@ -1,7 +1,12 @@
 package jmri.jmrit.display.switchboardEditor;
 
-import org.junit.*;
+import jmri.jmrit.display.EditorFrameOperator;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import java.awt.GraphicsEnvironment;
+
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -18,23 +23,24 @@ public class BeanSwitchTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             swe = new SwitchboardEditor("Bean Switch Test Layout");
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         if (swe != null) {
-            jmri.util.JUnitUtil.dispose(swe);
+            new EditorFrameOperator(swe.getTargetFrame()).closeFrameWithConfirmations();
             swe = null;
         }
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
 
 }

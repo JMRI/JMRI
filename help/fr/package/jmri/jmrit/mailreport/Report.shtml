@@ -22,10 +22,10 @@
   <!-- Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04
 --> <!-- Style -->
    <!-- /Style -->
-   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+   <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: T&eacute;l&eacute;chargement des Informations de
       D&eacute;bogage</h1>L'&eacute;l&eacute;ment
       "Transf&eacute;rer les informations de d&eacute;bogage" dans
@@ -70,7 +70,7 @@
       <p>Enfin,appuyer sur envoyer. Si tout va bien, la
       fen&ecirc;tre va se fermer quelques secondes apr&egrave;s que
       l'information ait &eacute;t&eacute; envoy&eacute;.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

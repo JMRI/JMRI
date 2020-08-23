@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * address; more than one Turnout object pointing to a single device is not
  * allowed.
  *
- * Description: extend jmri.AbstractTurnout for powerline serial layouts
+ * extend jmri.AbstractTurnout for powerline serial layouts
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
@@ -58,7 +58,7 @@ public class SerialTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -73,7 +73,7 @@ public class SerialTurnout extends AbstractTurnout {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton");
+            log.debug("Send command to {} Pushbutton", _pushButtonLockout ? "Lock" : "Unlock");
         }
     }
 
@@ -83,7 +83,7 @@ public class SerialTurnout extends AbstractTurnout {
 
     protected void sendMessage(boolean closed) {
         if (log.isDebugEnabled()) {
-            log.debug("set closed " + closed + " house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode);
+            log.debug("set closed {} house {} device {}", closed, X10Sequence.houseCodeToText(housecode), devicecode);
         }
         // create output sequence of address, then function
         X10Sequence out = new X10Sequence();

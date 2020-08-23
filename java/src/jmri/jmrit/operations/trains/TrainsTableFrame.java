@@ -5,21 +5,12 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -28,29 +19,14 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.setup.AutoSave;
-import jmri.jmrit.operations.setup.BuildReportOptionAction;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OptionAction;
-import jmri.jmrit.operations.setup.PrintOptionAction;
-import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.setup.*;
 import jmri.jmrit.operations.trains.excel.SetupExcelProgramFrameAction;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.jmrit.operations.trains.schedules.TrainsScheduleAction;
-import jmri.jmrit.operations.trains.tools.ChangeDepartureTimesAction;
-import jmri.jmrit.operations.trains.tools.ExportTrainRosterAction;
-import jmri.jmrit.operations.trains.tools.PrintSavedTrainManifestAction;
-import jmri.jmrit.operations.trains.tools.PrintTrainsAction;
-import jmri.jmrit.operations.trains.tools.TrainByCarTypeAction;
-import jmri.jmrit.operations.trains.tools.TrainCopyAction;
-import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
-import jmri.jmrit.operations.trains.tools.TrainsScriptAction;
-import jmri.jmrit.operations.trains.tools.TrainsTableSetColorAction;
+import jmri.jmrit.operations.trains.tools.*;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing the train roster for operations.
@@ -270,24 +246,26 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new OptionAction(Bundle.getMessage("TitleOptions")));
+        toolMenu.add(new OptionAction());
         toolMenu.add(new PrintOptionAction());
         toolMenu.add(new BuildReportOptionAction());
-        toolMenu.add(new TrainsByCarTypeAction(Bundle.getMessage("TitleModifyTrains")));
-        toolMenu.add(new TrainByCarTypeAction(Bundle.getMessage("MenuItemShowCarTypes"), null));
-        toolMenu.add(new ChangeDepartureTimesAction(Bundle.getMessage("TitleChangeDepartureTime")));
+        toolMenu.add(new TrainsByCarTypeAction());
+        toolMenu.add(new TrainByCarTypeAction(null));
+        toolMenu.add(new ChangeDepartureTimesAction());
         toolMenu.add(new TrainsTableSetColorAction());
-        toolMenu.add(new TrainsScheduleAction(Bundle.getMessage("TitleScheduleTrains")));
+        toolMenu.add(new TrainsScheduleAction());
         toolMenu.add(new AutomationsTableFrameAction());
-        toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy")));
-        toolMenu.add(new TrainsScriptAction(Bundle.getMessage("MenuItemScripts"), this));
-        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false, null));
-        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true, null));
-        toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
+        toolMenu.add(new TrainCopyAction());
+        toolMenu.add(new TrainsScriptAction(this));
+        toolMenu.add(new PrintSavedTrainManifestAction(false, null));
+        toolMenu.add(new PrintSavedTrainManifestAction(true, null));
+        toolMenu.add(new SetupExcelProgramFrameAction());
         toolMenu.add(new ExportTrainRosterAction());
+        toolMenu.add(new ExportTimetableAction());
+        toolMenu.add(new ExportTrainLineupsAction());
         toolMenu.addSeparator();
-        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), false, this));
-        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), true, this));
+        toolMenu.add(new PrintTrainsAction(false, this));
+        toolMenu.add(new PrintTrainsAction(true, this));
 
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());
@@ -304,12 +282,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         InstanceManager.getDefault(TrainScheduleManager.class).addPropertyChangeListener(this);
         // listen for changes in the number of trains
         trainManager.addPropertyChangeListener(this);
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
         // listen for location switch list changes
         addPropertyChangeLocations();
 
         // auto save
-        new AutoSave().start();
+        AutoSave.start();
     }
 
     @Override
@@ -564,7 +542,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         trainManager.runShutDownScripts();
         trainManager.removePropertyChangeListener(this);
         InstanceManager.getDefault(TrainScheduleManager.class).removePropertyChangeListener(this);
-        Setup.removePropertyChangeListener(this);
+        Setup.getDefault().removePropertyChangeListener(this);
         removePropertyChangeLocations();
         setModifiedFlag(false);
         InstanceManager.getOptionalDefault(JTablePersistenceManager.class).ifPresent(tpm -> {

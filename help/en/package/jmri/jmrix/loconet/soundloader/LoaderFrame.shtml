@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Sound Loader</h1>Digitrax sound decoders are loaded with
       "sound projects", stored in "Sound Project" (.spj) files.
       Those contain a number of "sound fragments" in .wav format,
@@ -127,7 +128,7 @@
       to try out your new sounds via the PR2. JMRI takes care of
       converting the PR2/PR3 from a programmer/loader into a low
       power command station to run the locomotive.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

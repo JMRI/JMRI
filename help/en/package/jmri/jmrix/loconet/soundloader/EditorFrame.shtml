@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>SPJ Sound File Editor</h1>
       <p>Digitrax sound decoders are
       loaded with "sound projects", stored in "Sound Project"
@@ -152,7 +153,7 @@
       <p>The <a href="../sdfeditor/EditorFrame.shtml">SDF
       Editor</a>, referenced above, lets you edit the SDF program
       within a SPJ file.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

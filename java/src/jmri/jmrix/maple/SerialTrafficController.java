@@ -75,6 +75,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     /**
      * Public method to set up for initialization of a Serial node.
+     * @param node unused.
      */
     public void initializeSerialNode(SerialNode node) {
         // dummy routine - Maple System devices do not require initialization

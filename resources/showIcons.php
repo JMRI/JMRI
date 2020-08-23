@@ -47,7 +47,7 @@ function showSubdirs() {
     
         sort($list);
         foreach ($list as $entry) {
-            echo '<img src="http://jmri.org/icons/folder.gif"> <a href="'.$entry.'">'.$entry.'</a></td><p>'."\n";
+            echo '<img src="https://www.jmri.org/icons/folder.gif"> <a href="'.$entry.'">'.$entry.'</a></td><p>'."\n";
         }
     }
 }

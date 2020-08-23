@@ -453,7 +453,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
         // Wait for throttle be correct and then run the profile
         throttleState = 0;
-        new Thread(new Runnable() {
+        jmri.util.ThreadingUtil.newThread(new Runnable() {
                 @Override
                 public void run() {
                     int count = 0;
@@ -467,7 +467,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                             setButtonStates(true);
                             return;
                         }
-                        trys++;
+                        count++;
                     }
                     log.debug("Run");
                     if (throttleState != 1) {
@@ -630,21 +630,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFailThrottleRequest"));
         log.error("Throttle request for {} failed because {}", address, reason);
-        setButtonStates(true);
-        throttleState = -1;
-    }
-    
-    /**
-     * Profiling on a stolen or shared throttle is invalid
-     * <p>
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoStealing"));
-        InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
         setButtonStates(true);
         throttleState = -1;
     }

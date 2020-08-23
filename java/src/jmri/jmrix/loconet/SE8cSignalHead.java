@@ -104,7 +104,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
                     closed = true;
                     break;
                 default:
-                    log.error("Invalid state request: " + mAppearance);
+                    log.error("Invalid state request: {}", mAppearance);
                     return;
             }
         }
@@ -224,6 +224,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
     @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
+        super.dispose();
     }
 
     // data members

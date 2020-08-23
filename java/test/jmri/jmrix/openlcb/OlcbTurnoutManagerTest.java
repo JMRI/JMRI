@@ -2,13 +2,15 @@ package jmri.jmrix.openlcb;
 
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.openlcb.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnoutManager class.
  *
- * @author	Bob Jacobsen Copyright 2008, 2010, 2011
+ * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
@@ -33,8 +35,8 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // create
         Turnout t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
@@ -50,23 +52,22 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // create
         Turnout t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         l = new OlcbTurnoutManager(memo);
     }
  
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
     }
 
-    @BeforeClass
+    @BeforeAll
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -89,17 +90,18 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             }
         });
     
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
     }
 
-    @AfterClass
-    public static void postClassTearDown() throws Exception {
+    @AfterAll
+    public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
-           memo.getInterface().dispose();
+            memo.getInterface().dispose();
         }
         memo = null;
         connection = null;
         nodeID = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 }

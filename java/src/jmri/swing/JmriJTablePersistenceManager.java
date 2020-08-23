@@ -257,18 +257,6 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
         return this.dirty;
     }
 
-    /**
-     * Get dirty (needs to be saved) state. Protected so that subclasses can
-     * manipulate this state.
-     *
-     * @return true if needs to be saved
-     * @deprecated since 4.9.7; use {@link #isDirty()} instead
-     */
-    @Deprecated
-    protected boolean getDirty() {
-        return this.isDirty();
-    }
-
     @Override
     public void setPaused(boolean paused) {
         boolean old = this.paused;
@@ -417,7 +405,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
      * @deprecated since 4.5.2; not to be removed; used by
      * {@link jmri.managers.configurexml.DefaultUserMessagePreferencesXml} to
      * allow tabled preferences from JMRI 4.4 and earlier to be read when a user
-     * is upgrading to a newer version; not be used elsewhere
+     * is upgrading to a newer version; not to be used elsewhere
      */
     @Deprecated
     public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {

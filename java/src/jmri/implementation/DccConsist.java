@@ -51,7 +51,7 @@ public class DccConsist implements Consist, ProgListener {
     protected DccLocoAddress consistAddress = null;
     protected String consistID = null;
     // data member to hold the throttle listener objects
-    final private ArrayList<ConsistListener> listeners;
+    private final ArrayList<ConsistListener> listeners;
 
 
     private AddressedProgrammerManager opsProgManager = null;
@@ -88,13 +88,12 @@ public class DccConsist implements Consist, ProgListener {
     @Override
     public void dispose() {
         if (consistList == null) {
-            // already disposed;
             return;
         }
         for (int i = (consistList.size() - 1); i >= 0; i--) {
             DccLocoAddress loco = consistList.get(i);
             if (log.isDebugEnabled()) {
-                log.debug("Deleting Locomotive: " + loco.toString());
+                log.debug("Deleting Locomotive: {}",loco);
             }
             try {
                 remove(loco);
@@ -114,9 +113,13 @@ public class DccConsist implements Consist, ProgListener {
         if (consist_type == ADVANCED_CONSIST) {
             consistType = consist_type;
         } else {
-            log.error("Consist Type Not Supported");
-            notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.NotImplemented);
+            notifyUnsupportedConsistType();
         }
+    }
+
+    private void notifyUnsupportedConsistType(){
+        log.error("Consist Type Not Supported");
+        notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.NotImplemented);
     }
 
     // get the Consist Type
@@ -167,11 +170,9 @@ public class DccConsist implements Consist, ProgListener {
     @Override
     public boolean contains(DccLocoAddress address) {
         if (consistType == ADVANCED_CONSIST) {
-            //String Address = Integer.toString(address);
             return (consistList.contains(address));
         } else {
-            log.error("Consist Type Not Supported");
-            notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.NotImplemented);
+            notifyUnsupportedConsistType();
         }
         return false;
     }
@@ -181,12 +182,10 @@ public class DccConsist implements Consist, ProgListener {
     @Override
     public boolean getLocoDirection(DccLocoAddress address) {
         if (consistType == ADVANCED_CONSIST) {
-            //String Address= Integer.toString(address);
             Boolean Direction = consistDir.get(address);
             return (Direction);
         } else {
-            log.error("Consist Type Not Supported");
-            notifyConsistListeners(address, ConsistListener.NotImplemented);
+            notifyUnsupportedConsistType();
         }
         return false;
     }
@@ -200,7 +199,6 @@ public class DccConsist implements Consist, ProgListener {
     @Override
     public void add(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (consistType == ADVANCED_CONSIST) {
-            //String Address= Integer.toString(LocoAddress);
             Boolean Direction = directionNormal;
             if (!(consistList.contains(LocoAddress))) {
                 consistList.add(LocoAddress);
@@ -210,8 +208,7 @@ public class DccConsist implements Consist, ProgListener {
             //set the value in the roster entry for CV19
             setRosterEntryCVValue(LocoAddress);
         } else {
-            log.error("Consist Type Not Supported");
-            notifyConsistListeners(LocoAddress, ConsistListener.NotImplemented);
+            notifyUnsupportedConsistType();
         }
     }
 
@@ -226,15 +223,13 @@ public class DccConsist implements Consist, ProgListener {
     @Override
     public void restore(DccLocoAddress LocoAddress, boolean directionNormal) {
         if (consistType == ADVANCED_CONSIST) {
-            //String Address= Integer.toString(LocoAddress);
             Boolean Direction = directionNormal;
             if (!(consistList.contains(LocoAddress))) {
                 consistList.add(LocoAddress);
             }
             consistDir.put(LocoAddress, Direction);
         } else {
-            log.error("Consist Type Not Supported");
-            notifyConsistListeners(LocoAddress, ConsistListener.NotImplemented);
+            notifyUnsupportedConsistType();
         }
     }
 
@@ -247,15 +242,13 @@ public class DccConsist implements Consist, ProgListener {
         if (consistType == ADVANCED_CONSIST) {
             //reset the value in the roster entry for CV19
             resetRosterEntryCVValue(LocoAddress);
-            //String Address= Integer.toString(LocoAddress);
             consistDir.remove(LocoAddress);
             consistList.remove(LocoAddress);
             consistPosition.remove(LocoAddress);
             consistRoster.remove(LocoAddress);
             removeFromAdvancedConsist(LocoAddress);
         } else {
-            log.error("Consist Type Not Supported");
-            notifyConsistListeners(LocoAddress, ConsistListener.NotImplemented);
+            notifyUnsupportedConsistType();
         }
     }
 
@@ -430,15 +423,15 @@ public class DccConsist implements Consist, ProgListener {
            return;
         }
         CvTableModel  cvTable = new CvTableModel(null, null);  // will hold CV objects
-        VariableTableModel varTable = new VariableTableModel(null,new String[]{"Name","Value"},cvTable);
-        entry.readFile();  // read, but don’t yet process
+        VariableTableModel varTable = new VariableTableModel(null, new String[]{"Name", "Value"}, cvTable); // NOI18N
+        entry.readFile();  // read, but don't yet process
 
         // load from decoder file
         loadDecoderFromLoco(entry,varTable);
 
         entry.loadCvModel(varTable, cvTable);
         CvValue cv19Value = cvTable.getCvByNumber("19");
-        cv19Value.setValue((value & 0xff) | (direction?0x00:0x80 ));
+        cv19Value.setValue((value & 0xff) | (direction.booleanValue()?0x00:0x80 ));
 
         entry.writeFile(cvTable,varTable);
    }
@@ -449,29 +442,29 @@ public class DccConsist implements Consist, ProgListener {
         String decoderModel = r.getDecoderModel();
         String decoderFamily = r.getDecoderFamily();
         if (log.isDebugEnabled()) {
-            log.debug("selected loco uses decoder " + decoderFamily + " " + decoderModel);
+            log.debug("selected loco uses decoder {} {}",decoderFamily,decoderModel);
         }
         // locate a decoder like that.
         List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         if (log.isDebugEnabled()) {
-            log.debug("found " + l.size() + " matches");
+            log.debug("found {} matches",l.size());
         }
-        if (l.size() == 0) {
-            log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
+        if (l.isEmpty()) {
+            log.debug("Loco uses {} {} decoder, but no such decoder defined",decoderFamily,decoderModel );
             // fall back to use just the decoder name, not family
             l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
             if (log.isDebugEnabled()) {
-                log.debug("found " + l.size() + " matches without family key");
+                log.debug("found {} matches without family key",l.size());
             }
         }
-        if (l.size() > 0) {
+        if (!l.isEmpty()) {
             DecoderFile d = l.get(0);
             loadDecoderFile(d, r, varTable);
         } else {
             if (decoderModel.equals("")) {
                 log.debug("blank decoderModel requested, so nothing loaded");
             } else {
-                log.warn("no matching \"" + decoderModel + "\" decoder found for loco, no decoder info loaded");
+                log.warn("no matching \"{}\" decoder found for loco, no decoder info loaded",decoderModel );
             }
         }
     }
@@ -482,8 +475,7 @@ public class DccConsist implements Consist, ProgListener {
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("loadDecoderFile from " + DecoderFile.fileLocation
-                    + " " + df.getFileName());
+            log.debug("loadDecoderFile from {} {}", DecoderFile.fileLocation, df.getFileName());
         }
 
         Element decoderRoot = null;
@@ -491,16 +483,12 @@ public class DccConsist implements Consist, ProgListener {
         try {
             decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFileName());
         } catch (JDOMException | IOException e) {
-            log.error("Exception while loading decoder XML file: " + df.getFileName(), e);
+            log.error("Exception while loading decoder XML file: {}", df.getFileName(), e);
         }
         // load variables from decoder tree
         df.getProductID();
         if(decoderRoot!=null) {
            df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
-
-           // load reset from decoder tree
-           //df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
-
            // load function names
            re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"));
         }
@@ -623,7 +611,7 @@ public class DccConsist implements Consist, ProgListener {
                 ErrorCode,
                 v.size(), LocoAddress);
         // forward to all listeners
-        v.forEach((client) -> {
+        v.forEach(client -> {
             client.consistReply(LocoAddress, ErrorCode);
         });
     }
@@ -636,5 +624,6 @@ public class DccConsist implements Consist, ProgListener {
         notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.OPERATION_SUCCESS);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccConsist.class);
+    private static final  Logger log = LoggerFactory.getLogger(DccConsist.class);
+
 }

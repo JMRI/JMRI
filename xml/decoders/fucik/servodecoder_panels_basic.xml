@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2020 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>Basic</name>
+    <name xml:lang="cs">Základní</name>
+    <column>
+        <row>
+            <column>
+                <qualifier>
+                    <variableref>Decoder Version</variableref>
+                    <relation>ne</relation>
+                    <value>34</value>
+                </qualifier>
+                <label>
+                    <text><![CDATA[<html>
+                        The decoder occupies several DCC addresses, each for single output (servo). <br/>
+                        The group address is used to compute the first handled DCC address, using the <br/> 
+                        formula <br/><br/>
+                        &nbsp;&nbsp;&nbsp;<font color="blue">(Group-Address - 1) * Number-Outputs + 1</font> <br/><br/>
+                        Setting "2" for a 4-output decoder will handle addresses 5-8. Setting 5 for <br/>
+                        2-output decoder will handle DCC addresses 11,12.<br/>
+                        Going in the other direction, if youv want to set up a 4-servo decoder to handle specific DCC addresses,<br/>
+                        you need to align the address block, so the <b>first address</b> is a multiply of 4 (number of outputs)<br/>
+                        plus one. For 4-servo decoder, you can start at DCC addresses 5, 9, 13, ... then the<br/>
+                        Group Address should be computed as<br/><br/>
+                        &nbsp;&nbsp;&nbsp;<font color="blue">(Starting DCC Address - 1) / Number-Outputs</font> <br/><br/>
+                        If a decoder (4 servos) should handle DCC addresses 17-20, its Group Address should be set to 4.<br/>
+                    </html>]]></text>
+                    <text xml:lang="cs"><![CDATA[<html>
+                        Dekodér obsluhuje několik po sobě jdoucích DCC adres, pro každý výstup jednu.<br/>
+                        Skupinová adresa se použije k výpočtu obsluhovaných adres příslušenství pomocí vzorce:<br/><br/>
+                        &nbsp;&nbsp;&nbsp;<font color="blue">(Skupinová-adresa - 1) * Počet-výstupů + 1</font> <br/><br/>
+                        Například nastavení "2" pro dekodér se 4 servy bude obsluhovat příslušenství s DCC adresami 5-8.<br/>
+                        Nastavení "5" pro dekodér pro 2 serva obslouží DCC adresy 11 a 12.<br/>
+                        Opačně, chcete-li nastavit dekodér pro 4 serva, aby obsluhoval konkrétní DCC adresy, musíte nejprve<br/>
+                        zvolit adresy tak, aby <b>první DCC adresa</b> byla násobkem 4 plus 1. Pro 4-servový dekodér mohou <br/>
+                        tedy obsluhované adresy začínat na 5, 9, 13, ... Skupinovou adresu pak spočítáte jako<br/><br/>
+                        &nbsp;&nbsp;&nbsp;<font color="blue">(Skupinová-adresa - 1) / Počet výstupů</font> <br/><br/>
+                        Tedy má-li dekodér (4 serva) obsluhovat adresy 17-20, musí být skupinová adresa 4.
+                    </html>]]></text>
+                </label>
+                <label>
+                    <text>
+                        
+                    </text>
+                </label>
+                <separator/>
+                <label>
+                    <text>
+                        
+                    </text>
+                </label>
+            </column>
+        </row>
+        <display item="Short Address" />
+        <display item="Save positions" />
+        <display item="PulsesReached" />
+    </column>
+</pane>

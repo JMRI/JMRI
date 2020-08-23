@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.SystemConnectionMemo;
 
 /**
  * Manager for SystemConnectionMemos. Manages SystemConnectionMemos and

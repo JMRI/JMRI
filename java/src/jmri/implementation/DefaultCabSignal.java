@@ -107,7 +107,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
             if ( blockVal.getValue() != null ) {
                 Object val = blockVal.getValue();
                 log.debug("CabSignal for {} searching block {} value {}",
-                           addr,blockVal,val.toString());
+                           addr,blockVal,val);
                 if (val instanceof jmri.AddressedIdTag) {
                     if( ((jmri.AddressedIdTag)val).getLocoAddress().toString().equals( 
                          addr.toString())){
@@ -186,7 +186,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
                     blockTest.setDirection(dirtoTest);
                     return blockTest;
                 }
-                if (((fromdirection & dirftTest)) == 0) { // less reliable
+                if ((fromdirection & dirftTest) == 0) { // less reliable
                     blockTest.setDirection(dirtoTest);
                     return blockTest;
                 }
@@ -277,6 +277,8 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      * aspect for this address
      */
     protected void forwardAspectToLayout(){
+        // this method is to be over-written by subclasses that actually
+        // talk to layout hardware.
     }
 
 
@@ -332,6 +334,8 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      * for this address
      */
     protected void resetLayoutCabSignal(){
+        // this method is to be over-written by subclasses that actually
+        // talk to layout hardware.
     }
 
 
@@ -382,7 +386,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultCabSignal.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultCabSignal.class);
 
 
 }

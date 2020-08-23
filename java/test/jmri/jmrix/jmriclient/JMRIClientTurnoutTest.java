@@ -1,13 +1,14 @@
 package jmri.jmrix.jmriclient;
 
-import org.junit.*;
-import jmri.Turnout;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import jmri.util.JUnitUtil;
 
 /**
  * Tests for the jmri.jmrix.jmriclient.JMRIClientTurnout class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
 public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase  {
@@ -41,9 +42,8 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -54,8 +54,9 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
         t = new JMRIClientTurnout(3, new JMRIClientSystemConnectionMemo(jcins));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
         jcins = null;

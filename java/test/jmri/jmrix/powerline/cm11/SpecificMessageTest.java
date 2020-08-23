@@ -1,13 +1,13 @@
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialMessage;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the cm11.SpecficMessage class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
  */
 public class SpecificMessageTest {
 

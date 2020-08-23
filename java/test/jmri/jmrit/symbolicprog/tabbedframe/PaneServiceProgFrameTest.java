@@ -1,17 +1,18 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
+
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -28,11 +29,10 @@ public class PaneServiceProgFrameTest {
         RosterEntry re = new RosterEntry();
         PaneServiceProgFrame t = new PaneServiceProgFrame(df, re, "test frame", "programmers/Basic.xml", p);
         Assert.assertNotNull("exists", t);
-        t.dispose();
+        t.dispatchEvent(new WindowEvent(t, WindowEvent.WINDOW_CLOSING));
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -41,7 +41,7 @@ public class PaneServiceProgFrameTest {
         setupDoc();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

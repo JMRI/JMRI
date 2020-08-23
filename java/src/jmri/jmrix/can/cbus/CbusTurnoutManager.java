@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import java.beans.PropertyChangeEvent;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
@@ -24,6 +25,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Ctor using a given system connection memo
+     * @param memo System Connection
      */
     public CbusTurnoutManager(CanSystemConnectionMemo memo) {
         super(memo);
@@ -33,11 +35,12 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -50,11 +53,11 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return result;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
-    protected Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
@@ -71,19 +74,19 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // first, check validity
         try {
             validateAddressFormat(curAddress);
@@ -95,11 +98,11 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + newAddress;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         String testAddr = curAddress;
         // make sure starting name is valid
         try {
@@ -134,17 +137,22 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         validateSystemNamePrefix(name, locale);
-        validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+        try {
+            validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+        } catch (IllegalArgumentException ex) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCBUS", ex.getMessage());
+        }
         return name;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         String addr;
         try {
             addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
@@ -184,6 +192,14 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddOutputEntryToolTip");
+    }
+    
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        super.propertyChange(e);
+        if (e.getPropertyName().equals("inverted")) {
+            firePropertyChange("beaninverted", null, null); //IN18N
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class);

@@ -127,8 +127,6 @@ from thread import start_new_thread
 
 # JMRI imports
 
-from apps import Apps
-
 from jmri import Block
 from jmri import DccThrottle
 from jmri import InstanceManager
@@ -144,6 +142,7 @@ from jmri.jmrit import XmlFile
 
 from jmri.jmrit.consisttool import ConsistToolFrame
 
+# is this next import necessary?
 from jmri.implementation import AbstractShutDownTask
 
 # from jmri.jmrit.operations.locations import LocationManager
@@ -182,7 +181,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     # Retrieve DOUBLE_XOVER constant, depending on JMRI Version
     # (LayoutTurnout class was moved to a new package, starting with JMRI 2.9.3)
     try :
-        DOUBLE_XOVER = jmri.jmrit.display.layoutEditor.LayoutTurnout.DOUBLE_XOVER
+        DOUBLE_XOVER = jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType.DOUBLE_XOVER
     except :
         DOUBLE_XOVER = jmri.jmrit.display.LayoutTurnout.DOUBLE_XOVER
 

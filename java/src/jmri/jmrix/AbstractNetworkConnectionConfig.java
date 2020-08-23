@@ -160,7 +160,29 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             final String item = entry.getKey();
             if (entry.getValue().getComponent() instanceof JComboBox) {
                 ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
+                    log.debug("option combo box changed to {}", options.get(item).getItem());
                     adapter.setOptionState(item, options.get(item).getItem());
+                });
+            } else if (entry.getValue().getComponent() instanceof JTextField) {
+                // listen for enter
+                ((JTextField) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
+                    log.debug("option text field changed to {}", options.get(item).getItem());
+                    adapter.setOptionState(item, options.get(item).getItem());
+                });
+                // listen for key press so you don't have to hit enter
+                ((JTextField) entry.getValue().getComponent()).addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyPressed(KeyEvent keyEvent) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent keyEvent) {
+                        adapter.setOptionState(item, options.get(item).getItem());
+                    }
+
+                    @Override
+                    public void keyTyped(KeyEvent keyEvent) {
+                    }
                 });
             }
         }
@@ -298,13 +320,19 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             String[] optionsAvailable = adapter.getOptions();
             options.clear();
             for (String i : optionsAvailable) {
-                JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
-                opt.setSelectedItem(adapter.getOptionState(i));
+                if (! adapter.isOptionTypeText(i) ) {
+                    JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
+                    opt.setSelectedItem(adapter.getOptionState(i));
                 
-                // check that it worked
-                checkOptionValueValidity(i, opt);
+                    // check that it worked
+                    checkOptionValueValidity(i, opt);
                 
-                options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
+                    options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
+                } else {
+                    JTextField opt = new JTextField(15);
+                    opt.setText(adapter.getOptionState(i));
+                    options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
+                }
             }
         }
 

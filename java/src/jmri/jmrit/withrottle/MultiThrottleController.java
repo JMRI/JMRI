@@ -1,12 +1,8 @@
 package jmri.jmrit.withrottle;
 
 import java.beans.PropertyChangeEvent;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import jmri.LocoAddress;
-import jmri.SpeedStepMode;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
+
+import jmri.*;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +69,7 @@ public class MultiThrottleController extends ThrottleController {
                 listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("SpeedSteps")) {
+        if (eventName.matches(Throttle.SPEEDSTEPS)) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append("s");
             message.append(encodeSpeedStepMode((SpeedStepMode)event.getNewValue()));
@@ -81,7 +77,7 @@ public class MultiThrottleController extends ThrottleController {
                 listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("IsForward")) {
+        if (eventName.matches(Throttle.ISFORWARD)) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append("R");
             message.append((Boolean) event.getNewValue() ? "1" : "0");
@@ -89,7 +85,7 @@ public class MultiThrottleController extends ThrottleController {
                listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("SpeedSetting")) {
+        if (eventName.matches(Throttle.SPEEDSETTING)) {
             float currentSpeed = ((Float) event.getNewValue()).floatValue();
             log.debug("Speed Setting: {} head of queue {}",currentSpeed, lastSentSpeed.peek());
             if(lastSentSpeed.isEmpty()) { 
@@ -134,29 +130,18 @@ public class MultiThrottleController extends ThrottleController {
      * This replaces the previous method of sending a string of function states,
      * and now sends them individually, the same as a property change would.
      *
-     * @param t the throttle to send the staes of
+     * @param t the throttle to send the states of.
      */
     @Override
     public void sendAllFunctionStates(DccThrottle t) {
         log.debug("Sending state of all functions");
-
-        try {
-            for (int cnt = 0; cnt < 29; cnt++) {
-                Method getF = t.getClass().getMethod("getF" + cnt, (Class[]) null);
-
-                StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
-                if ((Boolean) getF.invoke(t, (Object[]) null)) {
-                    message.append("F1");
-                } else {
-                    message.append("F0");
-                }
-                message.append(cnt);
-                for (ControllerInterface listener : controllerListeners) {
-                    listener.sendPacketToDevice(message.toString());
-                }
-            }
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ea) {
-            log.warn(ea.getLocalizedMessage(), ea);
+        for (int cnt = 0; cnt < 29; cnt++) {
+            StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
+            message.append( t.getFunction(cnt) ? "F1" : "F0" );
+            message.append(cnt);
+            controllerListeners.forEach(listener -> {
+                listener.sendPacketToDevice(message.toString());
+            });
         }
     }
 
@@ -206,24 +191,13 @@ public class MultiThrottleController extends ThrottleController {
     @Override
     protected void sendAllMomentaryStates(DccThrottle t) {
         log.debug("Sending momentary state of all functions");
-
-        try {
-            for (int cnt = 0; cnt < 29; cnt++) {
-                Method getF = t.getClass().getMethod("getF" + cnt + "Momentary", (Class[]) null);
-
-                StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
-                if ((Boolean) getF.invoke(t, (Object[]) null)) {
-                    message.append("m1");
-                } else {
-                    message.append("m0");
-                }
-                message.append(cnt);
-                for (ControllerInterface listener : controllerListeners) {
-                    listener.sendPacketToDevice(message.toString());
-                }
-            }
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ea) {
-            log.warn(ea.getLocalizedMessage(), ea);
+        for (int cnt = 0; cnt < 29; cnt++) {
+            StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
+            message.append( t.getFunctionMomentary(cnt) ? "m1" : "m0" );
+            message.append(cnt);
+            controllerListeners.forEach(listener -> {
+                listener.sendPacketToDevice(message.toString());
+            });
         }
     }
 
@@ -252,16 +226,6 @@ public class MultiThrottleController extends ThrottleController {
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }
-    }
-    
-    /**
-     * {@inheritDoc}
-     * @deprecated since 4.15.7; use #notifyDecisionRequired
-     */
-    @Override
-    @Deprecated
-    public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        notifyDecisionRequired(address, DecisionType.STEAL);
     }
 
     /**

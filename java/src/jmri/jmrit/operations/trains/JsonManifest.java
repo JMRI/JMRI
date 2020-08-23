@@ -207,7 +207,7 @@ public class JsonManifest extends TrainCommon {
     private ObjectNode getTrackComments(RouteLocation routeLocation, List<Car> cars) {
         ObjectNode comments = this.mapper.createObjectNode();
         if (routeLocation.getLocation() != null) {
-            List<Track> tracks = routeLocation.getLocation().getTrackByNameList(null);
+            List<Track> tracks = routeLocation.getLocation().getTracksByNameList(null);
             for (Track track : tracks) {
                 ObjectNode jsonTrack = this.mapper.createObjectNode();
                 // any pick ups or set outs to this track?

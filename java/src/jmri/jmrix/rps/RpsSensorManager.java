@@ -1,6 +1,7 @@
 package jmri.jmrix.rps;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * System names are "RSpppp", where ppp is a CSV representation of the region.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2019
+ * @author Bob Jacobsen Copyright (C) 2007, 2019
  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
@@ -23,6 +24,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public RpsSystemConnectionMemo getMemo() {
         return (RpsSystemConnectionMemo) memo;
     }
@@ -34,17 +36,23 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     /**
-     * Create a new sensor if all checks are passed.
-     * System name is normalized to ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System Name is normalized.
+     * Assumes calling method has checked that a Sensor with this system
+     * name does not already exist.
+     *
+     * @throws IllegalArgumentException if the system name is not in a valid format
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         try {
            RpsSensor r = new RpsSensor(systemName, userName, getSystemPrefix());
            Distributor.instance().addMeasurementListener(r);
            return r;
        } catch(java.lang.StringIndexOutOfBoundsException sioe){
-         throw new IllegalArgumentException("Invalid System Name: " + systemName);
+            throw new IllegalArgumentException("Invalid System Name: " + systemName);
        }
     }
 
@@ -52,10 +60,11 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (!prefix.equals(getSystemPrefix())) {
             log.warn("prefix does not match memo.prefix");
-            return null;
+            throw new JmriException("Unable to convert " + curAddress + ", Prefix does not match");
         }
         String sys = getSystemPrefix() + typeLetter() + curAddress;
         // first, check validity
@@ -71,7 +80,8 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return getMemo().validateSystemNameFormat(name, this, locale);
     }
     
@@ -79,7 +89,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 

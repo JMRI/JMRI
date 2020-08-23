@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233;  2017-01-10-->
+<!-- Updated by Blorec Herv&#233;  2017-01-10-->
 <html lang="fr">
 <head>
   <title>JMRI: Hardware Support</title>
@@ -16,12 +16,12 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">>
-
-      <h1>JMRI: Materiel pris en Charge</h1>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h1>JMRI: Materiel pris en Charge</h1>
 
       <p>JMRI prend en charge un large &#233;ventail de "Centrale" DCC produits par 
       diff&#233;rents fournisseurs pour l'automatisation de r&#233;seaux miniatures. 
@@ -341,7 +341,7 @@
           </dt>
           <dt><a href="grapevine/index.shtml">ProTrak Grapevine</a></dt>
           <dd>
-            <p class="dl">Configurer: <A HREF="grapevine/index.shtml">n&#339;uds
+            <p class="dl">Configurer: <a href="grapevine/index.shtml">n&#339;uds
             Grapevine</a></p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
@@ -494,20 +494,20 @@
         </dl>
       </div><!-- closes .list -->
 
-      <H2>JMRI: Connexion aux centrales de commande</H2>
+      <h2>JMRI: Connexion aux centrales de commande</h2>
       <dl>
-        <dt class=left>Macintosh</dt>
+        <dt class="left">Macintosh</dt>
         <dd>
           <p><a href="MacintoshSerialPorts.shtml">Mac connecteur Mini-DIN8 </a></p>
           <p><a href="USBtoSerial.shtml">USB vers un adaptateur S&#233;rie</a></p>
         </dd>
 
-        <dt class=left>PC</dt>
+        <dt class="left">PC</dt>
         <dd>
           <p><a href="USBtoSerial.shtml">USB vers adaptateur S&#233;rie</a></p>
         </dd>
 
-        <dt class=left>Serveur Terminal</dt>
+        <dt class="left">Serveur Terminal</dt>
         <dd>
           <p><a href="TerminalServer.shtml">EasyDCC via un Serveur Terminal Lantronix</a></p>
         </dd>
@@ -516,7 +516,7 @@
 
       <h2>JMRI: Infos G&#233;n&#233;rales sur le mat&#233;riel</h2>
       <dl>
-        <dt class=left><a href="../doc/Technical/TurnoutFeedback.shtml">R&#233;troaction des aiguillages</a></dt>
+        <dt class="left"><a href="../doc/Technical/TurnoutFeedback.shtml">R&#233;troaction des aiguillages</a></dt>
         <dd>
           <p>Si votre r&#233;seau utilise un m&#233;canisme de r&#233;tro-signalisation
           pour d&#233;tecter la position actuelle des Aiguillages, par exemple
@@ -534,7 +534,7 @@
         </dd>
       </dl>
 
-<!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

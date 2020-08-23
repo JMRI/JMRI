@@ -58,7 +58,7 @@ public class LokProgImporter {
                     value = Integer.parseInt(line.substring(9, 12));
                     cvObject = cvModel.allCvMap().get(name);
                     if (cvObject == null) {
-                        log.warn("CV " + name + " was in import file, but not defined by the decoder definition");
+                        log.warn("CV {} was in import file, but not defined by the decoder definition", name);
                         cvModel.addCV(name, false, false, false);
                         cvObject = cvModel.allCvMap().get(name);
                     }
@@ -67,7 +67,7 @@ public class LokProgImporter {
                 }
             }
         } catch (IOException e) {
-            log.error("Error reading file: " + e);
+            log.error("Error reading file: {}", e);
         } finally {
             if (bufferedReader != null) {
                 bufferedReader.close();

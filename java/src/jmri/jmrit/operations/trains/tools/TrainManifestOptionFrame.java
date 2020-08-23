@@ -3,15 +3,12 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.io.File;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
@@ -19,8 +16,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainEditFrame;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of the train manifest options
@@ -123,7 +118,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
 
     private void updateLogoButtons() {
         if (_train != null) {
-            boolean flag = _train.getManifestLogoPathName().equals("");
+            boolean flag = _train.getManifestLogoPathName().isEmpty();
             addLogoButton.setVisible(flag);
             removeLogoButton.setVisible(!flag);
             logoURL.setText(_train.getManifestLogoPathName());
@@ -147,8 +142,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
             int retVal = fc.showOpenDialog(null);
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                return file;
+                return fc.getSelectedFile();
             }
         }
         return null;

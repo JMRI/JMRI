@@ -22,10 +22,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Image Index Editor</h1>This window is used to create
       an Image Index. The index may be organized according to any
       taxonomy you wish. Using it allows you to access any image
@@ -167,7 +167,7 @@
           node.</i></p>
         </li>
       </ul>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

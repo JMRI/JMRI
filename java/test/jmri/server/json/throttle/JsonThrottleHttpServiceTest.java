@@ -1,26 +1,26 @@
 package jmri.server.json.throttle;
 
+import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.server.json.JsonRequest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
- * @author Randall Wood Copyright (C) 2019	
+ * @author Randall Wood Copyright (C) 2019
  */
 public class JsonThrottleHttpServiceTest extends JsonHttpServiceTestBase<JsonThrottleHttpService> {
 
     @Test
     public void testDoGet() {
         try {
-            service.doGet(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), locale, 42);
+            service.doGet(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -31,7 +31,7 @@ public class JsonThrottleHttpServiceTest extends JsonHttpServiceTestBase<JsonThr
     @Test
     public void testDoPut() {
         try {
-            service.doPut(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), locale, 42);
+            service.doPut(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -42,7 +42,7 @@ public class JsonThrottleHttpServiceTest extends JsonHttpServiceTestBase<JsonThr
     @Test
     public void testDoPost() {
         try {
-            service.doPost(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), locale, 42);
+            service.doPost(JsonThrottle.THROTTLE, "", mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -53,7 +53,7 @@ public class JsonThrottleHttpServiceTest extends JsonHttpServiceTestBase<JsonThr
     @Test
     public void testDoList() {
         try {
-            service.doGetList(JsonThrottle.THROTTLE, mapper.createObjectNode(), locale, 42);
+            service.doGetList(JsonThrottle.THROTTLE, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP Bad Request", 400, ex.getCode());
@@ -61,14 +61,14 @@ public class JsonThrottleHttpServiceTest extends JsonHttpServiceTestBase<JsonThr
         }
     }
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonThrottleHttpService(mapper);
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() throws Exception {
         super.tearDown();

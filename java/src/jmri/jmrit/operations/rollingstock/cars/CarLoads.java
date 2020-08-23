@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
+import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
  * Represents the loads that cars can have.
@@ -37,18 +38,6 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
     public static final String LOAD_COMMENT_CHANGED_PROPERTY = "CarLoads_Load_Comment"; // NOI18N
 
     public CarLoads() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized CarLoads instance() {
-        return InstanceManager.getDefault(CarLoads.class);
     }
 
     /**
@@ -430,9 +419,9 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 String key = en.nextElement();
                 List<CarLoad> loads = listCarLoads.get(key);
                 for (CarLoad load : loads) {
-                    if (load.getName().split("-")[0].length() > maxNameLength) {
-                        maxName = load.getName().split("-")[0];
-                        maxNameLength = load.getName().split("-")[0].length();
+                    if (load.getName().split(TrainCommon.HYPHEN)[0].length() > maxNameLength) {
+                        maxName = load.getName().split(TrainCommon.HYPHEN)[0];
+                        maxNameLength = load.getName().split(TrainCommon.HYPHEN)[0].length();
                     }
                 }
             }

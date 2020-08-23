@@ -124,7 +124,7 @@ public class CvUtil {
             if (!matcher.find()) {
                 ret.add(prefix + theString + suffix);
             } else {
-                log.error("Invalid string '" + cvString + "'");
+                log.error("Invalid string '{}'", cvString);
             }
         }
         return ret;

@@ -1,7 +1,10 @@
 package apps;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+
+import apps.util.AppsUtil;
 import cucumber.api.java8.En;
-import org.junit.Assert;
 import java.io.File;
 import org.apache.commons.io.FileUtils;
 import java.nio.file.Files;
@@ -30,10 +33,11 @@ public class ApplicationTestAcceptanceSteps implements En {
             JUnitUtil.setUp();
             JUnitUtil.clearShutDownManager();
             JUnitUtil.resetApplication();
-            JUnitUtil.resetAppsBase();
+            AppsUtil.resetAppsBase();
         });
 
         Given("^I am using profile (.*)$", (String profile) -> {
+            boolean exceptionThrown = false;
             try {
                 // create a custom profile
                 tempFolder = Files.createTempDirectory("AppTest").toFile();
@@ -42,8 +46,9 @@ public class ApplicationTestAcceptanceSteps implements En {
                 System.setProperty("jmri.prefsdir", tempFolder.getAbsolutePath());
                 System.setProperty("org.jmri.profile", profileDir.getAbsolutePath());
             } catch (java.io.IOException ioe) {
-                Assert.fail("Unable to create temporary profile");
+                exceptionThrown = true;
             }
+            assertThat(!exceptionThrown);
         });
 
         When("^starting application (.*) with (.*)", (String application, String frametitle) -> {
@@ -54,10 +59,10 @@ public class ApplicationTestAcceptanceSteps implements En {
                 String[] params = new String[]{frametitle};
                 method.invoke(null, (Object) params);
             } catch (java.lang.ClassNotFoundException cnf) {
-                Assert.fail("Class " + application + " not found");
+                fail("Class {} not found",application);
             } catch (java.lang.NoSuchMethodException
                     | java.lang.IllegalAccessException ex) {
-                Assert.fail("Error calling main method");
+                fail("Error calling main method",ex);
             }
         });
 
@@ -89,17 +94,18 @@ public class ApplicationTestAcceptanceSteps implements En {
             FileUtils.deleteDirectory(tempFolder);
             System.clearProperty("org.jmri.profile");
             JUnitUtil.clearShutDownManager();
-            JUnitUtil.resetAppsBase();
+            AppsUtil.resetAppsBase();
             JUnitUtil.resetFileUtilSupport();
+            JUnitUtil.resetWindows(false,false);
             JUnitUtil.tearDown();
         });
 
     }
 
     private void dismissClosingDialogs() {
-        // the Unsaved Changes dialog doesn't appear every time we close, 
-        // so put pressing No button in that dialog into a thread by itself.  
-        // If the dialog appears, the button will be clicked, but it's not 
+        // the Unsaved Changes dialog doesn't appear every time we close,
+        // so put pressing No button in that dialog into a thread by itself.
+        // If the dialog appears, the button will be clicked, but it's not
         // an error if the dialog doesn't appear.
         Thread t = new Thread(() -> {
             try {

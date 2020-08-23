@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class TamsSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

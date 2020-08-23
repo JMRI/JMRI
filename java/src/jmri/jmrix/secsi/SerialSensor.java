@@ -5,7 +5,7 @@ import jmri.implementation.AbstractSensor;
 /**
  * Extend jmri.AbstractSensor for serial systems.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  */
 public class SerialSensor extends AbstractSensor {
 
@@ -17,10 +17,6 @@ public class SerialSensor extends AbstractSensor {
     public SerialSensor(String systemName, String userName, SecsiSystemConnectionMemo _memo) {
         super(systemName, userName);
         _knownState = UNKNOWN;
-    }
-
-    @Override
-    public void dispose() {
     }
 
     /**

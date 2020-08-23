@@ -1,11 +1,8 @@
-!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
 <!-- Updated by Herv&#233; Blorec le 2017-02-06-->
-<title>JMRI: OpenLCB Support</title>
-
 <title>JMRI Hardware Support - OpenLCB</title>
-
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -16,14 +13,15 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
 
 <h1>Documentation Mat&#233;rielle: OpenLCB</h1>
 
-<em> Le contenu de cette page &#233;volue rapidement; le Code r&#233;el pourrait &#234;tre en avance ou en retard par rapport &#224; la documentation
-pour un jour donn&#233;.</em> <p>
+<em>Le contenu de cette page &#233;volue rapidement; le Code r&#233;el pourrait &#234;tre en avance ou en retard par rapport &#224; la documentation
+pour un jour donn&#233;.</em>
 <ul class="snav"><!-- TOC -->
 	<li><a href="#connecting">Connexion</a></li>
 	<li><a href="#tools">Outils JMRI OpenLCB </a></li>
@@ -39,7 +37,7 @@ en termes "d'&#233;v&#233;nements" OpenLCB.
 
 <h3>R&#233;glages</h3>
 <p>
-La <a href="../../../html/doc/Technical/Names.shtml">lettre syst&#232;me <a> 
+La <a href="../../../html/doc/Technical/Names.shtml">lettre syst&#232;me</a>
 pour les connexions OpenLCB est "M". Les &#233;v&#233;nements
 et noms d'objets OpenLCB sont 
 introduit,ci-dessous, avec des d&#233;tails suppl&#233;mentaires et les formats sur une 
@@ -56,7 +54,7 @@ et l'&#233;v&#233;nements OpenLCB "1.2.3.4.5.6.7.9"
 <p>
 Un autre format pour les ID d'&#233;v&#233;nement est une
 cha&#238;ne hexad&#233;cimale continue, tels que
-"<code>x0102030405060709</code>"..
+"<code>x0102030405060709</code>".
 <p>
 Ces noms de syst&#232;me peut devenir tr&#232;s long, dans lequel
 cas, les "noms utilisateur" deviennent beaucoup plus utile.
@@ -90,7 +88,7 @@ Le r&#233;gime des aiguillages est similaire aux capteurs ci-dessus,
 sauf que JMRI &#233;met les trames OpenLCB au lieu de les recevoir, et
 la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.2.3.4.5.6.7.9</code>".
 
-<h3>C&#226;blage</h3
+<h3>C&#226;blage</h3>
 <p>Les options de connexion OpenLCB sont <a href="Connections.shtml">sur une page s&#233;par&#233;e</a>.
 
 <a name="tools"></a><h2>JOutils JMRI OpenLCB</h2
@@ -101,14 +99,14 @@ la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.
 	<a href="images/OpenLCBMonitor.png">
 	<img src="images/OpenLCBMonitor.png" alt="Monitor Pane" width="488" height="88"></a></li>
 	<li>Vous pouvez agir directement sur le r&#233;seau OpenLCB via l'outil 
-	<a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml"></a>Envoi Trame</a><br>
+	<a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">Envoi Trame</a><br>
 	<a href="images/OpenLCBSendFrame.png">
 	<img src="images/OpenLCBSendFrame.png" alt="Send Frame Pane" width="456" height="349"></a></li>
 	<li>Naviguer et r&#233;gler la Configuration avec l'outil
 	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configurer No&#339;uds</a><br>
 	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
 	    <img src="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
-	    width="128" height="149" alt="Configuration Tool pane"></a>
+	    width="128" height="149" alt="Configuration Tool pane"></a>multiple connexions
 	<li>D&#233;marrer le Concentrateur<br>
 	<a href="images/OpenLCBHubControl.png">
 	<img src="images/OpenLCBHubControl.png" alt="Hub Control Pane" width="114" height="28"></a></li>
@@ -127,7 +125,7 @@ la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.
 incluant des liens vers des outils vari&#233;s </li>
 </ul>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

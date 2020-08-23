@@ -2,7 +2,9 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrit.operations.locations.Location;
 
 /**
@@ -19,7 +21,6 @@ public class LocationTrackBlockingOrderAction extends AbstractAction {
     }
 
     Location _location;
-
     LocationTrackBlockingOrderFrame _frame = null;
 
     @Override

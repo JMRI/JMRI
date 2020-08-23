@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Servlet Json</title><!-- Style -->
+  <title>JMRI: Servlet Json</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -26,27 +27,27 @@
             code {
                 white-space: normal;
             }
-  </style><!-- /Style -->
+  </style>
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Servlet Json</h1>
 
       <p>Le <b>Servlet Json JMRI</b> fournit l'acc&egrave;s web
       &agrave; des listes et des valeurs pour de nombreuses
       entit&eacute;s JMRI d&eacute;finies, dans le format <a href=
-      'http://en.wikipedia.org/wiki/JSON' target="_new">moderne
+      "http://en.wikipedia.org/wiki/JSON">moderne
       JSON</a>. Il fournit aussi une interface <a href=
-      'http://en.wikipedia.org/wiki/WebSocket' target=
-      "_new">WebSocket</a> pour faire changer les statuts de ces
+      "http://en.wikipedia.org/wiki/WebSocket">WebSocket</a> pour faire changer les statuts de ces
       entit&eacute;s, et &eacute;couter les changements
-      externes.</p>La fonction <b>HTTP GET</b> du servlet
+      externes.</p>
+      La fonction <b>HTTP GET</b> du servlet
       r&eacute;pond au mod&eacute;le URL suivant:
 
       <ul>
@@ -179,7 +180,7 @@
           <td>requi&egrave;re une liste de panneaux, r&eacute;pond
           avec un ensemble des d&eacute;tails de deux panneaux</td>
         </tr>
-      </table><!--#include virtual="/Footer" -->
+      </table><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

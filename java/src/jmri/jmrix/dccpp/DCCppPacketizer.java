@@ -109,13 +109,11 @@ public class DCCppPacketizer extends DCCppTrafficController {
      */
     @Override
     public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) {
-        if (p != null && ((DCCppPortController) p).okToSend()) {
+        if (p instanceof DCCppPortController && ((DCCppPortController) p).okToSend()) {
             ((DCCppPortController) p).setOutputBufferEmpty(false);
             return true;
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("DCC++ port not ready to receive");
-            }
+            log.debug("DCC++ port not ready to receive");
             return false;
         }
     }

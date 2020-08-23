@@ -5,7 +5,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import javax.swing.JComboBox;
 import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 
 /**

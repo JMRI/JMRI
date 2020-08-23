@@ -437,7 +437,7 @@ public class RosterSpeedProfile {
 
     javax.swing.Timer stopTimer = null;
 
-    long lastTimeTimerStarted = 0l;
+    long lastTimeTimerStarted = 0L;
 
     /**
      * reset everything back to default once the change has finished.

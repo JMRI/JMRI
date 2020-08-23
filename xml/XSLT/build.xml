@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/antdoc.xsl"?> 
+
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
 
@@ -22,7 +25,7 @@
   Provides build services for JMRI web pages
   </description>
 
-  <property name="jmri.copyright.year" value="1997-2019"/>
+  <property name="jmri.copyright.year" value="1997-2020"/>
 
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>

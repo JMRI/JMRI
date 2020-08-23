@@ -15,7 +15,7 @@ public class SensorEditAction extends BeanEditAction<Sensor> {
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorAddEdit";
-    } //IN18N
+    } // NOI18N
 
     SensorDebounceEditAction debounce;
     SensorPullUpEditAction pullup;

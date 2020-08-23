@@ -162,8 +162,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: " + getNameString() + " " + e.getPropertyName() + " is now "
-                    + e.getNewValue());
+            log.debug("property change: {} {} is now {}", getNameString(), e.getPropertyName(), e.getNewValue());
         }
 
         if (e.getPropertyName().equals("KnownState")) {
@@ -225,9 +224,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
         _iconEditor.makeIconPanel(false);
 
-        ActionListener addIconAction = (ActionEvent a) -> {
-            updateLight();
-        };
+        ActionListener addIconAction = (ActionEvent a) -> updateLight();
         _iconEditor.complete(addIconAction, true, true, true);
         _iconEditor.setSelection(light);
     }
@@ -301,7 +298,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("doMouseClicked state= " + light.getState());
+            log.debug("doMouseClicked state= {}", light.getState());
         }
         if (light.getState() == jmri.Light.OFF) {
             light.setState(jmri.Light.ON);

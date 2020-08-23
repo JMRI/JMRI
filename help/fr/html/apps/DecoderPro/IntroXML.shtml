@@ -4,7 +4,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2016-06-27 -->
 <title>JMRI: DecoderPro In Depth</title>
 
@@ -18,24 +17,25 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h1>JMRI: Guide Utilisateur DecoderPro </h1>
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+		<h2>Les D&#233;tails</h2>
 
-
-<h1>JMRI: Guide Utilisateur DecoderPro </h1><h2>Les D&#233;tails</h2>
-
-<p>Cette page fournit des renseignements sur la fa&#231;on dont DecoderPro ( programmateur
- symbolique )fonctionne. 
-Pour plus de d&#233;tails internes sur JMRI, s'il vous pla&#238;t voir les <a href="../../doc/Technical/
-IntroStructure.shtml">pages Doc Techniques</a>.</p>
+<p>Cette page fournit des renseignements sur la fa&#231;on dont DecoderPro (programmateur
+ symbolique) fonctionne.
+Pour plus de d&#233;tails internes sur JMRI, s'il vous pla&#238;t voir les
+	<a href="../../doc/Technical/IntroStructure.shtml">pages Doc Techniques</a>.</p>
 
 <dl>
-	<dt class=left>Fichiers de Configuration</dt>
-	<dd class=first>
+	<dt class="left">Fichiers de Configuration</dt>
+	<dd class="first">
 	<p>
-	Il existe trois types de <a href="Files.shtml">Fichiers de Configuration</a>:
+		Il existe trois types de <a href="Files.shtml">Fichiers de Configuration</a>:</p>
 		<ul>
 		<li> Fichiers Decoder configuration- Ceux-ci portent la description d'un type particulier de d&#233;codeur, 
 		et commandent le programmateur qui affiche les informations des variables.
@@ -43,9 +43,8 @@ IntroStructure.shtml">pages Doc Techniques</a>.</p>
 		locomotive.
 		<li>Programmer d&#233;finitions - celles-ci d&#233;finissent les formats pour les feuilles de programmation vari&#233;es.
 		</ul>
-	</p>
 
-	<p>
+<p>
 Le programmeur peut lire n'importe quel type de fichier. Si vous s&#233;lectionnez un fichier d&#233;codeur apr&#232;s avoir  
 cliqu&#233; sur Lire le fichier, le programmateur sera d&#233;fini avec les variables, options, etc pour ce type. Les 
 valeurs seront vides, parce que  le programmateur ne sait rien sur ce qui a &#233;t&#233; programm&#233; dans un 
@@ -72,50 +71,50 @@ sp&#233;ciaux, etc. Il y a aussi de puissants outils XML dans le domaine public 
 g&#233;rer un grand nombre de fichiers d&#233;codeur.</p>
 </dd>
 
-<dt class=left>Variables</dt>
+<dt class="left">Variables</dt>
 <dd>
 <p>Une "variable" d&#233;finit la valeur qui sera charg&#233;e dans tout ou partie d'un
 CV. Par exemple, une variable peut &#234;tre d&#233;finie qui fixe la valeur des trois
 bits les plus significatifs de la CV 47. Si il y a plusieurs options configur&#233;es dans
 un seul CV, celles-ci devraient normalement &#234;tre trait&#233;es par des variables distinctes.
-Actuellement, il existe plusieurs types de variables:
-<ul>
-<LI> Decimal - nombres entr&#233;s dans la notation habituelle d&#233;cimale. Ce sont les adresses courtes, les tensions de 
-d&#233;marrage, etc.
-<LI> Enum (&#233;num&#233;r&#233;) - choisir parmi un ensemble d'options. Elles peuvent &#234;tre utilis&#233;es
-pour un simple choix on/off, oui/non, ou plusieurs ensembles complexes comme les FX
-par exemple l'&#233;clairage ci-dessus. La configuration contient un nom pour chaque
-possibilit&#233;.
-<LI> Long adresse - comme une valeur d&#233;cimale, sauf les contraintes sur une adresse 
-longue valide qui sont prise en compte.
-<LI> Hex - Ce n'est pas tellement n&#233;cessaire, car les options multiples dans un
-seul CV peuvent &#234;tre manipul&#233;es par des variables multiples. Mais si elle est n&#233;cessaire pour certaines
-raisons, la possibilit&#233; est pr&#233;sente.
-<LI> Speed table - pas encore vraiment au point, ce type de variable est
-destin&#233;e &#224; fournir un tableau des tables graphiques des vitesses, que vous pouvez faire glisser autour pour
-configurer comme vous le souhaitez.
-</ul></p>
+	Actuellement, il existe plusieurs types de variables:</p>
+	<ul>
+	<li> Decimal - nombres entr&#233;s dans la notation habituelle d&#233;cimale. Ce sont les adresses courtes, les
+	tensions de	d&#233;marrage, etc.</li>
+	<li> Enum (&#233;num&#233;r&#233;) - choisir parmi un ensemble d'options. Elles peuvent &#234;tre utilis&#233;es
+	pour un simple choix on/off, oui/non, ou plusieurs ensembles complexes comme les FX
+	par exemple l'&#233;clairage ci-dessus. La configuration contient un nom pour chaque
+	possibilit&#233;.</li>
+	<li> Long adresse - comme une valeur d&#233;cimale, sauf les contraintes sur une adresse
+	longue valide qui sont prise en compte.</li>
+	<li> Hex - Ce n'est pas tellement n&#233;cessaire, car les options multiples dans un
+	seul CV peuvent &#234;tre manipul&#233;es par des variables multiples. Mais si elle est n&#233;cessaire pour certaines
+	raisons, la possibilit&#233; est pr&#233;sente.</li>
+	<li> Speed table - pas encore vraiment au point, ce type de variable est
+	destin&#233;e &#224; fournir un tableau des tables graphiques des vitesses, que vous pouvez faire glisser autour pour
+	configurer comme vous le souhaitez.</li>
+	</ul>
 </dd>
 
-<dt class=left> Communication Programmateur: &#233;tats</dt>
+<dt class="left">Communication Programmateur: &#233;tats</dt>
 <dd>
 <p>La communication avec la station de commande/programmeur, permettant la lecture et
 &#233;criture du d&#233;codeur, n'est effectu&#233;e que lorsque les boutons "Lecture" ou "&#201;criture" sont press&#233;s.
  DecoderPro garde la trace pour savoir si une valeur a &#233;t&#233; envoy&#233;e au
  d&#233;codeur en utilisant quatre &#233;tats de variables ou de CVs:</p>
-<ul>
-<li> Read - La valeur indiqu&#233;e a &#233;t&#233; lue par le d&#233;codeur.
-<LI> Stored - La valeur indiqu&#233;e a &#233;t&#233; &#233;crite dans le d&#233;codeur.
-<LI> Edited - La valeur indiqu&#233;e a &#233;t&#233; chang&#233;e dans l'ordinateur, mais
-pas encore &#233;crite dans le d&#233;codeur. Appuyez sur le bouton d'&#233;criture quand vous &#234;tes d'accord 
-avec la valeur. 
-<LI> Unknown - Une valeur par d&#233;faut, ou une lecture a &#233;chou&#233;, ou pour d'autres raisons
-le programme n'a pas confiance dans la valeur, est ce vraiment celle que vous voulez?. Modifiez la valeur ou appuyez sur le 
-bouton d'&#233;criture.
-</ul>
+	<ul>
+	<li> Read - La valeur indiqu&#233;e a &#233;t&#233; lue par le d&#233;codeur.
+	<li> Stored - La valeur indiqu&#233;e a &#233;t&#233; &#233;crite dans le d&#233;codeur.
+	<li> Edited - La valeur indiqu&#233;e a &#233;t&#233; chang&#233;e dans l'ordinateur, mais
+	pas encore &#233;crite dans le d&#233;codeur. Appuyez sur le bouton d'&#233;criture quand vous &#234;tes d'accord
+	avec la valeur.
+	<li> Unknown - Une valeur par d&#233;faut, ou une lecture a &#233;chou&#233;, ou pour d'autres raisons
+	le programme n'a pas confiance dans la valeur, est ce vraiment celle que vous voulez?. Modifiez la valeur ou appuyez sur le
+	bouton d'&#233;criture.
+	</ul>
 </dd>
 
-<dt class=left>Impression</dt>
+<dt class="left">Impression</dt>
 <dd>
 <p>Vous pouvez imprimer les informations de la locomotive courante depuis la fen&#234;tre du programmateur
 . Dans le menu "Fichier ...", s&#233;lectionnez "Imprimer ...", et  remplissez la
@@ -127,7 +126,8 @@ vous imprimez &#224; partir du format "de base", et une liste de tout lorsque vo
 </dd>
 </dl>
     
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
+</div>
 </div>
 </body>
 </html>

@@ -6,16 +6,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +14,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -377,13 +364,13 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     text = TrainSwitchListText.getStringHoldCar().split("\\{")[0] + s.trim();
                 } else {
                     text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
-                            new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(TrainCommon.splitString(car.getNumber()), Control.max_len_string_print_road_number),
-                                    TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(car.getLength() + TrainCommon.LENGTHABV, Control.max_len_string_length_name),
-                                    TrainCommon.padAndTruncateString(car.getLoadName(), InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(_track.getName(), InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength()),
-                                    TrainCommon.padAndTruncateString(car.getColor(), InstanceManager.getDefault(CarColors.class).getMaxNameLength())});
+                            new Object[]{TrainCommon.padAndTruncateIfNeeded(car.getRoadName(), InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(TrainCommon.splitString(car.getNumber()), Control.max_len_string_print_road_number),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getTypeName().split(TrainCommon.HYPHEN)[0], InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getLength() + Setup.getLengthUnitAbv(), Control.max_len_string_length_name),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getLoadName(), InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(_track.getName(), InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength()),
+                                    TrainCommon.padAndTruncateIfNeeded(car.getColor(), InstanceManager.getDefault(CarColors.class).getMaxNameLength())});
 
                 }
                 JCheckBox checkBox = new JCheckBox(text);
@@ -402,7 +389,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
             } else if (pickup && setout) {
                 textTrackCommentWorkPane.setText(_track.getCommentBoth());
             }
-            textTrackCommentWorkPane.setVisible(!textTrackCommentWorkPane.getText().equals(""));
+            textTrackCommentWorkPane.setVisible(!textTrackCommentWorkPane.getText().isEmpty());
         } else {
             pTrackPane.setBorder(BorderFactory.createTitledBorder(""));
             textTrackCommentPane.setVisible(false);

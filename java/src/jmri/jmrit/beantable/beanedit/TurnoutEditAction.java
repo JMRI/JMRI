@@ -28,7 +28,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
     @Override
     public String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutAddEdit";
-    } //NOI18N
+    } // NOI18N
 
     @Override
     public void actionPerformed(ActionEvent e) {

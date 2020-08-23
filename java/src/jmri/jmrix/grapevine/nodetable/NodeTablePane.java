@@ -44,7 +44,8 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
     private GrapevineSystemConnectionMemo memo = null;
 
     /**
-     * Constructor method
+     * Constructor method.
+     * @param _memo system connection.
      */
     public NodeTablePane(GrapevineSystemConnectionMemo _memo) {
         super();

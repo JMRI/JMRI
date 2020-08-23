@@ -259,7 +259,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityQueryMessage(LocoNetMessage m) {
-        if ((m.getElement(0) == LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (m.getElement(1) == LnConstants.RE_IPL_OP_LEN)) {
             // Message is a peer-to-peer message of appropriate length for
             // IPL Report message.  Check the individual message type
@@ -282,7 +282,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityReportMessage(LocoNetMessage m) {
-        if ((m.getElement(0) == LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (m.getElement(1) == LnConstants.RE_IPL_OP_LEN)) {
             // Message is a peer-to-peer message of appropriate length for
             // IPL Report message.  Check the individual message type
@@ -995,4 +995,4 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     private boolean waitingForIplReply;
- }
+}

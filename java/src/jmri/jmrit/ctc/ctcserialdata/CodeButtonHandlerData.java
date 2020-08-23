@@ -26,12 +26,12 @@ import javax.swing.ButtonGroup;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class CodeButtonHandlerData implements Serializable, Comparable<CodeButtonHandlerData> {
-    private final static int FILE_VERSION = 5;
+    private final static int FILE_VERSION = 6;
     public static final int SWITCH_NOT_SLAVED = -1;
 
     public enum LOCK_IMPLEMENTATION {
 // The values in paren's are the RadioGroup values set by "CommonSubs.numberButtonGroup",
-// gotten by calling "CommonSubs.getButtonSelectedInt".        
+// gotten by calling "CommonSubs.getButtonSelectedInt".
         GREGS(0), OTHER(1);
         private final int _mRadioGroupValue;
         private final static HashMap<Integer, LOCK_IMPLEMENTATION> map = new HashMap<>();
@@ -44,7 +44,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
 
     public enum TURNOUT_TYPE {
 // The values in paren's are the RadioGroup values set by "CommonSubs.numberButtonGroup",
-// gotten by calling "CommonSubs.getButtonSelectedInt".        
+// gotten by calling "CommonSubs.getButtonSelectedInt".
         TURNOUT(0), CROSSOVER(1), DOUBLE_CROSSOVER(2);
         private final int _mRadioGroupValue;
         private final static HashMap<Integer, TURNOUT_TYPE> map = new HashMap<>();
@@ -54,13 +54,13 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         public static TURNOUT_TYPE getTurnoutType(int radioGroupValue) { return map.get(radioGroupValue); }
         public static TURNOUT_TYPE getTurnoutType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
-  
+
     @SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS", justification = "The code works fine as is, I have no idea why it is whining about this.")
     @Override
     public int compareTo(CodeButtonHandlerData codeButtonHandlerData) {
         return this._mGUIColumnNumber - codeButtonHandlerData._mGUIColumnNumber;
     }
-    
+
     public CodeButtonHandlerData() {
         _mOSSectionSwitchSlavedToUniqueID = SWITCH_NOT_SLAVED;
         _mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
@@ -77,17 +77,17 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         _mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
         _mTUL_LockImplementation = LOCK_IMPLEMENTATION.GREGS;
     }
-//  This number NEVER changes, and is how this object is uniquely identified:    
+//  This number NEVER changes, and is how this object is uniquely identified:
     public int _mUniqueID = -1;         // FORCE serialization to write out the FIRST unique number 0 into the XML file (to make me happy!)
-//  Used by the Editor only:    
+//  Used by the Editor only:
     public int _mSwitchNumber;         // Switch Indicators and lever #
     public int _mSignalEtcNumber;      // Signal Indicators, lever, locktoggle, callon and code button number
-    public String myString() { return Bundle.getMessage("CBHD_SwitchNumber") + " " + _mSwitchNumber + Bundle.getMessage("CBHD_SignalNumberEtc") + " " + _mSignalEtcNumber + Bundle.getMessage("CBHD_ColumnNumber") + " " + _mGUIColumnNumber + (_mGUIGeneratedAtLeastOnceAlready ? "*" : "") + ", [" + _mUniqueID + "]"; }  // NOI18N
+    public String myString() { return Bundle.getMessage("CBHD_SwitchNumber") + " " + _mSwitchNumber + ", " + Bundle.getMessage("CBHD_SignalNumberEtc") + " " + _mSignalEtcNumber + Bundle.getMessage("CBHD_ColumnNumber") + " " + _mGUIColumnNumber + (_mGUIGeneratedAtLeastOnceAlready ? "*" : "") + ", [" + _mUniqueID + "]"; }  // NOI18N
     public String myShortStringNoComma() { return _mSwitchNumber + "/" + _mSignalEtcNumber; }
 //  PRESENTLY (as of 10/18/18) these are ONLY used by the edit routines to TEMPORARILY get a copy.  The
 //  data is NEVER stored anywhere.  I say this because "_mUniqueID" MUST have another unique number if it is EVER
 //  stored anywhere!  For example: take the source # and add 5,000,000 to it each time.  Even copies of copies would
-//  get unique numbers!  If the user ever creates 5,000,000 objects, they must be GOD!    
+//  get unique numbers!  If the user ever creates 5,000,000 objects, they must be GOD!
     public CodeButtonHandlerData deepCopy() {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -109,12 +109,12 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         }
         return stringFields;
     }
-    
+
     public static ArrayList<Field> getAllInternalSensorStringFields() {
         return ProjectsCommonSubs.getAllPartialVariableNameStringFields(INTERNAL_SENSOR, CodeButtonHandlerData.class.getFields());
     }
-    
-//  Duplicates get ONLY ONE entry in the set (obviously).    
+
+//  Duplicates get ONLY ONE entry in the set (obviously).
     public HashSet<String> getAllInternalSensors() {
         HashSet<String> returnValue = new HashSet<>();
         ArrayList<Field> fields = getAllInternalSensorStringFields();
@@ -142,7 +142,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
             } catch (IllegalAccessException e) {} // Skip this field on any error
         }
     }
-/*    
+/*
 Because of "getAllInternalSensorStringFields", ANY JMRI sensor object that we
 create should have "InternalSensor" (case sensitive,
 example: _mCodeButtonInternalSensor) as ANY PART of their variable name and
@@ -150,10 +150,10 @@ declared as type String.  This will insure that the GUI program will write these
 sensors out to a separate file for JMRI to load to automatically create
 these senosrs.  Other sensors that pre-exist within JMRI should NOT have
 that as part of their variable name (ex: _mOSSectionOccupiedExternalSensor).
-    
+
 Also, see CheckJMRIObject's "public static final String EXTERNAL_xxx" definitions
 at the top for "automatic" JMRI object verification.
-*/    
+*/
     private static final String INTERNAL_SENSOR = "InternalSensor";     // NOI18N
 //  Version of this file for supporting upgrade paths from prior versions:
     public int                  _mFileVersion;
@@ -174,7 +174,7 @@ at the top for "automatic" JMRI object verification.
     public int                  _mSIDI_TimeLockingTimeInMilliseconds;
     public String               _mSIDI_LeftRightTrafficSignalsCSVList;
     public String               _mSIDI_RightLeftTrafficSignalsCSVList;
-//  Signal Direction Lever:    
+//  Signal Direction Lever:
     public boolean              _mSIDL_Enabled;
     public String               _mSIDL_LeftInternalSensor;
     public String               _mSIDL_NormalInternalSensor;
@@ -200,7 +200,7 @@ at the top for "automatic" JMRI object verification.
     public boolean              _mTRL_Enabled;
     public String               _mTRL_LeftTrafficLockingRulesSSVList;
     public String               _mTRL_RightTrafficLockingRulesSSVList;
-//  Turnout Locking:    
+//  Turnout Locking:
     public boolean              _mTUL_Enabled;
     public String               _mTUL_DispatcherInternalSensorLockToggle;
     public String               _mTUL_ExternalTurnout;
@@ -218,7 +218,7 @@ at the top for "automatic" JMRI object verification.
 //  Indication Locking (Signals):
     public boolean              _mIL_Enabled;
     public String               _mIL_ListOfCSVSignalNames;
-    
+
     public void upgradeSelf() {
         for (int oldVersion = _mFileVersion; oldVersion < FILE_VERSION; oldVersion++) {
             switch(oldVersion) {
@@ -230,7 +230,7 @@ at the top for "automatic" JMRI object verification.
                     _mTRL_LeftTrafficLockingRulesSSVList = "";
                     _mTRL_RightTrafficLockingRulesSSVList = "";
                     break;
-                default:
+                default:    // 4->5, 5->6: Do NOTHING!
                     break;
             }
         }
@@ -240,14 +240,14 @@ at the top for "automatic" JMRI object verification.
 /*  When I change a variable name but want to keep the contents, I need to
     pre-process the file BEFORE I turn it over to serialization.  That is done
     here:
-    
+
     NOTE:
-    
+
     This is ALWAYS done BEFORE the normal "upgradeSelf"!  And if it matches a version to change,
     it ALWAYS increments the file version by one!  Therefore "upgradeSelf" will see one greater!
     So if you want to do BOTH, then you need to increase file version by 2, and insure that the
     first increment is processed by this:
-*/    
+*/
     private final static String FILE_VERSION_STRING = "<string>_mFileVersion</string>"; // NOI18N
     private final static String LESS_THAN_SIGN = "<";                                   // NOI18N
     private static final String TEMPORARY_EXTENSION = ".xmlTMP";                        // NOI18N
@@ -273,11 +273,14 @@ at the top for "automatic" JMRI object verification.
             case 4:
                 upgradeVersion4FileTo5(filename);
                 break;
+            case 5:
+                upgradeVersion5FileTo6(filename);
+                break;
             default:
                 break;
         }
     }
-    
+
     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
     static private void upgradeVersion4FileTo5(String filename) {
         String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
@@ -312,11 +315,48 @@ at the top for "automatic" JMRI object verification.
         (new File(temporaryFilename)).delete();        // If we get here, just clean up.
     }
     
+    /**
+     * This routine was written because CSVPrinter at some point began putting "\r\n" at the
+     * end of lines returned by "toString()" based upon the version of the Java Library that
+     * was present.  This corrupted my data internally, and a user out in the field got caught
+     * by this change in the Java library.  The result was lines like:
+     * Hurricane X-over Track 1 West,LEFTTRAFFIC,Flashing Red,,Hurricane Track 1,IS5:SWNI,IS3:SWNI,IS1:SWNI,,,;;;;Hurricane X-over Track 1 West,LEFTTRAFFIC,Flashing Red,,Hurricane Track 2,IS5:SWNI,IS3:SWNI,IS1:SWRI,,,;;;;Hurricane X-over Track 1 East,RIGHTTRAFFIC,Flashing Red,,East Hurricane Track 1,IS1:SWNI,IS3:SWNI,IS5:SWNI,,,;;;;Hurricane X-over Track 1 East,RIGHTTRAFFIC,Flashing Red,,East Hurricane Track 2,IS1:SWNI,IS3:SWNI,IS5:SWRI,IS7:SWNI,,
+     * You'll notice here (and other places in the line) that there are multiple ;;;; in a row                ^^^^ ...-> also
+     * caused by this.  What I will do here is fix any multiple ;;;; to a single ;:
+     * @param filename The .xml file to convert from version 5 format to version 6 format.
+     */
+    @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
+    static private void upgradeVersion5FileTo6(String filename) {
+        String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
+        (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
+        boolean hadAChange = false;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename)); BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename))) {
+            String aLine = null;
+            while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
+                if ((aLine = checkFileVersion(bufferedReader, bufferedWriter, aLine, "5", "6")) == null) { hadAChange = true; continue; } // Was processed.
+                if ((aLine = checkForMultipleSemiColons(bufferedWriter, aLine)) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                writeLine(bufferedWriter, aLine);
+            }
+//  Regarding commented out code (due to SpotBugs):
+//  I'm a safety "nut".  I will do such things in case other code is someday inserted
+//  between the above "check for != null" and here.  But to satisfy SpotBugs:
+            if (/*aLine == null && */hadAChange) { // Do the two step:
+                bufferedReader.close();
+                bufferedWriter.close();
+                File oldFile = new File(filename);
+                oldFile.delete();                   // Delete existing old file.
+                (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
+            }
+        } catch (IOException e) {}  // Any other error(s) just cleans up:
+        (new File(temporaryFilename)).delete();        // If we get here, just clean up.
+    }
+    
+
 /*
     Returns:    null if we processed it or it was the wrong format, and in either case WROTE the line(s) out indicating that we handled it.
         or
                 The original aLine passed and NOTHING written, so that other(s) can check it further.
-*/    
+*/
     private final static String INT_START_STRING = "<int>"; // NOI18N
     private final static String INT_END_STRING = "</int>";  // NOI18N
     static private String checkFileVersion(BufferedReader bufferedReader, BufferedWriter bufferedWriter, String aLine, String oldVersion, String newVersion) throws IOException {
@@ -337,7 +377,7 @@ at the top for "automatic" JMRI object verification.
         }
         return aLine;   // Line wasn't for us!
     }
-    
+
     private final static String STRING_START_STRING = "<string>";   // NOI18N
     private final static String STRING_END_STRING = "</string>";    // NOI18N
     static private String checkForRefactor(BufferedWriter bufferedWriter, String aLine, String oldName, String newName) throws IOException {
@@ -349,6 +389,22 @@ at the top for "automatic" JMRI object verification.
         return aLine;
     }
     
+    static private String checkForMultipleSemiColons(BufferedWriter bufferedWriter, String aLine) throws IOException {
+        int intStart = aLine.indexOf(STRING_START_STRING);
+        int intEnd = aLine.indexOf(STRING_END_STRING);
+        if (intStart >=0 && intEnd >=0 && intStart < intEnd) { // Insure a line we might look at:
+           while (aLine.contains(";;")) {
+               aLine= aLine.replace(";;", ";");
+           }
+        }
+        if (intStart >= 0) { // Found, replace:
+            writeLine(bufferedWriter, aLine);
+            return null;
+        }
+        return aLine;
+    }
+    
+
     static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
         bufferedWriter.write(aLine); bufferedWriter.newLine();
     }

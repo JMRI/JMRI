@@ -24,9 +24,6 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.SystemConnectionMemoManager;
-import jmri.managers.ProxySensorManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
@@ -52,7 +49,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         super(actionName);
 
         // disable ourself if there is no primary sensor manager available
-        if (senManager == null) {
+        if (sensorManager == null) {
             setEnabled(false);
         }
     }
@@ -61,7 +58,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         this(Bundle.getMessage("TitleSensorTable"));
     }
 
-    protected SensorManager senManager = InstanceManager.getDefault(SensorManager.class);
+    protected SensorManager sensorManager = InstanceManager.getDefault(SensorManager.class);
 
     /**
      * {@inheritDoc}
@@ -69,9 +66,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     @Override
     public void setManager(@Nonnull Manager<Sensor> s) {
         if (s instanceof SensorManager) {
-            senManager = (SensorManager) s;
+            sensorManager = (SensorManager) s;
             if (m != null) {
-                m.setManager(senManager);
+                m.setManager(sensorManager);
             }
         }
     }
@@ -82,7 +79,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
      */
     @Override
     protected void createModel() {
-        m = new jmri.jmrit.beantable.sensor.SensorTableDataModel(senManager);
+        m = new jmri.jmrit.beantable.sensor.SensorTableDataModel(sensorManager);
     }
 
     /**
@@ -134,17 +131,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             ActionListener createListener = this::createPressed;
             ActionListener cancelListener = this::cancelPressed;
             ActionListener rangeListener = this::canAddRange;
-            SensorManager sensorManager = InstanceManager.getDefault(SensorManager.class);
-            if (sensorManager instanceof ProxySensorManager) {
-                ProxySensorManager proxy = (ProxySensorManager) sensorManager;
-                prefixBox.setManagers(proxy.getDisplayOrderManagerList());
-                if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
-                    SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(p.getComboBoxLastSelection(systemSelectionCombo));
-                    prefixBox.setSelectedItem(memo.get(SensorManager.class));
-                }
-            } else {
-                prefixBox.setManagers(sensorManager);
-            }
+            configureManagerComboBox(prefixBox, sensorManager, SensorManager.class);
             userNameField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
@@ -167,6 +154,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     }
 
     void cancelPressed(ActionEvent e) {
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -213,8 +201,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             try {
                 curAddress = InstanceManager.getDefault(SensorManager.class).getNextValidAddress(curAddress, sensorPrefix);
             } catch (jmri.JmriException ex) {
-                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", curAddress), "" + ex, "", true, false);
+                displayHwError(curAddress, ex);
                 // directly add to statusBarLabel (but never called?)
                 statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
                 statusBarLabel.setForeground(Color.red);
@@ -280,6 +267,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
 
         p.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -320,10 +308,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     }
 
     protected void setDefaultDebounce(JFrame _who) {
-        SpinnerNumberModel activeSpinnerModel = new SpinnerNumberModel((Long)senManager.getDefaultSensorDebounceGoingActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
+        SpinnerNumberModel activeSpinnerModel = new SpinnerNumberModel((Long)sensorManager.getDefaultSensorDebounceGoingActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
         JSpinner activeSpinner = new JSpinner(activeSpinnerModel);
         activeSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
-        SpinnerNumberModel inActiveSpinnerModel = new SpinnerNumberModel((Long)senManager.getDefaultSensorDebounceGoingInActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
+        SpinnerNumberModel inActiveSpinnerModel = new SpinnerNumberModel((Long)sensorManager.getDefaultSensorDebounceGoingInActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
         JSpinner inActiveSpinner = new JSpinner(inActiveSpinnerModel);
         inActiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
 
@@ -355,8 +343,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
 
         // Allow the sensor manager to handle checking if the values have changed
-        senManager.setDefaultSensorDebounceGoingActive((Long) activeSpinner.getValue());
-        senManager.setDefaultSensorDebounceGoingInActive((Long) inActiveSpinner.getValue());
+        sensorManager.setDefaultSensorDebounceGoingActive((Long) activeSpinner.getValue());
+        sensorManager.setDefaultSensorDebounceGoingInActive((Long) inActiveSpinner.getValue());
         m.fireTableDataChanged();
     }
 
@@ -412,7 +400,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<Sensor> f) {
         final jmri.util.JmriJFrame finalF = f; // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         // check for menu
@@ -480,7 +468,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
      * {@inheritDoc}
      */
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(BeanTableFrame<Sensor> f) {
         f.addToBottomBox(showDebounceBox, this.getClass().getName());
         showDebounceBox.setToolTipText(Bundle.getMessage("SensorDebounceToolTip"));
         showDebounceBox.addActionListener(new ActionListener() {
@@ -514,9 +502,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
      */
     @Override
     public void addToPanel(AbstractTableTabAction<Sensor> f) {
-        String connectionName = senManager.getMemo().getUserName();
+        String connectionName = sensorManager.getMemo().getUserName();
 
-        if (senManager.getClass().getName().contains("ProxySensorManager")) {
+        if (sensorManager.getClass().getName().contains("ProxySensorManager")) {
             connectionName = "All";
         }
         f.addToBottomBox(showDebounceBox, connectionName);

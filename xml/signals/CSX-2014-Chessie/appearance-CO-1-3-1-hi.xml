@@ -22,6 +22,13 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial Version</revremark>
     </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect value which cannot be displayed by this mast type</revremark>
+     </revision>    
+
   </revhistory>
   <aspecttable>CSX-2014-Chessie</aspecttable>
   <name>Triple head 1-3-1 med/lim home color light high signal</name>
@@ -116,14 +123,12 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited Clear</advancedAspect>
-      <ourAspect>Approach Limited</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited Approach</advancedAspect>
-      <ourAspect>Approach Limited</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Restricting</ourAspect>
@@ -146,13 +151,11 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
-      <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
-      <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>

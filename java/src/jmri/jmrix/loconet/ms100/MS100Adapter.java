@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnPacketizer;
@@ -100,7 +99,7 @@ public class MS100Adapter extends LnPortController {
                 log.debug("Serial timeout was observed as: {} {}",
                         activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: {}", et);
             }
 
             // get and save stream
@@ -201,7 +200,7 @@ public class MS100Adapter extends LnPortController {
     @Override
     public void configureOption2(String value) {
         super.configureOption2(value);
-        log.debug("configureOption2: " + value);
+        log.debug("configureOption2: {}", value);
         setCommandStationType(value);
     }
 

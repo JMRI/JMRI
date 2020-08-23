@@ -47,7 +47,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     private final Object lock = new Object();
 
     // UI components for Add/Edit Source
-    JLabel assignedBufferLabel = new JLabel(Bundle.getMessage("LabelAssignedBuffer") + ":");
+    JLabel assignedBufferLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelAssignedBuffer")));
     JComboBox<String> assignedBuffer = new JComboBox<>();
     JLabel loopMinLabel = new JLabel(Bundle.getMessage("LabelLoopMin"));
     JSpinner loopMin = new JSpinner();
@@ -78,6 +78,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     JLabel fadeOutTimeLabel = new JLabel(Bundle.getMessage("LabelFadeOut"));
     JSpinner fadeOutTime = new JSpinner();
     JLabel fadeTimeUnitsLabel = new JLabel(Bundle.getMessage("UnitMS"));
+
+    private final static String PREFIX = "IAS";
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioSourceFrame(String title, AudioTableDataModel model) {
@@ -272,7 +274,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     @Override
     public void resetFrame() {
         synchronized (lock) {
-            sysName.setText("IAS" + nextCounter());
+            sysName.setText(PREFIX + nextCounter());
         }
         userName.setText(null);
         assignedBuffer.setSelectedIndex(0);
@@ -333,23 +335,31 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     public void updateBufferList() {
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
         assignedBuffer.removeAllItems();
-        assignedBuffer.addItem("Select buffer from list");
-        am.getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
-            String u = am.getAudio(s).getUserName();
-            if (u != null) {
-                assignedBuffer.addItem(u);
+        assignedBuffer.addItem(Bundle.getMessage("SelectBufferFromList"));
+        am.getNamedBeanSet(Audio.BUFFER).stream().forEach((s) -> {
+            Audio a = am.getAudio(s.getSystemName());
+            if (a != null) {
+                String u = a.getUserName();
+                if (u != null) {
+                    assignedBuffer.addItem(u);
+                } else {
+                    assignedBuffer.addItem(s.getSystemName());
+                }
             } else {
-                assignedBuffer.addItem(s);
+                assignedBuffer.addItem(s.getSystemName());
             }
         });
     }
 
-    void applyPressed(ActionEvent e) {
+    private void applyPressed(ActionEvent e) {
+        String sName = sysName.getText();
+        if (entryError(sName, PREFIX, "" + counter)) {
+            return;
+        }
         String user = userName.getText();
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText();
         AudioSource s;
         try {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
@@ -358,7 +368,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             } catch (IllegalArgumentException ex) {
                 throw new AudioException("Problem creating source");
             }
-            if (newSource && am.getByUserName(user) != null) {
+            if ((user != null) && (newSource) && (am.getByUserName(user) != null)) {
                 am.deregister(s);
                 synchronized (lock) {
                     prevCounter();
@@ -367,13 +377,18 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             }
             s.setUserName(user);
             if (assignedBuffer.getSelectedIndex() > 0) {
-                Audio a = am.getAudio((String) assignedBuffer.getSelectedItem());
-                s.setAssignedBuffer(a.getSystemName());
+                String sel = (String) assignedBuffer.getSelectedItem();
+                if (sel != null) {
+                    Audio a = am.getAudio(sel);
+                    if (a != null) {
+                        s.setAssignedBuffer(a.getSystemName());
+                    }
+                }
             }
             s.setMinLoops(loopInfinite.isSelected() ? AudioSource.LOOP_CONTINUOUS : (Integer) loopMin.getValue());
             s.setMaxLoops(loopInfinite.isSelected() ? AudioSource.LOOP_CONTINUOUS : (Integer) loopMax.getValue());
-//            s.setMinLoopDelay((Integer) loopMinDelay.getValue());
-//            s.setMaxLoopDelay((Integer) loopMaxDelay.getValue());
+            // s.setMinLoopDelay((Integer) loopMinDelay.getValue());
+            // s.setMaxLoopDelay((Integer) loopMaxDelay.getValue());
             s.setPosition(position.getValue());
             s.setPositionRelative(positionRelative.isSelected());
             s.setVelocity(velocity.getValue());
@@ -396,8 +411,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         return counter++;
     }
 
-    private static int prevCounter() {
-        return counter--;
+    private static void prevCounter() {
+        counter--;
     }
 
     //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class);

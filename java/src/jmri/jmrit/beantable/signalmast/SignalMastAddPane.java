@@ -1,13 +1,10 @@
 package jmri.jmrit.beantable.signalmast;
 
-import java.awt.*;
 
 import java.util.*;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import jmri.*;
 import jmri.spi.JmriServiceProviderInterface;
@@ -41,6 +38,8 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
      * Provide a new list of aspects in the signal system.
      * Must be done at startup before the pane is shown.
      * May be done later, to update to a newly selected system.
+     * @param map the signal appearance map.
+     * @param sigSystem the signal system.
      */
     abstract public void setAspectNames(@Nonnull SignalAppearanceMap map, 
                                @Nonnull SignalSystem sigSystem);
@@ -85,6 +84,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
         /**
          * Is this pane available, given the current configuration of the program?
          * In other words, are all necessary managers and other objects present?
+         * @return always true.
          */
         public boolean isAvailable() { return true; }
 
@@ -102,6 +102,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
          * Get all available instances as an {@link Collections#unmodifiableMap}
          * between the (localized) name and the pane. Note that this is a SortedMap in 
          * name order.
+         * @return all instance map sorted in name order.
          */
         final static public Map<String, SignalMastAddPaneProvider> getInstancesMap() {
             if (instanceMap == null) loadInstances();
@@ -111,6 +112,7 @@ public abstract class SignalMastAddPane extends JPanel implements JmriServicePro
         /**
          * Get all available instances as an {@link Collections#unmodifiableCollection}
          * between the (localized) name and the pane. 
+         * @return unmodifiable collection.
          */
         final static public Collection<SignalMastAddPaneProvider> getInstancesCollection() {
             if (instanceMap == null) loadInstances();

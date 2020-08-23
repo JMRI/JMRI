@@ -59,7 +59,7 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
             int tmp = Integer.valueOf(part[8], 10).intValue();
             val = tmp;  // don't do this assign until now in case the conversion throws
         } catch (Exception e) {
-            log.error("Unable to get number from reply: \"" + s + "\"");
+            log.error("Unable to get number from reply: \"{}\"", s);
         }
         return val;
     }

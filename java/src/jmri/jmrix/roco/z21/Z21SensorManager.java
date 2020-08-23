@@ -1,10 +1,13 @@
 package jmri.jmrix.roco.z21;
 
 import java.util.Locale;
+
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.Nonnull;
 
 /**
  * Manage the Z21Specific Sensor implementation.
@@ -41,6 +44,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Z21SystemConnectionMemo getMemo() {
         return (Z21SystemConnectionMemo) memo;
     }
@@ -53,21 +57,24 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     // Z21 specific methods
+
     /**
-     * Create a new Sensor based on the system name. Assumes calling method has
-     * checked that a Sensor with this system name does not already exist.
+     * {@inheritDoc}
+     * <p>
+     * Assumes calling method has checked that a Sensor with this system
+     * name does not already exist.
      *
-     * @return null if the system name is not in a valid format
+     * @throws IllegalArgumentException if the system name is not in a valid format
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName)  throws IllegalArgumentException {
         if (systemName.contains(":")) {
             // check for CAN format.
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
             if (bitNum != -1) {
                 return new Z21CanSensor(systemName, userName, getMemo());
             } else {
-                log.warn("Invalid Sensor name: {} " + systemName);
                 throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
             }
         } else {
@@ -78,14 +85,13 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 return new Z21RMBusSensor(systemName, userName,
                         getMemo().getTrafficController(), getSystemPrefix());
             } else {
-                log.warn("Invalid Sensor name: {} " + systemName);
                 throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
             }
         }
     }
 
     /**
-     * {inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void reply(Z21Reply msg) {
@@ -99,17 +105,17 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 int netID = (msg.getElement(4) & 0xFF) + ((msg.getElement(5) & 0xFF) << 8);
                 int msgPort = (msg.getElement(8) & 0xFF);
                 int address = (msg.getElement(6) & 0xFF) + ((msg.getElement(7) & 0xFF) << 8);
-                String sysName = getSystemPrefix() + typeLetter() + address + ":" + msgPort;
-                Z21CanSensor r = (Z21CanSensor) getBySystemName(sysName);
+                String systemName = Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),address,msgPort);
+                Z21CanSensor r = (Z21CanSensor) getBySystemName(systemName);
                 if (null == r) {
                     // try with the module's CAN network ID
-                    sysName = getSystemPrefix() + typeLetter() + String.format("%4x", netID) + ":" + msgPort;
-                    r = (Z21CanSensor) getBySystemName(sysName);
+                    systemName = Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),netID, msgPort);
+                    r = (Z21CanSensor) getBySystemName(systemName);
                     if (null == r) {
-                        log.debug("Creating reporter {}", sysName);
+                        log.debug("Creating reporter {}", systemName);
                         // need to create a new one, and send the message on 
                         // to the newly created object.
-                        ((Z21CanSensor) provideSensor(sysName)).reply(msg);
+                        ((Z21CanSensor) provideSensor(systemName)).reply(msg);
                     }
                 }
             }
@@ -122,17 +128,19 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     /**
-     * {inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void message(Z21Message l) {
+        // no processing of outgoing messages.
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         name = validateSystemNamePrefix(name, locale);
         if (name.substring(getSystemNamePrefix().length()).contains(":")) {
             return Z21CanBusAddress.validateSystemNameFormat(name, this, locale);
@@ -145,50 +153,51 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.VALID
                 ? NameValidity.VALID
                 : Z21CanBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix());
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    synchronized public String createSystemName(String curAddress, String prefix) throws JmriException {
-        int encoderAddress = 0;
-        int input = 0;
+    @Nonnull
+    public synchronized String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        int encoderAddress;
+        int input;
 
         if (curAddress.contains(":")) {
-            // Address format passed is in the form of encoderAddress:input or T:turnout address
-            int seperator = curAddress.indexOf(":");
+            // This is a CAN Bus sensor address passed in the form of encoderAddress:input
+            int seperator = curAddress.indexOf(':');
             try {
                 encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
                 input = Integer.parseInt(curAddress.substring(seperator + 1));
+                return Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),encoderAddress,input);
             } catch (NumberFormatException ex) {
                 // system name may include hex values for CAN sensors.
                 try {
                     encoderAddress = Integer.parseInt(curAddress.substring(0, seperator), 16);
                     input = Integer.parseInt(curAddress.substring(seperator + 1));
-                    return getSystemPrefix() + typeLetter() + String.format("%4x", encoderAddress) + ":" + input;
+                    return Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),encoderAddress,input);
                 } catch (NumberFormatException ex1) {
                     log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
                     throw new JmriException("Hardware Address passed should be a number");
                 }
             }
-            iName = ((encoderAddress - 1) * 8) + input;
         } else {
-            // Entered in using the old format
+            // This is an RMBus Sensor address.
             try {
                 iName = Integer.parseInt(curAddress);
+                return getSystemPrefix() + typeLetter() + iName;
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} Hardware Address to a number", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
         }
-        return getSystemPrefix() + typeLetter() + iName;
     }
 
     int iName; // must synchronize to avoid race conditions.
@@ -197,9 +206,9 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * Does not enforce any rules on the encoder or input values.
      */
     @Override
-    synchronized public String getNextValidAddress(String curAddress, String prefix) {
+    public synchronized String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -228,6 +237,15 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Sensor getBySystemName(@Nonnull String sName){
+        Z21SystemNameComparator comparator = new Z21SystemNameComparator(getSystemPrefix(),typeLetter());
+        return getBySystemName(sName,comparator);
+    }
+
+    /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
@@ -235,6 +253,6 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21SensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21SensorManager.class);
 
 }

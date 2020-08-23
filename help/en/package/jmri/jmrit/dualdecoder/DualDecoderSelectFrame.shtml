@@ -15,14 +15,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
 
     <div id="mainContent">
+
       <h2>JMRI: Multi-Decoder Control</h2>
       Originally, DCC did not
       provide a convenient way to program configuration values
@@ -108,7 +110,7 @@
       (programming on the main), you wil also need to specify the
       address of the locomotive being programmed.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div>
 </body>

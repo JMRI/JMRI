@@ -23,6 +23,9 @@ public class SerialTurnout extends AbstractTurnout {
      * Create a Turnout object, with both system and user names.
      * <p>
      * 'systemName' was previously validated in SerialTurnoutManager.
+     * @param systemName turnout system name.
+     * @param userName turnout user name.
+     * @param _memo system connection.
      */
     public SerialTurnout(String systemName, String userName, SecsiSystemConnectionMemo _memo) {
         super(systemName, userName);
@@ -40,9 +43,8 @@ public class SerialTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //          Object oldValue, Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states

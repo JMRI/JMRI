@@ -1,26 +1,28 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
+
 import javax.swing.JPanel;
+
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.junit.After;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Test PaneProg with qualified variables.
  *
- * @author	Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  */
 public class QualifiedVarTest {
 
@@ -42,6 +44,11 @@ public class QualifiedVarTest {
                     protected JPanel getModePane() {
                         return null;
                     }
+                    // prevent this test from prompting to save file
+                    @Override
+                    protected boolean checkDirtyFile() {
+                        return false;
+                    }
                 };
 
                 // get the sample info
@@ -60,8 +67,8 @@ public class QualifiedVarTest {
                 p.setVisible(true);
 
                 // close the window for cleanliness
-                JUnitUtil.dispose(p);
-            }
+                p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
+        }
         });
     }
 
@@ -178,14 +185,14 @@ public class QualifiedVarTest {
 
     private final static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class);
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

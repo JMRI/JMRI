@@ -2,12 +2,14 @@ package jmri;
 
 import java.util.Hashtable;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.SignalMastLogic class
  *
- * @author	Egbert Broerse Copyright 2017
+ * @author Egbert Broerse Copyright 2017
  */
 public class SignalMastLogicTest {
 
@@ -83,14 +85,16 @@ public class SignalMastLogicTest {
      */
     @Test
     public void testRename() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         // provide 2 virtual signal masts:
         SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
-        Assert.assertNotNull("SignalMast is null!", sm1);
+        Assert.assertNotNull("SignalMast sm1 is null!", sm1);
         SignalMast sm2 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
-        Assert.assertNotNull("SignalMast is null!", sm2);
+        Assert.assertNotNull("SignalMast sm2 is null!", sm2);
 
-        // Change logic delay from 500ms to 1:
-        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).setSignalLogicDelay(1);
+        // Change logic delay from 500ms to 20ms to speed tests:
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).setSignalLogicDelay(20);
 
         // provide a signal mast logic:
         SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sm1);
@@ -117,8 +121,7 @@ public class SignalMastLogicTest {
         sml.dispose();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -126,7 +129,7 @@ public class SignalMastLogicTest {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
