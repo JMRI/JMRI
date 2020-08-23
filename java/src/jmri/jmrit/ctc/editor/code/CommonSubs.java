@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -20,12 +21,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 import jmri.InstanceManager;
 import jmri.BlockManager;
+import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
 import jmri.TurnoutManager;
+import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -353,6 +357,44 @@ public class CommonSubs {
         String parent = file.getParent();   // Returns "null" if no parent.
         if (ProjectsCommonSubs.isNullOrEmptyString(parent)) return "";
         return file.getParent() + File.separator;
+    }
+
+    /**
+     * Verify that the CTC control sensors have been created.
+     */
+    public static void verifyInternalSensors() {
+        CtcManager ctcmgr = InstanceManager.getDefault(CtcManager.class);
+        CTCSerialData ctcserialdata = ctcmgr.getCTCSerialData();
+        OtherData otherData = ctcmgr.getOtherData();
+
+        ArrayList<Field> internalSensorStringFields = OtherData.getAllInternalSensorStringFields();
+        for (Field field : internalSensorStringFields) {
+            try {
+                String content = (String)field.get(otherData);
+                CommonSubs.createSensorIfNeeded(content);
+            } catch (IllegalAccessException e) {
+                log.debug("verifyInternalSensors other data exception");
+            } // Should never happen, print nothing for this entry if so.
+        }
+
+        internalSensorStringFields = CodeButtonHandlerData.getAllInternalSensorStringFields();
+        for (CodeButtonHandlerData codeButtonHandlerData : ctcmgr.getCTCSerialData().getCodeButtonHandlerDataArrayList()) {
+            for (Field field : internalSensorStringFields) {
+                try {
+                    String content = (String)field.get(codeButtonHandlerData);
+                    CommonSubs.createSensorIfNeeded(content);
+                } catch (IllegalAccessException e) {
+                    log.debug("verifyInternalSensors code button handler data exception");
+                } // Should never happen, print nothing for this entry if so.
+            }
+        }
+    }
+
+    public static void createSensorIfNeeded(String sensorName) {
+        if (InstanceManager.getDefault(SensorManager.class).getSensor(sensorName) == null) {
+            log.info("createSensorIfNeeded: name = {}", sensorName);
+            Sensor sensor = InstanceManager.getDefault(SensorManager.class).newSensor(sensorName, null);
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommonSubs.class);

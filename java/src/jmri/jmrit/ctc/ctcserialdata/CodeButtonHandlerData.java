@@ -213,13 +213,12 @@ at the top for "automatic" JMRI object verification.
     public boolean              _mTUL_NoDispatcherControlOfSwitch;
     public boolean              _mTUL_ndcos_WhenLockedSwitchStateIsClosed;
     public LOCK_IMPLEMENTATION  _mTUL_LockImplementation;
-    public ArrayList<AdditionalTurnout> _mTUL_AdditionalExternalTurnouts = new ArrayList<>();    // new
-    public String               _mTUL_AdditionalExternalTurnout1;                           // old
-    public boolean              _mTUL_AdditionalExternalTurnout1FeedbackDifferent;          // old
-    public String               _mTUL_AdditionalExternalTurnout2;                           // old
-    public boolean              _mTUL_AdditionalExternalTurnout2FeedbackDifferent;          // old
-    public String               _mTUL_AdditionalExternalTurnout3;                           // old
-    public boolean              _mTUL_AdditionalExternalTurnout3FeedbackDifferent;          // old
+    public String               _mTUL_AdditionalExternalTurnout1;
+    public boolean              _mTUL_AdditionalExternalTurnout1FeedbackDifferent;
+    public String               _mTUL_AdditionalExternalTurnout2;
+    public boolean              _mTUL_AdditionalExternalTurnout2FeedbackDifferent;
+    public String               _mTUL_AdditionalExternalTurnout3;
+    public boolean              _mTUL_AdditionalExternalTurnout3FeedbackDifferent;
 //  Indication Locking (Signals):
     public boolean              _mIL_Enabled;
     public ArrayList<NBHSignal>      _mIL_Signals = new ArrayList<>();

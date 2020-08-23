@@ -18,7 +18,7 @@ import jmri.jmrit.ctc.ctcserialdata.*;
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- * 
+ *
  * 7/30/2020 Bug Fix (found by a user in the field, as reported to Dave Sand):
  * The user can in two different O.S. sections (or in the
  * same O.S. section) mention the same turnout multiple times.  Now, of course
@@ -45,11 +45,11 @@ public class FrmTUL extends javax.swing.JFrame {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
-//  For support of no dups:  
+//  For support of no dups:
     private final HashSet<String> _mStartingHashSetOfTurnouts = new HashSet<>();
     private final ArrayList<String> _mArrayListOfThisRecordsUsedLockedTurnouts = new ArrayList<>(); // Should "always" be 4 in length.  See "initializeAll4LockedTurnoutJComboBoxesAndSupportingData"
     private boolean _mIgnoreActionEvent = false;
-//  End of support of no dups.    
+//  End of support of no dups.
 
     private String _mTUL_DispatcherInternalSensorLockToggleOrig;
     private String _mTUL_ExternalTurnoutOrig;
@@ -97,7 +97,7 @@ public class FrmTUL extends javax.swing.JFrame {
         return false;
     }
 
-    public FrmTUL(  AwtWindowProperties awtWindowProperties, 
+    public FrmTUL(  AwtWindowProperties awtWindowProperties,
                     CTCSerialData ctcSerialData,
                     CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
@@ -426,18 +426,22 @@ public class FrmTUL extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void _mTUL_ExternalTurnoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_ExternalTurnoutActionPerformed
+        _mCodeButtonHandlerData._mTUL_ExternalTurnout = (String) _mTUL_ExternalTurnout.getSelectedItem();
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
     }//GEN-LAST:event__mTUL_ExternalTurnoutActionPerformed
 
     private void _mTUL_AdditionalExternalTurnout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_AdditionalExternalTurnout1ActionPerformed
+        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1 = (String) _mTUL_AdditionalExternalTurnout1.getSelectedItem();
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
     }//GEN-LAST:event__mTUL_AdditionalExternalTurnout1ActionPerformed
 
     private void _mTUL_AdditionalExternalTurnout2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_AdditionalExternalTurnout2ActionPerformed
+        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2 = (String) _mTUL_AdditionalExternalTurnout2.getSelectedItem();
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
     }//GEN-LAST:event__mTUL_AdditionalExternalTurnout2ActionPerformed
 
     private void _mTUL_AdditionalExternalTurnout3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_AdditionalExternalTurnout3ActionPerformed
+        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3 = (String) _mTUL_AdditionalExternalTurnout3.getSelectedItem();
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
     }//GEN-LAST:event__mTUL_AdditionalExternalTurnout3ActionPerformed
 
@@ -456,7 +460,7 @@ public class FrmTUL extends javax.swing.JFrame {
         update1LockedTurnoutJComboBox(_mTUL_AdditionalExternalTurnout2, 2, _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2);
         update1LockedTurnoutJComboBox(_mTUL_AdditionalExternalTurnout3, 3, _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3);
     }
-    
+
     private void update1LockedTurnoutJComboBox(JComboBox<String> jComboBox, int index, String currentSelection) {
         HashSet<String> ultimateHashSet = new HashSet<>(_mStartingHashSetOfTurnouts);   // Make a deep copy.
         ultimateHashSet.removeAll(returnHashSetSubset(index));
@@ -465,25 +469,30 @@ public class FrmTUL extends javax.swing.JFrame {
     /**
      * Just returns a sub-set of _mArrayListOfThisRecordsUsedLockedTurnouts excluding
      * any blank entries, and the one index passed.
-     * 
+     *
      * @param indexToLeaveOff The JComboBox "field" we will be editing: 0 = _mTUL_ExternalTurnout, 1 = _mTUL_AdditionalExternalTurnout1, 2 = _mTUL_AdditionalExternalTurnout2, 3 = _mTUL_AdditionalExternalTurnout3
-     * @return The requested subset of _mArrayListOfThisRecordsUsedLockedTurnouts 
+     * @return The requested subset of _mArrayListOfThisRecordsUsedLockedTurnouts
      */
     private HashSet<String> returnHashSetSubset(int indexToLeaveOff) {
         HashSet<String> returnValue = new HashSet<>();
         for (int index = 0; index < _mArrayListOfThisRecordsUsedLockedTurnouts.size(); index++) {
-            if (index != indexToLeaveOff && !_mArrayListOfThisRecordsUsedLockedTurnouts.get(index).isEmpty()) { returnValue.add(_mArrayListOfThisRecordsUsedLockedTurnouts.get(index)); }
+
+            String recordUsed = _mArrayListOfThisRecordsUsedLockedTurnouts.get(index);
+            boolean recordValid = (recordUsed == null || recordUsed.isEmpty()) ? false : true;
+            if (index != indexToLeaveOff && recordValid) {
+                returnValue.add(recordUsed);
+            }
         }
         return returnValue;
     }
-    
+
     /**
-     * 
+     *
      * This is a DIRECT plagiarization of Dave Sands CommonSubs.populateJComboBoxWithBeans, repurposed to support
      * what is needed specifically by Turnout Locking.
      * It does not have the flexibility of the original routine, since thats not needed.
      * (see "_mIgnoreActionEvent", since I don't know of another way to do it).
-     * 
+     *
      * Populate a combo box with bean names using getDisplayName().
      * <p>
      * If a panel xml file has not been loaded, the combo box will behave as a
@@ -517,7 +526,7 @@ public class FrmTUL extends javax.swing.JFrame {
         }
         _mIgnoreActionEvent = false;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JLabel _mTUL_ActualTurnoutPrompt;

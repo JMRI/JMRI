@@ -104,7 +104,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
             cbhdElement.addContent(storeBoolean("TUL_NoDispatcherControlOfSwitch", cbhd._mTUL_NoDispatcherControlOfSwitch));
             cbhdElement.addContent(storeBoolean("TUL_ndcos_WhenLockedSwitchStateIsClosed", cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed));
             cbhdElement.addContent(storeInt("TUL_LockImplementation", cbhd._mTUL_LockImplementation.getInt()));
-            cbhdElement.addContent(storeTULAdditionalTurnouts("TUL_AdditionalExternalTurnouts", cbhd._mTUL_AdditionalExternalTurnouts));
+            cbhdElement.addContent(storeTULAdditionalTurnouts("TUL_AdditionalExternalTurnouts", cbhd));
 
             // IL section
             cbhdElement.addContent(storeBoolean("IL_Enabled", cbhd._mIL_Enabled));
@@ -301,14 +301,24 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return element;
     }
 
-    Element storeTULAdditionalTurnouts(String elementName, List<CodeButtonHandlerData.AdditionalTurnout> tulTurnouts) {
+    Element storeTULAdditionalTurnouts(String elementName, CodeButtonHandlerData cbhd) {
         Element element = new Element(elementName);
-        tulTurnouts.forEach(tulTurnout -> {
-            Element additionalTurnout = new Element("TUL_AdditionalExternalTurnoutEntry");
-            additionalTurnout.addContent(storeString("TUL_AdditionalExternalTurnout", tulTurnout._mTUL_AdditionalExternalTurnout));
-            additionalTurnout.addContent(storeBoolean("TUL_AdditionalExternalTurnoutFeedbackDifferent", tulTurnout._mTUL_AdditionalExternalTurnoutFeedbackDifferent));
-            element.addContent(additionalTurnout);
-        });
+        Element elementRow = createAdditionalTurnoutEntry(cbhd._mTUL_AdditionalExternalTurnout1, cbhd._mTUL_AdditionalExternalTurnout1FeedbackDifferent);
+        if (elementRow != null) element.addContent(elementRow);
+        elementRow = createAdditionalTurnoutEntry(cbhd._mTUL_AdditionalExternalTurnout2, cbhd._mTUL_AdditionalExternalTurnout2FeedbackDifferent);
+        if (elementRow != null) element.addContent(elementRow);
+        elementRow = createAdditionalTurnoutEntry(cbhd._mTUL_AdditionalExternalTurnout3, cbhd._mTUL_AdditionalExternalTurnout3FeedbackDifferent);
+        if (elementRow != null) element.addContent(elementRow);
+        return element;
+    }
+
+    Element createAdditionalTurnoutEntry(String turnoutName, boolean turnoutFeedback) {
+        Element element = null;
+        if (!(turnoutName == null || turnoutName.isEmpty())) {
+            element = new Element("TUL_AdditionalExternalTurnoutEntry");
+            element.addContent(storeString("TUL_AdditionalExternalTurnout", turnoutName));
+            element.addContent(storeBoolean("TUL_AdditionalExternalTurnoutFeedbackDifferent", turnoutFeedback));
+        }
         return element;
     }
 
@@ -407,7 +417,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 cbhd._mTUL_NoDispatcherControlOfSwitch = loadBoolean(lvl1.getChild("TUL_NoDispatcherControlOfSwitch"));
                 cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed = loadBoolean(lvl1.getChild("TUL_ndcos_WhenLockedSwitchStateIsClosed"));
                 cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(loadInt(lvl1.getChild("TUL_LockImplementation")));
-                cbhd._mTUL_AdditionalExternalTurnouts = getAdditionalTurnouts(lvl1.getChild("TUL_AdditionalExternalTurnouts"));
+                loadAdditionalTurnouts(lvl1.getChild("TUL_AdditionalExternalTurnouts"), cbhd);
 
                 // IL section
                 cbhd._mIL_Enabled = loadBoolean(lvl1.getChild("IL_Enabled"));
@@ -426,6 +436,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 }
             }
         }
+        CommonSubs.verifyInternalSensors();
         return true;
     }
 
@@ -668,19 +679,29 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return trlSwitches;
     }
 
-    ArrayList<CodeButtonHandlerData.AdditionalTurnout> getAdditionalTurnouts(Element element) {
-        ArrayList<CodeButtonHandlerData.AdditionalTurnout> tulTurnouts = new ArrayList<>();
+    void loadAdditionalTurnouts(Element element, CodeButtonHandlerData cbhd) {
         if (element != null) {
+            int rowNumber = 0;
             for (Element elTurnout : element.getChildren()) {
+                rowNumber++;
                 String turnout = loadString(elTurnout.getChild("TUL_AdditionalExternalTurnout"));
+                boolean feedback = loadBoolean(elTurnout.getChild("TUL_AdditionalExternalTurnoutFeedbackDifferent"));
                 if (turnout != null && !turnout.isEmpty()) {
-                    CodeButtonHandlerData.AdditionalTurnout newAdditionalTurnout = new CodeButtonHandlerData.AdditionalTurnout(
-                            turnout, loadBoolean(elTurnout.getChild("TUL_AdditionalExternalTurnoutFeedbackDifferent")));
-                    tulTurnouts.add(newAdditionalTurnout);
+                    if (rowNumber == 1) {
+                        cbhd._mTUL_AdditionalExternalTurnout1 = turnout;
+                        cbhd._mTUL_AdditionalExternalTurnout1FeedbackDifferent = feedback;
+                    }
+                    if (rowNumber == 2) {
+                        cbhd._mTUL_AdditionalExternalTurnout2 = turnout;
+                        cbhd._mTUL_AdditionalExternalTurnout2FeedbackDifferent = feedback;
+                    }
+                    if (rowNumber == 3) {
+                        cbhd._mTUL_AdditionalExternalTurnout3 = turnout;
+                        cbhd._mTUL_AdditionalExternalTurnout3FeedbackDifferent = feedback;
+                    }
                 }
             }
         }
-        return tulTurnouts;
     }
 
     @Override
