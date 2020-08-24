@@ -87,15 +87,38 @@ public interface Signal extends NamedBean {
     public void setLit(boolean newLit);
 
     /**
-     * Get whether the signal is held. Changes to this value can be listened to
-     * using the {@literal Held} property. It controls what mechanisms can
-     * control the signal's appearance. The actual semantics are defined by
-     * those external mechanisms.
-     *
+     * Get whether the signal is held. 
+     * The held state is input to whatever mechanism 
+     * controls the signal's appearance. 
+     * The actual semantics are defined by
+     * those external mechanisms. Generally, though, dispatcher code uses held
+     * to indicate that a signal should be held at STOP rather than letting
+     * trains proceed, even though the route may be otherwise available.
+     * <p>Changes to this value can be listened to
+     * using the {@literal Held} property.
+     * 
      * @return true if held; false otherwise
      */
     public boolean getHeld();
 
     public void setHeld(boolean newHeld);
+
+    /**
+     * Get whether the signal is in the permissive subset of the 
+     * the held state.  (This can only be true if {@link #getHeld()} is true) 
+     * The heldPermissive state is input to whatever mechanism 
+     * controls the signal's appearance. 
+     * The actual semantics are defined by
+     * those external mechanisms. Generally, though, dispatcher code uses heldPermissive
+     * to indicate that a signal should be allow travel under a RESTRICTING or similar rule.
+     * rather than holding them at an absolute STOP/
+     * <p>Changes to this value can be listened to
+     * using the {@literal HeldPermissive} property.
+     * 
+     * @return true if held; false otherwise
+     */
+    public boolean getHeldPermissive();
+
+    public void setHeldPermissive(boolean newHeld);
 
 }
