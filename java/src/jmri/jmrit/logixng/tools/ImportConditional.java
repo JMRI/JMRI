@@ -174,8 +174,6 @@ public class ImportConditional {
         for (int i=0; i < conditionalActions.size(); i++) {
             ConditionalAction ca = conditionalActions.get(i);
             
-            boolean triggerType = conditional.getTriggerOnChange();
-            
             OnChange.Trigger trigger;
             switch (ca.getOption()) {
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE:
