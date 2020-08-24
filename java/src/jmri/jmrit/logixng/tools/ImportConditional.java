@@ -284,7 +284,7 @@ public class ImportConditional {
                 expression.setSensorState(ExpressionSensor.SensorState.ACTIVE);
                 break;
             case SENSOR_INACTIVE:
-                expression.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+                expression.setSensorState(ExpressionSensor.SensorState.INACTIVE);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -361,7 +361,7 @@ public class ImportConditional {
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setTurnoutState(ActionTurnout.TurnoutState.CLOSED);
+                        action.setTurnoutState(ActionTurnout.TurnoutState.TOGGLE);
                         break;
                         
                     case Turnout.CLOSED:
