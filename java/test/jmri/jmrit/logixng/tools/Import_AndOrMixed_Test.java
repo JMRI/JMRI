@@ -48,7 +48,7 @@ public class Import_AndOrMixed_Test {
     // Test that the operator AND is imported correctly
     @Test
     public void testAnd() throws JmriException {
-        RunTest check = (message, expectSuccess) -> {
+        RunTestScaffold check = (message, expectSuccess) -> {
             s1.setState(Sensor.INACTIVE);
             s2.setState(Sensor.INACTIVE);
             s3.setState(Sensor.INACTIVE);
@@ -80,7 +80,6 @@ public class Import_AndOrMixed_Test {
             // This should throw the turnout if the logix/logixng is active
             s1.setState(Sensor.ACTIVE);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
-            
         };
         
         check.runTest("Logix is not activated", false);
@@ -166,12 +165,12 @@ public class Import_AndOrMixed_Test {
     // Test that the operator OR is imported correctly
     @Test
     public void testOr() throws JmriException {
-        RunTest check = (message, expectSuccess) -> {
+        RunTestScaffold check = (message, expectSuccess) -> {
             s1.setState(Sensor.INACTIVE);
             s2.setState(Sensor.INACTIVE);
             s3.setState(Sensor.INACTIVE);
             t1.setState(Turnout.CLOSED);
-            // This should throw the turnout
+            // This should throw the turnout if the logix/logixng is active
             s2.setState(Sensor.ACTIVE);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
             
@@ -181,24 +180,23 @@ public class Import_AndOrMixed_Test {
             t1.setState(Turnout.CLOSED);
             // This should not throw the turnout
             s1.setState(Sensor.ACTIVE);
-            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
             
             s1.setState(Sensor.ACTIVE);
             s2.setState(Sensor.INACTIVE);
             s3.setState(Sensor.ACTIVE);
             t1.setState(Turnout.CLOSED);
-            // This should throw the turnout if the logix/logixng is active
+            // This should not throw the turnout
             s2.setState(Sensor.ACTIVE);
-            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
             
             s1.setState(Sensor.INACTIVE);
             s2.setState(Sensor.ACTIVE);
             s3.setState(Sensor.ACTIVE);
             t1.setState(Turnout.CLOSED);
-            // This should throw the turnout if the logix/logixng is active
+            // This should not throw the turnout
             s1.setState(Sensor.ACTIVE);
-            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
-            
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
         };
         
         check.runTest("Logix is not activated", false);
@@ -272,7 +270,7 @@ public class Import_AndOrMixed_Test {
     // Test that the operator MIXED is imported correctly
     @Test
     public void testMixed() throws JmriException {
-        RunTest check = (message, expectSuccess) -> {
+        RunTestScaffold check = (message, expectSuccess) -> {
             s1.setState(Sensor.INACTIVE);
             s2.setState(Sensor.INACTIVE);
             s3.setState(Sensor.INACTIVE);
@@ -281,7 +279,7 @@ public class Import_AndOrMixed_Test {
             s2.setState(Sensor.ACTIVE);
             assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
             
-            s1.setState(Sensor.ACTIVE);
+            s1.setState(Sensor.INACTIVE);
             s2.setState(Sensor.INACTIVE);
             s3.setState(Sensor.INACTIVE);
             t1.setState(Turnout.CLOSED);
@@ -299,7 +297,7 @@ public class Import_AndOrMixed_Test {
             
             s1.setState(Sensor.ACTIVE);
             s2.setState(Sensor.INACTIVE);
-            s3.setState(Sensor.ACTIVE);
+            s3.setState(Sensor.INACTIVE);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if the logix/logixng is active
             s2.setState(Sensor.ACTIVE);
@@ -408,8 +406,8 @@ public class Import_AndOrMixed_Test {
         conditional = conditionalManager.createNewConditional("IX1C1", "First conditional");
         logix.addConditional(conditional.getSystemName(), 0);
         
+        conditional.setTriggerOnChange(true);
         conditional.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
-        conditional.setTriggerOnChange(false);
         
         variables = new ArrayList<>();
         conditional.setStateVariables(variables);
@@ -426,10 +424,4 @@ public class Import_AndOrMixed_Test {
     
     
     
-    public interface RunTest {
-        public void runTest(String message, boolean expectSuccess) throws JmriException;
-    }
-    
-    
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportTest.class);
 }

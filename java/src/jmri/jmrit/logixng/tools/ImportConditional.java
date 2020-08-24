@@ -69,6 +69,8 @@ public class ImportConditional {
 //        IfThenElse ifThen = new IfThenElse(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null, type);
         Logix logix = new Logix(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         
+        logix.setExecuteOnChange(_conditional.getTriggerOnChange());
+        
         Conditional.AntecedentOperator ao = _conditional.getLogicType();
         String antecedentExpression = _conditional.getAntecedentExpression();
         List<ConditionalVariable> conditionalVariables = _conditional.getCopyOfStateVariables();

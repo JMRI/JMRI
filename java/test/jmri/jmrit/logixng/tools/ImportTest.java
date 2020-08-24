@@ -45,11 +45,208 @@ public class ImportTest {
         }
     }
     
-    // Test that TriggerOnChange is imported correctly
+    // Test that TriggerOnChange == true is imported correctly
     @Test
-    public void testTriggerOnChange() {
-        conditional.setTriggerOnChange(false);
+    public void testTriggerOnChange_True() throws JmriException {
+        RunTest check = (message, expectSuccess) -> {
+            // Trigger on change is true. No change in result of evaluation
+            // so actions should not be executed.
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should not throw the turnout
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, true, t1.getState() == Turnout.CLOSED);
+            
+            // Trigger on change is true. The result of evaluation has changed
+            // so actions should be executed.
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.ACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+        };
+        
+        check.runTest("Logix is not activated", false);
+        
         conditional.setTriggerOnChange(true);
+        conditional.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
+        ConditionalVariable cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS1");
+        variables.add(cv);
+        
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS2");
+        variables.add(cv);
+        
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS3");
+        variables.add(cv);
+        
+        ConditionalAction ca = new DefaultConditionalAction();
+        ca.setOption(Conditional.ACTION_OPTION_ON_CHANGE);
+        ca.setType(Conditional.Action.SET_TURNOUT);
+        ca.setActionData(Turnout.THROWN);
+        ca.setDeviceName("IT1");
+        actions.add(ca);
+        
+        check.runTest("Logix is not activated", false);
+        
+        logixManager.activateAllLogixs();
+        
+        check.runTest("Logix is activated", true);
+        
+        logix.deActivateLogix();
+        
+        // Import the logix to LogixNG
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+        
+        logixManager.deleteLogix(logix);
+        
+        check.runTest("Logix is removed and LogixNG is not activated", false);
+        
+        // We want the conditionalNGs run immediately during this test
+        for (ConditionalNG conditionalNG : InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet()) {
+            conditionalNG.setRunOnGUIDelayed(false);
+        }
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        
+        check.runTest("LogixNG is activated", true);
+        
+        importLogix.getLogixNG().deActivateLogixNG();
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
+        
+        check.runTest("LogixNG is removed", false);
+    }
+    
+    // Test that TriggerOnChange == false is imported correctly
+    @Test
+    public void testTriggerOnChange_False() throws JmriException {
+        RunTest check = (message, expectSuccess) -> {
+            // Trigger on change is false. No change in result of evaluation
+            // but actions should be executed anyway.
+            s1.setState(Sensor.INACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.INACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+            
+            // Trigger on change is false. The result of evaluation has changed
+            // and actions should be executed in any case.
+            s1.setState(Sensor.ACTIVE);
+            s2.setState(Sensor.INACTIVE);
+            s3.setState(Sensor.ACTIVE);
+            t1.setState(Turnout.CLOSED);
+            // This should throw the turnout if the logix/logixng is active
+            s2.setState(Sensor.ACTIVE);
+            assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
+        };
+        
+        check.runTest("Logix is not activated", false);
+        
+        conditional.setTriggerOnChange(false);
+        conditional.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
+        ConditionalVariable cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS1");
+        variables.add(cv);
+        
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS2");
+        variables.add(cv);
+        
+        cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.SENSOR_ACTIVE);
+        cv.setName("IS3");
+        variables.add(cv);
+        
+        ConditionalAction ca = new DefaultConditionalAction();
+        ca.setOption(Conditional.ACTION_OPTION_ON_CHANGE);
+        ca.setType(Conditional.Action.SET_TURNOUT);
+        ca.setActionData(Turnout.THROWN);
+        ca.setDeviceName("IT1");
+        actions.add(ca);
+        
+        check.runTest("Logix is not activated", false);
+        
+        logixManager.activateAllLogixs();
+        
+        check.runTest("Logix is activated", true);
+        
+        logix.deActivateLogix();
+        
+        // Import the logix to LogixNG
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+        
+        logixManager.deleteLogix(logix);
+        
+        check.runTest("Logix is removed and LogixNG is not activated", false);
+/*        
+        System.err.println("-------------------------------------------");
+        java.io.PrintWriter p = new java.io.PrintWriter(System.err);
+        for (jmri.jmrit.logixng.LogixNG l : InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet()) {
+            System.err.println("LogixNG: " + l.getSystemName());
+            System.err.println("ConditionalNG: " + l.getConditionalNG(0).getSystemName());
+            l.printTree(p, "   ");
+            p.flush();
+        }
+        System.err.println("-------------------------------------------");
+*/        
+        // We want the conditionalNGs run immediately during this test
+        for (ConditionalNG conditionalNG : InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet()) {
+            conditionalNG.setRunOnGUIDelayed(false);
+        }
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        
+        check.runTest("LogixNG is activated", true);
+        
+        importLogix.getLogixNG().deActivateLogixNG();
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
+        
+        check.runTest("LogixNG is removed", false);
     }
     
     @Test
@@ -103,8 +300,8 @@ public class ImportTest {
         conditional = conditionalManager.createNewConditional("IX1C1", "First conditional");
         logix.addConditional(conditional.getSystemName(), 0);
         
+        conditional.setTriggerOnChange(true);
         conditional.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
-        conditional.setTriggerOnChange(false);
         
         variables = new ArrayList<>();
         conditional.setStateVariables(variables);
