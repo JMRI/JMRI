@@ -2674,6 +2674,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 scrollY - scrollBounds.getMinY());
         newClipRect = MathUtil.scale(newClipRect, 1.0 / getZoom());
         newClipRect = MathUtil.granulize(newClipRect, 1.0); // round to nearest pixel
+
+        //clear graphics clipping rectangle (to prevent culling)
+        Graphics g = this.getGraphics();
+        if (g != null) {
+            g.setClip(MathUtil.zeroToInfinityRectangle2D);
+        }
+        //set the clipping rectangle in the component instead
         layoutEditorComponent.setClip(newClipRect);
     }
 
@@ -7384,9 +7391,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // which calls draw.
         // This is so the layout is drawn at level three
         // (above or below the Positionables)
-
-        //This prevents the LE component from being culled from drawing
-        g.setClip(MathUtil.zeroToInfinityRectangle2D);
     }
 
     // get selection rectangle
