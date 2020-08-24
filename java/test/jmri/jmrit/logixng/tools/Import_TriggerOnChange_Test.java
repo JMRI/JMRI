@@ -24,7 +24,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist (C) 2020
  */
-public class ImportTest {
+public class Import_TriggerOnChange_Test {
     
     Sensor s1;
     Sensor s2;
@@ -328,5 +328,5 @@ public class ImportTest {
     }
     
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportTest.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Import_TriggerOnChange_Test.class);
 }
