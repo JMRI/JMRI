@@ -39,7 +39,7 @@
       <a href=
       "../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">
       Decoder Definition</a> for the basic LocoIO device in the
-      "Public Domain and DIY" category.</p>
+      "Public Domain and DIY" category. Supports up to rev 1.54 hardware per 2020.</p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
