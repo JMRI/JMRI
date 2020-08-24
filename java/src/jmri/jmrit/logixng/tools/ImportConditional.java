@@ -55,7 +55,7 @@ public class ImportConditional {
                 .createConditionalNG(conditionalNG_SysName, userName);
         
 //        log.debug("Import Logix {} to LogixNG {}", _logix.getSystemName(), _logixNG.getSystemName());
-        log.error("AA: Import Conditional {} to ConditionalNG {}", _conditional.getSystemName(), _conditionalNG.getSystemName());
+//        log.error("AA: Import Conditional {} to ConditionalNG {}", _conditional.getSystemName(), _conditionalNG.getSystemName());
     }
     
     public ConditionalNG getConditionalNG() {

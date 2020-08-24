@@ -37,7 +37,7 @@ public class ImportLogix {
     public void doImport() throws JmriException {
         for (int i=0; i < _logix.getNumConditionals(); i++) {
             Conditional c = _logix.getConditional(_logix.getConditionalByNumberOrder(i));
-            log.error("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName());
+//            log.error("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName());
             ImportConditional ic = new ImportConditional(
                     _logix, c, _logixNG,
                     InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
