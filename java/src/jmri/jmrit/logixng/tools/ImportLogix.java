@@ -50,9 +50,16 @@ public class ImportLogix {
 //                ex.printStackTrace();
                 log.error("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName(), ex);
             }
+            
+            ic.getConditionalNG().setEnabled(true);
+            _logixNG.setEnabled(true);
+//            _logix.activateLogix();
         }
     }
     
+    public LogixNG getLogixNG() {
+        return _logixNG;
+    }
     
     private final static Logger log = LoggerFactory.getLogger(ImportLogix.class);
 

@@ -9,13 +9,13 @@ import jmri.JmriException;
  * @author Daniel Bergqvist Copyright 2018
  */
 public interface DigitalExpression extends Base {
-    
+/*    
     public enum TriggerCondition {
         TRUE,
         FALSE,
         CHANGE
     }
-    
+*/    
     /**
      * Evaluate this expression.
      * 
@@ -31,5 +31,19 @@ public interface DigitalExpression extends Base {
      * is reset().
      */
     public void reset();
+    
+    /**
+     * Set whenether this expression should trigger the ConditionalNG if the
+     * named beans it listens to changes state.
+     * @param triggerOnChange true if trigger on change, false otherwise
+     */
+    public void setTriggerOnChange(boolean triggerOnChange);
+    
+    /**
+     * Get whenether this expression should trigger the ConditionalNG if the
+     * named beans it listens to changes state.
+     * @return true if trigger on change, false otherwise
+     */
+    public boolean getTriggerOnChange();
     
 }

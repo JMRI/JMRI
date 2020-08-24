@@ -2,28 +2,31 @@ package jmri.jmrit.logixng.tools;
 
 import java.util.List;
 
-import jmri.*;
+import javax.annotation.Nonnull;
+
+import jmri.Conditional;
+import jmri.ConditionalAction;
+import jmri.ConditionalVariable;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.Light;
+import jmri.Memory;
+import jmri.NamedBean;
+import jmri.Sensor;
+import jmri.Turnout;
+import jmri.NamedBean;
+import jmri.SignalHead;
+import jmri.SignalMast;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
-import jmri.jmrit.logixng.digital.actions.Many;
-import jmri.jmrit.logixng.digital.expressions.And;
-import jmri.jmrit.logixng.digital.expressions.Antecedent;
-import jmri.jmrit.logixng.digital.expressions.Or;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.digital.actions.*;
+import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
+import jmri.jmrit.logixng.digital.expressions.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.DigitalActionBean;
 
 /**
  * Imports Logixs to LogixNG
@@ -33,11 +36,12 @@ import jmri.jmrit.logixng.DigitalActionBean;
 public class ImportConditional {
 
 //    private final Logix _logix;
-    private final Conditional _conditional;
+    private final jmri.Conditional _conditional;
 //    private final LogixNG _logixNG;
     private final ConditionalNG _conditionalNG;
     
-    public ImportConditional(Logix logix, Conditional conditional, LogixNG logixNG, String conditionalNG_SysName) {
+    public ImportConditional(jmri.Logix logix, Conditional conditional,
+            LogixNG logixNG, String conditionalNG_SysName) {
         
 //        _logix = logix;
         _conditional = conditional;
@@ -59,11 +63,11 @@ public class ImportConditional {
     }
     
     public void doImport() throws SocketAlreadyConnectedException, JmriException {
-        boolean triggerOnChange = _conditional.getTriggerOnChange();
-        IfThenElse.Type type = triggerOnChange ? IfThenElse.Type.TRIGGER_ACTION : IfThenElse.Type.CONTINOUS_ACTION;
+//        boolean triggerOnChange = _conditional.getTriggerOnChange();
+//        IfThenElse.Type type = triggerOnChange ? IfThenElse.Type.TRIGGER_ACTION : IfThenElse.Type.CONTINOUS_ACTION;
         
-        // This will fail, but fix it later.
-        IfThenElse ifThen = new IfThenElse(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null, type);
+//        IfThenElse ifThen = new IfThenElse(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null, type);
+        Logix logix = new Logix(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         
         Conditional.AntecedentOperator ao = _conditional.getLogicType();
         String antecedentExpression = _conditional.getAntecedentExpression();
@@ -79,8 +83,7 @@ public class ImportConditional {
                 expression = new Or(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
                 break;
             case MIXED:
-                // This will fail, but fix it later.
-                expression = new Antecedent("", null);
+                expression = new Antecedent(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
                 ((Antecedent)expression).setAntecedent(antecedentExpression);
                 break;
             default:
@@ -88,21 +91,23 @@ public class ImportConditional {
         }
         buildExpression(expression, conditionalVariables);
         
-        DigitalActionBean action = new Many(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        buildAction(action, conditionalActions);
+//        DigitalActionBean action = new Many(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        buildAction(logix, _conditional, conditionalActions);
         
         MaleSocket expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-        ifThen.getChild(0).connect(expressionSocket);
+        logix.getChild(0).connect(expressionSocket);
         
-        MaleSocket ifThenAction = InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThen);
-        _conditionalNG.getChild(0).connect(ifThenAction);
+        MaleSocket logixAction = InstanceManager.getDefault(DigitalActionManager.class).registerAction(logix);
+        _conditionalNG.getChild(0).connect(logixAction);
     }
     
     
-    private void buildExpression(DigitalExpressionBean expression, List<ConditionalVariable> conditionalVariables) throws SocketAlreadyConnectedException {
+    private void buildExpression(DigitalExpressionBean expression, List<ConditionalVariable> conditionalVariables)
+            throws SocketAlreadyConnectedException, JmriException {
         for (int i=0; i < conditionalVariables.size(); i++) {
-            ConditionalVariable cv = conditionalVariables.get(i);
-            NamedBean nb = cv.getNamedBeanData();
+            jmri.ConditionalVariable cv = conditionalVariables.get(i);
+            NamedBean nb = cv.getBean();
+//            NamedBean nb = cv.getNamedBeanData();
             DigitalExpressionBean newExpression;
             switch (cv.getType().getItemType()) {
                 case SENSOR:
@@ -161,154 +166,264 @@ public class ImportConditional {
     }
     
     
-    private void buildAction(DigitalActionBean action, List<ConditionalAction> conditionalActions) throws SocketAlreadyConnectedException {
+    private void buildAction(Logix logix, Conditional conditional, List<ConditionalAction> conditionalActions)
+            throws SocketAlreadyConnectedException, JmriException {
+        
         for (int i=0; i < conditionalActions.size(); i++) {
             ConditionalAction ca = conditionalActions.get(i);
-            NamedBean nb = ca.getBean();
-            DigitalActionBean newAction;
-            switch (ca.getType().getItemType()) {
-                case SENSOR:
-                    Sensor sn = (Sensor)nb;
-                    newAction = getSensorAction(ca, sn);
+            
+            boolean triggerType = conditional.getTriggerOnChange();
+            
+            OnChange.Trigger trigger;
+            switch (ca.getOption()) {
+                case Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE:
+                    trigger = OnChange.Trigger.CHANGE_TO_TRUE;
                     break;
-                case TURNOUT:
-                    Turnout tn = (Turnout)nb;
-                    newAction = getTurnoutAction(ca, tn);
+                    
+                case Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE:
+                    trigger = OnChange.Trigger.CHANGE_TO_FALSE;
                     break;
-                case MEMORY:
-                    Memory my = (Memory)nb;
-                    newAction = getMemoryAction(ca, my);
+                    
+                case Conditional.ACTION_OPTION_ON_CHANGE:
+                    trigger = OnChange.Trigger.CHANGE;
                     break;
-                case LIGHT:
-                    Light l = (Light)nb;
-                    newAction = getLightAction(ca, l);
-                    break;
-                case SIGNALHEAD:
-                    SignalHead s = (SignalHead)nb;
-                    newAction = getSignalHeadAction(ca, s);
-                    break;
-                case SIGNALMAST:
-                    SignalMast sm = (SignalMast)nb;
-                    newAction = getSignalMastAction(ca, sm);
-                    break;
-                case ENTRYEXIT:
-//                    NamedBean nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(_name);
-//                    newAction = getSensorAction(cv, sn);
-                    newAction = null;
-                    break;
-                case CONDITIONAL:
-                    Conditional c = (Conditional)nb;
-                    newAction = getConditionalAction(ca, c);
-                    break;
-                case WARRANT:
-                    Warrant w = (Warrant)nb;
-                    newAction = getWarrantAction(ca, w);
-                    break;
-                case OBLOCK:
-                    OBlock b = (OBlock)nb;
-                    newAction = getOBlockAction(ca, b);
-                    break;
-
+                    
                 default:
-                    newAction = null;
-                    log.warn("Unexpected type in ImportConditional.doImport(): {} -> {}", ca.getType(), ca.getType().getItemType());
-                    break;
+                    throw new InvalidConditionalActionException(
+                            Bundle.getMessage("ActionBadTrigger", ca.getOption()));
             }
             
-            if (newAction != null) {
-                MaleSocket newActionSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(newAction);
-                action.getChild(i).connect(newActionSocket);
-            }
+            DigitalBooleanActionBean booleanAction =
+                    new OnChange(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null, trigger);
+            
+            buildAction(booleanAction, ca);
+            
+            MaleSocket newBooleanActionSocket = InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(booleanAction);
+            logix.getChild(i+1).connect(newBooleanActionSocket);
+        }
+    }
+    
+    private void buildAction(DigitalBooleanActionBean action, ConditionalAction conditionalAction)
+            throws SocketAlreadyConnectedException, JmriException {
+        
+        NamedBean nb = conditionalAction.getBean();
+        System.err.format("nb: %s%n", nb == null ? null : nb.getSystemName());
+        DigitalActionBean newAction;
+        switch (conditionalAction.getType().getItemType()) {
+            case SENSOR:
+                Sensor sn = (Sensor)nb;
+                newAction = getSensorAction(conditionalAction, sn);
+                break;
+            case TURNOUT:
+                Turnout tn = (Turnout)nb;
+                newAction = getTurnoutAction(conditionalAction, tn);
+                break;
+            case MEMORY:
+                Memory my = (Memory)nb;
+                newAction = getMemoryAction(conditionalAction, my);
+                break;
+            case LIGHT:
+                Light l = (Light)nb;
+                newAction = getLightAction(conditionalAction, l);
+                break;
+            case SIGNALHEAD:
+                SignalHead s = (SignalHead)nb;
+                newAction = getSignalHeadAction(conditionalAction, s);
+                break;
+            case SIGNALMAST:
+                SignalMast sm = (SignalMast)nb;
+                newAction = getSignalMastAction(conditionalAction, sm);
+                break;
+            case ENTRYEXIT:
+//                    NamedBean nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(_name);
+//                    newAction = getSensorAction(cv, sn);
+                newAction = null;
+                break;
+            case CONDITIONAL:
+                Conditional c = (Conditional)nb;
+                newAction = getConditionalAction(conditionalAction, c);
+                break;
+            case WARRANT:
+                Warrant w = (Warrant)nb;
+                newAction = getWarrantAction(conditionalAction, w);
+                break;
+            case OBLOCK:
+                OBlock b = (OBlock)nb;
+                newAction = getOBlockAction(conditionalAction, b);
+                break;
+
+            default:
+                newAction = null;
+                log.warn("Unexpected type in ImportConditional.doImport(): {} -> {}", conditionalAction.getType(), conditionalAction.getType().getItemType());
+                break;
+        }
+
+        if (newAction != null) {
+            MaleSocket newActionSocket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(newAction);
+            action.getChild(0).connect(newActionSocket);
         }
     }
     
     
-    private DigitalExpressionBean getSensorExpression(ConditionalVariable cv, Sensor sn) {
+    private DigitalExpressionBean getSensorExpression(@Nonnull ConditionalVariable cv, Sensor sn) throws JmriException {
+        ExpressionSensor expression =
+                new ExpressionSensor(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        System.err.format("Sensor: %s%n", sn == null ? null : sn.getSystemName());
+        
+        expression.setSensor(sn);
+        
+//        cv.getDataString();     // SignalMast, Memory, OBlock
+//        cv.getNamedBeanData();  // Only for memory
+//        cv.getNum1();   // Clock, Memory
+//        cv.getNum2();   // Clock, Memory
+        
+        switch (cv.getType()) {
+            case SENSOR_ACTIVE:
+                expression.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+                break;
+            case SENSOR_INACTIVE:
+                expression.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadSensorType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
+    }
+    
+    
+    private DigitalExpressionBean getTurnoutExpression(@Nonnull ConditionalVariable cv, Turnout tn) throws JmriException {
         return null;
     }
     
     
-    private DigitalExpressionBean getTurnoutExpression(ConditionalVariable cv, Turnout tn) {
+    private DigitalExpressionBean getMemoryExpression(@Nonnull ConditionalVariable cv, Memory my) throws JmriException {
         return null;
     }
     
     
-    private DigitalExpressionBean getMemoryExpression(ConditionalVariable cv, Memory my) {
+    private DigitalExpressionBean getLightExpression(@Nonnull ConditionalVariable cv, Light l) throws JmriException {
         return null;
     }
     
     
-    private DigitalExpressionBean getLightExpression(ConditionalVariable cv, Light l) {
+    private DigitalExpressionBean getSignalHeadExpression(@Nonnull ConditionalVariable cv, SignalHead s) throws JmriException {
         return null;
     }
     
     
-    private DigitalExpressionBean getSignalHeadExpression(ConditionalVariable cv, SignalHead s) {
+    private DigitalExpressionBean getSignalMastExpression(@Nonnull ConditionalVariable cv, SignalMast sm) throws JmriException {
         return null;
     }
     
     
-    private DigitalExpressionBean getSignalMastExpression(ConditionalVariable cv, SignalMast sm) {
+    private DigitalExpressionBean getConditionalExpression(@Nonnull ConditionalVariable cv, Conditional c) throws JmriException {
         return null;
     }
     
     
-    private DigitalExpressionBean getConditionalExpression(ConditionalVariable cv, Conditional c) {
+    private DigitalExpressionBean getWarrantExpression(@Nonnull ConditionalVariable cv, Warrant w) throws JmriException {
         return null;
     }
     
     
-    private DigitalExpressionBean getWarrantExpression(ConditionalVariable cv, Warrant w) {
+    private DigitalExpressionBean getOBlockExpression(@Nonnull ConditionalVariable cv, OBlock b) throws JmriException {
         return null;
     }
     
     
-    private DigitalExpressionBean getOBlockExpression(ConditionalVariable cv, OBlock b) {
+    private DigitalActionBean getSensorAction(@Nonnull ConditionalAction ca, Sensor sn) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getSensorAction(ConditionalAction ca, Sensor sn) {
+    private DigitalActionBean getTurnoutAction(@Nonnull ConditionalAction ca, Turnout tn) throws JmriException {
+        System.err.format("Turnout: %s%n", tn == null ? null : tn.getSystemName());
+        
+        ActionTurnout action;
+        
+//        cv.getDataString();     // SignalMast, Memory, OBlock
+//        cv.getNamedBeanData();  // Only for memory
+//        cv.getNum1();   // Clock, Memory
+//        cv.getNum2();   // Clock, Memory
+        
+        switch (ca.getType()) {
+            case SET_TURNOUT:
+                action = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class)
+                                .getAutoSystemName(), null);
+                
+                action.setTurnout(tn);
+                
+                switch (ca.getActionData()) {
+                    case jmri.Route.TOGGLE:
+                        action.setTurnoutState(ActionTurnout.TurnoutState.CLOSED);
+                        break;
+                        
+                    case Turnout.CLOSED:
+                        action.setTurnoutState(ActionTurnout.TurnoutState.CLOSED);
+                        break;
+                        
+                    case Turnout.THROWN:
+                        action.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
+                        break;
+                        
+                    default:
+                        throw new InvalidConditionalVariableException(
+                                Bundle.getMessage("ActionBadTurnoutState", ca.getActionData()));
+                }
+                break;
+            case RESET_DELAYED_TURNOUT:
+            case DELAYED_TURNOUT:
+            case CANCEL_TURNOUT_TIMERS:
+            case LOCK_TURNOUT:
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ActionBadTurnoutType", ca.getType().toString()));
+        }
+        
+//        ca.getActionData();
+//        action.setTriggerOnChange(ca.doTriggerActions());
+        
+        return action;
+    }
+    
+    
+    private DigitalActionBean getMemoryAction(@Nonnull ConditionalAction ca, Memory my) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getTurnoutAction(ConditionalAction ca, Turnout tn) {
+    private DigitalActionBean getLightAction(@Nonnull ConditionalAction ca, Light l) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getMemoryAction(ConditionalAction ca, Memory my) {
+    private DigitalActionBean getSignalHeadAction(@Nonnull ConditionalAction ca, SignalHead s) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getLightAction(ConditionalAction ca, Light l) {
+    private DigitalActionBean getSignalMastAction(@Nonnull ConditionalAction ca, SignalMast sm) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getSignalHeadAction(ConditionalAction ca, SignalHead s) {
+    private DigitalActionBean getConditionalAction(@Nonnull ConditionalAction ca, Conditional c) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getSignalMastAction(ConditionalAction ca, SignalMast sm) {
+    private DigitalActionBean getWarrantAction(@Nonnull ConditionalAction ca, Warrant w) throws JmriException {
         return null;
     }
     
     
-    private DigitalActionBean getConditionalAction(ConditionalAction ca, Conditional c) {
-        return null;
-    }
-    
-    
-    private DigitalActionBean getWarrantAction(ConditionalAction ca, Warrant w) {
-        return null;
-    }
-    
-    
-    private DigitalActionBean getOBlockAction(ConditionalAction ca, OBlock b) {
+    private DigitalActionBean getOBlockAction(@Nonnull ConditionalAction ca, OBlock b) throws JmriException {
         return null;
     }
     

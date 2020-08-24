@@ -67,6 +67,18 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
     
     /** {@inheritDoc} */
     @Override
+    public boolean getTriggerOnChange() {
+        return _expression.getTriggerOnChange();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void setTriggerOnChange(boolean triggerOnChange) {
+        _expression.setTriggerOnChange(triggerOnChange);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public Category getCategory() {
         return _expression.getCategory();
     }

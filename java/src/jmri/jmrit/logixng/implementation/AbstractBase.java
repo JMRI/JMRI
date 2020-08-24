@@ -102,16 +102,6 @@ public abstract class AbstractBase
         }
     }
     
-    /*.* {@inheritDoc} *./
-    @Override
-    public final void registerListeners() {
-        registerListenersInternal();
-//        registerListenersForThisClass();
-//        for (int i=0; i < getChildCount(); i++) {
-//            getChild(i).registerListeners();
-//        }
-    }
-*/    
     /** {@inheritDoc} */
     @Override
     public final void unregisterListeners() {

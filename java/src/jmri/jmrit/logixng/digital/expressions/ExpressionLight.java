@@ -192,7 +192,9 @@ public class ExpressionLight extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
+        if (getTriggerOnChange()) {
+            getConditionalNG().execute();
+        }
     }
     
     /** {@inheritDoc} */

@@ -182,7 +182,9 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
+        if (getTriggerOnChange()) {
+            getConditionalNG().execute();
+        }
     }
     
     /** {@inheritDoc} */

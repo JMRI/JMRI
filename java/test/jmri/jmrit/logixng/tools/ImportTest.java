@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import jmri.*;
 import jmri.implementation.*;
+import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.ConditionalNG_Manager;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.*;
 
@@ -128,28 +131,34 @@ public class ImportTest {
         logix.deActivateLogix();
         
         // Import the logix to LogixNG
-        new ImportLogix(logix).doImport();
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
         
         logixManager.deleteLogix(logix);
         
         check.runTest("Logix is removed and LogixNG is not activated", false);
         
-        // Not implemented yet
-//        Assume.assumeFalse(true);
+        // We want the conditionalNGs run immediately during this test
+        for (ConditionalNG conditionalNG : InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet()) {
+            conditionalNG.setRunOnGUIDelayed(false);
+        }
         
         InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
-        
+/*        
         System.err.println("-------------------------------------------");
         java.io.PrintWriter p = new java.io.PrintWriter(System.err);
         for (jmri.jmrit.logixng.LogixNG l : InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet()) {
             System.err.println("LogixNG: " + l.getSystemName());
             System.err.println("ConditionalNG: " + l.getConditionalNG(0).getSystemName());
             l.printTree(p, "   ");
+            p.flush();
         }
-        p.flush();
         System.err.println("-------------------------------------------");
-        
+*/        
         check.runTest("LogixNG is activated", true);
+        
+        importLogix.getLogixNG().deActivateLogixNG();
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);
     }
@@ -236,16 +245,26 @@ public class ImportTest {
         check.runTest("Logix is activated", true);
         
         logix.deActivateLogix();
+        
+        // Import the logix to LogixNG
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+        
         logixManager.deleteLogix(logix);
         
-        check.runTest("Logix is removed", false);
+        check.runTest("Logix is removed and LogixNG is not activated", false);
         
-        check.runTest("LogixNG is not activated", false);
+        // We want the conditionalNGs run immediately during this test
+        for (ConditionalNG conditionalNG : InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet()) {
+            conditionalNG.setRunOnGUIDelayed(false);
+        }
         
-        // Not implemented yet
-        Assume.assumeFalse(true);
+        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
         
         check.runTest("LogixNG is activated", true);
+        
+        importLogix.getLogixNG().deActivateLogixNG();
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);
     }
@@ -340,16 +359,26 @@ public class ImportTest {
         check.runTest("Logix is activated", true);
         
         logix.deActivateLogix();
+        
+        // Import the logix to LogixNG
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+        
         logixManager.deleteLogix(logix);
         
-        check.runTest("Logix is removed", false);
+        check.runTest("Logix is removed and LogixNG is not activated", false);
         
-        check.runTest("LogixNG is not activated", false);
+        // We want the conditionalNGs run immediately during this test
+        for (ConditionalNG conditionalNG : InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet()) {
+            conditionalNG.setRunOnGUIDelayed(false);
+        }
         
-        // Not implemented yet
-        Assume.assumeFalse(true);
+        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
         
         check.runTest("LogixNG is activated", true);
+        
+        importLogix.getLogixNG().deActivateLogixNG();
+        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);
     }

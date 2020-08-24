@@ -53,14 +53,14 @@ public class TestLogixCompatibilityTest {
     // Logix can execute action audio - control audio object
     // Logix can execute action script - run script, execute jython command
     // Logix can execute action other - trigger route
-    
+/*    
     @Test
     public void testEnum() {
         Assert.assertTrue("TRUE".equals(DigitalExpressionBean.TriggerCondition.TRUE.name()));
         Assert.assertTrue("FALSE".equals(DigitalExpressionBean.TriggerCondition.FALSE.name()));
         Assert.assertTrue("CHANGE".equals(DigitalExpressionBean.TriggerCondition.CHANGE.name()));
     }
-    
+*/    
     // The minimal setup for log4J
     @Before
     public void setUp() {

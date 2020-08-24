@@ -203,6 +203,16 @@ public class DigitalExpressionManagerTest {
         public void reset() {
             throw new UnsupportedOperationException("Not supported");
         }
+
+        @Override
+        public void setTriggerOnChange(boolean triggerOnChange) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public boolean getTriggerOnChange() {
+            throw new UnsupportedOperationException("Not supported");
+        }
         
     }
     
