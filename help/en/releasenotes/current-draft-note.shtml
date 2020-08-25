@@ -51,11 +51,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li><a href="https://www.jmri.org/help/en/html/hardware/loconet/Digitrax.shtml#deviceBoardId">
-                    Instructions</a> detailing how to change the Board ID (Board 
-                    Address) of certain Digitrax LocoNet-based devices using 
-                    JMRI have been added to the Digitrax hardware page.</li>
-                <li>Fixed a problem in the PM4Announce script</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -70,34 +66,12 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>When the connection is lost to a GridConnect Serial Device ( eg. CANUSB4 losing power /
-                Windows Sleep Modes ), JMRI will periodically attempt to reconnect to the device.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li>The MQTT temporary directory has been moved to the current profile directory.
-                    This will allow JMRI to have MQTT connections even when JMRI is installed
-                    in a protected location.
-                <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
-                <li>When status UNKNOWN or INCONSISTENT is received from MQTT 
-                    and the turnout operating mode is MONITORING or EXACT, 
-                    the layout is now updated with this status</li>
-                <li>When EXACT feedback mode is selected, 
-                    two different MQTT topics will be used - one for commands and one for state</li>
-                <li>Added MQTT Sensors</li>
-                <li>MQTT connection configuration now lets you set the prefix for Turnouts, Sensors,
-                        Lights, Reporters, Signal Heads and Signal Masts.  (There's no actual support
-                        for Lights, Reporters, Heads and Masts yet, but you can set the prefix).
-                        Note: You should check the settings for Turnouts and Sensors to ensure
-                        they're what you want.  This code upgrade might have overwritten any
-                        values you (had to) manually edit into preferences in the past.
-                <li>The new "jython/SendMqttMessage.py" sample script show how to
-                    send across an existing MQTT connection.
-                <li>The new "jython/ReceiveMqttMessage.py" is simple demo of 
-                    receiving MQTT messages into a script. It just prints the received messages,
-                    but you can build up from there.
-                    
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -182,8 +156,7 @@
 
         <h4>BLI</h4>
             <ul>
-                <li>
-                </li>
+                <li></li>
             </ul>
 
         <h4>BNM Hobbies</h4>
@@ -213,16 +186,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>Added LokPilot 5 Fx micro Next18 variants and Pullman Silberling.</li>
-            </ul>
-            <ul>
-                <li>Update for some new ESU firmware features.</li>
-            </ul>
-            <ul>
-                <li>Fix some errors.</li>
-            </ul>
-            <ul>
-                <li>F29-F31 now present in Function Labels pane for generation 5 decoders.</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -302,8 +266,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>
-                </li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -364,46 +327,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>The DecoderPro programming/editing screens now have a Find operation!
-                <p>
-                Ctrl-F or Cmd-F will open a small find bar at the bottom of the pane
-                where you can enter a search string.  Hitting Return will find the first 
-                occurrence. There are right and left arrows to find the next occurrence forward
-                and backwards respectively.  Ctrl-G or Cmd-G will also find the next forward
-                occurrence. Shift-Ctrl-G or Shift-Cmd-G will find the next occurrence going backwards.
-                The "Done" button will dismiss the 
-                bar, but you can leave it up without it interfering with anything.
-            </li>
-            <li>Added a new optional "maxFnNum" model-level attribute for Decoder Definitions.
-            <p>
-                <ul>
-                    <li>
-                        Specifies the highest F key supported by the decoder. The assumed default is "28".
-                    </li>
-                    <li>
-                        Note that `maxFnNum` is not to be confused with the existing `numFns`,
-                        a legacy attribute that limits the total number of function mapping lines displayed.
-                        Neither is derivable from the other.
-                    </li>
-                    <li>
-                        This value is currently used to build the Function Labels pane.
-                    </li>
-                   <li>
-                        This value is propagated to the Roster Index and intended to be used in future by throttles, etc.
-                    </li>
-                    <li>
-                        Example definitions are LokSound 5(uses F0-F31) and LokSound V3.5(uses only F0-F15).
-                    </li>
-                </ul>
-            <p>
-            </li>
-            <li>Added a new optional "allowResetDefaults" decoder-config level attribute for Decoder Definitions.
-                <p>
-                For some decoders, it's either impossible or impractical for the decoder definition
-                to have universally applicable defaults incorporated. In these cases,
-                setting allowResetDefaults="no" disables the "Reset to defaults" button on the Roster Entry pane
-                and provides an explanatory tooltip.
-            </li>
+            <li></li>
+        </ul>
+
+    <h3>CTC Tool</h3>
+        <a id="PE-CTC" name="PE-CTC"></a>
+        <ul>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -411,17 +341,12 @@
         <ul>
              <li></li>
         </ul>
-          
-   <h3>Dispatcher System</h3>
+
+    <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
         <ul>
-             <li>Jython based System which automates the build of a Dispatcher system</li>
-             <li>Requirement: Start with a Panel with track, signals, signal logic built with</li>
-             <li>automatic signal logic, sections built with automatic section builder</li>
-             <li>Provides Gui to: Modify xml of panel to provide icons to setup dispatch</li>
-             <li>between stops, Generate Transits and TrainInfo files required by dispatcher</li>
-             <li>Provides a runtime system to operate the system</li>
-        </ul>       
+             <li></li>
+        </ul>
 
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
@@ -449,121 +374,35 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Fixed problem where operations database was always saved when exiting JMRI.</li>
-            <li>Fixed problem with Panel name for train icons.</li>
-            <li>Fixed problem with track move count when track has an alternate track.</li>
+            <li></li>
         </ul>
 
-   <h3>CTC Tool</h3>
-        <a id="CTC-Tool" name="CTC-Tool"></a>
+   <h3>Panel Editor</h3>
+        <a id="PE" name="PE"></a>
         <ul>
-            <li>To correct prior release notes, the CTC panel can be created with Layout Editor, Control Panel Editor
-            or Panel Editor.</li>
-            <li>This release gets a new capability: Auto-Generation of Traffic Locking (TRL) rules, which is the most tedious
-            and difficult aspect of (any) CTC systems.  However, TRL Auto-Generation is <strong>dependent</strong> on Layout Editor, with Signal
-            Masts at block boundaries, and with automatically generated Signal Mast Logic.  The Signal Mast Logic
-            can be modified <strong>after</strong> discovery, but there has to be at least <strong>one</strong>
-            discovery process run.  After this process is complete, if you are not happy with the way Layout Editor
-            displays the layout, you can create a parallel Control Panel Editor or Panel Editor screen.  Personally, in
-            my opinion, Layout Editor looks very close to an actual CTC panel if drawn correctly.</li>
-            <li>There is a reminder dialog that was added to remind users of the CTC system that using "," (Comma) and
-            ";" (Semi-colon) in ANY of the System and User names for items used by the CTC system is <strong>not</strong>
-            supported, and may cause problems in the program.  The reminder can be silenced permanently too by the user.</li>
-            <li>When CTC Runtime starts (Run CTC Logic), if there are any problem(s), warning(s) or informational
-            message(s), it will now popup a dialog box to inform the user.  Previously, I relied on the System Console
-            for the logging of those messages (which still happens), but the System Console screen may not be
-            visible, ergo the need for this new feature.</li>
-            <li>Bug Fix: It was possible (though technically wrong) for a user to specify a single turnout as locked
-            in two (or more) <strong>different</strong> O.S. sections.  If this was specified, the runtime program would
-            fight itself and eventually cause a stack overflow.  This is now prevented during user entry from occurring.
-            If you have specified this prior to this release, you <strong>must</strong> manually correct this.</li>
-            <li>Bug Fix: There was a problem that occurred when certain Java libraries were used.  The CTC .xml file that
-            contains all of the data was slightly corrupted due it.  By just running this new version of CTC Editor, those
-            problems will <strong>automatically</strong> be fixed. You may then exit the CTC Editor even without saving,
-            as the fix will have already been done. (internal file version 5 to 6)</li>
-            <li>Bug Fix: If an O.S. section did <strong>not</strong> have a Signal Lever defined, it was
-            possible (though wrong) to enable Traffic Locking and / or Call On.  Now it is impossible to define either
-            if there is no Signal Lever defined <strong>properly</strong>.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>
-              The 'Circuit Builder' menu has been updated. See below.
-            </li><li>
-              The 'Edit Turnout Icon' menu item of Indicator Track popups synchronizes
-              paths with the 'Add/Edit Circuit Paths' window of Circuit Builder.
-            </li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
             <ul>
-                <li>
-                	A 'change Portal Icon Set' menu item is added to the 'Circuit Builder' menu of
-                	Control Panel Editor. User defined icon sets for Portals can be installed here.
-                </li><li>
-                	When using the 'Add/Edit Circuit Portal' window, the popup menu of a Portal
-                	now allows repositioning from the 'Set Location' menu item.
-                </li><li>
-                	Features added to the 'Add/Edit Signal Mast' window are;<br>
-                	1. A Signal list shows the signals that are configured to protect the block.<br>
-                	2. Buttons will open the Tables for creation, renaming and deletion of 
-                	both signal Masts and Signal Heads.<br>
-                	3. Signal icons can be dragged in the fashion of Item Palette from the window
-                	to the panel<br>
-                	4. Instructions for these operations are described on the window.
-                </li><li>
-                	Two new error alerts are added to the 'Error Checks' menu item of the 'Circuit
-                	Builder' menu.<br>
-                	1. OBlocks that do not have a block length are listed. Every Path in a block should
-                	have its length specified in order to run Warrants. But for convenience, this
-                	length can be inherited from the block length.<br>
-                	2. Signals that are not configured to protect a block are listed. If these signals
-                	have icons they can be highlighted with a corresponding menu Item.
-                </li>
+                <li></li>
             </ul>
         <h4>Palette</h4>
             <a id="CPE-P" name="CPE-P"></a>
-            Some minor changes are made to the user interface.
             <ul>
-                <li>
-                  For the tabs having icon sets, i.e. turnouts, sensors, etc., should all icon sets be deleted,
-                  a 'Restore Default' button is displayed to reinstall the default icons.
-                </li><li>
-                  The above restoration feature can be done at any time by holding keys CNTL A down while 
-                  clicking the 'New Icons' button.  All customized icon sets defined by the user are retained
-                  and any missing default icons are added.
-                </li><li>
-                  The unused functions to create, delete, or restore the status states of Indicator Turnouts 
-                  are now only displayable by holding keys CNTL A down while clicking the 'Edit Icons' button.
-                </li><li>
-                  Several new checks and alerts will inform users when duplicate names are used for 
-                  icon sets or when duplicate icon sets are found with different names.
-                </li><li>
-                  The fixed set of Portal icons may be redefined by the user under the 'Portal' tab.
-                  Portal icon sets created by the user may be selected for panels by a new menu item, 
-                  'Change Portal Icon Set' in Circuit Builder. The new set is then used for Warrant displays.
-                </li><li>
-                  The drag and drop of icons under the 'Icon' and 'Background' tabs no longer requires naming 
-                  the icon first. The drop from the Icon catalog can be done directly into the panel.
-                </li><li>
-				  The tabs having tables now display the element's actual table editing window when the 
-				  'Add New Table Item' button is pressed.
-                </li><li>
-                  Editing an icon set for an Indicator Turnout now follows the same paradigm as the rest of 
-                  the tabs having icon sets. Defining new icon sets, changing icons, or renaming sets functions
-                  the same for all such tab items.
-                </li>
+                <li></li>
             </ul>
-
+   
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>When a hardware connection fails, some hardware types may attempt to reconnect.<br>
-            The interval between reconnection attempts and the maximum number of reconnection attempts
-            can now be changed by saving your profile, then editing the profile.xml file.<br>
-            The reconnectMaxInterval is in seconds, reconnectMaxAttempts is infinite if -1, else the value.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -578,6 +417,12 @@
             <li></li>
         </ul>
 
+    <h3>Routes</h3>    
+        <a id="Routes" name="Routes"></a>
+       <ul>
+            <li></li>
+       </ul>
+       
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
@@ -587,9 +432,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Some internal refactoring that should help with the long term
-            maintenance of JMRI has been done. This may cause some scripts to
-            fail until classes or methods are renamed in those scripts.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -599,10 +442,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The B&amp;O-1980 signal system was updated to correct several
-                    errors and to include masts which can be used to protect a 
-                    block of "short braking distance".
-                </li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -686,41 +526,12 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>VSD now supports the "Location Following" (sound follows loco) with occupancy
-                sensors and JMRI Blocks. See the 
-				<a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#VSDLocations">
-                documentation</a> for details.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
-                interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
-                require changes to scripts.  If you have a script that references
-                jmri.jmrix.SystemConnectionMemo, please change it to either
-                jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
-                (it's easier to have you just try the two than to explain which 
-                one will work in which case)</li>
-            <li>Added PR automation to check for a comment in the release note when a PR
-                is opened, and to ensure that somebody has been assigned to the PR.</li>
-            <li>The jmri.JmriPlugin class is deprecated without a replacement. If you depend on
-	              on this class, please <a href="https://github.com/JMRI/JMRI/issues/new">raise an issue on GitHub</a>
-		            so we can discuss how to meet your requirements through other means.</li>
-            <li>"Display Message Log" has been removed from the Debug Menu. Use the
-                "System Console" from the Help Menu to view log messages.</li>
-            <li>The older "Upload Debugging Information" item
-                in the help menu has been replaced by 
-                a "Report Issue..." item.  This walks you through creating a
-                <a href="https://github.com/JMRI/JMRI/issues">JMRI GitHub issue</a> and uploads information 
-                that will make debugging easier.  You need a (free)
-                GitHub account to do the final submission.
-                There's more info on the 
-                <a href="https://jmri.org/help/en/package/apps/util/issuereporter/swing/IssueReporter.shtml">help page</a>.
-            <li>The interface jmri.Light has been split into jmri.Light and jmri.VariableLight. Lights
-                that supports variable intensity must now implement the jmri.VariableLight interface.
-                All lights are still managed by the jmri.LightManager, but a new manager jmri.VariableLightManager
-                has been added that keeps a copy of the VariableLights. But register and deregister of
-                all lights must still be done thru the LightManager.</li>
+            <li></li>
         </ul>
 
