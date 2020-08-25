@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DragSourceDropEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -23,6 +22,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jmri.NamedBean;
 import jmri.jmrit.beantable.AbstractTableAction;
+import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.beantable.TurnoutTableAction;
 import jmri.jmrit.beantable.SensorTableAction;
 import jmri.jmrit.beantable.LightTableAction;
@@ -293,11 +293,15 @@ public class TableItemPanel<E extends NamedBean> extends FamilyItemPanel impleme
     }
 
     @Override
-    public void dispose() {
+    public void closeDialogs() {
         if (_tableAction != null) {
             _tableAction.dispose();
+            BeanTableFrame<E> frame = _tableAction.getFrame();
+            if (frame != null) {
+                frame.dispose();
+            }
         }
-        super.dispose();
+        super.closeDialogs();
     }
 
     /** {@inheritDoc} */

@@ -489,12 +489,39 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>
+              The 'Circuit Builder' menu has been updated. See below.
+            </li><li>
+              The 'Edit Turnout Icon' menu item of Indicator Track popups synchronizes
+              paths with the 'Add/Edit Circuit Paths' window of Circuit Builder.
+            </li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
             <ul>
-                <li></li>
+                <li>
+                	A 'change Portal Icon Set' menu item is added to the 'Circuit Builder' menu of
+                	Control Panel Editor. User defined icon sets for Portals can be installed here.
+                </li><li>
+                	When using the 'Add/Edit Circuit Portal' window, the popup menu of a Portal
+                	now allows repositioning from the 'Set Location' menu item.
+                </li><li>
+                	Features added to the 'Add/Edit Signal Mast' window are;<br>
+                	1. A Signal list shows the signals that are configured to protect the block.<br>
+                	2. Buttons will open the Tables for creation, renaming and deletion of 
+                	both signal Masts and Signal Heads.<br>
+                	3. Signal icons can be dragged in the fashion of Item Palette from the window
+                	to the panel<br>
+                	4. Instructions for these operations are described on the window.
+                </li><li>
+                	Two new error alerts are added to the 'Error Checks' menu item of the 'Circuit
+                	Builder' menu.<br>
+                	1. OBlocks that do not have a block length are listed. Every Path in a block should
+                	have its length specified in order to run Warrants. But for convenience, this
+                	length can be inherited from the block length.<br>
+                	2. Signals that are not configured to protect a block are listed. If these signals
+                	have icons they can be highlighted with a corresponding menu Item.
+                </li>
             </ul>
         <h4>Palette</h4>
             <a id="CPE-P" name="CPE-P"></a>
@@ -525,10 +552,11 @@
 				  'Add New Table Item' button is pressed.
                 </li><li>
                   Editing an icon set for an Indicator Turnout now follows the same paradigm as the rest of 
-                  the tabs having icon sets.
+                  the tabs having icon sets. Defining new icon sets, changing icons, or renaming sets functions
+                  the same for all such tab items.
                 </li>
             </ul>
-   
+
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>

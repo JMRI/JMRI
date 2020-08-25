@@ -129,7 +129,8 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        if (property.equals("length") || property.equals("UserName")) {
+        if (property.equals("length") || property.equals("UserName") ||
+                property.equals("portalCount") ) {
             fireTableDataChanged();
         }
     }
