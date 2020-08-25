@@ -46,11 +46,11 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 4.21.1 4.21.2 4.21.2
+  ./scripts/update-HOWTO.sh 4.19.9 4.21.1 4.21.2
 ```
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
 
-- To check the script ran OK, the following should be the release you're doing now: 4.21.1
+- To check the script ran OK, the following should be the release you're doing now: 4.19.9
 
 ================================================================================
 ## Notification
@@ -184,7 +184,7 @@ git push github
 
 - Check if any section headings were added to the release-note fragment
 
-    diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri4.19-master.shtml
+    diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri4.21-master.shtml
     
     If there were, update the master
 
@@ -201,7 +201,7 @@ git push github
 
 - Create the new draft note section
 
-    cp help/en/releasenotes/jmri4.19-master.shtml help/en/releasenotes/current-draft-note.shtml
+    cp help/en/releasenotes/jmri4.21-master.shtml help/en/releasenotes/current-draft-note.shtml
     cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
     git commit -m"start for 4.22.2 release note" help/en/releasenotes/*.shtml
     git push github
@@ -472,7 +472,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.22.2". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.20 cycle. It's intended to be created from the `HEAD` of the `master` branch.
+This is the next release in the 4.22 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 
 - Confirm that the tag for the current release (v4.21.1 for release 4.21.1) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.21.1) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
@@ -526,7 +526,7 @@ git push github
 
 - Mail announcement to jmriusers@groups.io
 
-    Subject is "Test version 4.21.1 of JMRI/DecoderPro is available for download" or "JMRI 4.20 is available for download"
+    Subject is "Test version 4.21.1 of JMRI/DecoderPro is available for download" or "JMRI 4.22 is available for download"
 
     Content:
     
