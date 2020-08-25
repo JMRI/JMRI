@@ -55,7 +55,11 @@ then manually update the end of that line above in this document to be this vers
 ================================================================================
 ## Notification
 
-- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-4.21.1". (This might already exist, if it was properly created at the end of the last build cycle)
+- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.21.1". (This might already exist, if it was properly created at the end of the last build cycle)  Typical content:
+```
+This is the next release in the 4.22 cycle. It's intended to be created from the HEAD of the master branch.
+```
+
 
 ================================================================================
 ## Update Content
@@ -172,6 +176,7 @@ git push github
         git checkout master
         git pull 
         cp jmri4.21.1.shtml jmri4.22.2.shtml
+        $EDITOR jmri4.22.2.shtml
         (edit the new release note accordingly)
             change numbers throughout
             move new warnings to old (see below)
@@ -217,7 +222,7 @@ git push github
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2020-03-01+
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2020-06-01+
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
@@ -243,7 +248,7 @@ where the date at the end should be the date (and optionally time) of the last r
 
 - (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the next release:
 ```
-    <version>4.22.2</version>
+    <version>4.21.2-SNAPSHOT</version>
 ```
 Commit, and push back directly to master (this should be the only change, and has to be before the next step)
 ```
