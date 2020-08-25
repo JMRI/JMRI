@@ -808,6 +808,8 @@
 
 <mapID target="html.hardware.can.cbus.Details_c6" url="html/hardware/can/cbus/Details.shtml#c6"/>
 
+<mapID target="html.doc.Technical.gitadmin_merge" url="html/doc/Technical/gitadmin.shtml#merge"/>
+
 <mapID target="html.tools.scripting.ex_set_turnouts" url="html/tools/scripting/ex_set_turnouts.shtml"/>
 
 <mapID target="html.hardware.loconet.LocoNetworking" url="html/hardware/loconet/LocoNetworking.shtml"/>
@@ -851,6 +853,8 @@
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_Notes" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#Notes"/>
 
 <mapID target="package.jmri.jmrit.display.IconAdder" url="package/jmri/jmrit/display/IconAdder.shtml"/>
+
+<mapID target="html.doc.Technical.gitadmin_branches" url="html/doc/Technical/gitadmin.shtml#branches"/>
 
 <mapID target="manual.DecoderPro3.Comp_Speed" url="manual/DecoderPro3/Comp_Speed.shtml"/>
 
@@ -4366,6 +4370,8 @@
 
 <mapID target="manual.DecoderPro.Main_Tool_Consist" url="manual/DecoderPro/Main_Tool.shtml#Consist"/>
 
+<mapID target="html.doc.Technical.gitadmin_teams" url="html/doc/Technical/gitadmin.shtml#teams"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_RoadOptions" url="package/jmri/jmrit/operations/Operations.shtml#RoadOptions"/>
 
 <mapID target="package.apps.AppConfigPanel_advanced" url="package/apps/AppConfigPanel.shtml#advanced"/>
@@ -4395,6 +4401,8 @@
 <mapID target="html.apps.DecoderPro.index_guide" url="html/apps/DecoderPro/index.shtml#guide"/>
 
 <mapID target="manual.DecoderPro.Programmer_SingleCV_Top" url="manual/DecoderPro/Programmer_SingleCV.shtml#Top"/>
+
+<mapID target="package.jmri.jmrit.simpleclock.SimpleClockFrame_isclockrunning" url="package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml#isclockrunning"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_menubar_Wi" url="manual/DecoderPro3/dp3_Main_Throttle_menubar.shtml#Wi"/>
 
