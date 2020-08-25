@@ -5,7 +5,7 @@ package jmri;
  * Voltage, and other status data from the layout.
  *
  */
-public interface Meter extends NamedBean, AnalogIO {
+public interface Meter extends AnalogIO {
     
     public static final String VALUE = "MeterValue";
     

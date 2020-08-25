@@ -29,6 +29,7 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
     private final List<Class<? extends AnalogIO>> registerBeans = new ArrayList<>();
     private final List<Manager<? extends NamedBean>> registerBeanManagers = new ArrayList<>();
 
+    @Nonnull
     public ProxyAnalogIOManager init() {
         // Note that not all lights in LightManager are VariableLight.
         addBeanType(VariableLight.class, InstanceManager.getDefault(LightManager.class));
