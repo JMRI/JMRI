@@ -212,7 +212,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         InstanceManager.setDefault(ClockControl.class, cc);
 
-        jmri.InstanceManager.store(getMultiMeter(), jmri.MultiMeter.class);
+//DANIEL        jmri.InstanceManager.store(getMultiMeter(), jmri.MeterGroup.class);
 
         getIdTagManager();
 
@@ -289,7 +289,8 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (getDisabled()) {
             return null;
         }
-        return (LnMultiMeter) classObjectMap.computeIfAbsent(MultiMeter.class,(Class c) -> new LnMultiMeter(this));
+        return null;
+//DANIEL        return (LnMultiMeter) classObjectMap.computeIfAbsent(MeterGroup.class,(Class c) -> new LnMultiMeter(this));
     }
 
     @Override

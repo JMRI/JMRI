@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
+import jmri.implementation.DefaultMeter.DefaultVoltageMeter;
+import jmri.implementation.DefaultMeter.DefaultCurrentMeter;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetProgrammerManager;
 import jmri.util.NamedBeanComparator;
@@ -109,9 +111,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if (type.equals(jmri.ReporterManager.class)){
            return true;
         }
-        if (type.equals(jmri.MultiMeter.class)){
-           return true;
-        }
         if (type.equals(jmri.SensorManager.class)){
            return true;
         }
@@ -141,9 +140,6 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
             return null;
         }
         if(T.equals(jmri.ReporterManager.class)){
-            return super.get(T);
-        }
-        if(T.equals(jmri.MultiMeter.class)){
             return super.get(T);
         }
         if(T.equals(jmri.SensorManager.class)){
@@ -197,8 +193,8 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if ( xpm instanceof Z21XNetProgrammerManager) {
             ((Z21XNetProgrammerManager) xpm).setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
         }
-        // setup the MultiMeter
-        getMultiMeter();
+        // setup the MeterGroup
+        createMeterGroup();
 
         // setup the HeartBeat
         getHeartBeat();
@@ -249,11 +245,20 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
      * Provide access to the Roco Z21 MultiMeter for this particular
      * connection.
      * <p>
-     * NOTE: MultiMeter defaults to NULL
-     * @return MultiMeter, creates new if null.
+     * NOTE: MeterGroup defaults to NULL
+     * @return MeterGroup, creates new if null.
      */
-    public MultiMeter getMultiMeter() {
-        return (MultiMeter) classObjectMap.computeIfAbsent(MultiMeter.class, (Class c) -> { return new Z21MultiMeter(this); });
+    public MeterGroup createMeterGroup() {
+        MeterGroup mg = InstanceManager.getDefault(MeterGroupManager.class).provide("XVCommandStation");
+        
+        VoltageMeter vm = new DefaultVoltageMeter("XVCommandStationVoltage", Meter.Unit.Milli, 0.0, 1.0, 0.1);
+        CurrentMeter cm = new DefaultCurrentMeter("XVCommandStationCurrent", Meter.Unit.Milli, 0.0, 1.0, 0.1);
+        
+        mg.addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, vm);
+        mg.addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, cm);
+        
+        return mg;
+//        return (MeterGroup) classObjectMap.computeIfAbsent(MeterGroup.class, (Class c) -> { return new Z21MultiMeter(this); });
     }
 
     /**

@@ -63,8 +63,8 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
         systemMemo.setSensorManager(new jmri.jmrix.dccpp.DCCppSensorManager(systemMemo));
         jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
-        systemMemo.setMultiMeter(new DCCppMultiMeter(systemMemo));
-        jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);
+//DANIEL        systemMemo.setMultiMeter(new DCCppMultiMeter(systemMemo));
+        jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MeterGroup.class);
 
         systemMemo.register();
         log.debug("DCC++ Initialization Complete");

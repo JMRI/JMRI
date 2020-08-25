@@ -9,8 +9,9 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood (C) 2015
  * @author Paul Bender (C) 2017
  */
-public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implements Z21Listener {
-
+public class Z21MultiMeter {
+//public class Z21MultiMeter extends jmri.implementation.DefaultMeterGroup implements Z21Listener {
+/*
     private Z21TrafficController tc;
     private Z21SystemConnectionMemo _memo;
     private boolean enabled = false;  // disable by default; prevent polling when not being used.
@@ -68,10 +69,6 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
     }
 
     @Override
-    public void initializeHardwareMeter() {
-    }
-
-    @Override
     // Handle a timeout notification
     public String getHardwareMeterName() {
         return (_memo.getUserName());
@@ -93,5 +90,5 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21MultiMeter.class);
-
+*/
 }

@@ -2,11 +2,11 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.MultiMeter;
-
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
+
+import jmri.MeterGroup;
 
 /**
  * Abstract Base Class for MultiMeter tests in specific jmrix packages. This is 
@@ -29,7 +29,7 @@ public abstract class AbstractMultiMeterTestBase {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    protected MultiMeter mm = null; // holds objects under test
+    protected MeterGroup mm = null; // holds objects under test
 
     protected class Listen implements PropertyChangeListener {
     

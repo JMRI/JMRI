@@ -247,7 +247,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         ((CbusMultiMeter)mm).requestUpdateFromLayout();
         mm.initializeHardwareMeter();
         Assert.assertEquals("name", "CBUS", mm.getHardwareMeterName() );
-        Assert.assertEquals("ma units", jmri.MultiMeter.CurrentUnits.CURRENT_UNITS_MILLIAMPS, mm.getCurrentUnits() );
+        Assert.assertEquals("ma units", jmri.MeterGroup.CurrentUnits.CURRENT_UNITS_MILLIAMPS, mm.getCurrentUnits() );
         
         
     }

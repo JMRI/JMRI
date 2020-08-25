@@ -3,13 +3,16 @@ package jmri.jmrit.voltmeter;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.SortedSet;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.InstanceManager;
-import jmri.MultiMeter;
+
+import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.voltmeter.Bundle;
 import jmri.util.JmriJFrame;
 
 /**
@@ -33,7 +36,7 @@ public class VoltMeterFrame extends JmriJFrame {
     private int startWidth;
     private int startHeight;
 
-    MultiMeter meter;
+    Meter meter;
 
     NamedIcon digits[] = new NamedIcon[10];
     NamedIcon decimalIcon;
@@ -45,7 +48,14 @@ public class VoltMeterFrame extends JmriJFrame {
     public VoltMeterFrame() {
         super(Bundle.getMessage("TrackVoltageMeterTitle"));
 
-        meter = InstanceManager.getDefault(MultiMeter.class);
+        // If no current meter exists, AmpMeterAction should be disabled,
+        // so we shouldn't be here.
+        MeterGroupManager m = InstanceManager.getNullableDefault(MeterGroupManager.class);
+        if (m == null) throw new RuntimeException("No multimeter exists");
+        SortedSet<MeterGroup> set = m.getNamedBeanSet();
+        MeterGroup.MeterInfo meterInfo = set.first().getMeterByName(MeterGroup.CurrentMeter);
+        if (meterInfo == null) throw new RuntimeException("No current meter exists");
+        meter = meterInfo.getMeter();
     }
 
     @Override
@@ -88,7 +98,7 @@ public class VoltMeterFrame extends JmriJFrame {
                 update();
             }
         };
-        meter.addPropertyChangeListener(MultiMeter.VOLTAGE, du_listener);
+        meter.addPropertyChangeListener(Meter.VALUE, du_listener);
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(
@@ -158,7 +168,7 @@ public class VoltMeterFrame extends JmriJFrame {
      * Assumes an integer value has an extra, non-displayed decimal digit.
      */
     synchronized void update() {
-        float val = meter.getVoltage();
+        double val = meter.getKnownAnalogValue();
         int value = (int)Math.floor(val *10); // keep one decimal place.
         boolean scaleChanged = false;
         // autoscale the array of labels.

@@ -7,16 +7,17 @@ import org.slf4j.LoggerFactory;
  * Provide access to current meter from the Digitrax Evolution Base Station
  *
  */
-public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter implements LocoNetListener {
-
+public class LnMultiMeter {
+// public class LnMultiMeter extends jmri.implementation.DefaultMeterGroup implements LocoNetListener {
+/*
     private SlotManager sm = null;
     private LnTrafficController tc = null;
 
-    /**
+    /.**
      * Create a ClockControl object for a LocoNet clock
      *
      * @param scm  connection memo
-     */
+     *./
     public LnMultiMeter(LocoNetSystemConnectionMemo scm) {
         super(LnConstants.METER_INTERVAL_MS);
         this.sm = scm.getSlotManager();
@@ -52,11 +53,6 @@ public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter impleme
     }
 
     @Override
-    public void initializeHardwareMeter() {
-        // Connect to the hardware.
-    }
-
-    @Override
     // Handle a timeout notification
     public String getHardwareMeterName() {
         return ("LocoNet");
@@ -78,5 +74,5 @@ public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter impleme
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnMultiMeter.class);
-
+*/
 }

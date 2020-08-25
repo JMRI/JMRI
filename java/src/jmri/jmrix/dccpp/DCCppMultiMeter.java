@@ -8,8 +8,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood (C) 2015
  */
-public class DCCppMultiMeter extends jmri.implementation.AbstractMultiMeter implements DCCppListener {
-
+public class DCCppMultiMeter {
+// public class DCCppMultiMeter extends jmri.implementation.DefaultMeterGroup implements DCCppListener {
+/*
     private DCCppTrafficController tc = null;
 
     public DCCppMultiMeter(DCCppSystemConnectionMemo memo) {
@@ -51,11 +52,6 @@ public class DCCppMultiMeter extends jmri.implementation.AbstractMultiMeter impl
     }
 
     @Override
-    public void initializeHardwareMeter() {
-        // Connect to the hardware.
-    }
-
-    @Override
     // Handle a timeout notification
     public String getHardwareMeterName() {
         return ("DCC++");
@@ -83,5 +79,5 @@ public class DCCppMultiMeter extends jmri.implementation.AbstractMultiMeter impl
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeter.class);
-
+*/
 }

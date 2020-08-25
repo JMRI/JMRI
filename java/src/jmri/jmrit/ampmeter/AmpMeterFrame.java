@@ -3,12 +3,15 @@ package jmri.jmrit.ampmeter;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.SortedSet;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import jmri.InstanceManager;
-import jmri.MultiMeter;
+
+import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +45,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     private int startWidth;
     private int startHeight;
 
-    MultiMeter meter;
+    Meter meter;
 
     NamedIcon digits[] = new NamedIcon[10];
     NamedIcon percentIcon;
@@ -53,7 +56,14 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     public AmpMeterFrame() {
         super(Bundle.getMessage("TrackCurrentMeterTitle"));
 
-        meter = InstanceManager.getDefault(MultiMeter.class);
+        // If no current meter exists, AmpMeterAction should be disabled,
+        // so we shouldn't be here.
+        MeterGroupManager m = InstanceManager.getNullableDefault(MeterGroupManager.class);
+        if (m == null) throw new RuntimeException("No multimeter exists");
+        SortedSet<MeterGroup> set = m.getNamedBeanSet();
+        MeterGroup.MeterInfo meterInfo = set.first().getMeterByName(MeterGroup.CurrentMeter);
+        if (meterInfo == null) throw new RuntimeException("No current meter exists");
+        meter = meterInfo.getMeter();
     }
 
     @Override
@@ -75,14 +85,14 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         // Start with 4 digits '0000' for mA, to reduce the need to rescale the
         // image or resize the window when an extra digit is added. 9999mA will
         // be enough for most systems before rescaling is needed.
-        switch (meter.getCurrentUnits()) {
-            case CURRENT_UNITS_MILLIAMPS:
+        switch (meter.getUnit()) {
+            case Milli:
                 displayLength = 5;
                 displayDP = false;
                 break;
                 
-            case CURRENT_UNITS_AMPS:
-            case CURRENT_UNITS_PERCENTAGE:
+            case NoPrefix:
+            case Percent:
             default:
                 displayLength = 3;
                 displayDP = true;
@@ -119,7 +129,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
                 update();
             }
         };
-        meter.addPropertyChangeListener(MultiMeter.CURRENT, du_listener);
+        meter.addPropertyChangeListener(Meter.VALUE, du_listener);
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(
@@ -163,16 +173,16 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         for(int i=0;i<digitIcons.size()-1;i++){
             getContentPane().add(digitIcons.get(i));
         }
-        switch (meter.getCurrentUnits()) {
-            case CURRENT_UNITS_MILLIAMPS:
+        switch (meter.getUnit()) {
+            case Milli:
                 getContentPane().add(milliAmp);
                 break;
-            case CURRENT_UNITS_AMPS:
+            case NoPrefix:
                 getContentPane().add(decimal);
                 getContentPane().add(digitIcons.get(digitIcons.size()-1));
                 getContentPane().add(amp);
                 break;
-            case CURRENT_UNITS_PERCENTAGE:
+            case Percent:
             default:
                 getContentPane().add(decimal);
                 getContentPane().add(digitIcons.get(digitIcons.size()-1));
@@ -189,7 +199,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
      * Assumes an integer value has an extra, non-displayed decimal digit.
      */
     synchronized void update() {
-        float val = meter.getCurrent();
+        double val = meter.getKnownAnalogValue();
         LOG.debug("update for value {}", val);
         int value = (int)Math.floor(val *10); // keep one decimal place.
         LOG.debug("integer value with one dp preserved {}", value);

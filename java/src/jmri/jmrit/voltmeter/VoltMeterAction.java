@@ -1,7 +1,12 @@
 package jmri.jmrit.voltmeter;
 
 import java.awt.event.ActionEvent;
+import java.util.SortedSet;
+
 import javax.swing.AbstractAction;
+
+import jmri.*;
+import jmri.jmrit.voltmeter.Bundle;
 
 /**
  * Swing action to create and register a AmpMeterFrame object.
@@ -21,10 +26,21 @@ public class VoltMeterAction extends AbstractAction {
 
     public VoltMeterAction(String s) {
         super(s);
-        // disable ourself if no MultiMeter available
-        if (jmri.InstanceManager.getNullableDefault(jmri.MultiMeter.class) == null) {
+        
+        // disable ourself if no MeterGroup available
+        if (!hasVoltageMeter()) {
             setEnabled(false);
         }
+    }
+    
+    private boolean hasVoltageMeter() {
+        MeterGroupManager m = InstanceManager.getNullableDefault(MeterGroupManager.class);
+        if (m == null) return false;
+        
+        SortedSet<MeterGroup> set = m.getNamedBeanSet();
+        if (set.isEmpty()) return false;
+        
+        return set.first().getMeterByName(MeterGroup.VoltageMeter) != null;
     }
 
     @Override

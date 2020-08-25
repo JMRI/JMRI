@@ -45,12 +45,12 @@ public class Z21SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Z2
 
     @Test
     public void testProvidesMultiMeter() {
-        Assert.assertTrue("Provides MultiMeter", scm.provides(jmri.MultiMeter.class));
+        Assert.assertTrue("Provides MultiMeter", scm.provides(jmri.MeterGroup.class));
     }
 
     @Test
     public void testGetMultiMeter() {
-        Assert.assertNotNull("Get MultiMeter", scm.get(jmri.MultiMeter.class));
+        Assert.assertNotNull("Get MultiMeter", scm.get(jmri.MeterGroup.class));
     }
 
     @Override

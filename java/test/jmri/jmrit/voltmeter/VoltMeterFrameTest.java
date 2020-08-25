@@ -20,7 +20,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setVoltage(2.1f);
+            jmri.InstanceManager.getDefault(jmri.MeterGroup.class).setVoltage(2.1f);
         });
     }
 
@@ -29,7 +29,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setVoltage(32.1f);
+            jmri.InstanceManager.getDefault(jmri.MeterGroup.class).setVoltage(32.1f);
         });
     }
 
@@ -38,7 +38,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setVoltage(432.1f);
+            jmri.InstanceManager.getDefault(jmri.MeterGroup.class).setVoltage(432.1f);
         });
     }
 
@@ -47,7 +47,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setVoltage(5432.1f);
+            jmri.InstanceManager.getDefault(jmri.MeterGroup.class).setVoltage(5432.1f);
         });
     }
 
@@ -56,7 +56,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        jmri.InstanceManager.setDefault(jmri.MultiMeter.class, new TestMeter());
+        jmri.InstanceManager.setDefault(jmri.MeterGroup.class, new TestMeter());
         if (!GraphicsEnvironment.isHeadless()) {
             frame = new VoltMeterFrame();
         }
@@ -68,7 +68,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    private class TestMeter extends jmri.implementation.AbstractMultiMeter {
+    private class TestMeter extends jmri.implementation.DefaultMeterGroup {
 
         public TestMeter() {
             super(0);

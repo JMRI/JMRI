@@ -19,8 +19,9 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland 2020
  * Added voltage capability to use with new jmrit.voltmeter class
  */
-public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter implements CanListener {
-
+public class CbusMultiMeter {
+// public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implements CanListener {
+/*
     private final TrafficController tc;
     private int _nodeToListen;
     private int _eventToListenCurrent;
@@ -34,31 +35,31 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
         log.debug("CbusMultiMeter constructor called");
     }
 
-    /**
+    /.**
      * CBUS does have Amperage reporting
      * 
      * {@inheritDoc}
-     */
+     *./
     @Override
     public boolean hasCurrent() {
         return true;
     }
 
-    /**
+    /.**
      * CBUS might have Voltage reporting
      *
      * {@inheritDoc}
-     */
+     *./
     @Override
     public boolean hasVoltage() {
         return true;
     }
 
-    /**
+    /.**
      * Starts listening for ExData2 CAN Frames using the Node of the Master Command Station
      *
      * {@inheritDoc}
-     */
+     *./
     @Override
     public void enable() {
         _nodeToListen = 65534;
@@ -79,11 +80,11 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
             new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenVoltage));
     }
 
-    /**
+    /.**
      * Stops listening for updates
      *
      * {@inheritDoc}
-     */
+     *./
     @Override
     public void disable() {
         tc.removeCanListener(this);
@@ -96,12 +97,12 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
     }
 
 
-    /**
+    /.**
      * Listen for CAN Frames sent by Command Station 0
      * Typically sent every 4-5 seconds.
      *
      * {@inheritDoc}
-     */
+     *./
     @Override
     public void reply(CanReply r) {
         if ( r.extendedOrRtr()
@@ -121,42 +122,33 @@ public class CbusMultiMeter extends jmri.implementation.AbstractMultiMeter imple
         }
     }
 
-    /**
+    /.**
      * Outgoing CAN Frames ignored
      *
      * {@inheritDoc}
-     */
+     *./
     @Override
     public void message(CanMessage m) {
     }
     
-    /**
+    /.**
      * Adjust CBUS Command station settings to change frequency of updates
      * No local action performed
      *
      * {@inheritDoc}
-     */
+     *./
     @Override
     protected void requestUpdateFromLayout() {
     }
     
-    /**
-     * Performs no local action, Meter is setup by #enable()
-     *
+    /.**
      * {@inheritDoc}
-     */
-    @Override
-    public void initializeHardwareMeter() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
+     *./
     @Override
     public String getHardwareMeterName() {
         return ("CBUS");
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusMultiMeter.class);
-
+*/
 }

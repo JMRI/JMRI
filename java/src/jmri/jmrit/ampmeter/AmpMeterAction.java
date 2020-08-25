@@ -1,7 +1,14 @@
 package jmri.jmrit.ampmeter;
 
 import java.awt.event.ActionEvent;
+import java.util.SortedSet;
+
 import javax.swing.AbstractAction;
+
+import jmri.InstanceManager;
+import jmri.Meter;
+import jmri.MeterGroup;
+import jmri.MeterGroupManager;
 
 /**
  * Swing action to create and register a AmpMeterFrame object.
@@ -21,10 +28,21 @@ public class AmpMeterAction extends AbstractAction {
 
     public AmpMeterAction(String s) {
         super(s);
-        // disable ourself if no MultiMeter available
-        if (jmri.InstanceManager.getNullableDefault(jmri.MultiMeter.class) == null) {
+        
+        // disable ourself if no MeterGroup available
+        if (!hasCurrentMeter()) {
             setEnabled(false);
         }
+    }
+    
+    private boolean hasCurrentMeter() {
+        MeterGroupManager m = InstanceManager.getNullableDefault(MeterGroupManager.class);
+        if (m == null) return false;
+        
+        SortedSet<MeterGroup> set = m.getNamedBeanSet();
+        if (set.isEmpty()) return false;
+        
+        return set.first().getMeterByName(MeterGroup.CurrentMeter) != null;
     }
 
     @Override
