@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -21,6 +23,16 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         super(memo);
         InstanceManager.getDefault(TurnoutOperationManager.class); // force creation of an instance
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+
+        // set listener for changes in memo
+        memo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals(SystemConnectionMemo.INTERVAL)) {
+                    handleIntervalChange((Integer) e.getNewValue());
+                }
+            }
+        });
     }
 
     /** {@inheritDoc} */
@@ -375,6 +387,46 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     @Override
     public String getEntryToolTip() {
         return "Enter a number from 1 to 9999"; // Basic number format help
+    }
+
+    private void handleIntervalChange(int newVal) {
+        turnoutInterval = newVal;
+        log.debug("in memo turnoutInterval changed to {}", turnoutInterval);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getOutputInterval() {
+        return turnoutInterval;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setOutputInterval(int newInterval) {
+        memo.setOutputInterval(newInterval);
+        turnoutInterval = newInterval; // local field will hear change and update automatically?
+        log.debug("turnoutInterval set to: {}", newInterval);
+    }
+
+    /**
+     * Duration in milliseconds of interval between separate Turnout commands on the same connection.
+     * <p>
+     * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
+     */
+    private int turnoutInterval = memo.getOutputInterval();
+    private LocalDateTime waitUntil = LocalDateTime.now();
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public LocalDateTime outputIntervalEnds() {
+        log.debug("outputIntervalEnds called in AbstractTurnoutManager");
+        if (waitUntil.isAfter(LocalDateTime.now())) {
+            waitUntil = waitUntil.plus(turnoutInterval, ChronoUnit.MILLIS);
+        } else {
+            waitUntil = LocalDateTime.now().plus(turnoutInterval, ChronoUnit.MILLIS); // default interval = 250 Msec
+        }
+        return waitUntil;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);

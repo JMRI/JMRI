@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
 public class XpaSystemConnectionMemoTest extends SystemConnectionMemoTestBase<XpaSystemConnectionMemo> {
 
     @Test
-    public void testGetandSetXpaTrafficController() {
+    public void testGetAndSetXpaTrafficController() {
         // first, check to see that an exception is 
         // thrown when null is passed. 
         boolean exceptionThrown = false;

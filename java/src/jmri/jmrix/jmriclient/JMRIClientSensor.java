@@ -20,8 +20,8 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 
     /**
      * JMRIClient sensors use the sensor number on the remote host.
-     * @param number sensor number.
-     * @param memo system connection.
+     * @param number sensor number
+     * @param memo system connection
      */
     public JMRIClientSensor(int number, JMRIClientSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "S" + number);
@@ -38,16 +38,17 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
         return _number;
     }
 
-    // Handle a request to change state by sending a formatted packet
-    // to the server.
+    /** Handle a request to change state by sending a formatted packet
+     * to the server.
+     */
     @Override
-    public void setKnownState(int s) throws jmri.JmriException {
+    public void setKnownState(int newState) throws jmri.JmriException {
         // sort out states
-        if ((s & Sensor.ACTIVE) != 0) {
+        if ((newState & Sensor.ACTIVE) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Sensor.INACTIVE) != 0) {
+            if ((newState & Sensor.INACTIVE) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both ACTIVE and INACTIVE {}", s);
+                log.error("Cannot command both ACTIVE and INACTIVE {}", newState);
                 return;
             } else {
                 // send an ACTIVE command
@@ -57,10 +58,10 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
             // send a INACTIVE command
             sendMessage(false ^ getInverted());
         }
-        if (_knownState != s) {
+        if (_knownState != newState) {
             int oldState = _knownState;
-            _knownState = s;
-            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_knownState));
+            _knownState = newState;
+            firePropertyChange("KnownState", oldState, _knownState);
         }
     }
 
@@ -111,6 +112,3 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
     private final static Logger log = LoggerFactory.getLogger(JMRIClientSensor.class);
 
 }
-
-
-

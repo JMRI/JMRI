@@ -23,7 +23,7 @@ import jmri.util.startup.StartupActionFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public abstract class DefaultSystemConnectionMemo extends Bean implements SystemConnectionMemo,Disposable {
+public abstract class DefaultSystemConnectionMemo extends Bean implements SystemConnectionMemo, Disposable {
 
     private boolean disabled = false;
     private Boolean disabledAsLoaded = null; // Boolean can be true, false, or null
@@ -164,7 +164,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      */
     @OverridingMethodsMustInvokeSuper
     public boolean provides(Class<?> c) {
-        if(disabled){
+        if (disabled) {
             return false;
         }
         if (c.equals(jmri.ConsistManager.class)) {
@@ -188,7 +188,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     @OverridingMethodsMustInvokeSuper
     @SuppressWarnings("unchecked") // dynamic checking done on cast of getConsistManager
     public <T> T get(Class<?> type) {
-        if(disabled){
+        if (disabled) {
             return null;
         }
         if (type.equals(ConsistManager.class)) {
@@ -235,8 +235,8 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     /**
      * Set if the System Connection is currently Disabled.
      * <p>
-     * disabledAsLoaded is only set once. Sends PropertyChange on change of
-     * disabled status.
+     * disabledAsLoaded is only set once.
+     * Sends PropertyChange on change of disabled status.
      *
      * @param disabled true to disable, false to enable.
      */
@@ -245,12 +245,11 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
             // only set first time
             this.disabledAsLoaded = disabled;
         }
-        if (disabled == this.disabled) {
-            return;
+        if (disabled != this.disabled) {
+            boolean oldDisabled = this.disabled;
+            this.disabled = disabled;
+            this.propertyChangeSupport.firePropertyChange(DISABLED, oldDisabled, disabled);
         }
-        boolean oldDisabled = this.disabled;
-        this.disabled = disabled;
-        this.propertyChangeSupport.firePropertyChange(DISABLED, oldDisabled, disabled);
     }
 
     /**
@@ -268,7 +267,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
      * Provide a factory for getting startup actions.
      * <p>
      * This is a bound, read-only, property under the name "actionFactory".
-     * 
+     *
      * @return the factory
      */
     @Nonnull
@@ -280,7 +279,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     /**
      * Add actions to the action list.
-     * 
+     *
      * @deprecated since 4.19.7 without direct replacement
      */
     @Deprecated
@@ -290,7 +289,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     /**
      * Remove actions from the action list.
-     * 
+     *
      * @deprecated since 4.19.7 without direct replacement
      */
     @Deprecated
@@ -299,7 +298,8 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
     }
 
     /**
-     * Get if connection is dirty. Checked fields are disabled, prefix, userName
+     * Get if connection is dirty.
+     * Checked fields are disabled, prefix, userName
      *
      * @return true if changed since loaded
      */
@@ -315,7 +315,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     /**
      * Provide access to the ConsistManager for this particular connection.
-
+     *
      * @return the provided ConsistManager or null if the connection does not
      *         provide a ConsistManager
      */
@@ -343,6 +343,29 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
 
     public <T> void deregister(@Nonnull T item, @Nonnull Class<T> type){
         classObjectMap.remove(type,item);
+    }
+
+    /**
+     * Duration in milliseconds of interval between separate Turnout commands on the same connection.
+     * <p>
+     * Change from e.g. connection config dialog and scripts using {@link #setOutputInterval(int)}
+     */
+    private int _interval = 250;
+
+    /**
+     * Get the connection specific OutputInterval (in ms) to wait between/before commands
+     * are sent, configured in AdapterConfig.
+     * Used in {@link jmri.implementation.AbstractTurnout#setCommandedStateAtInterval(int)}.
+     */
+    public int getOutputInterval() {
+        log.debug("Getting interval {}", _interval);
+        return _interval;
+    }
+
+    public void setOutputInterval(int newInterval) {
+        log.debug("Setting interval from {} to {}", _interval, newInterval);
+        this.propertyChangeSupport.firePropertyChange(INTERVAL, _interval, newInterval);
+        _interval = newInterval;
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSystemConnectionMemo.class);

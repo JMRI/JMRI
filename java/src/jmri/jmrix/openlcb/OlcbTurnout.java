@@ -66,8 +66,6 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
 
     /**
      * Common initialization for constructor.
-     * <p>
-     *
      */
     private void init(String address) {
         // build local addresses
@@ -179,9 +177,8 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending CBUS events.
-     *
-     * @param s new state value
+     * {@inheritDoc}
+     * Sends an OpenLCB command
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {

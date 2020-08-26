@@ -40,7 +40,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         mWaitBeforePoll = 25;  // default = 25
         setAllowUnexpectedReply(true);
 
-        super.init(0, 1024); // 1024 is an artifical limit but economically reasonable maxNode upper limit
+        super.init(0, 1024); // 1024 is an artificial limit but economically reasonable maxNode upper limit
 
         reallyReadyToPoll = false;           // Need to not start polling until we are ready
         needToPollNodes = true;              // Need to poll and create corresponding nodes
@@ -152,6 +152,30 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     public void setReallyReadyToPoll(boolean newstate) {
         log.debug("setting really ready to poll (nodes): {}", newstate);
         reallyReadyToPoll = newstate;
+    }
+
+    /**
+     * Reference to the system connection memo.
+     */
+    AcelaSystemConnectionMemo mMemo = null;
+
+    /**
+     * Get access to the system connection memo associated with this traffic
+     * controller.
+     *
+     * @return associated systemConnectionMemo object
+     */
+    public AcelaSystemConnectionMemo getSystemConnectionMemo() {
+        return (mMemo);
+    }
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(AcelaSystemConnectionMemo m) {
+        mMemo = m;
     }
 
     /**
@@ -362,7 +386,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
             return m;
         }
 
-        // Trying to serialize Acela initiatization so system is stable
+        // Trying to serialize Acela initialization so system is stable
         // So we will not poll sensors or send om/off commands until we have
         // initialized all of the sensor modules -- this can take several seconds
         // during a cold system startup.

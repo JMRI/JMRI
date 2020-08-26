@@ -1,5 +1,7 @@
 package jmri;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 
@@ -48,7 +50,8 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
      * If the name is a valid system name, it will be used for the new Turnout.
      * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
-     * <p>This provides the same function as {@link ProvidingManager#provide}
+     * <p>
+     * This provides the same function as {@link ProvidingManager#provide}
      * which has a more generic form.
      *
      * @param name User name, system name, or address which can be promoted to
@@ -78,7 +81,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public Turnout getTurnout(@Nonnull String name);
 
     /**
-     * Get the Turnout with the given system name or return null if no instance
+     * Get the Turnout with the given system name or null if no instance
      * already exists.
      *
      * @param systemName the system name
@@ -88,7 +91,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public Turnout getBySystemName(@Nonnull String systemName);
 
     /**
-     * Get the Turnout with the given user name or return null if no instance
+     * Get the Turnout with the given user name or null if no instance
      * already exists.
      *
      * @param userName the user name
@@ -261,5 +264,28 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public String getDefaultThrownSpeed();
 
     public String getDefaultClosedSpeed();
+
+    /**
+     * Get the Interval (in ms) to wait between output commands.
+     * Configured in AdapterConfig, stored in memo.
+     *
+     * @return the (Turnout) Output Interval in milliseconds
+     */
+    public int getOutputInterval();
+
+    /**
+     * Set the Interval (in ms) to wait between output commands.
+     *
+     * @param newInterval the new Output Interval in Milliseconds
+     */
+    public void setOutputInterval(int newInterval);
+
+    /**
+     * Get end time of latest OutputInterval, calculated from the current time.
+     *
+     * @return end time in milliseconds or current time if no interval was set or timer has completed
+     */
+    @Nonnull
+    public LocalDateTime outputIntervalEnds();
 
 }

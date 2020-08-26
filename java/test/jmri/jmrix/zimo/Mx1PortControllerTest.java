@@ -51,8 +51,7 @@ public class Mx1PortControllerTest extends jmri.jmrix.AbstractSerialPortControll
              */
             @Override
             public String[] validBaudRates(){
-               String[] retval = {"9600"};
-               return retval;
+                return new String[]{"9600"};
             }
 
             /**

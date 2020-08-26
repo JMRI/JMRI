@@ -12,7 +12,7 @@ import org.junit.jupiter.api.*;
 public class LnNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortControllerTestBase {
 
     private LocoNetSystemConnectionMemo memo;
- 
+
     @Override
     @BeforeEach
     public void setUp(){
@@ -28,8 +28,8 @@ public class LnNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortC
     @Override
     @AfterEach
     public void tearDown(){
-       memo.dispose();
-       JUnitUtil.tearDown();
+        memo.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

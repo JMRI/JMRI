@@ -3,6 +3,7 @@ package jmri.jmrix.easydcc;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,6 +12,14 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2016
  */
 public class EasyDccSystemConnectionMemoTest extends SystemConnectionMemoTestBase<EasyDccSystemConnectionMemo> {
+
+    @Test
+    public void checkConfigureManagers() {
+        scm.configureManagers();
+        Assert.assertNotNull("Throttle Manager after configureManagers", scm.getThrottleManager());
+        Assert.assertNotNull("Turnout Manager after configureManagers", scm.getTurnoutManager());
+        Assert.assertNotNull("Power Manager after configureManagers", scm.getPowerManager());
+    }
 
     @Override
     @BeforeEach
