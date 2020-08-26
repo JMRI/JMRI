@@ -184,7 +184,7 @@ public class NBHSensor {
      * @return The sensor's handle name.
      */
     public String getHandleName() {
-        return _mNamedBeanHandleSensor.getName();
+        return valid() ? _mNamedBeanHandleSensor.getName() : "";
     }
 
     /**

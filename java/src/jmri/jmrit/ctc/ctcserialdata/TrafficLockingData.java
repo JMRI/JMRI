@@ -75,13 +75,71 @@ public class TrafficLockingData {
         _mOccupancyExternalSensors = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             String sensorName = topologyInfo.getSensorDisplayName(i);
-            NBHSensor sensor = new NBHSensor("TrafficLockingData", "", sensorName, sensorName, false);
-            if (sensor != null) {
+            NBHSensor sensor = new NBHSensor("TrafficLockingData", "", sensorName, sensorName, true);
+            if (sensor.valid()) {
                 _mOccupancyExternalSensors.add(sensor);
             }
         }
 
         _mOptionalExternalSensors = new ArrayList<>();
+    }
+
+    /**
+     * Create a list of occupancy sensors with 9 entries. Unused entries will be set to a dummy NBHSensor.
+     * @return a list of occupancy sensors.
+     */
+    public ArrayList<NBHSensor> getOccupancySensors() {
+        NBHSensor dummy = new NBHSensor("TrafficLockingData", "", "", "", true);  // NOI18N
+        NBHSensor[] occupancyArray = new NBHSensor[9];
+        Arrays.fill(occupancyArray, dummy);
+        ArrayList<NBHSensor> occupancyList = new ArrayList<>(Arrays.asList(occupancyArray));
+        for (int index = 0; index < _mOccupancyExternalSensors.size(); index++) {
+            occupancyList.set(index, _mOccupancyExternalSensors.get(index));
+        }
+        return occupancyList;
+    }
+
+    /**
+     * Create a list of optional sensors with 2 entries. Unused entries will be set to a dummy NBHSensor.
+     * @return a list of optional sensors.
+     */
+    public ArrayList<NBHSensor> getOptionalSensors() {
+        NBHSensor dummy = new NBHSensor("TrafficLockingData", "", "", "", true);  // NOI18N
+        NBHSensor[] optionalArray = new NBHSensor[2];
+        Arrays.fill(optionalArray, dummy);
+        ArrayList<NBHSensor> optionalList = new ArrayList<>(Arrays.asList(optionalArray));
+        for (int index = 0; index < _mOptionalExternalSensors.size(); index++) {
+            optionalList.set(index, _mOptionalExternalSensors.get(index));
+        }
+        return optionalList;
+    }
+
+    /**
+     * Create a list of unique ids with 5 entries.  Unused entries are set to -1.
+     * @return a list of ids
+     */
+    public ArrayList<Integer> getUniqueIDs() {
+        Integer[] ids = new Integer[5];
+        Arrays.fill(ids, -1);
+        ArrayList<Integer> idList = new ArrayList<>(Arrays.asList(ids));
+        for (int index = 0; index < _mSwitchAlignments.size(); index++) {
+            idList.set(index, _mSwitchAlignments.get(index)._mUniqueID);
+        }
+        return idList;
+    }
+
+    /**
+     * Create a list of alignments with 5 entries.  Unused entries are to to Normal.
+     * @return a list of alignments
+     */
+    public ArrayList<String> getAlignments() {
+        String[] alignment = new String[5];
+        Arrays.fill(alignment, Bundle.getMessage("TLE_Normal"));    // NOI18N
+        ArrayList<String> alignmentList = new ArrayList<>(Arrays.asList(alignment));
+        for (int index = 0; index < _mSwitchAlignments.size(); index++) {
+            alignmentList.set(index, _mSwitchAlignments.get(index)._mSwitchAlignment);
+        }
+        return alignmentList;
     }
 
     public String toString() {

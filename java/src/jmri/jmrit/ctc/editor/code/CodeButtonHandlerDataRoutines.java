@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import jmri.jmrit.ctc.NBHSignal;
 import jmri.jmrit.ctc.ctcserialdata.CallOnData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 
 /**
  *
@@ -38,8 +39,8 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mSWDL_Enabled = false;
         returnValue._mCO_Enabled = false;
         returnValue._mCO_GroupingsList = new ArrayList<CallOnData>();
-        returnValue._mTRL_LeftTrafficLockingRulesSSVList = "";
-        returnValue._mTRL_RightTrafficLockingRulesSSVList = "";
+        returnValue._mTRL_LeftTrafficLockingRules = new ArrayList<TrafficLockingData>();
+        returnValue._mTRL_RightTrafficLockingRules = new ArrayList<TrafficLockingData>();
         returnValue._mTRL_Enabled = false;
         returnValue._mTUL_Enabled = false;
         returnValue._mTUL_ExternalTurnout = "";

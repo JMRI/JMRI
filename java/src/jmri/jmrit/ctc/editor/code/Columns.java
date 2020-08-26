@@ -20,7 +20,7 @@ import javax.swing.JLabel;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
-import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
+import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 
 /**
  *
@@ -183,8 +183,8 @@ public class Columns {
         lazy1(_mEdit_SIDL_Prompt, FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_SWDI_Prompt, FrmSWDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_SWDL_Prompt, FrmSWDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
-// DS        lazy1(_mEdit_CO_Prompt, FrmCO.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
-// DS        lazy1(_mEdit_TRL_Prompt, FrmTRL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
+        lazy1(_mEdit_CO_Prompt, FrmCO.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
+        lazy1(_mEdit_TRL_Prompt, FrmTRL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_TUL_Prompt, FrmTUL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_IL_Prompt, FrmIL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         _mDefaultListModel.set(_mSelectedCodeButtonHandlerDataIndex, constructSingleColumnDisplayLine(_mSelectedCodeButtonHandlerData));
@@ -316,8 +316,8 @@ public class Columns {
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
             if (currentCodeButtonHandlerData != codeButtonHandlerData) { // Don't check ourselves
                 int otherUniqueID = codeButtonHandlerData._mUniqueID;
-                checkThisSSVList(currentUniqueID, otherUniqueID, "L", codeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList, temp);    // NOI18N
-                checkThisSSVList(currentUniqueID, otherUniqueID, "R", codeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList, temp);   // NOI18N
+                checkThisList(currentUniqueID, otherUniqueID, "L", codeButtonHandlerData._mTRL_LeftTrafficLockingRules, temp);    // NOI18N
+                checkThisList(currentUniqueID, otherUniqueID, "R", codeButtonHandlerData._mTRL_RightTrafficLockingRules, temp);   // NOI18N
             }
         }
         for (String result : temp) returnStringBuffer.append(result);
@@ -330,19 +330,19 @@ public class Columns {
 //      return returnStringBuffer.toString();
     }
 
-    private void checkThisSSVList(int ourUniqueID, int otherUniqueID, String lr, String trafficLockingRulesSSVList, TreeSet<String> setOfUniqueIDs) {
-//  DS       for (String trafficLockingRulesSSV : ProjectsCommonSubs.getArrayListFromSSV(trafficLockingRulesSSVList)) {
-//  DS           TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(trafficLockingRulesSSV);
-//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID1, setOfUniqueIDs);
-//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID2, setOfUniqueIDs);
-//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID3, setOfUniqueIDs);
-//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID4, setOfUniqueIDs);
-//  DS           lazy3(ourUniqueID, otherUniqueID, lr, trafficLockingEntry._mUniqueID5, setOfUniqueIDs);
-//  DS       }
+    private void checkThisList(int ourUniqueID, int otherUniqueID, String lr, ArrayList<TrafficLockingData> trafficLockingRules, TreeSet<String> setOfUniqueIDs) {
+        trafficLockingRules.forEach(rule -> {
+            ArrayList<Integer> idList = rule.getUniqueIDs();
+            lazy3(ourUniqueID, otherUniqueID, lr, idList.get(0), setOfUniqueIDs);
+            lazy3(ourUniqueID, otherUniqueID, lr, idList.get(1), setOfUniqueIDs);
+            lazy3(ourUniqueID, otherUniqueID, lr, idList.get(2), setOfUniqueIDs);
+            lazy3(ourUniqueID, otherUniqueID, lr, idList.get(3), setOfUniqueIDs);
+            lazy3(ourUniqueID, otherUniqueID, lr, idList.get(4), setOfUniqueIDs);
+        });
     }
 
-    private void lazy3(int ourUniqueID, int otherUniqueID, String lr, String value, TreeSet<String> setOfUniqueIDs) {
-        int uniqueID = ProjectsCommonSubs.getIntFromStringNoThrow(value, -1);   // Technically should NEVER throw or return default, but for safety.  Default will NEVER be found!
+    private void lazy3(int ourUniqueID, int otherUniqueID, String lr, int uniqueID, TreeSet<String> setOfUniqueIDs) {
+//         int uniqueID = ProjectsCommonSubs.getIntFromStringNoThrow(value, -1);   // Technically should NEVER throw or return default, but for safety.  Default will NEVER be found!
         if (ourUniqueID == uniqueID) {
             setOfUniqueIDs.add(_mCTCSerialData.getMyShortStringNoCommaViaUniqueID(otherUniqueID) + lr + ", ");
         }
@@ -379,8 +379,8 @@ public class Columns {
         if (!FrmSIDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmSWDI.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmSWDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
-// DS        if (!FrmCO.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
-// DS        if (!FrmTRL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
+        if (!FrmCO.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
+        if (!FrmTRL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmTUL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmIL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         return "";                              // No error (string)

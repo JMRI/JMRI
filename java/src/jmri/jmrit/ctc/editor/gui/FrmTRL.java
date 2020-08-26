@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
-import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
+import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
@@ -62,7 +62,7 @@ public class FrmTRL extends javax.swing.JFrame {
         _mReverseLeftRight.setVisible(topologyAvailable);
         _mAutoGenerateWarning.setVisible(topologyAvailable);
     }
-    
+
     private ArrayList<String> getListOfExternalSensorsSlaved(   CodeButtonHandlerData currentCodeButtonHandlerData,
                                                                 ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
         ArrayList<String> returnValue = new ArrayList<>();
@@ -79,21 +79,21 @@ public class FrmTRL extends javax.swing.JFrame {
     }
 
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
-        if (!valid(checkJMRIObject, codeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList)) return false;
-        if (!valid(checkJMRIObject, codeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList)) return false;
+        if (!valid(checkJMRIObject, codeButtonHandlerData._mTRL_LeftTrafficLockingRules)) return false;
+        if (!valid(checkJMRIObject, codeButtonHandlerData._mTRL_RightTrafficLockingRules)) return false;
         return true;
     }
 
     private void updateRuleCounts() {
-        _mLeftNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules") + " " + Integer.toString(ProjectsCommonSubs.getArrayListFromSSV(_mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList).size()));        // NOI18N
-        _mRightNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules") + " " + Integer.toString(ProjectsCommonSubs.getArrayListFromSSV(_mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList).size()));      // NOI18N
-        _mLeftNumberOfRulesPrompt.setForeground(valid(_mCheckJMRIObject, _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList) ? Color.black : Color.red);
-        _mRightNumberOfRulesPrompt.setForeground(valid(_mCheckJMRIObject, _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList) ? Color.black : Color.red);
+        _mLeftNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules") + " " + Integer.toString(_mCodeButtonHandlerData._mTRL_LeftTrafficLockingRules.size()));   // NOI18N
+        _mRightNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules") + " " + Integer.toString(_mCodeButtonHandlerData._mTRL_RightTrafficLockingRules.size()));      // NOI18N
+        _mLeftNumberOfRulesPrompt.setForeground(valid(_mCheckJMRIObject, _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRules) ? Color.black : Color.red);
+        _mRightNumberOfRulesPrompt.setForeground(valid(_mCheckJMRIObject, _mCodeButtonHandlerData._mTRL_RightTrafficLockingRules) ? Color.black : Color.red);
     }
 
-    private static boolean valid(CheckJMRIObject checkJMRIObject, String trafficLockingRulesSSVList) {
-        for (String groupingListString : ProjectsCommonSubs.getArrayListFromSSV(trafficLockingRulesSSVList)) {
-            if (!checkJMRIObject.validClass(new TrafficLockingEntry(groupingListString))) return false; // Error
+    private static boolean valid(CheckJMRIObject checkJMRIObject, ArrayList<TrafficLockingData> trafficLockingRules) {
+        for (TrafficLockingData trafficLockingRule : trafficLockingRules) {
+            if (!checkJMRIObject.validClass(trafficLockingRule)) return false; // Error
         }
         return true;    // All valid
     }
@@ -298,31 +298,30 @@ public class FrmTRL extends javax.swing.JFrame {
     }//GEN-LAST:event__mOKActionPerformed
 
     private void _mReverseLeftRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mReverseLeftRightActionPerformed
-        String blah = _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList;
-        _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList = _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList;
-        _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList = blah;  
+        ArrayList<TrafficLockingData> blah = _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRules;
+        _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRules = _mCodeButtonHandlerData._mTRL_RightTrafficLockingRules;
+        _mCodeButtonHandlerData._mTRL_RightTrafficLockingRules = blah;
         updateRuleCounts();
     }//GEN-LAST:event__mReverseLeftRightActionPerformed
 
     private void _mAutoGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mAutoGenerateActionPerformed
+
         ArrayList<TopologyInfo> topologyInfosArrayList = _mTopology.getTrafficLockingRules(true);        // Left traffic.
-        StringBuilder resultString = new StringBuilder();
+        _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRules.clear();
         for (int index = 0; index < topologyInfosArrayList.size(); index++) {
             TopologyInfo topologyInfo = topologyInfosArrayList.get(index);
-            TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(index + 1, topologyInfo.getDestinationSignalMast(), topologyInfo);
-            String thisEntry = trafficLockingEntry.toCSVString();
-            resultString.append((0 == index) ? thisEntry : ProjectsCommonSubs.SSV_SEPARATOR + thisEntry);
+            TrafficLockingData trafficLockingData = new TrafficLockingData(index + 1, topologyInfo.getDestinationSignalMast(), topologyInfo);
+            _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRules.add(trafficLockingData);
         }
-        _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList = resultString.toString();
+
         topologyInfosArrayList = _mTopology.getTrafficLockingRules(false);        // Right traffic.
-        resultString = new StringBuilder();
+        _mCodeButtonHandlerData._mTRL_RightTrafficLockingRules.clear();
         for (int index = 0; index < topologyInfosArrayList.size(); index++) {
             TopologyInfo topologyInfo = topologyInfosArrayList.get(index);
-            TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(index + 1, topologyInfo.getDestinationSignalMast(), topologyInfo);
-            String thisEntry = trafficLockingEntry.toCSVString();
-            resultString.append((0 == index) ? thisEntry : ProjectsCommonSubs.SSV_SEPARATOR + thisEntry);
+            TrafficLockingData trafficLockingData = new TrafficLockingData(index + 1, topologyInfo.getDestinationSignalMast(), topologyInfo);
+            _mCodeButtonHandlerData._mTRL_RightTrafficLockingRules.add(trafficLockingData);
         }
-        _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList = resultString.toString();
+
         updateRuleCounts();
     }//GEN-LAST:event__mAutoGenerateActionPerformed
 

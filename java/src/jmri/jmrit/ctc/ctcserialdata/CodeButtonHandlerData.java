@@ -197,13 +197,11 @@ at the top for "automatic" JMRI object verification.
 //  Call On:
     public boolean              _mCO_Enabled;
     public String               _mCO_CallOnToggleInternalSensor;
-    public ArrayList<CallOnData> _mCO_GroupingsList = new ArrayList<>();            // new
+    public ArrayList<CallOnData> _mCO_GroupingsList = new ArrayList<>();
 //  Traffic Locking:
     public boolean              _mTRL_Enabled;
-    public ArrayList<TrafficLockingData> _mTRL_LeftTrafficLockingRules = new ArrayList<>();      // new
-    public ArrayList<TrafficLockingData> _mTRL_RightTrafficLockingRules = new ArrayList<>();     // new
-    public String               _mTRL_LeftTrafficLockingRulesSSVList;                       // old
-    public String               _mTRL_RightTrafficLockingRulesSSVList;                      // old
+    public ArrayList<TrafficLockingData> _mTRL_LeftTrafficLockingRules = new ArrayList<>();
+    public ArrayList<TrafficLockingData> _mTRL_RightTrafficLockingRules = new ArrayList<>();
 //  Turnout Locking:
     public boolean              _mTUL_Enabled;
     public String               _mTUL_DispatcherInternalSensorLockToggle;
@@ -241,8 +239,8 @@ at the top for "automatic" JMRI object verification.
                 case 2:     // 2->3: Get rid of ALL Traffic locking stuff.  Incompatible with prior version.
                 case 3:     // 3->4: Get rid of ALL Traffic locking stuff.  Incompatible with prior version.
                     _mTRL_Enabled = false;
-                    _mTRL_LeftTrafficLockingRulesSSVList = "";
-                    _mTRL_RightTrafficLockingRulesSSVList = "";
+                    _mTRL_LeftTrafficLockingRules = new ArrayList<>();
+                    _mTRL_RightTrafficLockingRules = new ArrayList<>();
                     break;
                 default:    // 4->5, 5->6: Do NOTHING!
                     break;

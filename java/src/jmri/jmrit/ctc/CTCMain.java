@@ -17,6 +17,7 @@ import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
+import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -189,8 +190,8 @@ public class CTCMain {
 // Slave Switch: null
             TrafficLocking trafficLocking = (codeButtonHandlerData._mTRL_Enabled && !slavedSwitch) ?
                 new TrafficLocking( userIdentifier,
-                                    codeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList,
-                                    codeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList,
+                                    codeButtonHandlerData._mTRL_LeftTrafficLockingRules,
+                                    codeButtonHandlerData._mTRL_RightTrafficLockingRules,
                                     _mLockedRoutesManager)
                     : null;
             if (trafficLocking != null) trafficLockingFileReadComplete.add(trafficLocking);
@@ -224,7 +225,7 @@ public class CTCMain {
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.addPropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
 
         for (TrafficLocking trafficLocking : trafficLockingFileReadComplete) { // Call these routines to give them a chance to initialize:
-// DS            trafficLocking.fileReadComplete(_mCBHashMap, _mSWDIHashMap);
+            trafficLocking.fileReadComplete(_mCBHashMap, _mSWDIHashMap);
         }
 
 /*  As a final item, if the developer wants us to lock all of the lockable
