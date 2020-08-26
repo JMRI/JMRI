@@ -113,6 +113,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * Handle a request for a state change. For these lights, ON and OFF just
      * transition immediately between MinIntensity and MaxIntensity.
+     * Ignores any outputDelay setting for connection.
      *
      * @param newState new state
      */

@@ -68,7 +68,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
     }
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Special handling for numeric argument, which is treated as the suffix of a new system name
     */
     @Override

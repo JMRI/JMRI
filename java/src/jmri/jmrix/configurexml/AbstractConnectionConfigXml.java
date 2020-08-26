@@ -239,6 +239,20 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         return null;
     }
 
+    /**
+     * Store the outputInterval in a connection element for persistence.
+     *
+     * @param adapter the adapter for which properties are stored
+     * @param e the "connection" element being filled
+     */
+    protected void setOutputInterval(PortAdapter adapter, Element e) {
+        if (adapter.getSystemConnectionMemo().getOutputInterval() > 0) {
+            e.setAttribute("turnoutInterval", String.valueOf(adapter.getSystemConnectionMemo().getOutputInterval()));
+        } else {
+            e.setAttribute("turnoutInterval", "0");
+        }
+    }
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractConnectionConfigXml.class);
 

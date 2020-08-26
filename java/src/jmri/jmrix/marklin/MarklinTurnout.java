@@ -27,8 +27,8 @@ public class MarklinTurnout extends AbstractTurnout
      * identification in the system name.
      *
      * @param number address of the turnout
-     * @param prefix system prefix.
-     * @param etc connection traffic controller.
+     * @param prefix system prefix
+     * @param etc connection traffic controller
      */
     public MarklinTurnout(int number, String prefix, MarklinTrafficController etc) {
         super(prefix + "T" + number);
@@ -40,9 +40,11 @@ public class MarklinTurnout extends AbstractTurnout
 
     MarklinTrafficController tc;
 
-    // Handle a request to change state by sending a turnout command
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
         //  public void firePropertyChange(String propertyName,
@@ -51,19 +53,19 @@ public class MarklinTurnout extends AbstractTurnout
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
                 return;
             } else {
                 // send a CLOSED command
-                sendMessage(true ^ getInverted());
+                sendMessage(!getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false ^ getInverted());
+            sendMessage(getInverted());
         }
     }
 
@@ -197,4 +199,5 @@ public class MarklinTurnout extends AbstractTurnout
     static final int METERINTERVAL = 100;  // msec wait before closed
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnout.class);
+
 }

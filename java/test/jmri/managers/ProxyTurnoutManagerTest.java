@@ -140,6 +140,13 @@ public class ProxyTurnoutManagerTest {
     }
 
     @Test
+    public void testOutputInterval() {
+        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
+        l.setOutputInterval(50);
+        Assert.assertEquals("Internal outputInterval", 50, l.getOutputInterval());
+    }
+
+    @Test
     public void testInstanceManagerIntegration() {
         jmri.util.JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));

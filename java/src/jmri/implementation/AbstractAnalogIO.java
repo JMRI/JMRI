@@ -89,7 +89,6 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
 
     /** {@inheritDoc} */
     @Override
-    @Nonnull
     public double getCommandedAnalogValue() {
         return _commandedValue;
     }

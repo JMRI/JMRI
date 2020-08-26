@@ -114,7 +114,7 @@ public class LnSv2MessageContents {
      */
     public LnSv2MessageContents(LocoNetMessage m)
             throws java.lang.IllegalArgumentException {
-        
+
         log.debug("interpreting a LocoNet message - may be an SV2 message");  // NOI18N
         if (!isSupportedSv2Message(m)) {
             log.debug("interpreting a LocoNet message is NOT an SV2 message");   // NOI18N
@@ -321,30 +321,30 @@ public class LnSv2MessageContents {
                         sv_adr,
                         d1);
                 break;
-                
-            case (SV_CMD_WRITE_ONE_REPLY):    
-                returnString = Bundle.getMessage(locale, "SV2_WRITE_ONE_REPLY_INTERPRETED", 
+
+            case (SV_CMD_WRITE_ONE_REPLY):
+                returnString = Bundle.getMessage(locale, "SV2_WRITE_ONE_REPLY_INTERPRETED",
                         src,
                         dst,
                         sv_adr,
                         d1);
                 break;
-                
+
             case (SV_CMD_QUERY_ONE):
                 returnString = Bundle.getMessage(locale, "SV2_READ_ONE_REQUEST_INTERPRETED", 
                         src,
                         dst,
                         sv_adr);
                 break;
-                
-            case (SV_CMD_REPORT_ONE):    
+
+            case (SV_CMD_REPORT_ONE):
                 returnString = Bundle.getMessage(locale, "SV2_READ_ONE_REPORT_INTERPRETED", 
                         src,
                         dst,
                         sv_adr,
                         d1);
                 break;
-                
+
             case (SV_CMD_WRITE_ONE_MASKED):
                 returnString = Bundle.getMessage(locale, "SV2_WRITE_ONE_MASKED_INTERPRETED", 
                         src,
@@ -353,8 +353,8 @@ public class LnSv2MessageContents {
                         d1,
                         d2);
                 break;
-                
-            case (SV_CMD_WRITE_ONE_MASKED_REPLY):    
+
+            case (SV_CMD_WRITE_ONE_MASKED_REPLY):
                 returnString = Bundle.getMessage(locale, "SV2_WRITE_ONE_MASKED_REPLY_INTERPRETED", 
                         src,
                         dst,
@@ -362,7 +362,7 @@ public class LnSv2MessageContents {
                         d1,
                         d2);
                 break;
-                
+
             case (SV_CMD_WRITE_FOUR):
                 /* Note: This code does not track total available SVs.  Total 
                         available SVs can vary by SV device type.  So the simple 
@@ -379,8 +379,8 @@ public class LnSv2MessageContents {
                         d3,
                         d4);
                 break;
-                
-            case (SV_CMD_WRITE_FOUR_REPLY):    
+
+            case (SV_CMD_WRITE_FOUR_REPLY):
                 /* Note: This code does not track total available SVs.  Total 
                         available SVs can vary by SV device type.  So the simple 
                         expedient used here is "last SV number is equal to first 
@@ -396,7 +396,7 @@ public class LnSv2MessageContents {
                         d3,
                         d4);
                 break;
-                
+
             case (SV_CMD_QUERY_FOUR):
                 /* Note: This code does not track total available SVs.  Total 
                         available SVs can vary by SV device type.  So the simple 
@@ -409,8 +409,8 @@ public class LnSv2MessageContents {
                         sv_adr,
                         sv_adr+3);
                 break;
-                
-            case (SV_CMD_REPORT_FOUR):    
+
+            case (SV_CMD_REPORT_FOUR):
                 /* Note: This code does not track total available SVs.  Total 
                         available SVs can vary by SV device type.  So the simple 
                         expedient used here is "last SV number is equal to first 
@@ -426,12 +426,12 @@ public class LnSv2MessageContents {
                         d3,
                         d4);
                 break;
-                
+
             case (SV_CMD_DISCOVER_DEVICES_QUERY):
                 returnString = Bundle.getMessage(locale, "SV2_DISCOVER_DEVICES_INTERPRETED", 
                         src);
                 break;
-                
+
             case (SV_CMD_DISCOVER_DEVICE_REPORT):
                 returnString = Bundle.getMessage(locale, "SV2_DEVICE_TYPE_REPORT_INTEPRETED",
                         src,
@@ -441,14 +441,14 @@ public class LnSv2MessageContents {
                         d1 + (256 * d2),
                         d3 + (256 * d4));
                 break;
-                
+
             case (SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS):
                 returnString = Bundle.getMessage(locale, "SV2_IDENTIFY_DEVICE_REQUEST_INTEPRETED",
                         src,
                         dst);
                 break;
-                
-            case (SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS_REPLY):    
+
+            case (SV_CMD_IDENTIFY_DEVICE_BY_DEVICE_ADDRESS_REPLY):
                 returnString = Bundle.getMessage(locale, "SV2_DEVICE_IDENTITY_REPORT_INTEPRETED",
                         src,
                         dst,                // SV device address
@@ -457,7 +457,7 @@ public class LnSv2MessageContents {
                         d1 + (256 * d2),    // product id
                         d3 + (256 * d4));   // serial number
                 break;
-                
+
             case (SV_CMD_CHANGE_ADDRESS_REQUEST):
                 returnString = Bundle.getMessage(locale, "SV2_CHANGE_ADDRESS_REQUEST_INTEPRETED",
                         src,
@@ -467,7 +467,7 @@ public class LnSv2MessageContents {
                         d1 + (256 * d2),    // product id
                         d3 + (256 * d4));   // serial number
                 break;
-                
+
             case (SV_CMD_CHANGE_ADDRESS_REPLY):
                 /*
                 Using only a single SV2 Programming Format message, it is impossible 
@@ -498,13 +498,13 @@ public class LnSv2MessageContents {
                             d3 + (256 * d4));   // serial number
                 }
                 break;
-                
+
             case (SV_CMD_RECONFIGURE_REQUEST):
                 returnString = Bundle.getMessage(locale, "SV2_RECONFIGURE_REQUEST_INTEPRETED", 
                         src,
                         dst);
                 break;
-                
+
             case (SV_CMD_RECONFIGURE_REPLY):
                 returnString = Bundle.getMessage(locale, "SV2_DEVICE_RECONFIGURE_REPLY_INTEPRETED",
                         src,
@@ -514,13 +514,13 @@ public class LnSv2MessageContents {
                         d1 + (256 * d2),    // product id
                         d3 + (256 * d4));   // serial number
                 break;
-                
+
             default:
                 return Bundle.getMessage(locale, "SV2_UNDEFINED_MESSAGE");
         }
 
         log.debug("interpreted: {}", returnString);  // NOI18N
-        return returnString+"\n";  // NOI18N
+        return returnString + "\n"; // NOI18N
     }
 
     /**
@@ -602,7 +602,7 @@ public class LnSv2MessageContents {
     public int getSingleReadReportData() {
         return d1;
     }
-    
+
     /**
      * Create a LocoNet message containing an SV Programming Format 2 message
      * @param source  source device address (7 bit, for &lt;SRC&gt;)
@@ -619,7 +619,7 @@ public class LnSv2MessageContents {
     public static LocoNetMessage createSv2Message (int source, int command, 
             int destination, int svNum, int d1, int d2, int d3, int d4) 
         throws java.lang.IllegalArgumentException {
-        
+
         if ( ! isSupportedSv2Command(command)) {
             throw new java.lang.IllegalArgumentException("Command is not a supported SV2 command"); // NOI18N
         }
@@ -888,13 +888,13 @@ public class LnSv2MessageContents {
     }
     
     public static LocoNetMessage createSvDiscoverQueryMessage() {
-        return createSv2Message(1, 
+        return createSv2Message(1,
                 Sv2Command.SV2_DISCOVER_ALL.cmd, 
                 0, 0, 0, 0, 0, 0);
      }
     
     public static LocoNetMessage createSvReadRequest() {
-        return createSv2Message(1, 
+        return createSv2Message(1,
                 Sv2Command.SV2_DISCOVER_ALL.cmd, 
                 0, 0, 0, 0, 0, 0);
      }
@@ -936,11 +936,12 @@ public class LnSv2MessageContents {
         Sv2Command(int cmd) {
             this.cmd = cmd;
         }
-        
+
         int getCmd() {return cmd;}
         
         public static int getCmd(Sv2Command mt) {
             return mt.getCmd();
         }
     }
+
 }

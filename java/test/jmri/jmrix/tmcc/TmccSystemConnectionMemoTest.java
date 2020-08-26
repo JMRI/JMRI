@@ -19,6 +19,13 @@ public class TmccSystemConnectionMemoTest extends SystemConnectionMemoTestBase<T
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
+    @Test
+    public void checkConfigureManagers() {
+        scm.configureManagers();
+        Assert.assertNotNull("Throttle Manager after configureManagers", scm.getThrottleManager());
+        Assert.assertNotNull("Turnout Manager after configureManagers", scm.getTurnoutManager());
+    }
+
     @Override
     @BeforeEach
     public void setUp() {

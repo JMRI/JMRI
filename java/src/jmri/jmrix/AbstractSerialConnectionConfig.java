@@ -9,18 +9,27 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import jmri.InstanceManager;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import org.slf4j.Logger;
@@ -41,7 +50,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Thought to be safe as default connection config")
     public AbstractSerialConnectionConfig(jmri.jmrix.PortAdapter p) {
-            this((jmri.jmrix.SerialPortAdapter) p);
+        this((jmri.jmrix.SerialPortAdapter) p);
     }
 
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
@@ -140,6 +149,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         });
 
+        // set/change delay interval between (actually before) output (Turnout) commands
+        outputIntervalSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                adapter.getSystemConnectionMemo().setOutputInterval((Integer) outputIntervalSpinner.getValue());
+            }
+        });
+
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             final String item = entry.getKey();
             if (entry.getValue().getComponent() instanceof JComboBox) {
@@ -173,6 +190,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected JComboBox<String> baudBox = new JComboBox<>();
     protected JLabel baudBoxLabel;
     protected String[] baudList;
+
+    private SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(250, 0, 10000, 1); // 10 sec max seems long enough
+    // the following items are protected so they can be hidden when not applicable from a specific ConnectionConfig (ie. Simulator) implementation
+    protected JSpinner outputIntervalSpinner = new JSpinner(intervalSpinner);
+    protected JLabel outputIntervalLabel;
+    protected JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
+
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
     /**
@@ -382,6 +406,20 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (baudBox.getItemCount() > 0) { // skip when adapter returned an empty array (= spotbug's preference)
             baudBox.setSelectedIndex(adapter.getCurrentBaudIndex());
         }
+        // connection (memo) specific output command delay option, calls jmri.jmrix.SystemConnectionMemo#setOutputInterval(int)
+        outputIntervalLabel = new JLabel(Bundle.getMessage("OutputIntervalLabel"));
+        outputIntervalSpinner.setToolTipText(Bundle.getMessage("OutputIntervalTooltip"));
+        JTextField field = ((JSpinner.DefaultEditor) outputIntervalSpinner.getEditor()).getTextField();
+        field.setColumns(6);
+        outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
+        outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
+        outputIntervalSpinner.setEnabled(true);
+        outputIntervalReset.addActionListener((ActionEvent event) -> {
+            int defaultInterval = 250; // 250 was previously hard coded for Routes interval
+            outputIntervalSpinner.setValue(defaultInterval);
+            adapter.getSystemConnectionMemo().setOutputInterval(defaultInterval);
+        });
+
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener((ItemEvent e) -> {
@@ -460,6 +498,19 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                     i++;
                 }
             }
+
+            // interval config field
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(outputIntervalLabel, cL);
+            _details.add(outputIntervalLabel);
+            JPanel intervalPanel = new JPanel();
+            gbLayout.setConstraints(intervalPanel, cR);
+            intervalPanel.add(outputIntervalSpinner);
+            intervalPanel.add(outputIntervalReset);
+            _details.add(intervalPanel);
+            i++;
+
         }
         cL.gridwidth = 2;
         for (JComponent item : additionalItems) {
@@ -664,7 +715,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     /**
-     * 
+     *
      * @deprecated since 4.19.7 without direct replacement
      */
     @Deprecated
@@ -673,7 +724,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     /**
-     * 
+     *
      * @deprecated since 4.19.7 without direct replacement
      */
     @Deprecated
