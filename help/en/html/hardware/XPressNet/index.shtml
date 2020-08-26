@@ -275,7 +275,7 @@
         users, connection via the USB port will be identical to the
         previous version of the LI-USB. For Linux users, the device
         will appear as a /dev/ttyACMx device (where x is replaced
-        with a number). For Mac OS X users, the device name will be
+        with a number). For MacOS users, the device name will be
         /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit
         number)<br>
         The protocol used to connect to the device via USB is
@@ -721,9 +721,9 @@
 
         <li><b>This option has been removed starting in JMRI
         version 2.9.5</b> Check Buffer Status When Sending?
-        Defaults to "Yes" on Windows and Linux, and "No" on MacOS
-        8/9 and Mac OS X. Except when debugging problems, you
-        should leave this at the default.</li>
+        Defaults to "Yes" on Windows and Linux, and "No" on MacOS.
+        Except when debugging problems, you should leave this at
+        the default.</li>
 
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit, click "Yes".</li>
@@ -772,9 +772,9 @@
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="connectLiusbEthernet" id=
-      "connectLiusbEthernet"></a>
+      </ol>
 
+      <a name="connectLiusbEthernet" id="connectLiusbEthernet"></a>
       <h3>Connecting using a Lenz LI-USB Ethernet (Lenz Part Number
       23151) via the Ethernet connection</h3><b>Note: The first
       JMRI release supporting the Lenz LI-USB Ethernet connection
@@ -1054,8 +1054,9 @@
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="connectXntcp" id="connectXntcp"></a>
+      </ol>
 
+      <a name="connectXntcp" id="connectXntcp"></a>
       <h3>Connecting via an XnTcp adapter</h3>
 
       <p><b>Note: The first JMRI release supporting the XnTcp
@@ -1114,11 +1115,12 @@
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="tools" id="tools"></a>
+      </ol>
 
-      <h2>JMRI XpressNet Tools</h2><img src=
-      "images/XpressNetMenu.png" width="236" height="224" align=
-      "right" alt="Menu">
+      <a name="tools" id="tools"></a>
+      <h2>JMRI XpressNet Tools</h2>
+      <img src="images/XpressNetMenu.png" width="236" height="224"
+      align="right" alt="Menu">
 
       <p>The following tools are available from the XpressNet menu
       when this connection is active (click on the name to read
@@ -1151,8 +1153,9 @@
         and Power Station</li>
 
         <li>LV102 Configuration Manager</li>
-      </ul><a name="documentation" id="documentation"></a>
+      </ul>
 
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
@@ -1188,6 +1191,7 @@
 
       <p>Thanks to Paul Bender and others for implementing
       XpressNet</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
