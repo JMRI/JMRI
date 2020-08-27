@@ -122,9 +122,10 @@
         <li>460,800</li>
         </ul>
 
-        <p>CAN ID for CAN-USB: 126 ( selectable from 120-127 )</p>
-        <p>Connection Protocol: "MERG CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not use")</p>
-      
+        <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
+        <p>Connection Protocol : "MERG CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not use")</p>
+        <p>Output Interval : 250 ms</p>
+
       <h3><a name="c2" id="c2">CAN via MERG Network Interface</a></h3>
       <img src="images/connection/merg-connection-network-interface-330x353.png"
       width="330" height="353" alt="JMRI MERG Connection network interface" align="right">
@@ -136,12 +137,12 @@
         <li>CBUS Server</li> 
         </ul>
  
-        <p>IP Address / Host Name : ( none ) - enter an IP address for fully manual configuration.
+        <p>IP Address/Host Name : (none) - enter an IP address for fully manual configuration.
         <br>
         Optional hostname for ZeroConf / mDNS configuration does <strong> NOT </strong> currently work, use IP or localhost. 
         <br> "localhost" can be used on most systems if the CAN server is running on the same machine.
         </p>
-        <p>TCP / UDP Port : 5550 - Port address setting of the TCP connection</p>
+        <p>TCP/UDP Port : 5550 - Port address setting of the TCP connection</p>
         <p>Connection Protocol : "MERG CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not use")</p>
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
@@ -169,6 +170,7 @@
         </ul>
 
         <p>Connection Protocol : "MERG CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not use")</p>
+        <p>Output Interval : 250 ms</p>
 
       <h3><a name="c4" id="c4">CAN via GridConnect Network Interface</a></h3>
         <img src="images/connection/merg-connection-gridconnect-network-interface-300x267.png"
@@ -179,9 +181,9 @@
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
         <em>Additional Connection Settings shown when box checked</em>
-        <p>Gateway : Pass All ( Filtering also selectable )</p>  
-      
-      
+        <p>Gateway : Pass All ( Filtering also selectable )</p>
+        <p>Output Interval : 250 ms</p>
+
       <h3><a name="c5" id="c5">CAN via Lawicell CANUSB</a></h3>
       <img src="images/connection/merg-connection-lawicell-300x200.png"
       width="300" height="200" alt="JMRI MERG Lawicell USB Connection" align="right">
@@ -201,6 +203,7 @@
         </ul>
         
         <p>Connection Protocol: "MERG CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not use")</p>
+        <p>Output Interval : 250 ms</p>
 
       <h3><a name="c6" id="c6">CAN Simulation</a></h3>
       
@@ -216,7 +219,6 @@
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
         <em>Additional Connection Settings shown when box checked</em>
-        <p>Baud Rate : None ( grayed out dropdown unselectable )</p>
         <p>Connection Protocol : "MERG CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not use") </p>
 
       <h3><a name="c7" id="c7">Direct Serial Connection</a></h3>
@@ -238,6 +240,7 @@
         <p>Connection Name : Rfid</p>
         <em>Additional Connection Settings shown when box checked</em>
         <p>Baud rate : automatic ( unselectable, grayed out select box )</p>
+        <p>Output Interval : 250 ms</p>
 
       <h2>JMRI Help</h2>
 
