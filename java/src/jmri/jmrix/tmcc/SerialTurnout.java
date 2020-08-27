@@ -41,17 +41,17 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending a turnout command.
+     * {@inheritDoc}
      */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
 
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
                 return;
             } else {
                 // send a CLOSED command

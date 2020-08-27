@@ -37,4 +37,5 @@ public class DebuggerFrameTest extends jmri.util.JmriJFrameTestBase {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DebuggerFrameTest.class);
+
 }

@@ -32,6 +32,7 @@ public class DetectionPanel extends JPanel {
     private JCheckBox _showTrainName;
     private OBlock _block;
     private final JPanel _blockPathPanel;
+    private final JPanel _sensorBlurbPanel;
     private final ItemPanel _parent;
     private ArrayList<JCheckBox> _pathBoxes;
     private JPanel _checkBoxPanel;
@@ -78,9 +79,17 @@ public class DetectionPanel extends JPanel {
         _checkBoxPanel = new JPanel();
         _blockPathPanel.add(_checkBoxPanel);
         _blockPathPanel.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        _blockPathPanel.setVisible(false);
         _blockPathPanel.setToolTipText(Bundle.getMessage("ToolTipSelectPathIcons"));
         add(_blockPathPanel);
+
+        _sensorBlurbPanel = new JPanel();
+        JPanel blurb = new JPanel();
+        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        blurb.add(new JLabel(Bundle.getMessage("DectectorNote")));
+        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+        _sensorBlurbPanel.add(blurb);
+        add(_sensorBlurbPanel);
     }
 
     JPanel makeSensorPanel(JTextField field, String text, String toolTip) {
@@ -111,6 +120,7 @@ public class DetectionPanel extends JPanel {
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         blurb.add(new JLabel(Bundle.getMessage("DragOccupancyName", Bundle.getMessage("OccupancySensor"))));
+        blurb.add(new JLabel(Bundle.getMessage("DectectorNote")));
 //        blurb.add(new JLabel(Bundle.getMessage("DragErrorName", Bundle.getMessage("ErrorSensor"))));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
@@ -219,7 +229,7 @@ public class DetectionPanel extends JPanel {
         }
         for (String s : iconPath) {
             for (JCheckBox pathBox : _pathBoxes) {
-                // displayed path names are padded to 25 charts
+                // displayed path names are padded to 25 chars
                 String name = pathBox.getName().trim();
                 if (s.equals(name)) {
                     pathBox.setSelected(true);
@@ -240,7 +250,8 @@ public class DetectionPanel extends JPanel {
                     return;
                 }
                 makePathList(block);
-            } else {
+                showPanels(true);
+           } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
                 if (sensor == null) {
                     JOptionPane.showMessageDialog(_parent._frame,
@@ -248,13 +259,22 @@ public class DetectionPanel extends JPanel {
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);
                 }
-                _blockPathPanel.setVisible(false);
-                _block = null;
+                showPanels(false);
             }
         } else {
-            _blockPathPanel.setVisible(false);
+            showPanels(false);
+        }
+    }
+
+    private void showPanels(boolean hasOBlock) {
+        _trainIdPanel.setVisible(hasOBlock);
+        _blockPathPanel.setVisible(hasOBlock);
+        _sensorBlurbPanel.setVisible(!hasOBlock);
+        if (!hasOBlock) {
             _block = null;
         }
+        invalidate();
+        _parent.hideIcons();    // resizes panel properly
     }
 
     private void makePathList(OBlock block) {
@@ -284,7 +304,6 @@ public class DetectionPanel extends JPanel {
             _checkBoxPanel.add(box);
         });
         _blockPathPanel.add(_checkBoxPanel, 1);
-        _blockPathPanel.setVisible(true);
     }
 
 }

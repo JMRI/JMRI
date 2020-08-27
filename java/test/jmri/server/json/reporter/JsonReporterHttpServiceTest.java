@@ -9,6 +9,7 @@ import static org.junit.Assert.fail;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
@@ -130,8 +131,9 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         // create a default reporter manager that overrides provide() to require valid system name
         // this allows testing that invalid names are reported to clients correctly
         InstanceManager.setDefault(ReporterManager.class, new InternalReporterManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
+            @Nonnull
             @Override
-            public Reporter provide(String name) {
+            public Reporter provide(@Nonnull String name) {
                 return this.newReporter(name, null);
             }
         });

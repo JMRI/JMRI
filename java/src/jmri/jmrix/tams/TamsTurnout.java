@@ -12,30 +12,27 @@ import org.slf4j.LoggerFactory;
  * This object doesn't listen to the Tams communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
- *
+ * <p>
  * Based on work by Bob Jacobsen and Kevin Dickerson Copyright
  *
- * @author  Jan Boen
+ * @author Jan Boen
  */
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
-
-    String prefix;
 
     /**
      * Tams turnouts use the NMRA number (0-2040) as their numerical
      * identification in the system name.
      *
      * @param number DCC address of the turnout
-     * @param prefix system prefic
+     * @param prefix system prefix
      * @param etc Tams system connection traffic controller
      */
     public TamsTurnout(int number, String prefix, TamsTrafficController etc) {
         super(prefix + "T" + number);
         _number = number;
-        this.prefix = prefix;
         tc = etc;
-        //Request status of turnout
+        // Request status of turnout
         TamsMessage m = new TamsMessage("xT " + _number + ",,0");
         m.setBinary(false);
         m.setReplyType('T');
@@ -76,31 +73,32 @@ public class TamsTurnout extends AbstractTurnout
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    TamsTrafficController tc;
+    private final TamsTrafficController tc;
 
-    // Handle a request to change state by sending a turnout command
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         log.debug("*** forwardCommandChangeToLayout ***");
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
-                return;
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
             } else {
                 // send a CLOSED command
-                sendMessage(true ^ getInverted());
+                sendMessage(!getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false ^ getInverted());
+            sendMessage(getInverted());
         }
     }
 
     // data members
-    int _number;   // turnout number
+    int _number; // turnout number
 
     /**
      * Set the turnout known state to reflect what's been observed from the
@@ -173,7 +171,7 @@ public class TamsTurnout extends AbstractTurnout
         if (m.match("T") == 0) {
             String[] lines = msg.split(" ");
             if (lines[1].equals("" + _number)) {
-                updateReceived = true;
+                //updateReceived = true; // uncomment when pollForStatus() works
                 if (lines[2].equals("r") || lines[2].equals("0")) {
                     log.debug("Turnout {} = CLOSED", _number);
                     setCommandedStateFromCS(Turnout.CLOSED);
@@ -187,7 +185,7 @@ public class TamsTurnout extends AbstractTurnout
         }
     }
 
-    boolean updateReceived = false;
+    //boolean updateReceived = false;
 
     /*protected void pollForStatus() {
         if (_activeFeedbackType == MONITORING) {

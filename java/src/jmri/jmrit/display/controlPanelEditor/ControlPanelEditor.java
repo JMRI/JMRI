@@ -6,7 +6,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -118,7 +117,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JMenu _circuitMenu;
     private JMenu _drawMenu;
     private CircuitBuilder _circuitBuilder;
-    private ArrayList<Positionable> _secondSelectionGroup;
+    private ArrayList<Rectangle> _highlightGroup = new ArrayList<>();
     private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
     private boolean _disableShapeSelection;
@@ -982,7 +981,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
     @Override
     public void deselectSelectionGroup() {
-        _circuitBuilder.hidePortalIcons();
+        _circuitBuilder.hidePortalIcons(false);
         super.deselectSelectionGroup();
     }
 
@@ -1175,6 +1174,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _lastY = _anchorY;
 
         _currentSelection = getCurrentSelection(event);
+        _circuitBuilder.doMousePressed(event, _currentSelection);
 
         if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && !circuitBuilder) {
             _shapeDrawer.doMousePressed(event, _currentSelection);
@@ -1199,7 +1199,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         } else if (_currentSelection == null || (_selectionGroup != null && !_selectionGroup.contains(_currentSelection))) {
             deselectSelectionGroup();
         }
-        _circuitBuilder.doMousePressed(event, _currentSelection);
+        _circuitBuilder.doMousePressed(event);
         _targetPanel.repaint(); // needed for ToolTip
     }
 
@@ -1322,6 +1322,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (time - _mouseDownTime < 200) {
             return;     // don't drag until sure mouse down was not just a select click
         }
+        _dragging = true;
 
         if (_circuitBuilder.doMouseDragged(_currentSelection, event)) {
             return;
@@ -1371,7 +1372,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 drawSelectRect(event.getX(), event.getY());
             }
         }
-        _dragging = true;
+        _highlightGroup.clear();
         _lastX = event.getX();
         _lastY = event.getY();
         _targetPanel.repaint(); // needed for ToolTip
@@ -1418,25 +1419,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         targetWindowClosing(true);
     }
 
-    protected void setSecondSelectionGroup(ArrayList<Positionable> list) {
-        _secondSelectionGroup = list;
-    }
-
     @Override
     protected void paintTargetPanel(Graphics g) {
         // needed to create PositionablePolygon
         _shapeDrawer.paint(g);  // adds to rubber band line
-        if (_secondSelectionGroup != null) {    // CircuitBuilder highlights
-            if (g instanceof Graphics2D) {
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setStroke(new java.awt.BasicStroke(2.0f));
 
-            }
-            g.setColor(new Color(150, 150, 255));
-            for (Positionable p : _secondSelectionGroup) {
-                if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
-                    g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
-                }
+        if (!_highlightGroup.isEmpty()) {
+            g.setColor(((TargetPane) getTargetPanel()).getHighlightColor());
+            for (Rectangle r : _highlightGroup) {
+                g.drawRect(r.x, r.y, r.width, r.height);
             }
         }
     }
@@ -1710,7 +1701,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _editMenu.setEnabled(true);
         _fileMenu.setEnabled(true);
         // reset colors
-        _highlightcomponent = null;
+        highlight(null);
         TargetPane targetPane = (TargetPane) getTargetPanel();
         targetPane.setDefaultColors();
         targetPane.revalidate();
@@ -1725,10 +1716,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      */
     protected void highlight(Positionable pos) {
         if (pos == null) {
+            _highlightGroup.clear();
             _highlightcomponent = null;
         } else {
-            _highlightcomponent = new Rectangle(pos.getX(), pos.getY(),
+            Rectangle rect = new Rectangle(pos.getX(), pos.getY(),
                     pos.maxWidth(), pos.maxHeight());
+            _highlightcomponent = rect;
+            if (!_dragging) {
+                _highlightGroup.add(rect);
+            }
         }
         repaint();
     }
@@ -1809,9 +1805,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 item.setEditor(this);
                 putItem(item);
                 item.updateSize();
-                //if (_debug) log.debug("Drop positionable "+item.getNameString()+
-                //                                    " as "+item.getClass().getName()+
-                //                                    ", w= "+item.maxWidth()+", h= "+item.maxHeight());
+                _circuitBuilder.doMouseReleased(item, true);
                 evt.dropComplete(true);
                 return;
             } else if (tr.isDataFlavorSupported(_namedIconDataFlavor)) {

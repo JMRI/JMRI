@@ -202,7 +202,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         ((XNetTurnout) t).message(new XNetReply("01 04 05"));
         checkClosedOffSent();
         jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
-        Assert.assertEquals(Turnout.CLOSED,t.getState());
+        Assert.assertEquals(Turnout.CLOSED, t.getState());
         Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
     }
 
@@ -237,7 +237,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         ((XNetTurnout) t).message(new XNetReply("01 04 05"));
         checkClosedOffSent();
         jmri.util.JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
-        Assert.assertEquals(Turnout.CLOSED,t.getState());
+        Assert.assertEquals(Turnout.CLOSED, t.getState());
         Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
     }
 

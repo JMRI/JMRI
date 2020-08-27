@@ -8,9 +8,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
- * XBeeTurnoutTest.java
- *
- * Test for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeTurnout class
  *
  * @author Paul Bender
  */

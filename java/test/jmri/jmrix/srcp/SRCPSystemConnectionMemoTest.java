@@ -35,6 +35,11 @@ public class SRCPSystemConnectionMemoTest extends SystemConnectionMemoTestBase<S
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
+    @Test
+    public void testGetMemo() {
+        Assert.assertNotNull("Get Memo", scm.getMemo(0));
+    }
+
     @Override
     @BeforeEach
     public void setUp() {

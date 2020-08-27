@@ -83,7 +83,6 @@ public class SwitchboardEditor extends Editor {
     protected JMenu _editMenu;
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
-    private ArrayList<Positionable> _secondSelectionGroup;
     private transient boolean panelChanged = false;
 
     // Switchboard items
@@ -1268,24 +1267,9 @@ public class SwitchboardEditor extends Editor {
         return targetFrame;
     }
 
-    protected void setSecondSelectionGroup(ArrayList<Positionable> list) {
-        _secondSelectionGroup = list;
-    }
-
     @Override
     protected void paintTargetPanel(Graphics g) {
-        // needed to create PositionablePolygon
-        //_shapeDrawer.paint(g);
-        if (_secondSelectionGroup != null) {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(new Color(150, 150, 255));
-            g2d.setStroke(new java.awt.BasicStroke(2.0f));
-            for (Positionable p : _secondSelectionGroup) {
-                if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
-                    g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
-                }
-            }
-        }
+        // Shapes not available from switchboardEditor
     }
 
     /**
