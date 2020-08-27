@@ -414,7 +414,7 @@ public class FrmTUL extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
+        CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_TUL(_mProgramProperties, temp);
         _mTUL_DispatcherInternalSensorLockToggle.setText(temp._mTUL_DispatcherInternalSensorLockToggle);
         _mTUL_DispatcherInternalSensorUnlockedIndicator.setText(temp._mTUL_DispatcherInternalSensorUnlockedIndicator);
@@ -503,15 +503,7 @@ public class FrmTUL extends javax.swing.JFrame {
      */
     public void populateJComboBox(JComboBox<String> jComboBox, HashSet<String> populateWith, String currentSelection) {
         _mIgnoreActionEvent = true;
-        boolean panelLoaded = InstanceManager.getDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class)._mPanelLoaded;
         jComboBox.removeAllItems();
-        if (!panelLoaded) {
-            // Configure combo box as a pseudo text field
-            jComboBox.setEditable(true);
-            jComboBox.addItem(currentSelection == null ? "" : currentSelection);
-            _mIgnoreActionEvent = false;
-            return;
-        }
         jComboBox.setEditable(false);
         ArrayList<String> list = new ArrayList<>(populateWith);
         list.sort(new jmri.util.AlphanumComparator());

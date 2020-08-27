@@ -304,11 +304,9 @@ public class FrmCB extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
+        CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_CodeButton(_mProgramProperties, temp);
         _mCodeButtonInternalSensor.setText(temp._mCodeButtonInternalSensor);
-        _mOSSectionOccupiedExternalSensor.setSelectedItem(temp._mOSSectionOccupiedExternalSensor);
-        _mOSSectionOccupiedExternalSensor2.setSelectedItem(temp._mOSSectionOccupiedExternalSensor2);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void _mOSSectionSwitchSlavedToUniqueIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mOSSectionSwitchSlavedToUniqueIDActionPerformed

@@ -75,27 +75,32 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mCodeButtonInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mCodeButtonInternalSensorPattern);
         return returnValue;
     }
+
     public static CodeButtonHandlerData uECBHDWSD_SIDI(ProgramProperties programProperties, CodeButtonHandlerData returnValue) {
         returnValue._mSIDI_LeftInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mSIDI_LeftInternalSensorPattern);
         returnValue._mSIDI_NormalInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mSIDI_NormalInternalSensorPattern);
         returnValue._mSIDI_RightInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mSIDI_RightInternalSensorPattern);
         return returnValue;
     }
+
     public static CodeButtonHandlerData uECBHDWSD_SIDL(ProgramProperties programProperties, CodeButtonHandlerData returnValue) {
         returnValue._mSIDL_LeftInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mSIDL_LeftInternalSensorPattern);
         returnValue._mSIDL_NormalInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties. _mSIDL_NormalInternalSensorPattern);
         returnValue._mSIDL_RightInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties._mSIDL_RightInternalSensorPattern);
         return returnValue;
     }
+
     public static CodeButtonHandlerData uECBHDWSD_SWDI(ProgramProperties programProperties, CodeButtonHandlerData returnValue) {
         returnValue._mSWDI_NormalInternalSensor = substituteValueForPoundSigns(returnValue._mSwitchNumber, programProperties._mSWDI_NormalInternalSensorPattern);
         returnValue._mSWDI_ReversedInternalSensor = substituteValueForPoundSigns(returnValue._mSwitchNumber, programProperties._mSWDI_ReversedInternalSensorPattern);
         return returnValue;
     }
+
     public static CodeButtonHandlerData uECBHDWSD_SWDL(ProgramProperties programProperties, CodeButtonHandlerData returnValue) {
         returnValue._mSWDL_InternalSensor = substituteValueForPoundSigns(returnValue._mSwitchNumber, programProperties._mSWDL_InternalSensorPattern);
         return returnValue;
     }
+
     public static CodeButtonHandlerData uECBHDWSD_CallOn(ProgramProperties programProperties, CodeButtonHandlerData returnValue) {
         returnValue._mCO_CallOnToggleInternalSensor = substituteValueForPoundSigns(returnValue._mSignalEtcNumber, programProperties. _mCO_CallOnToggleInternalSensorPattern);
         return returnValue;

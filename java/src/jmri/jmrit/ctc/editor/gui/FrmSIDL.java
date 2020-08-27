@@ -204,7 +204,7 @@ public class FrmSIDL extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
+        CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SIDL(_mProgramProperties, temp);
         _mSIDL_LeftInternalSensor.setText(temp._mSIDL_LeftInternalSensor);
         _mSIDL_NormalInternalSensor.setText(temp._mSIDL_NormalInternalSensor);

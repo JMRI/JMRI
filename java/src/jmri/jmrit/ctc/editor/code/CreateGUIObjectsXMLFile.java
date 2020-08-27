@@ -3,7 +3,6 @@ package jmri.jmrit.ctc.editor.code;
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateEpilogue;
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateProlog;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
@@ -12,9 +11,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.TreeMap;
+import jmri.InstanceManager;
+import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
@@ -23,38 +26,28 @@ public class CreateGUIObjectsXMLFile {
     private static final int START_OFFSET = 12;
     private static final int GIF_HORIZONTAL_SIZE = 65;
 
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not write anything if it fails.")
-//  By doing this, it prevents me from accidentally accessing "_mCodeButtonHandlerDataArrayList" and screwing it up!
-//  I just have to make sure that I don't reference "passedCodeButtonHandlerDataArrayList" anywhere else in the code!
-    public static void writeGUIObjects(String directoryToCreateThemIn, OtherData otherData, ArrayList <CodeButtonHandlerData> passedCodeButtonHandlerDataArrayList) {
-//  Create a DEEP COPY of the array list, so that we can sort it independently of the outside data:
-//  In the process, reject any <= 0 entries, or one(s) that have been generated before, as they won't be generated:
-        ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayListDeepCopy = new ArrayList <>();
-        for (CodeButtonHandlerData codeButtonHandlerData : passedCodeButtonHandlerDataArrayList) {
-            if (codeButtonHandlerData._mGUIColumnNumber > 0 && codeButtonHandlerData._mGUIGeneratedAtLeastOnceAlready == false)
-                codeButtonHandlerDataArrayListDeepCopy.add(codeButtonHandlerData.deepCopy());
-            codeButtonHandlerData._mGUIGeneratedAtLeastOnceAlready = true;  // BUT mark it as being done already.
-        }
-//  Sort by columnm number:
-        Collections.sort(codeButtonHandlerDataArrayListDeepCopy);
-//  Reject any duplicate column numbers:
-        if (codeButtonHandlerDataArrayListDeepCopy.size() > 1) {
-            for (int index = codeButtonHandlerDataArrayListDeepCopy.size() - 2; index >= 0; index--) { // End -1 to first
-                if (codeButtonHandlerDataArrayListDeepCopy.get(index)._mGUIColumnNumber == codeButtonHandlerDataArrayListDeepCopy.get(index+1)._mGUIColumnNumber) {
-                    codeButtonHandlerDataArrayListDeepCopy.remove(index + 1);
-                }
-            }
-        }
+    public static void writeGUIObjects() {
+
+        CTCSerialData ctcSerialData = InstanceManager.getDefault(CtcManager.class).getCTCSerialData();
+
+        TreeMap<Integer, Integer> cbhdMap = new TreeMap<>();
+        ctcSerialData.getCodeButtonHandlerDataArrayList().forEach(cbhd -> {
+            cbhdMap.put(cbhd._mGUIColumnNumber, cbhd._mUniqueID);
+        });
 
         PrintWriter printWriter;
         try {
-            printWriter = new PrintWriter(new FileWriter(directoryToCreateThemIn + "GUIObjects.xml"));  // NOI18N
-        } catch (IOException e) { return; }
+            printWriter = new PrintWriter(new FileWriter(jmri.util.FileUtil.getUserFilesPath() + "ctc/GUIObjects.xml"));  // NOI18N
+        } catch (IOException e) {
+            log.debug("PrintWriter exception: {}", e.getMessage());
+            return;
+        }
         generateProlog(printWriter);
         printWriter.println("  <paneleditor class=\"jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml\" name=\"Panel \" x=\"857\" y=\"437\" height=\"437\" width=\"527\" editable=\"yes\" positionable=\"no\" showtooltips=\"yes\" controlling=\"yes\" hide=\"yes\" panelmenu=\"yes\" scrollable=\"both\" redBackground=\"255\" greenBackground=\"255\" blueBackground=\"255\">"); // NOI18N
 
 //  Create "one of" objects:
 
+        OtherData otherData = ctcSerialData.getOtherData();
         if (otherData._mGUIDesign_BuilderPlate) {
             generateBuilderPlate(printWriter);
         }
@@ -98,11 +91,12 @@ public class CreateGUIObjectsXMLFile {
         }
 
 //  Create all GUI objects:
-        if (!codeButtonHandlerDataArrayListDeepCopy.isEmpty()) {
+        if (!cbhdMap.isEmpty()) {
             generatePanel(0, 0, otherData._mGUIDesign_VerticalSize, "Panel-left", printWriter); // NOI18N
             int lastHorizontalPosition = START_OFFSET;        // Where we are now.
             int thisObjectHorizontalPosition = START_OFFSET;
-            for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayListDeepCopy) {
+            for (int cbhdID : cbhdMap.values()) {
+                CodeButtonHandlerData codeButtonHandlerData = ctcSerialData.getCodeButtonHandlerDataViaUniqueID(cbhdID);
                 thisObjectHorizontalPosition = (codeButtonHandlerData._mGUIColumnNumber - 1) * GIF_HORIZONTAL_SIZE + START_OFFSET;
 //  Put in possible blank panels between where we left off last and the next one:
                 for ( ; lastHorizontalPosition < thisObjectHorizontalPosition; lastHorizontalPosition += GIF_HORIZONTAL_SIZE) {
@@ -216,7 +210,7 @@ public class CreateGUIObjectsXMLFile {
                             }
                             x += 11;
                         }
-//  SpotBugs whines about "useless control flow", so I commented this out (not the comment on the next line):
+// //  SpotBugs whines about "useless control flow", so I commented this out (not the comment on the next line):
                     } /*else if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.GREEN_OFF) {  // Future someday, as of 10/30/18 user CANNOT select this!
                     }*/
                 }
@@ -752,4 +746,6 @@ Right:
                 return y + 180;
         }
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CreateGUIObjectsXMLFile.class);
 }

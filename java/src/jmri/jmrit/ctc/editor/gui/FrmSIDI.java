@@ -639,7 +639,7 @@ public class FrmSIDI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
+        CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SIDI(_mProgramProperties, temp);
         _mSIDI_LeftInternalSensor.setText(temp._mSIDI_LeftInternalSensor);
         _mSIDI_NormalInternalSensor.setText(temp._mSIDI_NormalInternalSensor);

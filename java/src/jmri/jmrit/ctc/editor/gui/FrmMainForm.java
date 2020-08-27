@@ -21,9 +21,9 @@ import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
+import jmri.jmrit.ctc.editor.code.CreateGUIObjectsXMLFile;
 import jmri.jmrit.ctc.editor.code.CreateXMLFiles;
 import jmri.jmrit.ctc.editor.code.InternalSensorManager;
-import jmri.jmrit.ctc.editor.code.OriginalCopy;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -46,19 +46,16 @@ import jmri.jmrit.ctc.ctcserialdata.OtherData;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-// public class FrmMainForm extends jmri.util.JmriJFrame {
 public class FrmMainForm extends JFrame {
 
     private static final String FORM_PROPERTIES = "FrmMainForm";    // NOI18N
     private CTCSerialData _mCTCSerialData;
-    private OriginalCopy _mOriginalCopy;
     private Columns _mColumns;
     private DefaultListModel<String> _mDefaultListModel;
     private ProgramProperties _mProgramProperties;
     private AwtWindowProperties _mAwtWindowProperties;
     private CheckJMRIObject _mCheckJMRIObject;
 
-    public boolean _mPanelLoaded = true;
     private boolean _mAnySubFormOpen = false;   // For any BUT FrmTRL_Rules
     boolean _mTRL_RulesFormOpen = false; // for ONLY FrmTRL_Rules
 
@@ -73,9 +70,7 @@ public class FrmMainForm extends JFrame {
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC", true);  // NOI18N
         _mAwtWindowProperties = new AwtWindowProperties(this, "AwtWindowProperties.txt", FORM_PROPERTIES); // NOI18N
         _mCheckJMRIObject = new CheckJMRIObject();
-        newOrOpenFile(true);
-        checkPanelStatus.actionPerformed(null);
-        new javax.swing.Timer(5000, checkPanelStatus).start();
+        setupEditor();
 //  Before we "start up the editor", let's warn the user about using "," and ";" if they haven't seen it before:
         if (!_mProgramProperties._mNoMoreReservedCharactersWarning) {
             Object[] options = { Bundle.getMessage("CTCNamesMessageOK"), Bundle.getMessage("CTCNamesMessageDontShowThisAgain") }; // NOI18N
@@ -94,33 +89,6 @@ public class FrmMainForm extends JFrame {
         int modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         return KeyStroke.getKeyStroke(keycode, modifier);
     }
-
-    /**
-     * Set the panel status:  true: CTC enabled panel loaded, false = no CTC enabled panel loaded.
-     * The presence of the debug and reload sensors is used to test for a potential CTC panel xml file.
-     * Runs as a swing timer event and checks every 5 seconds.
-     */
-    java.awt.event.ActionListener checkPanelStatus = new java.awt.event.ActionListener() {
-        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            _mPanelLoaded = true;
-
-            // Are two specific sensors present
-// DS            Sensor chkReload = sm.getSensor( _mCTCSerialData.getOtherData()._mCTCDebugSystemReloadInternalSensor);
-// DS            Sensor chkDebug = sm.getSensor( _mCTCSerialData.getOtherData()._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor);
-// DS
-// DS            if (chkReload == null || chkDebug == null) {
-// DS                // No CTC panel loaded
-// DS                _mJMRIValidationStatus.setText("<html><font color='red'>" + Bundle.getMessage("LabelDisabled") + "</font></html>");     // NOI18N
-// DS                _mCheckEverythingWithJMRI.setEnabled(false);
-// DS            } else {
-// DS                _mPanelLoaded = true;
-// DS                _mJMRIValidationStatus.setText("<html><font color='green'>" + Bundle.getMessage("LabelEnabled") + "</font></html>");    // NOI18N
-// DS                _mCheckEverythingWithJMRI.setEnabled(true);
-// DS            }
-        }
-    };
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -170,18 +138,13 @@ public class FrmMainForm extends JFrame {
         _mButtonWriteXMLFiles = new javax.swing.JButton();
         _mMoveUp = new javax.swing.JButton();
         _mMoveDown = new javax.swing.JButton();
-        _mCheckEverythingWithJMRI = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        _mJMRIValidationStatus = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         _mFile = new javax.swing.JMenu();
         _mNew = new javax.swing.JMenuItem();
-        _mSave = new javax.swing.JMenuItem();
-        _mQuitWithoutSaving = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        _mFindAndReplace = new javax.swing.JMenuItem();
+        _mImport = new javax.swing.JMenuItem();
+        _mEdit = new javax.swing.JMenu();
         _mFixErrors = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        _mConfigure = new javax.swing.JMenu();
         _mDebugging = new javax.swing.JMenuItem();
         _mDefaults = new javax.swing.JMenuItem();
         _mFleeting = new javax.swing.JMenuItem();
@@ -426,19 +389,6 @@ public class FrmMainForm extends JFrame {
             }
         });
 
-        _mCheckEverythingWithJMRI.setText(Bundle.getMessage("ButtonCheck"));
-        _mCheckEverythingWithJMRI.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mCheckEverythingWithJMRIActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText(Bundle.getMessage("LabelValidation"));
-
-        _mJMRIValidationStatus.setText("Unknown");
-        _mJMRIValidationStatus.setName("_mJMRIValidationStatus"); // NOI18N
-
         _mFile.setText(Bundle.getMessage("MenuFile"));
 
         _mNew.setAccelerator(getAccelerator(KeyEvent.VK_N));
@@ -451,39 +401,18 @@ public class FrmMainForm extends JFrame {
         });
         _mFile.add(_mNew);
 
-        _mSave.setAccelerator(getAccelerator(KeyEvent.VK_S));
-        _mSave.setText(Bundle.getMessage("MenuSave"));
-        _mSave.addActionListener(new java.awt.event.ActionListener() {
+        _mImport.setText(Bundle.getMessage("MenuImport"));
+        _mImport.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mSaveActionPerformed(evt);
+                _mImportActionPerformed(evt);
             }
         });
-        _mFile.add(_mSave);
-
-        _mQuitWithoutSaving.setAccelerator(getAccelerator(KeyEvent.VK_E));
-        _mQuitWithoutSaving.setText(Bundle.getMessage("MenuExit"));
-        _mQuitWithoutSaving.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mQuitWithoutSavingActionPerformed(evt);
-            }
-        });
-        _mFile.add(_mQuitWithoutSaving);
+        _mFile.add(_mImport);
 
         jMenuBar1.add(_mFile);
 
-        jMenu2.setText(Bundle.getMessage("MenuEdit"));
-
-        _mFindAndReplace.setAccelerator(getAccelerator(KeyEvent.VK_F));
-        _mFindAndReplace.setText(Bundle.getMessage("MenuFind"));
-        _mFindAndReplace.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mFindAndReplaceActionPerformed(evt);
-            }
-        });
-        jMenu2.add(_mFindAndReplace);
+        _mEdit.setText(Bundle.getMessage("MenuEdit"));
 
         _mFixErrors.setText(Bundle.getMessage("MenuFix"));
         _mFixErrors.addActionListener(new java.awt.event.ActionListener() {
@@ -492,11 +421,11 @@ public class FrmMainForm extends JFrame {
                 _mFixErrorsActionPerformed(evt);
             }
         });
-        jMenu2.add(_mFixErrors);
+        _mEdit.add(_mFixErrors);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(_mEdit);
 
-        jMenu1.setText(Bundle.getMessage("MenuConfigure"));
+        _mConfigure.setText(Bundle.getMessage("MenuConfigure"));
 
         _mDebugging.setText(Bundle.getMessage("MenuDebugging"));
         _mDebugging.addActionListener(new java.awt.event.ActionListener() {
@@ -505,7 +434,7 @@ public class FrmMainForm extends JFrame {
                 _mDebuggingActionPerformed(evt);
             }
         });
-        jMenu1.add(_mDebugging);
+        _mConfigure.add(_mDebugging);
 
         _mDefaults.setText(Bundle.getMessage("MenuDefaults"));
         _mDefaults.addActionListener(new java.awt.event.ActionListener() {
@@ -514,7 +443,7 @@ public class FrmMainForm extends JFrame {
                 _mDefaultsActionPerformed(evt);
             }
         });
-        jMenu1.add(_mDefaults);
+        _mConfigure.add(_mDefaults);
 
         _mFleeting.setText(Bundle.getMessage("MenuFleeting"));
         _mFleeting.addActionListener(new java.awt.event.ActionListener() {
@@ -523,7 +452,7 @@ public class FrmMainForm extends JFrame {
                 _mFleetingActionPerformed(evt);
             }
         });
-        jMenu1.add(_mFleeting);
+        _mConfigure.add(_mFleeting);
 
         _mPatterns.setText(Bundle.getMessage("MenuPatterns"));
         _mPatterns.addActionListener(new java.awt.event.ActionListener() {
@@ -532,7 +461,7 @@ public class FrmMainForm extends JFrame {
                 _mPatternsActionPerformed(evt);
             }
         });
-        jMenu1.add(_mPatterns);
+        _mConfigure.add(_mPatterns);
 
         _mGUIDesign.setText(Bundle.getMessage("MenuDesign"));
         _mGUIDesign.addActionListener(new java.awt.event.ActionListener() {
@@ -541,9 +470,9 @@ public class FrmMainForm extends JFrame {
                 _mGUIDesignActionPerformed(evt);
             }
         });
-        jMenu1.add(_mGUIDesign);
+        _mConfigure.add(_mGUIDesign);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(_mConfigure);
 
         _mHelp.setText(Bundle.getMessage("MenuAbout"));
 
@@ -612,54 +541,44 @@ public class FrmMainForm extends JFrame {
                                     .addComponent(_mEdit_SWDL)
                                     .addComponent(_mSWDL_Enabled)
                                     .addComponent(_mEdit_SWDL_Prompt))))
-                        .addGap(0, 174, Short.MAX_VALUE))
+                        .addGap(0, 228, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(172, 172, 172)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(_mJMRIValidationStatus)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(_mButtonWriteXMLFiles)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(4, 4, 4)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(_mCheckEverythingWithJMRI))
-                                        .addComponent(changeNumbersButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(reapplyPatternsButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(addButton)
+                                            .addComponent(deleteButton)))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(_mMoveUp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(_mMoveDown, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addContainerGap())))
+                                        .addComponent(_mMoveDown, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(changeNumbersButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                                    .addComponent(_mButtonWriteXMLFiles, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(reapplyPatternsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(_mJMRIValidationStatus))
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(addButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(deleteButton))
-                            .addComponent(_mCheckEverythingWithJMRI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(addButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteButton)
                         .addGap(18, 18, 18)
                         .addComponent(reapplyPatternsButton)
                         .addGap(18, 18, 18)
@@ -756,12 +675,21 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (!validToSaveAtThisTime(Bundle.getMessage("FrmMainFormAutoSaveError1"), Bundle.getMessage("FrmMainFormAutoSaveError2"))) return; // NOI18N
-// DS        _mCTCSerialData.writeDataToXMLFile(_mProgramProperties._mFilename);
-// DS        _mProgramProperties.close();
+        if (!validToExitAtThisTime(Bundle.getMessage("FrmMainFormExitError1"))) return; // NOI18N
         _mAwtWindowProperties.saveWindowStateAndClose(this, FORM_PROPERTIES);
         shutdown();
     }//GEN-LAST:event_formWindowClosing
+
+    private boolean validToExitAtThisTime(String whatIsTriggeringSave) {
+        if (_mColumns.anyErrorsPresent()) {
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("FrmMainFormValidError1") + whatIsTriggeringSave + Bundle.getMessage("FrmMainFormValidError2"),
+                    Bundle.getMessage("FrmMainFormValidError3"),
+                    JOptionPane.ERROR_MESSAGE);   // NOI18N
+            return false;
+        }
+        return true;
+    }
 
     private void _mPresentlyDefinedColumnsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event__mPresentlyDefinedColumnsValueChanged
         if (!evt.getValueIsAdjusting()) { // returns false is FINAL in chain.
@@ -1009,19 +937,11 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event_changeNumbersButtonActionPerformed
 
     private void _mButtonWriteXMLFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mButtonWriteXMLFilesActionPerformed
-// DS        CreateXMLFiles createTextFile = new CreateXMLFiles( _mCTCSerialData.getOtherData(), _mCTCSerialData.getCodeButtonHandlerDataArrayList());
-// DS        createTextFile.createTextFiles(CommonSubs.getDirectoryOnly(_mProgramProperties._mFilename));
+        CreateGUIObjectsXMLFile.writeGUIObjects();
         _mColumns.updateFrame();
     }//GEN-LAST:event__mButtonWriteXMLFilesActionPerformed
 
-    private void newOrOpenFile(boolean openExisting) {
-// DS        _mCTCSerialData = new CTCSerialData();
-        _mOriginalCopy = new OriginalCopy();
-        if (openExisting) {
-// DS            _mCTCSerialData.readDataFromXMLFile(_mProgramProperties._mFilename);
-            _mOriginalCopy.makeDeepCopy(_mCTCSerialData);
-        } // DS else _mProgramProperties._mFilename = ProgramProperties.FILENAME_DEFAULT;
-// DS        setTitle(Bundle.getMessage("TitleMainForm") + "   " + _mProgramProperties._mFilename );     // NOI18N
+    private void setupEditor() {
         setTitle(Bundle.getMessage("TitleMainForm"));     // NOI18N
         _mDefaultListModel = new DefaultListModel<>();
         _mPresentlyDefinedColumns.setModel(_mDefaultListModel);
@@ -1040,35 +960,24 @@ public class FrmMainForm extends JFrame {
     }
 
     private void _mNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mNewActionPerformed
-            newOrOpenFile(false);
+        int response = JOptionPane.showConfirmDialog(this,
+                Bundle.getMessage("NewConfigWarning"),
+                Bundle.getMessage("NewConfigTitle"),
+                JOptionPane.YES_NO_OPTION);
+        if (response == 1) return;
+
+        CtcManager ctcManager = InstanceManager.getDefault(CtcManager.class);
+        _mProgramProperties = ctcManager.newProgramProperties();
+        _mCTCSerialData = ctcManager.newCTCSerialData();
+        setupEditor();
     }//GEN-LAST:event__mNewActionPerformed
 
-    private void _mSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveActionPerformed
-        if (!validToSaveAtThisTime(Bundle.getMessage("MenuSave"), "")) return;  // NOI18N
-// DS        _mCTCSerialData.writeDataToXMLFile(_mProgramProperties._mFilename);
-        _mOriginalCopy.makeDeepCopy(_mCTCSerialData);
-    }//GEN-LAST:event__mSaveActionPerformed
-
-    private boolean validToSaveAtThisTime(String whatIsTriggeringSave, String hint) {
-        if (_mColumns.anyErrorsPresent()) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("FrmMainFormValidError1") + whatIsTriggeringSave + Bundle.getMessage("FrmMainFormValidError2") + hint, Bundle.getMessage("FrmMainFormValidError3"), JOptionPane.ERROR_MESSAGE);   // NOI18N
-            return false;
-        }
-        return true;
-    }
-
-    private void _mFindAndReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mFindAndReplaceActionPerformed
-        if (_mAnySubFormOpen) return;
-        _mAnySubFormOpen = true;
-        FrmFindAndReplace dialog = new FrmFindAndReplace(_mAwtWindowProperties, _mCTCSerialData);
-        InternalSensorManager.doDialog(dialog, _mCTCSerialData);
-        dialog.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                _mAnySubFormOpen = false;
-            }
-        });
-    }//GEN-LAST:event__mFindAndReplaceActionPerformed
+    private void _mImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mImportActionPerformed
+        JOptionPane.showMessageDialog(this,
+                "The import process is under construction",
+                "Import Pending",
+                JOptionPane.OK_OPTION);
+    }//GEN-LAST:event__mImportActionPerformed
 
     private void _mFleetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mFleetingActionPerformed
         if (_mAnySubFormOpen) return;
@@ -1155,17 +1064,6 @@ public class FrmMainForm extends JFrame {
         }
     }//GEN-LAST:event__mMoveDownActionPerformed
 
-    private void _mQuitWithoutSavingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mQuitWithoutSavingActionPerformed
-        if (_mOriginalCopy.changed(_mCTCSerialData)) {
-            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("FrmMainFormFileModWarn1"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) { // NOI18N
-                shutdown();
-            }
-        } else {    // No changes, just close.
-            shutdown();
-        }
-    }//GEN-LAST:event__mQuitWithoutSavingActionPerformed
-
     private void _mFixErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mFixErrorsActionPerformed
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
@@ -1192,31 +1090,14 @@ public class FrmMainForm extends JFrame {
         });
     }//GEN-LAST:event__mHelpAboutActionPerformed
 
-    private void _mCheckEverythingWithJMRIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mCheckEverythingWithJMRIActionPerformed
-        boolean showErrors = JOptionPane.showConfirmDialog(this, Bundle.getMessage("FrmMainFormSeeErrors"), Bundle.getMessage("Info"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;    // NOI18N
-        _mColumns.updateFrame();    // Sets ERROR_STRING at the end of each line.
-        if (showErrors) {
-            ArrayList<String> errors = new ArrayList<>();
-            _mCTCSerialData.getCodeButtonHandlerDataArrayList().forEach((codeButtonHandlerData) -> {
-                _mCheckJMRIObject.analyzeClass(codeButtonHandlerData, errors);
-            });
-            if (!errors.isEmpty()) {
-                StringBuilder stringBuffer = new StringBuilder();
-                errors.forEach((error) -> {
-                    stringBuffer.append(error).append("\n");
-                });
-                JOptionPane.showMessageDialog(this, stringBuffer.toString());
-            }
-        }
-    }//GEN-LAST:event__mCheckEverythingWithJMRIActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton _mButtonWriteXMLFiles;
     private javax.swing.JLabel _mCB_EditAlwaysEnabled;
     private javax.swing.JCheckBox _mCO_Enabled;
-    private javax.swing.JButton _mCheckEverythingWithJMRI;
+    private javax.swing.JMenu _mConfigure;
     private javax.swing.JMenuItem _mDebugging;
     private javax.swing.JMenuItem _mDefaults;
+    private javax.swing.JMenu _mEdit;
     private javax.swing.JButton _mEdit_CB;
     private javax.swing.JLabel _mEdit_CB_Prompt;
     private javax.swing.JButton _mEdit_CO;
@@ -1236,34 +1117,28 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JButton _mEdit_TUL;
     private javax.swing.JLabel _mEdit_TUL_Prompt;
     private javax.swing.JMenu _mFile;
-    private javax.swing.JMenuItem _mFindAndReplace;
     private javax.swing.JMenuItem _mFixErrors;
     private javax.swing.JMenuItem _mFleeting;
     private javax.swing.JMenuItem _mGUIDesign;
     private javax.swing.JMenu _mHelp;
     private javax.swing.JMenuItem _mHelpAbout;
     private javax.swing.JCheckBox _mIL_Enabled;
-    private javax.swing.JLabel _mJMRIValidationStatus;
+    private javax.swing.JMenuItem _mImport;
     private javax.swing.JButton _mMoveDown;
     private javax.swing.JButton _mMoveUp;
     private javax.swing.JMenuItem _mNew;
     private javax.swing.JMenuItem _mPatterns;
     private javax.swing.JList<String> _mPresentlyDefinedColumns;
-    private javax.swing.JMenuItem _mQuitWithoutSaving;
     private javax.swing.JCheckBox _mSIDI_Enabled;
     private javax.swing.JCheckBox _mSIDL_Enabled;
     private javax.swing.JCheckBox _mSWDI_Enabled;
     private javax.swing.JCheckBox _mSWDL_Enabled;
-    private javax.swing.JMenuItem _mSave;
     private javax.swing.JCheckBox _mTRL_Enabled;
     private javax.swing.JCheckBox _mTUL_Enabled;
     private javax.swing.JButton addButton;
     private javax.swing.JButton changeNumbersButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -1271,4 +1146,5 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JButton reapplyPatternsButton;
     // End of variables declaration//GEN-END:variables
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FrmMainForm.class);
 }

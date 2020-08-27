@@ -160,7 +160,7 @@ public class FrmSWDL extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
+        CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SWDL(_mProgramProperties, temp);
         _mSWDL_InternalSensor.setText(temp._mSWDL_InternalSensor);
     }//GEN-LAST:event_jButton2ActionPerformed

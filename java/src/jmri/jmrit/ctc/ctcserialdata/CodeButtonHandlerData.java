@@ -86,20 +86,6 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
     public int _mSignalEtcNumber;      // Signal Indicators, lever, locktoggle, callon and code button number
     public String myString() { return Bundle.getMessage("CBHD_SwitchNumber") + " " + _mSwitchNumber + ", " + Bundle.getMessage("CBHD_SignalNumberEtc") + " " + _mSignalEtcNumber + Bundle.getMessage("CBHD_ColumnNumber") + " " + _mGUIColumnNumber + (_mGUIGeneratedAtLeastOnceAlready ? "*" : "") + ", [" + _mUniqueID + "]"; }  // NOI18N
     public String myShortStringNoComma() { return _mSwitchNumber + "/" + _mSignalEtcNumber; }
-//  PRESENTLY (as of 10/18/18) these are ONLY used by the edit routines to TEMPORARILY get a copy.  The
-//  data is NEVER stored anywhere.  I say this because "_mUniqueID" MUST have another unique number if it is EVER
-//  stored anywhere!  For example: take the source # and add 5,000,000 to it each time.  Even copies of copies would
-//  get unique numbers!  If the user ever creates 5,000,000 objects, they must be GOD!
-    public CodeButtonHandlerData deepCopy() {
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(this);
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            return (CodeButtonHandlerData)objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) { return null;}
-    }
 
     public static ArrayList <Field> getAllStringFields() {
         Field[] fields = CodeButtonHandlerData.class.getFields();

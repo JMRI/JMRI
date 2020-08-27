@@ -183,7 +183,6 @@ public class CheckJMRIObject {
     }
 
     private boolean lowLevelCheck(OBJECT_TYPE objectType, String JMRIObjectName) {
-        if (!InstanceManager.getDefault(FrmMainForm.class)._mPanelLoaded) return true;
         switch(objectType) {
             case SENSOR:
                 if (InstanceManager.sensorManagerInstance().getSensor(JMRIObjectName) != null) return true;

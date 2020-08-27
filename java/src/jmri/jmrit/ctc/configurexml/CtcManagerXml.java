@@ -340,15 +340,15 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         List<Element> ctcList = sharedCtcData.getChildren();
 
         for (Element lvl1 : ctcList) {
-            if (lvl1.getName() == "ctcProperties") {
+            if (lvl1.getName().equals("ctcProperties")) {
                 loadProperties(cm, lvl1);
                 continue;
             }
-            if (lvl1.getName() == "ctcOtherData") {
+            if (lvl1.getName().equals("ctcOtherData")) {
                 loadOtherData(cm, lvl1);
                 continue;
             }
-            if (lvl1.getName() == "ctcCodeButtonData") {
+            if (lvl1.getName().equals("ctcCodeButtonData")) {
                 // Create basic CodeButtonHandlerData
                 int _mUniqueID = loadInt(lvl1.getChild("UniqueID"));
                 int _mSwitchNumber = loadInt(lvl1.getChild("SwitchNumber"));

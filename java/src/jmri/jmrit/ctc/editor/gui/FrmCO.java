@@ -627,8 +627,7 @@ public class FrmCO extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        log.info("jButton2ActionPerformed reapply patterns null exception");
-        CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
+        CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_CallOn(_mProgramProperties, temp);
         _mCO_CallOnToggleInternalSensor.setText(temp._mCO_CallOnToggleInternalSensor);
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -312,7 +312,7 @@ public class FrmSWDI extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
+        CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SWDI(_mProgramProperties, temp);
         _mSWDI_NormalInternalSensor.setText(temp._mSWDI_NormalInternalSensor);
         _mSWDI_ReversedInternalSensor.setText(temp._mSWDI_ReversedInternalSensor);

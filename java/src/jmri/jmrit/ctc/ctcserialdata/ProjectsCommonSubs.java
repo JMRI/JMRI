@@ -46,7 +46,7 @@ public class ProjectsCommonSubs {
         ArrayList<NBHSignal> newList = new ArrayList<>();
         signalNames.forEach(name -> {
             NBHSignal newSignal = new NBHSignal(name);
-            if (newSignal != null) {
+            if (newSignal.valid()) {
                 newList.add(newSignal);
             }
         });

@@ -222,17 +222,4 @@ public class TrafficLocking {
         if (switchDirectionIndicators == null) return null;     // Safety, technically shouldn't happen....
         return switchDirectionIndicators.getProperIndicatorSensor(isNormalAlignment);
     }
-
-    private int getUniqueID(String aString) {
-        return ProjectsCommonSubs.getIntFromStringNoThrow(aString, -1); // If a problem, -1!
-    }
-
-/*
-    private NBHSensor getOSSectionOccupancySensor(int uniqueID, HashMap<Integer, CodeButtonHandler> cbHashMap) {
-        if (uniqueID < 0) return null;
-        CodeButtonHandler codeButtonHandler = cbHashMap.get(uniqueID);
-        if (codeButtonHandler == null) return null;     // Safety, technically shouldn't happen....
-        return codeButtonHandler.getOSSectionOccupiedExternalSensor();
-    }
-*/
 }

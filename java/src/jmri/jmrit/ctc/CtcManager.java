@@ -38,10 +38,20 @@ public class CtcManager implements InstanceManagerAutoDefault {
         return programProperties;
     }
 
+    public ProgramProperties newProgramProperties() {
+        programProperties = new ProgramProperties();
+        return programProperties;
+    }
+
     public CTCSerialData getCTCSerialData() {
         if (ctcSerialData == null) {
             ctcSerialData = new CTCSerialData();
         }
+        return ctcSerialData;
+    }
+
+    public CTCSerialData newCTCSerialData() {
+        ctcSerialData = new CTCSerialData();
         return ctcSerialData;
     }
 

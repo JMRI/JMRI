@@ -209,14 +209,7 @@ public class CommonSubs {
      * @param firstRowBlank True to create a blank row. If the selection is null or empty, the blank row will be selected.
      */
     public static void populateJComboBoxWithBeans(JComboBox<String> jComboBox, String beanType, String currentSelection, boolean firstRowBlank) {
-        boolean panelLoaded = InstanceManager.getDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class)._mPanelLoaded;
         jComboBox.removeAllItems();
-        if (!panelLoaded) {
-            // Configure combo box as a pseudo text field
-            jComboBox.setEditable(true);
-            jComboBox.addItem(currentSelection == null ? "" : currentSelection);
-            return;
-        }
         jComboBox.setEditable(false);
         ArrayList<String> list = new ArrayList<>();
         switch (beanType) {
@@ -378,7 +371,7 @@ public class CommonSubs {
         }
 
         internalSensorStringFields = CodeButtonHandlerData.getAllInternalSensorStringFields();
-        for (CodeButtonHandlerData codeButtonHandlerData : ctcmgr.getCTCSerialData().getCodeButtonHandlerDataArrayList()) {
+        for (CodeButtonHandlerData codeButtonHandlerData : ctcserialdata.getCodeButtonHandlerDataArrayList()) {
             for (Field field : internalSensorStringFields) {
                 try {
                     String content = (String)field.get(codeButtonHandlerData);
@@ -394,6 +387,7 @@ public class CommonSubs {
         if (InstanceManager.getDefault(SensorManager.class).getSensor(sensorName) == null) {
             log.info("createSensorIfNeeded: name = {}", sensorName);
             Sensor sensor = InstanceManager.getDefault(SensorManager.class).newSensor(sensorName, null);
+            log.debug("createSensorIfNeeded: new sensor = {}", sensor);
         }
     }
 
