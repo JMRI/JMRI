@@ -37,8 +37,8 @@ public abstract class AbstractTurnoutTestBase {
         t = null; // to save space, as JU4 doesn't garbage collect this object
         JUnitUtil.tearDown();
     }
-    
-    /** 
+
+    /**
      * @return number of listeners registered with the TrafficController by the object under test
      */
     abstract public int numListeners();
@@ -102,7 +102,7 @@ public abstract class AbstractTurnoutTestBase {
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }
-    
+
     @Test
     public void testRemoveListenerOnDispose() {
         int startListeners =  t.getNumPropertyChangeListeners();
@@ -147,11 +147,11 @@ public abstract class AbstractTurnoutTestBase {
             }
 
             boolean getRequest(){
-              return request;
+                return request;
             }
 
             void resetRequest(){
-              request=false;
+                request=false;
             }
     }
 
@@ -290,12 +290,12 @@ public abstract class AbstractTurnoutTestBase {
         // Check that state changes appropriately
         t.setCommandedState(Turnout.THROWN);
         checkThrownMsgSent();
-        Assert.assertEquals(Turnout.THROWN,t.getState());
+        Assert.assertEquals(Turnout.THROWN, t.getState());
         Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.THROWN, listenStatus);
 
         t.setCommandedState(Turnout.CLOSED);
         checkClosedMsgSent();
-        Assert.assertEquals(Turnout.CLOSED,t.getState());
+        Assert.assertEquals(Turnout.CLOSED, t.getState());
         Assert.assertEquals("listener notified of change for DIRECT feedback", Turnout.CLOSED, listenStatus);
     }
 

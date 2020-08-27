@@ -26,12 +26,12 @@ abstract public class SystemConnectionMemoTestBase<M extends DefaultSystemConnec
 
     protected M scm = null;
 
-    public void getTest(Class t) {
-        if (scm.provides(t)) {
+    public void getTest(Class m) {
+        if (scm.provides(m)) {
             // if the manager reports providing the class, make sure it exists.
-            Assert.assertNotNull("Provides Class " + t.getName(), scm.get(t));
+            Assert.assertNotNull("Provides Class " + m.getName(), scm.get(m));
         } else {
-            Assert.assertNull("Provides Class " + t.getName(), scm.get(t));
+            Assert.assertNull("Provides Class " + m.getName(), scm.get(m));
         }
     }
 
@@ -94,7 +94,7 @@ abstract public class SystemConnectionMemoTestBase<M extends DefaultSystemConnec
 
     @Test
     public void testMultipleMemosSamePrefix() {
-        SystemConnectionMemo t = new DefaultSystemConnectionMemo("t", "test") {
+        SystemConnectionMemo m = new DefaultSystemConnectionMemo("t", "test") {
             @Override
             protected ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -105,12 +105,18 @@ abstract public class SystemConnectionMemoTestBase<M extends DefaultSystemConnec
                 return null;
             }
         };
-        Assert.assertEquals("t", t.getSystemPrefix());
-        t.register();
-        Assert.assertTrue(InstanceManager.getList(SystemConnectionMemo.class).contains(t));
+        Assert.assertEquals("t", m.getSystemPrefix());
+        m.register();
+        Assert.assertTrue(InstanceManager.getList(SystemConnectionMemo.class).contains(m));
         Assert.assertFalse(scm.setSystemPrefix("t"));
         Assert.assertTrue(scm.setSystemPrefix("t2"));
         Assert.assertEquals("t2", scm.getSystemPrefix());
+    }
+
+    @Test
+    public void testGetAndSetOutputInterval() {
+        scm.setOutputInterval(50);
+        Assert.assertEquals("Output Interval after set", 50, scm.getOutputInterval());
     }
 
     @BeforeEach

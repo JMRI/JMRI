@@ -1,6 +1,8 @@
 package jmri.implementation;
 
 import java.beans.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -69,6 +71,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * Handle a request to change state, typically by sending a message to the
      * layout in some child class. Public version (used by TurnoutOperator)
      * sends the current commanded state without changing it.
+     * Implementing classes will typically check the value of s and send a system specific sendMessage command.
      *
      * @param s new state value
      */
@@ -78,12 +81,43 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         forwardCommandChangeToLayout(_commandedState);
     }
 
-    // implementing classes will typically have a function/listener to get
-    // updates from the layout, which will then call
-    //        public void firePropertyChange(String propertyName,
-    //                               Object oldValue,
-    //                        Object newValue)
-    // _once_ if anything has changed state
+    /**
+     * Preprocess a Turnout state change request for {@link #forwardCommandChangeToLayout(int)}
+     * Public access to allow use in tests.
+     *
+     * @param newState the Turnout state command value passed
+     * @return true if a Turnout.CLOSED was requested and Turnout is not set to _inverted
+     */
+    public boolean stateChangeCheck(int newState) throws IllegalArgumentException {
+        // sort out states
+        if ((newState & Turnout.CLOSED) != 0) {
+            if (statesOk(newState)) {
+                // request a CLOSED command (or THROWN if inverted)
+                return (!_inverted);
+            } else {
+                throw new IllegalArgumentException("Can't set state for Turnout " + newState);
+            }
+        }
+        // request a THROWN command (or CLOSED if inverted)
+        return (_inverted);
+    }
+
+    /**
+     * Look for the case in which the state is neither Closed nor Thrown, which we can't handle.
+     * Separate method to allow it to be used in {@link #stateChangeCheck} and Xpa/MqttTurnout.
+     *
+     * @param state the Turnout state passed
+     * @return false if s = Turnout.THROWN, which is what we want
+     */
+    protected boolean statesOk(int state) {
+        if ((state & Turnout.THROWN) != 0) {
+            // this is the disaster case!
+            log.error("Cannot command both CLOSED and THROWN");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Set a new Commanded state, if need be notifying the listeners, but do
      * NOT send the command downstream.
@@ -121,6 +155,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
+            log.debug("myOperator NULL");
             forwardCommandChangeToLayout(s);
             // optionally handle feedback
             if (_activeFeedbackType == DIRECT) {
@@ -131,6 +166,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                          DELAYED_FEEDBACK_INTERVAL );
             }
         } else {
+            log.debug("myOperator NOT NULL");
             myOperator.start();
         }
     }
@@ -142,6 +178,43 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * the jython/SetDefaultDelayedTurnoutDelay script.
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
+
+    protected Thread thr;
+    protected Runnable r;
+    private LocalDateTime nextWait;
+
+    /** {@inheritDoc}
+     * Used in {@link jmri.implementation.DefaultRoute#setRoute()} and
+     * {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])}.
+     */
+    @Override
+    public void setCommandedStateAtInterval(int s) {
+        nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
+        // nextWait time is calculated using actual turnoutInterval in TurnoutManager
+        if (nextWait.isAfter(LocalDateTime.now())) { // don't sleep if nextWait =< now()
+            log.debug("Turnout now() = {}, waitUntil = {}", LocalDateTime.now(), nextWait);
+            // insert wait before sending next output command to the layout
+            r = new Runnable() {
+                @Override
+                public void run() {
+                    log.debug("go to sleep for {} ms...", Math.max(0L, LocalDateTime.now().until(nextWait, ChronoUnit.MILLIS)));
+                    try {
+                        Thread.sleep(Math.max(0L, LocalDateTime.now().until(nextWait, ChronoUnit.MILLIS))); // nextWait might have passed in the meantime
+                        log.debug("back from sleep, forward on {}", LocalDateTime.now());
+                        setCommandedState(s);
+                    } catch (InterruptedException ex) {
+                        log.debug("setCommandedStateAtInterval(s) interrupted at {}", LocalDateTime.now());
+                        Thread.currentThread().interrupt(); // retain if needed later
+                    }
+                }
+            };
+            thr = new Thread(r);
+            thr.start();
+        } else {
+            log.debug("nextWait has passed");
+            setCommandedState(s);
+        }
+    }
 
     @Override
     public int getCommandedState() {
@@ -367,8 +440,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         boolean oldInverted = _inverted;
         _inverted = inverted;
         if (oldInverted != _inverted) {
-            firePropertyChange("inverted", oldInverted,
-                    _inverted);
+            firePropertyChange("inverted", oldInverted, _inverted);
             int state = _knownState;
             if (state == THROWN) {
                 newKnownState(CLOSED);
@@ -445,7 +517,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * Determine if turnout is locked. Returns. There
+     * Determine if turnout is locked. There
      * are two types of locks: cab lockout, and pushbutton lockout.
      *
      * @param turnoutLockout turnout to check

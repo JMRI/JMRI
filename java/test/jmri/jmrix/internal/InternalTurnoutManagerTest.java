@@ -95,7 +95,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
                 .isLessThan(JUnitUtil.WAITFOR_MAX_DELAY);
         Turnout t1 = l.provideTurnout("IT1");
         Turnout t2 = l.provideTurnout("IT2");
-        
+
         assertThat(t1.getKnownState()).isEqualTo(Turnout.UNKNOWN);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.UNKNOWN);
         assertThat(t1.getFeedbackMode()).isEqualTo(Turnout.DIRECT);
@@ -116,7 +116,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         t1.setCommandedState(Turnout.THROWN);
         assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.THROWN);
-        
+
         t1.setFeedbackMode(Turnout.DELAYED);
         t1.setCommandedState(Turnout.CLOSED);
         assertThat(t1.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
@@ -124,7 +124,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.CLOSED);
         assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
-        
+
         // verify no stack overflow when following in a circular pattern
         t1.setFeedbackMode(Turnout.DIRECT);
         t1.setLeadingTurnout(t2);
@@ -138,7 +138,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         t2.setCommandedState(Turnout.CLOSED);
         assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
-        
+
         // verify
         t1.setFeedbackMode(Turnout.DELAYED);
         t1.setLeadingTurnout(null);
@@ -152,7 +152,19 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
         assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
     }
-    
+
+    @Test
+    @Override
+    public void testSetAndGetOutputInterval() {
+        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
+        l.getMemo().setOutputInterval(21);
+        Assert.assertEquals("new outputInterval in memo", 21, l.getMemo().getOutputInterval()); // set + get in memo
+        Assert.assertEquals("new outputInterval via manager", 21, l.getOutputInterval()); // get via turnoutManager
+        l.setOutputInterval(50); // interval set via ProxyTurnoutManager
+        Assert.assertEquals("new outputInterval in memo", 50, l.getMemo().getOutputInterval()); // get directly from memo
+        Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval()); // get via turnoutManager
+    }
+
     // from here down is testing infrastructure
     @Override
     @BeforeEach

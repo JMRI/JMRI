@@ -39,6 +39,7 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
     public static final String DISABLED = "ConnectionDisabled";
     public static final String USER_NAME = "ConnectionNameChanged";
     public static final String SYSTEM_PREFIX = "ConnectionPrefixChanged";
+    public static final String INTERVAL = "OutputInterval";
 
     /**
      * Provide a factory for getting startup actions.
@@ -138,8 +139,19 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
      *
      * @param userName user name to use for this system connection
      * @throws java.lang.NullPointerException if name is null
-     * @return true if the user name could be set.
+     * @return true if the user name could be set
      */
     boolean setUserName(@Nonnull String userName);
+
+    /**
+     * Get the connection specific OutputInterval to wait between/before commands
+     * are sent, configured in AdapterConfig.
+     * Used in {@link jmri.implementation.AbstractTurnout#setCommandedStateAtInterval(int)}.
+     *
+     * @return the output interval time in ms
+     */
+    int getOutputInterval();
+
+    void setOutputInterval(int newInterval);
 
 }
