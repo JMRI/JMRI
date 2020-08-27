@@ -202,8 +202,8 @@
       
       
       <h3><a name="c5" id="c5">CAN via Lawicell CANUSB</a></h3>
-      <img src="images/connection/merg-connection-lawicell-300x200.png"
-      width="300" height="200" alt="JMRI MERG Lawicell USB Connection" align="right">
+      <img src="images/connection/merg-connection-lawicell.png"
+      width="294" height="211" alt="JMRI MERG Lawicell USB Connection" align="right">
         <p>Serial Port - Select the serial or USB port that your CAN interface is plugged in to.</p>
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
@@ -221,9 +221,9 @@
         </ul>
         
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>   
-      
-      
-      
+
+
+
       <h3><a name="c6" id="c6">CAN Simulation</a></h3>
       
          <img src="images/connection/merg-connection-simulation-330x215.png"
