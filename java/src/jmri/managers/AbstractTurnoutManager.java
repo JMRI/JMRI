@@ -216,7 +216,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      *
      * @param systemName system name.
      * @param userName username.
-     * @return never null
+     * @param systemName the system name to use for the new Sensor
+     * @param userName   the user name to use for the new Sensor
+     * @return the new Turnout or null if unsuccessful
      */
     abstract protected Turnout createNewTurnout(@Nonnull String systemName, String userName);
 
