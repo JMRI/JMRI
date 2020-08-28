@@ -18,6 +18,12 @@ import jmri.util.JUnitUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 /**
  *
  * @author SG 2020
@@ -65,7 +71,6 @@ public class AutoActiveTrainsStoppingTest {
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/TestTrainDispatcherSSLOptions.xml");
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-        FileUtil.setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), "java/test/jmri/jmrit");
         // signal head manager
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
 
@@ -616,10 +621,43 @@ public class AutoActiveTrainsStoppingTest {
         // cleanup window
         JUnitUtil.dispose(d);
     }
+    
+    // Where in user space the "signals" file tree should live
+    private static File path = null;
+
+    // the file we create that we will delete
+    private static Path outPath = null;
+
+    @BeforeAll
+    public static void doOnce() throws Exception {
+        // set up users files in temp tst area
+        path = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");
+        try {
+            FileUtil.createDirectory(path);
+            {
+                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                        "SSL3TestTrain.xml").toPath();
+                outPath = new File(path, "SSL3TestTrain.xml").toPath();
+                Files.copy(inPath, outPath, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            throw e;
+        }
+    }
+    
+    @AfterAll
+    public static void unDoOnce() {
+        try {
+            Files.delete(outPath);
+        } catch  (IOException e) {
+            // doesnt matter its gonezo
+        }
+    }
 
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetFileUtilSupport();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initRosterConfigManager();

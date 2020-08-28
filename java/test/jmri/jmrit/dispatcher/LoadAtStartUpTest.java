@@ -19,6 +19,12 @@ import jmri.util.JUnitUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
 /**
  *
  * @author Steve Gigiel 2018
@@ -29,6 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LoadAtStartUpTest {
 
+    @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
     @Test
     public void testShowAndClose() throws Exception {
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
@@ -42,7 +49,7 @@ public class LoadAtStartUpTest {
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/TestTrainDispatcherOptions.xml");
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-        FileUtil.setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), "java/test/jmri/jmrit");
+        
         // we need a throttle manager
         ThrottleManager m = InstanceManager.getDefault(ThrottleManager.class);
         // signal mast manager
@@ -181,6 +188,50 @@ public class LoadAtStartUpTest {
         // cleanup window
         JUnitUtil.dispose(d);
     }
+    
+    // Where in user space the "signals" file tree should live
+    private static File path = null;
+
+    // the file we create that we will delete
+    private static Path outPath1 = null;
+    private static Path outPath2 = null;
+
+    @BeforeAll
+    public static void doOnce() throws Exception {
+        // set up users files in temp tst area
+        path = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");
+        try {
+            FileUtil.createDirectory(path);
+            {
+                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                        "TestTrainCW.xml").toPath();
+                outPath1 = new File(path, "TestTrainCW.xml").toPath();
+                Files.copy(inPath, outPath1, StandardCopyOption.REPLACE_EXISTING);
+            }
+            {
+                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                        "TestTrain.xml").toPath();
+                outPath2 = new File(path, "TestTrain.xml").toPath();
+                Files.copy(inPath, outPath2, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            throw e;
+        }
+    }
+    
+    @AfterAll
+    public static void unDoOnce() {
+        try {
+            Files.delete(outPath1);
+        } catch  (IOException e) {
+            // doesnt matter its gonezo
+        }
+        try {
+            Files.delete(outPath2);
+        } catch  (IOException e) {
+            // doesnt matter its gonezo
+        }
+    }
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -193,6 +244,7 @@ public class LoadAtStartUpTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.resetFileUtilSupport();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.resetFileUtilSupport();
