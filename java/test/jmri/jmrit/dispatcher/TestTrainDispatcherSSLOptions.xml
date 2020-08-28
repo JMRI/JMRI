@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/dispatcheroptions.xsl"?>
+<!DOCTYPE dispatcheroptions SYSTEM "dispatcher-options.dtd">
+
+<dispatcheroptions>
+    <!--Written by JMRI version 2.9.5+dev on Sun Apr 25 11:20:40 EDT 2010 $Id$-->
+    <options lename="SSLTestLayout" useconnectivity="yes" trainsfromroster="no" trainsfromtrains="no" trainsfromuser="yes" autoallocate="yes" autoturnouts="yes" trustknownturnouts="yes" minthrottleinterval="100" fullramptime="10000" hasoccupancydetection="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="yes" nameinallocatedblock="no" supportvsdecoder="no" layoutscale="N" usescalemeters="no" userosterentryinblock="no" stoppingspeedname="RestrictedSlow" usesignaltype="signalhead" />
+</dispatcheroptions>
+
+
